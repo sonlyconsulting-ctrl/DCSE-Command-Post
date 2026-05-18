@@ -1,0 +1,217 @@
+{
+  "snapshot_id": "EOD-DDNA-ASSET-CAPTURE-20260517-001",
+  "reconciliation": {
+    "run_key": "EOD_RUN_20260516_v68",
+    "uuid": "c461a80e-7b2a-4672-a1e1-1e464ca508e0",
+    "chatgpt_handoff": "EOD_DDNA_ASSET_CAPTURE_20260517_001",
+    "disposition": "Treat as same EOD closeout family",
+    "audit_status": "COMMITTED_AND_VERIFIED"
+  },
+  "operating_rules": {
+    "lifecycle_stages": [
+      "STAGE_1_DRAFT_CAPTURED_LOCAL_FILES",
+      "STAGE_2_STAGED_FOR_REVIEW_PLAN_INBOX",
+      "STAGE_3_CONFIRMED_PROMOTED_PLAN_REVIEWS",
+      "STAGE_4_CANONICAL_REGISTRY_PM_ARTIFACTS"
+    ],
+    "table_roles": {
+      "audit_ledger": ["dcse_eod_runs", "dcse_eod_assets"],
+      "staging_console": ["dcse_plan_inbox"],
+      "final_registry": ["pm_artifacts"]
+    },
+    "dba_stop_gate": true
+  },
+  "ddna_signals": {
+    "sentiment_posture": "high_strategic_clarity_strict_operational_restraint",
+    "logic_signals": [
+      "4-stage deliverable lifecycle",
+      "separation of audit ledger and visible staging queue"
+    ],
+    "design_signals": [
+      "editorial typography outfit playfair",
+      "dark obsidian bases with burnished amber gold highlights",
+      "dynamic active tab switching script"
+    ],
+    "product_candidates": [
+      "sc_home.html Sonly Consulting Home",
+      "sc_about_us.html Services & v6 Glossary",
+      "dcse_eod_inserts_doctrine.md DBA Stop-Gate Doctrine"
+    ],
+    "technical_signals": [
+      "direct postgresql port 5432 transaction bypassing pgbouncer",
+      "idempotent database updates via EXCLUDED values ON CONFLICT",
+      "DART-to-Decision-Audit renaming rule"
+    ]
+  },
+  "assets": {
+    "group_a_backlog": [
+      {
+        "external_id": "ASSET-PHASE-1-DECISION-AUDIT-COMPLETION",
+        "title": "Phase 1 Decision-Audit Completion Report",
+        "type": "asset",
+        "status": "pending_approval",
+        "release_status": "Ready for DCS Review",
+        "renamed_from": "ASSET-PHASE-1-DART-COMPLETION",
+        "rationale": "DART trade-style terminology deprecated for website-visible staging console"
+      },
+      {
+        "external_id": "ASSET-AG-IMPLEMENTATION-GUIDE",
+        "title": "AG Implementation Guide - v6.8",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-AG-TASK-PACKET-STAGING-REVIEW",
+        "title": "AG Task Packet v6.8 Staging Review Module v1",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-ARCHITECTURE-REVIEW-SR-ARCHITECT",
+        "title": "Architecture Review - SR Architect Assessment",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCSE-V68-STAGING-REVIEW-DOCTRINE",
+        "title": "DCSE v6.8 Staging Review Module Doctrine v1",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCSE-V68-STAGING-REVIEW-TECH-SPEC",
+        "title": "DCSE v6.8 Staging Review Module Technical Spec v1",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-PHASE-1-IMPLEMENTATION-SUMMARY",
+        "title": "Phase 1 Implementation Summary",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-PHASE-1-MASTER-INTEGRATION-MANIFEST",
+        "title": "Phase 1 Master Integration Manifest",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-PHASE-1-RLS-DEPLOYMENT-SQL",
+        "title": "Phase 1 RLS Deployment SQL Script",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCSE-PLAN-REVIEWS-MIGRATION-SQL",
+        "title": "dcse_plan_reviews Migration SQL v1",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCSE-V68-PROJECT-PLAN-INSERT-SQL",
+        "title": "dcse_v68 Project Plan Insert SQL Script",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCSE-V68-STAGING-REVIEW-PROTOTYPE-HTML",
+        "title": "dcse_v68 Staging Review Module Prototype HTML",
+        "type": "asset",
+        "status": "pending_approval"
+      }
+    ],
+    "group_b_current_packet": [
+      {
+        "external_id": "ASSET-DCS-HERO-05172026-HTML",
+        "title": "DCS Hero 05172026 PENDING APPROVAL HTML",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCS-RESUME-05172026-HTML",
+        "title": "DCS Resume 05172026 PENDING APPROVAL HTML",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCS-RESUME-05172026-DOCX",
+        "title": "DCS Resume 05172026 PENDING APPROVAL DOCX",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCS-HERO-RESUME-CP-MD",
+        "title": "DCS Hero and Resume CP Asset Entry MD",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-DCS-HERO-RESUME-CP-JSON",
+        "title": "DCS Hero and Resume CP Asset Entry JSON",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-WIX-CLAUDE-WORKFLOW-MD",
+        "title": "Wix Claude Workflow System MD",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-WIX-CLAUDE-WORKFLOW-JSON",
+        "title": "Wix Claude Workflow System JSON",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-DNA-ASSET-INSERT-HANDOFF-MD",
+        "title": "EOD DNA Asset Insert DBA Handoff MD",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-DNA-ASSET-INSERT-SQL",
+        "title": "EOD DNA Asset Insert SQL",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-DNA-ASSET-INSERT-MANIFEST-JSON",
+        "title": "EOD DNA Asset Insert Manifest JSON",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-SC-PREMIUM-HOME-HTML",
+        "title": "SC Premium Home HTML",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-SC-ABOUT-SERVICES-GLOSSARY-HTML",
+        "title": "SC About, Services, and Glossary HTML",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-INSERTS-DBA-STOP-GATE-MD",
+        "title": "EOD Inserts and DBA Stop-Gate Doctrine MD",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-DAILY-ASSET-DDNA-MD",
+        "title": "EOD Daily Asset and DDNA MD",
+        "type": "asset",
+        "status": "pending_approval"
+      },
+      {
+        "external_id": "ASSET-EOD-DAILY-ASSET-DDNA-JSON",
+        "title": "EOD Daily Asset and DDNA JSON",
+        "type": "asset",
+        "status": "pending_approval"
+      }
+    ]
+  }
+}
