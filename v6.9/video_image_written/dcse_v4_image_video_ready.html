@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <style>
+    :root{--bg0:#070c18;--bg1:#0a1630;--ink:#f4efe7;--muted:rgba(244,239,231,.74);--line:rgba(255,255,255,.10);--accent:#c9a66b;--accent2:#8fb3ff;--max:1240px;--gutter:clamp(16px,3vw,40px);--section-y:clamp(28px,4.6vw,72px);--hero-y:clamp(42px,8vw,120px);--h1:clamp(2.6rem,5.7vw,6.6rem);--h2:clamp(1.5rem,2.7vw,3rem);--body:clamp(1rem,1.05vw,1.12rem);--small:clamp(.82rem,.88vw,.95rem);--radius:26px;--radius-sm:18px;--shadow:0 28px 80px rgba(0,0,0,.28)}
+    *{box-sizing:border-box} html,body{width:100%;height:100%;margin:0;padding:0;overflow-x:hidden;background:radial-gradient(1100px 650px at 18% 0%, rgba(201,166,107,.14), transparent 58%),radial-gradient(900px 520px at 92% 10%, rgba(143,179,255,.10), transparent 52%),linear-gradient(180deg,var(--bg1),var(--bg0));color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:var(--body);line-height:1.6;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    .frame{width:100%;min-height:100vh;display:flex;flex-direction:column}
+    .shell{width:min(var(--max), calc(100% - (var(--gutter) * 2)));margin-inline:auto}
+    .topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(18px);background:rgba(7,12,24,.72);border-bottom:1px solid var(--line)}
+    .topbar-inner{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0}
+    .brand{font-size:var(--small);font-weight:800;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+    .nav{display:flex;flex-wrap:wrap;gap:12px 22px;justify-content:flex-end;color:var(--muted);font-size:var(--small)}
+    .nav a{position:relative;padding:8px 0} .nav a::after{content:"";position:absolute;left:0;bottom:2px;width:100%;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .18s ease;opacity:.85}
+    .nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1)}
+    .hero{flex:1;display:flex;align-items:center;padding:var(--hero-y) 0 var(--section-y)}
+    .grid{width:100%;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:clamp(22px,3vw,48px);align-items:end}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.24em;font-size:var(--small);margin-bottom:18px}
+    .eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--accent),transparent)}
+    h1{margin:0;max-width:11ch;font-family:Georgia,"Times New Roman",serif;font-size:var(--h1);line-height:.92;letter-spacing:-.04em}
+    .lede{margin:20px 0 0;max-width:60ch;color:var(--muted);font-size:clamp(1.02rem,1.18vw,1.22rem)}
+    .panel{border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border-radius:var(--radius);padding:clamp(18px,2.4vw,30px);box-shadow:var(--shadow);min-height:260px;overflow:hidden;position:relative}
+    .panel::after{content:"";position:absolute;inset:auto -20% -30% auto;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle, rgba(201,166,107,.18), transparent 68%);pointer-events:none}
+    .panel h2{margin:0 0 12px;font-size:var(--h2);line-height:1.05}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:var(--small)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);white-space:nowrap}
+    .pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 0 4px rgba(143,179,255,.14)}
+    .section{padding:0 0 var(--section-y)} .section h2{margin:0 0 16px;font-size:var(--h2);line-height:1.05}
+    .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .card{min-height:180px;border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,255,255,.03);padding:22px}
+    .card h3{margin:0 0 10px;font-size:1.06rem;letter-spacing:-.01em}
+    .card p{margin:0;color:var(--muted)}
+    .media{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .media-block{border:1px solid var(--line);border-radius:var(--radius-sm);background:rgba(255,255,255,.03);padding:18px;overflow:hidden}
+    .media-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#101827;border:1px solid rgba(255,255,255,.08)}
+    .media-frame img,.media-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+    .media-frame img{object-fit:cover}
+    .caption{margin-top:12px;color:var(--muted);font-size:var(--small)}
+    .footer{padding:0 0 28px;color:var(--muted);font-size:var(--small);border-top:1px solid var(--line);margin-top:4px}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    @media (max-width: 1024px){.grid,.media,.cards{grid-template-columns:1fr}.nav{justify-content:flex-start}.hero{align-items:flex-start}h1{max-width:12ch}}
+    @media (max-width: 640px){:root{ --gutter:16px; }.topbar-inner{min-height:64px;flex-direction:column;align-items:flex-start;gap:8px}.panel{min-height:auto}h1{max-width:100%}.cards{gap:14px}.card,.media-block{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header class="topbar">
+      <div class="shell topbar-inner">
+        <div class="brand">DCSE</div>
+        <nav class="nav" aria-label="Primary">
+          <a href="#story">Story</a>
+          <a href="#features">Features</a>
+          <a href="#media">Media</a>
+          <a href="#specs">Specs</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="shell hero">
+      <div style="width:100%;">
+        <div class="grid" id="story">
+          <section>
+            <div class="eyebrow">Editorial Web Experience</div>
+            <h1>Luxury visual rhythm for mobile, tablet, and desktop.</h1>
+            <p class="lede">A premium Wix embed should feel composed, stretch cleanly, and preserve its proportions without manual fighting after paste-in.</p>
+          </section>
+          <aside class="panel" aria-label="Highlights">
+            <h2>Top-of-line sizing logic</h2>
+            <div class="meta">
+              <span class="pill">Fluid type</span>
+              <span class="pill">Exact gutters</span>
+              <span class="pill">Reflow-safe</span>
+              <span class="pill">Touch-friendly</span>
+            </div>
+          </aside>
+        </div>
+
+        <section class="section" id="features" style="margin-top: clamp(26px,4vw,44px);">
+          <h2>Core features</h2>
+          <div class="cards">
+            <article class="card"><h3>Precision spacing</h3><p>All margins and paddings are controlled by variables so the layout stays disciplined at every width.</p></article>
+            <article class="card"><h3>Responsive balance</h3><p>The layout collapses from editorial two-column to single-column without clipping or forced zoom behavior.</p></article>
+            <article class="card"><h3>Luxury polish</h3><p>Subtle gradients, restrained borders, and serif-led hierarchy create an ESPN/GQ-level presentation.</p></article>
+          </div>
+        </section>
+
+        <section class="section" id="media">
+          <h2>Image and video</h2>
+          <div class="media">
+            <div class="media-block">
+              <div class="media-frame">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80" alt="Editorial style workspace image" />
+              </div>
+              <div class="caption">Replace this image with any Wix-hosted or external image URL.</div>
+            </div>
+            <div class="media-block">
+              <div class="media-frame">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Embedded video example" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+              <div class="caption">Yes, video can be embedded if desired using a responsive iframe wrapper.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="specs">
+          <h2>Implementation specs</h2>
+          <div class="media">
+            <div class="media-block"><strong style="display:block;margin-bottom:8px;">Width behavior</strong><span style="color:var(--muted);">Uses a max-width container with fluid gutters so the embed breathes on large screens and tightens on mobile.</span></div>
+            <div class="media-block"><strong style="display:block;margin-bottom:8px;">Accessibility</strong><span style="color:var(--muted);">Built with visible focus, readable contrast, and responsive reflow expectations aligned to WCAG 2.2.</span></div>
+          </div>
+        </section>
+
+        <footer class="footer" id="contact" style="margin-top: clamp(22px,4vw,40px);">Designed for Wix HTML embeds with minimal resizing friction and high editorial finish.</footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

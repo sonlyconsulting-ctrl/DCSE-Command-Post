@@ -1,0 +1,48 @@
+<!-- Inside <script> tags -->
+<script>
+  // Function to save answers to Wix Dataset
+  async function saveToWix(userId, answers) {
+    try {
+      const response = await fetch('/_functions/save-assessment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_WIX_ACCESS_TOKEN' // Replace with your token
+        },
+        body: JSON.stringify({
+          userId,
+          answers,
+          assessmentType: 'S1' // Change based on assessment
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to save');
+      return response.json();
+    } catch (error) {
+      console.error('Error saving:', error);
+      alert('Failed to save your answers. Please try again.');
+    }
+  }
+
+  // Event listener for form submission
+  document.getElementById('assessmentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Collect answers from form inputs
+    const answers = {
+      question1: document.getElementById('q1').value,
+      question2: document.getElementById('q2').value,
+      // Add more questions...
+    };
+
+    // Get user ID from URL parameter (passed from Wix)
+    const userId = new URLSearchParams(window.location.search).get('user_id');
+
+    // Save to Wix
+    const result = await saveToWix(userId, answers);
+    if (result.status === 'success') {
+      alert('Answers saved successfully!');
+      // Redirect or show next page
+    }
+  });
+</script>

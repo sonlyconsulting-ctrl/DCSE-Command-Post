@@ -1,0 +1,108 @@
+# Leveraging AI Coding Models for Optimized Wix Editor Applications
+
+## Strategic AI Model Selection Framework
+
+To maximize effectiveness in Wix Editor development, a specialized multi-model approach outperforms relying on a single "one-size-fits-all" solution. Based on current capabilities:
+
+### Specialized Model Roles
+
+**1. Architecture & Scalability Planning (Claude 3 Opus)**
+- Excels at understanding Wix's structural limitations and creating scalable data models
+- Generates comprehensive site maps that identify potential growth blockers before development begins 
+- Creates optimized Wix Data Collections schemas that prevent performance degradation as user base grows
+- Develops fallback strategies when approaching Wix's scalability limits, crucial for applications like the TSL Sports Lounge that expect growing user bases
+
+**2. Design Specification Translation (GPT-4 Turbo)**
+- Translates design mockups into precise Wix-compatible CSS variables and styling
+- Maintains visual consistency by enforcing strict color palettes (3-5 colors) as recommended in Wix's best practices 
+- Converts Figma/Sketch designs into Wix Editor-compatible component structures with pixel-perfect accuracy
+- Creates theme variants (like the TSL's Gold/Silver/Money themes) while maintaining design system integrity
+
+**3. Wix-Velo Specific Implementation (CodeLlama 70B)**
+- Generates production-ready Velo code with awareness of Wix Editor's iframe constraints
+- Optimizes localStorage usage patterns while respecting Wix's storage limitations
+- Creates responsive layouts that work within Wix's mobile breakpoint system
+- Implements time-sensitive features (like game lock/unlock mechanisms) using Wix-compatible timing approaches
+
+**4. Responsive Design Optimization (Wix's Own AI Tools)**
+- Leverages Wix's Responsive AI which "analyses thousands of designs" to create truly responsive layouts 
+- Ensures mobile optimization specifically for Wix Editor's rendering engine, not generic web standards
+- Creates device-specific styling that maintains performance during "peak traffic periods" 
+
+## Ensuring Design Specification Adherence
+
+### Automated Design Compliance System
+
+1. **Specification-to-Code Mapping**
+   - Use GPT-4 Turbo to convert design documentation into a machine-readable specification schema
+   - Create custom validation rules that check generated code against design requirements (e.g., "all buttons must use primary gold #FFD700")
+   - Implement a pre-commit verification step that flags deviations before deployment
+
+2. **Wix-Specific Design Translation**
+   - Convert standard CSS units to Wix's relative sizing system (percentages, viewport units)
+   - Map design system tokens to Wix's variable system (like the TSL's `:root` CSS variables)
+   - Transform standard web components into Wix-compatible implementations that avoid iframe conflicts
+
+3. **Real-time Design Validation**
+   - Implement a "design guardrail" system that monitors code changes against specifications
+   - Use AI to generate visual regression tests that compare rendered output against design mockups
+   - Create a dashboard showing compliance percentage across all design requirements
+
+## Scalability Optimization Strategies
+
+### Progressive Enhancement Framework
+
+1. **Scalability-Aware Architecture**
+   - Implement a tiered data strategy where frequently accessed data uses localStorage while persistent data uses Wix Data Collections
+   - Design with Wix's "enhanced performance" principles in mind to maintain responsiveness during traffic spikes 
+   - Structure code to isolate performance-critical sections (like the TSL leaderboard calculations) for targeted optimization
+
+2. **AI-Generated Performance Optimization**
+   - Use Claude 3 to analyze potential scalability bottlenecks before implementation
+   - Generate code that implements Wix-specific performance patterns like lazy loading for schedule data
+   - Create automated test scenarios that simulate growing user bases to identify breaking points
+
+3. **Scalability Roadmap Integration**
+   - Build applications with "scalability as needed" migration paths 
+   - Implement monitoring that triggers alerts when approaching Wix's limitations
+   - Create modular code that allows for partial migration to custom backend solutions when Wix constraints become limiting
+
+## Implementation Strategy for Non-Technical Users
+
+### AI-Assisted Development Workflow
+
+1. **Natural Language to Technical Specification**
+   - Use a multi-step translation process where business requirements are converted to technical specs
+   - Implement Wix-specific guardrails that prevent non-technical users from requesting impossible implementations
+   - Create a visual feedback system showing how design choices impact scalability
+
+2. **Contextual AI Assistance Within Wix Editor**
+   - Develop an AI assistant that operates within the Wix Editor interface
+   - Provide real-time suggestions that respect Wix's "simplicity and visual editing" paradigm 
+   - Offer "explain like I'm non-technical" mode for complex implementation decisions
+
+3. **Production-Ready Code Generation**
+   - Implement a verification system that ensures generated code follows Wix's best practices
+   - Create a "Wix constraint handbook" that explains limitations in business terms
+   - Develop an automated testing framework specifically for Wix Editor applications
+
+## Practical Example: TSL Sports Lounge Optimization
+
+For the TSL application described in your documentation:
+
+1. **Scalability Enhancement**
+   - Use Claude 3 to redesign the leaderboard calculation to minimize client-side processing
+   - Implement a caching strategy for schedule data that reduces localStorage operations
+   - Create a data partitioning system that handles the NFL/NCAA schedule growth over time
+
+2. **Design Specification Adherence**
+   - Generate automated checks that verify all team links point to official sites (no broken links)
+   - Create theme-switching logic that maintains the "sleek, urban, vibey" aesthetic across all views
+   - Implement a color validation system that ensures only approved brand colors are used
+
+3. **Non-Technical Implementation**
+   - Develop a simple interface for updating sports schedules without coding
+   - Create visual indicators showing membership tier restrictions in the editor
+   - Implement a "test as free user/premium user" toggle for immediate feedback
+
+By adopting this specialized multi-model approach with Wix-specific implementation patterns, non-technical users can create applications that maintain design integrity while scaling effectively within Wix Editor's constraints. This strategy aligns with Wix's own approach of deploying "AI models to improve... development velocity" while providing the "extensive customisation options" needed for professional applications.  

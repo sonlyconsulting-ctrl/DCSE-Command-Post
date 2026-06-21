@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sister Dee Portal Welcome</title>
+<style>
+:root{
+  --bg:#f6f1e7;
+  --paper:#fffdf8;
+  --paper-2:#f2ecdf;
+  --ink:#26231e;
+  --muted:#625d54;
+  --line:#d9cdb8;
+  --accent:#ef9b1f;
+  --accent-deep:#ca7d16;
+  --mist:#dfe5f5;
+  --mist-deep:#aeb8df;
+  --shadow:0 20px 48px rgba(44,34,20,.12);
+  --radius-xl:30px;
+  --radius-lg:22px;
+  --max:1140px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  font-family:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(239,155,31,.12), transparent 22%),
+    radial-gradient(circle at bottom left, rgba(174,184,223,.18), transparent 24%),
+    linear-gradient(180deg,#f8f3ea 0%,#f5efe5 100%);
+  line-height:1.55;
+}
+img,iframe,video{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+.page{
+  width:min(100%, var(--max));
+  margin:0 auto;
+  padding:clamp(14px,2vw,26px);
+}
+.portal{
+  background:linear-gradient(180deg, rgba(255,253,248,.92), rgba(255,250,243,.98));
+  border:1px solid rgba(217,205,184,.95);
+  border-radius:clamp(24px,2.8vw,36px);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:18px clamp(20px,3vw,32px);
+  border-bottom:1px solid rgba(217,205,184,.75);
+  background:rgba(255,255,255,.46);
+  backdrop-filter:blur(8px);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.mark{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-deep));
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+  box-shadow:0 12px 24px rgba(202,125,22,.22);
+}
+.brand-text{min-width:0}
+.brand-text strong{
+  display:block;
+  font-size:1rem;
+  letter-spacing:-.02em;
+}
+.brand-text span{
+  display:block;
+  color:var(--muted);
+  font-size:.9rem;
+}
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:flex-end;
+}
+.nav a{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(217,205,184,.9);
+  background:rgba(255,255,255,.68);
+  color:#4f4a42;
+  font-size:.92rem;
+  font-weight:600;
+}
+.section{
+  padding:clamp(26px,4vw,54px) clamp(20px,4vw,44px);
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+}
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  border-radius:999px;
+}
+.hero::before{
+  width:min(34vw,320px);
+  aspect-ratio:1;
+  right:-6%;
+  top:-18%;
+  background:radial-gradient(circle, rgba(239,155,31,.16), rgba(239,155,31,.03) 66%, transparent 70%);
+}
+.hero::after{
+  width:min(30vw,280px);
+  aspect-ratio:1;
+  left:-7%;
+  bottom:-20%;
+  background:radial-gradient(circle, rgba(174,184,223,.26), rgba(174,184,223,.04) 66%, transparent 70%);
+}
+.hero-grid{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(280px,.82fr);
+  gap:clamp(22px,3vw,42px);
+  align-items:start;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(174,184,223,.55);
+  background:rgba(223,229,245,.55);
+  color:#495172;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-size:.76rem;
+  margin-bottom:18px;
+}
+.eyebrow i{
+  width:9px;
+  height:9px;
+  border-radius:999px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-deep));
+  display:block;
+}
+h1{
+  margin:0 0 14px;
+  font-family:"Georgia","Times New Roman",serif;
+  font-size:clamp(2rem,4.8vw,4.35rem);
+  line-height:.98;
+  letter-spacing:-.035em;
+  max-width:11ch;
+}
+.intro{
+  font-size:clamp(1.02rem,1.6vw,1.15rem);
+  color:var(--muted);
+  max-width:62ch;
+  margin:0 0 22px;
+}
+.intro strong{color:var(--ink)}
+.welcome-copy{
+  display:grid;
+  gap:14px;
+  max-width:64ch;
+}
+.welcome-copy p{
+  margin:0;
+  color:#4e493f;
+  font-size:1rem;
+}
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+  padding:13px 18px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:.96rem;
+  transition:transform .16s ease, box-shadow .16s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{
+  background:linear-gradient(180deg,var(--accent),var(--accent-deep));
+  color:#fffdf8;
+  box-shadow:0 14px 28px rgba(202,125,22,.24);
+}
+.btn-secondary{
+  background:rgba(255,255,255,.76);
+  border:1px solid rgba(217,205,184,.95);
+  color:var(--ink);
+}
+.side-panel{
+  background:linear-gradient(180deg,#fffdf8,#f5efe4);
+  border:1px solid rgba(217,205,184,.95);
+  border-radius:var(--radius-xl);
+  padding:clamp(16px,2vw,22px);
+  box-shadow:0 14px 30px rgba(44,34,20,.08);
+}
+.side-panel h2,
+.video-copy h2{
+  margin:0 0 10px;
+  font-family:"Georgia","Times New Roman",serif;
+  font-size:clamp(1.4rem,2.2vw,2rem);
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+.side-panel p,
+.video-copy p{
+  margin:0 0 12px;
+  color:#595347;
+}
+.path{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+.path-item{
+  display:grid;
+  grid-template-columns:36px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+}
+.path-num{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:rgba(223,229,245,.8);
+  color:#475071;
+  font-weight:800;
+}
+.path-item strong{display:block;margin-bottom:2px}
+.path-item span{display:block;color:#6a6357;font-size:.95rem}
+.divider{
+  margin:0 clamp(20px,4vw,44px);
+  border:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(217,205,184,.92), transparent);
+}
+.video-section{
+  display:grid;
+  grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+  gap:clamp(22px,3vw,36px);
+  align-items:center;
+}
+.kicker{
+  display:inline-block;
+  margin-bottom:14px;
+  color:#72541f;
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.video-note{
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+.note-card{
+  padding:14px 15px;
+  border-radius:18px;
+  background:rgba(255,255,255,.66);
+  border:1px solid rgba(217,205,184,.95);
+}
+.note-card strong{display:block;margin-bottom:4px}
+.media-shell{
+  background:linear-gradient(180deg,#fffdf8,#f4ede1);
+  border:1px solid rgba(217,205,184,.95);
+  border-radius:var(--radius-xl);
+  box-shadow:0 14px 30px rgba(44,34,20,.08);
+  overflow:hidden;
+}
+.media-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:14px 16px;
+  border-bottom:1px solid rgba(217,205,184,.7);
+  background:rgba(255,255,255,.64);
+}
+.media-top strong{font-size:.96rem}
+.media-top span{color:var(--muted);font-size:.88rem}
+.media-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:linear-gradient(135deg,#fbf7f0,#ece5d7);
+}
+.media-frame iframe,
+.media-frame video{
+  width:100%;
+  height:100%;
+  border:0;
+}
+.poster{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  text-align:center;
+  color:#514b40;
+  background:
+    radial-gradient(circle at top left, rgba(239,155,31,.18), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(174,184,223,.2), transparent 30%),
+    linear-gradient(180deg,#fbf8f2,#efe7d8);
+}
+.poster h3{
+  margin:0 0 8px;
+  font-family:"Georgia","Times New Roman",serif;
+  font-size:clamp(1.45rem,2vw,2rem);
+  line-height:1.06;
+}
+.poster p{
+  max-width:34ch;
+  margin:0 auto;
+}
+.footer-space{height:8px}
+@media (max-width: 960px){
+  .hero-grid,
+  .video-section{
+    grid-template-columns:1fr;
+  }
+  h1{max-width:13ch}
+}
+@media (max-width: 680px){
+  .topbar{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .nav{
+    width:100%;
+    justify-content:flex-start;
+  }
+  .nav a{
+    font-size:.88rem;
+  }
+  .section{
+    padding:24px 18px 30px;
+  }
+  .divider{
+    margin:0 18px;
+  }
+  .brand-text strong{font-size:.95rem}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <main class="portal">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">SD</div>
+        <div class="brand-text">
+          <strong>Sister Dee Portal</strong>
+          <span>The Gift of Giving</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#welcome">Welcome</a>
+        <a href="#video">Watch the intro</a>
+      </nav>
+    </header>
+
+    <section class="section hero" id="welcome">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow"><i></i>Your private project space</div>
+          <h1>A gentle beginning with room to grow.</h1>
+          <p class="intro"><strong>Welcome, Sister Denise.</strong> This space was prepared to hold the work in one calm, organized place so you can return to it at your own pace, revisit what matters, and move forward with clarity.</p>
+          <div class="welcome-copy">
+            <p>This project begins with donated computers, but it reaches further than the machines themselves. It speaks to stewardship, access, care, and the quiet possibility of putting something useful back into the hands of someone who truly needs it.</p>
+            <p>Inside this portal, the journey is meant to feel simple. You can start with the welcome, continue into the video introduction, and then return later to the guides and downloads that support the work now and as it grows.</p>
+            <p>We are ready to hit the ground running, not rushed, with a good start that feels steady, private, secure, and useful — something that can support thoughtful progress today and still remain meaningful down the road.</p>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#video">Begin with your welcome video</a>
+            <a class="btn btn-secondary" href="#video">See what comes next</a>
+          </div>
+        </div>
+
+        <aside class="side-panel" aria-label="Portal orientation">
+          <h2>How this space is meant to serve you</h2>
+          <p>This portal is designed as a smooth path rather than a crowded dashboard. The intention is to help you feel oriented, supported, and able to come back whenever you need to review or download what has been prepared.</p>
+          <div class="path">
+            <div class="path-item">
+              <div class="path-num">1</div>
+              <div>
+                <strong>Start with the welcome.</strong>
+                <span>Get grounded in the purpose of the project and the spirit behind the work.</span>
+              </div>
+            </div>
+            <div class="path-item">
+              <div class="path-num">2</div>
+              <div>
+                <strong>Watch the introduction.</strong>
+                <span>See the heart of the project before moving into the practical materials.</span>
+              </div>
+            </div>
+            <div class="path-item">
+              <div class="path-num">3</div>
+              <div>
+                <strong>Return as often as needed.</strong>
+                <span>Use this space as a living reference point for clarity, review, and future growth.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <section class="section" id="video">
+      <div class="video-section">
+        <div class="video-copy">
+          <span class="kicker">Section two</span>
+          <h2>Your opening video</h2>
+          <p>This short introduction was prepared to welcome you into the project and to frame the heart behind The Gift of Giving before the practical guides begin. It is meant to feel personal, respectful, and easy to revisit whenever you want a quick orientation to the portal and the work ahead.</p>
+          <p>You do not have to take everything in at once. This opening piece is here to give you a clear feel for the project, let the message settle naturally, and make the next step into the guides and process materials feel more familiar.</p>
+          <div class="video-note">
+            <div class="note-card">
+              <strong>What this video does</strong>
+              <span>It welcomes you into the portal and sets the tone for the project before the process materials begin.</span>
+            </div>
+            <div class="note-card">
+              <strong>What follows after this</strong>
+              <span>The practical guide video and the downloadable materials can sit directly after this section as the next step in the journey.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="media-shell">
+          <div class="media-top">
+            <strong>The Gift of Giving — Welcome</strong>
+            <span>Intro video</span>
+          </div>
+          <div class="media-frame" id="mediaFrame">
+            <div class="poster" id="posterState">
+              <div>
+                <h3>Your welcome video lives here</h3>
+                <p>This section is ready for the hosted video and can also support a YouTube embed later if needed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="footer-space"></div>
+  </main>
+</div>
+<script>
+const youtubeEmbedUrl = "";
+const localVideoFile = "https://video.wixstatic.com/video/83ba7d_590c1223bb304947b2f24117a67b2a84/720p/mp4/file.mp4";
+const mediaFrame = document.getElementById("mediaFrame");
+const posterState = document.getElementById("posterState");
+if (youtubeEmbedUrl && /^https?:\/\//.test(youtubeEmbedUrl)) {
+  const iframe = document.createElement("iframe");
+  iframe.src = youtubeEmbedUrl;
+  iframe.title = "Sister Dee welcome video";
+  iframe.loading = "lazy";
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.allowFullscreen = true;
+  mediaFrame.appendChild(iframe);
+  posterState.remove();
+} else {
+  const video = document.createElement("video");
+  video.src = localVideoFile;
+  video.controls = true;
+  video.preload = "metadata";
+  video.playsInline = true;
+  mediaFrame.appendChild(video);
+  posterState.remove();
+}
+</script>
+</body>
+</html>

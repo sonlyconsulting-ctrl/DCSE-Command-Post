@@ -1,4 +1,4 @@
-﻿.env
+.env
 .env.*
 !.env.example
 node_modules/
@@ -16,7 +16,7 @@ venv/
 .DS_Store
 Thumbs.db
 
-# ── DCSE v6.9 Hub ── exclude heavy/sensitive subdirectories
+# ?? DCSE v6.9 Hub ?? exclude heavy/sensitive subdirectories
 # Doctrine (01_Doctrine) and Registry (02_Registry) ARE committed.
 # Everything below is excluded.
 v6.9/05_Tribunal_Inbox/
@@ -26,7 +26,6 @@ v6.9/10_Archive/
 v6.9/11_Receipts/
 v6.9/12_Diffs/
 v6.9/13_Open_Items/
-v6.9/video_image_written/
 
 # Allow DDNA staging index but not its contents (staged proposals may contain PS signals)
 v6.9/13_Open_Items/DDNA_Staging/
@@ -35,7 +34,7 @@ v6.9/13_Open_Items/DDNA_Staging/
 v6.9/09_Tools/**/__pycache__/
 v6.9/09_Tools/**/*.pyc
 
-# ── Credential and PS litigation hard exclusions (D04 Section 2.6) ──
+# ?? Credential and PS litigation hard exclusions (D04 Section 2.6) ??
 *.QUARANTINE
 dcs.env.txt
 credential_*.csv
@@ -43,3 +42,10 @@ credential_*.csv
 *_purge_*.csv
 *exposure_audit*
 *safety_verification*
+
+# D04 no-Git / PS-litigation exclusions inside approved support mirror
+v6.9/video_image_written/*Seals*
+v6.9/video_image_written/*DHHS*
+v6.9/video_image_written/*Deposition*
+v6.9/video_image_written/*Discovery Session*
+v6.9/video_image_written/PS_PowerPlay_*

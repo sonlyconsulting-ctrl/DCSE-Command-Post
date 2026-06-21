@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthcare Professional Digital Journey Assessment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+/*
+ * Healthcare Professional Digital Journey Assessment Widget
+ * Styling definitions. Use CSS variables for easy customization.
+ */
+
+/* CSS Variables for color scheme and fonts */
+:root {
+  /* Updated color scheme to match SS brand profile */
+  --color-primary: #EF476F; /* primary accent */
+  --color-secondary: #023E8A; /* deep blue secondary */
+  --color-accent: #FFD166; /* warm golden accent */
+  --color-success: #06D6A0; /* vibrant green success */
+  --color-bg: #FAFAFA; /* soft background */
+  --color-text: #333333; /* body text */
+  --border-radius: 8px;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Container for the widget */
+.widget-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Header */
+.assessment-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.assessment-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.assessment-header .subtitle {
+  font-size: 1rem;
+  color: var(--color-secondary);
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: var(--border-radius);
+  position: relative;
+  height: 8px;
+  margin-top: 1rem;
+}
+
+.progress-fill {
+  background-color: var(--color-primary);
+  height: 8px;
+  border-radius: var(--border-radius);
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.8rem;
+  color: var(--color-text);
+}
+
+/* Welcome Screen */
+.welcome-screen {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+}
+
+.welcome-content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-content p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.assessment-benefits h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.assessment-benefits ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.assessment-benefits li {
+  margin-bottom: 0.4rem;
+  position: relative;
+  padding-left: 1rem;
+}
+.assessment-benefits li::before {
+  content: '•';
+  color: var(--color-primary);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.start-assessment-btn {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.start-assessment-btn:hover {
+  background-color: var(--color-success);
+}
+
+/* Styling for the submit responses button on the thank you page */
+.download-report-btn {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+.download-report-btn:hover {
+  background-color: var(--color-success);
+}
+
+/* Question Section */
+.question-section {
+  margin-top: 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+
+.question-container {
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.question-number {
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.question-text {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-heading);
+}
+
+.answer-options {
+  margin-bottom: 1rem;
+}
+
+/* Form controls */
+.radio-group,
+.checkbox-group {
+  margin-bottom: 0.5rem;
+}
+
+.radio-group input,
+.checkbox-group input {
+  margin-right: 0.5rem;
+}
+
+.dropdown {
+  margin-bottom: 0.5rem;
+}
+
+.rating-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.text-area {
+  width: 100%;
+  min-height: 80px;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  font-family: var(--font-body);
+}
+
+.star-rating {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.5rem;
+}
+.star-rating span {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ccc;
+  margin-right: 0.2rem;
+}
+.star-rating span.selected {
+  color: var(--color-primary);
+}
+
+.ranking-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+.ranking-item {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  margin-bottom: 0.4rem;
+  cursor: grab;
+  background-color: #f7f7f7;
+}
+
+.question-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.question-navigation button {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.question-navigation button:hover {
+  background-color: var(--color-primary);
+}
+
+/* Results Dashboard */
+.results-dashboard {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.results-header h2 {
+  font-size: 1.6rem;
+  color: var(--color-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.results-subtitle {
+  font-size: 1rem;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.scores-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.score-card {
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  width: 150px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.score-circle {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 0.5rem;
+}
+
+.score-circle svg {
+  transform: rotate(-90deg);
+}
+
+.score-number {
+  font-size: 1.4rem;
+  font-family: var(--font-heading);
+}
+
+.score-label {
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+  margin-top: 0.2rem;
+}
+
+.score-description {
+  font-size: 0.8rem;
+  color: var(--color-text);
+}
+
+.recommendations-section {
+  margin-top: 1.5rem;
+}
+.recommendation-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+.recommendation-card {
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 0.8rem;
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.next-steps {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+.next-steps button {
+  background-color: var(--color-accent);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.next-steps button:hover {
+  background-color: var(--color-success);
+}
+
+.email-capture {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.email-capture input {
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  width: 250px;
+}
+.email-capture button {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+.email-capture button:hover {
+  background-color: var(--color-success);
+}
+
+/* Utility classes */
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .scores-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .score-card {
+    width: 200px;
+  }
+  .email-capture input {
+    width: 180px;
+  }
+}
+  </style>
+</head>
+<body>
+  <div id="assessment-widget" class="widget-container">
+    <header class="assessment-header">
+      <h1>Healthcare Professional Digital Journey Assessment</h1>
+      <p class="subtitle">Your Personal Career & Digital Pathway Check-In</p>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        <span class="progress-text" id="progressText">Step 0 of 7</span>
+      </div>
+    </header>
+
+    <section class="welcome-screen" id="welcomeScreen">
+      <div class="welcome-content">
+        <h2>This isn’t a test. It’s your personal snapshot.</h2>
+        <p class="intro-text">
+          You’ve been in healthcare for years. You know what it’s like to balance everything — work demands, family needs, personal goals, and finding moments for yourself.
+        </p>
+        <div class="assessment-benefits">
+          <h3>What You’ll Discover:</h3>
+          <ul>
+            <li>Your Digital Readiness Score</li>
+            <li>Personalized Career Development Roadmap</li>
+            <li>Custom Work-Life Integration Strategies</li>
+            <li>Professional Growth Recommendations</li>
+          </ul>
+        </div>
+        <button class="start-assessment-btn" id="startAssessmentBtn">Start Your Assessment (12–15 minutes)</button>
+      </div>
+    </section>
+
+    <section class="question-section hidden" id="questionSection">
+      <div class="section-header" id="sectionHeader">
+        <h2 class="section-title" id="sectionTitle">Section Title</h2>
+        <p class="section-subtitle" id="sectionSubtitle">Section description</p>
+      </div>
+      <div class="question-container" id="questionContainer">
+        </div>
+    </section>
+
+    <section class="results-dashboard hidden" id="resultsDashboard">
+      <div class="results-header">
+        <h2>Your Professional Development Profile</h2>
+        <p class="results-subtitle">Based on your responses, here’s your personalized assessment</p>
+      </div>
+      <div class="scores-grid" id="scoresGrid">
+        </div>
+      <div class="recommendations-section" id="recommendationsSection">
+        <h3>Your Personalized Recommendations</h3>
+        <div class="recommendation-cards" id="recommendationCards">
+          </div>
+      </div>
+      <div class="next-steps">
+        <h3>Next Steps</h3>
+        <button class="download-report-btn" id="downloadReportBtn">Download Full Report (PDF)</button>
+        <button class="schedule-consultation-btn" id="scheduleConsultationBtn">Schedule Free Consultation</button>
+        <form class="email-capture" id="emailCaptureForm">
+          <input type="email" id="emailInput" placeholder="Enter email for ongoing resources" required />
+          <button type="submit">Get Resources</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script>
+/*
+ * Healthcare Professional Digital Journey Assessment
+ * Main JavaScript logic for the multi-step form, scoring and results display.
+ */
+
+// =================================================================================
+// WIX INTEGRATION FUNCTION - START
+// =================================================================================
+/**
+ * Saves the collected assessment answers to a Wix backend function.
+ * @param {string} userId - The ID of the user, typically passed in the URL.
+ * @param {object} answers - The answers object collected from the form.
+ * @returns {Promise<object|undefined>} A promise that resolves with the response JSON from the server, or undefined on failure.
+ */
+async function saveToWix(userId, answers) {
+  try {
+    const response = await fetch('/_functions/save-assessment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // IMPORTANT: Replace with your actual Wix access token or manage tokens securely.
+        'Authorization': 'IST.eyJraWQiOiJQb3pIX2FDMiIsImFsZyI6IlJTMjU2In0.eyJkYXRhIjoie1wiaWRcIjpcIjNlM2E1MTA0LTE4MzEtNGRhZS05YjExLTg0MjkwYzI5MTk2MlwiLFwiaWRlbnRpdHlcIjp7XCJ0eXBlXCI6XCJhcHBsaWNhdGlvblwiLFwiaWRcIjpcIjI4MDNiMmY2LWZhN2QtNGRhNS1iZTMzLWYxOTk4NDk1NzBmZVwifSxcInRlbmFudFwiOntcInR5cGVcIjpcImFjY291bnRcIixcImlkXCI6XCI4M2JhN2Q2MC03ZGYwLTQwYTgtOGFhYi1kNjJkZTkzNzUyZGNcIn19IiwiaWF0IjoxNzU4NTA2MjIyfQ.FcjBXxlwnTC_zwN6WraIDMjTg8TcE6j7fzQ0AD_g64lyuLzMMihJQvOfwuivPpNkw2EmRzik7cCE_ZPPUaRQJcqXyWcczMqz0rPAFZLOM9gdFyzvYoz6uVWZPqu-gYgwpCOtFNgo5RS31oOf36Uka2WwY3dDQBn2VyeJ17ltXYwgH2cfhMi6o0FO9bPuoYGyJcLNvMn4fhV7IC_oqnO0RE3XWFFtD8LxWtIhwTHTxz16z34rjcc3oRdIs3L2D_fgKxwGCqaHgmJyiJxXR-1pqWEC34go27xq4BkCW-0GmMAHQdVui65FVLHNBurX8xwkutmHTOlciRwA7QzeEm7fGg'
+      },
+      body: JSON.stringify({
+        userId,
+        answers,
+        assessmentType: 'S1' // This identifies the specific assessment being saved.
+      })
+    });
+    if (!response.ok) {
+        // Log more details from the response if it's not OK
+        const errorBody = await response.text();
+        console.error('Failed to save assessment. Status:', response.status, 'Body:', errorBody);
+        throw new Error('Failed to save your responses. The server responded with an error.');
+    }
+    // Assuming the Wix function returns a JSON object with a status property
+    return await response.json();
+  } catch (error) {
+    console.error('Error saving assessment data to Wix:', error);
+    alert('A technical error occurred while saving your answers. Please check your internet connection and try again.');
+    return undefined; // Return undefined to indicate failure
+  }
+}
+// =================================================================================
+// WIX INTEGRATION FUNCTION - END
+// =================================================================================
+
+
+// Define sections metadata
+const sections = [
+  {
+    id: 1,
+    title: 'Life & Balance',
+    subtitle: 'Where you are today, personally and professionally'
+  },
+  {
+    id: 2,
+    title: 'Professional Foundation & Career Snapshot',
+    subtitle: 'Understand your current career position and aspirations'
+  },
+  {
+    id: 3,
+    title: 'Training, Education & Professional Development',
+    subtitle: 'How you learn and grow'
+  },
+  {
+    id: 4,
+    title: 'Healthcare Industry & Work Environment',
+    subtitle: 'Your views on the industry and your workplace'
+  },
+  {
+    id: 5,
+    title: 'Digital Integration & Technology',
+    subtitle: 'Your digital interests and readiness'
+  },
+  {
+    id: 6,
+    title: 'Website & Resource Development Input',
+    subtitle: 'What you want to see on a professional development site'
+  },
+  {
+    id: 7,
+    title: 'Personal Motivation & Future Vision',
+    subtitle: 'Your drive and where you’re headed'
+  }
+];
+
+// Define questions dataset
+const questions = [
+  // Section 1: Life & Balance
+  {
+    id: 1,
+    section: 1,
+    question: 'What best describes your current family situation?',
+    type: 'radio',
+    options: [
+      'Single parent with children at home',
+      'Partnered with children at home',
+      'No children',
+      'Other'
+    ]
+  },
+  {
+    id: 2,
+    section: 1,
+    question: 'How much free time do you have outside of work?',
+    type: 'radio',
+    options: [
+      'Rarely, I’m too busy',
+      'A couple hours a week',
+      'Enough time to enjoy my hobbies',
+      'Plenty of time for self‑care'
+    ]
+  },
+  {
+    id: 3,
+    section: 1,
+    question: 'Rate your physical health',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Poor',
+    labelHigh: 'Excellent'
+  },
+  {
+    id: 4,
+    section: 1,
+    question: 'Rate your mental health',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Poor',
+    labelHigh: 'Excellent'
+  },
+  {
+    id: 5,
+    section: 1,
+    question: 'Rate your work‑life balance',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Unbalanced',
+    labelHigh: 'Well‑balanced'
+  },
+  // Section 2: Professional Foundation & Career Snapshot
+  {
+    id: 6,
+    section: 2,
+    question: 'What is your current role?',
+    type: 'dropdown',
+    options: [
+      'Registered Nurse (RN)',
+      'Licensed Practical Nurse (LPN)',
+      'Certified Nursing Assistant (CNA)',
+      'Administration / Management',
+      'Other'
+    ]
+  },
+  {
+    id: 7,
+    section: 2,
+    question: 'How many years have you worked in healthcare?',
+    type: 'dropdown',
+    options: [
+      '0–4 years',
+      '5–9 years',
+      '10–14 years',
+      '15+ years'
+    ]
+  },
+  {
+    id: 8,
+    section: 2,
+    question: 'Rate your satisfaction with your employer',
+    type: 'star',
+    max: 5
+  },
+  {
+    id: 9,
+    section: 2,
+    question: 'How secure do you feel in your current job?',
+    type: 'radio',
+    options: [
+      'Very secure',
+      'Somewhat secure',
+      'Not secure at all'
+    ]
+  },
+  {
+    id: 10,
+    section: 2,
+    question: 'What are your career aspirations?',
+    type: 'checkbox',
+    options: [
+      'Promotion at current job',
+      'Switching employers',
+      'Leaving healthcare altogether',
+      'Going back to school/training',
+      'Exploring side hustles/digital income',
+      'Not sure'
+    ]
+  },
+  {
+    id: 11,
+    section: 2,
+    question: 'How prepared do you feel for retirement?',
+    type: 'radio',
+    options: [
+      'Comfortable & confident',
+      'Unsure',
+      'Worried / not prepared'
+    ]
+  },
+  // Section 3: Training, Education & Professional Development
+  {
+    id: 12,
+    section: 3,
+    question: 'How often does your employer offer training opportunities?',
+    type: 'radio',
+    options: [
+      'Regular',
+      'Occasional',
+      'Rare',
+      'Nonexistent'
+    ]
+  },
+  {
+    id: 13,
+    section: 3,
+    question: 'Have you taken courses or training outside of work?',
+    type: 'radio',
+    options: [
+      'Yes',
+      'No'
+    ]
+  },
+  {
+    id: 14,
+    section: 3,
+    question: 'What types of further education interest you?',
+    type: 'checkbox',
+    options: [
+      'Certifications',
+      'Degree programs',
+      'Online digital skills training',
+      'None of these'
+    ]
+  },
+  // Section 4: Healthcare Industry & Work Environment
+  {
+    id: 15,
+    section: 4,
+    question: 'How do you view the current job market for healthcare workers?',
+    type: 'radio',
+    options: [
+      'Strong with opportunities',
+      'Fair but competitive',
+      'Tough, limited choices',
+      'Not sure'
+    ]
+  },
+  {
+    id: 16,
+    section: 4,
+    question: 'How manageable are your work demands?',
+    type: 'radio',
+    options: [
+      'Manageable',
+      'Sometimes overwhelming',
+      'Constantly overwhelming'
+    ]
+  },
+  {
+    id: 17,
+    section: 4,
+    question: 'How accessible are promotion & growth opportunities at your organization?',
+    type: 'radio',
+    options: [
+      'Easy to access',
+      'Hard to access',
+      'Nonexistent'
+    ]
+  },
+  {
+    id: 18,
+    section: 4,
+    question: 'What would you tell someone interested in joining healthcare today?',
+    type: 'textarea'
+  },
+  // Section 5: Digital Integration & Technology
+  {
+    id: 19,
+    section: 5,
+    question: 'How active are you on social media?',
+    type: 'radio',
+    options: [
+      'Casual use',
+      'Active posting',
+      'Exploring professional branding',
+      'Influencer‑level ambition'
+    ]
+  },
+  {
+    id: 20,
+    section: 5,
+    question: 'Which digital interests apply to you? (Select all that apply)',
+    type: 'checkbox',
+    options: [
+      'Blogging / Writing',
+      'Online business (store, consulting, side hustle)',
+      'Learning AI / digital tools',
+      'Building personal brand',
+      'None of these'
+    ]
+  },
+  {
+    id: 21,
+    section: 5,
+    question: 'Rate your comfort with digital tools',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Not comfortable',
+    labelHigh: 'Very comfortable'
+  },
+  {
+    id: 22,
+    section: 5,
+    question: 'Rate your overall digital readiness',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Not ready',
+    labelHigh: 'Fully ready'
+  },
+  // Section 6: Website & Resource Development Input
+  {
+    id: 23,
+    section: 6,
+    question: 'What content would you find useful on a professional development site? (Select all that apply)',
+    type: 'checkbox',
+    options: [
+      'Career tips & resources',
+      'Digital strategy training',
+      'Personal growth & wellness',
+      'Tools for healthcare workers',
+      'Community stories & highlights'
+    ]
+  },
+  {
+    id: 24,
+    section: 6,
+    question: 'Which features would you value most? (Select all that apply)',
+    type: 'checkbox',
+    options: [
+      'Job board / postings',
+      'Resource downloads (guides, journals)',
+      'Training modules',
+      'Members‑only forum',
+      'Other'
+    ]
+  },
+  {
+    id: 25,
+    section: 6,
+    question: 'Please provide any other suggestions or comments',
+    type: 'textarea'
+  },
+  // Section 7: Personal Motivation & Future Vision
+  {
+    id: 26,
+    section: 7,
+    question: 'Are you open to career transitions or change?',
+    type: 'radio',
+    options: [
+      'Yes',
+      'No',
+      'Unsure'
+    ]
+  },
+  {
+    id: 27,
+    section: 7,
+    question: 'Rate your satisfaction with your current career progress',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Low satisfaction',
+    labelHigh: 'High satisfaction'
+  },
+  {
+    id: 28,
+    section: 7,
+    question: 'Rate your momentum towards your goals',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'No momentum',
+    labelHigh: 'Strong momentum'
+  },
+  {
+    id: 29,
+    section: 7,
+    question: 'Rate your overall wellness & sustainability',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    labelLow: 'Poor',
+    labelHigh: 'Excellent'
+  },
+  {
+    id: 30,
+    section: 7,
+    question: 'Anything else you’d like to share?',
+    type: 'textarea'
+  }
+];
+
+// State variables
+let currentQuestionIndex = 0;
+let answers = {};
+
+// DOM references
+const startBtn = document.getElementById('startAssessmentBtn');
+const welcomeScreenElem = document.getElementById('welcomeScreen');
+const questionSectionElem = document.getElementById('questionSection');
+const questionContainerElem = document.getElementById('questionContainer');
+const sectionTitleElem = document.getElementById('sectionTitle');
+const sectionSubtitleElem = document.getElementById('sectionSubtitle');
+const progressFillElem = document.getElementById('progressFill');
+const progressTextElem = document.getElementById('progressText');
+const resultsDashboardElem = document.getElementById('resultsDashboard');
+const emailCaptureFormElem = document.getElementById('emailCaptureForm');
+
+// Start button listener
+startBtn.addEventListener('click', () => {
+  welcomeScreenElem.classList.add('hidden');
+  questionSectionElem.classList.remove('hidden');
+  currentQuestionIndex = 0;
+  renderCurrentQuestion();
+});
+
+// Render the current question based on index
+function renderCurrentQuestion() {
+  const q = questions[currentQuestionIndex];
+  if (!q) return;
+  // Update section header
+  const sectionInfo = sections.find(sec => sec.id === q.section);
+  sectionTitleElem.textContent = sectionInfo.title;
+  sectionSubtitleElem.textContent = sectionInfo.subtitle;
+  // Update progress bar (per section)
+  const sectionIndex = sections.indexOf(sectionInfo);
+  const progressPercent = ((sectionIndex) / (sections.length)) * 100;
+  progressFillElem.style.width = `${progressPercent}%`;
+  progressTextElem.textContent = `Step ${sectionIndex + 1} of ${sections.length}`;
+  // Build question HTML
+  const container = document.createElement('div');
+  container.innerHTML = '';
+  const numberEl = document.createElement('div');
+  numberEl.className = 'question-number';
+  // Count question number within section
+  const sectionQuestions = questions.filter(item => item.section === q.section);
+  const questionNumber = sectionQuestions.indexOf(q) + 1;
+  numberEl.textContent = `Question ${questionNumber} of ${sectionQuestions.length}`;
+  const questionEl = document.createElement('h3');
+  questionEl.className = 'question-text';
+  questionEl.textContent = q.question;
+  const answersEl = document.createElement('div');
+  answersEl.className = 'answer-options';
+  // Render answer controls
+  renderAnswerControl(q, answersEl);
+  // Navigation buttons
+  const nav = document.createElement('div');
+  nav.className = 'question-navigation';
+  // Previous button
+  const prevBtn = document.createElement('button');
+  prevBtn.textContent = 'Previous';
+  prevBtn.disabled = (currentQuestionIndex === 0);
+  prevBtn.addEventListener('click', () => {
+    saveAnswer(q.id);
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      renderCurrentQuestion();
+    }
+  });
+  // Next button
+  const nextBtn = document.createElement('button');
+  nextBtn.textContent = (currentQuestionIndex === questions.length - 1) ? 'Finish' : 'Next';
+  nextBtn.addEventListener('click', () => {
+    // Save answer; if validation fails, return
+    const saved = saveAnswer(q.id);
+    if (!saved) return;
+    if (currentQuestionIndex < questions.length - 1) {
+      currentQuestionIndex++;
+      renderCurrentQuestion();
+    } else {
+      // Completed all questions
+      displayResults();
+    }
+  });
+  nav.appendChild(prevBtn);
+  nav.appendChild(nextBtn);
+  // Append to question container
+  container.appendChild(numberEl);
+  container.appendChild(questionEl);
+  container.appendChild(answersEl);
+  container.appendChild(nav);
+  // Replace existing content
+  questionContainerElem.innerHTML = '';
+  questionContainerElem.appendChild(container);
+  // Populate existing answer if available
+  populateExistingAnswer(q);
+}
+
+// Render the appropriate input control for the given question
+function renderAnswerControl(question, container) {
+  switch (question.type) {
+    case 'radio':
+      question.options.forEach(opt => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'radio-group';
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = `question-${question.id}`;
+        input.value = opt;
+        input.id = `q${question.id}-${opt}`;
+        const label = document.createElement('label');
+        label.htmlFor = input.id;
+        label.textContent = opt;
+        wrapper.appendChild(input);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+      });
+      break;
+    case 'checkbox':
+      question.options.forEach(opt => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'checkbox-group';
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.name = `question-${question.id}`;
+        input.value = opt;
+        input.id = `q${question.id}-${opt}`;
+        const label = document.createElement('label');
+        label.htmlFor = input.id;
+        label.textContent = opt;
+        wrapper.appendChild(input);
+        wrapper.appendChild(label);
+        container.appendChild(wrapper);
+      });
+      break;
+    case 'dropdown':
+      const select = document.createElement('select');
+      select.name = `question-${question.id}`;
+      select.id = `q${question.id}`;
+      const defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = '-- Select --';
+      select.appendChild(defaultOption);
+      question.options.forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+      container.appendChild(select);
+      break;
+    case 'slider':
+      const sliderWrapper = document.createElement('div');
+      sliderWrapper.className = 'slider-wrapper';
+      const range = document.createElement('input');
+      range.type = 'range';
+      range.min = question.min;
+      range.max = question.max;
+      range.step = 1;
+      range.name = `question-${question.id}`;
+      range.id = `q${question.id}`;
+      range.className = 'rating-slider';
+      // Display current value
+      const valueDisplay = document.createElement('span');
+      valueDisplay.id = `value-display-${question.id}`;
+      valueDisplay.style.marginLeft = '0.5rem';
+      valueDisplay.textContent = question.min;
+      // Label low/high
+      const labelLow = document.createElement('div');
+      labelLow.textContent = question.labelLow;
+      labelLow.style.fontSize = '0.8rem';
+      const labelHigh = document.createElement('div');
+      labelHigh.textContent = question.labelHigh;
+      labelHigh.style.fontSize = '0.8rem';
+      labelHigh.style.textAlign = 'right';
+      const labelContainer = document.createElement('div');
+      labelContainer.style.display = 'flex';
+      labelContainer.style.justifyContent = 'space-between';
+      labelContainer.appendChild(labelLow);
+      labelContainer.appendChild(labelHigh);
+      sliderWrapper.appendChild(range);
+      sliderWrapper.appendChild(valueDisplay);
+      sliderWrapper.appendChild(labelContainer);
+      range.addEventListener('input', (e) => {
+        valueDisplay.textContent = e.target.value;
+      });
+      container.appendChild(sliderWrapper);
+      break;
+    case 'star':
+      const starWrapper = document.createElement('div');
+      starWrapper.className = 'star-rating';
+      for (let i = 1; i <= question.max; i++) {
+        const star = document.createElement('span');
+        star.innerHTML = '★';
+        star.dataset.value = i;
+        star.addEventListener('click', () => {
+          // Set selected stars
+          const siblings = starWrapper.querySelectorAll('span');
+          siblings.forEach(sib => {
+            sib.classList.toggle('selected', sib.dataset.value <= i);
+          });
+          // Save selected value
+          answers[question.id] = i;
+        });
+        starWrapper.appendChild(star);
+      }
+      container.appendChild(starWrapper);
+      break;
+    case 'textarea':
+      const textarea = document.createElement('textarea');
+      textarea.name = `question-${question.id}`;
+      textarea.id = `q${question.id}`;
+      textarea.className = 'text-area';
+      container.appendChild(textarea);
+      break;
+    default:
+      // Unknown type
+      container.textContent = 'Unsupported question type';
+  }
+}
+
+// Populate existing answer when navigating back
+function populateExistingAnswer(question) {
+  const existing = answers[question.id];
+  if (existing === undefined) return;
+  switch (question.type) {
+    case 'radio':
+      const radios = document.querySelectorAll(`input[name="question-${question.id}"]`);
+      radios.forEach(r => {
+        if (r.value === existing) {
+          r.checked = true;
+        }
+      });
+      break;
+    case 'checkbox':
+      const checkboxes = document.querySelectorAll(`input[name="question-${question.id}"]`);
+      checkboxes.forEach(cb => {
+        if (Array.isArray(existing) && existing.includes(cb.value)) {
+          cb.checked = true;
+        }
+      });
+      break;
+    case 'dropdown':
+      const selectElem = document.querySelector(`#q${question.id}`);
+      if (selectElem) {
+        selectElem.value = existing;
+      }
+      break;
+    case 'slider':
+      const sliderElem = document.querySelector(`#q${question.id}`);
+      const displayElem = document.querySelector(`#value-display-${question.id}`);
+      if (sliderElem && displayElem) {
+        sliderElem.value = existing;
+        displayElem.textContent = existing;
+      }
+      break;
+    case 'star':
+      const stars = document.querySelectorAll('.star-rating span');
+      stars.forEach(star => {
+        star.classList.toggle('selected', parseInt(star.dataset.value) <= existing);
+      });
+      break;
+    case 'textarea':
+      const textEl = document.querySelector(`#q${question.id}`);
+      if (textEl) {
+        textEl.value = existing;
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+// Save current answer from the UI; returns true if saved, false if validation fails
+function saveAnswer(questionId) {
+  const question = questions.find(q => q.id === questionId);
+  if (!question) return true;
+  let answer;
+  switch (question.type) {
+    case 'radio':
+      const radio = document.querySelector(`input[name="question-${questionId}"]:checked`);
+      answer = radio ? radio.value : undefined;
+      break;
+    case 'checkbox':
+      const checks = Array.from(document.querySelectorAll(`input[name="question-${questionId}"]:checked`));
+      answer = checks.map(cb => cb.value);
+      // If nothing selected, set to empty array
+      break;
+    case 'dropdown':
+      const selectEl = document.querySelector(`#q${questionId}`);
+      answer = selectEl ? selectEl.value : undefined;
+      break;
+    case 'slider':
+      const slide = document.querySelector(`#q${questionId}`);
+      answer = slide ? parseInt(slide.value) : undefined;
+      break;
+    case 'star':
+      // Already saved to answers during click; use existing
+      answer = answers[questionId];
+      break;
+    case 'textarea':
+      const textBox = document.querySelector(`#q${questionId}`);
+      answer = textBox ? textBox.value : '';
+      break;
+    default:
+      break;
+  }
+  // Basic validation: require a non-empty answer for non-textarea and non-checkbox (checkbox can be empty)
+  if ((question.type === 'radio' || question.type === 'dropdown' || question.type === 'slider' || question.type === 'star') && (answer === undefined || answer === '')) {
+    alert('Please provide an answer before proceeding.');
+    return false;
+  }
+  answers[questionId] = answer;
+  return true;
+}
+
+// Display results after completing all questions.
+// THIS FUNCTION HAS BEEN MODIFIED FOR WIX INTEGRATION.
+function displayResults() {
+  // Hide the question section and show a simple thank you/submission page.
+  questionSectionElem.classList.add('hidden');
+  resultsDashboardElem.classList.remove('hidden');
+  
+  // Update progress to 100% and indicate completion
+  progressFillElem.style.width = '100%';
+  progressTextElem.textContent = 'Completed';
+  
+  // Clear the dashboard and build the submission UI.
+  // Note: The original scoring dashboard is bypassed in favor of direct submission.
+  resultsDashboardElem.innerHTML = '';
+  
+  const thankYouHeader = document.createElement('h2');
+  thankYouHeader.textContent = 'Assessment Complete!';
+  resultsDashboardElem.appendChild(thankYouHeader);
+  
+  const thankYouDesc = document.createElement('p');
+  thankYouDesc.textContent = 'Thank you for sharing your insights. Click the button below to save your responses.';
+  resultsDashboardElem.appendChild(thankYouDesc);
+  
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'download-report-btn';
+  submitBtn.textContent = 'Save My Responses';
+  
+  // Add the async event listener to handle the Wix submission
+  submitBtn.addEventListener('click', async () => {
+    // Provide user feedback and prevent multiple clicks
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving...';
+    
+    // Get user ID from the URL parameter (this must be passed from Wix)
+    // Example URL: .../your-page-url?user_id=12345abc
+    const userId = new URLSearchParams(window.location.search).get('user_id');
+    
+    if (!userId) {
+      alert('Error: A user ID was not found in the URL. Your responses cannot be saved.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Save My Responses';
+      return;
+    }
+    
+    // Call the Wix save function with the user ID and the collected answers
+    const result = await saveToWix(userId, answers);
+    
+    // Handle the response from the server
+    if (result && result.status === 'success') {
+      submitBtn.textContent = 'Saved Successfully!';
+      submitBtn.style.backgroundColor = 'var(--color-success)'; // Green for success
+      thankYouDesc.textContent = 'Your responses have been successfully saved. Thank you!';
+    } else {
+      // Failure is handled by the alert inside saveToWix, but we'll re-enable the button
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Try Saving Again';
+    }
+  });
+  
+  resultsDashboardElem.appendChild(submitBtn);
+}
+
+
+// Email capture form submission (this remains unchanged)
+emailCaptureFormElem.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  alert(`Thank you! Resources will be sent to ${email}.`);
+  // Reset input
+  emailCaptureFormElem.reset();
+});
+  </script>
+</body>
+</html>

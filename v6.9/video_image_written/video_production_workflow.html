@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Video Production Workflow - DCS Enterprise</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1A365D 0%, #2D3748 50%, #1A202C 100%);
+            color: #E2E8F0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(45deg, #F6AD55, #ED8936);
+            color: #1A202C;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="40" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="40" cy="80" r="1.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: grain 2s infinite;
+        }
+        
+        @keyframes grain {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-1px, -1px); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .toc {
+            background: linear-gradient(145deg, #2D3748 0%, #4A5568 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid #4A5568;
+        }
+        
+        .toc h2 {
+            color: #F6AD55;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .toc-section {
+            background: rgba(26, 54, 93, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #F6AD55;
+        }
+        
+        .toc-section h3 {
+            color: #F6AD55;
+            margin-bottom: 1rem;
+        }
+        
+        .toc-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc-section li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(74, 85, 104, 0.3);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .toc-section li:hover {
+            color: #F6AD55;
+        }
+        
+        .toc-section li:last-child {
+            border-bottom: none;
+        }
+        
+        .section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #F6AD55;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(246, 173, 85, 0.3);
+        }
+        
+        .workflow-card {
+            background: linear-gradient(145deg, #2D3748 0%, #4A5568 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid #4A5568;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .workflow-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #F6AD55, #2F855A);
+        }
+        
+        .workflow-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .workflow-number {
+            background: linear-gradient(45deg, #F6AD55, #ED8936);
+            color: #1A202C;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 2rem;
+            margin-right: 2rem;
+            box-shadow: 0 10px 20px rgba(246, 173, 85, 0.3);
+        }
+        
+        .workflow-title {
+            color: #F6AD55;
+            font-size: 2rem;
+            margin: 0;
+        }
+        
+        .workflow-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .workflow-details {
+            background: rgba(26, 54, 93, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .workflow-assets {
+            background: rgba(47, 133, 90, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .asset-item {
+            background: rgba(45, 55, 72, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #4A5568;
+            transition: all 0.3s ease;
+        }
+        
+        .asset-item:hover {
+            transform: translateY(-5px);
+            border-color: #F6AD55;
+            box-shadow: 0 10px 20px rgba(246, 173, 85, 0.2);
+        }
+        
+        .asset-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tool-badge {
+            background: linear-gradient(45deg, #2F855A, #38A169);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0.2rem;
+            display: inline-block;
+        }
+        
+        .script-template {
+            background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid #4A5568;
+        }
+        
+        .script-section {
+            background: rgba(246, 173, 85, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            border-left: 4px solid #F6AD55;
+        }
+        
+        .script-section h4 {
+            color: #F6AD55;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-visual {
+            background: rgba(45, 55, 72, 0.6);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .timeline-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #F6AD55, #2F855A, #1A365D);
+            border-radius: 4px;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            top: -10px;
+            width: 24px;
+            height: 24px;
+            background: #F6AD55;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(246, 173, 85, 0.5);
+        }
+        
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .flow-step {
+            background: linear-gradient(145deg, #4A5568, #2D3748);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            border-color: #F6AD55;
+            transform: scale(1.05);
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #F6AD55;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .ai-integration {
+            background: linear-gradient(45deg, #2F855A, #38A169);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            color: white;
+        }
+        
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .ai-tool {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .ai-tool h4 {
+            color: #F6AD55;
+            margin-bottom: 1rem;
+        }
+        
+        .quality-checklist {
+            background: rgba(26, 54, 93, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(45, 55, 72, 0.5);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:hover {
+            background: rgba(246, 173, 85, 0.1);
+        }
+        
+        .checkmark {
+            background: #2F855A;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .workflow-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .workflow-number {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1>Executive Video Production Workflow</h1>
+            <p>From Strategic Concept to Award-Winning Execution</p>
+            <p style="font-size: 1.1rem; opacity: 0.9;">DCS Enterprise Master Production Guide</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Table of Contents -->
+        <section class="toc">
+            <h2>📋 Master Workflow Table of Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-section">
+                    <h3>🎬 Phase 1: Strategic Foundation</h3>
+                    <ul>
+                        <li onclick="scrollToSection('executive-brief')">Executive Brief Development</li>
+                        <li onclick="scrollToSection('script-architecture')">Script Architecture & Messaging</li>
+                        <li onclick="scrollToSection('brand-integration')">Brand Integration Strategy</li>
+                        <li onclick="scrollToSection('asset-planning')">Asset Planning & Requirements</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>🤖 Phase 2: AI-Powered Asset Creation</h3>
+                    <ul>
+                        <li onclick="scrollToSection('ai-content-generation')">AI Content Generation Strategy</li>
+                        <li onclick="scrollToSection('voice-production')">Voice & Audio Production</li>
+                        <li onclick="scrollToSection('visual-assets')">Visual Asset Generation</li>
+                        <li onclick="scrollToSection('broll-creation')">B-Roll Creation & Curation</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>🎨 Phase 3: Production Excellence</h3>
+                    <ul>
+                        <li onclick="scrollToSection('editing-workflow')">Professional Editing Workflow</li>
+                        <li onclick="scrollToSection('motion-graphics')">Motion Graphics & Animation</li>
+                        <li onclick="scrollToSection('audio-mastering')">Audio Mastering & Integration</li>
+                        <li onclick="scrollToSection('quality-control')">Quality Control & Review</li>
+                    </ul>
+                </div>
+                
+                <div class="toc-section">
+                    <h3>🚀 Phase 4: Strategic Distribution</h3>
+                    <ul>
+                        <li onclick="scrollToSection('format-optimization')">Format Optimization</li>
+                        <li onclick="scrollToSection('platform-strategy')">Platform-Specific Strategy</li>
+                        <li onclick="scrollToSection('analytics-setup')">Analytics & Performance Tracking</li>
+                        <li onclick="scrollToSection('scaling-operations')">Scaling Operations</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phase 1: Strategic Foundation -->
+        <section id="executive-brief" class="section">
+            <h2 class="section-title">Phase 1: Strategic Foundation</h2>
+            
+            <div class="workflow-card fade-in">
+                <div class="workflow-header">
+                    <div class="workflow-number">1</div>
+                    <h3 class="workflow-title">Executive Brief Development</h3>
+                </div>
+                
+                <div class="workflow-content">
+                    <div class="workflow-details">
+                        <h4 style="color: #2F855A; margin-bottom: 1rem;">🎯 Strategic Objectives</h4>
+                        <ul style="margin-bottom: 2rem;">
+                            <li>Define core message and value proposition</li>
+                            <li>Identify target audience and their pain points</li>
+                            <li>Establish desired emotional journey</li>
+                            <li>Set measurable success metrics</li>
+                            <li>Align with DCS Enterprise brand pillars</li>
+                        </ul>
+                        
+                        <h4 style="color: #2F855A; margin-bottom: 1rem;">📊 Video Classification</h4>
+                        <div class="asset-grid">
+                            <div class="asset-item">
+                                <div class="asset-icon">⚡</div>
+                                <h5>Promo Videos</h5>
+                                <p>30-60 seconds</p>
+                                <span class="tool-badge">High Impact</span>
+                            </div>
+                            <div class="asset-item">
+                                <div class="asset-icon">🎓</div>
+                                <h5>Educational</h5>
+                                <p>2-5 minutes</p>
+                                <span class="tool-badge">Authority Building</span>
+                            </div>
+                            <div class="asset-item">
+                                <div class="asset-icon">🏆</div>
+                                <h5>Long-form</h5>
+                                <p>10-20 minutes</p>
+                                <span class="tool-badge">Deep Engagement</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-assets">
+                        <h4 style="color: #F6AD55; margin-bottom: 1rem;">📋 Required Deliverables</h4>
+                        <ul>
+                            <li><strong>Executive Summary:</strong> One-page strategic overview</li>
+                            <li><strong>Audience Persona:</strong> Detailed target profile</li>
+                            <li><strong>Message Hierarchy:</strong> Primary, secondary, tertiary points</li>
+                            <li><strong>Brand Guidelines:</strong> Voice, tone, visual standards</li>
+                            <li><strong>Success Metrics:</strong> KPIs and measurement strategy</li>
+                        </ul>
+                        
+                        <div style="background: rgba(246, 173, 85, 0.1); padding: 1rem; border-radius: 10px; margin-top: 2rem;">
+                            <h5 style="color: #F6AD55;">🎬 GYTO™ Integration Points</h5>
+                            <p>Strategic placement of "GET YOUR THINK ON!™" throughout the narrative to reinforce brand authority and call-to-action moments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Script Architecture -->
+        <section id="script-architecture" class="section">
+            <div class="script-template">
+                <h2 style="color: #F6AD55; text-align: center; margin-bottom: 2rem;">📝 Script Architecture & Messaging Framework</h2>
+                
+                <div class="script-section">
+                    <h4>🎣 Hook (0-3 seconds)</h4>
+                    <p><strong>Purpose:</strong> Capture immediate attention and establish relevance</p>
+                    <div style="background: rgba(45, 55, 72, 0.5); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <p><strong>Template Structure:</strong></p>
+                        <p>"What if [specific pain point] could be transformed into [desired outcome] in just [timeframe]?"</p>
+                        <p><strong>Example:</strong> "What if business confusion could be transformed into strategic clarity in just 30 days?"</p>
+                    </div>
+                    <p><strong>AI Prompt for ChatGPT/Claude:</strong></p>
+                    <div style="background: rgba(26, 54, 93, 0.3); padding: 1rem; border-radius: 5px; font-family: monospace;">
+                        "Create 5 compelling video hooks for [topic] targeting [audience]. Each hook should be under 10 words, create curiosity, and align with the executive yet warm tone of DCS Enterprise. Include the pain point of [specific challenge] and promise of [specific outcome]."
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <h4>🎯 Value Proposition (3-15 seconds)</h4>
+                    <p><strong>Purpose:</strong> Establish credibility and preview the value</p>
+                    <div style="background: rgba(45, 55, 72, 0.5); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <p><strong>Framework:</strong></p>
+                        <ul style="margin-left: 2rem;">
+                            <li>Acknowledge the problem (empathy)</li>
+                            <li>Position expertise (authority)</li>
+                            <li>Promise specific outcome (value)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <h4>📚 Content Delivery (15-85% of video)</h4>
+                    <p><strong>Purpose:</strong> Deliver core value and build trust</p>
+                    <div class="asset-grid">
+                        <div class="asset-item">
+                            <h5>Educational Segments</h5>
+                            <p>Chunked into 30-45 second modules</p>
+                        </div>
+                        <div class="asset-item">
+                            <h5>Story Integration</h5>
+                            <p>Real examples and case studies</p>
+                        </div>
+                        <div class="asset-item">
+                            <h5>Visual Cues</h5>
+                            <p>Screen annotations and graphics</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="script-section">
+                    <h4>🚀 Call-to-Action (Final 10-15%)</h4>
+                    <p><strong>Purpose:</strong> Drive specific, measurable action</p>
+                    <div style="background: rgba(47, 133, 90, 0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <p><strong>GYTO™ Integration:</strong> "Ready to transform your approach? GET YOUR THINK ON!™ and [specific action]"</p>
+                        <ul style="margin-left: 2rem; margin-top: 1rem;">
+                            <li>Visit [specific landing page]</li>
+                            <li>Download [specific resource]</li>
+                            <li>Schedule [specific consultation]</li>
+                            <li>Subscribe for [specific benefit]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Powered Asset Creation -->
+        <section id="ai-content-generation" class="section">
+            <h2 class="section-title">Phase 2: AI-Powered Asset Creation</h2>
+            
+            <div class="ai-integration">
+                <h3 style="text-align: center; margin-bottom: 2rem;">🤖 AI Content Generation Strategy</h3>
+                
+                <div class="ai-grid">
+                    <div class="ai-tool">
+                        <h4>ChatGPT - Script & Content</h4>
+                        <p><strong>Optimization Prompt:</strong></p>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 5px; font-family: monospace; margin: 1rem 0;">
+                            "Act as a video script writer for DCS Enterprise. Create a [duration] video script about [topic] for [audience]. Use executive yet warm tone, third-person perspective. Include strategic hooks, GYTO™ brand integration, and specific call-to-action. Structure: Hook (3 sec) → Value Prop (12 sec) → Content (70%) → CTA (15%)."
+                        </div>
+                        <ul>
+                            <li>✓ Script development and refinement</li>
+                            <li>✓ Subtitle and caption generation</li>
+                            <li>✓ SEO metadata optimization</li>
+                            <li>✓ A/B testing variations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ai-tool">
+                        <h4>Claude - Strategic Polish</h4>
+                        <p><strong>Optimization Prompt:</strong></p>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 5px; font-family: monospace; margin: 1rem 0;">
+                            "Review this video script for DCS Enterprise. Enhance the emotional resonance while maintaining executive authority. Ensure brand voice consistency across SC (strategic precision), SS (soulful transformation), PS (empowerment). Integrate cinematic narrative elements and strategic pacing."
+                        </div>
+                        <ul>
+                            <li>✓ Narrative flow optimization</li>
+                            <li>✓ Emotional arc development</li>
+                            <li>✓ Brand voice consistency</li>
+                            <li>✓ Executive presentation polish</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="ai-tool">
+                        <h4>Gemini - Technical Integration</h4>
+                        <p><strong>Optimization Prompt:</strong></p>
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 5px; font-family: monospace; margin: 1rem 0;">
+                            "Analyze this video script for technical production requirements. Generate shot lists, timing markers for graphics/transitions, audio cue specifications, and platform-specific optimization requirements. Include technical metadata for automated editing workflows."
+                        </div>
+                        <ul>
+                            <li>✓ Technical specification generation</li>
+                            <li>✓ Platform optimization analysis</li>
+                            <li>✓ Automated workflow integration</li>
+                            <li>✓ Performance prediction modeling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Asset Generation -->
+        <section id="visual-assets" class="section">
+            <div class="workflow-card fade-in">
+                <div class="workflow-header">
+                    <div class="workflow-number">2</div>
+                    <h3 class="workflow-title">Visual Asset Generation & Curation</h3>
+                </div>
+                
+                <div class="workflow-content">
+                    <div class="workflow-details">
+                        <h4 style="color: #2F855A; margin-bottom: 1rem;">🎨 Asset Categories</h4>
+                        
+                        <div class="process-flow">
+                            <div class="flow-step">
+                                <h5>Hero Images</h5>
+                                <p>Executive portraits, brand moments</p>
+                                <span class="tool-badge">Sora</span>
+                                <span class="tool-badge">Freepik</span>
+                            </div>
+                            <div class="flow-step">
+                                <h5>Supporting Visuals</h5>
+                                <p>Conceptual illustrations, metaphors</p>
+                                <span class="tool-badge">ChatGPT DALL-E</span>
+                                <span class="tool-badge">Claude Vision</span>
+                            </div>
+                            <div class="flow-step">
+                                <h5>B-Roll Content</h5>
+                                <p>Lifestyle, business, technology</p>
+                                <span class="tool-badge">Sora</span>
+                                <span class="tool-badge">Stock Libraries</span>
+                            </div>
+                            <div class="flow-step">
+                                <h5>Graphics & Elements</h5>
+                                <p>Charts, diagrams, animations</p>
+                                <span class="tool-badge">Canva Pro</span>
+                                <span class="tool-badge">After Effects</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-assets">
+                        <h4 style="color: #F6AD55; margin-bottom: 1rem;">🖼️ Image Generation Prompts</h4>
+                        
+                        <div style="background: rgba(26, 54, 93, 0.3); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                            <h5 style="color: #F6AD55;">Sora Video Generation</h5>
+                            <p style="font-family: monospace; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 5px;">
+                                "Create a cinematic 3-second video: Professional African-American executive in modern office, warm golden hour lighting, ARRI Alexa style cinematography, shallow depth of field, confident yet approachable expression, navy blue suit, reviewing strategic documents, subtle camera movement, 4K resolution, corporate authority with human warmth"
+                            </p>
+                        </div>
+                        
+                        <div style="background: rgba(26, 54, 93, 0.3); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                            <h5 style="color: #F6AD55;">ChatGPT Image Prompts</h5>
+                            

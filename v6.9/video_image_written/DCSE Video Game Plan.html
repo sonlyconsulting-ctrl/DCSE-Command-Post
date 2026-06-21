@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCS Enterprise Video Game Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Executive -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive guide for the DCS Enterprise team, translating their linear "Game Plan" into a non-linear, explorable tool. It uses a top navigation bar for quick access to four key thematic sections: The Vision (strategy), The Workflow (process), The Toolkit (technology), and The Rollout (deployment). This structure prioritizes usability, allowing users to jump to relevant information as needed, rather than scrolling through a long document. Key interactions include an interactive process diagram to break down complex stages, filterable tool recommendations for easy selection, and checklists to make abstract concepts like 'measurement' actionable. This design transforms a static plan into a dynamic, engaging resource for project execution. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Full production plan -> Goal: Organize/Compare -> Viz: Interactive Workflow Diagram (HTML/CSS) & Bar Chart (Chart.js) -> Interaction: Click to expand details, hover for data -> Justification: Breaks down the complex process into manageable, explorable steps and provides a high-level view of effort allocation.
+        - Report Info: Tool needs (editing, AI, audio) -> Goal: Organize/Inform -> Viz: Filterable Card Grid (HTML/CSS/JS) -> Interaction: Click filters to sort tools by category -> Justification: Provides a clean, interactive catalog of curated, affordable tools, directly answering the user's need for technology guidance.
+        - Report Info: Objectives & Measurement -> Goal: Inform/Engage -> Viz: Interactive Checklists & Input Fields (HTML/JS) -> Interaction: User can type in plans and check off metrics -> Justification: Transforms abstract goals into tangible planning exercises, increasing user engagement and practical application of the guide.
+        - Library/Method: Chart.js for canvas-based charts, custom JS for interactions, and Tailwind CSS for all layout and styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDF8F0;
+            color: #333;
+        }
+        .warm-gradient-text {
+            background: linear-gradient(90deg, #D4AF37, #b08d2d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #D4AF37;
+            border-bottom-color: #D4AF37;
+        }
+        .workflow-step {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .workflow-step.active {
+            background-color: #001f3f;
+            color: #FDF8F0;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tool-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .filter-btn.active {
+            background-color: #001f3f;
+            color: #ffffff;
+        }
+        .chart-container { 
+            position: relative; 
+            width: 100%; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-[#001f3f]">DCS <span class="font-light">Enterprise</span></h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#vision" class="nav-link text-gray-600 font-medium border-b-2 border-transparent">The Vision</a>
+                <a href="#workflow" class="nav-link text-gray-600 font-medium border-b-2 border-transparent">The Workflow</a>
+                <a href="#toolkit" class="nav-link text-gray-600 font-medium border-b-2 border-transparent">The Toolkit</a>
+                <a href="#rollout" class="nav-link text-gray-600 font-medium border-b-2 border-transparent">The Rollout</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#vision" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">The Vision</a>
+            <a href="#workflow" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">The Workflow</a>
+            <a href="#toolkit" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">The Toolkit</a>
+            <a href="#rollout" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">The Rollout</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+        <!-- Hero Section -->
+        <section class="text-center mb-16 md:mb-24">
+            <h2 class="text-4xl md:text-6xl font-extrabold warm-gradient-text mb-4">Video Production Game Plan</h2>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An interactive guide to achieving strategic precision and soulful execution for the DCS Enterprise Intro Package Rollout.</p>
+        </section>
+
+        <!-- The Vision -->
+        <section id="vision" class="mb-16 md:mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-[#001f3f] mb-2">The Vision</h3>
+                <p class="max-w-3xl mx-auto text-gray-600">This initial phase is the foundation of the entire project. It's where we define the 'why' behind the content. By establishing clear objectives, understanding the target audience, and honing the core message for each video series, we ensure that every piece of content produced is purposeful, resonant, and drives tangible results for the business.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h4 class="text-2xl font-bold text-[#001f3f] mb-4">Core Program Objectives</h4>
+                    <p class="text-gray-600 mb-6">The video series will support three key strategic initiatives, each with its own unique audience and goals.</p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-[#D4AF37] font-bold text-xl mr-4">✓</span>
+                            <div>
+                                <h5 class="font-semibold text-lg">Sonly Consulting Website</h5>
+                                <p class="text-gray-500">Produce high-level, cinematic brand videos to establish authority and drive client acquisition.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#D4AF37] font-bold text-xl mr-4">✓</span>
+                            <div>
+                                <h5 class="font-semibold text-lg">GYTO™ Shorts</h5>
+                                <p class="text-gray-500">Create engaging, short-form content for YouTube to build a community and generate leads.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-[#D4AF37] font-bold text-xl mr-4">✓</span>
+                            <div>
+                                <h5 class="font-semibold text-lg">CTJ™ Modules</h5>
+                                <p class="text-gray-500">Develop in-depth informational video modules for educational purposes and customer onboarding.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-[#001f3f] text-white p-8 rounded-xl shadow-lg">
+                    <h4 class="text-2xl font-bold mb-4">Interactive Message Planner</h4>
+                    <p class="text-gray-300 mb-6">Use this planner to crystallize the message for any new video idea.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="audience" class="block text-sm font-medium text-gray-300 mb-1">Who is the target audience?</label>
+                            <input type="text" id="audience" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 focus:ring-[#D4AF37] focus:border-[#D4AF37]" placeholder="e.g., C-level executives, new customers">
+                        </div>
+                        <div>
+                            <label for="takeaway" class="block text-sm font-medium text-gray-300 mb-1">What is the single most important takeaway?</label>
+                            <input type="text" id="takeaway" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 focus:ring-[#D4AF37] focus:border-[#D4AF37]" placeholder="e.g., Our process delivers measurable ROI.">
+                        </div>
+                        <div>
+                            <label for="action" class="block text-sm font-medium text-gray-300 mb-1">What action should they take after watching?</label>
+                            <input type="text" id="action" class="w-full bg-gray-800 border-gray-700 rounded-md p-2 focus:ring-[#D4AF37] focus:border-[#D4AF37]" placeholder="e.g., Book a consultation, subscribe to channel.">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Workflow -->
+        <section id="workflow" class="mb-16 md:mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-[#001f3f] mb-2">The Workflow</h3>
+                <p class="max-w-3xl mx-auto text-gray-600">Success in video production comes from a disciplined, phased approach. This interactive timeline breaks down the entire journey, from initial planning to post-launch analysis. Click on any stage to see the specific tasks involved. This structured process ensures efficiency, maintains quality, and keeps the project aligned with its strategic goals.</p>
+            </div>
+            <div id="workflow-diagram" class="flex flex-col md:flex-row justify-between items-center mb-8 space-y-4 md:space-y-0 md:space-x-4">
+                <div class="workflow-step bg-white p-4 rounded-lg shadow-md w-full md:w-1/5 text-center" data-step="1">
+                    <div class="font-bold text-lg">1. Define</div>
+                    <div class="text-sm text-gray-500">Objectives & Strategy</div>
+                </div>
+                <div class="text-gray-300 text-2xl hidden md:block">&rarr;</div>
+                <div class="workflow-step bg-white p-4 rounded-lg shadow-md w-full md:w-1/5 text-center" data-step="2">
+                    <div class="font-bold text-lg">2. Develop</div>
+                    <div class="text-sm text-gray-500">Content & Libraries</div>
+                </div>
+                <div class="text-gray-300 text-2xl hidden md:block">&rarr;</div>
+                <div class="workflow-step bg-white p-4 rounded-lg shadow-md w-full md:w-1/5 text-center" data-step="3">
+                    <div class="font-bold text-lg">3. Produce</div>
+                    <div class="text-sm text-gray-500">Design & Film</div>
+                </div>
+                 <div class="text-gray-300 text-2xl hidden md:block">&rarr;</div>
+                <div class="workflow-step bg-white p-4 rounded-lg shadow-md w-full md:w-1/5 text-center" data-step="4">
+                    <div class="font-bold text-lg">4. Deploy</div>
+                    <div class="text-sm text-gray-500">Launch & Distribute</div>
+                </div>
+                 <div class="text-gray-300 text-2xl hidden md:block">&rarr;</div>
+                <div class="workflow-step bg-white p-4 rounded-lg shadow-md w-full md:w-1/5 text-center" data-step="5">
+                    <div class="font-bold text-lg">5. Measure</div>
+                    <div class="text-sm text-gray-500">Analyze & Iterate</div>
+                </div>
+            </div>
+            
+            <div id="workflow-details" class="bg-white p-8 rounded-xl shadow-lg min-h-[200px]">
+                <!-- Details will be injected here by JS -->
+                 <p class="text-center text-gray-500">Click on a workflow step above to see details.</p>
+            </div>
+
+            <div class="mt-16">
+                 <h4 class="text-2xl font-bold text-[#001f3f] mb-4 text-center">Estimated Effort Allocation</h4>
+                 <div class="chart-container">
+                    <canvas id="effortChart"></canvas>
+                 </div>
+            </div>
+        </section>
+
+
+        <!-- The Toolkit -->
+        <section id="toolkit" class="mb-16 md:mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-[#001f3f] mb-2">The Toolkit</h3>
+                <p class="max-w-3xl mx-auto text-gray-600">Achieving a high-end, cinematic look doesn't require a Hollywood budget. It requires the *right* tools. This section presents a curated list of affordable, powerful software and services for every stage of production. From editing and color grading to AI-powered voiceovers and visuals, this toolkit is designed to maximize quality while maintaining cost-efficiency.</p>
+            </div>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-8">
+                <button class="filter-btn active px-4 py-2 rounded-full text-sm font-semibold bg-white shadow-sm" data-filter="all">All</button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white shadow-sm" data-filter="editing">Video Editing</button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white shadow-sm" data-filter="audio">Voice & Audio</button>
+                <button class="filter-btn px-4 py-2 rounded-full text-sm font-semibold bg-white shadow-sm" data-filter="visuals">Visuals & Assets</button>
+            </div>
+            <div id="tool-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="editing">
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">🎬</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">DaVinci Resolve</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">All-in-one solution for editing, color grading, visual effects, and audio post-production.</p>
+                    <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded-full">Industry Standard & Free Version</span>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="editing">
+                    <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">⚡️</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">PowerDirector</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">User-friendly editor with powerful AI features, great for rapid production cycles.</p>
+                    <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Great for Beginners</span>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="audio">
+                     <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">🎙️</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">ElevenLabs</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">Best-in-class AI for generating natural-sounding voiceovers and cloning voices for consistency.</p>
+                    <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">AI Voice Generation</span>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="audio">
+                     <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">🎶</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">Soundstripe</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">Vast library of high-quality, royalty-free cinematic music and sound effects.</p>
+                     <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Music & SFX</span>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="visuals">
+                     <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">🖼️</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">Freepik / Vecteezy</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">Excellent source for high-quality stock photos, vectors, and b-roll footage.</p>
+                     <span class="text-xs font-semibold bg-purple-100 text-purple-800 px-2 py-1 rounded-full">Stock Assets</span>
+                </div>
+                <div class="tool-card bg-white p-6 rounded-xl shadow-lg" data-category="visuals">
+                     <div class="flex items-center mb-4">
+                        <div class="text-2xl mr-4">🤖</div>
+                        <h5 class="text-xl font-bold text-[#001f3f]">Runway / Kling</h5>
+                    </div>
+                    <p class="text-gray-600 mb-4">Leading AI platforms for generating short video clips from text or images (as Sora alternatives).</p>
+                    <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">AI Video Generation</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Rollout -->
+        <section id="rollout" class="scroll-mt-20">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-[#001f3f] mb-2">The Rollout</h3>
+                <p class="max-w-3xl mx-auto text-gray-600">A successful launch is as critical as the production itself. This final phase focuses on strategic deployment and rigorous measurement. We're not just releasing content; we are executing a planned distribution strategy across key platforms and then analyzing the data to understand performance, learn, and optimize for future videos.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                 <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <h4 class="text-2xl font-bold text-[#001f3f] mb-4">Deployment Channels</h4>
+                    <p class="text-gray-600 mb-6">A preview of how the content will be presented on our primary platforms.</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h5 class="font-semibold text-lg mb-2">Sonly Consulting Website</h5>
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-200">
+                                <div class="w-full h-32 bg-gray-300 rounded-md flex items-center justify-center">
+                                    <span class="text-gray-500">▶️ Cinematic Hero Video</span>
+                                </div>
+                                <p class="text-sm text-gray-700 mt-2">"Strategic Precision. Soulful Execution."</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold text-lg mb-2">YouTube Channel</h5>
+                            <div class="bg-gray-100 p-4 rounded-lg border border-gray-200 space-y-2">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-24 h-16 bg-gray-300 rounded-md flex items-center justify-center text-xs text-center text-gray-500">GYTO™ Short Thumbnail</div>
+                                    <p class="text-sm font-medium text-gray-800">Scheduled: Mon, 9 AM</p>
+                                </div>
+                                 <div class="flex items-center space-x-3">
+                                    <div class="w-24 h-16 bg-gray-300 rounded-md flex items-center justify-center text-xs text-center text-gray-500">CTJ™ Module Thumbnail</div>
+                                    <p class="text-sm font-medium text-gray-800">Scheduled: Wed, 9 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                 <div class="bg-[#4A5C4D] text-white p-8 rounded-xl shadow-lg">
+                    <h4 class="text-2xl font-bold mb-4">Performance Measurement</h4>
+                    <p class="text-gray-200 mb-6">Track these key metrics to gauge success and inform the next production cycle.</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                            <span class="ml-3 text-gray-100">Audience Retention Rate</span>
+                        </label>
+                         <label class="flex items-center">
+                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                            <span class="ml-3 text-gray-100">View-Through Rate (VTR)</span>
+                        </label>
+                         <label class="flex items-center">
+                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                            <span class="ml-3 text-gray-100">Click-Through Rate (CTR) on CTAs</span>
+                        </label>
+                         <label class="flex items-center">
+                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                            <span class="ml-3 text-gray-100">Engagement (Likes, Comments, Shares)</span>
+                        </label>
+                         <label class="flex items-center">
+                            <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]">
+                            <span class="ml-3 text-gray-100">Lead Generation / Conversions</span>
+                        </label>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-16 md:mt-24 border-t">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+             <h4 class="text-2xl font-bold warm-gradient-text mb-2">Launch Ready.</h4>
+             <p>&copy; 2025 DCS Enterprise. Strategic Precision. Soulful Execution.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Smooth scrolling for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    mobileMenu.classList.add('hidden'); // Close menu on click
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const onScroll = () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            window.addEventListener('scroll', onScroll);
+
+            // Workflow diagram interaction
+            const workflowSteps = document.querySelectorAll('.workflow-step');
+            const workflowDetailsContainer = document.getElementById('workflow-details');
+            const workflowDetailsContent = {
+                1: {
+                    title: 'Define Objectives & Strategy',
+                    points: [
+                        'Conduct stakeholder interviews to align on goals.',
+                        'Define Target Audience Personas for each video series.',
+                        'Develop Core Messaging and Value Propositions.',
+                        'Set measurable KPIs (e.g., 10% increase in leads).',
+                    ]
+                },
+                2: {
+                    title: 'Develop Content & Asset Libraries',
+                    points: [
+                        'Scriptwriting and storyboarding for all video concepts.',
+                        'Prompt engineering for AI visual and voice assets.',
+                        'Build asset libraries: approved voiceovers, branding elements, music tracks.',
+                        'Metadata tagging for all assets for easy retrieval.',
+                    ]
+                },
+                3: {
+                    title: 'Produce: Design Website & Videos',
+                    points: [
+                        'Record voiceovers (human or AI).',
+                        'Generate/acquire video clips and images (Sora/Freepik).',
+                        'Video editing, color grading, and sound mixing (Resolve/PowerDirector).',
+                        'Design and develop website landing pages for video content.',
+                    ]
+                },
+                 4: {
+                    title: 'Deploy: Launch & Distribute',
+                    points: [
+                        'Final quality assurance and render of all videos.',
+                        'Upload and schedule content on YouTube and website.',
+                        'Promote videos across social media and email newsletters.',
+                        'Coordinate launch day activities for maximum impact.',
+                    ]
+                },
+                 5: {
+                    title: 'Measure: Analyze & Iterate',
+                    points: [
+                        'Monitor analytics dashboards weekly (YouTube Studio, Google Analytics).',
+                        'Gather audience feedback from comments and surveys.',
+                        'Compile a monthly performance report against KPIs.',
+                        'Use insights to refine strategy for the next production cycle.',
+                    ]
+                }
+            };
+
+            workflowSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    workflowSteps.forEach(s => s.classList.remove('active'));
+                    step.classList.add('active');
+                    const stepKey = step.dataset.step;
+                    const details = workflowDetailsContent[stepKey];
+                    
+                    let pointsHTML = details.points.map(point => `<li class="flex items-start"><span class="text-[#001f3f] font-bold mr-3 mt-1">&#9679;</span><span>${point}</span></li>`).join('');
+
+                    workflowDetailsContainer.innerHTML = `
+                        <h4 class="text-2xl font-bold text-[#001f3f] mb-4">${details.title}</h4>
+                        <ul class="space-y-2 text-gray-700">${pointsHTML}</ul>
+                    `;
+                });
+            });
+            
+             // Trigger click on the first step to show initial content
+            workflowSteps[0].click();
+
+            // Toolkit filter
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const toolCards = document.querySelectorAll('.tool-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    toolCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Effort Allocation Chart
+            const ctx = document.getElementById('effortChart').getContext('2d');
+            const effortChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Define', 'Develop', 'Produce', 'Deploy', 'Measure'],
+                    datasets: [{
+                        label: 'Estimated Effort %',
+                        data: [15, 30, 40, 10, 5],
+                        backgroundColor: [
+                            'rgba(0, 31, 63, 0.7)',
+                            'rgba(74, 92, 77, 0.7)',
+                            'rgba(212, 175, 55, 0.7)',
+                            'rgba(0, 31, 63, 0.5)',
+                            'rgba(74, 92, 77, 0.5)',
+                        ],
+                        borderColor: [
+                            '#001f3f',
+                            '#4A5C4D',
+                            '#D4AF37',
+                            '#001f3f',
+                            '#4A5C4D',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + "%"
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                             callbacks: {
+                                label: function(context) {
+                                    return ` ${context.dataset.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>

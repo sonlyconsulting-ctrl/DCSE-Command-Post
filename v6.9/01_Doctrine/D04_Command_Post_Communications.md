@@ -3,7 +3,7 @@
 **Document ID:** DCSE-D04  
 **Version:** v6.9  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T21:00:00-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T18:59:00-04:00  
 **Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
 **Status:** CANDIDATE  
 **Classification:** INTERNAL  
@@ -83,6 +83,15 @@ https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/v69/v6.
 Replace the filename to access any doctrine file directly. Web-bound models that cannot git pull use this URL pattern to fetch the latest committed version of any doctrine file.
 
 **Staleness rule:** if a web-bound model's uploaded files are older than the last commit on `v69`, the model must notify the operator before proceeding. A model operating on stale doctrine is non-compliant. The operator re-uploads the updated files before the session continues.
+### 2.10 v69 Candidate Mirror Rule
+
+The `v69` branch of `DCSE-Command-Post` is the candidate-published mirror of the approved local v6.9 Hub. After DCS Level 0 approval, the mirror scope includes the full Git-eligible local `C:\DS All Things\DCSE_Command_Center\v6.9\` tree, including support, review, archive, receipt, and auxiliary source folders required for doctrine reconciliation.
+
+The candidate mirror does not create promotion authority. `main` remains stable/promoted only after a separate DCS decision under D05. The `v69` branch is reviewable candidate evidence and source distribution, not final doctrine authority by existence.
+
+Permanent no-Git exclusions in Section 2.6 still control. Credentials, quarantine files, and PS litigation material do not enter GitHub merely because they exist inside or near the local Hub. If a requested full-tree mirror encounters an excluded file, the agent records the exclusion in the Tribunal receipt and continues with the Git-eligible mirror set unless DCS issues a separate explicit override and safe repository destination.
+
+Mirror verification must compare path coverage and content equivalence for all Git-eligible files. Text files may be normalized for CRLF/LF line endings during Git transport, but substantive content drift is non-compliant and requires a `TRIBUNAL_DOCTRINE_DRIFT_[...]` packet before further pushes.
 
 ### 2.1 Repository Map
 

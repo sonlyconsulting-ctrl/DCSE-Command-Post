@@ -3,7 +3,7 @@
 **Document ID:** DCSE-D06  
 **Version:** v6.9  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T18:00:00-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T18:59:00-04:00  
 **Last Version/Release Date/Time:** 2026-06-21T15:22:10-04:00  
 **Status:** CANDIDATE  
 **Classification:** INTERNAL  
@@ -32,6 +32,13 @@ All active, controlled files under the `C:\DS All Things\DCSE_Command_Center\v6.
 12. `11_Receipts`: Contains compliance audits and verification logs.
 13. `12_Diffs`: Contains line-by-line version differences.
 14. `13_Open_Items`: Contains active checklists, gap lists, and raw staging folders.
+### 1.1 Candidate Mirror Scope
+
+The local Hub remains the working authority and audit source. The GitHub `v69` branch is the candidate-published mirror used for review, model access, and cross-agent source distribution. When DCS approves a full local-to-GitHub mirror, the mirror scope extends beyond the 14 active control directories to include approved support, review, archive, receipt, and auxiliary source folders that are present under the local `v6.9` root.
+
+Auxiliary folders, including `video_image_written`, are classified as SUPPORT or REVIEW unless promoted by a later D05 baseline decision. Their presence in `v69` supports reconciliation and source availability. It does not convert them into ACTIVE doctrine and does not authorize promotion to `main`.
+
+The mirror scope remains bounded by D04 Section 2.6. Files containing live credentials, quarantine flags, or PS litigation material remain excluded from GitHub unless DCS separately assigns a safe destination and records that decision. All exclusions must be listed in the Tribunal push receipt.
 
 ---
 

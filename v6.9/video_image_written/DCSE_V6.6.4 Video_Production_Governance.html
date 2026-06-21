@@ -1,0 +1,716 @@
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  METADATA BLOCK                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  owner: DCSE                                                     ║
+║  audience: All DCSE AI models (Claude, Gemini, ChatGPT, Qwen)   ║
+║  surface: Internal Governance — Not Public-Facing                ║
+║  wix_embedding_mode: N/A — Governance Reference Only             ║
+║  cms_dependency: None                                            ║
+║  velo_tier: N/A                                                  ║
+║  performance_budget: N/A                                         ║
+║  accessibility_target: Structured for WCAG 2.2 AA alignment;    ║
+║                       verification pending formal audit          ║
+║  last_verified_against_docs: 2026-04-13                          ║
+║  module_version: 1.0.1                                           ║
+║  change_classification: Additive Tightening — Finalized Addendum ║
+║  next_review_date: 2026-05-15                                    ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  WIX INTEGRATION MAP                                             ║
+╠══════════════════════════════════════════════════════════════════╣
+║  WIX_EMBED_CLASS: N/A — Internal Governance                      ║
+║  WIX_DATASET_ID: N/A                                             ║
+║  WIX_REPEATER_ID: N/A                                            ║
+║  WIX_CRM_CONNECTION: N/A                                         ║
+║  VELO_ENDPOINTS: N/A                                             ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DCSE V6.6 Video Production Governance Doctrine — Governing addendum for all video production across SC, SS, PS, and TI entities.">
+    <meta name="developer" content="DCSE Logic &amp; Data Stylist">
+    <meta name="persona" content="DCSE">
+    <meta name="date" content="2026-04-13">
+    <meta name="change-classification" content="Additive Tightening — Finalized Addendum to Master Profile v6.6.4">
+    <title>DCSE V6.6 Video Production Governance — Final</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Barlow+Condensed:wght@400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dcse-primary: #0A192F;
+            --dcse-secondary: #C0C0C0;
+            --sc-primary: #D4AF37;
+            --sc-secondary: #F8F8F0;
+            --ps-primary: #333333;
+            --ti-primary: #FFFFFF;
+            --ss-primary: #D2691E;
+            --ss-secondary: #8B4513;
+            --highlight-doctrine: #FFDDC4;
+            --accent-info: #E8F4FD;
+            --accent-success: #E8F6ED;
+            --model-claude: #1A4A6B;
+            --model-gemini: #2D6A4F;
+            --model-chatgpt: #5C3A8A;
+            --model-qwen: #8B6914;
+            --model-badge-text: #FFFFFF;
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            --font-mono: 'DM Mono', 'Courier New', monospace;
+            --font-sans: 'Barlow Condensed', system-ui, -apple-system, sans-serif;
+            --spacing-unit: 1rem;
+            --radius-control: 0.25rem;
+            --shadow-subtle: 0 2px 4px rgba(0,0,0,0.08);
+            --transition-speed: 0.2s;
+            --focus-ring: 2px solid var(--sc-primary);
+        }
+        @keyframes sonlyFlip {
+            0%, 82.9% { transform: rotateY(0deg); }
+            91.5% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        .skip-link {
+            position: absolute; top: -3rem; left: 0;
+            background: var(--sc-primary); color: var(--dcse-primary);
+            padding: 0.5rem 1rem; font-family: var(--font-condensed);
+            font-weight: 700; z-index: 9999;
+            transition: top var(--transition-speed); text-decoration: none;
+        }
+        .skip-link:focus { top: 0; }
+        .visually-hidden {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .header h1 { animation: none; }
+            * { transition-duration: 0.01ms !important; }
+        }
+        .badge-claude { background: var(--model-claude); color: var(--model-badge-text); padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+        .badge-gemini { background: var(--model-gemini); color: var(--model-badge-text); padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+        .badge-chatgpt { background: var(--model-chatgpt); color: var(--model-badge-text); padding: 0.15rem 0.55rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+        body {
+            font-family: var(--font-sans); line-height: 1.6;
+            color: #1A1A1A; background: #F5F5F5; margin: 0; padding: 0;
+        }
+        :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+        .container { max-width: 960px; margin: 2rem auto; padding: 0 1.5rem; }
+        .header {
+            background: var(--dcse-primary); color: var(--dcse-secondary);
+            padding: 2rem 1.5rem; border-bottom: 3px solid var(--sc-primary);
+            perspective: 1000px;
+        }
+        .header h1 {
+            margin: 0; font-size: 1.75rem; letter-spacing: 0.05em;
+            font-family: var(--font-condensed);
+            animation: sonlyFlip 11.7s ease-in-out 2s infinite;
+            display: inline-block; transform-origin: center;
+        }
+        .header .meta { font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.9; font-family: var(--font-mono); }
+        section {
+            background: #FFFFFF; margin: 1.5rem 0; padding: 1.5rem;
+            border-radius: var(--radius-control); box-shadow: var(--shadow-subtle);
+            transition: box-shadow var(--transition-speed);
+        }
+        section:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+        h2 {
+            border-bottom: 2px solid var(--dcse-primary); padding-bottom: 0.5rem;
+            margin-top: 0; color: var(--dcse-primary); font-family: var(--font-condensed);
+            font-size: 1.2rem; letter-spacing: 0.04em; text-transform: uppercase;
+        }
+        h3 { color: #2C3E50; margin-top: 1.5rem; font-family: var(--font-condensed); letter-spacing: 0.02em; }
+        p { margin: 0.5rem 0; }
+        .rule-list { margin: 0; padding-left: 1.5rem; }
+        .rule-list li { margin: 0.5rem 0; }
+        .doctrine-highlight {
+            background: var(--highlight-doctrine); border-left: 4px solid var(--ss-primary);
+            padding: 1rem; margin: 1.5rem 0;
+        }
+        .callout-info {
+            background: var(--accent-info); border-left: 4px solid var(--model-claude);
+            padding: 1rem; margin: 1.5rem 0; font-size: 0.9rem;
+        }
+        .schema-block {
+            background: #F8F9FA; border-left: 4px solid var(--sc-primary);
+            padding: 1rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.85rem;
+        }
+        .schema-field { display: block; margin: 0.25rem 0; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th, td { border: 1px solid #E0E0E0; padding: 0.75rem; text-align: left; vertical-align: top; }
+        th { background: #F8F9FA; font-weight: 600; font-family: var(--font-condensed); }
+        .footer {
+            text-align: center; padding: 2rem 0; font-size: 0.85rem;
+            color: #666; border-top: 1px solid #E0E0E0; margin-top: 2rem;
+        }
+        .footer a { color: var(--dcse-primary); text-decoration: none; font-weight: 500; transition: opacity var(--transition-speed); }
+        .footer a:hover { opacity: 0.7; text-decoration: underline; }
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .header h1 { font-size: 1.4rem; }
+            table thead { border: none; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+            table tr { border-bottom: 2px solid var(--dcse-primary); display: block; margin-bottom: 1rem; }
+            td { display: block; text-align: right; border-bottom: 1px dotted #ccc; }
+            td::before { content: attr(data-label); float: left; font-weight: bold; text-transform: uppercase; color: var(--dcse-primary); }
+            td:last-child { border-bottom: 0; }
+        }
+        @media print {
+            body { background: #FFFFFF; }
+            .header { background: #FFFFFF; color: #0A192F; border-bottom: 2px solid #D4AF37; }
+            .header h1 { animation: none; color: #0A192F; }
+            section { box-shadow: none; border: 1px solid #E0E0E0; }
+            .skip-link { display: none; }
+            a { color: #0A192F; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="container">
+        <header class="header" role="banner">
+            <h1>DCSE V6.6 Video Production Governance</h1>
+            <div class="meta">Status: FINAL — Packet-Ready | Version: 1.0.1 | Authority: Subordinate Addendum to Master Profile v6.6.4</div>
+            <div class="meta">Entity: DCSE Core | Date: 2026-04-13 | Sonly Flip Active | Classification: Internal Governance</div>
+        </header>
+
+        <main id="main-content" role="main">
+
+        <section aria-labelledby="s1-heading">
+            <h2 id="s1-heading">1. Purpose</h2>
+            <p>This document is the V6 video-production addendum for governed creation of video content, motion graphics, audio assets, and multimedia deliverables across all DCSE entities.</p>
+            <p>It exists to control production quality, brand consistency, tool-chain discipline, asset management, secrets handling, distribution safety, and release readiness while remaining subordinate to Master Profile v6.6.4.</p>
+            <p>This addendum supplements V6. It does not take away from it. It also inherits and must comply with the Product Creation Governance addendum where video assets are embedded in or delivered alongside governed product builds.</p>
+        </section>
+
+        <section aria-labelledby="s2-heading">
+            <h2 id="s2-heading">2. Authority and Relationship to V6</h2>
+            <p>Master Profile v6.6.4 remains the primary operational authority.</p>
+            <p>This addendum exists because video production has creative, technical, and distribution guardrails that should not over-expand the main master profile or the Product Creation Governance addendum.</p>
+            <p>Doctrine stack for video production tasks:</p>
+            <ol class="rule-list">
+                <li>Master Profile v6.6.4 (primary authority)</li>
+                <li>v6.5 HTML Governance Doctrine (entity firewalls, model-duty registry, agentic controls)</li>
+                <li>Product Creation Governance (when video is part of a product build)</li>
+                <li>This Video Production Governance (current document)</li>
+            </ol>
+            <p>Digital DNA operates as the identity, extraction, processing, calibration, and output-control layer for all video production governed by this addendum.</p>
+        </section>
+
+        <section aria-labelledby="s3-heading">
+            <h2 id="s3-heading">3. Scope</h2>
+            <p>This addendum governs:</p>
+            <ul class="rule-list">
+                <li>Scripted and unscripted video content</li>
+                <li>AI-generated video (Sora, Freepik, and equivalent tools)</li>
+                <li>AI-generated images used as video assets (ChatGPT, Gemini, Claude)</li>
+                <li>Voice-over and narration (ElevenLabs and equivalent)</li>
+                <li>B-roll creation and curation</li>
+                <li>Motion graphics and text overlays</li>
+                <li>Music and audio design (royalty-free, AI-generated, or licensed)</li>
+                <li>Video editing and post-production (PowerDirector and equivalent)</li>
+                <li>Thumbnail and preview image creation</li>
+                <li>Captions, subtitles, and accessibility compliance</li>
+                <li>Asset library organization and governance</li>
+                <li>Distribution across YouTube, website, LinkedIn, Instagram, and other platforms</li>
+                <li>Secrets and API key management for production tools</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="s4-heading">
+            <h2 id="s4-heading">4. Video Build Doctrine</h2>
+            <p>Before production begins on any video asset, define:</p>
+            <div class="schema-block">
+                <strong>VIDEO BUILD DECLARATION (Required Before Production)</strong>
+                <span class="schema-field">&bull; Target Entity: [DCSE / SC / SS / PS / TI / DCS]</span>
+                <span class="schema-field">&bull; Content Series: [e.g., SC Authority Series / SS Transformation / PS Empowerment]</span>
+                <span class="schema-field">&bull; Video Type: [Promo (&lt;60s) / Medium (1&ndash;5 min) / Long-form (&gt;5 min) / Short-form Vertical]</span>
+                <span class="schema-field">&bull; Target Platform(s): [YouTube / Website / LinkedIn / Instagram / Multi-platform]</span>
+                <span class="schema-field">&bull; Audience: [Primary demographic and decision tier]</span>
+                <span class="schema-field">&bull; Public/Internal Status: [Public-Safe / Internal-Only]</span>
+                <span class="schema-field">&bull; Voice Archetype: [Entity preset per Master Profile v6.6.4 Section 3]</span>
+                <span class="schema-field">&bull; Assigned Model(s): [Per Section 9 of this document]</span>
+                <span class="schema-field">&bull; Agentic Authorization Level: [1 &mdash; Supervised / 2 &mdash; Spot-Checked / 3 &mdash; Autonomous OK]</span>
+                <span class="schema-field">&bull; Prohibited Expansion: [What this video must NOT include]</span>
+                <span class="schema-field">&bull; Digital DNA Compliance: [Entity overlay confirmed / Voice archetype locked]</span>
+            </div>
+            <p>No video production should proceed as an open-ended generation exercise. Every video is a governed product.</p>
+        </section>
+
+        <section aria-labelledby="s5-heading">
+            <h2 id="s5-heading">5. Entity-Specific Video Standards</h2>
+            <p>Entity firewalls are absolute in video production. A video scoped to one entity must not bleed into another entity's voice, visual system, or narrative posture without explicit reauthorization.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Entity</th>
+                        <th scope="col">Tone &amp; Voice</th>
+                        <th scope="col">Visual Palette</th>
+                        <th scope="col">Music &amp; Audio</th>
+                        <th scope="col">Constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Entity"><strong>SC</strong></td>
+                        <td data-label="Tone">Warm executive, strategic clarity, Morgan Freeman authority</td>
+                        <td data-label="Visual">Gold, ivory, glass, polished surfaces, warm gradients</td>
+                        <td data-label="Audio">Minimal orchestral, piano-led, understated confidence</td>
+                        <td data-label="Constraints">No hype. No cinematic excess. No casual slang.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Entity"><strong>SS</strong></td>
+                        <td data-label="Tone">Soulful guide, cinematic warmth, Michael B. Jordan grit</td>
+                        <td data-label="Visual">Amber, nature tones, selective richness, golden hour</td>
+                        <td data-label="Audio">Soft jazz, ambient soul, strings with warmth</td>
+                        <td data-label="Constraints">No clinical coldness. No corporate sterility.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Entity"><strong>PS</strong></td>
+                        <td data-label="Tone">Precise, restrained, federal-court disciplined, authoritative</td>
+                        <td data-label="Visual">Monochrome, grey, restrained typography, document-grade</td>
+                        <td data-label="Audio">Minimal or none. If present: sparse, tension-aware, no triumph until earned</td>
+                        <td data-label="Constraints">No cinematic language. No emotional inflation. No entertainment framing of legal content.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Entity"><strong>TI</strong></td>
+                        <td data-label="Tone">Transparent, public-intelligence, constitutional clarity</td>
+                        <td data-label="Visual">Pure white, slate, constitutional textures</td>
+                        <td data-label="Audio">Clean, neutral, informational</td>
+                        <td data-label="Constraints">Must remain distinct from PS. No legal conflation. Governed persona lane only.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Entity"><strong>DCSE</strong></td>
+                        <td data-label="Tone">Backbone, clinical, structural authority</td>
+                        <td data-label="Visual">Deep navy, silver, architectural</td>
+                        <td data-label="Audio">Structural, data-aware, ambient precision</td>
+                        <td data-label="Constraints">Internal governance content only. No SS cinematic drift.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section aria-labelledby="s6-heading">
+            <h2 id="s6-heading">6. GYTO Firewall in Video Production</h2>
+            <div class="doctrine-highlight">
+                <strong>Fixed Doctrine:</strong> GET YOUR THINK ON!&trade; (GYTO) must not appear in any public-facing video content &mdash; titles, thumbnails, on-screen text, captions, narration scripts, or metadata (tags, descriptions, closed captions). GYTO is restricted to internal use only. Any model generating a public-facing video script, storyboard, or asset must suppress GYTO automatically. If GYTO appears in a source prompt for a public video asset, the model must redact it and flag the occurrence.
+            </div>
+        </section>
+
+        <section aria-labelledby="s7-heading">
+            <h2 id="s7-heading">7. Cinematic Production Standards</h2>
+            <p>All DCSE video production aspires to cinema-grade quality within accessible tooling. The following are reference standards, not absolute requirements for every output. Scale to the video type and budget tier.</p>
+
+            <h3>7.1. Visual Reference Standards</h3>
+            <ul class="rule-list">
+                <li><strong>Resolution:</strong> 4K DCI minimum for long-form. 1080p acceptable for social-first short-form. 8K as aspiration for flagship content.</li>
+                <li><strong>Frame Rate:</strong> 24 fps for cinematic delivery. 30 fps for web/social. 60 fps only for smooth-motion sequences where justified.</li>
+                <li><strong>Color:</strong> DCI-P3 gamut preferred. HDR when platform supports it. Moody warm gradients as the DCSE default grade.</li>
+                <li><strong>Camera Reference:</strong> ARRI Alexa 65 / RED Komodo with anamorphic lens characteristics as the reference aesthetic for AI-generated footage and motion graphics.</li>
+                <li><strong>Cinematography Inspiration:</strong> Roger Deakins, Greig Fraser, Emmanuel Lubezki. Controlled light, purposeful shadow, depth through layering.</li>
+            </ul>
+
+            <h3>7.2. Audio Reference Standards</h3>
+            <ul class="rule-list">
+                <li><strong>Format:</strong> WAV or ProRes for master files. AAC/MP3 for distribution.</li>
+                <li><strong>Voice-over:</strong> Professional-grade AI voice (ElevenLabs or equivalent) or live narration. Third-person narrative only per Master Profile v6.6.4. Male/female alternating tones permitted.</li>
+                <li><strong>Music:</strong> Minimal orchestral score as default. Entity-specific overrides per Section 5. Royalty-free or properly licensed only.</li>
+                <li><strong>Mixing:</strong> Voice at -6dB to -3dB. Music bed at -18dB to -12dB under narration. No music competing with voice.</li>
+            </ul>
+
+            <h3>7.3. Negative Prompt Standards</h3>
+            <p>For all AI-generated video and image assets, enforce these exclusions:</p>
+            <ul class="rule-list">
+                <li>No bad anatomy, extra limbs, missing fingers, distorted faces, warped proportions</li>
+                <li>No low resolution, pixelation, poor lighting, unintentional motion blur</li>
+                <li>No brand marks in trivial, sarcastic, or dismissive contexts</li>
+                <li>No deviation from entity-specific color palettes</li>
+                <li>No text-in-image generation unless reviewed for accuracy (AI text rendering remains unreliable)</li>
+            </ul>
+            <p>Reference standards in this section are target aspirations for cinema-grade quality. Actual outputs should scale to video type, budget tier, and platform requirements. Claims regarding resolution, frame rate, and color gamut are structural targets, not pre-verified guarantees unless explicit testing documentation is attached.</p>
+        </section>
+
+        <section aria-labelledby="s8-heading">
+            <h2 id="s8-heading">8. Production Pipeline</h2>
+            <p>Every governed video follows this pipeline. Steps may be compressed for short-form content but not skipped.</p>
+
+            <h3>8.1. Pre-Production</h3>
+            <ol class="rule-list">
+                <li><strong>Video Build Declaration</strong> (Section 4) completed and entity confirmed.</li>
+                <li><strong>Script Development:</strong> Narrative arc defined. Third-person voice confirmed. Key messages identified. Call-to-action determined.</li>
+                <li><strong>Storyboard or Shot List:</strong> Visual sequence mapped. Asset sources identified (library, AI-generated, or recorded).</li>
+                <li><strong>Asset Sourcing Plan:</strong> Each asset tagged with source tool, generation method, and licensing status.</li>
+                <li><strong>Voice-over Script:</strong> Finalized, reviewed for entity compliance, timed against target duration.</li>
+            </ol>
+
+            <h3>8.2. Asset Creation</h3>
+            <ol class="rule-list">
+                <li><strong>Primary Footage:</strong> AI-generated video (Sora, Freepik) or recorded content. Shot per storyboard.</li>
+                <li><strong>B-Roll:</strong> Supplementary footage &mdash; lifestyle, business, technology, environment. AI-generated or sourced from governed asset library.</li>
+                <li><strong>Images:</strong> AI-generated (ChatGPT, Sora, Gemini, Claude) or sourced. Negative prompts enforced.</li>
+                <li><strong>Voice-over Recording:</strong> ElevenLabs or equivalent. Entity voice archetype confirmed before generation.</li>
+                <li><strong>Music Selection:</strong> Royalty-free or licensed. Entity-specific palette per Section 5.</li>
+                <li><strong>Motion Graphics &amp; Text Overlays:</strong> Brand-consistent. Entity color tokens applied. No GYTO in public outputs.</li>
+                <li><strong>Thumbnails:</strong> Created per platform requirements. Consistent with entity visual system.</li>
+            </ol>
+
+            <h3>8.3. Post-Production</h3>
+            <ol class="rule-list">
+                <li><strong>Assembly Edit:</strong> Primary footage, B-roll, and voice-over assembled in timeline (PowerDirector or equivalent).</li>
+                <li><strong>Music &amp; Audio Mix:</strong> Music bed placed. Voice levels balanced per Section 7.2.</li>
+                <li><strong>Color Grade:</strong> Entity-specific palette applied. Moody warm gradients as DCSE default.</li>
+                <li><strong>Text &amp; Graphics:</strong> Lower thirds, overlays, captions inserted. Typography consistent with entity tokens.</li>
+                <li><strong>Captions &amp; Subtitles:</strong> Generated and reviewed for accuracy. Required for all public-facing content (accessibility compliance).</li>
+                <li><strong>Review Cut:</strong> Full video reviewed against Video Build Declaration before export.</li>
+            </ol>
+
+            <h3>8.4. Export &amp; Distribution</h3>
+            <ol class="rule-list">
+                <li><strong>Master Export:</strong> Highest quality for archive. 4K/ProRes or equivalent.</li>
+                <li><strong>Platform Exports:</strong> Format-specific renders per distribution targets (YouTube, website embed, LinkedIn, Instagram Reels, etc.).</li>
+                <li><strong>Metadata:</strong> Title, description, tags, thumbnail, captions packaged per platform requirements. GYTO suppressed from all public metadata.</li>
+                <li><strong>Scheduling:</strong> Publication timing aligned with content calendar and entity strategy.</li>
+            </ol>
+        </section>
+
+        <section aria-labelledby="s9-heading">
+            <h2 id="s9-heading">9. Model-Duty Assignments for Video Production</h2>
+            <p>Video production inherits the Cross-Model Duty Registry (v6.5 Section 12) with the following video-specific assignments:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Primary Model</th>
+                        <th scope="col">Secondary / Review</th>
+                        <th scope="col">Human Gate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Task">Script writing &amp; narrative structure</td>
+                        <td data-label="Primary"><span class="badge-claude">Claude</span></td>
+                        <td data-label="Secondary">ChatGPT (draft support)</td>
+                        <td data-label="Gate">YES &mdash; voice integrity</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Storyboard &amp; shot list</td>
+                        <td data-label="Primary"><span class="badge-chatgpt">ChatGPT</span></td>
+                        <td data-label="Secondary">Claude (entity review)</td>
+                        <td data-label="Gate">Spot-check recommended</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">AI video generation prompts (Sora, Freepik)</td>
+                        <td data-label="Primary"><span class="badge-chatgpt">ChatGPT</span></td>
+                        <td data-label="Secondary">Gemini (technical optimization)</td>
+                        <td data-label="Gate">YES &mdash; before generation</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">AI image generation prompts</td>
+                        <td data-label="Primary"><span class="badge-chatgpt">ChatGPT</span></td>
+                        <td data-label="Secondary">Claude / Gemini</td>
+                        <td data-label="Gate">Spot-check on output</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Voice-over script review &amp; DNA calibration</td>
+                        <td data-label="Primary"><span class="badge-claude">Claude</span></td>
+                        <td data-label="Secondary">Human final review</td>
+                        <td data-label="Gate">YES &mdash; brand voice</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Technical editing workflow (PowerDirector)</td>
+                        <td data-label="Primary"><span class="badge-gemini">Gemini</span></td>
+                        <td data-label="Secondary">Human execution</td>
+                        <td data-label="Gate">YES &mdash; human operates editor</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Caption &amp; subtitle generation</td>
+                        <td data-label="Primary"><span class="badge-gemini">Gemini</span></td>
+                        <td data-label="Secondary">Claude (accuracy review)</td>
+                        <td data-label="Gate">YES &mdash; accuracy-critical</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Metadata, SEO tags, descriptions</td>
+                        <td data-label="Primary"><span class="badge-chatgpt">ChatGPT</span></td>
+                        <td data-label="Secondary">Claude (brand polish)</td>
+                        <td data-label="Gate">NO &mdash; unless public-facing final</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">PS legal education video content</td>
+                        <td data-label="Primary"><span class="badge-claude">Claude</span></td>
+                        <td data-label="Secondary">Human review mandatory</td>
+                        <td data-label="Gate">YES &mdash; court-adjacent content</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Task">Distribution scheduling &amp; orchestration</td>
+                        <td data-label="Primary"><span class="badge-chatgpt">ChatGPT</span></td>
+                        <td data-label="Secondary">Human confirmation</td>
+                        <td data-label="Gate">YES &mdash; before publish</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section aria-labelledby="s10-heading">
+            <h2 id="s10-heading">10. Tool-Chain Governance</h2>
+            <p>Video production tools must be governed by purpose, cost, and licensing posture. No tool is adopted merely because it exists.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Function</th>
+                        <th scope="col">Primary Tool</th>
+                        <th scope="col">Alternative</th>
+                        <th scope="col">Licensing Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Function">AI Video Generation</td>
+                        <td data-label="Primary">Sora</td>
+                        <td data-label="Alt">Freepik AI Video</td>
+                        <td data-label="License">Verify commercial usage rights per output</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">AI Image Generation</td>
+                        <td data-label="Primary">ChatGPT (DALL-E)</td>
+                        <td data-label="Alt">Sora / Gemini / Claude</td>
+                        <td data-label="License">Verify commercial usage rights per platform TOS</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">Voice-over / Narration</td>
+                        <td data-label="Primary">ElevenLabs</td>
+                        <td data-label="Alt">Live narration / equivalent AI voice</td>
+                        <td data-label="License">Subscription required. API key governed per Section 12.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">Video Editing</td>
+                        <td data-label="Primary">CyberLink PowerDirector</td>
+                        <td data-label="Alt">DaVinci Resolve (free tier)</td>
+                        <td data-label="License">PowerDirector 16 lifetime + Power Suite 360 subscription</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">Music / Audio</td>
+                        <td data-label="Primary">Royalty-free libraries</td>
+                        <td data-label="Alt">AI-generated (Suno, equivalent)</td>
+                        <td data-label="License">Must confirm royalty-free or proper license before use</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">Thumbnails / Graphics</td>
+                        <td data-label="Primary">Canva Pro</td>
+                        <td data-label="Alt">ChatGPT image generation</td>
+                        <td data-label="License">Subscription. Commercial use permitted.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Function">Captions / Subtitles</td>
+                        <td data-label="Primary">PowerDirector built-in</td>
+                        <td data-label="Alt">YouTube auto-captions (review required)</td>
+                        <td data-label="License">Included with editor</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Tool additions require justification against cost, capability gap, and licensing clarity. No tool sprawl.</p>
+        </section>
+
+        <section aria-labelledby="s11-heading">
+            <h2 id="s11-heading">11. Asset Library Governance</h2>
+            <p>Video assets must be stored, tagged, and retrievable. An ungoverned asset library is a liability.</p>
+
+            <h3>11.1. Storage Structure</h3>
+            <ul class="rule-list">
+                <li><strong>Master Archive:</strong> Google Drive &mdash; DCSE_Operations/Video_Assets/</li>
+                <li><strong>Folder Structure:</strong> Organized by entity, then by content series, then by asset type (footage, images, audio, graphics, exports).</li>
+                <li><strong>Naming Convention:</strong> [Entity]-[Series]-[AssetType]-[Version]-[Date] &mdash; e.g., SC-Authority-BRoll-v1-20260413</li>
+                <li><strong>Local Working Files:</strong> Local machine during active production. Moved to Drive archive upon project completion.</li>
+            </ul>
+
+            <h3>11.2. Asset Tagging</h3>
+            <p>Each asset should carry metadata sufficient for retrieval and reuse:</p>
+            <div class="schema-block">
+                <strong>ASSET TAG (Minimum Fields)</strong>
+                <span class="schema-field">&bull; Entity: [SC / SS / PS / TI / DCSE]</span>
+                <span class="schema-field">&bull; Content Series: [e.g., SC Authority Series]</span>
+                <span class="schema-field">&bull; Asset Type: [Footage / B-Roll / Image / Audio / VO / Graphic / Music / Export]</span>
+                <span class="schema-field">&bull; Source Tool: [Sora / ChatGPT / ElevenLabs / PowerDirector / etc.]</span>
+                <span class="schema-field">&bull; License Status: [Royalty-Free / Licensed / AI-Generated-Commercial-OK / TBD]</span>
+                <span class="schema-field">&bull; Reuse Status: [Reusable / Project-Specific / One-Time]</span>
+                <span class="schema-field">&bull; Version: [v1.0 / v1.1 / etc.]</span>
+                <span class="schema-field">&bull; id: [per Master Profile v6.6.4 metadata schema]</span>
+                <span class="schema-field">&bull; brand: [single entity assignment]</span>
+                <span class="schema-field">&bull; category: [Video / Asset / Export]</span>
+                <span class="schema-field">&bull; format: [Footage / Audio / Graphic / etc.]</span>
+                <span class="schema-field">&bull; reuse: [Reusable / Project-Specific / One-Time]</span>
+            </div>
+
+            <h3>11.3. Retention and Deprecation</h3>
+            <ul class="rule-list">
+                <li>Master exports retained indefinitely.</li>
+                <li>Working project files retained for 90 days after final export, then archived or deleted.</li>
+                <li>Deprecated assets (superseded versions) retained in archive with deprecated tag, not deleted.</li>
+                <li>Assets with unclear licensing status must be flagged and not used in public-facing content until resolved.</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="s12-heading">
+            <h2 id="s12-heading">12. Secrets and API Key Management</h2>
+            <p>Video production relies on external services requiring API keys, subscription credentials, and account access. These are governed infrastructure, not convenient strings.</p>
+            <ul class="rule-list">
+                <li>Never hardcode API keys (ElevenLabs, Sora, Freepik, Canva) into scripts, prompts, shared documents, or public repos.</li>
+                <li>Store credentials in a secure password manager or, for Wix-integrated workflows, in Wix Secrets Manager with backend-only access.</li>
+                <li>Document which tools require credentials and how they are consumed.</li>
+                <li>Separate subscription credentials from production credentials.</li>
+                <li>Review API key exposure risk during preflight (Section 14).</li>
+            </ul>
+            <p>Secret-bearing operations must be fully backend-mediated; zero client-side exposure. This rule is inherited from DCSE V6 Product Creation Governance Sections 12–13.</p>
+        </section>
+
+        <section aria-labelledby="s13-heading">
+            <h2 id="s13-heading">13. Content Series Framework</h2>
+            <p>Video production is organized into governed content series. Each series has a defined entity, cadence, format, and distribution target.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Series</th>
+                        <th scope="col">Entity</th>
+                        <th scope="col">Format</th>
+                        <th scope="col">Cadence</th>
+                        <th scope="col">Primary Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Series"><strong>SC Authority Series</strong></td>
+                        <td data-label="Entity">SC</td>
+                        <td data-label="Format">Medium (2&ndash;5 min)</td>
+                        <td data-label="Cadence">Weekly</td>
+                        <td data-label="Platform">YouTube + LinkedIn</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Series"><strong>SS Transformation</strong></td>
+                        <td data-label="Entity">SS</td>
+                        <td data-label="Format">Medium (3&ndash;7 min)</td>
+                        <td data-label="Cadence">Bi-weekly</td>
+                        <td data-label="Platform">YouTube + Instagram</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Series"><strong>PS Empowerment</strong></td>
+                        <td data-label="Entity">PS</td>
+                        <td data-label="Format">Long-form (5&ndash;15 min)</td>
+                        <td data-label="Cadence">Monthly</td>
+                        <td data-label="Platform">YouTube</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Series"><strong>Short-Form Vertical</strong></td>
+                        <td data-label="Entity">SC / SS</td>
+                        <td data-label="Format">Short (&lt;60s, 9:16)</td>
+                        <td data-label="Cadence">3x/week</td>
+                        <td data-label="Platform">Instagram Reels + YouTube Shorts</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Series"><strong>Executive Promos</strong></td>
+                        <td data-label="Entity">DCSE / SC</td>
+                        <td data-label="Format">Promo (30&ndash;60s)</td>
+                        <td data-label="Cadence">As needed</td>
+                        <td data-label="Platform">Website + YouTube + LinkedIn</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>New series require a Video Build Declaration (Section 4) before the first episode enters production. Series are not created ad hoc.</p>
+        </section>
+
+        <section aria-labelledby="s14-heading">
+            <h2 id="s14-heading">14. QA and Preflight</h2>
+            <p>Every governed video must pass preflight checks before publication.</p>
+
+            <h3>14.1. QA Checklist</h3>
+            <ul class="rule-list">
+                <li>Entity and Digital DNA compliance confirmed</li>
+                <li>Voice archetype matches target entity</li>
+                <li>GYTO absent from all public-facing surfaces (title, description, tags, on-screen text, captions, narration)</li>
+                <li>Captions/subtitles present and accurate</li>
+                <li>Audio levels balanced (voice over music, no clipping)</li>
+                <li>Color grade consistent with entity palette</li>
+                <li>No AI-generation artifacts (distorted faces, extra limbs, garbled text)</li>
+                <li>Thumbnail created and entity-consistent</li>
+                <li>Music licensing verified</li>
+                <li>No secret keys, credentials, or internal references visible in output</li>
+                <li>Duration matches target format</li>
+                <li>Platform-specific export requirements met</li>
+            </ul>
+
+            <h3>14.2. Preflight Declaration</h3>
+            <div class="schema-block">
+                <strong>VIDEO PREFLIGHT (Required Before Publish)</strong>
+                <span class="schema-field">&bull; Video Title: [Final title]</span>
+                <span class="schema-field">&bull; Entity Confirmed: [SC / SS / PS / TI / DCSE]</span>
+                <span class="schema-field">&bull; GYTO Suppression Verified: [Yes]</span>
+                <span class="schema-field">&bull; Captions Present: [Yes / N/A]</span>
+                <span class="schema-field">&bull; Music License Confirmed: [Yes &mdash; source noted]</span>
+                <span class="schema-field">&bull; AI Artifact Check: [Passed / Flagged items resolved]</span>
+                <span class="schema-field">&bull; Secret Exposure Check: [Passed]</span>
+                <span class="schema-field">&bull; QA Reviewer: [Human / Model name]</span>
+                <span class="schema-field">&bull; Agentic Level Respected: [1 / 2 / 3]</span>
+                <span class="schema-field">&bull; Approved for Publication: [Yes / No &mdash; reason]</span>
+            </div>
+        </section>
+
+        <section aria-labelledby="s15-heading">
+            <h2 id="s15-heading">15. Release Rule</h2>
+            <p>No video should be considered release-ready merely because it renders and plays.</p>
+            <p>Release readiness requires:</p>
+            <ul class="rule-list">
+                <li>Preflight Declaration completed (Section 14.2)</li>
+                <li>Entity firewall verified</li>
+                <li>Digital DNA compliance confirmed</li>
+                <li>GYTO firewall passed</li>
+                <li>Licensing for all assets confirmed</li>
+                <li>Human review completed for all Level 1 content</li>
+                <li>Distribution metadata finalized</li>
+                <li>Known limits documented where applicable</li>
+            </ul>
+            <p>All public-facing video content is Agentic Level 1 &mdash; Supervised. No public video release without human review and approval. This aligns with the non-negotiable “No public deployment at Agentic Level 3” from DCSE V6 Product Creation Governance.</p>
+        </section>
+
+        <section aria-labelledby="s16-heading">
+            <h2 id="s16-heading">16. Packet Guidance</h2>
+            <p>When a governed video production task is requested, the ideal minimum packet is:</p>
+            <ol class="rule-list">
+                <li>Master Profile v6.6.4</li>
+                <li>Model-specific V6 set</li>
+                <li>This Video Production Governance addendum</li>
+            </ol>
+            <p>Add the Product Creation Governance addendum only if the video is part of a larger product build (e.g., embedded in an HTML module or Wix page).</p>
+        </section>
+
+        <section aria-labelledby="s17-heading">
+            <h2 id="s17-heading">17. Non-Negotiables</h2>
+            <ul class="rule-list">
+                <li>No GYTO in public-facing video content</li>
+                <li>No entity contamination across video productions</li>
+                <li>No unlicensed music or assets in published content</li>
+                <li>No AI-generated content published without artifact review</li>
+                <li>No hardcoded secrets or API keys in scripts, prompts, or shared files</li>
+                <li>No video published without preflight declaration</li>
+                <li>No public release at Agentic Level 3</li>
+                <li>No silent scope drift in content series</li>
+                <li>No PS legal content treated as entertainment</li>
+                <li>No weakening of V6 governance</li>
+            </ul>
+        </section>
+
+        <section aria-labelledby="s18-heading">
+            <h2 id="s18-heading">18. Open Implementation Note</h2>
+            <p>This addendum can later be tightened with a model-facing traffic-copy version if character or paste limits require it, but the doctrine must remain intact.</p>
+            <p>Content series definitions (Section 13) and tool-chain assignments (Section 10) are subject to operational updates as tools evolve and new series are launched. Updates must follow the additive-first standard per Master Profile v6.6.4 Section 11.</p>
+        </section>
+
+        </main>
+
+        <footer class="footer" role="contentinfo">
+            <a href="https://www.sonlyconsulting.com" target="_blank" rel="noopener noreferrer">www.sonlyconsulting.com</a><br>
+            &copy; 2026 Sonly Consulting. All rights reserved. DCSE Video Production Governance v1.0.1 &mdash; Subordinate Addendum to Master Profile v6.6.4.
+        </footer>
+    </div>
+</body>
+</html>
