@@ -3,9 +3,9 @@
 **Document ID:** DCSE-D16  
 **Version:** v6.9  
 **Created Date/Time:** 2026-06-21T20:00:00-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T20:00:00-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
 **Last Version/Release Date/Time:** 2026-06-21T20:00:00-04:00  
-**Status:** CANDIDATE  
+**Status:** DCSE Authorized version Pending Approval  
 **Classification:** INTERNAL  
 **Lane:** ALL  
 **Canonical file:** D16_DDNA_Governance.md  

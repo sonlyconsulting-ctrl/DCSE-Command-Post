@@ -3,9 +3,9 @@
 **Document ID:** DCSE-MP-v6.9-RC1  
 **Version:** v6.9-RC1  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T15:22:37-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
 **Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** RELEASE_CANDIDATE  
+**Status:** DCSE Authorized version Pending Approval  
 **Classification:** INTERNAL  
 **Lane:** ALL  
 **Canonical file:** DCSE_Master_Profile_v6.9_RC1.md  

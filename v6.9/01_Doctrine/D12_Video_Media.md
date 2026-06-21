@@ -3,9 +3,9 @@
 **Document ID:** DCSE-D12  
 **Version:** v6.9 Update Candidate  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T17:05:00-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
 **Last Version/Release Date/Time:** 2026-06-21T17:05:00-04:00  
-**Status:** CANDIDATE  
+**Status:** DCSE Authorized version Pending Approval  
 **Classification:** INTERNAL  
 **Lane:** ALL  
 **Entityx:** DCS, DCSE  

@@ -3,9 +3,9 @@
 **Document ID:** DCSE-D14  
 **Version:** v6.9  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T15:22:37-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
 **Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** CANDIDATE  
+**Status:** DCSE Authorized version Pending Approval  
 **Classification:** PS-PROTECTED  
 **Lane:** PS  
 **Canonical file:** D14_DART_PS_Protected.md  

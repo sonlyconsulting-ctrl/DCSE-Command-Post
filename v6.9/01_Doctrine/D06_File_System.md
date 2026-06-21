@@ -3,9 +3,9 @@
 **Document ID:** DCSE-D06  
 **Version:** v6.9  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T18:59:00-04:00  
+**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
 **Last Version/Release Date/Time:** 2026-06-21T15:22:10-04:00  
-**Status:** CANDIDATE  
+**Status:** DCSE Authorized version Pending Approval  
 **Classification:** INTERNAL  
 **Lane:** DCSE and PS Command Center  
 **Canonical file:** D06_File_System.md  
