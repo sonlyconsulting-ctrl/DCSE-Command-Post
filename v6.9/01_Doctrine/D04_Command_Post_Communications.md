@@ -177,7 +177,38 @@ git rm --cached [file]  ← remove if already committed
 ```
 Then write a credential exposure notice to the Hub Inbox immediately.
 
-### 2.7 Poller Daemon Sync (Operational Inbox → GitHub)
+### 2.8 Git-Tribunal Concurrency Rule (Hard Enforcement)
+
+**Every GitHub push and every Tribunal receipt are a single atomic operation. They are never separated.**
+
+This rule has no exceptions. An agent that pushes to GitHub without writing a Tribunal receipt has violated doctrine. An agent that writes a Tribunal receipt for a push that did not happen has violated doctrine. The two actions confirm each other — one without the other signals an incomplete or phantom operation.
+
+**The enforcement sequence is fixed:**
+
+```
+STEP 1  Execute git push to correct branch (D04 Section 2.3)
+STEP 2  Confirm push success (non-zero exit code = halt, write ERR packet, do not write receipt)
+STEP 3  Write TRIBUNAL_GITHUB_PUSH_[YYYYMMDD]_[AGENT]_[LABEL].json to Operational Inbox
+         _Tribunal_Inbox\ immediately after confirmed push
+STEP 4  Apply identical change set to the local doctrine copy in v6.9\01_Doctrine\
+         if the push contained doctrine modifications
+STEP 5  Confirm local and remote doctrine files match exactly
+         Any drift between local and GitHub = write TRIBUNAL_DOCTRINE_DRIFT_[...].json
+         to Hub Inbox and halt further pushes until resolved
+```
+
+**Receipt must include at minimum:**
+- Every commit hash pushed in this operation
+- Every file changed, added, or deleted
+- The branch and remote URL
+- Doctrine refs governing the changes
+- Open items or exclusions relevant to the push
+
+**Change application rule:** if a push modifies any file in `v6.9\01_Doctrine\`, the identical modification must already be present in the local copy before the push is staged. GitHub is never ahead of local doctrine. Local doctrine is never ahead of GitHub. They move together or not at all.
+
+**Pull concurrency:** the same rule applies in reverse. When a pull is executed and remote doctrine files differ from local, the local copies are updated to match before any session work begins. A pull that is not followed by local application is a compliance gap.
+
+### 2.9 Poller Daemon Sync (Operational Inbox → GitHub)
 
 The tribunal poller daemon syncs the Operational Inbox to `DCSE-Tribunal-Relay` on the following schedule:
 
