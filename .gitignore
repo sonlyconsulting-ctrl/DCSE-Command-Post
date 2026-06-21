@@ -15,3 +15,31 @@ venv/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# ── DCSE v6.9 Hub ── exclude heavy/sensitive subdirectories
+# Doctrine (01_Doctrine) and Registry (02_Registry) ARE committed.
+# Everything below is excluded.
+v6.9/05_Tribunal_Inbox/
+v6.9/06_Baselines/
+v6.9/07_Projects/
+v6.9/10_Archive/
+v6.9/11_Receipts/
+v6.9/12_Diffs/
+v6.9/13_Open_Items/
+v6.9/video_image_written/
+
+# Allow DDNA staging index but not its contents (staged proposals may contain PS signals)
+v6.9/13_Open_Items/DDNA_Staging/
+
+# Allow tool scripts but not compiled/cache artifacts
+v6.9/09_Tools/**/__pycache__/
+v6.9/09_Tools/**/*.pyc
+
+# ── Credential and PS litigation hard exclusions (D04 Section 2.6) ──
+*.QUARANTINE
+dcs.env.txt
+credential_*.csv
+*credential*.csv
+*_purge_*.csv
+*exposure_audit*
+*safety_verification*
