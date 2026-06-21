@@ -126,12 +126,41 @@ Qwen       → Validation Loop / V6 CHECK
 
 ### 6.2 Constitution Load (Mandatory — All Modes)
 
+Before loading any file, the agent confirms its source using the **Model-to-Source Routing Table** in D04 Section 2.0. That table is the single authority for which repository, which branch, and which access method applies to this model. Do not proceed without confirming source.
+
+**Pull sequence for CLI-capable models (Claude, Qwen, Codex):**
+```
+1. git fetch origin
+2. git pull --rebase origin v69
+3. Confirm pull succeeded before loading any doctrine file.
+   A failed pull = halt and write ERR_PULL_FAILED to 05_Tribunal_Inbox.
+```
+
+**Fetch sequence for web-bound models (Gemini, ChatGPT, NotebookLM):**
+```
+1. Confirm uploaded doctrine files match the latest commit on v69.
+   GitHub raw URL to verify:
+   https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/v69/v6.9/01_Doctrine/[filename]
+2. If uploaded files are stale: notify operator. Do not proceed until
+   operator re-uploads current versions from v6.9\01_Doctrine\.
+```
+
 Load the following files in order and confirm each is readable. These three files are the constitutional floor. No session proceeds without them:
 
 ```
-C:\DS All Things\DCSE_Command_Center\v6.9\00_Authority\DCSE_Master_Profile_v6.9_RC1.md
-C:\DS All Things\DCSE_Command_Center\v6.9\02_Registry\DCSE_Doctrine_Index_v6.9.md
-C:\DS All Things\DCSE_Command_Center\v6.9\02_Registry\DCSE_Runtime_Access_Map_v6.9.md
+v6.9/00_Authority/DCSE_Master_Profile_v6.9_RC1.md
+v6.9/02_Registry/DCSE_Doctrine_Index_v6.9.md
+v6.9/02_Registry/DCSE_Runtime_Access_Map_v6.9.md
+```
+
+Local path (CLI-capable models):
+```
+C:\DS All Things\DCSE_Command_Center\v6.9\
+```
+
+GitHub raw base (web-bound models):
+```
+https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/v69/v6.9/
 ```
 
 If any file is missing or unreadable: trigger Section 5.3 immediately.

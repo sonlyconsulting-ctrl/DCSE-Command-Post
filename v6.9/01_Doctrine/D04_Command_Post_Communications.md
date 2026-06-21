@@ -58,6 +58,32 @@ Every packet must contain:
 
 This section governs all Git push, pull, branch, and conflict operations across the DCSE ecosystem. Agents that interact with GitHub must follow these rules exactly. Ambiguous Git operations are a compliance failure, not a judgment call.
 
+### 2.0 Model-to-Source Routing Table
+
+This table is the first thing any frontier model reads before any pull, file load, or session open action. It answers exactly one question: **where do I get my doctrine from?**
+
+Every model has a designated access method based on whether it can execute git commands directly (CLI-capable) or must receive files through an upload interface (web-bound). No model guesses its source. No model defaults to pre-training knowledge when this table is available.
+
+| Model | Interface Type | Primary Source | Branch | Fallback Source | Upload Path |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Claude (CTO)** | CLI / API | `git pull origin v69` | `v69` | Local: `v6.9\01_Doctrine\` | N/A — CLI access |
+| **Gemini** | Web / API | GitHub raw file URL | `v69` | Operator upload | `01_Doctrine\` files uploaded to Gem |
+| **ChatGPT** | Web / Custom GPT | Operator upload | `v69` | GitHub raw URL | `01_Doctrine\` files uploaded to GPT |
+| **Qwen Coder** | CLI / API | `git pull origin v69` | `v69` | Local: `v6.9\01_Doctrine\` | N/A — CLI access |
+| **Codex / o-series** | API | `git pull origin v69` | `v69` | Local: `v6.9\01_Doctrine\` | N/A — CLI access |
+| **NotebookLM** | Web upload only | Operator upload | `v69` | N/A | `01_Doctrine\` files uploaded as sources |
+| **Any new model** | Confirm before use | Operator assigns | `v69` | Halt until confirmed | N/A until confirmed |
+
+**Branch rule:** all models pull from `v69` until the operator promotes to `main`. When `main` is promoted, this table is updated and all models switch to `main`. No model pulls from `dev` or `feature/` branches — those are write-only for agents.
+
+**GitHub raw URL pattern for web-bound models:**
+```
+https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/v69/v6.9/01_Doctrine/D03_AI_Orchestration.md
+```
+Replace the filename to access any doctrine file directly. Web-bound models that cannot git pull use this URL pattern to fetch the latest committed version of any doctrine file.
+
+**Staleness rule:** if a web-bound model's uploaded files are older than the last commit on `v69`, the model must notify the operator before proceeding. A model operating on stale doctrine is non-compliant. The operator re-uploads the updated files before the session continues.
+
 ### 2.1 Repository Map
 
 | Repository | Purpose | Primary Branch | Agent Write Access |
