@@ -25,7 +25,8 @@
     },
     {
       "path": "_Tribunal_Inbox/TRIBUNAL_GITHUB_PUSH_20260624_CHATGPT_RECENT_ACTIVITY_COMPOSITE.json",
-      "commit_sha": "connector_return_value_recorded_in_final_chat_report",
+      "commit_sha": "9a332493cb0b9c9121b64c1ed5cfbbff049a92f8",
+      "followup_update_commit_sha": "connector_return_value_recorded_in_final_chat_report",
       "classification": "INTERNAL",
       "lane": "DCSE"
     }
@@ -41,7 +42,8 @@
     "GitHub repository was reachable through connector.",
     "Authenticated connector reported push permission.",
     "Branch v69 exists based on duplicate reference create response.",
-    "Activity report commit succeeded before receipt creation."
+    "Activity report commit succeeded before receipt creation.",
+    "Receipt creation commit was recorded by follow up update."
   ],
   "open_items": [
     "Run local Windows delta scan for all Git eligible files modified from 2026-06-21 through 2026-06-24.",
@@ -50,6 +52,6 @@
   ],
   "limitations": [
     "This ChatGPT runtime did not scan the local Windows file system.",
-    "GitHub contents API returns the commit SHA only after file creation, so this receipt records its own commit SHA in the final chat report rather than inside the precommit JSON body."
+    "GitHub contents API returns the commit SHA only after file creation, so the latest follow up update commit SHA is recorded in the final chat report rather than inside the precommit JSON body."
   ]
 }
