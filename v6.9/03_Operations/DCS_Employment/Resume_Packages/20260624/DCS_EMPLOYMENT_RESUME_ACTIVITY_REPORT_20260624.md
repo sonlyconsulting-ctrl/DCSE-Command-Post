@@ -10,13 +10,27 @@
 
 This report records the recent resume activity for Donald C. Seals, Jr. using the v6.8 master resume as the factual base and the DCS Employment controls as the operating lane. The activity focused on a general job-board distribution resume, with the document body kept target-neutral.
 
-## Final Artifact
+## Final Artifact Set
 
-- Final working artifact: `DCS_EMPLOYMENT_GENERAL_DISTRIBUTION_RESUME_20260624_v5.docx`
-- Source local artifact before GitHub-safe rename: `DCS_EMPLOYMENT_INDEED_POSTINGS_RESUME_20260623_v5.docx`
-- SHA256: `ea9858d1130e6337895e03333b1a5a5af8899b7af8883c0b48cc88f639b87c27`
+- Final DOCX working artifact: `DCS_EMPLOYMENT_GENERAL_DISTRIBUTION_RESUME_20260624_v5.docx`
+- Source local DOCX name before GitHub-safe rename: `DCS_EMPLOYMENT_INDEED_POSTINGS_RESUME_20260623_v5.docx`
+- DOCX SHA256: `ea9858d1130e6337895e03333b1a5a5af8899b7af8883c0b48cc88f639b87c27`
+- GitHub text mirror: `DCS_EMPLOYMENT_GENERAL_DISTRIBUTION_RESUME_20260624_v5.md`
+- GitHub text mirror SHA256: `3e9576900bc708f7b9346813bc5139ef2ae4d2621b01642074955bc566854b02`
 - Render QA source: `qa_v5/DCS_EMPLOYMENT_INDEED_POSTINGS_RESUME_20260623_v5.pdf`
 - Render SHA256: `00972d952407f0cbbad132c854430d376ab4bb9d07b3bd02ae5588947735c92b`
+
+## GitHub Push Status
+
+Pushed to GitHub:
+
+1. Activity report markdown.
+2. Activity receipt JSON.
+3. Searchable Markdown mirror of the final v5 resume content.
+
+Open artifact limitation:
+
+The DOCX binary remains the final formatted working artifact, but direct binary upload through the current GitHub connector path was not completed in this run. The Markdown mirror preserves the resume content and closeout state inside the repository. The DOCX remains available as the generated deliverable from the ChatGPT workspace.
 
 ## Recent Activity Summary
 
@@ -65,7 +79,7 @@ The resume no longer uses the following in the body:
 
 The repository is public. This package intentionally contains only DCS employment-facing, public-contact resume material and a business-review activity report. Protected PS material was not used or included.
 
-Intermediate versions v1 through v4 are not promoted because they captured correction history, layout drift, or target-language drift. The GitHub closeout promotes only the corrected v5 artifact plus this report and receipt.
+Intermediate versions v1 through v4 are not promoted because they captured correction history, layout drift, or target-language drift. The GitHub closeout records the corrected v5 content mirror plus this report and receipt.
 
 ## V6 Check
 
