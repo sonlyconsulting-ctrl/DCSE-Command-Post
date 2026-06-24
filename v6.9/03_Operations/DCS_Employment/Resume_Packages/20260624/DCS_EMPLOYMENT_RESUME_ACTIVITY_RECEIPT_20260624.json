@@ -1,0 +1,32 @@
+{
+  "id": "DCS_EMPLOYMENT_RESUME_ACTIVITY_RECEIPT_20260624",
+  "date": "2026-06-24",
+  "lane": "DCS-Opportunity",
+  "repository_destination": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "status": "GitHub closeout candidate",
+  "final_artifact": "DCS_EMPLOYMENT_GENERAL_DISTRIBUTION_RESUME_20260624_v5.docx",
+  "source_local_artifact": "DCS_EMPLOYMENT_INDEED_POSTINGS_RESUME_20260623_v5.docx",
+  "docx_sha256": "ea9858d1130e6337895e03333b1a5a5af8899b7af8883c0b48cc88f639b87c27",
+  "pdf_render_sha256": "00972d952407f0cbbad132c854430d376ab4bb9d07b3bd02ae5588947735c92b",
+  "qa": {
+    "ps_leakage": "pass",
+    "secret_leakage": "pass",
+    "em_dash": "pass",
+    "en_dash": "pass",
+    "vincennes": "pass",
+    "target_language_in_body": "removed",
+    "visual_qa": "passed_two_page_render"
+  },
+  "promoted_files": [
+    "DCS_EMPLOYMENT_GENERAL_DISTRIBUTION_RESUME_20260624_v5.docx",
+    "DCS_EMPLOYMENT_RESUME_ACTIVITY_REPORT_20260624.md",
+    "DCS_EMPLOYMENT_RESUME_ACTIVITY_RECEIPT_20260624.json"
+  ],
+  "not_promoted": [
+    "v1",
+    "v2",
+    "v3",
+    "v4"
+  ],
+  "reason_not_promoted": "Intermediate correction history, layout drift, or target-language drift."
+}
