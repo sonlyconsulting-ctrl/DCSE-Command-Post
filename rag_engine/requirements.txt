@@ -1,0 +1,24 @@
+# DCSE RAG Engine — Python Dependencies
+# All local/OSS — zero cloud API cost
+# Install: pip install -r requirements.txt --break-system-packages
+
+# LlamaIndex core
+llama-index-core>=0.10.0
+
+# Local embeddings — no API key required
+llama-index-embeddings-huggingface>=0.2.0
+sentence-transformers>=2.7.0
+
+# Supabase pgvector integration
+llama-index-vector-stores-supabase>=0.1.0
+
+# LangChain OSS orchestration
+langchain-core>=0.2.0
+langchain-ollama>=0.1.0
+
+# Observability — local trace only, no LangSmith
+opentelemetry-api>=1.24.0
+opentelemetry-sdk>=1.24.0
+
+# Utilities
+python-dotenv>=1.0.0

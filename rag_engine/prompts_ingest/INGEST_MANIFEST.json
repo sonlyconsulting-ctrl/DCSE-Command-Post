@@ -1,0 +1,26 @@
+{
+  "manifest_id": "DCSE-RAG-INGEST-20260625-001",
+  "lane": "SC",
+  "scanned_for_ps": true,
+  "scanned_for_secrets": true,
+  "files": [
+    {
+      "filename": "prompt_index.md",
+      "type": "index",
+      "status": "ELIGIBLE",
+      "sha256": ""
+    },
+    {
+      "filename": "rag_prompt_pack_v1.md",
+      "type": "prompts",
+      "status": "ELIGIBLE",
+      "sha256": ""
+    },
+    {
+      "filename": "source_map.json",
+      "type": "mapping",
+      "status": "ELIGIBLE",
+      "sha256": ""
+    }
+  ]
+}

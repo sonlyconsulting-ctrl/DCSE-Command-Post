@@ -1,0 +1,144 @@
+﻿# DCSE Command Center GitHub containment firewall
+# Authorized DCS/DCSE containment write. This file prevents accidental staging of
+# secrets, PS/litigation material, local runtime artifacts, vendor folders, caches,
+# and large generated assets. It does not delete or move any local files.
+
+# Secrets and credentials
+.env
+.env.*
+*.env
+*.env.txt
+*.local
+*.local.*
+*secret*
+*Secret*
+*credential*
+*Credential*
+*password*
+*Password*
+*api*key*
+*API*Key*
+*token*
+*Token*
+*service_role*
+*Service_Role*
+*client_secret*
+*Client_Secret*
+*connection*string*
+*Connection*String*
+Google Passwords.csv
+recovery-codes.txt
+
+# Credential/security audit artifacts stay local unless separately approved
+*_search_results.csv
+*credential*_audit*.csv
+*Credential*_Audit*.csv
+*credential*_purge*.csv
+*p0_credential*.csv
+service_role_references.csv
+secret_module_search_results.csv
+credential_artifacts_to_purge.csv
+credential_exposure_audit.csv
+credential_value_exposure_audit.csv
+credential_safety_verification.csv
+
+# PS / litigation firewall - excluded from GitHub hub by default
+PS_WIN_WIN_WIN/
+DCSE_PS_CP_Project/
+*DS Litigation*
+*seals*
+*Seals*
+*823cv489*
+*823CV489*
+*pro se*
+*Pro Se*
+*pro-se*
+*Pro-Se*
+
+# DART operational/source-risk areas. Do not use broad *dart* here because
+# approved doctrine files such as D13_DART_Core.md may later be allowlisted.
+DCSE Tech Only/DCSE Orchestrator DART Files/
+**/pro-se-litigation-system/
+
+# Local intake, staging, and private work areas requiring separate classification
+DCSE Tech Only/
+DCS_Employment_Workflow/
+Inbox_From_Downloads/
+DCS_CP/Inbox_From_Downloads/
+scratch/
+review_lanes/
+artifacts/restricted/
+
+# Nested repositories require separate normalization approval
+DCSE_CP_Project/.git/
+DCSE_CP_Project/DCSE_ASSET_PORTAL_APP/.git/
+_Tribunal_Inbox/.git/
+
+# Runtime/build/vendor/cache artifacts
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+.next/
+.vite/
+.cache/
+coverage/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local tool state and temporary files
+.codex/
+.agents/
+.ai/tmp/
+*.tmp
+*.temp
+*.bak
+*.orig
+Thumbs.db
+desktop.ini
+.~lock*
+~$*
+*.docx#
+*.txt#
+
+# Large/local binaries and media; approve individually if ever needed
+*.exe
+*.dll
+*.msi
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.gz
+*.mp4
+*.mov
+*.avi
+*.mp3
+*.wav
+*.pds
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated reconciliation/copy-plan artifacts are local-only by default
+*_inventory.csv
+*_INVENTORY.csv
+*_copy_plan.csv
+*_COPY_PLAN.csv
+*_rename_map.csv
+*_RENAME_MAP.csv
+*_manifest.csv
+*_MANIFEST.csv
+*_receipt.csv
+*_RECEIPT.csv

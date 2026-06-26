@@ -1,0 +1,13 @@
+{
+  "pack_version": "v1.0",
+  "mappings": [
+    {
+      "target": "rag_prompt_pack_v1.md",
+      "doctrine_dependency": "v6.9",
+      "related_module": "PM-PROJECTMANAGERC",
+      "exclusions": [
+        "PS_FIREWALL_EXCLUDE_LIST"
+      ]
+    }
+  ]
+}
