@@ -1,0 +1,82 @@
+{
+  "tribunal_id": "TRIBUNAL_SC_HTML_ACCURACY_TESTING_HANDOFF_20260630_CHATGPT",
+  "created_date": "2026-06-30",
+  "created_by": "ChatGPT",
+  "lane": "SC",
+  "mode": "DCSE Tribunal Asset Preservation",
+  "status": "CANDIDATE_ACTIVITY_UPDATE_LOGGED_AWAITING_DCS_REVIEW",
+  "classification": "INTERNAL_DCSE_SC",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "branch": "v69",
+  "primary_directive": "Preserve the two SC HTML web assets and current conversation context as a governed Tribunal asset for the next phase of accuracy testing.",
+  "asset_manifest": {
+    "html_assets": [
+      {
+        "asset_name": "sc_home.html",
+        "described_local_path": "c:/DS All Things/dcse-sc-sportsociety/sc_home.html",
+        "role": "SC Premium Home Page",
+        "core_message": "Structure Precedes Scale",
+        "raw_file_status": "NOT_ATTACHED_IN_ACTIVE_CHAT_OR_FETCHABLE_FROM_REPO_AT_TIME_OF_RECEIPT",
+        "preservation_status": "MANIFEST_REFERENCE_SAVED_PENDING_RAW_FILE_SYNC"
+      },
+      {
+        "asset_name": "sc_about_us.html",
+        "described_local_path": "c:/DS All Things/dcse-sc-sportsociety/sc_about_us.html",
+        "role": "SC Services, About Us, and v6 Glossary Page",
+        "raw_file_status": "NOT_ATTACHED_IN_ACTIVE_CHAT_OR_FETCHABLE_FROM_REPO_AT_TIME_OF_RECEIPT",
+        "preservation_status": "MANIFEST_REFERENCE_SAVED_PENDING_RAW_FILE_SYNC"
+      }
+    ],
+    "conversation_asset": {
+      "scope": "Current ChatGPT conversation concerning preservation of both HTML files, Tribunal asset creation, and next phase accuracy testing.",
+      "capture_status": "CONTINUATION_SUMMARY_AND_VISIBLE_CONTEXT_SAVED",
+      "verbatim_transcript_status": "PENDING_USER_EXPORT_OR_TOOL_ACCESS_TO_FULL_CHAT_TRANSCRIPT"
+    }
+  },
+  "verified": [
+    "The two target HTML assets are identified as sc_home.html and sc_about_us.html.",
+    "The assets are SC lane assets connected to Sonly Consulting premium web asset review.",
+    "The stated next phase is accuracy testing and return-to-work continuation.",
+    "The operational repository is sonlyconsulting-ctrl/DCSE-Command-Post on branch v69."
+  ],
+  "likely": [
+    "The next review should occur through Command Post staging inbox or the SC web asset QA flow.",
+    "The raw HTML should be synced from local workspace before release testing or promotion."
+  ],
+  "unknown": [
+    "The raw current contents of sc_home.html and sc_about_us.html were not accessible inside the active chat at receipt time.",
+    "A verbatim export of the entire chat transcript was not accessible from the active tool layer at receipt time.",
+    "No date, time, cadence, or triggering condition was provided for scheduling a future return task."
+  ],
+  "accuracy_testing_directive": {
+    "objective": "Review both HTML assets for DCSE alignment, SC lane fidelity, accessibility, responsive behavior, navigation consistency, content accuracy, visual consistency, and readiness for staging or promotion.",
+    "required_checks": [
+      "SC entity and brand alignment",
+      "No PS lane leakage",
+      "Structure Precedes Scale message integrity",
+      "CTA hierarchy accuracy",
+      "Founder profile placement as tertiary credibility support",
+      "Services pillar accuracy",
+      "v6 glossary and language limitation consistency",
+      "HTML guardrail compliance",
+      "Wix or Command Post staging suitability",
+      "Visible interaction failure check"
+    ],
+    "promotion_gate": "No promotion without DCS review and explicit approval."
+  },
+  "scheduling_assessment": {
+    "can_be_scheduled_as_is": false,
+    "reason": "The continuation task has a clear objective but lacks a date, time, recurrence, or trigger condition required for automation scheduling.",
+    "schedule_ready_when": "DCS supplies a due date, review date, recurrence, or conditional trigger such as after raw HTML files are synced."
+  },
+  "next_phase_task": {
+    "title": "SC HTML Accuracy Test",
+    "task_prompt": "Review sc_home.html and sc_about_us.html against DCSE SC governance, HTML guardrails, lane firewall requirements, and staging readiness. Preserve findings in Tribunal and do not promote without DCS approval.",
+    "required_inputs_before_execution": [
+      "Raw sc_home.html",
+      "Raw sc_about_us.html",
+      "Verbatim chat transcript export if exact transcript preservation is required",
+      "Current v69 governance source or active SC HTML doctrine reference"
+    ]
+  }
+}
