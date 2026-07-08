@@ -1,0 +1,19 @@
+{
+  "tribunal_receipt_id": "TRIBUNAL_20260708_MVT006_RAG_TO_HTML_GITHUB_PUBLIC_PUSH",
+  "status": "public_safe_github_push_ready",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "path": "_Public_Builds/MVT006_RAG_TO_HTML_20260708",
+  "artifacts": [
+    "README.md",
+    "MVT006_RAG_TO_HTML_PUBLIC_PROOF_20260708.html",
+    "MVT006_RAG_TO_HTML_PUBLIC_MANIFEST_20260708.json"
+  ],
+  "policy_outcome": "scoped retrieval proof preserved publicly without broad retrieval claims",
+  "guardrails": [
+    "no PS leakage",
+    "no false enterprise affiliation claims",
+    "no DCS Employ public drift",
+    "no broad public retrieval",
+    "no broad member retrieval"
+  ]
+}
