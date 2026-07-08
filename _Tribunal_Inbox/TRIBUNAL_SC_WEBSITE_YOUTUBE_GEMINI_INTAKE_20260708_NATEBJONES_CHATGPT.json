@@ -1,0 +1,36 @@
+{
+  "id": "TRIBUNAL_SC_WEBSITE_YOUTUBE_GEMINI_INTAKE_20260708_NATEBJONES_CHATGPT",
+  "date": "2026-07-08",
+  "prepared_by": "ChatGPT",
+  "lane": "SC/TI",
+  "status": "corrected_intake_posted_for_gemini_processing",
+  "confidentiality": "non_ps_no_litigation_facts_included",
+  "source_item": {
+    "type": "youtube_video",
+    "url": "https://youtu.be/suY66oTDn0s?is=oeqMSJY4VrPo-Uky",
+    "video_id": "suY66oTDn0s",
+    "visible_channel_from_screenshot": "@NateBJones",
+    "visible_partial_title_from_screenshot": "I Built a Website Wit...",
+    "full_title_status": "not_independently_verified_in_this_intake_record"
+  },
+  "screenshot_context": "Uploaded screenshot shows a website-building video interface with an accessibility-related website example visible in the video frame.",
+  "activity_purpose": "Website-source research intake for Gemini review, with apparent relevance to website build strategy, accessibility-aware web presentation, video-based website review, public-facing design workflow, and SC/TI content architecture.",
+  "governance": {
+    "primary_lane": "SC/TI",
+    "forbidden_lane_crossover": ["PS"],
+    "ps_leakage_status": "clean_intake_record_only",
+    "promotion_required_before_public_use": true,
+    "supersedes_prior_wrong_link_intake_for_current_instruction": true
+  },
+  "gemini_processing_instructions": [
+    "Resolve full video title, creator/channel, date, and source metadata.",
+    "Identify core subject matter and relevance to DCSE website planning.",
+    "Extract accessibility, user experience, and website structure lessons.",
+    "Assess whether the video supports SC website, DCS resume-webpage traffic, or GovOS dashboard concepts.",
+    "Flag brand-safety, copyright, political, or reputational risks.",
+    "Determine whether transcript extraction is needed.",
+    "Recommend promote, summarize, archive, or reject."
+  ],
+  "promotion_gate": "No website copy, campaign copy, public post, or DCSE doctrine update should be produced until Gemini completes review and a separate promotion decision is recorded.",
+  "notes": "This corrected intake record preserves the submitted YouTube link and screenshot context only. It does not endorse the video content and does not treat visible screenshot text as fully verified metadata."
+}
