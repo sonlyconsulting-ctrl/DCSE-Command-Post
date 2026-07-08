@@ -1,0 +1,50 @@
+{
+  "artifact_id": "MVT007_AGENT_ORCHESTRATION_LAYER_20260708",
+  "date": "2026-07-08",
+  "repo_path": "_Public_Builds/MVT007_AGENT_ORCHESTRATION_LAYER_20260708",
+  "primary_lane": "DCSE",
+  "migrations": [
+    "mvt007_agent_orchestration_layer",
+    "mvt007_seed_agents_initial_task",
+    "mvt007_seed_assignments_events"
+  ],
+  "database_objects": {
+    "tables": [
+      "dcse_cp.agent_registry",
+      "dcse_cp.agent_tasks",
+      "dcse_cp.agent_task_assignments",
+      "dcse_cp.agent_task_events"
+    ],
+    "views": [
+      "dcse_cp.agent_orchestration_dashboard"
+    ]
+  },
+  "initial_participants": [
+    "chatgpt",
+    "claude_code",
+    "codex",
+    "ag_builder",
+    "review_board",
+    "tribunal_agent",
+    "supabase_agent",
+    "github_agent",
+    "dcs_authority"
+  ],
+  "orchestration_patterns": [
+    "one_to_one",
+    "one_to_many",
+    "many_to_one",
+    "sequential_handoff",
+    "parallel_review",
+    "review_board",
+    "dcs_decision"
+  ],
+  "control_points": [
+    "DCS final authority",
+    "shared state required",
+    "task handoff recorded",
+    "PS firewall preserved",
+    "retrieval scope preserved"
+  ],
+  "status": "supabase_layer_created_and_seeded"
+}
