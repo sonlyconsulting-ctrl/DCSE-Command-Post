@@ -1,0 +1,31 @@
+{
+  "id": "TRIBUNAL_SC_WEBSITE_YOUTUBE_GEMINI_INTAKE_20260708_CHATGPT",
+  "date": "2026-07-08",
+  "prepared_by": "ChatGPT",
+  "lane": "SC/TI",
+  "status": "intake_posted_for_gemini_processing",
+  "confidentiality": "non_ps_no_litigation_facts_included",
+  "source_item": {
+    "type": "youtube_video",
+    "url": "https://youtu.be/F-Y5uDFCA4M?is=S3lJU97OfiUwVSFy",
+    "resolved_title": "The World Cup Has Maga Down BAD",
+    "video_id": "F-Y5uDFCA4M"
+  },
+  "activity_purpose": "Website-source research intake for Gemini review, with possible relevance to DCSE website planning, public-facing narrative strategy, cultural trend analysis, video-reference workflow, and SC/TI content architecture.",
+  "governance": {
+    "primary_lane": "SC/TI",
+    "forbidden_lane_crossover": ["PS"],
+    "ps_leakage_status": "clean_intake_record_only",
+    "promotion_required_before_public_use": true
+  },
+  "gemini_processing_instructions": [
+    "Identify core subject matter and public-facing relevance.",
+    "Evaluate website or content strategy implications.",
+    "Determine whether the video supports a broader SC/TI research theme.",
+    "Flag political, reputational, or brand-safety risks.",
+    "Recommend promote, summarize, archive, or reject.",
+    "Determine whether transcript extraction or secondary-source corroboration is required."
+  ],
+  "promotion_gate": "No website copy, campaign copy, public post, or DCSE doctrine update should be produced until Gemini completes review and a separate promotion decision is recorded.",
+  "notes": "This intake record preserves the link and activity purpose only. It does not endorse the video content and does not treat the title, claims, or commentary as verified facts."
+}
