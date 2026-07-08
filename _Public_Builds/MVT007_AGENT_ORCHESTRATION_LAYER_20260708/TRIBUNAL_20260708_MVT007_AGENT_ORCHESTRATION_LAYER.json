@@ -1,0 +1,19 @@
+{
+  "tribunal_receipt_id": "TRIBUNAL_20260708_MVT007_AGENT_ORCHESTRATION_LAYER",
+  "status": "completed",
+  "layer": "agent_orchestration",
+  "database": "Supabase project nevgdyfpxdaloacuutal",
+  "migrations_applied": [
+    "mvt007_agent_orchestration_layer",
+    "mvt007_seed_agents_initial_task",
+    "mvt007_seed_assignments_events"
+  ],
+  "public_files": [
+    "README.md",
+    "MVT007_AGENT_ORCHESTRATION_LAYER_MANIFEST_20260708.json",
+    "MVT007_AGENT_ORCHESTRATION_PUBLIC_PROOF_20260708.html",
+    "TRIBUNAL_20260708_MVT007_AGENT_ORCHESTRATION_LAYER.json"
+  ],
+  "policy_outcome": "Multi-agent task registry and handoff layer created under DCSE authority.",
+  "next_action": "Push public-safe proof package to GitHub and optionally route a live task through the new registry."
+}
