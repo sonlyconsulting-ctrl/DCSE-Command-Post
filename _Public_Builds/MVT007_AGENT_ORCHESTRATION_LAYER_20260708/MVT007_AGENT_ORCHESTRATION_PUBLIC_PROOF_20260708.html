@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DCSE MVT-007 Agent Orchestration Layer</title>
+  <style>
+    :root { --navy:#07182f; --navy2:#0c2445; --gold:#c9a84c; --cream:#f5f0e8; --ink:#142033; --muted:#61708a; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Tahoma,Verdana,Arial,sans-serif; background:var(--cream); color:var(--ink); line-height:1.58; }
+    header { color:white; background:radial-gradient(circle at 15% 15%, rgba(201,168,76,0.30), transparent 28%), linear-gradient(135deg,var(--navy),var(--navy2)); padding:72px 22px; }
+    .wrap { max-width:1180px; margin:0 auto; }
+    .eyebrow { color:#f1d98b; text-transform:uppercase; letter-spacing:0.15em; font-weight:800; font-size:12px; margin-bottom:16px; }
+    h1 { margin:0 0 18px; font-size:clamp(38px,5vw,68px); line-height:0.98; letter-spacing:-0.05em; }
+    header p { max-width:900px; color:#e9eef8; font-size:19px; margin:0; }
+    section { padding:58px 22px; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+    .card { background:white; border:1px solid rgba(20,32,51,0.10); border-radius:22px; padding:24px; box-shadow:0 18px 44px rgba(7,24,47,0.07); }
+    .card span { display:inline-flex; margin-bottom:12px; padding:6px 10px; border-radius:999px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.30); color:#8b6b15; font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; }
+    .card h3 { margin:0 0 10px; font-size:22px; line-height:1.2; }
+    .card p { margin:0; color:#58657c; }
+    .panel { background:#07182f; color:white; border-radius:24px; padding:28px; margin-top:24px; }
+    .panel p { color:#d8dfec; }
+    footer { padding:24px 22px; text-align:center; background:#061426; color:#d8dfec; font-size:13px; }
+    @media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">DCSE MVT-007 | Agent Orchestration</div>
+      <h1>Agents can now be registered, assigned, routed, and recorded.</h1>
+      <p>MVT-007 creates the first Supabase-backed orchestration layer for participating agents and models. The layer supports task assignment, parallel review, sequential handoff, event logging, and DCS-controlled authority.</p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Created Layer</div>
+      <h2>Command Post orchestration structures</h2>
+      <div class="grid">
+        <article class="card"><span>Registry</span><h3>Agent Registry</h3><p>Registers participating agents, model roles, allowed lanes, permitted actions, restricted actions, and source of authority.</p></article>
+        <article class="card"><span>Tasks</span><h3>Task Registry</h3><p>Tracks task title, lane, priority, status, assignment mode, assigned agent, handoff role, input refs, output refs, and policy flags.</p></article>
+        <article class="card"><span>Assignments</span><h3>Many-Agent Routing</h3><p>Supports one-to-one, one-to-many, many-to-one, sequential, parallel, and review-board orchestration patterns.</p></article>
+        <article class="card"><span>Events</span><h3>Task Event Log</h3><p>Records creation, assignment, completion, blocking, handoff, review, decision, and receipt events.</p></article>
+        <article class="card"><span>Dashboard</span><h3>Orchestration View</h3><p>Provides a Command Post dashboard surface for task status, assigned agent, handoff role, and review requirements.</p></article>
+        <article class="card"><span>Authority</span><h3>DCS Control</h3><p>Agents execute assigned actions. DCS remains final authority for approval, merge, release, and doctrine correction.</p></article>
+      </div>
+      <div class="panel"><h2>Operating rule</h2><p>Agents do not communicate through uncontrolled backchannels. Agents coordinate through shared records: tasks, assignments, events, PRs, Tribunal receipts, and Supabase activity trails.</p></div>
+    </div>
+  </section>
+
+  <footer>DCSE | MVT-007 Agent Orchestration Layer | 2026-07-08</footer>
+</body>
+</html>
