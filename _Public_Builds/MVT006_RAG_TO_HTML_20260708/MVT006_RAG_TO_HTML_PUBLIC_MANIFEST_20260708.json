@@ -1,0 +1,35 @@
+{
+  "artifact_id": "MVT006_RAG_TO_HTML_PUBLIC_PROOF_20260708",
+  "date": "2026-07-08",
+  "repo_path": "_Public_Builds/MVT006_RAG_TO_HTML_20260708",
+  "source_id": "MVT004_SCENARIO_TEST_LAB_20260708",
+  "pipeline": [
+    "approved source",
+    "lane classification",
+    "controlled embedding expansion",
+    "pgvector rows",
+    "scoped retrieval enablement",
+    "HTML build artifact",
+    "GitHub public-safe preservation"
+  ],
+  "database_state": {
+    "lane": "SC",
+    "sensitivity": "Internal",
+    "public_safe": true,
+    "ps_lock": false,
+    "approved_for_embedding": true,
+    "approved_for_retrieval": true,
+    "retrieval_enabled": true,
+    "embedding_status": "embedded",
+    "vector_rows": 6
+  },
+  "scope_limits": [
+    "no broad public retrieval",
+    "no broad member retrieval",
+    "no PS material",
+    "no DCS Employ public drift",
+    "no enterprise affiliation claims"
+  ],
+  "public_claim": "Controlled RAG-to-HTML proof-of-flow for approved SC website-build direction.",
+  "html_sha256": "2ac67d3301757e2760110524057b322e1c352f34b7b02d0085e5564869659122"
+}
