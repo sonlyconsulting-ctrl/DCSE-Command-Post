@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DCSE Agent OS v1</title>
+  <style>
+    :root {
+      --navy-950: #07162c;
+      --navy-900: #0b1d3a;
+      --navy-800: #102b52;
+      --navy-700: #173b6c;
+      --cream: #f5f0e8;
+      --cream-2: #fffaf1;
+      --gold: #c9a84c;
+      --gold-2: #e0c66f;
+      --ink: #172033;
+      --muted: #6d7584;
+      --line: rgba(11, 29, 58, 0.13);
+      --success: #2f7d57;
+      --warning: #9b6b15;
+      --danger: #a54545;
+      --shadow: 0 18px 48px rgba(7, 22, 44, 0.12);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Tahoma, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(201, 168, 76, 0.16), transparent 28rem),
+        linear-gradient(135deg, #f7f3eb 0%, #eef2f7 55%, #f8f4ec 100%);
+    }
+
+    button, select, textarea, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 24px 18px;
+      background: linear-gradient(180deg, var(--navy-950), var(--navy-900));
+      color: white;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(224, 198, 111, 0.6);
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-2);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: rgba(255,255,255,0.65);
+      font-size: 11px;
+    }
+
+    .nav-group { margin: 24px 0; }
+    .nav-label {
+      margin: 0 10px 8px;
+      color: rgba(255,255,255,0.45);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 12px;
+      margin: 3px 0;
+      text-align: left;
+      color: rgba(255,255,255,0.82);
+      background: transparent;
+    }
+
+    .nav-button:hover, .nav-button.active {
+      color: white;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .system-card {
+      padding: 13px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 7px;
+      border-radius: 50%;
+      background: #6ed6a3;
+      box-shadow: 0 0 0 4px rgba(110,214,163,0.12);
+    }
+
+    main {
+      min-width: 0;
+      padding: 26px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: var(--warning);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 40px);
+      color: var(--navy-950);
+      letter-spacing: -0.03em;
+    }
+
+    .topbar p {
+      margin: 8px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 13px;
+      color: var(--navy-900);
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 6px 18px rgba(7,22,44,0.05);
+    }
+
+    .btn.primary {
+      color: white;
+      border-color: var(--navy-900);
+      background: var(--navy-900);
+    }
+
+    .btn.gold {
+      color: var(--navy-950);
+      border-color: var(--gold);
+      background: var(--gold-2);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .metric, .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.86);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .metric { padding: 18px; }
+    .metric .label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .metric strong {
+      display: block;
+      margin-top: 10px;
+      color: var(--navy-950);
+      font-size: 30px;
+    }
+    .metric small { color: var(--muted); }
+
+    .workspace {
+      grid-template-columns: minmax(0, 1.42fr) minmax(340px, 0.85fr);
+      align-items: start;
+    }
+
+    .panel { overflow: hidden; }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.62);
+    }
+
+    .panel-header h3 {
+      margin: 0;
+      color: var(--navy-950);
+      font-size: 16px;
+    }
+
+    .panel-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .panel-body { padding: 17px; }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 160px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(245,240,232,0.6));
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(7,22,44,0.1);
+    }
+
+    .project-card h4 {
+      margin: 11px 0 7px;
+      color: var(--navy-950);
+      font-size: 15px;
+    }
+
+    .project-card p {
+      margin: 0;
+      min-height: 45px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 8px;
+      background: #edf1f7;
+      color: var(--navy-800);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .tag.active { background: #e3f2ea; color: var(--success); }
+    .tag.review { background: #fbf0d7; color: var(--warning); }
+    .tag.foundation { background: #e9edf8; color: #4c5f9f; }
+
+    .progress {
+      height: 7px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e6eaf0;
+    }
+    .progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold), var(--navy-700));
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .workflow {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px;
+      background: white;
+    }
+
+    .workflow strong {
+      display: block;
+      color: var(--navy-950);
+      font-size: 12px;
+    }
+
+    .workflow span {
+      display: block;
+      margin: 6px 0 12px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .workflow button {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 9px;
+      color: white;
+      background: var(--navy-900);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .chat-panel {
+      position: sticky;
+      top: 20px;
+    }
+
+    .chat-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #f8f9fb;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink);
+      background: white;
+      outline: none;
+    }
+
+    select, input { padding: 9px 10px; font-size: 11px; }
+    textarea { min-height: 76px; resize: vertical; padding: 11px; }
+    select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+
+    .chat-log {
+      min-height: 360px;
+      max-height: 480px;
+      padding: 14px;
+      overflow-y: auto;
+      background:
+        linear-gradient(rgba(255,255,255,0.94), rgba(255,255,255,0.94)),
+        repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(11,29,58,0.03) 24px);
+    }
+
+    .message {
+      max-width: 88%;
+      margin: 0 0 12px;
+      padding: 11px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .message.user {
+      margin-left: auto;
+      color: white;
+      background: var(--navy-900);
+      border-bottom-right-radius: 4px;
+    }
+    .message.agent {
+      color: var(--ink);
+      background: #f1eee7;
+      border: 1px solid rgba(201,168,76,0.22);
+      border-bottom-left-radius: 4px;
+    }
+    .message small {
+      display: block;
+      margin-bottom: 5px;
+      opacity: 0.65;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .chat-compose {
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      background: white;
+    }
+
+    .compose-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .inline-note {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .lower-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 16px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+    .list li:last-child { border-bottom: 0; }
+
+    .icon {
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      color: var(--navy-900);
+      background: #edf0f5;
+      font-weight: 700;
+      font-size: 10px;
+    }
+
+    .list strong { display: block; color: var(--navy-950); }
+    .list span { color: var(--muted); }
+
+    .run-banner {
+      display: none;
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border: 1px solid rgba(47,125,87,0.25);
+      border-radius: 13px;
+      color: #245f43;
+      background: #e9f5ef;
+      font-size: 12px;
+    }
+    .run-banner.visible { display: block; }
+
+    @media (max-width: 1180px) {
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workspace { grid-template-columns: 1fr; }
+      .chat-panel { position: static; }
+      .workflow-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 760px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: static; height: auto; }
+      main { padding: 18px; }
+      .topbar { flex-direction: column; }
+      .top-actions { justify-content: flex-start; }
+      .metrics, .portfolio-grid, .workflow-grid, .lower-grid { grid-template-columns: 1fr; }
+      .chat-controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">D</div>
+        <div>
+          <h1>DCSE Agent OS</h1>
+          <p>Structure Precedes Scale</p>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Mission Control</div>
+        <button class="nav-button active">Command Overview</button>
+        <button class="nav-button">Interactive Chat</button>
+        <button class="nav-button">Workflow Studio</button>
+        <button class="nav-button">Agent Dock</button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Enterprise</div>
+        <button class="nav-button">Portfolio</button>
+        <button class="nav-button">DDNA</button>
+        <button class="nav-button">RAG and Sources</button>
+        <button class="nav-button">Artifacts and Media</button>
+        <button class="nav-button">Approvals</button>
+        <button class="nav-button">Tribunal Receipts</button>
+      </div>
+
+      <div class="system-card">
+        <div><span class="status-dot"></span>Increment 1 shell active</div>
+        <div>Mode: Local browser prototype</div>
+        <div>Data: Session and local storage</div>
+        <div>Next: Supabase persistence</div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">DCSE Authorized Version Pending Approval</p>
+          <h2>Agent Operating System</h2>
+          <p>One operating environment for interactive conversation, governed agents, local and frontier models, product workflows, media, approvals, evidence, and deployment preparation.</p>
+        </div>
+        <div class="top-actions">
+          <button class="btn" id="resetSession">Reset Local Session</button>
+          <button class="btn gold" data-workflow="Daily Command">Run Daily Command</button>
+        </div>
+      </header>
+
+      <div id="runBanner" class="run-banner"></div>
+
+      <section class="grid metrics">
+        <article class="metric">
+          <span class="label">Active priorities</span>
+          <strong id="priorityCount">10</strong>
+          <small>Foundation and product portfolio</small>
+        </article>
+        <article class="metric">
+          <span class="label">Registered agents</span>
+          <strong>12</strong>
+          <small>Frontier, code, local, test, governance</small>
+        </article>
+        <article class="metric">
+          <span class="label">Workflow templates</span>
+          <strong>6</strong>
+          <small>Launchable from Mission Control</small>
+        </article>
+        <article class="metric">
+          <span class="label">Decisions pending</span>
+          <strong id="decisionCount">3</strong>
+          <small>DCS approval gates remain active</small>
+        </article>
+      </section>
+
+      <section class="grid workspace">
+        <div class="grid">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Active Portfolio</h3>
+                <p>Pilots join existing priorities and do not displace them.</p>
+              </div>
+              <span class="tag active">Portfolio active</span>
+            </div>
+            <div class="panel-body">
+              <div class="portfolio-grid" id="portfolioGrid"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>One-Click Workflow Studio</h3>
+                <p>Launch a governed workflow and track its local run state.</p>
+              </div>
+              <span class="tag foundation">Increment 1</span>
+            </div>
+            <div class="panel-body">
+              <div class="workflow-grid">
+                <div class="workflow"><strong>Source Intelligence</strong><span>Capture, verify, classify, DDNA review, and intake receipt.</span><button data-workflow="Source Intelligence">Launch</button></div>
+                <div class="workflow"><strong>Product Build</strong><span>Requirements, agent assignment, divergent builds, testing, convergence.</span><button data-workflow="Product Build">Launch</button></div>
+                <div class="workflow"><strong>Website Build</strong><span>Source discovery, DDNA, visual builds, accessibility, SEO, deployment prep.</span><button data-workflow="Website Build">Launch</button></div>
+                <div class="workflow"><strong>Media Build</strong><span>Images, video, voice, captions, variants, approvals, durable URLs.</span><button data-workflow="Media Build">Launch</button></div>
+                <div class="workflow"><strong>RAG Intake</strong><span>Excavate, classify, govern, chunk, embed, test retrieval, promote.</span><button data-workflow="RAG Intake">Launch</button></div>
+                <div class="workflow"><strong>Daily Command</strong><span>Reconcile carryover, new activity, decisions, assignments, and receipts.</span><button data-workflow="Daily Command">Launch</button></div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel chat-panel">
+          <div class="panel-header">
+            <div>
+              <h3>Interactive Command Chat</h3>
+              <p id="chatContext">General Command Post conversation</p>
+            </div>
+            <span class="tag active">Interactive</span>
+          </div>
+          <div class="chat-controls">
+            <select id="projectSelect" aria-label="Select project"></select>
+            <select id="agentSelect" aria-label="Select agent">
+              <option>Convergence Agent</option>
+              <option>Product Architect</option>
+              <option>Frontier Build Agent</option>
+              <option>Claude Code Agent</option>
+              <option>Local Qwen Coder</option>
+              <option>Raw Divergence Agent</option>
+              <option>DDNA Compliance Agent</option>
+              <option>Functional Test Agent</option>
+            </select>
+          </div>
+          <div class="chat-log" id="chatLog" aria-live="polite"></div>
+          <div class="chat-compose">
+            <textarea id="chatInput" placeholder="Direct the selected agent, ask about a product, or launch a workflow..."></textarea>
+            <div class="compose-actions">
+              <span class="inline-note">Increment 1 preserves conversation locally. Model routing follows in the Supabase integration increment.</span>
+              <button class="btn primary" id="sendMessage">Send</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="grid lower-grid">
+        <article class="panel">
+          <div class="panel-header"><div><h3>Agent Dock</h3><p>Provider-neutral execution roles</p></div></div>
+          <div class="panel-body">
+            <ul class="list">
+              <li><span class="icon">F</span><div><strong>Frontier Reasoning</strong><span>Architecture, synthesis, convergence</span></div></li>
+              <li><span class="icon">C</span><div><strong>Code and Cowork</strong><span>Repository work, testing, interface build</span></div></li>
+              <li><span class="icon">L</span><div><strong>Local Open Models</strong><span>Private batch work, classification, coding</span></div></li>
+              <li><span class="icon">R</span><div><strong>Raw Divergence</strong><span>Internal alternatives with constrained authority</span></div></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header"><div><h3>Approval Queue</h3><p>Controlled human decision gates</p></div></div>
+          <div class="panel-body">
+            <ul class="list" id="approvalList">
+              <li><span class="icon">1</span><div><strong>Canonical media domain</strong><span>Required before durable public media URLs</span></div></li>
+              <li><span class="icon">2</span><div><strong>Local model hardware envelope</strong><span>Required before selecting the first raw divergence model</span></div></li>
+              <li><span class="icon">3</span><div><strong>First public pilot release</strong><span>Required after internal validation, not before</span></div></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header"><div><h3>Activity and Artifacts</h3><p>Local shell evidence stream</p></div></div>
+          <div class="panel-body">
+            <ul class="list" id="activityList">
+              <li><span class="icon">A</span><div><strong>Agent OS branch opened</strong><span>Isolated build path established</span></div></li>
+              <li><span class="icon">W</span><div><strong>Build order registered</strong><span>Full portfolio priority model preserved</span></div></li>
+              <li><span class="icon">UI</span><div><strong>Interactive shell loaded</strong><span>Ready for Supabase and model adapters</span></div></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const projects = [
+      { name: 'Command Post Agent OS', type: 'Foundation', status: 'Active', progress: 18, description: 'Mission control, chat, agents, workflows, approvals, artifacts, and observability.' },
+      { name: 'CTJ', type: 'Product', status: 'Active', progress: 46, description: 'Critical Thinker\'s Journey product family, packaging, delivery, media, and campaign.' },
+      { name: 'TSL', type: 'Product', status: 'Active', progress: 39, description: 'Tedo\'s Sports Lounge application, membership, leaderboard, and product operations.' },
+      { name: 'SC and SS Websites', type: 'Platform', status: 'Active', progress: 34, description: 'Non-Wix websites, web applications, product discovery, campaigns, and media.' },
+      { name: 'RAG and Source Locator', type: 'Foundation', status: 'Active', progress: 31, description: 'Governed excavation, retrieval, provenance, source authority, and reusable knowledge.' },
+      { name: 'Baller4Life / SJL', type: 'Pilot 1', status: 'Priority', progress: 14, description: 'Driving exceptional student and young-adult development application.' },
+      { name: 'Bee Beauty', type: 'Pilot 2', status: 'Priority', progress: 8, description: 'Consumer brand, services, visual media, conversion, and campaign workflow pilot.' },
+      { name: 'Media and URL Registry', type: 'Foundation', status: 'Active', progress: 12, description: 'Images, video, voice, captions, variants, provenance, and durable product URLs.' },
+      { name: 'DDNA Refinement', type: 'Governance', status: 'Active', progress: 41, description: 'Model comparison, pattern discovery, drift control, promotion, and constitutional memory.' },
+      { name: 'DCS Employment Products', type: 'Product', status: 'Active', progress: 27, description: 'Employment web presence, proof-of-fit assets, recruiter workflows, and revenue support.' }
+    ];
+
+    const portfolioGrid = document.getElementById('portfolioGrid');
+    const projectSelect = document.getElementById('projectSelect');
+    const agentSelect = document.getElementById('agentSelect');
+    const chatLog = document.getElementById('chatLog');
+    const chatInput = document.getElementById('chatInput');
+    const chatContext = document.getElementById('chatContext');
+    const runBanner = document.getElementById('runBanner');
+    const activityList = document.getElementById('activityList');
+    const storageKey = 'dcse-agent-os-v1-chat';
+
+    projects.forEach((project) => {
+      const card = document.createElement('article');
+      card.className = 'project-card';
+      const tagClass = project.type.includes('Pilot') ? 'review' : project.type === 'Foundation' ? 'foundation' : 'active';
+      card.innerHTML = `
+        <span class="tag ${tagClass}">${project.type}</span>
+        <h4>${project.name}</h4>
+        <p>${project.description}</p>
+        <div class="progress" aria-label="${project.progress}% progress"><span style="width:${project.progress}%"></span></div>
+      `;
+      card.addEventListener('click', () => {
+        projectSelect.value = project.name;
+        syncChatContext();
+        chatInput.focus();
+      });
+      portfolioGrid.appendChild(card);
+
+      const option = document.createElement('option');
+      option.textContent = project.name;
+      projectSelect.appendChild(option);
+    });
+
+    function nowLabel() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function getMessages() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveMessages(messages) {
+      localStorage.setItem(storageKey, JSON.stringify(messages));
+    }
+
+    function renderMessages() {
+      const messages = getMessages();
+      chatLog.innerHTML = '';
+      if (!messages.length) {
+        messages.push({
+          role: 'agent',
+          label: 'Agent OS',
+          text: 'The interactive command channel is active. Select a project and agent, then issue a direction. This increment stores the conversation locally while Supabase persistence and live model routing are built.',
+          time: nowLabel()
+        });
+        saveMessages(messages);
+      }
+      messages.forEach(addMessageElement);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function addMessageElement(message) {
+      const block = document.createElement('div');
+      block.className = `message ${message.role}`;
+      block.innerHTML = `<small>${message.label} | ${message.time}</small>${escapeHtml(message.text)}`;
+      chatLog.appendChild(block);
+    }
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function syncChatContext() {
+      chatContext.textContent = `${projectSelect.value} | ${agentSelect.value}`;
+    }
+
+    function sendChat() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+
+      const messages = getMessages();
+      const userMessage = { role: 'user', label: projectSelect.value, text, time: nowLabel() };
+      messages.push(userMessage);
+      addMessageElement(userMessage);
+      chatInput.value = '';
+
+      const replyText = `Direction received for ${projectSelect.value}. ${agentSelect.value} has created a local intake event. Live execution is not yet connected in Increment 1. The next integration will persist this turn, create or link a task, route the request through the selected model adapter, and stream governed results back into this conversation.`;
+      const agentMessage = { role: 'agent', label: agentSelect.value, text: replyText, time: nowLabel() };
+      messages.push(agentMessage);
+      saveMessages(messages);
+      window.setTimeout(() => {
+        addMessageElement(agentMessage);
+        chatLog.scrollTop = chatLog.scrollHeight;
+      }, 250);
+
+      addActivity('Chat direction captured', `${projectSelect.value} routed to ${agentSelect.value}`);
+    }
+
+    function launchWorkflow(name) {
+      const project = projectSelect.value || 'Command Post Agent OS';
+      const stamp = new Date().toLocaleString();
+      runBanner.textContent = `${name} launched for ${project} at ${stamp}. Increment 1 has registered a local run event. Supabase job persistence and agent execution follow in the next increment.`;
+      runBanner.classList.add('visible');
+      addActivity(`${name} launched`, `Project: ${project}`);
+
+      const messages = getMessages();
+      messages.push({
+        role: 'agent',
+        label: 'Workflow Engine',
+        text: `${name} was launched for ${project}. Local run state is active. The governed execution path will bind this event to workflow jobs, task events, artifacts, approvals, and receipts.`,
+        time: nowLabel()
+      });
+      saveMessages(messages);
+      renderMessages();
+    }
+
+    function addActivity(title, detail) {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="icon">+</span><div><strong>${escapeHtml(title)}</strong><span>${escapeHtml(detail)}</span></div>`;
+      activityList.prepend(li);
+    }
+
+    document.querySelectorAll('[data-workflow]').forEach((button) => {
+      button.addEventListener('click', () => launchWorkflow(button.dataset.workflow));
+    });
+
+    document.getElementById('sendMessage').addEventListener('click', sendChat);
+    chatInput.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') sendChat();
+    });
+
+    projectSelect.addEventListener('change', syncChatContext);
+    agentSelect.addEventListener('change', syncChatContext);
+
+    document.getElementById('resetSession').addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      runBanner.classList.remove('visible');
+      renderMessages();
+      addActivity('Local session reset', 'Conversation history restarted in this browser');
+    });
+
+    renderMessages();
+    syncChatContext();
+  </script>
+</body>
+</html>
