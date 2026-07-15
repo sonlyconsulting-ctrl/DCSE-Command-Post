@@ -110,20 +110,35 @@
 ## Technical Gates
 
 ### Vercel Deployment
-- Connect Vercel project to GitHub repo OR run vercel locally
-- Set SUPABASE_SERVICE_ROLE_KEY and SUPABASE_URL in Vercel project settings
-- Current production: os.sonlyconsulting.com (v1.3 multi-provider chat)
+- Project: sc-command-post (prj_a9pbcrfvQczbmH2Cr1S2Q08p2975)
+- Team: sonlyconsulting-ctrls-projects
+- Root api/index.js proxies to apps/sc-agent-os/api/index.js
+- Root vercel.json rewrites all routes to /api
+- Requires SUPABASE_SERVICE_ROLE_KEY and SUPABASE_URL in Vercel project env vars
+- Preview deployments have Vercel Deployment Protection (SSO) enabled
+- Current production domains: sonlyconsulting.com, www.sonlyconsulting.com
+
+### Relay Bridge Classification
+- Local Operational Inbox (Windows file poller) is supplementary, not primary
+- CP Dispatch API is the active operating method for cloud task lifecycle
+- Watcher-to-API bridge classified as DEFERRED pending DCS direction
+- CP_DISPATCH_INTEGRATION.md committed to Tribunal Relay repo documents mapping
 
 ### Remaining DCS Decisions
-- SC hero line final selection (DDNA process)
 - TSL source reconstruction packet (Issue #3)
 - SC brand palette confirmation
-- PR #8 merge authorization (Batch 1 P0 surfaces)
 - Production deployment authorization
+- Hero-line state reconciliation (PR #5 vs blocked-input register inconsistency)
 
 ### Hard Gates (Blocking Further Autonomous Work)
 - Batch 2 (TSL MVP): requires source reconstruction packet from DCS
 - Batch 3-A (SC Hero DDNA): requires DCS selection after DDNA process
 - Batch 3-B (SC Campaign): requires LM Arena artifact intake
 - Batch 3-D (Family Pathways): requires product definition
-- No migration, merge, deployment, or external action without DCS authorization
+
+### Rollback Instructions
+- Migration 005: rollback SQL in comments at bottom of 005_supabase_security_remediation.sql
+- Tribunal API: remove 4 handler functions and route entries from index.js
+- Vercel routing: delete root vercel.json and api/index.js to revert to no-route state
+- AgentOps schema fix: revert column names in handleAgentOps (non-functional without matching schema)
+- All changes are additive and reversible without data loss
