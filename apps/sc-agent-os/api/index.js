@@ -283,6 +283,8 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       <div class="sb-label">Governance</div>
       <div class="nav-item" onclick="nav('tribunal',this)"><span class="nav-icon">⚖</span>Tribunal<span class="nav-badge nb-red">5</span></div>
       <div class="nav-item" onclick="nav('dispatch',this)"><span class="nav-icon">📦</span>Dispatch</div>
+      <div class="nav-item" onclick="nav('personas',this)"><span class="nav-icon">◉</span>Personas<span class="nav-badge nb-gold" id="personasBadge">6</span></div>
+      <div class="nav-item" onclick="nav('assets',this)"><span class="nav-icon">◫</span>Assets<span class="nav-badge nb-blue" id="assetsBadge">7</span></div>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
@@ -649,6 +651,56 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       <div class="trib-list" id="dispatchList"></div>
     </div>
 
+    <!-- PERSONAS -->
+    <div class="panel" id="panel-personas">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Personas</div><div class="panel-sub">DCSE Persona Registry — Supabase</div></div>
+        <span class="tag tag-amber" id="personasGateTag">MIGRATIONS PENDING</span>
+      </div>
+      <div class="card mb-8">
+        <div class="filter-row">
+          <button class="btn btn-gold btn-sm" onclick="loadPersonas('all')">All</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadPersonas('active')">Active</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadPersonas('candidate')">Candidate</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadPersonas('draft')">Draft</button>
+        </div>
+        <div id="personasList"><div class="text-dim mono" style="padding:16px;font-size:11px">Loading personas...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Agent Limits (Enforced)</div>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Approve own output</span><span class="tag tag-red">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Promote persona</span><span class="tag tag-red">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Change privacy class</span><span class="tag tag-red">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Override identity mask</span><span class="tag tag-red">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migrations 001-003 apply</span><span class="tag tag-amber">DCS GATE</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div class="panel" id="panel-assets">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Assets</div><div class="panel-sub">DCSE Asset Inventory — Supabase</div></div>
+        <span class="tag tag-amber" id="assetsGateTag">MIGRATIONS PENDING</span>
+      </div>
+      <div class="card mb-8">
+        <div class="filter-row">
+          <button class="btn btn-gold btn-sm" onclick="loadAssets('all')">All</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadAssets('deployed')">Deployed</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadAssets('approved')">Approved</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadAssets('candidate')">Candidate</button>
+        </div>
+        <div id="assetsList"><div class="text-dim mono" style="padding:16px;font-size:11px">Loading assets...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Relationship Spine</div>
+        <div class="mono text-dim" style="font-size:10px;line-height:1.8">
+          Persona → Product → Module → Asset → Task → Approval → Deployment → Tribunal
+        </div>
+      </div>
+    </div>
+
     <!-- PS FIREWALL -->
     <div class="panel" id="panel-ps">
       <div class="panel-hdr">
@@ -713,6 +765,8 @@ function nav(id,el){
     const found=Array.from(document.querySelectorAll('.nav-item')).find(n=>(n.getAttribute('onclick')||'').includes("'"+id+"'"));
     if(found)found.classList.add('active');
   }
+  if(id==='personas')loadPersonas(_personasFilter);
+  if(id==='assets')loadAssets(_assetsFilter);
 }
 
 // Voice
@@ -1220,6 +1274,70 @@ function copyDispatchJSON(i){navigator.clipboard.writeText(JSON.stringify(dispat
 function copyDispatchPath(i){navigator.clipboard.writeText(dispatchPackets[i].inbox).then(()=>alert('Path copied.'));}
 function setDispatchStatus(i,status){dispatchPackets[i].status=status;saveDispatch();renderDispatch();}
 
+// ===== PERSONAS =====
+let _personasFilter='all';
+async function loadPersonas(filter){
+  _personasFilter=filter||_personasFilter;
+  const list=document.getElementById('personasList');if(!list)return;
+  list.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">Fetching...</div>';
+  try{
+    const url='/api/personas'+(filter&&filter!=='all'?'?lifecycle='+filter:'');
+    const r=await fetch(url);
+    const data=await r.json();
+    if(data.gate){
+      list.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px;line-height:1.8">'+data.gate+'</div>';
+      return;
+    }
+    if(!data.personas||!data.personas.length){list.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No personas found.</div>';return;}
+    document.getElementById('personasBadge').textContent=data.personas.length;
+    list.innerHTML=data.personas.map(p=>\`
+      <div class="trib-item">
+        <span class="trib-status \${p.dcse_lifecycle==='active'?'ts-open':'ts-draft'}">\${(p.dcse_lifecycle||p.release_posture||'unknown').toUpperCase()}</span>
+        <div class="trib-info">
+          <div class="trib-title">\${p.identity_mask?'[MASKED]':p.name||p.persona_code||p.id}</div>
+          <div class="trib-meta">\${p.persona_code||''} · Lane: \${p.dcs_lane||'—'} · Privacy: \${p.privacy_class||'—'}</div>
+          \${p.identity_mask?'<div class="trib-meta" style="color:var(--amber);font-size:9px">IDENTITY MASKED — no identifying fields rendered</div>':''}
+        </div>
+        \${p.family_product?'<span class="tag tag-blue" style="font-size:9px">FAMILY</span>':''}
+        \${p.child_safe?'<span class="tag tag-green" style="font-size:9px">CHILD-SAFE</span>':''}
+      </div>\`).join('');
+  }catch(e){
+    list.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px">Error: '+e.message+'</div>';
+  }
+}
+
+// ===== ASSETS =====
+let _assetsFilter='all';
+async function loadAssets(filter){
+  _assetsFilter=filter||_assetsFilter;
+  const list=document.getElementById('assetsList');if(!list)return;
+  list.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">Fetching...</div>';
+  try{
+    const url='/api/assets'+(filter&&filter!=='all'?'?state='+filter:'');
+    const r=await fetch(url);
+    const data=await r.json();
+    if(data.gate){
+      list.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px;line-height:1.8">'+data.gate+'</div>';
+      return;
+    }
+    if(!data.assets||!data.assets.length){list.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No assets found.</div>';return;}
+    document.getElementById('assetsBadge').textContent=data.assets.length;
+    const stateColor={deployed:'var(--green)',approved:'var(--blue)',active:'var(--gold)',candidate:'var(--text-dim)',review:'var(--amber)',blocked:'var(--red)',quarantined:'var(--red)'};
+    list.innerHTML=data.assets.map(a=>\`
+      <div class="trib-item">
+        <span class="trib-status" style="background:rgba(255,255,255,.05);color:\${stateColor[a.dcse_state||a.asset_type]||'var(--text-dim)'}">\${(a.dcse_state||'inventoried').toUpperCase()}</span>
+        <div class="trib-info">
+          <div class="trib-title">\${a.asset_name||a.asset_label||a.url||a.id}</div>
+          <div class="trib-meta">Type: \${a.asset_type||'—'} · Privacy: \${a.privacy_class||'public'} · Lane: \${a.dcs_lane||'—'}</div>
+          \${a.persona_fk||a.source_id?'<div class="trib-meta" style="font-size:9px">Persona: '+(a.persona_fk||a.source_id)+'</div>':''}
+        </div>
+        \${a.agent_approve_locked?'<span class="tag tag-amber" style="font-size:9px">APPROVE-LOCKED</span>':''}
+      </div>\`).join('');
+  }catch(e){
+    list.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px">Error: '+e.message+'</div>';
+  }
+}
+
 // Ops Log add
 function addOpsEntry(){
   const t=prompt('Ops log entry:');if(!t)return;
@@ -1240,6 +1358,57 @@ renderDispatch();
 </body>
 </html>`;
 
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://nevgdyfpxdaloacuutal.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+async function handlePersonas(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (!SUPABASE_KEY) {
+    res.statusCode = 200;
+    res.end(JSON.stringify({gate: 'Migrations 001-003 pending DCS authorization. SUPABASE_SERVICE_ROLE_KEY not set. Apply migrations and set env var to activate this panel.'}));
+    return;
+  }
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    const lifecycle = url.searchParams.get('lifecycle');
+    let query = `${SUPABASE_URL}/rest/v1/personas?select=id,persona_code,name,release_posture,dcse_lifecycle,privacy_class,dcs_lane,identity_mask,family_product,child_safe,agent_promote_locked&order=persona_code.asc`;
+    if (lifecycle) query += `&dcse_lifecycle=eq.${lifecycle}`;
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const personas = await r.json();
+    res.statusCode = r.status;
+    res.end(JSON.stringify({personas: Array.isArray(personas) ? personas : [], total: Array.isArray(personas) ? personas.length : 0}));
+  } catch(e) {
+    res.statusCode = 500;
+    res.end(JSON.stringify({error: e.message}));
+  }
+}
+
+async function handleAssets(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (!SUPABASE_KEY) {
+    res.statusCode = 200;
+    res.end(JSON.stringify({gate: 'Migrations 001-003 pending DCS authorization. SUPABASE_SERVICE_ROLE_KEY not set. Apply migrations and set env var to activate this panel.'}));
+    return;
+  }
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    const state = url.searchParams.get('state');
+    const persona = url.searchParams.get('persona');
+    let query = `${SUPABASE_URL}/rest/v1/assets?select=id,asset_name,asset_label,asset_type,url,dcse_state,privacy_class,dcs_lane,persona_fk,source_id,agent_approve_locked,agent_deploy_locked,tribunal_pr_url&order=asset_type.asc`;
+    if (state) query += `&dcse_state=eq.${state}`;
+    if (persona) query += `&persona_fk=eq.${persona}`;
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const assets = await r.json();
+    res.statusCode = r.status;
+    res.end(JSON.stringify({assets: Array.isArray(assets) ? assets : [], total: Array.isArray(assets) ? assets.length : 0}));
+  } catch(e) {
+    res.statusCode = 500;
+    res.end(JSON.stringify({error: e.message}));
+  }
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -1248,6 +1417,8 @@ module.exports = (req, res) => {
     res.statusCode = 200; res.end(); return;
   }
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/personas')) return handlePersonas(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/assets')) return handleAssets(req, res);
   res.setHeader('Content-Type', 'text/html;charset=utf-8');
   res.statusCode = 200;
   res.end(HTML);
