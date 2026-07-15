@@ -31,6 +31,7 @@
 | DBA Console panel + /api/dba | COMMITTED | index.js: refreshDBA(), handleDBA() |
 | API Keys Admin Console + /api/apikeys | COMMITTED | index.js: refreshAPIKeys(), handleAPIKeys() |
 | Assurance Loop Console + /api/assurance | COMMITTED | index.js: refreshAssurance(), handleAssurance() |
+| Agent Operations panel + /api/agentops | COMMITTED | index.js: refreshAgentOps(), handleAgentOps() |
 
 ---
 

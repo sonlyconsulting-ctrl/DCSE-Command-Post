@@ -270,6 +270,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       <div class="nav-item" onclick="nav('agents',this)"><span class="nav-icon">🤖</span>Agent Dock<span class="nav-badge nb-gold">12</span></div>
       <div class="nav-item" onclick="nav('tasks',this)"><span class="nav-icon">▦</span>Task Queue<span class="nav-badge nb-blue" id="taskBadge">3</span></div>
       <div class="nav-item" onclick="nav('portfolio',this)"><span class="nav-icon">◈</span>Portfolio<span class="nav-badge nb-gold" id="portBadge">4</span></div>
+      <div class="nav-item" onclick="nav('agentops',this)"><span class="nav-icon">⬢</span>Agent Operations<span class="nav-badge nb-amber" id="agentopsBadge">?</span></div>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
@@ -519,6 +520,65 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
           <button class="btn btn-gold" onclick="addPortItem()">Add</button>
         </div>
         <div class="trib-list" id="portfolioList"></div>
+      </div>
+    </div>
+
+    <!-- AGENT OPERATIONS (Tracks B+D: MVT-008A Relay + MVT-010 Observability) -->
+    <div class="panel" id="panel-agentops">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Agent Operations</div><div class="panel-sub">MVT-008A Relay Plumbing + MVT-010 Agent OS Observability</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshAgentOps()">Refresh</button>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Relay Status</div>
+          <div class="flex flex-col gap-6" id="relayStatus">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Task Event Detection</span><span class="tag tag-amber" id="relayEventDetect">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Assignment Routing</span><span class="tag tag-amber" id="relayAssignRouting">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Dispatch Mode</span><span class="tag tag-amber" id="relayDispatchMode">MANUAL</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Kill Switch</span><span class="tag tag-green" id="relayKillSwitch">AVAILABLE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Cost Control</span><span class="tag tag-green" id="relayCostControl">ENFORCED</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Agent Heartbeats</div>
+          <div class="flex flex-col gap-6" id="agentHeartbeats">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Active Heartbeats</span><span class="mono text-dim" id="heartbeatCount">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last Heartbeat</span><span class="mono text-dim" id="heartbeatLast">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Stale Agents</span><span class="mono text-dim" id="heartbeatStale">...</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2 mt-8">
+        <div class="card">
+          <div class="card-title">Task Pipeline</div>
+          <div class="flex flex-col gap-6" id="taskPipeline">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Pending Tasks</span><span class="mono text-dim" id="tasksPending">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">In Progress</span><span class="mono text-dim" id="tasksInProgress">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Completed (24h)</span><span class="mono text-dim" id="tasksCompleted">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Failed / Blocked</span><span class="mono text-dim" id="tasksFailed">...</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Decision Queue</div>
+          <div class="flex flex-col gap-6" id="decisionQueue">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Awaiting DCS</span><span class="mono text-dim" id="decisionsAwaitingDCS">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Awaiting Review</span><span class="mono text-dim" id="decisionsAwaitingReview">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Blockers</span><span class="mono text-dim" id="decisionsBlockers">...</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Recent Activity Events</div>
+        <div class="trib-list" id="activityEventsList"><div class="text-dim mono" style="padding:12px;font-size:11px">Click Refresh to load activity events from dcse_cp.</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Agent Registry</div>
+        <div class="trib-list" id="agentRegistryList"><div class="text-dim mono" style="padding:12px;font-size:11px">Click Refresh to load registered agents.</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Pending Assignments</div>
+        <div class="trib-list" id="pendingAssignmentsList"><div class="text-dim mono" style="padding:12px;font-size:11px">Click Refresh to check relay_pending_assignments.</div></div>
       </div>
     </div>
 
@@ -1003,6 +1063,7 @@ function nav(id,el){
   if(id==='personas')loadPersonas(_personasFilter);
   if(id==='assets')loadAssets(_assetsFilter);
   if(id==='runtime'&&!_runtimeChecked)refreshRuntimeHealth();
+  if(id==='agentops'&&!_agentopsChecked)refreshAgentOps();
   if(id==='dba'&&!_dbaChecked)refreshDBA();
   if(id==='apikeys'&&!_apikeysChecked)refreshAPIKeys();
   if(id==='assurance'&&!_assuranceChecked)refreshAssurance();
@@ -1583,6 +1644,61 @@ async function runRuntimeSmokeTest(){
   }
 }
 
+// ===== AGENT OPERATIONS =====
+let _agentopsChecked=false;
+async function refreshAgentOps(){
+  _agentopsChecked=true;
+  try{
+    const r=await fetch('/api/agentops');
+    const data=await r.json();
+    if(data.heartbeats){
+      const hc=document.getElementById('heartbeatCount');if(hc)hc.textContent=data.heartbeats.active||'0';
+      const hl=document.getElementById('heartbeatLast');if(hl)hl.textContent=data.heartbeats.last||'None';
+      const hs=document.getElementById('heartbeatStale');if(hs)hs.textContent=data.heartbeats.stale||'0';
+    }
+    if(data.tasks){
+      const tp=document.getElementById('tasksPending');if(tp)tp.textContent=data.tasks.pending||'0';
+      const ti=document.getElementById('tasksInProgress');if(ti)ti.textContent=data.tasks.in_progress||'0';
+      const tc=document.getElementById('tasksCompleted');if(tc)tc.textContent=data.tasks.completed||'0';
+      const tf=document.getElementById('tasksFailed');if(tf)tf.textContent=data.tasks.failed||'0';
+    }
+    if(data.decisions){
+      const dd=document.getElementById('decisionsAwaitingDCS');if(dd)dd.textContent=data.decisions.awaiting_dcs||'0';
+      const dr=document.getElementById('decisionsAwaitingReview');if(dr)dr.textContent=data.decisions.awaiting_review||'0';
+      const db=document.getElementById('decisionsBlockers');if(db)db.textContent=data.decisions.blockers||'0';
+    }
+    if(data.relay){
+      const rd=document.getElementById('relayEventDetect');
+      if(rd){rd.textContent=data.relay.event_detection||'UNKNOWN';rd.className='tag tag-'+(data.relay.event_detection==='ACTIVE'?'green':'amber');}
+      const ra=document.getElementById('relayAssignRouting');
+      if(ra){ra.textContent=data.relay.assignment_routing||'UNKNOWN';ra.className='tag tag-'+(data.relay.assignment_routing==='ACTIVE'?'green':'amber');}
+    }
+    const ael=document.getElementById('activityEventsList');
+    if(ael&&data.recent_events&&data.recent_events.length){
+      ael.innerHTML=data.recent_events.map(e=>'<div class="trib-row"><div class="trib-title">'+(e.event_type||'event')+'</div><div class="trib-meta">'+(e.agent_id||'system')+' · '+(e.created_at||'')+'</div></div>').join('');
+    }else if(ael&&data.recent_events){
+      ael.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No recent activity events.</div>';
+    }
+    const arl=document.getElementById('agentRegistryList');
+    if(arl&&data.agents&&data.agents.length){
+      arl.innerHTML=data.agents.map(a=>'<div class="trib-row"><div class="trib-title">'+(a.agent_name||a.agent_id||'agent')+'</div><div class="trib-meta">Type: '+(a.agent_type||'unknown')+' · Status: '+(a.status||'unknown')+'</div></div>').join('');
+    }else if(arl&&data.agents){
+      arl.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No agents registered.</div>';
+    }
+    const pal=document.getElementById('pendingAssignmentsList');
+    if(pal&&data.pending_assignments&&data.pending_assignments.length){
+      pal.innerHTML=data.pending_assignments.map(p=>'<div class="trib-row"><div class="trib-title">'+(p.task_id||'task')+'</div><div class="trib-meta">Agent: '+(p.agent_id||'unassigned')+' · '+(p.created_at||'')+'</div></div>').join('');
+    }else if(pal&&data.pending_assignments){
+      pal.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No pending assignments.</div>';
+    }
+    const badge=document.getElementById('agentopsBadge');
+    if(badge){badge.textContent=(data.tasks?data.tasks.in_progress:'?');badge.className='nav-badge '+(data.tasks&&parseInt(data.tasks.in_progress)>0?'nb-green':'nb-amber');}
+  }catch(e){
+    const badge=document.getElementById('agentopsBadge');
+    if(badge){badge.textContent='ERR';badge.className='nav-badge nb-red';}
+  }
+}
+
 // ===== DBA CONSOLE =====
 let _dbaChecked=false;
 async function refreshDBA(){
@@ -1883,6 +1999,55 @@ async function handleRuntimeSmoke(req, res) {
   });
 }
 
+async function handleAgentOps(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const result = {
+    relay: {event_detection: 'UNKNOWN', assignment_routing: 'UNKNOWN'},
+    heartbeats: {active: 0, last: null, stale: 0},
+    tasks: {pending: 0, in_progress: 0, completed: 0, failed: 0},
+    decisions: {awaiting_dcs: 0, awaiting_review: 0, blockers: 0},
+    recent_events: [],
+    agents: [],
+    pending_assignments: []
+  };
+  if (SUPABASE_KEY) {
+    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+    try {
+      const [hbr, tsr, aer, arr, par] = await Promise.all([
+        fetch(`${SUPABASE_URL}/rest/v1/agent_heartbeats?select=agent_id,status,last_heartbeat&order=last_heartbeat.desc&limit=20`, {headers}).catch(() => null),
+        fetch(`${SUPABASE_URL}/rest/v1/agent_tasks?select=id,task_type,status,priority,assigned_agent,updated_at&order=updated_at.desc&limit=30`, {headers}).catch(() => null),
+        fetch(`${SUPABASE_URL}/rest/v1/activity_events?select=id,event_type,agent_id,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null),
+        fetch(`${SUPABASE_URL}/rest/v1/agent_registry?select=agent_id,agent_name,agent_type,status&order=agent_name.asc&limit=30`, {headers}).catch(() => null),
+        fetch(`${SUPABASE_URL}/rest/v1/relay_pending_assignments?select=id,task_id,agent_id,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null)
+      ]);
+      if (hbr && hbr.ok) {
+        const hb = await hbr.json();
+        const now = Date.now();
+        result.heartbeats.active = hb.filter(h => h.status === 'active').length;
+        result.heartbeats.stale = hb.filter(h => h.last_heartbeat && (now - new Date(h.last_heartbeat).getTime()) > 300000).length;
+        if (hb.length) result.heartbeats.last = hb[0].last_heartbeat;
+        result.relay.event_detection = hb.length > 0 ? 'ACTIVE' : 'UNKNOWN';
+      }
+      if (tsr && tsr.ok) {
+        const ts = await tsr.json();
+        result.tasks.pending = ts.filter(t => t.status === 'pending').length;
+        result.tasks.in_progress = ts.filter(t => t.status === 'in_progress').length;
+        result.tasks.completed = ts.filter(t => t.status === 'completed').length;
+        result.tasks.failed = ts.filter(t => t.status === 'failed' || t.status === 'blocked').length;
+      }
+      if (aer && aer.ok) result.recent_events = await aer.json();
+      if (arr && arr.ok) {
+        result.agents = await arr.json();
+        result.relay.assignment_routing = result.agents.length > 0 ? 'ACTIVE' : 'UNKNOWN';
+      }
+      if (par && par.ok) result.pending_assignments = await par.json();
+    } catch(e) {}
+  }
+  res.statusCode = 200;
+  res.end(JSON.stringify(result));
+}
+
 async function handleDBA(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -2000,6 +2165,7 @@ module.exports = (req, res) => {
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/agentops')) return handleAgentOps(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/dba')) return handleDBA(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/apikeys')) return handleAPIKeys(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/assurance')) return handleAssurance(req, res);
