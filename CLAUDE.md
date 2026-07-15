@@ -1,0 +1,207 @@
+# CLAUDE.md — DCSE Command Post
+
+## Project Overview
+
+SC Agent OS v1.3: a single-file Vercel serverless Node.js application serving both API endpoints and a full HTML/CSS/JS dashboard UI. The entire application lives in `apps/sc-agent-os/api/index.js` (~2750 lines). A root `api/index.js` proxy re-exports it for Vercel's function detection.
+
+**Stack:** Node.js serverless function on Vercel, Supabase (PostgreSQL + RLS), no framework, no bundler, no test runner currently configured.
+
+**Supabase project:** `nevgdyfpxdaloacuutal` — schema `dcse_cp` with 24 tables.
+
+## Repository Layout
+
+```
+api/index.js                    # Root proxy: re-exports apps/sc-agent-os/api/index.js
+vercel.json                     # Root Vercel config (rewrites all routes to /api)
+apps/sc-agent-os/api/index.js   # THE application (all handlers + full HTML UI)
+apps/sc-agent-os/migrations/    # SQL migrations 001-006
+apps/sc-agent-os/docs/          # Governance docs, specs, implementation status
+01_GOVERNANCE/                  # DCS governance artifacts
+02_ARCHITECTURE/                # Architecture docs
+03_WORK_ORDERS/                 # Build orders
+```
+
+## Code Review Instructions
+
+### Architecture
+
+The app is a single `module.exports` handler that routes by URL pathname. Each route calls a `handle*` function. The HTML UI is a template literal (`const HTML`) embedded in the same file.
+
+Key handler functions and their API routes:
+- `handleChat` — `/api/chat` (multi-provider LLM proxy)
+- `handleTribunalInbox` — `/api/tribunal/inbox` (GET: task list + stats)
+- `handleTribunalDispatch` — `/api/tribunal/dispatch` (POST: create task)
+- `handleTribunalReceipt` — `/api/tribunal/receipt` (POST: record event)
+- `handleTribunalStatus` — `/api/tribunal/status` (POST: update task status)
+- `handleRuntime` — `/api/runtime` (GET: runtime health)
+- `handleRuntimeSmoke` — `/api/runtime/smoke` (POST: smoke test)
+- `handlePersonas` — `/api/personas` (CRUD)
+- `handleAssets` — `/api/assets` (CRUD)
+- `handleAgentOps` — `/api/agentops` (GET: agent operations)
+- `handleDBA` — `/api/dba` (GET: database admin)
+- `handleAPIKeys` — `/api/apikeys` (GET: API key status)
+- `handleAssurance` — `/api/assurance` (GET: assurance loop)
+- `handleDCSQueue` — `/api/dcsqueue` (GET: DCS decision queue)
+- `handleReceipts` — `/api/receipts` (GET: receipts/evidence)
+
+### What to Check in Code Review
+
+1. **Input validation before DB access** — All POST handlers must validate required fields BEFORE checking `SUPABASE_KEY`. Bad payloads should get 400, not 503.
+
+2. **SQL injection** — All Supabase queries use the `@supabase/supabase-js` client (parameterized). Verify no raw string interpolation into SQL.
+
+3. **Secret exposure** — `SUPABASE_SERVICE_ROLE_KEY` and provider API keys must never appear in:
+   - The HTML template literal
+   - Console.log output
+   - API response bodies
+   - Error messages sent to clients
+
+4. **CORS headers** — All handlers set `Access-Control-Allow-Origin: *`. Review whether this is appropriate for each endpoint.
+
+5. **Status codes** — Verify correct HTTP status codes:
+   - 200 for successful GET
+   - 201 for successful POST that creates a resource
+   - 400 for validation failures
+   - 503 for missing database connection
+   - 500 for unhandled errors
+
+6. **Supabase column names** — The `dcse_cp.agent_tasks` table uses `created_by_label` (not `created_by`) and `dcse_cp.agent_task_events` uses `event_summary` (not `summary`). The API code maps between request body field names and DB column names.
+
+7. **Valid enums** — Verify that status and lane values match the allowed sets:
+   - Lanes: `DCSE, PS, SC, SS, TSL, TRIBUNAL, DDNA, RAG, SYSTEM`
+   - Statuses: `planned, assigned, running, blocked, completed, needs_review, handoff_ready, parallel_review, awaiting_dcs, approved, rejected, archived`
+
+8. **Error handling** — Each handler wraps DB operations in try/catch and returns JSON error responses. Verify no stack traces leak to clients.
+
+### What NOT to Flag
+
+- The single-file architecture is intentional (Vercel serverless constraint).
+- The inline HTML template is intentional (no build step needed).
+- `Access-Control-Allow-Origin: *` is currently accepted for preview deployments.
+- External font CDN links in the HTML are accepted.
+
+## Testing Instructions
+
+### Local API Testing (No Network Required)
+
+Start the server locally:
+```bash
+cd apps/sc-agent-os
+node -e "
+const http = require('http');
+const handler = require('./api/index.js');
+http.createServer(handler).listen(3000, () => console.log('http://localhost:3000'));
+"
+```
+
+Note: Without `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` env vars, DB-dependent endpoints return 503. Input validation tests still work.
+
+### Test Matrix (10-Point Validation)
+
+Run these against `http://localhost:3000`:
+
+| # | Test | Method | Endpoint | Expected |
+|---|------|--------|----------|----------|
+| 1 | Inbox returns stats | GET | `/api/tribunal/inbox` | 200 with `stats` object |
+| 2 | Dispatch without DB | POST | `/api/tribunal/dispatch` | 503 (no DB) with valid payload |
+| 3 | Missing title | POST | `/api/tribunal/dispatch` | 400 `title required` |
+| 4 | Invalid status value | POST | `/api/tribunal/status` | 400 `Invalid status` |
+| 5 | Missing task_id on status | POST | `/api/tribunal/status` | 400 `task_id and status required` |
+| 6 | Missing status field | POST | `/api/tribunal/status` | 400 `task_id and status required` |
+| 7 | Malformed JSON body | POST | `/api/tribunal/dispatch` | 500 |
+| 8 | Runtime health | GET | `/api/runtime` | 200 |
+| 9 | Dependency failure msg | GET | `/api/runtime` | Response contains dependency info |
+| 10 | UI HTML serves | GET | `/` | 200 with HTML containing `SC Agent OS` |
+
+### Example curl Commands
+
+```bash
+# Test 1: GET inbox
+curl -s http://localhost:3000/api/tribunal/inbox | jq .
+
+# Test 3: Missing title (expect 400)
+curl -s -X POST http://localhost:3000/api/tribunal/dispatch \
+  -H 'Content-Type: application/json' \
+  -d '{"lane":"SYSTEM"}' | jq .
+
+# Test 4: Invalid status (expect 400)
+curl -s -X POST http://localhost:3000/api/tribunal/status \
+  -H 'Content-Type: application/json' \
+  -d '{"task_id":"00000000-0000-0000-0000-000000000000","status":"bogus"}' | jq .
+
+# Test 7: Malformed JSON (expect 500)
+curl -s -X POST http://localhost:3000/api/tribunal/dispatch \
+  -H 'Content-Type: application/json' \
+  -d 'not json' | jq .
+
+# Test 10: UI serves
+curl -s http://localhost:3000/ | grep -o 'SC Agent OS'
+```
+
+### E2E Testing Against Supabase
+
+For full lifecycle testing with a live Supabase connection, set env vars and run:
+
+```bash
+export SUPABASE_URL=https://nevgdyfpxdaloacuutal.supabase.co
+export SUPABASE_SERVICE_ROLE_KEY=<key from Vercel env vars>
+```
+
+Then test the full dispatch lifecycle:
+1. POST `/api/tribunal/dispatch` with title, lane, task_type, priority
+2. Verify task appears in GET `/api/tribunal/inbox`
+3. POST `/api/tribunal/status` with `status: assigned`, then `running`
+4. POST `/api/tribunal/receipt` with `event_type: completed`
+5. Verify final state in GET `/api/tribunal/inbox`
+6. Clean up test records via Supabase MCP `execute_sql`
+
+### Playwright UI Testing
+
+Playwright is available for browser-based testing. Use the pre-installed Chromium:
+
+```javascript
+const { chromium } = require('playwright');
+const browser = await chromium.launch({
+  executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
+  args: ['--no-sandbox']
+});
+```
+
+UI tests should verify:
+- Dashboard loads with "SC Agent OS" title
+- Each panel button activates its corresponding panel
+- No browser console errors on panel activation
+- Dispatch panel renders form fields
+- Agent Ops panel renders agent table
+
+### Vercel Preview Testing
+
+Preview deployments have Vercel Deployment Protection (SSO). To test previews:
+- Use `mcp__Vercel__get_access_to_vercel_url` to obtain a share token
+- Authenticate via `?_vercel_share=<token>` query parameter
+- Note: The environment proxy may block direct HTTPS to `.vercel.app` domains
+
+## Security Constraints (Enforced)
+
+- No secrets in client code, logs, GitHub, or CP task payloads
+- Provider credentials and SUPABASE_SERVICE_ROLE_KEY must remain server-side
+- An agent may not approve its own output, promote a persona, or bypass DCS authority
+- No direct-to-main push without DCS authorization
+- No PS content in any dispatch or build
+- No family or minor content in public GitHub repositories
+
+## Deployment
+
+- **Vercel project:** `sc-command-post` (prj_a9pbcrfvQczbmH2Cr1S2Q08p2975)
+- **Team:** sonlyconsulting-ctrls-projects
+- **Required env vars:** `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`
+- **Production domains:** sonlyconsulting.com, www.sonlyconsulting.com
+- Root `vercel.json` rewrites all routes to `/api`
+- Root `api/index.js` proxies to `apps/sc-agent-os/api/index.js`
+
+## Branch Policy
+
+- Feature branches: `claude/<descriptor>`
+- PRs target `main`
+- Squash merge only
+- No force push to main
