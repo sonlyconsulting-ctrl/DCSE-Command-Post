@@ -1,6 +1,6 @@
 # Implementation Status Report
 **Date:** 2026-07-15 (Updated)
-**Build:** SC Agent OS v1.3 + Personas/Assets Module + Runtime Health
+**Build:** SC Agent OS v1.3 + Batch 1 P0 Complete (All 11 Section 2.8 CP Views)
 
 ---
 
@@ -66,20 +66,38 @@
 
 ---
 
+## Batch 1 P0 Completion (Section 2.8 CP Views)
+
+| # | Required CP View | Panel | Status |
+|---|---|---|---|
+| 1 | Portfolio build order | panel-portfolio | Pre-existing (v1.3) |
+| 2 | Parallel execution board | panel-phasegate | COMMITTED |
+| 3 | Phase gate board | panel-phasegate | COMMITTED |
+| 4 | DCS decision queue | panel-dcsqueue | COMMITTED |
+| 5 | Runtime and data health | panel-runtime | COMMITTED |
+| 6 | Receipts and evidence | panel-receipts | COMMITTED |
+| 7 | Assurance Loop Console | panel-assurance | COMMITTED |
+| 8 | DBA Console | panel-dba | COMMITTED |
+| 9 | API Keys Admin Console | panel-apikeys | COMMITTED |
+| 10 | SC Fullness Approval | panel-assurance (fullness section) | COMMITTED |
+| 11 | Configuration Console | panel-config | COMMITTED |
+
+---
+
 ## Open Workstreams (Per Handoff v7)
 
-| Workstream | Priority | Status |
-|-----------|----------|--------|
-| MVT-014 Runtime Health | P0 | Runtime Health panel built, Ollama endpoint/model/smoke/job surface |
-| MVT-008A Agent Relay Runtime | P0 | Supabase dcse_cp tables active, relay plumbing pending |
-| MVT-010 Agent OS continuation | P0 | v1.3 merged, continuation areas open |
-| MVT-013 TSL July 18 MVP | P0 | Issue #3 open, source reconstruction pending |
-| MVT-011 SC Hero Line DDNA | P1 | DDNA process defined, hero line candidate only |
-| MVT-016 SC Campaign System | P1 | LM Arena artifact intake pending |
-| MVT-009 SC Parent Webpage | P1 | Assigned, non-blocking |
-| MVT-015 Family Education Pathways | P1 | Product definition pending |
-| MVT-017 Media Production Unit | P1 | Architecture defined, preflight pending |
-| MVT-018 Knowledge Promotion Router | P0 | Approved concept, implementation pending |
+| Workstream | Priority | Batch | Status |
+|-----------|----------|-------|--------|
+| MVT-014 Runtime Health | P0 | B1-A | CP surface built, Ollama endpoint/model/smoke/job/capability |
+| MVT-008A Agent Relay Runtime | P0 | B1-B | Agent Operations panel built, dcse_cp tables queried |
+| DBA Administration | P0 | B1-C | DBA Console built, schema/migration/RLS/operations surface |
+| MVT-010 Agent OS continuation | P0 | B1-D | Agent Operations + Phase Gates + DCS Queue built |
+| API Keys Administration | P0 | B1-E | API Keys Admin Console built, provider readiness matrix |
+| Build Assurance automation | P0 | B1-F | Assurance Loop Console built, A0-A8 + fullness |
+| MVT-013 TSL July 18 MVP | P0 | B2 | BLOCKED — source reconstruction pending DCS |
+| MVT-011 SC Hero Line DDNA | P1 | B3-A | BLOCKED — DCS final selection after DDNA process |
+| MVT-016 SC Campaign System | P1 | B3-B | BLOCKED — LM Arena artifact intake pending |
+| MVT-015 Family Education Pathways | P1 | B3-D | BLOCKED — product definition pending |
 
 ---
 
@@ -92,6 +110,14 @@
 
 ### Remaining DCS Decisions
 - SC hero line final selection (DDNA process)
-- TSL release approval after QA
+- TSL source reconstruction packet (Issue #3)
 - SC brand palette confirmation
+- PR #8 merge authorization (Batch 1 P0 surfaces)
 - Production deployment authorization
+
+### Hard Gates (Blocking Further Autonomous Work)
+- Batch 2 (TSL MVP): requires source reconstruction packet from DCS
+- Batch 3-A (SC Hero DDNA): requires DCS selection after DDNA process
+- Batch 3-B (SC Campaign): requires LM Arena artifact intake
+- Batch 3-D (Family Pathways): requires product definition
+- No migration, merge, deployment, or external action without DCS authorization
