@@ -32,6 +32,10 @@
 | API Keys Admin Console + /api/apikeys | COMMITTED | index.js: refreshAPIKeys(), handleAPIKeys() |
 | Assurance Loop Console + /api/assurance | COMMITTED | index.js: refreshAssurance(), handleAssurance() |
 | Agent Operations panel + /api/agentops | COMMITTED | index.js: refreshAgentOps(), handleAgentOps() |
+| Phase Gate Board | COMMITTED | index.js: refreshPhaseGate(), panel-phasegate |
+| DCS Decision Queue + /api/dcsqueue | COMMITTED | index.js: refreshDCSQueue(), handleDCSQueue() |
+| Receipts and Evidence + /api/receipts | COMMITTED | index.js: refreshReceipts(), handleReceipts() |
+| Configuration Console | COMMITTED | index.js: refreshConfig(), panel-config |
 
 ---
 

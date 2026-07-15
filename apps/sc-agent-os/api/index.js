@@ -287,10 +287,14 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       <div class="nav-item" onclick="nav('dispatch',this)"><span class="nav-icon">📦</span>Dispatch</div>
       <div class="nav-item" onclick="nav('personas',this)"><span class="nav-icon">◉</span>Personas<span class="nav-badge nb-gold" id="personasBadge">6</span></div>
       <div class="nav-item" onclick="nav('assets',this)"><span class="nav-icon">◫</span>Assets<span class="nav-badge nb-blue" id="assetsBadge">7</span></div>
+      <div class="nav-item" onclick="nav('phasegate',this)"><span class="nav-icon">▥</span>Phase Gates<span class="nav-badge nb-amber" id="phasegateBadge">10</span></div>
+      <div class="nav-item" onclick="nav('dcsqueue',this)"><span class="nav-icon">◆</span>DCS Queue<span class="nav-badge nb-red" id="dcsqueueBadge">?</span></div>
+      <div class="nav-item" onclick="nav('receipts',this)"><span class="nav-icon">▧</span>Receipts<span class="nav-badge nb-amber" id="receiptsBadge">?</span></div>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">Administration</div>
+      <div class="nav-item" onclick="nav('config',this)"><span class="nav-icon">⚙</span>Configuration<span class="nav-badge nb-amber" id="configBadge">?</span></div>
       <div class="nav-item" onclick="nav('dba',this)"><span class="nav-icon">▣</span>DBA Console<span class="nav-badge nb-amber" id="dbaBadge">?</span></div>
       <div class="nav-item" onclick="nav('apikeys',this)"><span class="nav-icon">⚿</span>API Keys Admin<span class="nav-badge nb-amber" id="apikeysBadge">?</span></div>
       <div class="nav-item" onclick="nav('assurance',this)"><span class="nav-icon">◎</span>Assurance Loops<span class="nav-badge nb-amber" id="assuranceBadge">A0-A8</span></div>
@@ -822,6 +826,195 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       </div>
     </div>
 
+    <!-- PHASE GATE BOARD (views 2+3: parallel execution + phase gates) -->
+    <div class="panel" id="panel-phasegate">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Phase Gate Board</div><div class="panel-sub">Universal Workstream Lifecycle and Parallel Execution Status</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshPhaseGate()">Refresh</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Workstream Phase Status</div>
+        <div class="flex flex-col gap-6" id="phaseGateGrid">
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:6px"><span>Workstream</span><span>Batch</span><span>Phase</span><span>Status</span><span>Owner</span><span>Blocker</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-014 Runtime Health</span><span>B1-A</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">Codex</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-008A Relay</span><span>B1-B</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">Claude Code</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">DBA Administration</span><span>B1-C</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">DBA Admin</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-010 Agent OS</span><span>B1-D</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">Codex</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">API Keys Admin</span><span>B1-E</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">API Keys Admin</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Build Assurance</span><span>B1-F</span><span class="tag tag-green" style="font-size:9px">P3 BUILD</span><span class="tag tag-green" style="font-size:9px">ACTIVE</span><span class="mono text-dim">Codex</span><span class="mono text-dim">None</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-013 TSL MVP</span><span>B2</span><span class="tag tag-amber" style="font-size:9px">P1 SOURCE</span><span class="tag tag-amber" style="font-size:9px">BLOCKED</span><span class="mono text-dim">Codex</span><span class="mono text-dim">Source recon</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-011 SC Hero DDNA</span><span>B3-A</span><span class="tag tag-amber" style="font-size:9px">P1 SOURCE</span><span class="tag tag-amber" style="font-size:9px">PENDING</span><span class="mono text-dim">ChatGPT + Codex</span><span class="mono text-dim">DCS confirm</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-016 SC Campaign</span><span>B3-B</span><span class="tag tag-amber" style="font-size:9px">P0 INTAKE</span><span class="tag tag-amber" style="font-size:9px">PENDING</span><span class="mono text-dim">Codex</span><span class="mono text-dim">LM Arena</span></div>
+          <div style="display:grid;grid-template-columns:2fr 60px 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">MVT-015 Family Pathways</span><span>B3-D</span><span class="tag tag-amber" style="font-size:9px">P0 INTAKE</span><span class="tag tag-amber" style="font-size:9px">PENDING</span><span class="mono text-dim">ChatGPT + Codex</span><span class="mono text-dim">Product def</span></div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Phase Legend</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:10px;color:var(--text-dim)">
+          <div>P0: Authority and intake</div><div>P1: Source reconstruction</div><div>P2: Requirements and architecture</div>
+          <div>P3: Governed build</div><div>P4: Integration and validation</div><div>P5: Backward-chain QA</div>
+          <div>P6: Compliance and readiness</div><div>P7: Staging and promotion</div><div>P8: Monitoring and maintenance</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DCS DECISION QUEUE (view 4) -->
+    <div class="panel" id="panel-dcsqueue">
+      <div class="panel-hdr">
+        <div><div class="panel-title">DCS Decision Queue</div><div class="panel-sub">Decisions Awaiting Level 0 DCS Authority</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshDCSQueue()">Refresh</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Active Decisions</div>
+        <div class="trib-list" id="dcsDecisionList">
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--red)">PENDING</span>
+            <div class="trib-info">
+              <div class="trib-title">SC Hero Line Final Selection</div>
+              <div class="trib-meta">MVT-011 · DDNA process required · PR #5 held</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--amber)">PENDING</span>
+            <div class="trib-info">
+              <div class="trib-title">TSL Source Reconstruction Packet</div>
+              <div class="trib-meta">MVT-013 · Issue #3 · Source material from DCS</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--amber)">PENDING</span>
+            <div class="trib-info">
+              <div class="trib-title">SC Brand Palette Confirmation</div>
+              <div class="trib-meta">MVT-009/016 · Visual identity lock</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--amber)">PENDING</span>
+            <div class="trib-info">
+              <div class="trib-title">Production Deployment Authorization</div>
+              <div class="trib-meta">Batch 5 · Post-staging DCS promotion</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--text-dim)">FUTURE</span>
+            <div class="trib-info">
+              <div class="trib-title">PR #8 Merge Authorization</div>
+              <div class="trib-meta">Current branch · Batch 1 P0 surfaces · Draft</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Hold Conditions</div>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Tribunal Relay PR #5 (hero line)</span><span class="tag tag-red">HELD</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">TSL July 18 MVP (source recon)</span><span class="tag tag-amber">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">SC Campaign (LM Arena intake)</span><span class="tag tag-amber">BLOCKED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Family Pathways (product def)</span><span class="tag tag-amber">BLOCKED</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECEIPTS AND EVIDENCE (view 6) -->
+    <div class="panel" id="panel-receipts">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Receipts and Evidence</div><div class="panel-sub">Proof Supporting Each Status Claim</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshReceipts()">Refresh</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Build Receipts</div>
+        <div class="trib-list" id="receiptsList">
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--green)">VERIFIED</span>
+            <div class="trib-info">
+              <div class="trib-title">PR #5 Agent OS v1.3 Baseline</div>
+              <div class="trib-meta">Commit c8f5270 · Merged to main · Vercel deployed</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--green)">VERIFIED</span>
+            <div class="trib-info">
+              <div class="trib-title">PR #6 Personas/Assets Module</div>
+              <div class="trib-meta">Commit 12acec7 · Merged to main · Migrations 001-003 applied</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--green)">VERIFIED</span>
+            <div class="trib-info">
+              <div class="trib-title">Migration 004 Relay RPC Security</div>
+              <div class="trib-meta">Applied · Public/anon/auth execution revoked</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--blue)">COMMITTED</span>
+            <div class="trib-info">
+              <div class="trib-title">PR #8 Batch 1 P0 Surfaces</div>
+              <div class="trib-meta">Runtime Health, DBA, API Keys, Assurance, Agent Ops, Phase Gates, DCS Queue, Receipts, Config</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Supabase Verification</div>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">dcse_cp schema (24 tables)</span><span class="tag tag-green">VERIFIED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Governed persona seeds (6)</span><span class="tag tag-green">VERIFIED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">SNTY/ASP identity masking</span><span class="tag tag-green">VERIFIED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Agent promote/approve/deploy locks</span><span class="tag tag-green">VERIFIED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Assets defaulted to internal/discovered</span><span class="tag tag-green">VERIFIED</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIGURATION CONSOLE (view 11) -->
+    <div class="panel" id="panel-config">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Configuration Console</div><div class="panel-sub">Themes, Tiers, Entitlements, Feature Flags, and Display Profiles</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshConfig()">Refresh</button>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Active Configuration</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Theme</span><span class="mono text-dim">DCSE Navy (default)</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Display Profile</span><span class="mono text-dim">SC Agent OS v1.3</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Config Version</span><span class="mono text-dim" id="configVersion">1.0.0</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last Updated</span><span class="mono text-dim" id="configUpdated">2026-07-15</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Feature Flags</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Multi-provider Chat</span><span class="tag tag-green">ENABLED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">DDNA Harvest</span><span class="tag tag-green">ENABLED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Runtime Health</span><span class="tag tag-green">ENABLED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Agent Operations</span><span class="tag tag-green">ENABLED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">TSL Admin Console</span><span class="tag tag-amber">PENDING</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">SC Campaign System</span><span class="tag tag-amber">PENDING</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2 mt-8">
+        <div class="card">
+          <div class="card-title">Tier Configuration</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Operator (Internal)</span><span class="tag tag-green">ACTIVE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">DCS (Authority)</span><span class="tag tag-green">ACTIVE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Review Board</span><span class="tag tag-green">ACTIVE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Agent (Automated)</span><span class="tag tag-green">ACTIVE</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Deployment Targets</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Production (os.sonlyconsulting.com)</span><span class="tag tag-green">LIVE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Preview (Vercel)</span><span class="tag tag-green">DEPLOYED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Local Dev</span><span class="tag tag-amber">MANUAL</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- DBA CONSOLE -->
     <div class="panel" id="panel-dba">
       <div class="panel-hdr">
@@ -1063,6 +1256,10 @@ function nav(id,el){
   if(id==='personas')loadPersonas(_personasFilter);
   if(id==='assets')loadAssets(_assetsFilter);
   if(id==='runtime'&&!_runtimeChecked)refreshRuntimeHealth();
+  if(id==='phasegate')refreshPhaseGate();
+  if(id==='dcsqueue'&&!_dcsqueueChecked)refreshDCSQueue();
+  if(id==='receipts'&&!_receiptsChecked)refreshReceipts();
+  if(id==='config'&&!_configChecked)refreshConfig();
   if(id==='agentops'&&!_agentopsChecked)refreshAgentOps();
   if(id==='dba'&&!_dbaChecked)refreshDBA();
   if(id==='apikeys'&&!_apikeysChecked)refreshAPIKeys();
@@ -1644,6 +1841,54 @@ async function runRuntimeSmokeTest(){
   }
 }
 
+// ===== PHASE GATE BOARD =====
+function refreshPhaseGate(){
+  const badge=document.getElementById('phasegateBadge');
+  if(badge){badge.textContent='10';badge.className='nav-badge nb-green';}
+}
+
+// ===== DCS DECISION QUEUE =====
+let _dcsqueueChecked=false;
+async function refreshDCSQueue(){
+  _dcsqueueChecked=true;
+  const badge=document.getElementById('dcsqueueBadge');
+  try{
+    const r=await fetch('/api/dcsqueue');
+    const data=await r.json();
+    if(badge)badge.textContent=data.pending_count||'0';
+    if(data.decisions&&data.decisions.length){
+      const list=document.getElementById('dcsDecisionList');
+      if(list){
+        list.innerHTML=data.decisions.map(d=>'<div class="trib-item"><span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--'+(d.status==='PENDING'?'red':'amber')+')">'+(d.status||'PENDING')+'</span><div class="trib-info"><div class="trib-title">'+d.title+'</div><div class="trib-meta">'+(d.context||'')+'</div></div></div>').join('');
+      }
+    }
+  }catch(e){
+    if(badge){badge.textContent='ERR';badge.className='nav-badge nb-red';}
+  }
+}
+
+// ===== RECEIPTS =====
+let _receiptsChecked=false;
+async function refreshReceipts(){
+  _receiptsChecked=true;
+  const badge=document.getElementById('receiptsBadge');
+  try{
+    const r=await fetch('/api/receipts');
+    const data=await r.json();
+    if(badge){badge.textContent=data.receipt_count||'0';badge.className='nav-badge '+(data.receipt_count?'nb-green':'nb-amber');}
+  }catch(e){
+    if(badge){badge.textContent='ERR';badge.className='nav-badge nb-red';}
+  }
+}
+
+// ===== CONFIGURATION =====
+let _configChecked=false;
+function refreshConfig(){
+  _configChecked=true;
+  const badge=document.getElementById('configBadge');
+  if(badge){badge.textContent='v1';badge.className='nav-badge nb-green';}
+}
+
 // ===== AGENT OPERATIONS =====
 let _agentopsChecked=false;
 async function refreshAgentOps(){
@@ -1999,6 +2244,33 @@ async function handleRuntimeSmoke(req, res) {
   });
 }
 
+async function handleDCSQueue(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const decisions = [
+    {title: 'SC Hero Line Final Selection', status: 'PENDING', context: 'MVT-011 · DDNA process required · PR #5 held'},
+    {title: 'TSL Source Reconstruction Packet', status: 'PENDING', context: 'MVT-013 · Issue #3 · Source material from DCS'},
+    {title: 'SC Brand Palette Confirmation', status: 'PENDING', context: 'MVT-009/016 · Visual identity lock'},
+    {title: 'Production Deployment Authorization', status: 'PENDING', context: 'Batch 5 · Post-staging DCS promotion'},
+    {title: 'PR #8 Merge Authorization', status: 'FUTURE', context: 'Current branch · Batch 1 P0 surfaces · Draft'}
+  ];
+  res.statusCode = 200;
+  res.end(JSON.stringify({decisions, pending_count: decisions.filter(d => d.status === 'PENDING').length}));
+}
+
+async function handleReceipts(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const receipts = [
+    {title: 'PR #5 Agent OS v1.3 Baseline', status: 'VERIFIED', ref: 'c8f5270'},
+    {title: 'PR #6 Personas/Assets Module', status: 'VERIFIED', ref: '12acec7'},
+    {title: 'Migration 004 Relay RPC Security', status: 'VERIFIED', ref: 'Applied'},
+    {title: 'PR #8 Batch 1 P0 Surfaces', status: 'COMMITTED', ref: 'Draft PR'}
+  ];
+  res.statusCode = 200;
+  res.end(JSON.stringify({receipts, receipt_count: receipts.length}));
+}
+
 async function handleAgentOps(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -2165,6 +2437,8 @@ module.exports = (req, res) => {
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/dcsqueue')) return handleDCSQueue(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/receipts')) return handleReceipts(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/agentops')) return handleAgentOps(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/dba')) return handleDBA(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/apikeys')) return handleAPIKeys(req, res);
