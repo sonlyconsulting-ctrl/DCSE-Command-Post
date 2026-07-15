@@ -68,7 +68,8 @@
 | Agent promote/approve/deploy locks | VERIFIED: all locked by default |
 | Existing assets (7) | Defaulted to internal/discovered with locks |
 | dcse_cp schema | 24 tables active |
-| Security advisor findings | 43 remediated to 3 residual |
+| Migration 006 (vector to extensions) | APPLIED |
+| Security advisor findings | 43 remediated to 1 resolved + 3 residual (see below) |
 
 ---
 
@@ -135,6 +136,15 @@
 - Batch 3-A (SC Hero DDNA): requires DCS selection after DDNA process
 - Batch 3-B (SC Campaign): requires LM Arena artifact intake
 - Batch 3-D (Family Pathways): requires product definition
+
+### Security Residual Disposition (Step 8)
+
+| Finding | Status | Detail |
+|---------|--------|--------|
+| vector in public schema | REMEDIATED | Migration 006, moved to extensions schema |
+| pg_net in public schema | PLATFORM RESIDUAL | Extension does not support SET SCHEMA, Supabase-managed |
+| sc_contact_feedback permissive INSERT | DEFERRED | Likely intentional for public contact form, awaiting DCS |
+| Leaked password protection disabled | DASHBOARD ACTION | Enable via Supabase Dashboard > Auth > Security |
 
 ### Rollback Instructions
 - Migration 005: rollback SQL in comments at bottom of 005_supabase_security_remediation.sql
