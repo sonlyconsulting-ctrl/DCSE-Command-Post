@@ -1,6 +1,6 @@
 # Implementation Status Report
 **Date:** 2026-07-15 (Updated)
-**Build:** SC Agent OS v1.3 + Batch 1 P0 Complete (All 11 Section 2.8 CP Views)
+**Build:** SC Agent OS v1.3 + Batch 1 P0 Merged + Security Remediation + Tribunal Dispatch API
 
 ---
 
@@ -23,8 +23,12 @@
 | Migration 002, assets additive | APPLIED | migrations/002_dcse_assets_additive.sql |
 | Migration 003, persona seeds | APPLIED | migrations/003_dcse_persona_seeds.sql |
 | Relay RPC security migration 004 | APPLIED | Revoked public/anon/authenticated execution |
+| Security remediation migration 005 | APPLIED | Search paths, EXECUTE revocations, scn_balance, RLS, avatar bucket |
 | Command Post PR #5 (Agent OS baseline) | MERGED | c8f5270 |
 | Command Post PR #6 (Personas/Assets) | MERGED | 12acec7 |
+| Command Post PR #8 (Batch 1 P0) | MERGED | ad2f82d |
+| Tribunal Dispatch API (inbox/dispatch/receipt/status) | COMMITTED | index.js: handleTribunalInbox/Dispatch/Receipt/Status |
+| AgentOps column fix (schema alignment) | COMMITTED | index.js: handleAgentOps() |
 | Runtime Health panel + /api/runtime | COMMITTED | index.js: refreshRuntimeHealth(), handleRuntime() |
 | Runtime smoke test + /api/runtime/smoke | COMMITTED | index.js: runRuntimeSmokeTest(), handleRuntimeSmoke() |
 | Persona API column fix (code/display_name) | COMMITTED | index.js: handlePersonas() |
@@ -58,11 +62,13 @@
 |------|--------|
 | Migrations 001-003 | APPLIED under DCS authorization |
 | Migration 004 (Relay RPC security) | APPLIED |
+| Migration 005 (Security remediation) | APPLIED |
 | Governed persona seeds (6) | LIVE: SASH, SNTY, ASP, DCS, SC Operator, DCS-E |
 | SNTY/ASP identity masking | VERIFIED: identity_mask=true, privacy_class=protected |
 | Agent promote/approve/deploy locks | VERIFIED: all locked by default |
 | Existing assets (7) | Defaulted to internal/discovered with locks |
 | dcse_cp schema | 24 tables active |
+| Security advisor findings | 43 remediated to 3 residual |
 
 ---
 

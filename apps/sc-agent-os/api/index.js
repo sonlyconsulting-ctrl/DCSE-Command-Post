@@ -761,23 +761,47 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
     <!-- DISPATCH -->
     <div class="panel" id="panel-dispatch">
       <div class="panel-hdr">
-        <div><div class="panel-title">Dispatch</div><div class="panel-sub">Operational packet queue</div></div>
-        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('dispatchForm').style.display=document.getElementById('dispatchForm').style.display==='none'?'block':'none'">+ New Packet</button>
+        <div><div class="panel-title">Dispatch</div><div class="panel-sub">Tribunal task dispatch and routing</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('dispatchForm').style.display=document.getElementById('dispatchForm').style.display==='none'?'block':'none'">+ New Dispatch</button>
       </div>
-      <div class="card" id="dispatchForm" style="display:none">
-        <div class="card-title">New Packet</div>
-        <div class="form-row">
-          <input class="inp" id="dispatchId" placeholder="Packet ID (e.g. TRIB-20260715-DESC)" />
-        </div>
-        <div class="form-row">
-          <input class="inp" id="dispatchDesc" placeholder="Description..." />
-        </div>
-        <div class="form-row">
-          <input class="inp" id="dispatchInbox" placeholder="Inbox UNC path (optional)" />
-          <button class="btn btn-gold" onclick="addDispatch()">Create</button>
+      <div class="card mb-8" id="dispatchStats">
+        <div class="card-title">Dispatch Pipeline</div>
+        <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="stat-card"><div class="stat-val" id="dspPlanned">-</div><div class="stat-lbl">Planned</div></div>
+          <div class="stat-card"><div class="stat-val" id="dspAssigned">-</div><div class="stat-lbl">Assigned</div></div>
+          <div class="stat-card"><div class="stat-val" id="dspRunning">-</div><div class="stat-lbl">Running</div></div>
+          <div class="stat-card"><div class="stat-val" id="dspCompleted">-</div><div class="stat-lbl">Completed</div></div>
         </div>
       </div>
-      <div class="trib-list" id="dispatchList"></div>
+      <div class="card mb-8" id="dispatchForm" style="display:none">
+        <div class="card-title">Create Dispatch</div>
+        <div class="form-row">
+          <input class="inp" id="dispatchTitle" placeholder="Task title" style="flex:2" />
+          <select class="inp" id="dispatchLane" style="flex:1"><option value="DCSE">DCSE</option><option value="SC">SC</option><option value="TSL">TSL</option><option value="TRIBUNAL">TRIBUNAL</option><option value="DDNA">DDNA</option><option value="RAG">RAG</option><option value="SYSTEM">SYSTEM</option></select>
+        </div>
+        <div class="form-row">
+          <input class="inp" id="dispatchDesc" placeholder="Description (optional)" style="flex:2" />
+          <select class="inp" id="dispatchType" style="flex:1"><option value="build">Build</option><option value="review">Review</option><option value="tribunal">Tribunal</option><option value="qa">QA</option><option value="database">Database</option><option value="github">GitHub</option><option value="decision">Decision</option><option value="monitor">Monitor</option><option value="other">Other</option></select>
+        </div>
+        <div class="form-row">
+          <select class="inp" id="dispatchPriority" style="flex:1"><option value="1">P1 Critical</option><option value="2">P2 High</option><option value="3" selected>P3 Normal</option><option value="4">P4 Low</option><option value="5">P5 Backlog</option></select>
+          <button class="btn btn-gold" onclick="createDispatch()">Dispatch</button>
+        </div>
+      </div>
+      <div class="card mb-8">
+        <div class="card-title">Task Queue</div>
+        <div class="filter-row">
+          <button class="btn btn-gold btn-sm" onclick="loadDispatchInbox('all')">All</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadDispatchInbox('active')">Active</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadDispatchInbox('completed')">Completed</button>
+          <button class="btn btn-ghost btn-sm" onclick="loadDispatchInbox('blocked')">Blocked</button>
+        </div>
+        <div id="dispatchTaskList"><div class="text-dim mono" style="padding:16px;font-size:11px">Loading dispatch queue...</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent Events</div>
+        <div id="dispatchEventList"><div class="text-dim mono" style="padding:16px;font-size:11px">No events loaded</div></div>
+      </div>
     </div>
 
     <!-- PERSONAS -->
@@ -950,10 +974,17 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
             </div>
           </div>
           <div class="trib-item">
-            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--blue)">COMMITTED</span>
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--green)">MERGED</span>
             <div class="trib-info">
               <div class="trib-title">PR #8 Batch 1 P0 Surfaces</div>
               <div class="trib-meta">Runtime Health, DBA, API Keys, Assurance, Agent Ops, Phase Gates, DCS Queue, Receipts, Config</div>
+            </div>
+          </div>
+          <div class="trib-item">
+            <span class="trib-status" style="background:rgba(255,255,255,.05);color:var(--green)">APPLIED</span>
+            <div class="trib-info">
+              <div class="trib-title">Migration 005 Security Remediation</div>
+              <div class="trib-meta">Search paths, EXECUTE revocations, scn_balance INVOKER, RLS policies, avatar bucket</div>
             </div>
           </div>
         </div>
@@ -1041,7 +1072,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
             <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 001 (Personas)</span><span class="tag tag-green">APPLIED</span></div>
             <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 002 (Assets)</span><span class="tag tag-green">APPLIED</span></div>
             <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 003 (Persona Seeds)</span><span class="tag tag-green">APPLIED</span></div>
-            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 004 (Relay RPC Security)</span><span class="tag tag-green">APPLIED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 005 (Security Remediation)</span><span class="tag tag-green">APPLIED</span></div>
           </div>
         </div>
       </div>
@@ -1268,6 +1299,7 @@ function nav(id,el){
   if(id==='dba'&&!_dbaChecked)refreshDBA();
   if(id==='apikeys'&&!_apikeysChecked)refreshAPIKeys();
   if(id==='assurance'&&!_assuranceChecked)refreshAssurance();
+  if(id==='dispatch')loadDispatchInbox('all');
 }
 
 // Voice
@@ -1739,41 +1771,85 @@ let dispatchPackets=JSON.parse(localStorage.getItem('sc_dispatch')||'null')||[
   {id:'TRIB-20260708-SC-LP-TRIAL-BUILD-DISPATCH',status:'ready',desc:'Hero line locked · Skill line agent-neutral · Trial: CONTROLLED_TRIAL SC_LP_20260707',created:'2026-07-08',inbox:'\\\\\\\\LAPTOP-74UF76GB\\\\DS All Things\\\\DCSE_Command_Center\\\\_Tribunal_Inbox'}
 ];
 function saveDispatch(){localStorage.setItem('sc_dispatch',JSON.stringify(dispatchPackets));}
-function renderDispatch(){
-  const list=document.getElementById('dispatchList');if(!list)return;
-  const statusStyle={ready:'background:var(--green-dim);color:var(--green)',draft:'background:var(--blue-dim);color:var(--blue)',dropped:'background:var(--teal-dim);color:var(--teal)'};
-  list.innerHTML=dispatchPackets.map((p,i)=>\`
-    <div class="trib-item" style="\${p.status==='ready'?'background:rgba(46,204,113,.04);border-color:rgba(46,204,113,.25)':''}">
-      <span class="trib-status" style="\${statusStyle[p.status]||''}">\${p.status.toUpperCase()}</span>
-      <div class="trib-info">
-        <div class="trib-title">\${p.id}</div>
-        <div class="trib-meta">\${p.desc}</div>
-        \${p.inbox?'<div class="trib-meta" style="margin-top:2px;font-size:8px">Inbox: '+p.inbox+'</div>':''}
-      </div>
-      <div class="flex gap-6">
-        <button class="btn btn-ghost btn-sm" onclick="copyDispatchJSON(\${i})">Copy JSON</button>
-        \${p.inbox?'<button class="btn btn-ghost btn-sm" onclick="copyDispatchPath('+i+')">Copy Path</button>':''}
-        <select class="model-select" style="font-size:9px;padding:2px 4px" onchange="setDispatchStatus(\${i},this.value)">
-          \${['draft','ready','dropped'].map(s=>'<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+s+'</option>').join('')}
-        </select>
-        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteDispatch(\${i})">✕</button>
-      </div>
-    </div>\`).join('');
+function renderDispatch(){loadDispatchInbox('all');}
+
+let _dispatchData=null;
+async function loadDispatchInbox(filter){
+  filter=filter||'all';
+  try{
+    const r=await fetch('/api/tribunal/inbox');
+    _dispatchData=await r.json();
+    const s=_dispatchData.stats;
+    const el=id=>document.getElementById(id);
+    if(el('dspPlanned'))el('dspPlanned').textContent=s.planned;
+    if(el('dspAssigned'))el('dspAssigned').textContent=s.assigned;
+    if(el('dspRunning'))el('dspRunning').textContent=s.running;
+    if(el('dspCompleted'))el('dspCompleted').textContent=s.completed;
+    const tl=el('dispatchTaskList');
+    if(tl){
+      let tasks=_dispatchData.tasks;
+      if(filter==='active')tasks=tasks.filter(t=>['planned','assigned','running','needs_review','awaiting_dcs'].includes(t.status));
+      else if(filter==='completed')tasks=tasks.filter(t=>['completed','approved'].includes(t.status));
+      else if(filter==='blocked')tasks=tasks.filter(t=>['blocked','rejected'].includes(t.status));
+      const statusTag=(st)=>{
+        const m={planned:'tag-amber',assigned:'tag-blue',running:'tag-teal',completed:'tag-green',approved:'tag-green',blocked:'tag-red',rejected:'tag-red',needs_review:'tag-amber',awaiting_dcs:'tag-amber'};
+        return '<span class="tag '+(m[st]||'tag-amber')+'">'+st.toUpperCase().replace(/_/g,' ')+'</span>';
+      };
+      const prioLabel=(p)=>({1:'P1',2:'P2',3:'P3',4:'P4',5:'P5'}[p]||'P3');
+      const agentName=(id)=>{
+        if(!id)return 'Unassigned';
+        const a=(_dispatchData.agents||[]).find(a=>a.id===id);
+        return a?a.display_name:'Agent '+id.slice(0,8);
+      };
+      if(!tasks.length){tl.innerHTML='<div class="text-dim mono" style="padding:16px;font-size:11px">No tasks matching filter</div>';return;}
+      tl.innerHTML=tasks.map(t=>\`
+        <div class="trib-item">
+          \${statusTag(t.status)}
+          <div class="trib-info">
+            <div class="trib-title">\${t.task_key}: \${t.title}</div>
+            <div class="trib-meta">\${t.lane} / \${t.task_type} / \${prioLabel(t.priority)} / \${agentName(t.assigned_agent_id)}</div>
+            \${t.description?'<div class="trib-meta" style="margin-top:2px;font-size:9px">'+t.description+'</div>':''}
+          </div>
+          <div class="flex gap-6">
+            <span class="mono" style="font-size:8px;color:var(--text-dim)">\${t.updated_at?new Date(t.updated_at).toLocaleDateString():''}</span>
+          </div>
+        </div>\`).join('');
+    }
+    const evl=el('dispatchEventList');
+    if(evl&&_dispatchData.events&&_dispatchData.events.length){
+      evl.innerHTML=_dispatchData.events.slice(0,10).map(e=>\`
+        <div style="font-size:10px;padding:4px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center">
+          <span class="tag tag-blue" style="font-size:8px">\${e.event_type}</span>
+          <span style="flex:1;color:var(--text-dim)">\${e.event_summary||''}</span>
+          <span class="mono" style="font-size:8px;color:var(--text-dim)">\${e.actor_label||''} \${e.created_at?new Date(e.created_at).toLocaleTimeString('en-US',{hour12:false}):''}</span>
+        </div>\`).join('');
+    }
+  }catch(e){console.error('Dispatch inbox error:',e);}
 }
-function addDispatch(){
-  const id=document.getElementById('dispatchId').value.trim();
-  const desc=document.getElementById('dispatchDesc').value.trim();
-  const inbox=document.getElementById('dispatchInbox').value.trim();
-  if(!id)return;
-  dispatchPackets.push({id,status:'draft',desc,created:new Date().toISOString().split('T')[0],inbox});
-  saveDispatch();renderDispatch();
-  document.getElementById('dispatchId').value='';document.getElementById('dispatchDesc').value='';document.getElementById('dispatchInbox').value='';
-  document.getElementById('dispatchForm').style.display='none';
+
+async function createDispatch(){
+  const title=(document.getElementById('dispatchTitle')||{}).value?.trim();
+  if(!title){alert('Title required');return;}
+  const desc=(document.getElementById('dispatchDesc')||{}).value?.trim();
+  const lane=(document.getElementById('dispatchLane')||{}).value||'DCSE';
+  const task_type=(document.getElementById('dispatchType')||{}).value||'other';
+  const priority=parseInt((document.getElementById('dispatchPriority')||{}).value)||3;
+  try{
+    const r=await fetch('/api/tribunal/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,description:desc,lane,task_type,priority})});
+    const data=await r.json();
+    if(data.ok){
+      document.getElementById('dispatchTitle').value='';document.getElementById('dispatchDesc').value='';
+      document.getElementById('dispatchForm').style.display='none';
+      loadDispatchInbox('all');
+    }else{alert('Dispatch error: '+(data.error||'Unknown'));}
+  }catch(e){alert('Dispatch failed: '+e.message);}
 }
-function deleteDispatch(i){if(!confirm('Delete packet?'))return;dispatchPackets.splice(i,1);saveDispatch();renderDispatch();}
-function copyDispatchJSON(i){navigator.clipboard.writeText(JSON.stringify(dispatchPackets[i],null,2)).then(()=>alert('Copied.'));}
-function copyDispatchPath(i){navigator.clipboard.writeText(dispatchPackets[i].inbox).then(()=>alert('Path copied.'));}
-function setDispatchStatus(i,status){dispatchPackets[i].status=status;saveDispatch();renderDispatch();}
+
+function addDispatch(){createDispatch();}
+function deleteDispatch(){}
+function copyDispatchJSON(){}
+function copyDispatchPath(){}
+function setDispatchStatus(){}
 
 // ===== RUNTIME HEALTH =====
 let _runtimeChecked=false;
@@ -1962,7 +2038,7 @@ async function refreshDBA(){
     const data=await r.json();
     if(tc)tc.textContent=data.table_count||'?';
     if(sv)sv.textContent=data.schema_version||'dcse_cp active';
-    if(lm)lm.textContent=data.last_migration||'004 (Relay RPC Security)';
+    if(lm)lm.textContent=data.last_migration||'005 (Security Remediation)';
     if(tl&&data.tables&&data.tables.length){
       tl.innerHTML=data.tables.map(t=>'<div class="trib-row"><div class="trib-title">'+t.name+'</div><div class="trib-meta">Rows: '+(t.row_count!=null?t.row_count:'?')+' · Schema: '+(t.schema||'dcse_cp')+'</div></div>').join('');
     }else if(tl){
@@ -2255,8 +2331,7 @@ async function handleDCSQueue(req, res) {
     {title: 'SC Hero Line Final Selection', status: 'PENDING', context: 'MVT-011 · DDNA process required · PR #5 held'},
     {title: 'TSL Source Reconstruction Packet', status: 'PENDING', context: 'MVT-013 · Issue #3 · Source material from DCS'},
     {title: 'SC Brand Palette Confirmation', status: 'PENDING', context: 'MVT-009/016 · Visual identity lock'},
-    {title: 'Production Deployment Authorization', status: 'PENDING', context: 'Batch 5 · Post-staging DCS promotion'},
-    {title: 'PR #8 Merge Authorization', status: 'FUTURE', context: 'Current branch · Batch 1 P0 surfaces · Draft'}
+    {title: 'Production Deployment Authorization', status: 'PENDING', context: 'Batch 5 · Post-staging DCS promotion'}
   ];
   res.statusCode = 200;
   res.end(JSON.stringify({decisions, pending_count: decisions.filter(d => d.status === 'PENDING').length}));
@@ -2269,7 +2344,8 @@ async function handleReceipts(req, res) {
     {title: 'PR #5 Agent OS v1.3 Baseline', status: 'VERIFIED', ref: 'c8f5270'},
     {title: 'PR #6 Personas/Assets Module', status: 'VERIFIED', ref: '12acec7'},
     {title: 'Migration 004 Relay RPC Security', status: 'VERIFIED', ref: 'Applied'},
-    {title: 'PR #8 Batch 1 P0 Surfaces', status: 'COMMITTED', ref: 'Draft PR'}
+    {title: 'PR #8 Batch 1 P0 Surfaces', status: 'VERIFIED', ref: 'ad2f82d (merged)'},
+    {title: 'Migration 005 Security Remediation', status: 'VERIFIED', ref: 'Applied (4 sections)'}
   ];
   res.statusCode = 200;
   res.end(JSON.stringify({receipts, receipt_count: receipts.length}));
@@ -2289,28 +2365,31 @@ async function handleAgentOps(req, res) {
   };
   if (SUPABASE_KEY) {
     const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+    const base = SUPABASE_URL + '/rest/v1';
     try {
       const [hbr, tsr, aer, arr, par] = await Promise.all([
-        fetch(`${SUPABASE_URL}/rest/v1/agent_heartbeats?select=agent_id,status,last_heartbeat&order=last_heartbeat.desc&limit=20`, {headers}).catch(() => null),
-        fetch(`${SUPABASE_URL}/rest/v1/agent_tasks?select=id,task_type,status,priority,assigned_agent,updated_at&order=updated_at.desc&limit=30`, {headers}).catch(() => null),
-        fetch(`${SUPABASE_URL}/rest/v1/activity_events?select=id,event_type,agent_id,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null),
-        fetch(`${SUPABASE_URL}/rest/v1/agent_registry?select=agent_id,agent_name,agent_type,status&order=agent_name.asc&limit=30`, {headers}).catch(() => null),
-        fetch(`${SUPABASE_URL}/rest/v1/relay_pending_assignments?select=id,task_id,agent_id,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null)
+        fetch(`${base}/agent_heartbeats?select=id,agent_id,heartbeat_status,last_seen_at,capability_status,notes&order=last_seen_at.desc&limit=20`, {headers}).catch(() => null),
+        fetch(`${base}/agent_tasks?select=id,task_key,title,task_type,status,priority,lane,assignment_mode,assigned_agent_id,updated_at&order=updated_at.desc&limit=30`, {headers}).catch(() => null),
+        fetch(`${base}/agent_task_events?select=id,task_id,event_type,actor_label,event_summary,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null),
+        fetch(`${base}/agent_registry?select=id,agent_key,display_name,agent_type,status,authorized_lanes&order=display_name.asc&limit=30`, {headers}).catch(() => null),
+        fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,status,created_at&status=eq.assigned&order=created_at.desc&limit=10`, {headers}).catch(() => null)
       ]);
       if (hbr && hbr.ok) {
         const hb = await hbr.json();
         const now = Date.now();
-        result.heartbeats.active = hb.filter(h => h.status === 'active').length;
-        result.heartbeats.stale = hb.filter(h => h.last_heartbeat && (now - new Date(h.last_heartbeat).getTime()) > 300000).length;
-        if (hb.length) result.heartbeats.last = hb[0].last_heartbeat;
+        result.heartbeats.active = hb.filter(h => h.heartbeat_status === 'online').length;
+        result.heartbeats.stale = hb.filter(h => h.last_seen_at && (now - new Date(h.last_seen_at).getTime()) > 300000).length;
+        if (hb.length) result.heartbeats.last = hb[0].last_seen_at;
         result.relay.event_detection = hb.length > 0 ? 'ACTIVE' : 'UNKNOWN';
       }
       if (tsr && tsr.ok) {
         const ts = await tsr.json();
-        result.tasks.pending = ts.filter(t => t.status === 'pending').length;
-        result.tasks.in_progress = ts.filter(t => t.status === 'in_progress').length;
-        result.tasks.completed = ts.filter(t => t.status === 'completed').length;
-        result.tasks.failed = ts.filter(t => t.status === 'failed' || t.status === 'blocked').length;
+        result.tasks.pending = ts.filter(t => t.status === 'planned' || t.status === 'assigned').length;
+        result.tasks.in_progress = ts.filter(t => t.status === 'running').length;
+        result.tasks.completed = ts.filter(t => t.status === 'completed' || t.status === 'approved').length;
+        result.tasks.failed = ts.filter(t => t.status === 'blocked' || t.status === 'rejected').length;
+        result.tasks.awaiting_dcs = ts.filter(t => t.status === 'awaiting_dcs').length;
+        result.tasks.needs_review = ts.filter(t => t.status === 'needs_review').length;
       }
       if (aer && aer.ok) result.recent_events = await aer.json();
       if (arr && arr.ok) {
@@ -2328,7 +2407,7 @@ async function handleDBA(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
   try {
-    const result = {table_count: 0, schema_version: 'dcse_cp', last_migration: '004 (Relay RPC Security)', tables: []};
+    const result = {table_count: 0, schema_version: 'dcse_cp', last_migration: '005 (Security Remediation)', tables: []};
     if (SUPABASE_KEY) {
       const tr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/`, {
         method: 'POST',
@@ -2431,6 +2510,149 @@ async function handleAssurance(req, res) {
   }));
 }
 
+async function handleTribunalInbox(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const result = {tasks: [], agents: [], events: [], assignments: [], stats: {total: 0, planned: 0, assigned: 0, running: 0, completed: 0, blocked: 0, awaiting_dcs: 0}};
+  if (!SUPABASE_KEY) { res.statusCode = 200; res.end(JSON.stringify(result)); return; }
+  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+  const base = SUPABASE_URL + '/rest/v1';
+  try {
+    const [tr, ar, er, asr] = await Promise.all([
+      fetch(`${base}/agent_tasks?select=id,task_key,title,description,lane,task_type,status,priority,assignment_mode,assigned_agent_id,dcs_decision_required,review_required,created_by_label,created_at,updated_at,completed_at&order=priority.asc,created_at.desc&limit=50`, {headers}).catch(() => null),
+      fetch(`${base}/agent_registry?select=id,agent_key,display_name,agent_type,status,authorized_lanes,current_task_id&order=display_name.asc`, {headers}).catch(() => null),
+      fetch(`${base}/agent_task_events?select=id,task_id,event_type,actor_label,event_summary,from_agent_id,to_agent_id,created_at&order=created_at.desc&limit=25`, {headers}).catch(() => null),
+      fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,sequence_order,status,created_at&order=created_at.desc&limit=30`, {headers}).catch(() => null)
+    ]);
+    if (tr && tr.ok) {
+      result.tasks = await tr.json();
+      result.stats.total = result.tasks.length;
+      result.tasks.forEach(t => {
+        if (t.status === 'planned') result.stats.planned++;
+        else if (t.status === 'assigned') result.stats.assigned++;
+        else if (t.status === 'running') result.stats.running++;
+        else if (t.status === 'completed' || t.status === 'approved') result.stats.completed++;
+        else if (t.status === 'blocked' || t.status === 'rejected') result.stats.blocked++;
+        else if (t.status === 'awaiting_dcs') result.stats.awaiting_dcs++;
+      });
+    }
+    if (ar && ar.ok) result.agents = await ar.json();
+    if (er && er.ok) result.events = await er.json();
+    if (asr && asr.ok) result.assignments = await asr.json();
+  } catch(e) {}
+  res.statusCode = 200;
+  res.end(JSON.stringify(result));
+}
+
+async function handleTribunalDispatch(req, res) {
+  let body = '';
+  req.on('data', d => body += d);
+  req.on('end', async () => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
+    try {
+      const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key} = JSON.parse(body);
+      if (!title) { res.statusCode = 400; res.end(JSON.stringify({error: 'title required'})); return; }
+      const validLanes = ['DCSE','SC','SS','TSL','TRIBUNAL','DDNA','RAG','SYSTEM'];
+      const validTypes = ['build','review','rag','database','github','tribunal','qa','synthesis','handoff','decision','monitor','other'];
+      const taskLane = validLanes.includes(lane) ? lane : 'DCSE';
+      const taskType = validTypes.includes(task_type) ? task_type : 'other';
+      const taskKey = 'TRIB-' + Date.now().toString(36).toUpperCase();
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const base = SUPABASE_URL + '/rest/v1';
+      const taskPayload = {
+        task_key: taskKey, title, description: description || null,
+        lane: taskLane, task_type: taskType,
+        priority: Math.min(5, Math.max(1, parseInt(priority) || 3)),
+        assignment_mode: assignment_mode || 'single',
+        status: 'planned', created_by_label: 'CP Dispatch'
+      };
+      if (assigned_agent_key) {
+        const agentR = await fetch(`${base}/agent_registry?agent_key=eq.${encodeURIComponent(assigned_agent_key)}&select=id&limit=1`, {headers});
+        if (agentR.ok) {
+          const agents = await agentR.json();
+          if (agents.length) { taskPayload.assigned_agent_id = agents[0].id; taskPayload.status = 'assigned'; }
+        }
+      }
+      const cr = await fetch(`${base}/agent_tasks`, {method: 'POST', headers, body: JSON.stringify(taskPayload)});
+      if (!cr.ok) { const err = await cr.text(); res.statusCode = cr.status; res.end(JSON.stringify({error: err})); return; }
+      const created = await cr.json();
+      const taskId = created[0]?.id;
+      if (taskId) {
+        await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
+          task_id: taskId, event_type: 'created', actor_label: 'CP Dispatch',
+          event_summary: `Task dispatched: ${title} [${taskKey}]`
+        })}).catch(() => {});
+      }
+      res.statusCode = 201;
+      res.end(JSON.stringify({ok: true, task: created[0], task_key: taskKey}));
+    } catch(e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+  });
+}
+
+async function handleTribunalReceipt(req, res) {
+  let body = '';
+  req.on('data', d => body += d);
+  req.on('end', async () => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
+    try {
+      const {task_id, event_type, actor_label, summary, result_status} = JSON.parse(body);
+      if (!task_id) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id required'})); return; }
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const base = SUPABASE_URL + '/rest/v1';
+      const evType = event_type || 'receipt';
+      const er = await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
+        task_id, event_type: evType, actor_label: actor_label || 'system',
+        event_summary: summary || `Receipt recorded for task ${task_id}`
+      })});
+      if (!er.ok) { const err = await er.text(); res.statusCode = er.status; res.end(JSON.stringify({error: err})); return; }
+      if (result_status) {
+        const validStatuses = ['completed','approved','blocked','rejected','needs_review','awaiting_dcs'];
+        if (validStatuses.includes(result_status)) {
+          const updatePayload = {status: result_status};
+          if (result_status === 'completed' || result_status === 'approved') updatePayload.completed_at = new Date().toISOString();
+          await fetch(`${base}/agent_tasks?id=eq.${task_id}`, {method: 'PATCH', headers, body: JSON.stringify(updatePayload)}).catch(() => {});
+        }
+      }
+      const event = await er.json();
+      res.statusCode = 201;
+      res.end(JSON.stringify({ok: true, event: event[0]}));
+    } catch(e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+  });
+}
+
+async function handleTribunalStatus(req, res) {
+  let body = '';
+  req.on('data', d => body += d);
+  req.on('end', async () => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
+    try {
+      const {task_id, status, actor_label, summary} = JSON.parse(body);
+      if (!task_id || !status) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id and status required'})); return; }
+      const validStatuses = ['planned','assigned','running','blocked','completed','needs_review','handoff_ready','parallel_review','awaiting_dcs','approved','rejected','archived'];
+      if (!validStatuses.includes(status)) { res.statusCode = 400; res.end(JSON.stringify({error: 'Invalid status: ' + status})); return; }
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const base = SUPABASE_URL + '/rest/v1';
+      const updatePayload = {status};
+      if (status === 'completed' || status === 'approved') updatePayload.completed_at = new Date().toISOString();
+      const ur = await fetch(`${base}/agent_tasks?id=eq.${task_id}`, {method: 'PATCH', headers, body: JSON.stringify(updatePayload)});
+      if (!ur.ok) { const err = await ur.text(); res.statusCode = ur.status; res.end(JSON.stringify({error: err})); return; }
+      await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
+        task_id, event_type: 'status_change', actor_label: actor_label || 'CP Dispatch',
+        event_summary: summary || `Status changed to ${status}`
+      })}).catch(() => {});
+      const updated = await ur.json();
+      res.statusCode = 200;
+      res.end(JSON.stringify({ok: true, task: updated[0]}));
+    } catch(e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+  });
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -2439,6 +2661,10 @@ module.exports = (req, res) => {
     res.statusCode = 200; res.end(); return;
   }
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
+  if (req.method === 'POST' && req.url.includes('/api/tribunal/dispatch')) return handleTribunalDispatch(req, res);
+  if (req.method === 'POST' && req.url.includes('/api/tribunal/receipt')) return handleTribunalReceipt(req, res);
+  if (req.method === 'POST' && req.url.includes('/api/tribunal/status')) return handleTribunalStatus(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/tribunal/inbox')) return handleTribunalInbox(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/dcsqueue')) return handleDCSQueue(req, res);
