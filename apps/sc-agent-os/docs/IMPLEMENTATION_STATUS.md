@@ -1,25 +1,40 @@
 # Implementation Status Report
-**Date:** 2026-07-15
-**Build:** SC Agent OS v1.3 + Personas/Assets Module
+**Date:** 2026-07-15 (Updated)
+**Build:** SC Agent OS v1.3 + Personas/Assets Module + Runtime Health
 
 ---
 
-## Completed (This Session)
+## Completed
 
 | Item | Status | Location |
 |------|--------|----------|
-| SC Agent OS v1.3 full functional rewrite | COMMITTED | apps/sc-agent-os/api/index.js |
-| DDNA Harvest — AI-powered scoring | COMMITTED | index.js: runDDNAHarvest() |
-| Local Models — Ollama live check | COMMITTED | index.js: checkOllama() |
-| RAG/Source — AI query + DDNA pipe | COMMITTED | index.js: queryRagSource() |
-| Task Queue — localStorage CRUD | COMMITTED | index.js: renderTasks() |
-| Portfolio — localStorage CRUD | COMMITTED | index.js: renderPortfolio() |
-| Tribunal — GitHub PR list + filter | COMMITTED | index.js: renderTribunal() |
-| Dispatch — packet management | COMMITTED | index.js: renderDispatch() |
-| Agent Dock — 12 agents, click-to-launch | COMMITTED | index.js: launchAgent() |
-| Migration 001 — personas additive | COMMITTED | migrations/001_dcse_personas_additive.sql |
-| Migration 002 — assets additive | COMMITTED | migrations/002_dcse_assets_additive.sql |
-| Migration 003 — persona seeds | COMMITTED | migrations/003_dcse_persona_seeds.sql |
+| SC Agent OS v1.3 full functional rewrite | MERGED | apps/sc-agent-os/api/index.js |
+| DDNA Harvest, AI-powered scoring | MERGED | index.js: runDDNAHarvest() |
+| Local Models, Ollama live check | MERGED | index.js: checkOllama() |
+| RAG/Source, AI query + DDNA pipe | MERGED | index.js: queryRagSource() |
+| Task Queue, localStorage CRUD | MERGED | index.js: renderTasks() |
+| Portfolio, localStorage CRUD | MERGED | index.js: renderPortfolio() |
+| Tribunal, GitHub PR list + filter | MERGED | index.js: renderTribunal() |
+| Dispatch, packet management | MERGED | index.js: renderDispatch() |
+| Agent Dock, 12 agents, click-to-launch | MERGED | index.js: launchAgent() |
+| Personas panel + /api/personas | MERGED | index.js: loadPersonas(), handlePersonas() |
+| Assets panel + /api/assets | MERGED | index.js: loadAssets(), handleAssets() |
+| Migration 001, personas additive | APPLIED | migrations/001_dcse_personas_additive.sql |
+| Migration 002, assets additive | APPLIED | migrations/002_dcse_assets_additive.sql |
+| Migration 003, persona seeds | APPLIED | migrations/003_dcse_persona_seeds.sql |
+| Relay RPC security migration 004 | APPLIED | Revoked public/anon/authenticated execution |
+| Command Post PR #5 (Agent OS baseline) | MERGED | c8f5270 |
+| Command Post PR #6 (Personas/Assets) | MERGED | 12acec7 |
+| Runtime Health panel + /api/runtime | COMMITTED | index.js: refreshRuntimeHealth(), handleRuntime() |
+| Runtime smoke test + /api/runtime/smoke | COMMITTED | index.js: runRuntimeSmokeTest(), handleRuntimeSmoke() |
+| Persona API column fix (code/display_name) | COMMITTED | index.js: handlePersonas() |
+
+---
+
+## Governance Docs
+
+| Document | Status | Location |
+|----------|--------|----------|
 | Schema Inspection Report | COMMITTED | docs/SCHEMA_INSPECTION_REPORT.md |
 | Personas Module Spec | COMMITTED | docs/PERSONAS_MODULE_SPEC.md |
 | Assets Module Spec | COMMITTED | docs/ASSETS_MODULE_SPEC.md |
@@ -29,39 +44,46 @@
 
 ---
 
-## Hard Gates (DCS Authorization Required)
+## Supabase Verified State
 
-| Item | Gate | Notes |
-|------|------|-------|
-| Apply migrations 001-003 to Supabase | DCS authorization | All are additive, reversible |
-| Merge PR #5 (Tribunal Relay) | DCS merge command | Clean, no conflicts |
-| Drop TRIB-20260708 dispatch packet | DCS manual execution | UNC path confirmed |
-| SC brand palette confirmation | DCS decision | Blocking SC LP production |
-| Vercel production deploy of v1.3 | Technical gate + DCS | See deploy note below |
+| Item | Status |
+|------|--------|
+| Migrations 001-003 | APPLIED under DCS authorization |
+| Migration 004 (Relay RPC security) | APPLIED |
+| Governed persona seeds (6) | LIVE: SASH, SNTY, ASP, DCS, SC Operator, DCS-E |
+| SNTY/ASP identity masking | VERIFIED: identity_mask=true, privacy_class=protected |
+| Agent promote/approve/deploy locks | VERIFIED: all locked by default |
+| Existing assets (7) | Defaulted to internal/discovered with locks |
+| dcse_cp schema | 24 tables active |
+
+---
+
+## Open Workstreams (Per Handoff v7)
+
+| Workstream | Priority | Status |
+|-----------|----------|--------|
+| MVT-014 Runtime Health | P0 | Runtime Health panel built, Ollama endpoint/model/smoke/job surface |
+| MVT-008A Agent Relay Runtime | P0 | Supabase dcse_cp tables active, relay plumbing pending |
+| MVT-010 Agent OS continuation | P0 | v1.3 merged, continuation areas open |
+| MVT-013 TSL July 18 MVP | P0 | Issue #3 open, source reconstruction pending |
+| MVT-011 SC Hero Line DDNA | P1 | DDNA process defined, hero line candidate only |
+| MVT-016 SC Campaign System | P1 | LM Arena artifact intake pending |
+| MVT-009 SC Parent Webpage | P1 | Assigned, non-blocking |
+| MVT-015 Family Education Pathways | P1 | Product definition pending |
+| MVT-017 Media Production Unit | P1 | Architecture defined, preflight pending |
+| MVT-018 Knowledge Promotion Router | P0 | Approved concept, implementation pending |
 
 ---
 
 ## Technical Gates
 
-### Vercel Deployment of SC Agent OS v1.3
-- **Blocker:** File is 85KB (~21K tokens), exceeds ~8K token output limit per agent response
-- **Current state:** File committed to GitHub at apps/sc-agent-os/api/index.js
-- **Unblock options:**
-  1. Connect Vercel project `sc-agent-os` (prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM) to GitHub repo `sonlyconsulting-ctrl/DCSE-Command-Post` via Vercel dashboard
-  2. Run `vercel --prod` locally from `apps/sc-agent-os/` directory with Vercel credentials
-- **Current production:** v1.3 with multi-provider chat is live at os.sonlyconsulting.com (deployment dpl_GHvK75urUEbBExB3wkwh8GPswj9z)
+### Vercel Deployment
+- Connect Vercel project to GitHub repo OR run vercel locally
+- Set SUPABASE_SERVICE_ROLE_KEY and SUPABASE_URL in Vercel project settings
+- Current production: os.sonlyconsulting.com (v1.3 multi-provider chat)
 
-### Supabase Personas/Assets API (Vercel)
-- **Blocker:** SUPABASE_SERVICE_ROLE_KEY not set as Vercel env var
-- **Required:** Set `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_URL=https://nevgdyfpxdaloacuutal.supabase.co` in Vercel project settings
-- **After that:** /api/personas and /api/assets endpoints will be live
-
----
-
-## Pending (Requires DCS Action)
-
-1. Apply Supabase migrations → Personas/Assets DCSE fields active
-2. Connect Vercel to GitHub → Auto-deploy on push
-3. Set Vercel env vars → Supabase API endpoints live
-4. Merge PR #5 → Tribunal relay updated
-5. Confirm SC brand palette → SC LP production unblocked
+### Remaining DCS Decisions
+- SC hero line final selection (DDNA process)
+- TSL release approval after QA
+- SC brand palette confirmation
+- Production deployment authorization

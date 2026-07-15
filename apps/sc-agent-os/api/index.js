@@ -277,6 +277,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       <div class="nav-item" onclick="nav('ddna',this)"><span class="nav-icon">△</span>DDNA Harvest<span class="nav-badge nb-red">73</span></div>
       <div class="nav-item" onclick="nav('models',this)"><span class="nav-icon">△</span>Local Models<span class="nav-badge nb-green" id="modelsBadge">?</span></div>
       <div class="nav-item" onclick="nav('rag',this)"><span class="nav-icon">▤</span>RAG / Source<span class="nav-badge nb-gold" id="ragBadge">8</span></div>
+      <div class="nav-item" onclick="nav('runtime',this)"><span class="nav-icon">⬡</span>Runtime Health<span class="nav-badge nb-amber" id="runtimeBadge">?</span></div>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
@@ -606,6 +607,59 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       </div>
     </div>
 
+    <!-- RUNTIME HEALTH -->
+    <div class="panel" id="panel-runtime">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Runtime Health</div><div class="panel-sub">MVT-014: Local Model Maintenance and Multi-Model Orchestration</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshRuntimeHealth()">Refresh</button>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Ollama Endpoint</div>
+          <div class="flex flex-col gap-6" id="ollamaStatus">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Endpoint</span><span class="mono text-dim" style="font-size:10px">localhost:11434</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Status</span><span class="tag tag-amber" id="ollamaEndpointStatus">CHECKING</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Version</span><span class="mono text-dim" id="ollamaVersion">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last Check</span><span class="mono text-dim" id="ollamaLastCheck">...</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Resource Safety</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Execution Mode</span><span class="tag tag-amber" id="runtimeExecMode">ONE-MODEL SAFETY</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Concurrency Limit</span><span class="mono text-dim">1</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Timeout Ceiling</span><span class="mono text-dim">60s</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Cloud PS Fallback</span><span class="tag tag-red">BLOCKED</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Model Registry</div>
+        <div class="trib-list" id="modelRegistryList"><div class="text-dim mono" style="padding:12px;font-size:11px">Click Refresh to check Ollama model inventory.</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Smoke Test</div>
+        <div class="flex gap-8">
+          <button class="btn btn-ghost btn-sm" onclick="runRuntimeSmokeTest()">Run Minimal JSON Test</button>
+          <span class="mono text-dim" style="font-size:10px;align-self:center" id="smokeTestResult">Not run</span>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Job Queue (dcse_cp.ddna_ollama_jobs)</div>
+        <div id="ollamaJobsList"><div class="text-dim mono" style="padding:12px;font-size:11px">Loading...</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Capability Matrix</div>
+        <div class="flex flex-col gap-6" id="capabilityMatrix">
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Chat / Reasoning</span><span class="tag tag-amber" id="capChat">UNTESTED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">JSON Output</span><span class="tag tag-amber" id="capJSON">UNTESTED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Structured Extraction</span><span class="tag tag-amber" id="capExtract">UNTESTED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Classification</span><span class="tag tag-amber" id="capClassify">UNTESTED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Coding</span><span class="tag tag-amber" id="capCode">UNTESTED</span></div>
+        </div>
+      </div>
+    </div>
+
     <!-- TRIBUNAL -->
     <div class="panel" id="panel-tribunal">
       <div class="panel-hdr">
@@ -767,6 +821,7 @@ function nav(id,el){
   }
   if(id==='personas')loadPersonas(_personasFilter);
   if(id==='assets')loadAssets(_assetsFilter);
+  if(id==='runtime'&&!_runtimeChecked)refreshRuntimeHealth();
 }
 
 // Voice
@@ -1274,6 +1329,76 @@ function copyDispatchJSON(i){navigator.clipboard.writeText(JSON.stringify(dispat
 function copyDispatchPath(i){navigator.clipboard.writeText(dispatchPackets[i].inbox).then(()=>alert('Path copied.'));}
 function setDispatchStatus(i,status){dispatchPackets[i].status=status;saveDispatch();renderDispatch();}
 
+// ===== RUNTIME HEALTH =====
+let _runtimeChecked=false;
+async function refreshRuntimeHealth(){
+  _runtimeChecked=true;
+  document.getElementById('ollamaLastCheck').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});
+  try{
+    const r=await fetch('/api/runtime');
+    const data=await r.json();
+    if(data.ollama){
+      const o=data.ollama;
+      const tag=document.getElementById('ollamaEndpointStatus');
+      tag.textContent=o.status==='running'?'RUNNING':'UNREACHABLE';
+      tag.className='tag '+(o.status==='running'?'tag-green':'tag-red');
+      document.getElementById('ollamaVersion').textContent=o.version||'unknown';
+      document.getElementById('runtimeBadge').textContent=o.models?o.models.length:'0';
+      const list=document.getElementById('modelRegistryList');
+      if(o.models&&o.models.length){
+        list.innerHTML=o.models.map(m=>\`
+          <div class="trib-item">
+            <span class="trib-status ts-open">\${m.name?'INSTALLED':'?'}</span>
+            <div class="trib-info">
+              <div class="trib-title">\${m.name||m.model||'unknown'}</div>
+              <div class="trib-meta">Size: \${m.size?Math.round(m.size/1e9*10)/10+'GB':'?'} · Modified: \${m.modified_at?m.modified_at.split('T')[0]:'?'}</div>
+            </div>
+          </div>\`).join('');
+      }else{
+        list.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px">No models installed or Ollama not reachable.</div>';
+      }
+    }
+    if(data.jobs){
+      const jl=document.getElementById('ollamaJobsList');
+      if(data.jobs.length){
+        jl.innerHTML=data.jobs.map(j=>\`
+          <div class="trib-item">
+            <span class="trib-status \${j.status==='completed'?'ts-open':'ts-draft'}">\${(j.status||'queued').toUpperCase()}</span>
+            <div class="trib-info">
+              <div class="trib-title">\${j.model||'?'} — \${j.source_type||'?'}</div>
+              <div class="trib-meta">Retries: \${j.retry_count||0} · Duration: \${j.duration_ms?j.duration_ms+'ms':'?'}</div>
+            </div>
+          </div>\`).join('');
+      }else{
+        jl.innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px">No jobs recorded.</div>';
+      }
+    }
+  }catch(e){
+    document.getElementById('ollamaEndpointStatus').textContent='ERROR';
+    document.getElementById('ollamaEndpointStatus').className='tag tag-red';
+    document.getElementById('modelRegistryList').innerHTML='<div class="mono text-dim" style="padding:12px;font-size:11px">Error: '+e.message+'</div>';
+  }
+}
+
+async function runRuntimeSmokeTest(){
+  const el=document.getElementById('smokeTestResult');
+  el.textContent='Running...';
+  try{
+    const r=await fetch('/api/runtime/smoke',{method:'POST'});
+    const data=await r.json();
+    if(data.pass){
+      el.textContent='PASS — '+data.model+' responded in '+data.duration_ms+'ms';
+      el.style.color='var(--green)';
+    }else{
+      el.textContent='FAIL — '+(data.error||'unknown');
+      el.style.color='var(--red)';
+    }
+  }catch(e){
+    el.textContent='ERROR — '+e.message;
+    el.style.color='var(--red)';
+  }
+}
+
 // ===== PERSONAS =====
 let _personasFilter='all';
 async function loadPersonas(filter){
@@ -1294,8 +1419,8 @@ async function loadPersonas(filter){
       <div class="trib-item">
         <span class="trib-status \${p.dcse_lifecycle==='active'?'ts-open':'ts-draft'}">\${(p.dcse_lifecycle||p.release_posture||'unknown').toUpperCase()}</span>
         <div class="trib-info">
-          <div class="trib-title">\${p.identity_mask?'[MASKED]':p.name||p.persona_code||p.id}</div>
-          <div class="trib-meta">\${p.persona_code||''} · Lane: \${p.dcs_lane||'—'} · Privacy: \${p.privacy_class||'—'}</div>
+          <div class="trib-title">\${p.identity_mask?'[MASKED]':p.display_name||p.code||p.id}</div>
+          <div class="trib-meta">\${p.code||''} · Lane: \${p.dcs_lane||'—'} · Privacy: \${p.privacy_class||'—'}</div>
           \${p.identity_mask?'<div class="trib-meta" style="color:var(--amber);font-size:9px">IDENTITY MASKED — no identifying fields rendered</div>':''}
         </div>
         \${p.family_product?'<span class="tag tag-blue" style="font-size:9px">FAMILY</span>':''}
@@ -1372,7 +1497,7 @@ async function handlePersonas(req, res) {
   try {
     const url = new URL(req.url, 'http://localhost');
     const lifecycle = url.searchParams.get('lifecycle');
-    let query = `${SUPABASE_URL}/rest/v1/personas?select=id,persona_code,name,release_posture,dcse_lifecycle,privacy_class,dcs_lane,identity_mask,family_product,child_safe,agent_promote_locked&order=persona_code.asc`;
+    let query = `${SUPABASE_URL}/rest/v1/personas?select=id,code,display_name,release_posture,dcse_lifecycle,privacy_class,dcs_lane,identity_mask,family_product,child_safe,agent_promote_locked&order=code.asc`;
     if (lifecycle) query += `&dcse_lifecycle=eq.${lifecycle}`;
     const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
     const personas = await r.json();
@@ -1409,6 +1534,86 @@ async function handleAssets(req, res) {
   }
 }
 
+const OLLAMA_URL = 'http://127.0.0.1:11434';
+
+async function handleRuntime(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  try {
+    let ollamaData = {status: 'unreachable', version: null, models: []};
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 5000);
+      const vr = await fetch(OLLAMA_URL, {signal: ctrl.signal});
+      clearTimeout(t);
+      const vt = await vr.text();
+      ollamaData.status = 'running';
+      ollamaData.version = vt.includes('Ollama') ? vt.trim() : 'connected';
+      const lr = await fetch(`${OLLAMA_URL}/api/tags`, {signal: AbortSignal.timeout(5000)});
+      const ld = await lr.json();
+      ollamaData.models = ld.models || [];
+    } catch(e) {
+      ollamaData.status = 'unreachable';
+      ollamaData.error = e.message;
+    }
+    let jobs = [];
+    if (SUPABASE_KEY) {
+      try {
+        const jr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/`, {method: 'POST', headers: {'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY, 'Content-Type': 'application/json'}});
+      } catch(e) {}
+      try {
+        const jr = await fetch(`${SUPABASE_URL}/rest/v1/ddna_ollama_jobs?select=id,model,source_type,status,retry_count,duration_ms,created_at&order=created_at.desc&limit=10&schema=dcse_cp`, {headers: {'apikey': SUPABASE_KEY, 'Authorization': 'Bearer '+SUPABASE_KEY, 'Content-Type': 'application/json', 'Accept-Profile': 'dcse_cp'}});
+        const jd = await jr.json();
+        if (Array.isArray(jd)) jobs = jd;
+      } catch(e) {}
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify({ollama: ollamaData, jobs}));
+  } catch(e) {
+    res.statusCode = 500;
+    res.end(JSON.stringify({error: e.message}));
+  }
+}
+
+async function handleRuntimeSmoke(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  let body = '';
+  req.on('data', d => body += d);
+  req.on('end', async () => {
+    try {
+      const start = Date.now();
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 60000);
+      const lr = await fetch(`${OLLAMA_URL}/api/tags`, {signal: ctrl.signal});
+      const ld = await lr.json();
+      const models = ld.models || [];
+      if (!models.length) {
+        clearTimeout(t);
+        res.statusCode = 200;
+        res.end(JSON.stringify({pass: false, error: 'No models installed'}));
+        return;
+      }
+      const model = models[0].name || models[0].model;
+      const sr = await fetch(`${OLLAMA_URL}/api/generate`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({model, prompt: 'Respond with exactly: {"status":"ok"}', stream: false, format: 'json'}),
+        signal: ctrl.signal
+      });
+      const sd = await sr.json();
+      clearTimeout(t);
+      const duration_ms = Date.now() - start;
+      const pass = sd.response && sd.response.includes('ok');
+      res.statusCode = 200;
+      res.end(JSON.stringify({pass, model, duration_ms, response: sd.response ? sd.response.substring(0, 200) : null, error: pass ? null : 'Unexpected response'}));
+    } catch(e) {
+      res.statusCode = 200;
+      res.end(JSON.stringify({pass: false, error: e.name === 'AbortError' ? 'Timeout (60s)' : e.message}));
+    }
+  });
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -1417,6 +1622,8 @@ module.exports = (req, res) => {
     res.statusCode = 200; res.end(); return;
   }
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
+  if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/personas')) return handlePersonas(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/assets')) return handleAssets(req, res);
   res.setHeader('Content-Type', 'text/html;charset=utf-8');
