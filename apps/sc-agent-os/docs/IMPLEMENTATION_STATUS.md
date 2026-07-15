@@ -28,6 +28,9 @@
 | Runtime Health panel + /api/runtime | COMMITTED | index.js: refreshRuntimeHealth(), handleRuntime() |
 | Runtime smoke test + /api/runtime/smoke | COMMITTED | index.js: runRuntimeSmokeTest(), handleRuntimeSmoke() |
 | Persona API column fix (code/display_name) | COMMITTED | index.js: handlePersonas() |
+| DBA Console panel + /api/dba | COMMITTED | index.js: refreshDBA(), handleDBA() |
+| API Keys Admin Console + /api/apikeys | COMMITTED | index.js: refreshAPIKeys(), handleAPIKeys() |
+| Assurance Loop Console + /api/assurance | COMMITTED | index.js: refreshAssurance(), handleAssurance() |
 
 ---
 

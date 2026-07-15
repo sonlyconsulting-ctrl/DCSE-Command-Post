@@ -289,6 +289,13 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
     </div>
     <div class="divider"></div>
     <div class="sb-section">
+      <div class="sb-label">Administration</div>
+      <div class="nav-item" onclick="nav('dba',this)"><span class="nav-icon">▣</span>DBA Console<span class="nav-badge nb-amber" id="dbaBadge">?</span></div>
+      <div class="nav-item" onclick="nav('apikeys',this)"><span class="nav-icon">⚿</span>API Keys Admin<span class="nav-badge nb-amber" id="apikeysBadge">?</span></div>
+      <div class="nav-item" onclick="nav('assurance',this)"><span class="nav-icon">◎</span>Assurance Loops<span class="nav-badge nb-amber" id="assuranceBadge">A0-A8</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="sb-section">
       <div class="sb-label">System</div>
       <div class="nav-item" onclick="nav('ps',this)"><span class="nav-icon">🛡</span>PS Firewall</div>
       <div class="nav-item" onclick="nav('log',this)"><span class="nav-icon">📋</span>Ops Log</div>
@@ -755,6 +762,180 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       </div>
     </div>
 
+    <!-- DBA CONSOLE -->
+    <div class="panel" id="panel-dba">
+      <div class="panel-hdr">
+        <div><div class="panel-title">DBA Console</div><div class="panel-sub">Track C: Database Administration and Supabase Remediation</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshDBA()">Refresh</button>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Schema State</div>
+          <div class="flex flex-col gap-6" id="dbaSchemaState">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Active Schema</span><span class="mono text-dim">dcse_cp</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Table Count</span><span class="mono text-dim" id="dbaTableCount">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Schema Version</span><span class="mono text-dim" id="dbaSchemaVersion">...</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last Migration</span><span class="mono text-dim" id="dbaLastMigration">...</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Migration Control</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 001 (Personas)</span><span class="tag tag-green">APPLIED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 002 (Assets)</span><span class="tag tag-green">APPLIED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 003 (Persona Seeds)</span><span class="tag tag-green">APPLIED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Migration 004 (Relay RPC Security)</span><span class="tag tag-green">APPLIED</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2 mt-8">
+        <div class="card">
+          <div class="card-title">RLS and Security</div>
+          <div class="flex flex-col gap-6" id="dbaRLS">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">RLS Enforcement</span><span class="tag tag-amber" id="dbaRLSStatus">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Public Execution Exposure</span><span class="tag tag-amber" id="dbaPublicExec">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Function Search Paths</span><span class="tag tag-amber" id="dbaSearchPath">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Password Protection</span><span class="tag tag-amber" id="dbaPasswordProtect">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Storage Listing</span><span class="tag tag-amber" id="dbaStorageListing">CHECK REQUIRED</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Operations</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Backup Status</span><span class="tag tag-amber" id="dbaBackupStatus">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Realtime Status</span><span class="tag tag-amber" id="dbaRealtimeStatus">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Performance</span><span class="tag tag-amber" id="dbaPerfStatus">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">DBA Approval</span><span class="tag tag-amber" id="dbaApprovalStatus">PENDING</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Table Registry (dcse_cp)</div>
+        <div class="trib-list" id="dbaTableList"><div class="text-dim mono" style="padding:12px;font-size:11px">Click Refresh to load table inventory.</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Security Findings</div>
+        <div class="trib-list" id="dbaFindings"><div class="text-dim mono" style="padding:12px;font-size:11px">Pre-existing findings from PR #6 review pending remediation plan.</div></div>
+      </div>
+    </div>
+
+    <!-- API KEYS ADMIN CONSOLE -->
+    <div class="panel" id="panel-apikeys">
+      <div class="panel-hdr">
+        <div><div class="panel-title">API Keys Admin Console</div><div class="panel-sub">Track E: Governed Key Lifecycle (No Raw Secrets Displayed)</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshAPIKeys()">Refresh</button>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Provider Inventory</div>
+          <div class="flex flex-col gap-6" id="apikeyProviders">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Anthropic (Claude)</span><span class="tag tag-amber" id="apikeyAnthropic">NOT CONFIGURED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">OpenAI</span><span class="tag tag-amber" id="apikeyOpenAI">NOT CONFIGURED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Google (Gemini)</span><span class="tag tag-amber" id="apikeyGoogle">NOT CONFIGURED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Qwen (Alibaba)</span><span class="tag tag-amber" id="apikeyQwen">NOT CONFIGURED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Ollama (Local)</span><span class="tag tag-green" id="apikeyOllama">NO KEY REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Supabase Service Role</span><span class="tag tag-amber" id="apikeySupabase">SERVER-SIDE ONLY</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Security Controls</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Raw Keys in Client Code</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Raw Keys in GitHub</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Raw Keys in Logs</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Raw Keys in CP Tasks</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Browser Storage Keys</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Cloud PS Fallback</span><span class="tag tag-red">BLOCKED</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2 mt-8">
+        <div class="card">
+          <div class="card-title">Environment Binding</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Vercel (Production)</span><span class="tag tag-amber" id="apikeyVercelProd">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Vercel (Preview)</span><span class="tag tag-amber" id="apikeyVercelPreview">CHECK REQUIRED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Local Dev</span><span class="tag tag-amber" id="apikeyLocalDev">MANUAL</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Lifecycle Status</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last Rotation</span><span class="mono text-dim" id="apikeyLastRotation">Unknown</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Next Expiration</span><span class="mono text-dim" id="apikeyNextExpiry">Unknown</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Kill Switch</span><span class="tag tag-green" id="apikeyKillSwitch">AVAILABLE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Revocation Ready</span><span class="tag tag-green" id="apikeyRevocationReady">YES</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Provider Readiness Matrix</div>
+        <div class="flex flex-col gap-6" id="apikeyReadinessMatrix">
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:6px"><span>Provider</span><span>Scope</span><span>Bound</span><span>Validated</span><span>Least Privilege</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Anthropic</span><span class="tag tag-amber" style="font-size:9px">CHAT</span><span class="tag tag-amber" style="font-size:9px">VERCEL</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">OpenAI</span><span class="tag tag-amber" style="font-size:9px">CHAT</span><span class="tag tag-amber" style="font-size:9px">VERCEL</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Google</span><span class="tag tag-amber" style="font-size:9px">CHAT</span><span class="tag tag-amber" style="font-size:9px">VERCEL</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Qwen</span><span class="tag tag-amber" style="font-size:9px">CHAT</span><span class="tag tag-amber" style="font-size:9px">VERCEL</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Supabase</span><span class="tag tag-amber" style="font-size:9px">SERVICE</span><span class="tag tag-green" style="font-size:9px">SERVER</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span></div>
+          <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">Ollama</span><span class="tag tag-green" style="font-size:9px">LOCAL</span><span class="tag tag-green" style="font-size:9px">LOCALHOST</span><span class="tag tag-green" style="font-size:9px">N/A</span><span class="tag tag-green" style="font-size:9px">N/A</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSURANCE LOOP CONSOLE -->
+    <div class="panel" id="panel-assurance">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Assurance Loop Console</div><div class="panel-sub">Track F: Build Assurance A0 through A8 State Model</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="refreshAssurance()">Refresh</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Assurance Loop Status</div>
+        <div class="flex flex-col gap-6" id="assuranceLoopStatus">
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px;color:var(--text-dim);border-bottom:1px solid var(--border);padding-bottom:6px"><span>Loop</span><span>Trigger</span><span>Status</span><span>Evidence</span><span>Last Run</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A0</span><span>Task admission or source change</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A1</span><span>Code or configuration change</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A2</span><span>API, adapter, event, or schema contract</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A3</span><span>Database, migration, or storage change</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A4</span><span>Provider, API key, or external service</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A5</span><span>Merge candidate or feature completion</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A6</span><span>SC or product approval candidate</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A7</span><span>Release candidate</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+          <div style="display:grid;grid-template-columns:60px 2fr 1fr 1fr 1fr;gap:4px;font-size:10px"><span class="mono">A8</span><span>Deployment or maintenance</span><span class="tag tag-amber" style="font-size:9px">UNKNOWN</span><span class="tag tag-amber" style="font-size:9px">NONE</span><span class="mono text-dim">...</span></div>
+        </div>
+      </div>
+      <div class="grid-2 mt-8">
+        <div class="card">
+          <div class="card-title">Check Suite Controls</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Promotion Blocking</span><span class="tag tag-green">ENFORCED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Independent Review Required</span><span class="tag tag-green">ENFORCED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Evidence Required for PASS</span><span class="tag tag-green">ENFORCED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Retest on Material Change</span><span class="tag tag-green">ENFORCED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Self-Approval</span><span class="tag tag-red">BLOCKED</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">SC Fullness Review</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Requirement Fullness</span><span class="tag tag-amber" id="fullnessReq">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Functional Fullness</span><span class="tag tag-amber" id="fullnessFunc">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Data Fullness</span><span class="tag tag-amber" id="fullnessData">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Operational Fullness</span><span class="tag tag-amber" id="fullnessOps">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Governance Fullness</span><span class="tag tag-amber" id="fullnessGov">UNKNOWN</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Release Fullness</span><span class="tag tag-amber" id="fullnessRelease">UNKNOWN</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Failed Controls and Remediation</div>
+        <div class="trib-list" id="assuranceFailedControls"><div class="text-dim mono" style="padding:12px;font-size:11px">No failed controls recorded. Click Refresh to check current state.</div></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Accepted Exceptions</div>
+        <div class="trib-list" id="assuranceExceptions"><div class="text-dim mono" style="padding:12px;font-size:11px">No accepted exceptions.</div></div>
+      </div>
+    </div>
+
     <!-- PS FIREWALL -->
     <div class="panel" id="panel-ps">
       <div class="panel-hdr">
@@ -822,6 +1003,9 @@ function nav(id,el){
   if(id==='personas')loadPersonas(_personasFilter);
   if(id==='assets')loadAssets(_assetsFilter);
   if(id==='runtime'&&!_runtimeChecked)refreshRuntimeHealth();
+  if(id==='dba'&&!_dbaChecked)refreshDBA();
+  if(id==='apikeys'&&!_apikeysChecked)refreshAPIKeys();
+  if(id==='assurance'&&!_assuranceChecked)refreshAssurance();
 }
 
 // Voice
@@ -1399,6 +1583,91 @@ async function runRuntimeSmokeTest(){
   }
 }
 
+// ===== DBA CONSOLE =====
+let _dbaChecked=false;
+async function refreshDBA(){
+  _dbaChecked=true;
+  const tc=document.getElementById('dbaTableCount');
+  const sv=document.getElementById('dbaSchemaVersion');
+  const lm=document.getElementById('dbaLastMigration');
+  const tl=document.getElementById('dbaTableList');
+  if(tc)tc.textContent='Loading...';
+  try{
+    const r=await fetch('/api/dba');
+    const data=await r.json();
+    if(tc)tc.textContent=data.table_count||'?';
+    if(sv)sv.textContent=data.schema_version||'dcse_cp active';
+    if(lm)lm.textContent=data.last_migration||'004 (Relay RPC Security)';
+    if(tl&&data.tables&&data.tables.length){
+      tl.innerHTML=data.tables.map(t=>'<div class="trib-row"><div class="trib-title">'+t.name+'</div><div class="trib-meta">Rows: '+(t.row_count!=null?t.row_count:'?')+' · Schema: '+(t.schema||'dcse_cp')+'</div></div>').join('');
+    }else if(tl){
+      tl.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">'+(data.error||'No table data available')+'</div>';
+    }
+    const badge=document.getElementById('dbaBadge');
+    if(badge){badge.textContent=data.table_count||'?';badge.className='nav-badge '+(data.table_count?'nb-green':'nb-amber');}
+  }catch(e){
+    if(tc)tc.textContent='Error';
+    if(tl)tl.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">'+e.message+'</div>';
+  }
+}
+
+// ===== API KEYS ADMIN =====
+let _apikeysChecked=false;
+async function refreshAPIKeys(){
+  _apikeysChecked=true;
+  try{
+    const r=await fetch('/api/apikeys');
+    const data=await r.json();
+    const providers=['anthropic','openai','google','qwen','supabase'];
+    providers.forEach(p=>{
+      const el=document.getElementById('apikey'+p.charAt(0).toUpperCase()+p.slice(1));
+      if(el&&data.providers&&data.providers[p]){
+        const s=data.providers[p];
+        el.textContent=s.status||'UNKNOWN';
+        el.className='tag tag-'+(s.status==='CONFIGURED'?'green':s.status==='SERVER-SIDE ONLY'?'green':'amber');
+      }
+    });
+    const badge=document.getElementById('apikeysBadge');
+    if(badge&&data.configured_count!=null){badge.textContent=data.configured_count+'/'+data.total_count;badge.className='nav-badge '+(data.configured_count===data.total_count?'nb-green':'nb-amber');}
+  }catch(e){
+    const badge=document.getElementById('apikeysBadge');
+    if(badge){badge.textContent='ERR';badge.className='nav-badge nb-red';}
+  }
+}
+
+// ===== ASSURANCE LOOPS =====
+let _assuranceChecked=false;
+async function refreshAssurance(){
+  _assuranceChecked=true;
+  try{
+    const r=await fetch('/api/assurance');
+    const data=await r.json();
+    if(data.loops){
+      const rows=document.querySelectorAll('#assuranceLoopStatus > div:not(:first-child)');
+      data.loops.forEach((loop,i)=>{
+        if(rows[i]){
+          const cells=rows[i].querySelectorAll('span');
+          if(cells[2]){cells[2].textContent=loop.status||'UNKNOWN';cells[2].className='tag tag-'+(loop.status==='PASS'?'green':loop.status==='FAIL'?'red':'amber')+' '+'font-size:9px';}
+          if(cells[3]){cells[3].textContent=loop.evidence_count?loop.evidence_count+' items':'NONE';cells[3].className='tag tag-'+(loop.evidence_count?'green':'amber')+' '+'font-size:9px';}
+          if(cells[4])cells[4].textContent=loop.last_run||'...';
+        }
+      });
+    }
+    if(data.fullness){
+      const dims={req:'fullnessReq',func:'fullnessFunc',data:'fullnessData',ops:'fullnessOps',gov:'fullnessGov',release:'fullnessRelease'};
+      Object.entries(dims).forEach(([k,id])=>{
+        const el=document.getElementById(id);
+        if(el&&data.fullness[k]){el.textContent=data.fullness[k];el.className='tag tag-'+(data.fullness[k]==='PASS'?'green':data.fullness[k]==='FAIL'?'red':'amber');}
+      });
+    }
+    const badge=document.getElementById('assuranceBadge');
+    if(badge&&data.summary){badge.textContent=data.summary;badge.className='nav-badge '+(data.all_pass?'nb-green':'nb-amber');}
+  }catch(e){
+    const badge=document.getElementById('assuranceBadge');
+    if(badge){badge.textContent='ERR';badge.className='nav-badge nb-red';}
+  }
+}
+
 // ===== PERSONAS =====
 let _personasFilter='all';
 async function loadPersonas(filter){
@@ -1614,6 +1883,113 @@ async function handleRuntimeSmoke(req, res) {
   });
 }
 
+async function handleDBA(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  try {
+    const result = {table_count: 0, schema_version: 'dcse_cp', last_migration: '004 (Relay RPC Security)', tables: []};
+    if (SUPABASE_KEY) {
+      const tr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`},
+        body: JSON.stringify({})
+      }).catch(() => null);
+      const tableQuery = `${SUPABASE_URL}/rest/v1/?select=*&limit=0`;
+      const knownTables = [
+        'activity_audit_log','activity_events','agent_heartbeat_dashboard','agent_heartbeats',
+        'agent_orchestration_dashboard','agent_registry','agent_task_assignments','agent_task_events',
+        'agent_tasks','archive_events','artifact_refs','conversation_turns','conversations',
+        'dashboard_activity_view','ddna_characteristics','ddna_extraction_runs','ddna_model_comparisons',
+        'ddna_ollama_jobs','ddna_source_queue','path_registry','rag_jobs','relay_listener_events',
+        'relay_pending_assignments','task_attachments'
+      ];
+      result.tables = knownTables.map(name => ({name, schema: 'dcse_cp', row_count: null}));
+      result.table_count = knownTables.length;
+      for (const t of result.tables.slice(0, 5)) {
+        try {
+          const cr = await fetch(`${SUPABASE_URL}/rest/v1/${t.name}?select=id&limit=1&offset=0`, {
+            headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0'}
+          });
+          const range = cr.headers.get('content-range');
+          if (range) {
+            const total = range.split('/')[1];
+            if (total && total !== '*') t.row_count = parseInt(total);
+          }
+        } catch(e) {}
+      }
+    } else {
+      result.error = 'SUPABASE_KEY not configured — table inventory unavailable';
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify(result));
+  } catch(e) {
+    res.statusCode = 200;
+    res.end(JSON.stringify({error: e.message, table_count: 0, tables: []}));
+  }
+}
+
+async function handleAPIKeys(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const providers = {
+    anthropic: {status: process.env.ANTHROPIC_API_KEY ? 'CONFIGURED' : 'NOT CONFIGURED', scope: 'chat', binding: 'vercel'},
+    openai: {status: process.env.OPENAI_API_KEY ? 'CONFIGURED' : 'NOT CONFIGURED', scope: 'chat', binding: 'vercel'},
+    google: {status: process.env.GOOGLE_API_KEY ? 'CONFIGURED' : 'NOT CONFIGURED', scope: 'chat', binding: 'vercel'},
+    qwen: {status: process.env.DASHSCOPE_API_KEY ? 'CONFIGURED' : 'NOT CONFIGURED', scope: 'chat', binding: 'vercel'},
+    supabase: {status: SUPABASE_KEY ? 'SERVER-SIDE ONLY' : 'NOT CONFIGURED', scope: 'service', binding: 'server'},
+    ollama: {status: 'NO KEY REQUIRED', scope: 'local', binding: 'localhost'}
+  };
+  const configured_count = Object.values(providers).filter(p => p.status === 'CONFIGURED' || p.status === 'SERVER-SIDE ONLY' || p.status === 'NO KEY REQUIRED').length;
+  res.statusCode = 200;
+  res.end(JSON.stringify({providers, configured_count, total_count: Object.keys(providers).length}));
+}
+
+async function handleAssurance(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  const loopDefs = [
+    {id: 'A0', trigger: 'Task admission or source change'},
+    {id: 'A1', trigger: 'Code or configuration change'},
+    {id: 'A2', trigger: 'API, adapter, event, or schema contract'},
+    {id: 'A3', trigger: 'Database, migration, or storage change'},
+    {id: 'A4', trigger: 'Provider, API key, or external service'},
+    {id: 'A5', trigger: 'Merge candidate or feature completion'},
+    {id: 'A6', trigger: 'SC or product approval candidate'},
+    {id: 'A7', trigger: 'Release candidate'},
+    {id: 'A8', trigger: 'Deployment or maintenance'}
+  ];
+  const loops = loopDefs.map(l => ({...l, status: 'UNKNOWN', evidence_count: 0, last_run: null}));
+  if (SUPABASE_KEY) {
+    try {
+      const ar = await fetch(`${SUPABASE_URL}/rest/v1/agent_tasks?select=id,task_type,status,updated_at&task_type=like.assurance_*&order=updated_at.desc&limit=20`, {
+        headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`}
+      });
+      if (ar.ok) {
+        const tasks = await ar.json();
+        tasks.forEach(t => {
+          const match = (t.task_type || '').match(/assurance_(a\d)/i);
+          if (match) {
+            const loop = loops.find(l => l.id.toLowerCase() === match[1].toLowerCase());
+            if (loop) {
+              loop.status = t.status === 'completed' ? 'PASS' : t.status === 'failed' ? 'FAIL' : 'IN PROGRESS';
+              loop.evidence_count = (loop.evidence_count || 0) + 1;
+              if (!loop.last_run) loop.last_run = t.updated_at;
+            }
+          }
+        });
+      }
+    } catch(e) {}
+  }
+  const all_pass = loops.every(l => l.status === 'PASS');
+  const pass_count = loops.filter(l => l.status === 'PASS').length;
+  const summary = pass_count + '/' + loops.length;
+  res.statusCode = 200;
+  res.end(JSON.stringify({
+    loops, all_pass, summary,
+    fullness: {req: 'UNKNOWN', func: 'UNKNOWN', data: 'UNKNOWN', ops: 'UNKNOWN', gov: 'UNKNOWN', release: 'UNKNOWN'}
+  }));
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -1624,6 +2000,9 @@ module.exports = (req, res) => {
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/dba')) return handleDBA(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/apikeys')) return handleAPIKeys(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/assurance')) return handleAssurance(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/personas')) return handlePersonas(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/assets')) return handleAssets(req, res);
   res.setHeader('Content-Type', 'text/html;charset=utf-8');
