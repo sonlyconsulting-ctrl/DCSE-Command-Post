@@ -2550,10 +2550,10 @@ async function handleTribunalDispatch(req, res) {
   req.on('end', async () => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
     try {
       const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key} = JSON.parse(body);
       if (!title) { res.statusCode = 400; res.end(JSON.stringify({error: 'title required'})); return; }
+      if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
       const validLanes = ['DCSE','SC','SS','TSL','TRIBUNAL','DDNA','RAG','SYSTEM'];
       const validTypes = ['build','review','rag','database','github','tribunal','qa','synthesis','handoff','decision','monitor','other'];
       const taskLane = validLanes.includes(lane) ? lane : 'DCSE';
@@ -2597,10 +2597,10 @@ async function handleTribunalReceipt(req, res) {
   req.on('end', async () => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
     try {
       const {task_id, event_type, actor_label, summary, result_status} = JSON.parse(body);
       if (!task_id) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id required'})); return; }
+      if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
       const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
       const base = SUPABASE_URL + '/rest/v1';
       const evType = event_type || 'receipt';
@@ -2630,12 +2630,12 @@ async function handleTribunalStatus(req, res) {
   req.on('end', async () => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
     try {
       const {task_id, status, actor_label, summary} = JSON.parse(body);
       if (!task_id || !status) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id and status required'})); return; }
       const validStatuses = ['planned','assigned','running','blocked','completed','needs_review','handoff_ready','parallel_review','awaiting_dcs','approved','rejected','archived'];
       if (!validStatuses.includes(status)) { res.statusCode = 400; res.end(JSON.stringify({error: 'Invalid status: ' + status})); return; }
+      if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
       const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
       const base = SUPABASE_URL + '/rest/v1';
       const updatePayload = {status};
