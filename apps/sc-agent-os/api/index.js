@@ -316,38 +316,42 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
         <span class="tag tag-gold">ACTIVE</span>
       </div>
       <div class="grid-4">
-        <div class="stat-tile"><div class="stat-label">Active Agents</div><div class="stat-value">12</div><div class="stat-sub">4 frontier · 2 local · 6 standby</div></div>
-        <div class="stat-tile"><div class="stat-label">Tribunal PRs</div><div class="stat-value">5</div><div class="stat-sub">5 open · 0 merged today</div></div>
-        <div class="stat-tile"><div class="stat-label">Dispatch Queue</div><div class="stat-value">1</div><div class="stat-sub">SC LP Trial — CLEARED</div></div>
+        <div class="stat-tile"><div class="stat-label">Active Workstreams</div><div class="stat-value" id="mcWorkstreams">10</div><div class="stat-sub">6 Batch 1 · 1 Batch 2 · 3 Batch 3</div></div>
+        <div class="stat-tile"><div class="stat-label">CP Views</div><div class="stat-value" id="mcViews">11</div><div class="stat-sub">All Section 2.8 views built</div></div>
+        <div class="stat-tile"><div class="stat-label">DCS Decisions</div><div class="stat-value" id="mcDecisions">4</div><div class="stat-sub" id="mcDecisionsSub">Pending DCS authority</div></div>
         <div class="stat-tile"><div class="stat-label">PS Firewall</div><div class="stat-value text-green">✔</div><div class="stat-sub">ACTIVE — No breach</div></div>
       </div>
       <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
         <div class="card">
           <div class="card-title">Recent Activity</div>
           <div class="feed">
-            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">SC Agent OS v1.3 — ChatGPT, Gemini, Qwen added to Agent Chat</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
-            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">SC LP Trial build complete — D08 v6.9.1 voice rule held</div><div class="feed-meta">Claude Code · 2026-07-14</div></div></div>
-            <div class="feed-item"><div class="feed-icon" style="background:var(--gold-glow);color:var(--gold)">🔒</div><div class="feed-body"><div class="feed-title">Hero line confirmed by DCS — LOCKED</div><div class="feed-meta">DCS · 2026-07-08</div></div></div>
-            <div class="feed-item"><div class="feed-icon" style="background:var(--purple-dim);color:var(--purple)">⚖</div><div class="feed-body"><div class="feed-title">PR #5 — trial designation, skill line fix, hero line staged</div><div class="feed-meta">Claude Code · 2026-07-08</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">PR #8 — Batch 1 P0: All 11 CP views, admin consoles, relay plumbing</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">Runtime Health, DBA, API Keys, Assurance, Agent Ops panels built</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">Phase Gates, DCS Queue, Receipts, Config panels built</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">Persona API column fix (code/display_name)</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">PR #6 merged — Personas/Assets module integrated</div><div class="feed-meta">DCS · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">SC Agent OS v1.3 — multi-provider chat deployed</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
           </div>
         </div>
         <div class="flex flex-col gap-8">
           <div class="card">
             <div class="card-title">System Status</div>
             <div class="flex flex-col gap-6">
-              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Governance</span><span class="tag tag-green">v6.9</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Governance</span><span class="tag tag-green">v6.9+</span></div>
               <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">PS Firewall</span><span class="tag tag-green">ACTIVE</span></div>
-              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Tribunal Relay</span><span class="tag tag-green">ONLINE</span></div>
-              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">SC Agent OS</span><span class="tag tag-gold">LIVE</span></div>
-              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Ollama Local</span><span class="tag tag-amber">CORS REQ</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Supabase</span><span class="tag tag-green">24 tables</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">SC Agent OS</span><span class="tag tag-gold">v1.3 LIVE</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Ollama Local</span><span class="tag tag-amber" id="mcOllamaStatus">CHECK REQ</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Migrations</span><span class="tag tag-green">001-004</span></div>
             </div>
           </div>
           <div class="card">
-            <div class="card-title">Next Actions</div>
+            <div class="card-title">DCS Decision Queue</div>
             <div class="flex flex-col gap-6">
-              <div style="font-size:10px;color:var(--cream)">1. Merge PR #5 (DCS authorize)</div>
-              <div style="font-size:10px;color:var(--text-dim)">2. Drop dispatch packet to inbox</div>
-              <div style="font-size:10px;color:var(--text-dim)">3. Confirm SC brand palette</div>
+              <div style="font-size:10px;color:var(--red)">1. SC hero line final selection (DDNA)</div>
+              <div style="font-size:10px;color:var(--amber)">2. TSL source reconstruction packet</div>
+              <div style="font-size:10px;color:var(--amber)">3. SC brand palette confirmation</div>
+              <div style="font-size:10px;color:var(--amber)">4. PR #8 merge authorization</div>
             </div>
           </div>
         </div>
