@@ -1,25 +1,48 @@
 # Implementation Status Report
-**Date:** 2026-07-15
-**Build:** SC Agent OS v1.3 + Personas/Assets Module
+**Date:** 2026-07-15 (Updated)
+**Build:** SC Agent OS v1.3 + Batch 1 P0 Complete (All 11 Section 2.8 CP Views)
 
 ---
 
-## Completed (This Session)
+## Completed
 
 | Item | Status | Location |
 |------|--------|----------|
-| SC Agent OS v1.3 full functional rewrite | COMMITTED | apps/sc-agent-os/api/index.js |
-| DDNA Harvest — AI-powered scoring | COMMITTED | index.js: runDDNAHarvest() |
-| Local Models — Ollama live check | COMMITTED | index.js: checkOllama() |
-| RAG/Source — AI query + DDNA pipe | COMMITTED | index.js: queryRagSource() |
-| Task Queue — localStorage CRUD | COMMITTED | index.js: renderTasks() |
-| Portfolio — localStorage CRUD | COMMITTED | index.js: renderPortfolio() |
-| Tribunal — GitHub PR list + filter | COMMITTED | index.js: renderTribunal() |
-| Dispatch — packet management | COMMITTED | index.js: renderDispatch() |
-| Agent Dock — 12 agents, click-to-launch | COMMITTED | index.js: launchAgent() |
-| Migration 001 — personas additive | COMMITTED | migrations/001_dcse_personas_additive.sql |
-| Migration 002 — assets additive | COMMITTED | migrations/002_dcse_assets_additive.sql |
-| Migration 003 — persona seeds | COMMITTED | migrations/003_dcse_persona_seeds.sql |
+| SC Agent OS v1.3 full functional rewrite | MERGED | apps/sc-agent-os/api/index.js |
+| DDNA Harvest, AI-powered scoring | MERGED | index.js: runDDNAHarvest() |
+| Local Models, Ollama live check | MERGED | index.js: checkOllama() |
+| RAG/Source, AI query + DDNA pipe | MERGED | index.js: queryRagSource() |
+| Task Queue, localStorage CRUD | MERGED | index.js: renderTasks() |
+| Portfolio, localStorage CRUD | MERGED | index.js: renderPortfolio() |
+| Tribunal, GitHub PR list + filter | MERGED | index.js: renderTribunal() |
+| Dispatch, packet management | MERGED | index.js: renderDispatch() |
+| Agent Dock, 12 agents, click-to-launch | MERGED | index.js: launchAgent() |
+| Personas panel + /api/personas | MERGED | index.js: loadPersonas(), handlePersonas() |
+| Assets panel + /api/assets | MERGED | index.js: loadAssets(), handleAssets() |
+| Migration 001, personas additive | APPLIED | migrations/001_dcse_personas_additive.sql |
+| Migration 002, assets additive | APPLIED | migrations/002_dcse_assets_additive.sql |
+| Migration 003, persona seeds | APPLIED | migrations/003_dcse_persona_seeds.sql |
+| Relay RPC security migration 004 | APPLIED | Revoked public/anon/authenticated execution |
+| Command Post PR #5 (Agent OS baseline) | MERGED | c8f5270 |
+| Command Post PR #6 (Personas/Assets) | MERGED | 12acec7 |
+| Runtime Health panel + /api/runtime | COMMITTED | index.js: refreshRuntimeHealth(), handleRuntime() |
+| Runtime smoke test + /api/runtime/smoke | COMMITTED | index.js: runRuntimeSmokeTest(), handleRuntimeSmoke() |
+| Persona API column fix (code/display_name) | COMMITTED | index.js: handlePersonas() |
+| DBA Console panel + /api/dba | COMMITTED | index.js: refreshDBA(), handleDBA() |
+| API Keys Admin Console + /api/apikeys | COMMITTED | index.js: refreshAPIKeys(), handleAPIKeys() |
+| Assurance Loop Console + /api/assurance | COMMITTED | index.js: refreshAssurance(), handleAssurance() |
+| Agent Operations panel + /api/agentops | COMMITTED | index.js: refreshAgentOps(), handleAgentOps() |
+| Phase Gate Board | COMMITTED | index.js: refreshPhaseGate(), panel-phasegate |
+| DCS Decision Queue + /api/dcsqueue | COMMITTED | index.js: refreshDCSQueue(), handleDCSQueue() |
+| Receipts and Evidence + /api/receipts | COMMITTED | index.js: refreshReceipts(), handleReceipts() |
+| Configuration Console | COMMITTED | index.js: refreshConfig(), panel-config |
+
+---
+
+## Governance Docs
+
+| Document | Status | Location |
+|----------|--------|----------|
 | Schema Inspection Report | COMMITTED | docs/SCHEMA_INSPECTION_REPORT.md |
 | Personas Module Spec | COMMITTED | docs/PERSONAS_MODULE_SPEC.md |
 | Assets Module Spec | COMMITTED | docs/ASSETS_MODULE_SPEC.md |
@@ -29,39 +52,72 @@
 
 ---
 
-## Hard Gates (DCS Authorization Required)
+## Supabase Verified State
 
-| Item | Gate | Notes |
-|------|------|-------|
-| Apply migrations 001-003 to Supabase | DCS authorization | All are additive, reversible |
-| Merge PR #5 (Tribunal Relay) | DCS merge command | Clean, no conflicts |
-| Drop TRIB-20260708 dispatch packet | DCS manual execution | UNC path confirmed |
-| SC brand palette confirmation | DCS decision | Blocking SC LP production |
-| Vercel production deploy of v1.3 | Technical gate + DCS | See deploy note below |
+| Item | Status |
+|------|--------|
+| Migrations 001-003 | APPLIED under DCS authorization |
+| Migration 004 (Relay RPC security) | APPLIED |
+| Governed persona seeds (6) | LIVE: SASH, SNTY, ASP, DCS, SC Operator, DCS-E |
+| SNTY/ASP identity masking | VERIFIED: identity_mask=true, privacy_class=protected |
+| Agent promote/approve/deploy locks | VERIFIED: all locked by default |
+| Existing assets (7) | Defaulted to internal/discovered with locks |
+| dcse_cp schema | 24 tables active |
+
+---
+
+## Batch 1 P0 Completion (Section 2.8 CP Views)
+
+| # | Required CP View | Panel | Status |
+|---|---|---|---|
+| 1 | Portfolio build order | panel-portfolio | Pre-existing (v1.3) |
+| 2 | Parallel execution board | panel-phasegate | COMMITTED |
+| 3 | Phase gate board | panel-phasegate | COMMITTED |
+| 4 | DCS decision queue | panel-dcsqueue | COMMITTED |
+| 5 | Runtime and data health | panel-runtime | COMMITTED |
+| 6 | Receipts and evidence | panel-receipts | COMMITTED |
+| 7 | Assurance Loop Console | panel-assurance | COMMITTED |
+| 8 | DBA Console | panel-dba | COMMITTED |
+| 9 | API Keys Admin Console | panel-apikeys | COMMITTED |
+| 10 | SC Fullness Approval | panel-assurance (fullness section) | COMMITTED |
+| 11 | Configuration Console | panel-config | COMMITTED |
+
+---
+
+## Open Workstreams (Per Handoff v7)
+
+| Workstream | Priority | Batch | Status |
+|-----------|----------|-------|--------|
+| MVT-014 Runtime Health | P0 | B1-A | CP surface built, Ollama endpoint/model/smoke/job/capability |
+| MVT-008A Agent Relay Runtime | P0 | B1-B | Agent Operations panel built, dcse_cp tables queried |
+| DBA Administration | P0 | B1-C | DBA Console built, schema/migration/RLS/operations surface |
+| MVT-010 Agent OS continuation | P0 | B1-D | Agent Operations + Phase Gates + DCS Queue built |
+| API Keys Administration | P0 | B1-E | API Keys Admin Console built, provider readiness matrix |
+| Build Assurance automation | P0 | B1-F | Assurance Loop Console built, A0-A8 + fullness |
+| MVT-013 TSL July 18 MVP | P0 | B2 | BLOCKED — source reconstruction pending DCS |
+| MVT-011 SC Hero Line DDNA | P1 | B3-A | BLOCKED — DCS final selection after DDNA process |
+| MVT-016 SC Campaign System | P1 | B3-B | BLOCKED — LM Arena artifact intake pending |
+| MVT-015 Family Education Pathways | P1 | B3-D | BLOCKED — product definition pending |
 
 ---
 
 ## Technical Gates
 
-### Vercel Deployment of SC Agent OS v1.3
-- **Blocker:** File is 85KB (~21K tokens), exceeds ~8K token output limit per agent response
-- **Current state:** File committed to GitHub at apps/sc-agent-os/api/index.js
-- **Unblock options:**
-  1. Connect Vercel project `sc-agent-os` (prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM) to GitHub repo `sonlyconsulting-ctrl/DCSE-Command-Post` via Vercel dashboard
-  2. Run `vercel --prod` locally from `apps/sc-agent-os/` directory with Vercel credentials
-- **Current production:** v1.3 with multi-provider chat is live at os.sonlyconsulting.com (deployment dpl_GHvK75urUEbBExB3wkwh8GPswj9z)
+### Vercel Deployment
+- Connect Vercel project to GitHub repo OR run vercel locally
+- Set SUPABASE_SERVICE_ROLE_KEY and SUPABASE_URL in Vercel project settings
+- Current production: os.sonlyconsulting.com (v1.3 multi-provider chat)
 
-### Supabase Personas/Assets API (Vercel)
-- **Blocker:** SUPABASE_SERVICE_ROLE_KEY not set as Vercel env var
-- **Required:** Set `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_URL=https://nevgdyfpxdaloacuutal.supabase.co` in Vercel project settings
-- **After that:** /api/personas and /api/assets endpoints will be live
+### Remaining DCS Decisions
+- SC hero line final selection (DDNA process)
+- TSL source reconstruction packet (Issue #3)
+- SC brand palette confirmation
+- PR #8 merge authorization (Batch 1 P0 surfaces)
+- Production deployment authorization
 
----
-
-## Pending (Requires DCS Action)
-
-1. Apply Supabase migrations → Personas/Assets DCSE fields active
-2. Connect Vercel to GitHub → Auto-deploy on push
-3. Set Vercel env vars → Supabase API endpoints live
-4. Merge PR #5 → Tribunal relay updated
-5. Confirm SC brand palette → SC LP production unblocked
+### Hard Gates (Blocking Further Autonomous Work)
+- Batch 2 (TSL MVP): requires source reconstruction packet from DCS
+- Batch 3-A (SC Hero DDNA): requires DCS selection after DDNA process
+- Batch 3-B (SC Campaign): requires LM Arena artifact intake
+- Batch 3-D (Family Pathways): requires product definition
+- No migration, merge, deployment, or external action without DCS authorization
