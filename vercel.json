@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/apps/sc-agent-os/api/index.js" },
+    { "src": "/(.*)", "dest": "/apps/sc-agent-os/api/index.js" }
+  ]
+}
