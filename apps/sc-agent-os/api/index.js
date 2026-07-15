@@ -1,0 +1,1254 @@
+async function handleChat(req, res) {
+  let body = '';
+  req.on('data', d => body += d);
+  req.on('end', async () => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    try {
+      const {model, messages, apiKey, system} = JSON.parse(body);
+      let data, status;
+
+      if (model.startsWith('gpt-') || model.startsWith('o3')) {
+        const msgs = system ? [{role:'system',content:system},...messages] : messages;
+        const r = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+          body: JSON.stringify({model, messages: msgs, max_tokens: 1024})
+        });
+        const raw = await r.json(); status = r.status;
+        if (raw.choices) data = {text: raw.choices[0].message.content};
+        else data = {error: raw.error?.message || 'OpenAI error'};
+
+      } else if (model.startsWith('gemini-')) {
+        const parts = messages.map(m => ({role: m.role==='assistant'?'model':'user', parts:[{text:m.content}]}));
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const payload = {contents: parts};
+        if (system) payload.systemInstruction = {parts:[{text:system}]};
+        const r = await fetch(url, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        const raw = await r.json(); status = r.status;
+        if (raw.candidates) data = {text: raw.candidates[0].content.parts[0].text};
+        else data = {error: raw.error?.message || 'Gemini error'};
+
+      } else if (model.startsWith('qwen-')) {
+        const msgs = system ? [{role:'system',content:system},...messages] : messages;
+        const r = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
+          method: 'POST',
+          headers: {'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+          body: JSON.stringify({model, messages: msgs, max_tokens: 1024})
+        });
+        const raw = await r.json(); status = r.status;
+        if (raw.choices) data = {text: raw.choices[0].message.content};
+        else data = {error: raw.error?.message || 'Qwen error'};
+
+      } else {
+        const payload = {model, max_tokens: 1024, messages};
+        if (system) payload.system = system;
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const raw = await r.json(); status = r.status;
+        if (raw.content) data = {text: raw.content[0].text};
+        else data = {error: raw.error?.message || 'Anthropic error'};
+      }
+
+      res.statusCode = status || 200;
+      res.end(JSON.stringify(data));
+    } catch(e) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({error: e.message}));
+    }
+  });
+}
+
+const HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SC Agent OS v1.3 — Mission Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1D3A;--navy-mid:#122444;--navy-light:#1a3058;--navy-border:#1e3a6a;
+  --gold:#C9A84C;--gold-dim:#9a7e38;--gold-glow:rgba(201,168,76,0.15);
+  --cream:#F5F0E8;--text-dim:#8fa3c0;--text-muted:#4d6a8a;
+  --green:#2ecc71;--green-dim:rgba(46,204,113,0.15);
+  --amber:#f39c12;--amber-dim:rgba(243,156,18,0.15);
+  --red:#e74c3c;--red-dim:rgba(231,76,60,0.15);
+  --blue:#3498db;--blue-dim:rgba(52,152,219,0.15);
+  --orange:#e67e22;--orange-dim:rgba(230,126,34,0.15);
+  --teal:#1abc9c;--teal-dim:rgba(26,188,156,0.15);
+  --purple:#9b59b6;--purple-dim:rgba(155,89,182,0.15);
+  --surface:#0f2442;--surface-2:#152e52;
+  --font:'Space Grotesk',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:6px;--rl:10px;--sidebar:210px;--hdr:48px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--navy);color:var(--cream);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.hdr{height:var(--hdr);background:var(--navy-mid);border-bottom:1px solid var(--navy-border);display:flex;align-items:center;justify-content:space-between;padding:0 14px;flex-shrink:0;z-index:100;gap:10px}
+.hdr-l{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo{width:28px;height:28px;background:var(--gold);border-radius:5px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:var(--navy);flex-shrink:0}
+.hdr-title{font-size:13px;font-weight:600;color:var(--cream);white-space:nowrap}
+.hdr-sub{font-size:9px;color:var(--gold);font-family:var(--mono);letter-spacing:1px;text-transform:uppercase}
+.hdr-badges{display:flex;align-items:center;gap:5px;flex:1;flex-wrap:nowrap;overflow:hidden}
+.hdr-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:600;letter-spacing:.5px;padding:3px 7px;border-radius:3px;white-space:nowrap}
+.hdr-badge .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.b-green{background:rgba(46,204,113,.12);color:var(--green);border:1px solid rgba(46,204,113,.25)}
+.b-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(243,156,18,.25)}
+.b-orange{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(230,126,34,.25)}
+.b-gold{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+.b-blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(52,152,219,.25)}
+.hdr-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.time-display{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:1px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.layout{display:flex;flex:1;overflow:hidden}
+.sidebar{width:var(--sidebar);background:var(--navy-mid);border-right:1px solid var(--navy-border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-section{padding:8px 0}
+.sb-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;padding:0 12px 4px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;transition:all .12s;border-left:2px solid transparent;font-size:11px;color:var(--text-dim);user-select:none}
+.nav-item:hover{background:var(--navy-light);color:var(--cream)}
+.nav-item.active{background:var(--navy-light);color:var(--cream);border-left-color:var(--gold)}
+.nav-icon{width:13px;text-align:center;flex-shrink:0;font-size:11px}
+.nav-badge{margin-left:auto;font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;flex-shrink:0}
+.nb-gold{background:var(--gold);color:var(--navy)}
+.nb-red{background:var(--red);color:#fff}
+.nb-green{background:var(--green);color:var(--navy)}
+.nb-blue{background:var(--blue);color:#fff}
+.nb-live{background:var(--green);color:var(--navy);font-size:7px;letter-spacing:.5px}
+.divider{height:1px;background:var(--navy-border);margin:2px 0}
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;background:var(--navy)}
+.panel{display:none;flex-direction:column;flex:1;padding:16px;gap:12px;overflow-y:auto}
+.panel.active{display:flex}
+.panel-hdr{display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+.panel-title{font-size:15px;font-weight:600;color:var(--cream)}
+.panel-sub{font-size:10px;color:var(--text-dim);margin-top:2px}
+.card{background:var(--surface);border:1px solid var(--navy-border);border-radius:var(--rl);padding:14px}
+.card-title{font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+.stat-tile{background:var(--surface);border:1px solid var(--navy-border);border-radius:var(--rl);padding:12px 14px}
+.stat-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.stat-value{font-size:20px;font-weight:700;color:var(--cream);font-family:var(--mono);font-variant-numeric:tabular-nums}
+.stat-sub{font-size:9px;color:var(--text-dim);margin-top:3px}
+.tag{display:inline-flex;align-items:center;font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 6px;border-radius:3px;flex-shrink:0}
+.tag-gold{background:var(--gold-glow);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-red{background:var(--red-dim);color:var(--red)}
+.tag-blue{background:var(--blue-dim);color:var(--blue)}
+.tag-amber{background:var(--amber-dim);color:var(--amber)}
+.tag-orange{background:var(--orange-dim);color:var(--orange)}
+.tag-purple{background:var(--purple-dim);color:var(--purple)}
+.reg-section-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;padding:10px 0 6px;border-bottom:1px solid var(--navy-border);margin-bottom:8px}
+.reg-section-label:first-child{padding-top:0}
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.agent-card{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all .15s}
+.agent-card:hover{border-color:var(--gold);background:var(--surface)}
+.agent-card.live{border-color:rgba(46,204,113,.35)}
+.agent-avatar{width:32px;height:32px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;font-family:var(--mono);font-size:11px}
+.agent-info{flex:1;min-width:0}
+.agent-name{font-size:11px;font-weight:600;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agent-role{font-size:9px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pip{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.pip-g{background:var(--green)}.pip-a{background:var(--amber)}.pip-r{background:var(--red)}.pip-b{background:var(--blue)}.pip-x{background:var(--text-muted)}
+.feed{display:flex;flex-direction:column}
+.feed-item{padding:8px 0;border-bottom:1px solid var(--navy-border);display:flex;gap:8px;align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:1px}
+.feed-body{flex:1;min-width:0}
+.feed-title{font-size:11px;color:var(--cream);line-height:1.4}
+.feed-meta{font-size:9px;color:var(--text-muted);margin-top:1px;font-family:var(--mono)}
+.trib-list{display:flex;flex-direction:column;gap:6px}
+.trib-item{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px 12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trib-status{font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 6px;border-radius:3px;flex-shrink:0}
+.ts-draft{background:var(--blue-dim);color:var(--blue)}
+.ts-open{background:var(--amber-dim);color:var(--amber)}
+.ts-done{background:var(--green-dim);color:var(--green)}
+.ts-prog{background:var(--purple-dim);color:var(--purple)}
+.trib-info{flex:1;min-width:0}
+.trib-title{font-size:11px;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trib-meta{font-size:9px;color:var(--text-muted);margin-top:1px;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat-wrap{display:flex;flex-direction:column;flex:1;min-height:0}
+.chat-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--navy-border);flex-shrink:0;flex-wrap:wrap}
+.model-select{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:11px;padding:4px 8px;border-radius:var(--r);cursor:pointer;outline:none;flex-shrink:0}
+.model-select:focus{border-color:var(--gold)}
+.key-input{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--mono);font-size:10px;padding:4px 8px;border-radius:var(--r);outline:none;flex-shrink:0}
+.key-input:focus{border-color:var(--gold)}
+.key-input::placeholder{color:var(--text-muted)}
+.chat-area{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:0}
+.msg{max-width:78%;padding:9px 13px;border-radius:var(--rl);font-size:12px;line-height:1.55}
+.msg.user{background:var(--gold);color:var(--navy);align-self:flex-end;font-weight:500}
+.msg.agent{background:var(--surface);border:1px solid var(--navy-border);color:var(--cream);align-self:flex-start}
+.msg.sys{background:transparent;border:1px dashed var(--navy-border);color:var(--text-dim);align-self:center;font-size:10px;font-family:var(--mono);max-width:92%;text-align:center}
+.msg.thinking{opacity:.6;font-style:italic}
+.chat-input-row{padding:10px 14px;border-top:1px solid var(--navy-border);display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.chat-textarea{flex:1;background:var(--surface);border:1px solid var(--navy-border);border-radius:var(--r);color:var(--cream);font-family:var(--font);font-size:12px;padding:7px 10px;resize:none;min-height:36px;max-height:110px;outline:none;transition:border .15s}
+.chat-textarea:focus{border-color:var(--gold)}
+.chat-send{background:var(--gold);color:var(--navy);border:none;border-radius:var(--r);padding:7px 14px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0;transition:all .15s}
+.chat-send:hover{background:var(--gold-dim)}
+.chat-send:disabled{opacity:.5;cursor:not-allowed}
+.voice-wave{display:flex;align-items:center;justify-content:center;gap:3px;height:28px}
+.wave-bar{width:3px;background:var(--gold);border-radius:2px;animation:wave 1.1s ease-in-out infinite}
+@keyframes wave{0%,100%{height:4px;opacity:.35}50%{height:18px;opacity:1}}
+#waveArea{display:none;padding:6px 14px;border-top:1px solid var(--navy-border)}
+.ddna-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media(max-width:800px){.ddna-grid{grid-template-columns:repeat(2,1fr)}}
+.ddna-cell{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px;text-align:center}
+.ddna-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:7px}
+.ddna-bar-wrap{height:5px;background:var(--navy-border);border-radius:3px;overflow:hidden;margin-bottom:5px}
+.ddna-bar{height:100%;border-radius:3px;transition:width .9s cubic-bezier(.4,0,.2,1)}
+.ddna-score{font-size:17px;font-weight:700;font-family:var(--mono);color:var(--cream)}
+.ddna-delta{font-size:8px;color:var(--text-dim);margin-top:2px}
+.model-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);margin-bottom:6px}
+.model-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.model-info{flex:1}
+.model-name{font-size:11px;font-weight:600;color:var(--cream)}
+.model-detail{font-size:9px;color:var(--text-muted);font-family:var(--mono);margin-top:2px}
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}
+.gap-6{gap:6px}.gap-8{gap:8px}.gap-10{gap:10px}
+.mt-8{margin-top:8px}.mt-10{margin-top:10px}.mt-12{margin-top:12px}
+.mono{font-family:var(--mono);font-size:10px}.text-dim{color:var(--text-dim)}.text-muted{color:var(--text-muted)}
+.text-gold{color:var(--gold)}.text-green{color:var(--green)}.text-red{color:var(--red)}.text-amber{color:var(--amber)}
+.overflow-auto{overflow:auto}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:var(--r);font-size:10px;font-weight:700;font-family:var(--font);cursor:pointer;border:none;transition:all .15s;letter-spacing:.3px;text-decoration:none}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold-dim)}
+.btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--navy-border)}.btn-ghost:hover{color:var(--cream);border-color:var(--text-dim)}
+.btn-sm{padding:3px 8px;font-size:9px}
+.voice-btn{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);padding:4px 10px;border-radius:var(--r);font-size:10px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .15s}
+.voice-btn:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.voice-btn.rec{background:var(--red);border-color:var(--red);animation:pulse .7s infinite}
+.form-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.inp{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:11px;padding:5px 9px;border-radius:var(--r);outline:none;flex:1;min-width:120px}
+.inp:focus{border-color:var(--gold)}
+.inp::placeholder{color:var(--text-muted)}
+.textarea{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:11px;padding:7px 9px;border-radius:var(--r);outline:none;width:100%;resize:vertical;min-height:70px}
+.textarea:focus{border-color:var(--gold)}
+.textarea::placeholder{color:var(--text-muted)}
+.result-box{background:var(--navy);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px;font-size:11px;color:var(--cream);line-height:1.6;min-height:50px;white-space:pre-wrap;word-break:break-word}
+.filter-row{display:flex;gap:5px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-l">
+    <div class="logo">SC</div>
+    <div>
+      <div class="hdr-title">SC Agent OS <span style="font-size:10px;color:var(--gold)">v1.3</span></div>
+      <div class="hdr-sub">Mission Control · SC-COMMAND-POST</div>
+    </div>
+  </div>
+  <div class="hdr-badges">
+    <span class="hdr-badge b-green"><span class="dot" style="background:var(--green)"></span>Claude API</span>
+    <span class="hdr-badge b-amber"><span class="dot" style="background:var(--amber)"></span>Ollama: Set CORS</span>
+    <span class="hdr-badge b-green"><span class="dot" style="background:var(--green)"></span>RLS Secured</span>
+    <span class="hdr-badge b-amber"><span class="dot" style="background:var(--amber)"></span>DDNA: 73 Queued</span>
+    <span class="hdr-badge b-gold"><span class="dot" style="background:var(--gold)"></span>DCS L0</span>
+  </div>
+  <div class="hdr-r">
+    <span class="status-dot"></span>
+    <span class="time-display" id="clock">--:--:--</span>
+    <button class="voice-btn" id="voiceToggle" onclick="toggleVoice()">🎤 Voice</button>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Command</div>
+      <div class="nav-item active" onclick="nav('mission',this)"><span class="nav-icon">⚡</span>Mission Control</div>
+      <div class="nav-item" onclick="nav('chat',this)"><span class="nav-icon">💬</span>Agent Chat + Voice<span class="nav-badge nb-live">LIVE</span></div>
+      <div class="nav-item" onclick="nav('approvals',this)"><span class="nav-icon">✅</span>Approvals<span class="nav-badge nb-gold">1</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">Orchestration</div>
+      <div class="nav-item" onclick="nav('agents',this)"><span class="nav-icon">🤖</span>Agent Dock<span class="nav-badge nb-gold">12</span></div>
+      <div class="nav-item" onclick="nav('tasks',this)"><span class="nav-icon">▦</span>Task Queue<span class="nav-badge nb-blue" id="taskBadge">3</span></div>
+      <div class="nav-item" onclick="nav('portfolio',this)"><span class="nav-icon">◈</span>Portfolio<span class="nav-badge nb-gold" id="portBadge">4</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">DDNA + Intelligence</div>
+      <div class="nav-item" onclick="nav('ddna',this)"><span class="nav-icon">△</span>DDNA Harvest<span class="nav-badge nb-red">73</span></div>
+      <div class="nav-item" onclick="nav('models',this)"><span class="nav-icon">△</span>Local Models<span class="nav-badge nb-green" id="modelsBadge">?</span></div>
+      <div class="nav-item" onclick="nav('rag',this)"><span class="nav-icon">▤</span>RAG / Source<span class="nav-badge nb-gold" id="ragBadge">8</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">Governance</div>
+      <div class="nav-item" onclick="nav('tribunal',this)"><span class="nav-icon">⚖</span>Tribunal<span class="nav-badge nb-red">5</span></div>
+      <div class="nav-item" onclick="nav('dispatch',this)"><span class="nav-icon">📦</span>Dispatch</div>
+    </div>
+    <div class="divider"></div>
+    <div class="sb-section">
+      <div class="sb-label">System</div>
+      <div class="nav-item" onclick="nav('ps',this)"><span class="nav-icon">🛡</span>PS Firewall</div>
+      <div class="nav-item" onclick="nav('log',this)"><span class="nav-icon">📋</span>Ops Log</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- MISSION CONTROL -->
+    <div class="panel active" id="panel-mission">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Mission Control</div><div class="panel-sub">DCSE Operational Overview</div></div>
+        <span class="tag tag-gold">ACTIVE</span>
+      </div>
+      <div class="grid-4">
+        <div class="stat-tile"><div class="stat-label">Active Agents</div><div class="stat-value">12</div><div class="stat-sub">4 frontier · 2 local · 6 standby</div></div>
+        <div class="stat-tile"><div class="stat-label">Tribunal PRs</div><div class="stat-value">5</div><div class="stat-sub">5 open · 0 merged today</div></div>
+        <div class="stat-tile"><div class="stat-label">Dispatch Queue</div><div class="stat-value">1</div><div class="stat-sub">SC LP Trial — CLEARED</div></div>
+        <div class="stat-tile"><div class="stat-label">PS Firewall</div><div class="stat-value text-green">✔</div><div class="stat-sub">ACTIVE — No breach</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
+        <div class="card">
+          <div class="card-title">Recent Activity</div>
+          <div class="feed">
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">SC Agent OS v1.3 — ChatGPT, Gemini, Qwen added to Agent Chat</div><div class="feed-meta">Claude Code · 2026-07-15</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--green-dim);color:var(--green)">✔</div><div class="feed-body"><div class="feed-title">SC LP Trial build complete — D08 v6.9.1 voice rule held</div><div class="feed-meta">Claude Code · 2026-07-14</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--gold-glow);color:var(--gold)">🔒</div><div class="feed-body"><div class="feed-title">Hero line confirmed by DCS — LOCKED</div><div class="feed-meta">DCS · 2026-07-08</div></div></div>
+            <div class="feed-item"><div class="feed-icon" style="background:var(--purple-dim);color:var(--purple)">⚖</div><div class="feed-body"><div class="feed-title">PR #5 — trial designation, skill line fix, hero line staged</div><div class="feed-meta">Claude Code · 2026-07-08</div></div></div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-8">
+          <div class="card">
+            <div class="card-title">System Status</div>
+            <div class="flex flex-col gap-6">
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Governance</span><span class="tag tag-green">v6.9</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">PS Firewall</span><span class="tag tag-green">ACTIVE</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Tribunal Relay</span><span class="tag tag-green">ONLINE</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">SC Agent OS</span><span class="tag tag-gold">LIVE</span></div>
+              <div class="flex items-center justify-between"><span class="text-dim" style="font-size:11px">Ollama Local</span><span class="tag tag-amber">CORS REQ</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Next Actions</div>
+            <div class="flex flex-col gap-6">
+              <div style="font-size:10px;color:var(--cream)">1. Merge PR #5 (DCS authorize)</div>
+              <div style="font-size:10px;color:var(--text-dim)">2. Drop dispatch packet to inbox</div>
+              <div style="font-size:10px;color:var(--text-dim)">3. Confirm SC brand palette</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENT CHAT -->
+    <div class="panel" id="panel-chat">
+      <div class="panel-hdr" style="flex-shrink:0">
+        <div><div class="panel-title">Agent Chat + Voice</div><div class="panel-sub" id="chatContextLabel">Select model — SC/DCSE context active — PS firewall on</div></div>
+        <button class="voice-btn" onclick="toggleVoice()">🎤 Start Voice</button>
+      </div>
+      <div class="card chat-wrap" style="flex:1;padding:0;min-height:0">
+        <div class="chat-toolbar">
+          <select class="model-select" id="modelSelect" onchange="onModelChange()">
+            <optgroup label="Claude (Anthropic)">
+              <option value="claude-sonnet-5">claude-sonnet-5</option>
+              <option value="claude-opus-4-8">claude-opus-4-8</option>
+              <option value="claude-haiku-4-5-20251001">claude-haiku-4-5</option>
+            </optgroup>
+            <optgroup label="ChatGPT (OpenAI)">
+              <option value="gpt-4o">gpt-4o</option>
+              <option value="gpt-4o-mini">gpt-4o-mini</option>
+              <option value="o3-mini">o3-mini</option>
+            </optgroup>
+            <optgroup label="Gemini (Google)">
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+            </optgroup>
+            <optgroup label="Qwen (Alibaba)">
+              <option value="qwen-turbo">qwen-turbo</option>
+              <option value="qwen-plus">qwen-plus</option>
+              <option value="qwen-max">qwen-max</option>
+            </optgroup>
+            <optgroup label="Ollama Local">
+              <option value="ollama:nous-hermes2">Nous-Hermes2 (DDNA)</option>
+              <option value="ollama:dolphin-mistral">Dolphin Mistral (Uncensored)</option>
+              <option value="ollama:qwen2.5">Qwen2.5 (Local)</option>
+            </optgroup>
+          </select>
+          <input class="key-input" id="apiKeyInput" type="password" placeholder="API key" style="width:170px" oninput="saveKey()" />
+          <span id="modelStatus" class="tag tag-amber">KEY NEEDED</span>
+          <span id="ollamaNote" style="font-size:9px;color:var(--text-muted);display:none">calls localhost:11434</span>
+          <button class="btn btn-ghost btn-sm" onclick="clearChat()">Clear</button>
+        </div>
+        <div class="chat-area" id="chatArea">
+          <div class="msg sys">SC Agent OS — Agent Chat open. PS firewall active.</div>
+          <div class="msg agent">Ready. What do you need?</div>
+        </div>
+        <div id="waveArea">
+          <div class="voice-wave">
+            <div class="wave-bar" style="animation-delay:0s"></div>
+            <div class="wave-bar" style="animation-delay:.1s"></div>
+            <div class="wave-bar" style="animation-delay:.2s"></div>
+            <div class="wave-bar" style="animation-delay:.3s"></div>
+            <div class="wave-bar" style="animation-delay:.4s"></div>
+            <div class="wave-bar" style="animation-delay:.5s"></div>
+            <div class="wave-bar" style="animation-delay:.6s"></div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <textarea class="chat-textarea" id="chatInput" placeholder="Type or speak..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+          <button class="chat-send" id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPROVALS -->
+    <div class="panel" id="panel-approvals">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Approvals</div><div class="panel-sub">Pending DCS decisions</div></div>
+        <span class="tag tag-amber">1 PENDING</span>
+      </div>
+      <div class="card">
+        <div class="trib-item" style="background:rgba(243,156,18,.06);border-color:rgba(243,156,18,.3)">
+          <span class="trib-status ts-open">PENDING</span>
+          <div class="trib-info">
+            <div class="trib-title">PR #5 — SC LP Trial Packet ready for merge</div>
+            <div class="trib-meta">claude/dcs-packet-trial-confirm-jwuzsy · Hero line confirmed · Awaiting DCS merge approval</div>
+          </div>
+          <a class="btn btn-gold" href="https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/5" target="_blank">Open PR ↗</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Approval Rules</div>
+        <div class="flex flex-col gap-6">
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">PR merge to main</span><span class="tag tag-gold">DCS REQUIRED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Production deploy</span><span class="tag tag-gold">DCS REQUIRED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Supabase live write</span><span class="tag tag-gold">DCS REQUIRED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Wix publish</span><span class="tag tag-gold">DCS REQUIRED</span></div>
+          <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">PS content movement</span><span class="tag tag-red">BLOCKED</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGENT DOCK -->
+    <div class="panel" id="panel-agents">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Agent Dock</div><div class="panel-sub">Click agent to launch in chat</div></div>
+        <span class="tag tag-green">12 REGISTERED</span>
+      </div>
+      <div class="card">
+        <div class="reg-section-label">Frontier + Platform Agents</div>
+        <div class="agent-grid">
+          <div class="agent-card live" onclick="launchAgent('DCS Authority','dcs_authority','You are the DCS Authority. Lead constructively, no dominating contrast. All governance decisions final.')"><div class="agent-avatar" style="background:var(--gold-glow);color:var(--gold)">DCS</div><div class="agent-info"><div class="agent-name">DCS Authority</div><div class="agent-role">dcs_authority · governance</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-gold" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('Claude Code','code_agent','You are Claude Code, an AI software engineering agent. Help build and deploy SC infrastructure.')"><div class="agent-avatar" style="background:var(--blue-dim);color:var(--blue)">CC</div><div class="agent-info"><div class="agent-name">Claude Code</div><div class="agent-role">code_agent · builder</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('ChatGPT','model','You are ChatGPT, assisting with SC operations. PS firewall active.')"><div class="agent-avatar" style="background:var(--green-dim);color:var(--green)">GP</div><div class="agent-info"><div class="agent-name">ChatGPT</div><div class="agent-role">openai model</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('Gemini','model','You are Gemini, assisting with SC operations. PS firewall active.')"><div class="agent-avatar" style="background:var(--blue-dim);color:var(--blue)">GE</div><div class="agent-info"><div class="agent-name">Gemini</div><div class="agent-role">google model</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('Supabase Agent','database','You are a Supabase database agent. Help manage SC schema, RLS, and data operations.')"><div class="agent-avatar" style="background:var(--teal-dim);color:var(--teal)">DB</div><div class="agent-info"><div class="agent-name">Supabase Agent</div><div class="agent-role">database · RLS</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('GitHub Agent','github','You are a GitHub agent. Help manage repos, PRs, and the Tribunal Relay.')"><div class="agent-avatar" style="background:rgba(100,100,100,.15);color:var(--cream)">GH</div><div class="agent-info"><div class="agent-name">GitHub Agent</div><div class="agent-role">github · tribunal</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('Tribunal Agent','tribunal','You are the Tribunal Agent. Manage DCSE governance artifacts, dispatch packets, and PR review.')"><div class="agent-avatar" style="background:var(--amber-dim);color:var(--amber)">TR</div><div class="agent-info"><div class="agent-name">Tribunal Agent</div><div class="agent-role">tribunal · dispatch</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+          <div class="agent-card live" onclick="launchAgent('Codex','code_agent','You are Codex, an OpenAI code model. Help with SC code review and generation.')"><div class="agent-avatar" style="background:var(--purple-dim);color:var(--purple)">CX</div><div class="agent-info"><div class="agent-name">Codex</div><div class="agent-role">openai code model</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">ACTIVE</span></div></div>
+        </div>
+        <div class="reg-section-label">Local Models — Ollama (localhost:11434)</div>
+        <div class="agent-grid">
+          <div class="agent-card live" onclick="launchAgentOllama('Nous-Hermes2','nous-hermes2','DDNA extractor. Score agent behavioral dimensions from session transcripts.')"><div class="agent-avatar" style="background:rgba(46,204,113,.12);color:var(--green)">HE</div><div class="agent-info"><div class="agent-name">Nous-Hermes2 (Local)</div><div class="agent-role">DDNA extractor · ollama</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-green" style="font-size:7px">DDNA</span></div></div>
+          <div class="agent-card live" onclick="launchAgentOllama('Dolphin Mistral','dolphin-mistral','Uncensored model for raw divergence analysis and unfiltered reasoning.')"><div class="agent-avatar" style="background:var(--orange-dim);color:var(--orange)">DP</div><div class="agent-info"><div class="agent-name">Dolphin Mistral</div><div class="agent-role">raw divergence · uncensored</div></div><div class="flex items-center gap-6"><div class="pip pip-g"></div><span class="tag tag-orange" style="font-size:7px">RAW</span></div></div>
+        </div>
+        <div class="reg-section-label">Standby</div>
+        <div class="agent-grid">
+          <div class="agent-card" onclick="launchAgent('AG Builder','builder_agent','You are the AG Builder agent. Help scope and build SC GovOS components.')"><div class="agent-avatar" style="background:var(--amber-dim);color:var(--amber)">AG</div><div class="agent-info"><div class="agent-name">AG Builder</div><div class="agent-role">builder_agent</div></div><div class="flex items-center gap-6"><div class="pip pip-a"></div><span class="tag tag-amber" style="font-size:7px">STANDBY</span></div></div>
+          <div class="agent-card" onclick="launchAgent('Review Board','reviewer','You are the SC Review Board. Evaluate builds against D08 voice rule and governance standards.')"><div class="agent-avatar" style="background:var(--red-dim);color:var(--red)">RB</div><div class="agent-info"><div class="agent-name">Review Board</div><div class="agent-role">reviewer</div></div><div class="flex items-center gap-6"><div class="pip pip-a"></div><span class="tag tag-amber" style="font-size:7px">STANDBY</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASK QUEUE -->
+    <div class="panel" id="panel-tasks">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Task Queue</div><div class="panel-sub">Active DCSE tasks — localStorage backed</div></div>
+        <span class="tag tag-blue" id="taskCountTag">LOADING</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Add Task</div>
+        <div class="form-row">
+          <input class="inp" id="newTaskInput" placeholder="Task title..." />
+          <input class="inp" id="newTaskOwner" placeholder="Owner" style="max-width:100px" />
+          <select class="model-select" id="newTaskStatus">
+            <option value="queued">Queued</option>
+            <option value="in_progress">In Progress</option>
+          </select>
+          <button class="btn btn-gold" onclick="addTask()">Add Task</button>
+        </div>
+        <div class="filter-row">
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="all" onclick="renderTasks('all')">All</button>
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="queued" onclick="renderTasks('queued')">Queued</button>
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="in_progress" onclick="renderTasks('in_progress')">In Progress</button>
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="done" onclick="renderTasks('done')">Done</button>
+        </div>
+        <div class="trib-list" id="taskList"></div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div class="panel" id="panel-portfolio">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Portfolio</div><div class="panel-sub">SC active builds and deployments</div></div>
+        <span class="tag tag-gold" id="portCountTag">LOADING</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Add Item</div>
+        <div class="form-row">
+          <input class="inp" id="newPortName" placeholder="Name..." />
+          <input class="inp" id="newPortUrl" placeholder="URL (optional)" />
+          <input class="inp" id="newPortNote" placeholder="Note" />
+          <select class="model-select" id="newPortStatus">
+            <option value="live">Live</option>
+            <option value="trial">Trial</option>
+            <option value="arch">Arch</option>
+            <option value="active">Active</option>
+            <option value="pending">Pending</option>
+            <option value="paused">Paused</option>
+          </select>
+          <button class="btn btn-gold" onclick="addPortItem()">Add</button>
+        </div>
+        <div class="trib-list" id="portfolioList"></div>
+      </div>
+    </div>
+
+    <!-- DDNA HARVEST -->
+    <div class="panel" id="panel-ddna">
+      <div class="panel-hdr">
+        <div><div class="panel-title">DDNA Harvest</div><div class="panel-sub">Digital DNA — Agent behavioral scoring via AI model</div></div>
+        <div class="flex gap-6">
+          <button class="btn btn-ghost btn-sm" onclick="exportDDNA()">Export JSON</button>
+          <span class="tag tag-amber">73 QUEUED</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Run Harvest</div>
+        <textarea class="textarea" id="ddnaInput" placeholder="Paste agent session transcript or output here to score DDNA dimensions..."></textarea>
+        <div class="form-row" style="margin-top:8px">
+          <button class="btn btn-gold" id="harvestBtn" onclick="runDDNAHarvest()">Run Harvest</button>
+          <span id="harvestStatus" class="mono text-dim"></span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">DDNA Scores — Current Session</div>
+        <div class="ddna-grid" id="ddnaGrid"></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Session Notes</div>
+        <div class="form-row">
+          <input class="inp" id="ddnaNoteInput" placeholder="Add session note..." />
+          <button class="btn btn-ghost" onclick="addDDNANote()">Add</button>
+        </div>
+        <div id="ddnaNotesList" style="margin-top:8px"></div>
+      </div>
+    </div>
+
+    <!-- LOCAL MODELS -->
+    <div class="panel" id="panel-models">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Local Models</div><div class="panel-sub">Ollama — localhost:11434</div></div>
+        <div class="flex gap-6">
+          <button class="btn btn-gold" onclick="checkOllama()">Refresh</button>
+          <span class="tag" id="ollamaStatus" style="background:var(--amber-dim);color:var(--amber)">NOT CHECKED</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Available Models</div>
+        <div id="ollamaModelList">
+          <div class="mono text-dim" style="padding:8px">Click Refresh to check Ollama status and list models.</div>
+        </div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Test Output</div>
+        <div class="result-box" id="ollamaTestOut" style="min-height:36px;color:var(--text-dim)">Test output appears here.</div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">CORS Setup</div>
+        <div style="font-size:10px;color:var(--text-dim);font-family:var(--mono);line-height:1.9">
+          Mac/Linux: OLLAMA_ORIGINS=* ollama serve<br>
+          PowerShell: $env:OLLAMA_ORIGINS="*"; ollama serve<br>
+          Pull model: ollama pull nous-hermes2
+        </div>
+      </div>
+    </div>
+
+    <!-- RAG / SOURCE -->
+    <div class="panel" id="panel-rag">
+      <div class="panel-hdr">
+        <div><div class="panel-title">RAG / Source</div><div class="panel-sub">Knowledge sources — add, index, and query with AI</div></div>
+        <span class="tag tag-gold" id="ragCountTag">LOADING</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Add / Edit Source</div>
+        <input type="hidden" id="ragEditId" />
+        <div class="form-row">
+          <input class="inp" id="ragName" placeholder="Source name..." />
+          <input class="inp" id="ragUrl" placeholder="URL (optional)" />
+        </div>
+        <textarea class="textarea" id="ragContent" placeholder="Paste source content to index (optional — needed for query)..." style="min-height:80px"></textarea>
+        <div class="form-row" style="margin-top:8px">
+          <button class="btn btn-gold" onclick="saveRagEdit()">Save Source</button>
+          <button class="btn btn-ghost" onclick="clearRagForm()">Clear</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Query Source</div>
+        <div class="form-row">
+          <input class="inp" id="ragQuery" placeholder="Enter question to query against selected source..." />
+        </div>
+        <div class="result-box" id="ragQueryResult" style="color:var(--text-dim)">Select a source below and click Query, or enter a question above.</div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Sources</div>
+        <div class="trib-list" id="ragSourceList"></div>
+      </div>
+    </div>
+
+    <!-- TRIBUNAL -->
+    <div class="panel" id="panel-tribunal">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Tribunal</div><div class="panel-sub">DCSE-Tribunal-Relay — Open PRs</div></div>
+        <span class="tag tag-amber">5 OPEN</span>
+      </div>
+      <div class="card">
+        <div class="filter-row">
+          <button class="btn btn-gold btn-sm trib-filter-btn" data-filter="all" onclick="renderTribunal('all')">All</button>
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="draft" onclick="renderTribunal('draft')">Draft</button>
+          <button class="btn btn-ghost btn-sm trib-filter-btn" data-filter="open" onclick="renderTribunal('open')">Open</button>
+        </div>
+        <div class="trib-list" id="tribunalList"></div>
+      </div>
+      <div class="card mt-8">
+        <div class="card-title">Repository Links</div>
+        <div class="flex gap-8">
+          <a class="btn btn-ghost" href="https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay" target="_blank">Tribunal Relay ↗</a>
+          <a class="btn btn-ghost" href="https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post" target="_blank">Command Post ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISPATCH -->
+    <div class="panel" id="panel-dispatch">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Dispatch</div><div class="panel-sub">Operational packet queue</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('dispatchForm').style.display=document.getElementById('dispatchForm').style.display==='none'?'block':'none'">+ New Packet</button>
+      </div>
+      <div class="card" id="dispatchForm" style="display:none">
+        <div class="card-title">New Packet</div>
+        <div class="form-row">
+          <input class="inp" id="dispatchId" placeholder="Packet ID (e.g. TRIB-20260715-DESC)" />
+        </div>
+        <div class="form-row">
+          <input class="inp" id="dispatchDesc" placeholder="Description..." />
+        </div>
+        <div class="form-row">
+          <input class="inp" id="dispatchInbox" placeholder="Inbox UNC path (optional)" />
+          <button class="btn btn-gold" onclick="addDispatch()">Create</button>
+        </div>
+      </div>
+      <div class="trib-list" id="dispatchList"></div>
+    </div>
+
+    <!-- PS FIREWALL -->
+    <div class="panel" id="panel-ps">
+      <div class="panel-hdr">
+        <div><div class="panel-title">PS Firewall</div><div class="panel-sub">Personal / sensitive content gate</div></div>
+        <span class="tag tag-green">ACTIVE</span>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Firewall Rules</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">PS content in dispatch packets</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Employ/career material in SC lane</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Pricing in public-facing copy</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">External brand mentions</span><span class="tag tag-red">BLOCKED</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Superlatives without evidence</span><span class="tag tag-red">BLOCKED</span></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-title">Current Session</div>
+          <div class="flex flex-col gap-6">
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">PS content detected</span><span class="tag tag-green">NONE</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Breach count</span><span class="mono text-green">0</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Last check</span><span class="mono text-dim">2026-07-15</span></div>
+            <div class="flex items-center justify-between"><span style="font-size:11px;color:var(--text-dim)">Build receipt</span><span class="tag tag-green">CLEAN</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPS LOG -->
+    <div class="panel" id="panel-log">
+      <div class="panel-hdr">
+        <div><div class="panel-title">Ops Log</div><div class="panel-sub">Session audit trail</div></div>
+        <button class="btn btn-ghost btn-sm" onclick="addOpsEntry()">+ Entry</button>
+      </div>
+      <div class="card overflow-auto">
+        <div class="flex flex-col gap-6" id="opsLog">
+          <div class="mono text-dim">2026-07-15 · SC Agent OS v1.3 — full functionality deployed (Orchestration, DDNA, Local Models, RAG, Governance)</div>
+          <div class="mono text-dim">2026-07-15 · ChatGPT, Gemini, Qwen added to Agent Chat</div>
+          <div class="mono text-dim">2026-07-14 · SC Agent OS v1.3 deployed to os.sonlyconsulting.com</div>
+          <div class="mono text-dim">2026-07-14 · SC LP trial build complete — D08 v6.9.1 voice rule held</div>
+          <div class="mono text-dim">2026-07-08T03:35 · UNC path corrected in dispatch packet</div>
+          <div class="mono text-dim">2026-07-08T03:27 · PR #5 opened</div>
+          <div class="mono text-dim">2026-07-08 · DCS confirmed hero line — LOCKED</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Clock
+function tick(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});}
+tick();setInterval(tick,1000);
+
+// Nav
+function nav(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(el){el.classList.add('active');}
+  else{
+    const found=Array.from(document.querySelectorAll('.nav-item')).find(n=>(n.getAttribute('onclick')||'').includes("'"+id+"'"));
+    if(found)found.classList.add('active');
+  }
+}
+
+// Voice
+let voiceActive=false,recognition=null;
+function toggleVoice(){
+  voiceActive=!voiceActive;
+  document.querySelectorAll('.voice-btn').forEach(b=>{b.textContent=voiceActive?'🔴 Stop':'🎤 Voice';b.classList.toggle('rec',voiceActive);});
+  const wave=document.getElementById('waveArea');
+  if(wave)wave.style.display=voiceActive?'block':'none';
+  if(voiceActive){
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(SR){
+      recognition=new SR();recognition.continuous=true;recognition.interimResults=false;
+      recognition.onresult=e=>{const t=e.results[e.results.length-1][0].transcript.trim();if(t){document.getElementById('chatInput').value=t;sendMessage();}};
+      recognition.onerror=()=>{addMsg('sys','Voice error — check browser permissions.');voiceActive=false;document.querySelectorAll('.voice-btn').forEach(b=>{b.textContent='🎤 Voice';b.classList.remove('rec');});};
+      recognition.start();
+    } else {addMsg('sys','Web Speech API not supported.');voiceActive=false;}
+  } else {if(recognition)recognition.stop();}
+}
+
+// Per-provider key management
+const KEY_STORES={anthropic:'sc_anthropic_key',openai:'sc_openai_key',google:'sc_google_key',qwen:'sc_qwen_key'};
+const PROVIDER_META={
+  anthropic:{label:'Anthropic',placeholder:'sk-ant-...',check:v=>v.startsWith('sk-ant-')},
+  openai:   {label:'OpenAI',   placeholder:'sk-...',     check:v=>v.startsWith('sk-')},
+  google:   {label:'Google',   placeholder:'AIza...',    check:v=>v.length>10},
+  qwen:     {label:'Qwen',     placeholder:'sk-... (DashScope)', check:v=>v.length>10},
+  ollama:   {label:'Ollama',   placeholder:'(no key needed)', check:()=>true}
+};
+function providerOf(model){
+  if(model.startsWith('claude-'))return'anthropic';
+  if(model.startsWith('gpt-')||model.startsWith('o3'))return'openai';
+  if(model.startsWith('gemini-'))return'google';
+  if(model.startsWith('qwen-'))return'qwen';
+  if(model.startsWith('ollama:'))return'ollama';
+  return'anthropic';
+}
+const keyInput=document.getElementById('apiKeyInput');
+function loadKeyForModel(model){const p=providerOf(model);if(p==='ollama'){keyInput.value='';return;}keyInput.value=localStorage.getItem(KEY_STORES[p])||'';}
+function saveKey(){const model=document.getElementById('modelSelect').value;const p=providerOf(model);if(p!=='ollama')localStorage.setItem(KEY_STORES[p],keyInput.value);updateStatus();}
+function updateStatus(){
+  const s=document.getElementById('modelStatus');
+  const model=document.getElementById('modelSelect').value;
+  const p=providerOf(model);const meta=PROVIDER_META[p];
+  if(p==='ollama'){s.textContent='OLLAMA';s.className='tag tag-orange';}
+  else if(meta.check(keyInput.value)){s.textContent=meta.label+' KEY OK';s.className='tag tag-green';}
+  else{s.textContent=meta.label+' KEY NEEDED';s.className='tag tag-amber';}
+}
+function onModelChange(){
+  const model=document.getElementById('modelSelect').value;
+  const p=providerOf(model);
+  document.getElementById('ollamaNote').style.display=p==='ollama'?'inline':'none';
+  keyInput.placeholder=PROVIDER_META[p].placeholder;
+  loadKeyForModel(model);updateStatus();
+}
+onModelChange();
+
+// Chat
+const chatHistory=[];
+let activeSysPrompt='You are an AI assistant inside SC Agent OS, the DCSE Mission Control interface for Sonly Consulting. PS firewall active — no personal/sensitive content. Be concise and direct.';
+
+function clearChat(){
+  chatHistory.length=0;
+  document.getElementById('chatArea').innerHTML='<div class="msg sys">Chat cleared.</div>';
+  document.getElementById('chatContextLabel').textContent='Select model — SC/DCSE context active — PS firewall on';
+  activeSysPrompt='You are an AI assistant inside SC Agent OS, the DCSE Mission Control interface for Sonly Consulting. PS firewall active — no personal/sensitive content. Be concise and direct.';
+}
+
+function addMsg(type,text){
+  const area=document.getElementById('chatArea');
+  const m=document.createElement('div');m.className='msg '+type;m.textContent=text;
+  area.appendChild(m);area.scrollTop=area.scrollHeight;return m;
+}
+
+async function sendMessage(){
+  const inp=document.getElementById('chatInput');
+  const text=inp.value.trim();if(!text)return;
+  addMsg('user',text);chatHistory.push({role:'user',content:text});
+  inp.value='';autoResize(inp);
+  const btn=document.getElementById('sendBtn');btn.disabled=true;
+  const model=document.getElementById('modelSelect').value;
+  const thinking=addMsg('agent thinking','...');
+  const p=providerOf(model);
+  try{
+    if(p==='ollama'){
+      const ollamaModel=model.replace('ollama:','');
+      const r=await fetch('http://localhost:11434/api/chat',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:ollamaModel,messages:chatHistory,stream:false})
+      });
+      if(!r.ok)throw new Error('Ollama '+r.status+' — CORS? Run: OLLAMA_ORIGINS=* ollama serve');
+      const d=await r.json();
+      const reply=d.message?.content||'[no response]';
+      chatHistory.push({role:'assistant',content:reply});
+      thinking.textContent=reply;thinking.className='msg agent';
+    } else {
+      const apiKey=keyInput.value;
+      if(!PROVIDER_META[p].check(apiKey)){thinking.textContent='Enter '+PROVIDER_META[p].label+' API key ('+PROVIDER_META[p].placeholder+')';thinking.className='msg sys';btn.disabled=false;return;}
+      const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:chatHistory,system:activeSysPrompt,apiKey})});
+      const d=await r.json();
+      if(d.error)throw new Error(typeof d.error==='string'?d.error:d.error.message||'API error');
+      const reply=d.text||'[no response]';
+      chatHistory.push({role:'assistant',content:reply});
+      thinking.textContent=reply;thinking.className='msg agent';
+    }
+  }catch(e){thinking.textContent='Error: '+e.message;thinking.className='msg sys';}
+  btn.disabled=false;
+}
+
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,110)+'px';}
+
+// Agent Dock — launch in chat
+function launchAgent(name,role,sysCtx){
+  activeSysPrompt=sysCtx;
+  document.getElementById('chatContextLabel').textContent='Agent: '+name+' ('+role+') — PS firewall on';
+  nav('chat',null);
+  addMsg('sys','Agent loaded: '+name+' — '+role);
+}
+function launchAgentOllama(name,ollamaModel,ctx){
+  // Switch model selector to ollama model
+  const sel=document.getElementById('modelSelect');
+  const optVal='ollama:'+ollamaModel;
+  if(sel.querySelector('option[value="'+optVal+'"]'))sel.value=optVal;
+  onModelChange();
+  activeSysPrompt=ctx;
+  document.getElementById('chatContextLabel').textContent='Local: '+name+' via Ollama — '+ollamaModel;
+  nav('chat',null);
+  addMsg('sys','Local agent loaded: '+name+' ('+ollamaModel+') — calls localhost:11434');
+}
+
+// ===== TASK QUEUE =====
+let tasks=JSON.parse(localStorage.getItem('sc_tasks')||'null')||[
+  {id:1,title:'SC LP trial build — review and merge PR #5',owner:'DCS',status:'in_progress',created:'2026-07-14'},
+  {id:2,title:'Drop TRIB-20260708 dispatch packet to Tribunal Inbox',owner:'DCS',status:'queued',created:'2026-07-08'},
+  {id:3,title:'Confirm SC brand palette (color_primary) for LP production',owner:'DCS',status:'queued',created:'2026-07-08'}
+];
+function saveTasks(){localStorage.setItem('sc_tasks',JSON.stringify(tasks));}
+let taskFilter='all';
+function renderTasks(filter){
+  taskFilter=filter||taskFilter;
+  const list=document.getElementById('taskList');if(!list)return;
+  const shown=taskFilter==='all'?tasks:tasks.filter(t=>t.status===taskFilter);
+  const statusStyle={queued:'background:var(--amber-dim);color:var(--amber)',in_progress:'background:var(--purple-dim);color:var(--purple)',done:'background:var(--green-dim);color:var(--green)'};
+  list.innerHTML=shown.length?shown.map(t=>\`
+    <div class="trib-item">
+      <span class="trib-status" style="\${statusStyle[t.status]||''}">\${t.status.replace('_',' ').toUpperCase()}</span>
+      <div class="trib-info"><div class="trib-title">\${t.title}</div><div class="trib-meta">Owner: \${t.owner} · \${t.created}</div></div>
+      <div class="flex gap-6">
+        <button class="btn btn-ghost btn-sm" onclick="cycleTask(\${t.id})">Cycle</button>
+        <button class="btn btn-ghost btn-sm" onclick="chatAboutTask('\${t.title.replace(/'/g,'\\\\'')}')">Chat</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteTask(\${t.id})">✕</button>
+      </div>
+    </div>\`).join(''):'<div class="mono text-dim" style="padding:8px">No tasks.</div>';
+  document.querySelectorAll('.trib-filter-btn').forEach(b=>b.classList.toggle('btn-gold',b.dataset.filter===taskFilter));
+  const active=tasks.filter(t=>t.status!=='done').length;
+  document.getElementById('taskBadge').textContent=active;
+  const tag=document.getElementById('taskCountTag');if(tag)tag.textContent=active+' ACTIVE';
+}
+function addTask(){
+  const inp=document.getElementById('newTaskInput');
+  const owner=document.getElementById('newTaskOwner');
+  const status=document.getElementById('newTaskStatus').value;
+  if(!inp.value.trim())return;
+  tasks.push({id:Date.now(),title:inp.value.trim(),owner:owner.value||'DCS',status,created:new Date().toISOString().split('T')[0]});
+  saveTasks();inp.value='';owner.value='';renderTasks();
+}
+function cycleTask(id){
+  const t=tasks.find(x=>x.id===id);if(!t)return;
+  const cycle={queued:'in_progress',in_progress:'done',done:'queued'};
+  t.status=cycle[t.status]||'queued';saveTasks();renderTasks();
+}
+function deleteTask(id){tasks=tasks.filter(x=>x.id!==id);saveTasks();renderTasks();}
+function chatAboutTask(title){
+  document.getElementById('chatInput').value='Help me with this task: '+title;
+  nav('chat',null);
+}
+
+// ===== PORTFOLIO =====
+let portfolio=JSON.parse(localStorage.getItem('sc_portfolio')||'null')||[
+  {id:1,name:'SC Agent OS v1.3',url:'os.sonlyconsulting.com',status:'live',note:'Vercel · iad1'},
+  {id:2,name:'SC Landing Page',url:'',status:'trial',note:'Trial build complete · palette TBD'},
+  {id:3,name:'SC GovOS RAG Website',url:'',status:'arch',note:'Hybrid Wix+Velo+CMS+Supabase'},
+  {id:4,name:'DCSE Governance Doctrine',url:'',status:'active',note:'D08 voice rule trial passed'}
+];
+function savePortfolio(){localStorage.setItem('sc_portfolio',JSON.stringify(portfolio));}
+const portStatusStyle={live:'background:var(--green-dim);color:var(--green)',trial:'background:var(--amber-dim);color:var(--amber)',arch:'background:var(--blue-dim);color:var(--blue)',active:'background:var(--teal-dim);color:var(--teal)',pending:'background:var(--navy-border);color:var(--text-dim)',paused:'background:var(--red-dim);color:var(--red)'};
+function renderPortfolio(){
+  const list=document.getElementById('portfolioList');if(!list)return;
+  list.innerHTML=portfolio.map(p=>\`
+    <div class="trib-item">
+      <span class="trib-status" style="\${portStatusStyle[p.status]||''}">\${p.status.toUpperCase()}</span>
+      <div class="trib-info">
+        <div class="trib-title">\${p.name}\${p.url?' <span class="mono text-dim" style="font-size:9px">· '+p.url+'</span>':''}</div>
+        <div class="trib-meta">\${p.note||''}</div>
+      </div>
+      <div class="flex gap-6 items-center">
+        <select class="model-select" style="font-size:9px;padding:2px 5px" onchange="updatePortStatus(\${p.id},this.value)">
+          \${['live','trial','arch','active','pending','paused'].map(s=>'<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+s+'</option>').join('')}
+        </select>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deletePort(\${p.id})">✕</button>
+      </div>
+    </div>\`).join('');
+  document.getElementById('portBadge').textContent=portfolio.length;
+  const tag=document.getElementById('portCountTag');if(tag)tag.textContent=portfolio.length+' ITEMS';
+}
+function addPortItem(){
+  const n=document.getElementById('newPortName').value.trim();
+  const u=document.getElementById('newPortUrl').value.trim();
+  const note=document.getElementById('newPortNote').value.trim();
+  const status=document.getElementById('newPortStatus').value;
+  if(!n)return;
+  portfolio.push({id:Date.now(),name:n,url:u,status,note});
+  savePortfolio();renderPortfolio();
+  document.getElementById('newPortName').value='';document.getElementById('newPortUrl').value='';document.getElementById('newPortNote').value='';
+}
+function updatePortStatus(id,status){const p=portfolio.find(x=>x.id===id);if(p){p.status=status;savePortfolio();}}
+function deletePort(id){portfolio=portfolio.filter(x=>x.id!==id);savePortfolio();renderPortfolio();}
+
+// ===== DDNA HARVEST =====
+const DDNA_DIMS=[
+  {key:'voice_fidelity',label:'Voice Fidelity',color:'var(--gold)'},
+  {key:'ps_firewall',label:'PS Firewall',color:'var(--green)'},
+  {key:'gate_discipline',label:'Gate Discipline',color:'var(--green)'},
+  {key:'packet_integrity',label:'Packet Integrity',color:'var(--green)'},
+  {key:'schema_accuracy',label:'Schema Accuracy',color:'var(--blue)'},
+  {key:'dcs_alignment',label:'DCS Alignment',color:'var(--gold)'},
+  {key:'instruction_fidelity',label:'Instruction Fidelity',color:'var(--purple)'},
+  {key:'divergence_signal',label:'Divergence Signal',color:'var(--orange)'},
+];
+let ddnaScores=JSON.parse(localStorage.getItem('sc_ddna_scores')||'null')||{voice_fidelity:94,ps_firewall:100,gate_discipline:97,packet_integrity:99,schema_accuracy:96,dcs_alignment:100,instruction_fidelity:95,divergence_signal:72};
+let ddnaNotes=JSON.parse(localStorage.getItem('sc_ddna_notes')||'[]');
+
+function renderDDNA(){
+  const grid=document.getElementById('ddnaGrid');if(!grid)return;
+  grid.innerHTML=DDNA_DIMS.map(d=>\`
+    <div class="ddna-cell">
+      <div class="ddna-label">\${d.label}</div>
+      <div class="ddna-bar-wrap"><div class="ddna-bar" style="width:0%;background:\${d.color}" id="bar-\${d.key}"></div></div>
+      <div class="ddna-score" id="score-\${d.key}">\${ddnaScores[d.key]||0}</div>
+      <div class="ddna-delta">Session</div>
+    </div>\`).join('');
+  setTimeout(()=>DDNA_DIMS.forEach(d=>{const b=document.getElementById('bar-'+d.key);if(b)b.style.width=(ddnaScores[d.key]||0)+'%';}),200);
+  const nl=document.getElementById('ddnaNotesList');
+  if(nl)nl.innerHTML=ddnaNotes.length?ddnaNotes.map((n,i)=>\`<div class="mono text-dim" style="padding:5px 0;border-bottom:1px solid var(--navy-border);display:flex;justify-content:space-between"><span>\${n.ts} — \${n.text}</span><button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteDDNANote(\${i})">✕</button></div>\`).join(''):'<div class="mono text-dim">No notes.</div>';
+}
+
+async function runDDNAHarvest(){
+  const input=document.getElementById('ddnaInput').value.trim();
+  if(!input){document.getElementById('harvestStatus').textContent='Paste session content above first.';return;}
+  const model=document.getElementById('modelSelect').value;
+  const p=providerOf(model);
+  const btn=document.getElementById('harvestBtn');btn.disabled=true;btn.textContent='Harvesting...';
+  const prompt='You are a DDNA scoring system. Analyze this agent session and score each dimension 0-100.\\n\\nDimensions:\\n- voice_fidelity: D08 voice rule adherence (lead constructively, no dominating contrast)\\n- ps_firewall: Personal/sensitive content exclusion (100=perfect, 0=breach)\\n- gate_discipline: Respect for DCS approval gates\\n- packet_integrity: Dispatch packet completeness and accuracy\\n- schema_accuracy: JSON/data structure correctness\\n- dcs_alignment: Alignment with DCS instructions and DCSE doctrine\\n- instruction_fidelity: Precision in following explicit instructions\\n- divergence_signal: Creative divergence level (higher=more divergent)\\n\\nRespond ONLY with valid JSON like:\\n{"voice_fidelity":90,"ps_firewall":100,"gate_discipline":95,"packet_integrity":88,"schema_accuracy":92,"dcs_alignment":97,"instruction_fidelity":93,"divergence_signal":65}\\n\\nSession:\\n'+input.slice(0,3000);
+  try{
+    let result;
+    if(p==='ollama'){
+      const om=model.replace('ollama:','');
+      const r=await fetch('http://localhost:11434/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:om,messages:[{role:'user',content:prompt}],stream:false})});
+      const d=await r.json();result=d.message?.content||'';
+    } else {
+      const apiKey=keyInput.value;
+      if(!PROVIDER_META[p].check(apiKey)){document.getElementById('harvestStatus').textContent='Enter API key for '+PROVIDER_META[p].label;btn.disabled=false;btn.textContent='Run Harvest';return;}
+      const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'user',content:prompt}],apiKey})});
+      const d=await r.json();result=d.text||'';
+    }
+    const match=result.match(/\\{[^}]+\\}/);
+    if(match){
+      try{
+        const scores=JSON.parse(match[0]);
+        Object.assign(ddnaScores,scores);
+        localStorage.setItem('sc_ddna_scores',JSON.stringify(ddnaScores));
+        renderDDNA();
+        document.getElementById('harvestStatus').textContent='Harvest complete — '+new Date().toLocaleTimeString();
+      }catch(pe){document.getElementById('harvestStatus').textContent='JSON parse error: '+pe.message;}
+    } else {
+      document.getElementById('harvestStatus').textContent='Could not parse scores from: '+result.slice(0,120);
+    }
+  }catch(e){document.getElementById('harvestStatus').textContent='Error: '+e.message;}
+  btn.disabled=false;btn.textContent='Run Harvest';
+}
+function addDDNANote(){
+  const inp=document.getElementById('ddnaNoteInput');if(!inp.value.trim())return;
+  ddnaNotes.unshift({ts:new Date().toISOString().split('T')[0],text:inp.value.trim()});
+  localStorage.setItem('sc_ddna_notes',JSON.stringify(ddnaNotes));inp.value='';renderDDNA();
+}
+function deleteDDNANote(i){ddnaNotes.splice(i,1);localStorage.setItem('sc_ddna_notes',JSON.stringify(ddnaNotes));renderDDNA();}
+function exportDDNA(){
+  const data={scores:ddnaScores,notes:ddnaNotes,exported:new Date().toISOString()};
+  navigator.clipboard.writeText(JSON.stringify(data,null,2)).then(()=>alert('DDNA profile copied to clipboard.'));
+}
+
+// ===== LOCAL MODELS =====
+function formatBytes(b){if(!b)return'';const mb=b/1024/1024;return mb>1000?(mb/1024).toFixed(1)+' GB':mb.toFixed(0)+' MB';}
+async function checkOllama(){
+  const statusEl=document.getElementById('ollamaStatus');
+  const listEl=document.getElementById('ollamaModelList');
+  statusEl.textContent='Checking...';statusEl.style.cssText='background:var(--amber-dim);color:var(--amber)';
+  try{
+    const r=await fetch('http://localhost:11434/api/tags',{signal:AbortSignal.timeout(3000)});
+    const d=await r.json();
+    statusEl.textContent='ONLINE';statusEl.style.cssText='background:var(--green-dim);color:var(--green)';
+    document.getElementById('modelsBadge').textContent=d.models?d.models.length:0;
+    if(d.models&&d.models.length){
+      listEl.innerHTML=d.models.map(m=>\`
+        <div class="model-row">
+          <div class="model-dot" style="background:var(--green)"></div>
+          <div class="model-info">
+            <div class="model-name">\${m.name}</div>
+            <div class="model-detail">\${m.details?.parameter_size||''} · \${m.details?.family||'ollama'} · \${formatBytes(m.size||0)}</div>
+          </div>
+          <div class="flex gap-6">
+            <button class="btn btn-ghost btn-sm" onclick="testOllamaModel('\${m.name}')">Test</button>
+            <button class="btn btn-ghost btn-sm" onclick="chatWithOllama('\${m.name}')">Chat</button>
+          </div>
+        </div>\`).join('');
+    } else {
+      listEl.innerHTML='<div class="mono text-dim" style="padding:8px">No models found. Run: ollama pull nous-hermes2</div>';
+    }
+  }catch(e){
+    statusEl.textContent='OFFLINE';statusEl.style.cssText='background:var(--red-dim);color:var(--red)';
+    document.getElementById('modelsBadge').textContent='0';
+    listEl.innerHTML='<div class="mono text-dim" style="padding:8px">Cannot reach localhost:11434. Start Ollama and set OLLAMA_ORIGINS=*<br><br>Run: OLLAMA_ORIGINS=* ollama serve</div>';
+  }
+}
+async function testOllamaModel(name){
+  const out=document.getElementById('ollamaTestOut');
+  out.textContent='Testing '+name+'...';out.style.color='var(--text-dim)';
+  try{
+    const r=await fetch('http://localhost:11434/api/chat',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:name,messages:[{role:'user',content:'Reply with exactly: OK'}],stream:false})
+    });
+    const d=await r.json();
+    out.textContent=name+' response: '+(d.message?.content||'[no response]');
+    out.style.color='var(--green)';
+  }catch(e){out.textContent='Error: '+e.message;out.style.color='var(--red)';}
+}
+function chatWithOllama(name){
+  const sel=document.getElementById('modelSelect');
+  const optVal='ollama:'+name;
+  let found=false;
+  Array.from(sel.options).forEach(o=>{if(o.value===optVal){sel.value=optVal;found=true;}});
+  if(!found){
+    const opt=document.createElement('option');opt.value=optVal;opt.textContent=name+' (local)';
+    sel.querySelector('optgroup[label="Ollama Local"]').appendChild(opt);
+    sel.value=optVal;
+  }
+  onModelChange();nav('chat',null);
+  addMsg('sys','Local model loaded: '+name);
+}
+
+// ===== RAG / SOURCE =====
+let ragSources=JSON.parse(localStorage.getItem('sc_rag_sources')||'null')||[
+  {id:1,name:'DCSE Governance Doctrine (D01-D08)',url:'',content:'',status:'indexed',chars:0},
+  {id:2,name:'SC Command Post GitHub',url:'https://github.com/sonlyconsulting-ctrl/dcse-command-post',content:'',status:'live',chars:0},
+  {id:3,name:'Tribunal Relay GitHub',url:'https://github.com/sonlyconsulting-ctrl/dcse-tribunal-relay',content:'',status:'live',chars:0},
+  {id:4,name:'SC LP Trial Packet',url:'',content:'',status:'indexed',chars:0},
+  {id:5,name:'GovOS RAG Architecture',url:'',content:'',status:'pending',chars:0},
+  {id:6,name:'Supabase SC Schema',url:'',content:'',status:'pending',chars:0},
+  {id:7,name:'Wix CMS Site Map',url:'',content:'',status:'pending',chars:0},
+  {id:8,name:'DDNA Harvest Queue',url:'',content:'',status:'queued',chars:73}
+];
+function saveRag(){localStorage.setItem('sc_rag_sources',JSON.stringify(ragSources));}
+const ragStatusStyle={indexed:'background:var(--green-dim);color:var(--green)',live:'background:var(--teal-dim);color:var(--teal)',pending:'background:var(--navy-border);color:var(--text-dim)',queued:'background:var(--amber-dim);color:var(--amber)'};
+function renderRag(){
+  const list=document.getElementById('ragSourceList');if(!list)return;
+  list.innerHTML=ragSources.map(s=>\`
+    <div class="trib-item">
+      <span class="trib-status" style="\${ragStatusStyle[s.status]||''}">\${s.status.toUpperCase()}</span>
+      <div class="trib-info">
+        <div class="trib-title">\${s.name}\${s.url?' <a href="'+s.url+'" target="_blank" style="color:var(--blue);font-size:9px;margin-left:6px">↗</a>':''}</div>
+        <div class="trib-meta">\${s.chars?s.chars+' chars indexed':'No content indexed'}</div>
+      </div>
+      <div class="flex gap-6">
+        <button class="btn btn-ghost btn-sm" onclick="editRagSource(\${s.id})">Edit</button>
+        <button class="btn btn-ghost btn-sm" onclick="queryRagSource(\${s.id})">Query</button>
+        <button class="btn btn-ghost btn-sm" onclick="runRagDDNA(\${s.id})">DDNA</button>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteRagSource(\${s.id})">✕</button>
+      </div>
+    </div>\`).join('');
+  document.getElementById('ragBadge').textContent=ragSources.length;
+  const tag=document.getElementById('ragCountTag');if(tag)tag.textContent=ragSources.length+' SOURCES';
+}
+function clearRagForm(){
+  document.getElementById('ragName').value='';document.getElementById('ragUrl').value='';
+  document.getElementById('ragContent').value='';document.getElementById('ragEditId').value='';
+}
+function saveRagEdit(){
+  const id=parseInt(document.getElementById('ragEditId').value)||0;
+  const name=document.getElementById('ragName').value.trim();if(!name)return;
+  const url=document.getElementById('ragUrl').value.trim();
+  const content=document.getElementById('ragContent').value.trim();
+  if(id){
+    const s=ragSources.find(x=>x.id===id);
+    if(s){s.name=name;s.url=url;s.content=content;s.chars=content.length;s.status=content?'indexed':url?'live':'pending';}
+  } else {
+    ragSources.push({id:Date.now(),name,url,content,status:content?'indexed':url?'live':'pending',chars:content.length});
+  }
+  saveRag();renderRag();clearRagForm();
+}
+function editRagSource(id){
+  const s=ragSources.find(x=>x.id===id);if(!s)return;
+  document.getElementById('ragName').value=s.name;
+  document.getElementById('ragUrl').value=s.url||'';
+  document.getElementById('ragContent').value=s.content||'';
+  document.getElementById('ragEditId').value=id;
+}
+function deleteRagSource(id){ragSources=ragSources.filter(x=>x.id!==id);saveRag();renderRag();}
+async function queryRagSource(id){
+  const s=ragSources.find(x=>x.id===id);if(!s)return;
+  const q=document.getElementById('ragQuery').value.trim();
+  if(!q){document.getElementById('ragQueryResult').textContent='Enter a question in the Query box above.';return;}
+  const model=document.getElementById('modelSelect').value;
+  const p=providerOf(model);
+  const context=s.content||('Source reference: '+s.name+(s.url?' at '+s.url:''));
+  const sysPrompt='You are a retrieval assistant. Answer ONLY based on this source context.\\n\\nSOURCE ('+s.name+'):\\n'+context.slice(0,4000);
+  document.getElementById('ragQueryResult').textContent='Querying...';document.getElementById('ragQueryResult').style.color='var(--text-dim)';
+  try{
+    let reply;
+    if(p==='ollama'){
+      const om=model.replace('ollama:','');
+      const r=await fetch('http://localhost:11434/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:om,messages:[{role:'system',content:sysPrompt},{role:'user',content:q}],stream:false})});
+      const d=await r.json();reply=d.message?.content||'[no response]';
+    } else {
+      const apiKey=keyInput.value;
+      if(!PROVIDER_META[p].check(apiKey)){document.getElementById('ragQueryResult').textContent='Enter API key for '+PROVIDER_META[p].label;return;}
+      const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:[{role:'user',content:q}],system:sysPrompt,apiKey})});
+      const d=await r.json();reply=d.text||d.error||'[no response]';
+    }
+    document.getElementById('ragQueryResult').textContent=reply;document.getElementById('ragQueryResult').style.color='var(--cream)';
+  }catch(e){document.getElementById('ragQueryResult').textContent='Error: '+e.message;}
+}
+function runRagDDNA(id){
+  const s=ragSources.find(x=>x.id===id);
+  if(!s||!s.content){alert('No content indexed for this source. Add content first.');return;}
+  document.getElementById('ddnaInput').value=s.content.slice(0,3000);
+  nav('ddna',null);
+  setTimeout(()=>document.getElementById('harvestBtn').click(),300);
+}
+
+// ===== TRIBUNAL =====
+const TRIBUNAL_PRS=[
+  {num:5,title:'SC LP Trial Packet: trial designation, skill line fix, hero line',branch:'claude/dcs-packet-trial-confirm-jwuzsy',date:'2026-07-08',status:'draft',url:'https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/5'},
+  {num:4,title:'SC LP Trial Build Dispatch Packet (TRIB-20260708)',branch:'claude/tribunal-inbox-schema-packet-i9rt45',date:'2026-07-08',status:'draft',url:'https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/4'},
+  {num:3,title:'Tribunal protocol: Account-level ChatGPT to GitHub',branch:'tribunal/account-level-chatgpt-github',date:'2026-06-20',status:'draft',url:'https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/3'},
+  {num:2,title:'Tribunal closeout: ChatGPT SC GovOS RAG website session',branch:'tribunal/session-closeout-20260619',date:'2026-06-19',status:'draft',url:'https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/2'},
+  {num:1,title:'Update from task 64ffd9b7 (qwen-chat)',branch:'dcse-tribunal-authorization-process',date:'2026-06-08',status:'open',url:'https://github.com/sonlyconsulting-ctrl/DCSE-Tribunal-Relay/pull/1'},
+];
+let tribunalFilter='all';
+function renderTribunal(filter){
+  tribunalFilter=filter||tribunalFilter;
+  const list=document.getElementById('tribunalList');if(!list)return;
+  const shown=tribunalFilter==='all'?TRIBUNAL_PRS:TRIBUNAL_PRS.filter(p=>p.status===tribunalFilter);
+  list.innerHTML=shown.map(p=>\`
+    <div class="trib-item">
+      <span class="trib-status \${p.status==='draft'?'ts-draft':'ts-open'}">\${p.status.toUpperCase()}</span>
+      <div class="trib-info">
+        <div class="trib-title">#\${p.num} — \${p.title}</div>
+        <div class="trib-meta">\${p.branch} · \${p.date}</div>
+      </div>
+      <a class="btn btn-ghost btn-sm" href="\${p.url}" target="_blank">Open PR ↗</a>
+    </div>\`).join('');
+  document.querySelectorAll('.trib-filter-btn').forEach(b=>b.classList.toggle('btn-gold',b.dataset.filter===tribunalFilter));
+}
+
+// ===== DISPATCH =====
+let dispatchPackets=JSON.parse(localStorage.getItem('sc_dispatch')||'null')||[
+  {id:'TRIB-20260708-SC-LP-TRIAL-BUILD-DISPATCH',status:'ready',desc:'Hero line locked · Skill line agent-neutral · Trial: CONTROLLED_TRIAL SC_LP_20260707',created:'2026-07-08',inbox:'\\\\\\\\LAPTOP-74UF76GB\\\\DS All Things\\\\DCSE_Command_Center\\\\_Tribunal_Inbox'}
+];
+function saveDispatch(){localStorage.setItem('sc_dispatch',JSON.stringify(dispatchPackets));}
+function renderDispatch(){
+  const list=document.getElementById('dispatchList');if(!list)return;
+  const statusStyle={ready:'background:var(--green-dim);color:var(--green)',draft:'background:var(--blue-dim);color:var(--blue)',dropped:'background:var(--teal-dim);color:var(--teal)'};
+  list.innerHTML=dispatchPackets.map((p,i)=>\`
+    <div class="trib-item" style="\${p.status==='ready'?'background:rgba(46,204,113,.04);border-color:rgba(46,204,113,.25)':''}">
+      <span class="trib-status" style="\${statusStyle[p.status]||''}">\${p.status.toUpperCase()}</span>
+      <div class="trib-info">
+        <div class="trib-title">\${p.id}</div>
+        <div class="trib-meta">\${p.desc}</div>
+        \${p.inbox?'<div class="trib-meta" style="margin-top:2px;font-size:8px">Inbox: '+p.inbox+'</div>':''}
+      </div>
+      <div class="flex gap-6">
+        <button class="btn btn-ghost btn-sm" onclick="copyDispatchJSON(\${i})">Copy JSON</button>
+        \${p.inbox?'<button class="btn btn-ghost btn-sm" onclick="copyDispatchPath('+i+')">Copy Path</button>':''}
+        <select class="model-select" style="font-size:9px;padding:2px 4px" onchange="setDispatchStatus(\${i},this.value)">
+          \${['draft','ready','dropped'].map(s=>'<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+s+'</option>').join('')}
+        </select>
+        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteDispatch(\${i})">✕</button>
+      </div>
+    </div>\`).join('');
+}
+function addDispatch(){
+  const id=document.getElementById('dispatchId').value.trim();
+  const desc=document.getElementById('dispatchDesc').value.trim();
+  const inbox=document.getElementById('dispatchInbox').value.trim();
+  if(!id)return;
+  dispatchPackets.push({id,status:'draft',desc,created:new Date().toISOString().split('T')[0],inbox});
+  saveDispatch();renderDispatch();
+  document.getElementById('dispatchId').value='';document.getElementById('dispatchDesc').value='';document.getElementById('dispatchInbox').value='';
+  document.getElementById('dispatchForm').style.display='none';
+}
+function deleteDispatch(i){if(!confirm('Delete packet?'))return;dispatchPackets.splice(i,1);saveDispatch();renderDispatch();}
+function copyDispatchJSON(i){navigator.clipboard.writeText(JSON.stringify(dispatchPackets[i],null,2)).then(()=>alert('Copied.'));}
+function copyDispatchPath(i){navigator.clipboard.writeText(dispatchPackets[i].inbox).then(()=>alert('Path copied.'));}
+function setDispatchStatus(i,status){dispatchPackets[i].status=status;saveDispatch();renderDispatch();}
+
+// Ops Log add
+function addOpsEntry(){
+  const t=prompt('Ops log entry:');if(!t)return;
+  const log=document.getElementById('opsLog');
+  const d=document.createElement('div');d.className='mono text-dim';
+  d.textContent=new Date().toISOString().split('T')[0]+' · '+t;
+  log.insertBefore(d,log.firstChild);
+}
+
+// Init all renders
+renderTasks();
+renderPortfolio();
+renderDDNA();
+renderRag();
+renderTribunal();
+renderDispatch();
+</script>
+</body>
+</html>`;
+
+module.exports = (req, res) => {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.statusCode = 200; res.end(); return;
+  }
+  if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
+  res.setHeader('Content-Type', 'text/html;charset=utf-8');
+  res.statusCode = 200;
+  res.end(HTML);
+};
