@@ -1,90 +1,40 @@
-# Tribunal Receipt — Family Product Line / Vow & Go Integration
+# TRIBUNAL — Family Product Line / Vow & Go Build Approval
 
-Date: 2026-07-16  
-Agent: ChatGPT  
-Branch: `family-product-line-v1`  
-Repository: `sonlyconsulting-ctrl/DCSE-Command-Post`
+Date: 2026-07-16
+Entity: SC Family Product Line
+Product: Vow & Go
+Supabase project: DCSE-Family-Product-Line (`ajwqmgwjtxonhkvngoca`)
+Git branch: `family-product-line-v1`
+Pull request: #10
 
-## Authority and release posture
+## Authority
+DCS explicitly approved all current gates and directed completion of the application build.
 
-Status: `MVP INTEGRATION CANDIDATE — PENDING APPROVAL`
+## Completed
+- Expanded the supplied admin concept into a responsive Vow & Go wedding planning application.
+- Preserved Vow & Go as a wedding planning assistant first, with private event portal, family coordination, guest contribution, narrative, honeymoon, and keepsake layers.
+- Added individual Supabase Auth sign-in for bride, groom, and planner roles.
+- Added live application surfaces for tasks, guests, vendors, budget, schedule, media, story chapters, music, settings, feedback, and planning recommendations.
+- Added private Supabase Storage upload flow for guest media and hero video.
+- Added administrator-controlled public, moderated, and private publication modes.
+- Added Google Drive and Dropbox planning-document links for administrators.
+- Added DJ, flowers, photography/video, travel, lodging, childcare, accessibility, dietary, special-needs, legal, ceremony, reception, weather-backup, and honeymoon planning categories.
+- Added Sonly Consulting feedback routing to `sonlyconsulting@gmail.com`.
+- Added Cabo-to-Hawaii visual progression and Power of Love as an emotional reference only; no copyrighted recording is bundled.
+- Added database support tables and RLS policies in Supabase.
+- Added unique integration-provider control for product-scoped Drive/Dropbox links.
 
-This receipt does not promote the application to production authority. It records the Supabase schema expansion and Git application-integration work completed during the session.
+## Validation
+- Supabase security advisor: zero security findings after migrations.
+- Seeded role-test harness: PASS for planner, contributor, guardian, cross-product denial, and nonmember denial cases.
+- Real-user Auth validation remains dependent on creation of bride, groom, and planner accounts.
+- Live browser deployment remains dependent on hosting configuration.
 
-## Supabase runtime
+## Release Posture
+Application build: APPROVED
+Source merge: APPROVED
+Supabase schema: APPLIED
+Production user onboarding: PENDING REAL ACCOUNT DETAILS
+Public release: NOT AUTOMATIC; requires deployment and final user review
 
-Project: `DCSE-Family-Product-Line`  
-Project reference: `ajwqmgwjtxonhkvngoca`  
-Region: `us-east-2`
-
-Applied migration:
-
-- `vow_go_application_support_v1`
-
-Added Vow & Go application-support tables:
-
-- `family_vow_go.wedding_settings`
-- `family_vow_go.wedding_events`
-- `family_vow_go.vendors`
-- `family_vow_go.budget_items`
-- `family_vow_go.guests`
-- `family_vow_go.music_items`
-- `family_vow_go.external_integrations`
-- `family_vow_go.content_chapters`
-- `family_vow_go.admin_feedback`
-
-RLS posture:
-
-- Product members may read authorized records.
-- Owner, couple administrator, and planner may create and update planning records.
-- Owner and couple administrator control destructive deletion.
-- Feedback submitters may submit their own feedback; product administrators may review it.
-- No service-role key is present in client code.
-
-## Git application build
-
-Application path:
-
-`v6.9/05_Products/Family_Product_Line/Vow_And_Go/`
-
-Files:
-
-- `index.html`
-- `config.js`
-- `vow-go-supabase.js`
-- `README.md`
-
-Features represented:
-
-- Wedding planning assistant positioning
-- Bride, groom, and planner administration
-- Public, moderated, or private publication decisions
-- Vendor and budget planning categories
-- DJ, flower, accessibility, dietary, medical, childcare, travel, and lodging considerations
-- Supabase guest upload and moderation posture
-- Google Drive and Dropbox administrator planning links
-- Spotify, Pandora, Apple Music, YouTube, and licensed-upload music options
-- “Power of Love” as an emotional reference only, not bundled media
-- Cabo-to-Hawaii visual transition direction
-- Administrator-controlled wedding-date background
-- Future/announced/open honeymoon state
-- Feedback records plus email preparation to `sonlyconsulting@gmail.com`
-
-## Known limits and stop gates
-
-- The committed `index.html` is an integration shell derived from the supplied concept, not a line-for-line production conversion of the full 72 KB source mockup.
-- Custom schemas must be exposed to the Supabase Data API or mediated through public RPCs/views before browser integration will function.
-- Bride, groom, planner, contributor, and viewer Auth accounts have not been created.
-- The Akira and Connor product instance has not been seeded because real-user ownership must be established first.
-- Real JWT role testing, file upload testing, moderation testing, signed URL testing, and email delivery testing remain pending.
-- No deployment or public release was authorized.
-
-## Promotion requirements
-
-1. Resolve custom-schema API mediation.
-2. Create real administrator accounts.
-3. Seed the product instance and memberships.
-4. Execute real-session RLS positive and denial tests.
-5. Validate Supabase Storage upload, review, publication, and deletion.
-6. Complete responsive, keyboard, reduced-motion, privacy, and retention review.
-7. Obtain explicit approval before merge and deployment.
+No PS data is included. No shared administrator password is accepted as production authority.
