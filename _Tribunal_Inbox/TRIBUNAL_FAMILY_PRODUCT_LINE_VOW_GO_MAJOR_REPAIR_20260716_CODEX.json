@@ -1,0 +1,29 @@
+{
+  "receipt_id": "TRIBUNAL-FAMILY-VOW-GO-MAJOR-REPAIR-20260716-CODEX",
+  "date": "2026-07-16",
+  "authority": "DCS/DCSE execution directive",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "branch": "codex/vow-and-go-major-repair",
+  "supabase_project_ref": "ajwqmgwjtxonhkvngoca",
+  "release_posture": "review_only",
+  "production_cutover": false,
+  "hosted_review_url": "https://vow-and-go-review.vercel.app",
+  "vercel_deployment_id": "dpl_4ADqDn1VzmkqRqfnJ2Y6rekAY2Nw",
+  "vercel_status": "READY",
+  "migrations_applied": 5,
+  "edge_function": { "name": "vow-go-feedback", "version": 1, "status": "ACTIVE", "verify_jwt": true },
+  "security_advisor_findings": 0,
+  "unit_tests": { "passed": 11, "failed": 0 },
+  "browser_tests": { "status": "ci_rerun_required", "reason": "local Playwright driver did not return results" },
+  "gps_features": "deferred",
+  "secrets_committed": false,
+  "rls_weakened": false,
+  "production_data_deleted": false,
+  "human_actions": [
+    "Provision individual role users and two isolated test engagements",
+    "Configure RESEND_API_KEY and VOW_GO_FEEDBACK_FROM",
+    "Run Playwright on Node 20 or 22",
+    "Verify invitation, private media, and cross-engagement denials",
+    "Complete preview approval before production promotion"
+  ]
+}

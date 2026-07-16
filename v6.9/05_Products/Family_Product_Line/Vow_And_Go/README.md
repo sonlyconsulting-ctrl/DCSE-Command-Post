@@ -1,65 +1,70 @@
-# Vow & Go — Wedding Planning Assistant
+# Vow & Go — Wedding Experience & Command Center
 
-Status: `MVP integration candidate`  
-Supabase project: `DCSE-Family-Product-Line` (`ajwqmgwjtxonhkvngoca`)  
-Release authority: pending real-user onboarding, end-to-end upload testing, and approval.
+Status: major repair review build
 
-## Product definition
+Supabase: `DCSE-Family-Product-Line` (`ajwqmgwjtxonhkvngoca`)
 
-Vow & Go is a wedding planning assistant, private event portal, family/friend contribution surface, and living keepsake. The planning core supports bride, groom, and authorized planner administration. The content arc moves from the Cabo San Lucas proposal through the Hawaii wedding, honeymoon, and later family chapters.
+Production cutover: not authorized
 
-## Included in this build
+Vow & Go is a modular wedding experience platform with optional professional planning administration. It supports couples who already use another planner or planning application. Its visual direction moves from Cabo to a Hawaii celebration and future honeymoon chapters.
 
-- Supabase Auth session detection and product-scoped role resolution.
-- Bride/groom/planner administration posture.
-- Admin-controlled `public`, `moderated`, or `private` publication behavior.
-- Wedding tasks, events, vendors, budget, guests, special needs, music references, external planning links, chapters, media moderation, guestbook, and feedback.
-- Guest media intended for private Supabase Storage.
-- Google Drive/Dropbox links intended for administrator planning files, vendor contracts, spreadsheets, and working documents.
-- Music provider mix: Spotify, Pandora, Apple Music, YouTube, uploaded licensed audio, or curated links.
-- “Power of Love” is recorded only as an emotional reference. Playback requires a licensed or provider-authorized source.
-- Feedback saves to Supabase when authenticated and prepares an email to `sonlyconsulting@gmail.com`.
-- Progressive Cabo-to-Hawaii visual direction and administrator-controlled countdown background.
-- Honeymoon chapter supports future, announced, open, and archived states.
+## Architecture
 
-## Security posture
+The app remains a lightweight static ES-module application: semantic HTML, responsive CSS, schema-driven UI, pinned local Supabase client, governed public RPCs, private Storage, and a JWT-protected feedback Edge Function. No framework or bundler is required for local or hosted review.
 
-- No service-role key is present in client code.
-- The committed key is a Supabase publishable client key.
-- Authorization is enforced by PostgreSQL RLS, not by hidden UI elements.
-- Shared production passwords shown in the source mockup are deprecated. Production access uses individual Auth accounts and product memberships.
-- The application is designed to target accessibility standards; no formal accessibility audit has been completed.
+Browser code uses only the Supabase publishable key. Custom schemas remain outside direct browser exposure; RLS-aware `public` RPCs mediate access.
 
-## Run locally
+## Product modes
 
-Serve the directory with an HTTP server. ES modules will not run reliably from a direct `file://` URL.
+- `experience_only` (default)
+- `coordination`
+- `full_command_center`
 
-```bash
-python -m http.server 8080
+Disabled modules are hidden from navigation, dashboard cards, and recommendations while their records and implementation remain preserved.
+
+## Roles
+
+- Platform Owner — templates, planner approval, licensing placeholders, support, and authorized audit; no automatic private wedding access.
+- Planner / Command Center Admin — multi-engagement operational administration.
+- Couple Owner — engagement authority, approvals, access, and major decisions.
+- Couple Collaborator — delegated editing without ownership/security transfer.
+- Guest Viewer — approved public/protected wedding content, no account required.
+- Guest Participant — invitation-scoped RSVP, needs, guestbook, media, and poll participation.
+- Trusted Contributor — authenticated assigned content and task contribution.
+- Signed-Out User — approved guest experience only.
+
+## Major modules
+
+Dashboard; Our Story; Media & Gallery Portal; Wedding Tasks & Checklist; Vendors & Contracts; Budget & Payments; Guests & Wedding Party; Wedding Party Hub; Schedule & Timeline; Travel & Hotel; Destination & Local Guide; Music & Playlists; Communications & Notifications; Help & Guidance; Settings & Access; Feedback & Support.
+
+Generic operational records provide create/read/update/archive/delete/restore, search, sort, validation, activity history, JSON export, and JSON/CSV import. Financial, guest, media, security, communication, and feedback records favor archive before deletion.
+
+## Local review
+
+Double-click `START_VOW_AND_GO.cmd`. See `REVIEW_ON_WINDOWS.md`.
+
+## Development
+
+```powershell
+npm.cmd install
+npm.cmd run serve
+npm.cmd run test:unit
+npm.cmd run test:browser
 ```
 
-Open `http://localhost:8080`.
+The launcher does not require npm. Development dependencies are pinned. Browser tests should run on Node 20 or 22 in CI.
 
-## Required Supabase configuration
+## Database and function artifacts
 
-The custom schemas must be exposed to the Data API, or equivalent public RPC/view mediation must be added:
+- `20260716224000_vow_go_public_rpc_preview_v1.sql`
+- `20260716224258_vow_go_major_repair_v2.sql`
+- `20260716231446_vow_go_major_repair_advisor_cleanup.sql`
+- `20260716231535_vow_go_engagement_selector_rpc.sql`
+- `20260716231732_vow_go_platform_owner_context.sql`
+- `supabase/functions/vow-go-feedback/index.ts`
 
-- `family_core`
-- `family_vow_go`
+All migrations were applied to the approved project. Security advisor result after application: zero findings. Real role users and email-provider secrets remain human provisioning steps.
 
-Real users must be created through Supabase Auth and assigned to `family_core.product_memberships`.
+GPS, geolocation, live/background tracking, route tracking, proximity alerts, check-in coordinates, and automatic venue detection are explicitly deferred. Ordinary addresses and HTTPS map links are supported.
 
-## Promotion gates
-
-1. Create bride, groom, and planner test accounts.
-2. Create the Akira and Connor product instance.
-3. Validate RLS with real JWT sessions.
-4. Test media upload, signed read access, moderation, and deletion.
-5. Test public/moderated/private transitions.
-6. Test Drive/Dropbox links without exposing private credentials.
-7. Test email feedback delivery.
-8. Test mobile, desktop, tablet, TV/display, reduced motion, and keyboard navigation.
-9. Complete privacy, retention, and content-release review.
-10. Promote only after approval receipt.
-
-The HTML provided in the source conversation remains the visual baseline. This build adds integration scaffolding and governance controls; it is not yet approved for public release.
+Designed to target accessibility standards. Formal compliance requires a separate audit.

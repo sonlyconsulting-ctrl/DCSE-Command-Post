@@ -1,0 +1,32 @@
+name: Vow & Go Review
+
+on:
+  pull_request:
+    paths:
+      - "v6.9/05_Products/Family_Product_Line/Vow_And_Go/**"
+      - "supabase/migrations/*vow_go*.sql"
+      - "supabase/functions/vow-go-feedback/**"
+      - ".github/workflows/vow-and-go-review.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: v6.9/05_Products/Family_Product_Line/Vow_And_Go
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: v6.9/05_Products/Family_Product_Line/Vow_And_Go/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:unit
+      - run: npm run test:browser
+      - run: npm audit --audit-level=high

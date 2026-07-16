@@ -1,0 +1,20 @@
+{
+  "name": "vow-and-go-review",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:vendor": "node tools/copy-supabase-vendor.mjs",
+    "serve": "node tools/static-server.mjs --port 8080",
+    "serve:test": "node tools/static-server.mjs --port 4173",
+    "test:unit": "node --test tests/*.unit.test.mjs",
+    "test:browser": "playwright test",
+    "test:smoke": "node tools/browser-smoke.mjs",
+    "test": "npm run test:unit && npm run test:browser"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@supabase/supabase-js": "2.110.7",
+    "axe-core": "4.12.1"
+  }
+}
