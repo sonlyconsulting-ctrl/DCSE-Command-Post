@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Completion Engine Schema - DCSE V7 Phase K",
+  "description": "12-step continuous completion loop cycle tracking",
+  "type": "object",
+  "required": [
+    "cycle_id",
+    "task_id",
+    "current_step",
+    "created_at"
+  ],
+  "properties": {
+    "cycle_id": {
+      "type": "string",
+      "pattern": "^CYC-[0-9]{8}-[a-z0-9]{6}$"
+    },
+    "task_id": {"type": "string"},
+    "version": {"type": "string"},
+    "current_step": {"type": "integer", "minimum": 1, "maximum": 12},
+    "step_status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "passed", "failed", "needs_repair"]
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"},
+    "step_receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step": {"type": "integer"},
+          "step_name": {"type": "string"},
+          "receipt_id": {"type": "string"},
+          "status": {"type": "string"},
+          "started_at": {"type": "string", "format": "date-time"},
+          "completed_at": {"type": "string", "format": "date-time"},
+          "duration_ms": {"type": "integer"},
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "items_processed": {"type": "integer"},
+              "items_passed": {"type": "integer"},
+              "items_failed": {"type": "integer"},
+              "coverage_percent": {"type": "number"}
+            }
+          },
+          "findings": {"type": "array", "items": {"type": "object"}},
+          "next_action": {"type": "string"}
+        }
+      }
+    },
+    "cycle_metrics": {
+      "type": "object",
+      "properties": {
+        "total_duration_minutes": {"type": "number"},
+        "total_duration_target": {"type": "number"},
+        "build_time_minutes": {"type": "number"},
+        "test_time_minutes": {"type": "number"},
+        "evaluation_time_minutes": {"type": "number"},
+        "repair_cycles": {"type": "integer"},
+        "confidence_score": {"type": "number", "minimum": 0, "maximum": 1},
+        "test_coverage_percent": {"type": "number"},
+        "deployment_success_rate": {"type": "number"},
+        "cost_estimated_usd": {"type": "number"},
+        "cost_actual_usd": {"type": "number"}
+      }
+    },
+    "feedback_loops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "loop_type": {"type": "string", "enum": ["repair", "rework", "rollback"]},
+          "from_step": {"type": "integer"},
+          "to_step": {"type": "integer"},
+          "reason": {"type": "string"},
+          "triggered_at": {"type": "string", "format": "date-time"},
+          "resolved_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "build_artifacts": {"type": "array", "items": {"type": "string"}},
+        "test_results": {"type": "array", "items": {"type": "string"}},
+        "acceptance_receipt": {"type": "string"},
+        "review_receipt": {"type": "string"},
+        "promotion_receipt": {"type": "string"},
+        "deployment_receipt": {"type": "string"},
+        "monitoring_receipt": {"type": "string"},
+        "learning_receipt": {"type": "string"}
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["in_progress", "completed", "failed", "blocked"],
+      "description": "Overall cycle status"
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "started_at": {"type": "string", "format": "date-time"},
+        "completed_at": {"type": "string", "format": "date-time"},
+        "total_steps_executed": {"type": "integer"},
+        "steps_passed": {"type": "integer"},
+        "steps_failed": {"type": "integer"},
+        "total_loops": {"type": "integer"},
+        "last_updated_by": {"type": "string"}
+      }
+    }
+  },
+  "additionalProperties": false
+}
