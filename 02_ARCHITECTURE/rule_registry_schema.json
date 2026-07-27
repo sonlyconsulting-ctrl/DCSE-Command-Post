@@ -1,0 +1,273 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Rule Registry Schema - DCSE V7",
+  "description": "Executable governance rules for system validation and promotion",
+  "type": "object",
+  "required": [
+    "rule_id",
+    "version",
+    "category",
+    "priority",
+    "status",
+    "name",
+    "rule_definition",
+    "acceptance",
+    "materiality"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^RULE-V[0-9]+-[0-9]{3}-[A-Z][A-Z0-9-]*$",
+      "description": "Unique rule identifier"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "architecture",
+        "migration",
+        "security",
+        "compliance",
+        "testing",
+        "documentation",
+        "performance",
+        "governance"
+      ]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "description": "Execution order (1 = first)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "deprecated",
+        "archived",
+        "proposed",
+        "suspended"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "User or system that created this rule"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_by": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+
+    "scope": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Glob patterns for files this rule applies to"
+    },
+
+    "triggers_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["commit", "pr_open", "pr_close", "merge", "release", "manual_review", "scheduled"]
+      },
+      "minItems": 1
+    },
+
+    "rule_definition": {
+      "type": "object",
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "File Presence Check",
+          "properties": {
+            "type": {"const": "file_presence"},
+            "files_required": {"type": "array", "items": {"type": "string"}},
+            "min_lines": {"type": "integer"},
+            "max_files": {"type": "integer"}
+          }
+        },
+        {
+          "type": "object",
+          "title": "Pattern Match",
+          "properties": {
+            "type": {"const": "pattern_match"},
+            "pattern": {"type": "string"},
+            "should_match": {"type": "boolean"},
+            "sample_size": {"type": "integer"}
+          }
+        },
+        {
+          "type": "object",
+          "title": "SQL Validation",
+          "properties": {
+            "type": {"const": "sql_validation"},
+            "forbidden_keywords": {"type": "array", "items": {"type": "string"}},
+            "required_patterns": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        {
+          "type": "object",
+          "title": "Schema Completeness",
+          "properties": {
+            "type": {"const": "schema_completeness"},
+            "required_tables": {"type": "array"},
+            "required_functions": {"type": "array"},
+            "required_policies": {"type": "array"}
+          }
+        },
+        {
+          "type": "object",
+          "title": "Code Quality",
+          "properties": {
+            "type": {"const": "code_quality"},
+            "min_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+            "max_complexity": {"type": "number"},
+            "forbidden_patterns": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        {
+          "type": "object",
+          "title": "Security Check",
+          "properties": {
+            "type": {"const": "security_check"},
+            "banned_libs": {"type": "array"},
+            "required_encryption": {"type": "array"},
+            "audit_logging_required": {"type": "boolean"}
+          }
+        },
+        {
+          "type": "object",
+          "title": "Dependency Graph",
+          "properties": {
+            "type": {"const": "dependency_graph"},
+            "must_not_depend_on": {"type": "array"},
+            "max_depth": {"type": "integer"},
+            "no_circular": {"type": "boolean"}
+          }
+        }
+      ]
+    },
+
+    "acceptance": {
+      "type": "object",
+      "required": ["pass", "fail"],
+      "properties": {
+        "pass": {
+          "type": "string",
+          "description": "Message when rule passes"
+        },
+        "fail": {
+          "type": "string",
+          "description": "Message when rule fails"
+        },
+        "inconclusive": {
+          "type": "string",
+          "description": "Message when result is ambiguous"
+        }
+      }
+    },
+
+    "remediation": {
+      "type": "object",
+      "properties": {
+        "automated_fix_available": {"type": "boolean"},
+        "fix_command": {"type": "string"},
+        "manual_steps": {"type": "array", "items": {"type": "string"}},
+        "doc_link": {"type": "string"},
+        "estimated_effort_hours": {"type": "number"}
+      }
+    },
+
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {"type": "string"},
+          "severity": {"type": "string", "enum": ["HIGH", "MEDIUM", "LOW"]},
+          "description": {"type": "string"},
+          "resolution": {"type": "string"}
+        }
+      }
+    },
+
+    "dependencies": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Rule IDs that must pass before this rule executes"
+    },
+
+    "materiality": {
+      "type": "object",
+      "required": ["scope", "severity", "blocks_promotion"],
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "COMPONENT",
+            "LANE",
+            "FULL_PRODUCT"
+          ],
+          "description": "How much of the system is affected if violated"
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+          "description": "Impact severity if violated"
+        },
+        "blocks_promotion": {
+          "type": "boolean",
+          "description": "Whether violation blocks artifact promotion"
+        },
+        "requires_approval": {
+          "type": "boolean",
+          "description": "Whether violation requires manual approval to override"
+        },
+        "escalation_level": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "0=ignore, 1=warning, 2=escalate_to_approval"
+        }
+      }
+    },
+
+    "execution_config": {
+      "type": "object",
+      "properties": {
+        "max_execution_time_seconds": {"type": "integer"},
+        "retry_on_failure": {"type": "boolean"},
+        "parallel_execution_allowed": {"type": "boolean"},
+        "requires_human_review": {"type": "boolean"}
+      }
+    },
+
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "For categorization and search"
+    }
+  },
+  "additionalProperties": false
+}
