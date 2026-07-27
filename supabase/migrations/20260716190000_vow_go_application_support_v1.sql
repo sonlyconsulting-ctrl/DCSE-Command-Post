@@ -1,3 +1,6 @@
+-- Create schema if not exists
+create schema if not exists family_vow_go;
+
 create table if not exists family_vow_go.wedding_settings (
   product_instance_id uuid primary key references family_core.product_instances(id) on delete cascade,
   wedding_date timestamptz,
