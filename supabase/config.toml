@@ -1,0 +1,8 @@
+# Supabase project configuration
+# https://supabase.com/docs/guides/cli/managing-environments
+
+[project]
+project_id = "liwdquzuigrlgfzgmpjp"
+
+[functions.v7-worker-auth]
+verify_jwt = false
