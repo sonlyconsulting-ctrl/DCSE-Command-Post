@@ -528,15 +528,15 @@ begin
     v_metrics := p_metrics;
   end if;
 
-  -- Insert heartbeat record
-  insert into v7_worker.heartbeat (
+  -- Insert heartbeat record and return the row
+  return query insert into v7_worker.heartbeat (
     agent_id, current_task_id, status, current_lane, workspace_path, branch_name,
     model_version, capabilities, metrics
   ) values (
     p_agent_id, p_current_task_id, p_status, p_current_lane, p_workspace_path, p_branch_name,
     coalesce(p_model_version, ''), p_capabilities, v_metrics
   )
-  returning heartbeat.heartbeat_id, heartbeat.sent_at into v_new_id, return query select v_new_id, heartbeat.sent_at;
+  returning heartbeat.heartbeat_id, heartbeat.sent_at;
 end;
 $$;
 
