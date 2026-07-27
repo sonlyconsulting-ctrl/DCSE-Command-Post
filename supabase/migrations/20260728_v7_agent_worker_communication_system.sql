@@ -10,6 +10,9 @@
 -- 0. EXTENSIONS AND SCHEMAS
 -- ============================================================================
 
+-- Create pgmq schema first (required before creating extension)
+create schema if not exists pgmq;
+
 -- Enable pgmq for durable queue support (visibility timeout, acknowledgment)
 create extension if not exists pgmq with schema pgmq;
 
