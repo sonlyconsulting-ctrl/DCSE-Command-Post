@@ -233,7 +233,7 @@ class DeterministicValidator:
             content = migration_file.read_text().upper()
 
             for table in required_tables:
-                table_name = table.split(".")[-1]
+                table_name = table.split(".")[-1].upper()
                 if f"CREATE TABLE" in content and table_name in content:
                     self.schema_inventory["tables"].append(table)
                 else:
@@ -245,8 +245,9 @@ class DeterministicValidator:
                     ))
 
             for func in required_functions:
-                func_name = func.split(".")[-1]
-                if "CREATE FUNCTION" in content and func_name in content:
+                func_name = func.split(".")[-1].upper()
+                has_create = ("CREATE FUNCTION" in content or "CREATE OR REPLACE FUNCTION" in content)
+                if has_create and func_name in content:
                     self.schema_inventory["functions"].append(func)
                 else:
                     self.findings.append(Finding(
