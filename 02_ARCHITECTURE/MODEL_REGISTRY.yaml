@@ -1,0 +1,76 @@
+# DCSE Model Registry
+# Authorized models for autonomous worker roles
+# Updated: 2026-07-27
+
+models:
+  claude_architecture_reviewer:
+    capability: architecture_review
+    provider: anthropic
+    approved_model_id: claude-opus-5
+    fallback_model_id: claude-sonnet-5
+    max_tokens: 8192
+    tool_mode: agentic
+    required_tools:
+      - read_file
+      - glob_search
+      - grep_search
+      - git_diff
+      - test_execution
+      - supabase_rpc
+
+  claude_implementation_worker:
+    capability: code_implementation
+    provider: anthropic
+    approved_model_id: claude-opus-5
+    fallback_model_id: claude-sonnet-5
+    max_tokens: 4096
+    tool_mode: agentic_edit
+    required_tools:
+      - read_file
+      - edit_file
+      - write_file
+      - bash_execution
+      - git_operations
+      - test_execution
+      - supabase_rpc
+
+  qwen_build_worker:
+    capability: code_execution
+    provider: qwen
+    approved_model_id: qwen-coder-latest
+    fallback_model_id: qwen-coder-7b
+    max_tokens: 4096
+    tool_mode: shell_execution
+    required_tools:
+      - shell_exec
+      - file_io
+      - git_operations
+
+  deterministic_validator:
+    capability: structural_validation
+    provider: internal
+    approved_model_id: python_3.11_validator
+    fallback_model_id: python_3.10_validator
+    max_tokens: null
+    tool_mode: deterministic
+    required_tools:
+      - sql_syntax_check
+      - file_hash_verify
+      - schema_inspection
+      - test_execution
+
+supabase_auth:
+  claude_reviewer_worker:
+    auth_method: edge_function_rpc
+    function_name: v7_worker_claim_and_execute
+    scope:
+      - read_v7_worker_queues
+      - read_dcse_cp_schema
+      - write_v7_worker_results
+      - write_v7_worker_heartbeats
+    never_expose: SUPABASE_SERVICE_ROLE_KEY
+
+heartbeat_config:
+  renewal_interval_seconds: 300  # 5 minutes
+  visibility_timeout_seconds: 1800  # 30 minutes
+  max_renewals_per_task: 6
