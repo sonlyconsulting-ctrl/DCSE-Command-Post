@@ -84,18 +84,18 @@ async function processPendingResults() {
         }
 
         // 3. Write to dcse_cp.agent_task_events
-        const eventPayload: TaskEventPayload = {
+        const eventPayload = {
           task_id: submission.task_id,
           event_type: submission.result_event_type,
           event_summary: `Worker ${submission.agent_id} submitted: ${submission.result_event_type}`,
-          event_details: {
+          event_payload: {
             submission_id: submission.submission_id,
             claim_id: submission.claim_id,
             agent_id: submission.agent_id,
             worker_session_id: submission.worker_session_id,
             result_output: submission.result_output,
           },
-          created_by_label: submission.agent_id,
+          actor_label: submission.agent_id,
         };
 
         const { data: eventData, error: eventError } = await supabase
