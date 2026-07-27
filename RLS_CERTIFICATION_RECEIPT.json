@@ -46,18 +46,26 @@
   "migrations_applied_to_preview": [
     {
       "name": "v7_restricted_rpc_and_rls_hardening",
-      "file": "supabase/migrations/20260729_v7_restricted_rpc_and_rls_hardening.sql",
+      "remote_version": "20260727231155",
+      "file": "supabase/migrations/20260727231155_v7_restricted_rpc_and_rls_hardening.sql",
       "applied": true,
       "remediates": ["D1","D2","D3","D4","D5","D6","D7","D8","D9","D10"]
     },
     {
       "name": "v7_capture_prod_hotfixes_and_search_path",
-      "file": "supabase/migrations/20260729_v7_restricted_rpc_and_rls_hardening.sql (sections 9-10)",
+      "remote_version": "20260727231413",
+      "file": "supabase/migrations/20260727231413_v7_capture_prod_hotfixes_and_search_path.sql",
       "applied": true,
       "remediates": ["D11","D8-residual"]
     }
   ],
-  "rollback_script": "supabase/migrations/20260729_v7_restricted_rpc_rollback.sql",
+  "rollback_script": "supabase/rollback/v7_restricted_rpc_rollback.sql",
+  "rollback_script_placement_note": "Deliberately stored OUTSIDE supabase/migrations/. The Supabase GitHub integration applies every file in the migrations directory, so a rollback script kept there would be executed on the next push and would silently strip the hardening.",
+  "migration_version_reconciliation": {
+    "issue": "The first push failed the Supabase Preview check with 'Remote migration versions not found in local migrations directory.'",
+    "cause": "The two migrations were applied through the Supabase MCP apply_migration tool, which assigned remote versions 20260727231155 and 20260727231413. The local files had been named 20260729_*, so the CLI saw remote versions with no local counterpart.",
+    "resolution": "The combined local file was split in two and renamed to match the remote versions exactly, giving a 1:1 mapping for all five tracked versions: 20260716190000, 20260727, 20260727231155, 20260727231413, 20260728."
+  },
 
   "test_results": {
     "suite": "tests/rls_role_matrix.sql",
