@@ -209,7 +209,7 @@ create policy "workers_read_eligible_messages" on v7_worker.queue_message
   using (
     dead_lettered_at is null
     and lane = any(
-      (select authorized_lanes from v7_worker.agent_identity
+      (select unnest(authorized_lanes) from v7_worker.agent_identity
        where agent_id = current_setting('app.worker_id', true)::text)
     )
   );
