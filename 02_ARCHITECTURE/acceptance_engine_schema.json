@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Acceptance Engine Schema - DCSE V7 Phase E",
+  "description": "Multi-category artifact acceptance rules and results",
+  "type": "object",
+  "definitions": {
+    "finding": {
+      "type": "object",
+      "required": ["finding_id", "category", "severity", "status", "title", "description"],
+      "properties": {
+        "finding_id": {"type": "string", "pattern": "^ACC-[A-Z]+-[0-9]{3}$"},
+        "category": {
+          "type": "string",
+          "enum": ["doctrine", "rules", "skills", "workflow", "runtime", "dashboard", "supabase", "github", "workers", "security", "accessibility", "deployment", "compliance"]
+        },
+        "severity": {"type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]},
+        "status": {"type": "string", "enum": ["pass", "fail", "repairable", "inconclusive"]},
+        "title": {"type": "string", "minLength": 10, "maxLength": 200},
+        "description": {"type": "string", "minLength": 20, "maxLength": 1000},
+        "evidence": {"type": "string", "description": "Specific evidence supporting finding"},
+        "location": {"type": "string", "description": "File/line/section where issue found"},
+        "remediation": {"type": "string", "description": "How to fix the issue"},
+        "blocks_promotion": {"type": "boolean"},
+        "requires_approval": {"type": "boolean"}
+      }
+    },
+    "category_result": {
+      "type": "object",
+      "required": ["category", "status"],
+      "properties": {
+        "category": {
+          "type": "string",
+          "enum": ["doctrine", "rules", "skills", "workflow", "runtime", "dashboard", "supabase", "github", "workers", "security", "accessibility", "deployment", "compliance"]
+        },
+        "status": {"type": "string", "enum": ["pass", "fail", "repairable"]},
+        "findings": {"type": "integer"},
+        "blocking": {"type": "boolean"},
+        "checks_run": {"type": "integer"},
+        "checks_passed": {"type": "integer"},
+        "evidence_items": {"type": "integer"}
+      }
+    }
+  },
+  "required": [
+    "acceptance_id",
+    "artifact_id",
+    "created_at",
+    "status",
+    "promotion_ready",
+    "categories_checked",
+    "categories_passed"
+  ],
+  "properties": {
+    "acceptance_id": {
+      "type": "string",
+      "pattern": "^ACC-[0-9]{8}-[a-z0-9]{6}$",
+      "description": "Unique acceptance receipt ID"
+    },
+    "artifact_id": {
+      "type": "string",
+      "description": "ID of artifact being accepted (PKT-..., ART-..., etc)"
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string", "description": "Worker that performed acceptance"},
+    "task_id": {"type": "string", "description": "Associated task ID"},
+    "lane": {"type": "string", "enum": ["SC", "DCSE", "SYSTEM", "RAG", "DDNA"]},
+    "categories_checked": {"type": "integer", "minimum": 1, "maximum": 13},
+    "categories_passed": {"type": "integer", "minimum": 0, "maximum": 13},
+    "categories_failed": {"type": "integer", "minimum": 0},
+    "categories_repairable": {"type": "integer", "minimum": 0},
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "REPAIRABLE", "STOP_GATE", "BLOCKED"],
+      "description": "Overall acceptance status"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Confidence in the acceptance decision (0-1)"
+    },
+    "promotion_ready": {
+      "type": "boolean",
+      "description": "Whether artifact is ready for promotion"
+    },
+    "findings": {
+      "type": "array",
+      "items": {"$ref": "#/definitions/finding"},
+      "description": "All findings from acceptance checks"
+    },
+    "category_results": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/definitions/category_result"},
+      "description": "Results per category"
+    },
+    "blocking_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "finding_id": {"type": "string"},
+          "category": {"type": "string"},
+          "title": {"type": "string"},
+          "reason": {"type": "string", "enum": ["CRITICAL_SEVERITY", "HIGH_SEVERITY", "ARCHITECTURAL_CHANGE_REQUIRED"]}
+        }
+      },
+      "description": "Findings that prevent promotion"
+    },
+    "repairable_findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "finding_id": {"type": "string"},
+          "category": {"type": "string"},
+          "title": {"type": "string"},
+          "remediation": {"type": "string"}
+        }
+      },
+      "description": "Findings that can be repaired and rechecked"
+    },
+    "evidence_summary": {
+      "type": "object",
+      "properties": {
+        "total_evidence_items": {"type": "integer"},
+        "evidence_types": {
+          "type": "object",
+          "properties": {
+            "automated_checks": {"type": "integer"},
+            "manual_reviews": {"type": "integer"},
+            "test_results": {"type": "integer"},
+            "audit_logs": {"type": "integer"},
+            "metrics": {"type": "integer"},
+            "documentation": {"type": "integer"}
+          }
+        },
+        "coverage_percent": {"type": "number", "minimum": 0, "maximum": 100}
+      }
+    },
+    "audit_trail": {
+      "type": "object",
+      "properties": {
+        "checked_by": {"type": "string"},
+        "checked_at": {"type": "string", "format": "date-time"},
+        "evidence_count": {"type": "integer"},
+        "check_duration_ms": {"type": "integer"},
+        "automated_checks": {"type": "integer"},
+        "manual_checks": {"type": "integer"}
+      }
+    },
+    "escalation": {
+      "type": "object",
+      "properties": {
+        "required": {"type": "boolean"},
+        "level": {"type": "integer", "enum": [0, 1, 2], "description": "0=no escalation, 1=notify, 2=approve"},
+        "reason": {"type": "string"},
+        "escalated_to": {"type": "string", "description": "Role or lane"}
+      }
+    }
+  },
+  "additionalProperties": false
+}
