@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DCSE V7 Runtime Receipt Schema",
+  "description": "Execution receipt produced after task completion",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "packet_id",
+    "task_id",
+    "worker_id",
+    "status",
+    "started_at",
+    "completed_at",
+    "hashes"
+  ],
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^REC-\\d{8}-[a-f0-9]{32}$",
+      "description": "Unique receipt identifier"
+    },
+    "packet_id": {
+      "type": "string",
+      "pattern": "^PKT-\\d{8}-[a-f0-9]{32}$",
+      "description": "Source packet identifier"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+$"
+    },
+    "worker_id": {
+      "type": "string",
+      "pattern": "^AGENT-[A-Z0-9-]+@[A-Z]+$",
+      "description": "Worker identity that executed task"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success", "error", "stop_gate", "retry", "cancelled"],
+      "description": "Execution outcome"
+    },
+    "result_status": {
+      "type": "string",
+      "enum": [
+        "pending_validation",
+        "review_ready",
+        "approved",
+        "rejected",
+        "awaiting_repair"
+      ],
+      "description": "Result validation status (post-execution)"
+    },
+
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+
+    "execution_timeline": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {"type": "string", "format": "date-time"},
+          "iteration": {"type": "integer"},
+          "event": {"type": "string"},
+          "tool": {"type": "string"},
+          "target": {"type": "string"},
+          "status": {"type": "string"},
+          "error": {"type": "string"}
+        }
+      }
+    },
+
+    "result": {
+      "type": "object",
+      "description": "Task result (conforms to packet contract.output_schema)",
+      "properties": {
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "finding_id": {"type": "string"},
+              "severity": {
+                "type": "string",
+                "enum": ["pass", "warning", "repairable", "stop_gate"]
+              },
+              "title": {"type": "string"},
+              "description": {"type": "string"},
+              "location": {"type": "string"},
+              "remedy": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+
+    "cost": {
+      "type": "object",
+      "properties": {
+        "estimated_usd": {"type": "number"},
+        "actual_usd": {"type": "number"},
+        "variance_percent": {"type": "number"},
+        "under_budget": {"type": "boolean"}
+      }
+    },
+
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "iterations": {"type": "integer"},
+        "tools_used": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "files_read": {"type": "integer"},
+        "files_written": {"type": "integer"},
+        "context_tokens": {"type": "integer"},
+        "completion_tokens": {"type": "integer"},
+        "total_tokens": {"type": "integer"}
+      }
+    },
+
+    "error": {
+      "type": "object",
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "enum": [
+            "TRANSIENT",
+            "KNOWN_REPAIRABLE",
+            "AUTHORIZATION",
+            "CONTEXT_MISSING",
+            "SECURITY_STOPGATE",
+            "COST_LIMIT",
+            "UNKNOWN"
+          ]
+        },
+        "error_message": {"type": "string"},
+        "stack_trace": {"type": "string"},
+        "recovery_suggestion": {"type": "string"},
+        "should_retry": {"type": "boolean"}
+      }
+    },
+
+    "hashes": {
+      "type": "object",
+      "properties": {
+        "packet_hash": {
+          "type": "string",
+          "description": "Hash of source packet (for verification)"
+        },
+        "result_hash": {
+          "type": "string",
+          "description": "Hash of result object (for integrity)"
+        },
+        "receipt_hash": {
+          "type": "string",
+          "description": "Hash of entire receipt (for audit)"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Cryptographic signature of receipt"
+        }
+      }
+    },
+
+    "audit": {
+      "type": "object",
+      "properties": {
+        "worker_model": {"type": "string"},
+        "worker_mode": {"type": "string"},
+        "execution_environment": {"type": "string"},
+        "framework_version": {"type": "string"},
+        "compliance_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "check": {"type": "string"},
+              "passed": {"type": "boolean"},
+              "details": {"type": "string"}
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

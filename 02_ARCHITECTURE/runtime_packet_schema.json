@@ -1,0 +1,338 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DCSE V7 Runtime Packet Schema",
+  "description": "Complete runtime packet structure for task execution",
+  "type": "object",
+  "required": [
+    "packet_id",
+    "task_id",
+    "version",
+    "created_at",
+    "metadata",
+    "instruction",
+    "contract",
+    "hashes"
+  ],
+  "properties": {
+    "packet_id": {
+      "type": "string",
+      "pattern": "^PKT-\\d{8}-[a-f0-9]{32}$",
+      "description": "Unique packet identifier (timestamp + hash)"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+$",
+      "description": "Parent task identifier from queue_message"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$",
+      "description": "Runtime compiler version used"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Packet creation timestamp (ISO 8601)"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Packet expiration timestamp (ISO 8601)"
+    },
+
+    "metadata": {
+      "type": "object",
+      "required": [
+        "task_type",
+        "lane",
+        "priority",
+        "worker_model",
+        "worker_mode"
+      ],
+      "properties": {
+        "task_type": {
+          "type": "string",
+          "enum": [
+            "architecture_review",
+            "implement_feature",
+            "repair_code",
+            "validate_schema",
+            "compile_runtime",
+            "execute_workflow"
+          ]
+        },
+        "lane": {
+          "type": "string",
+          "enum": [
+            "SYSTEM",
+            "DCSE",
+            "SC",
+            "SS",
+            "TSL",
+            "TRIBUNAL",
+            "DDNA",
+            "RAG",
+            "PS"
+          ],
+          "description": "Authorization lane"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["P0", "P1", "P2", "P3"],
+          "description": "Task priority level"
+        },
+        "worker_model": {
+          "type": "string",
+          "enum": [
+            "claude-opus-5",
+            "claude-sonnet-5",
+            "qwen-max-latest",
+            "codex-premium",
+            "deterministic-validator"
+          ]
+        },
+        "worker_mode": {
+          "type": "string",
+          "enum": ["blueprint", "implementation", "premium", "validation"],
+          "description": "Execution mode tier"
+        },
+        "estimated_cost_usd": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50
+        },
+        "estimated_duration_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 3600
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "maximum": 3600
+        }
+      }
+    },
+
+    "instruction": {
+      "type": "object",
+      "required": [
+        "objective",
+        "scope",
+        "acceptance_criteria",
+        "tools_allowed",
+        "tools_forbidden"
+      ],
+      "properties": {
+        "objective": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000,
+          "description": "Task objective statement"
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "files": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Specific files to include"
+            },
+            "patterns": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Glob patterns for file inclusion"
+            },
+            "exclude": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Glob patterns for file exclusion"
+            },
+            "max_files": {
+              "type": "integer",
+              "description": "Maximum files to process"
+            },
+            "max_size_bytes": {
+              "type": "integer",
+              "description": "Maximum total size"
+            }
+          }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1,
+          "description": "Criteria for task success"
+        },
+        "tools_allowed": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "read_file",
+              "glob_search",
+              "grep_search",
+              "git_diff",
+              "test_execution",
+              "edit_file",
+              "write_file",
+              "bash_execution",
+              "git_operations",
+              "supabase_rpc"
+            ]
+          },
+          "minItems": 1
+        },
+        "tools_forbidden": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "stopping_conditions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "max_cost_exceeded",
+              "max_time_exceeded",
+              "max_retries_exceeded",
+              "security_violation",
+              "unrecoverable_error",
+              "user_cancellation"
+            ]
+          }
+        }
+      }
+    },
+
+    "context": {
+      "type": "object",
+      "properties": {
+        "repo_structure": {
+          "type": "object",
+          "properties": {
+            "hash": {"type": "string"},
+            "files_count": {"type": "integer"},
+            "size_bytes": {"type": "integer"}
+          }
+        },
+        "relevant_files": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "content_hash": {"type": "string"},
+              "line_count": {"type": "integer"},
+              "last_modified": {"type": "string", "format": "date-time"}
+            }
+          }
+        },
+        "compressed_context": {
+          "type": "object",
+          "required": ["data", "compression", "original_size", "compressed_size"],
+          "properties": {
+            "data": {
+              "type": "string",
+              "description": "Base64-encoded compressed data"
+            },
+            "compression": {
+              "type": "string",
+              "enum": ["none", "gzip", "brotli", "zstd"]
+            },
+            "original_size": {"type": "integer"},
+            "compressed_size": {"type": "integer"},
+            "ratio": {"type": "number"}
+          }
+        }
+      }
+    },
+
+    "security": {
+      "type": "object",
+      "properties": {
+        "execution_mode": {
+          "type": "string",
+          "enum": ["blueprint", "implementation", "premium", "validation"]
+        },
+        "rls_policies": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "authorized_lanes": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "vault_secrets": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Secrets required from secure vault"
+        },
+        "secret_paths": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Secure function paths (SECURITY DEFINER)"
+        }
+      }
+    },
+
+    "contract": {
+      "type": "object",
+      "required": ["input_schema", "output_schema", "receipt_schema"],
+      "properties": {
+        "input_schema": {
+          "type": "object",
+          "description": "JSON Schema for task input validation"
+        },
+        "output_schema": {
+          "type": "object",
+          "description": "JSON Schema for task output validation"
+        },
+        "receipt_schema": {
+          "type": "object",
+          "description": "JSON Schema for execution receipt"
+        },
+        "error_schema": {
+          "type": "object",
+          "description": "JSON Schema for error responses"
+        }
+      }
+    },
+
+    "hashes": {
+      "type": "object",
+      "required": [
+        "packet_hash",
+        "content_hash",
+        "instruction_hash",
+        "signature"
+      ],
+      "properties": {
+        "packet_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "instruction_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "signature": {
+          "type": "string",
+          "pattern": "^ed25519:[a-f0-9]{128}$"
+        },
+        "verified_by": {
+          "type": "string",
+          "description": "Compiler version that created this hash"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
