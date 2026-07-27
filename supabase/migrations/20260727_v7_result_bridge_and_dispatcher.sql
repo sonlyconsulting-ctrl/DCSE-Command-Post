@@ -218,4 +218,8 @@ comment on function v7_worker.dispatcher_recovery_cycle() is
 comment on function v7_worker.result_bridge_invoke() is
   'Queues result processing cycle. Bridges v7_worker.result_submission → dcse_cp.agent_task_events.';
 
-raise notice '[v7_worker] Dispatcher and result bridge scheduled successfully';
+do $$
+begin
+  raise notice '[v7_worker] Dispatcher and result bridge scheduled successfully';
+end;
+$$;
