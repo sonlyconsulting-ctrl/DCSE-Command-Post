@@ -130,7 +130,7 @@ async function processPendingResults() {
           .update({
             submission_status: "acked",
             submission_acked_at: new Date().toISOString(),
-            dc_event_id: eventData?.id || null,
+            dc_event_id: eventData?.id ? String(eventData.id) : null,
           })
           .eq("submission_id", submission.submission_id);
 
