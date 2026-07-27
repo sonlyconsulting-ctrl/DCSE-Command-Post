@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Promotion Engine Schema - DCSE V7 Phase F",
+  "description": "Artifact promotion state machine and lifecycle management",
+  "type": "object",
+  "required": [
+    "promotion_id",
+    "artifact_id",
+    "current_state",
+    "created_at"
+  ],
+  "properties": {
+    "promotion_id": {
+      "type": "string",
+      "pattern": "^PRO-[0-9]{8}-[a-z0-9]{6}$",
+      "description": "Unique promotion record ID"
+    },
+    "artifact_id": {
+      "type": "string",
+      "description": "ID of artifact being promoted"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "current_state": {
+      "type": "string",
+      "enum": [
+        "Candidate",
+        "Reviewed",
+        "Validated",
+        "Approved",
+        "Promoted",
+        "Deprecated",
+        "Archived",
+        "Rejected",
+        "Rolled Back",
+        "Superseded"
+      ],
+      "description": "Current state in promotion lifecycle"
+    },
+    "previous_state": {
+      "type": "string",
+      "enum": [
+        "Candidate",
+        "Reviewed",
+        "Validated",
+        "Approved",
+        "Promoted",
+        "Deprecated",
+        "Archived",
+        "Rejected",
+        "Rolled Back",
+        "Superseded"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "User or system that initiated promotion"
+    },
+    "state_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["state", "entered_at"],
+        "properties": {
+          "state": {"type": "string"},
+          "entered_at": {"type": "string", "format": "date-time"},
+          "entered_by": {"type": "string"},
+          "duration_minutes": {"type": "integer"},
+          "evidence_count": {"type": "integer"},
+          "findings": {
+            "type": "object",
+            "properties": {
+              "total": {"type": "integer"},
+              "blocking": {"type": "integer"},
+              "repairable": {"type": "integer"}
+            }
+          },
+          "reviewed_by": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Code reviewers (for Reviewed state)"
+          },
+          "acceptance_confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "approved_by": {
+            "type": "string",
+            "description": "Approver role (for Approved state)"
+          },
+          "deployment_receipt_id": {
+            "type": "string",
+            "description": "Deployment receipt (for Promoted state)"
+          }
+        }
+      },
+      "description": "Timeline of all state transitions"
+    },
+    "transition_rules": {
+      "type": "object",
+      "properties": {
+        "automatic": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"},
+              "condition": {"type": "string"},
+              "triggered_when": {"type": "string"}
+            }
+          }
+        },
+        "manual_approval": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"},
+              "approvers": {"type": "array", "items": {"type": "string"}},
+              "timeout_minutes": {"type": "integer"},
+              "escalation_on_timeout": {"type": "boolean"}
+            }
+          }
+        },
+        "blocking": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"},
+              "reject_to": {"type": "string"},
+              "trigger": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "lane": {"type": "string", "enum": ["SC", "DCSE", "SYSTEM", "RAG", "DDNA"]},
+        "promotion_velocity_hours": {"type": "number"},
+        "blocking_issues": {"type": "integer"},
+        "rejections": {"type": "integer"},
+        "rollbacks": {"type": "integer"},
+        "total_evidence_collected": {"type": "integer"}
+      }
+    },
+    "approval_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gate_id": {"type": "string"},
+          "transition": {
+            "type": "object",
+            "properties": {
+              "from": {"type": "string"},
+              "to": {"type": "string"}
+            }
+          },
+          "approvers": {"type": "array", "items": {"type": "string"}},
+          "timeout_minutes": {"type": "integer"},
+          "status": {"type": "string", "enum": ["pending", "approved", "rejected", "timeout"]},
+          "requested_at": {"type": "string", "format": "date-time"},
+          "responded_at": {"type": "string", "format": "date-time"},
+          "approved_by": {"type": "string"},
+          "rejection_reason": {"type": "string"}
+        }
+      }
+    },
+    "deprecation": {
+      "type": "object",
+      "properties": {
+        "status": {"type": "string", "enum": ["not_planned", "planned", "active", "complete"]},
+        "announced_at": {"type": "string", "format": "date-time"},
+        "end_of_life_at": {"type": "string", "format": "date-time"},
+        "replacement_artifact_id": {"type": "string"},
+        "usage_level": {
+          "type": "string",
+          "enum": ["high", "medium", "low", "none"]
+        },
+        "notices_sent": {"type": "integer"}
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "properties": {
+        "rolled_back": {"type": "boolean"},
+        "rolled_back_at": {"type": "string", "format": "date-time"},
+        "rolled_back_by": {"type": "string"},
+        "reason": {"type": "string"},
+        "previous_state": {"type": "string"},
+        "restore_procedure": {"type": "string"}
+      }
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "total_transitions": {"type": "integer"},
+        "total_duration_hours": {"type": "number"},
+        "approval_gates_passed": {"type": "integer"},
+        "rejection_gates_triggered": {"type": "integer"},
+        "last_updated_at": {"type": "string", "format": "date-time"},
+        "last_updated_by": {"type": "string"}
+      }
+    }
+  },
+  "additionalProperties": false
+}
