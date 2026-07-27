@@ -1,0 +1,244 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workflow Registry Schema - DCSE V7 Phase D",
+  "description": "Executable workflow definitions for system orchestration",
+  "type": "object",
+  "required": [
+    "workflow_id",
+    "type",
+    "version",
+    "lanes",
+    "steps",
+    "status"
+  ],
+  "properties": {
+    "workflow_id": {
+      "type": "string",
+      "pattern": "^WF-V[0-9]+-[A-Z]+-[0-9]{3}$",
+      "description": "Unique workflow identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["sequential", "parallel", "conditional", "repair", "approval", "rollback"],
+      "description": "Workflow execution type"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "tested", "stable", "promoted", "deprecated", "archived"],
+      "description": "Lifecycle state"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_by": {
+      "type": "string"
+    },
+    "lanes": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "description": "Authorization lanes that can execute this workflow"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"type": "string", "enum": ["string", "number", "boolean", "object", "array"]},
+          "required": {"type": "boolean"},
+          "description": {"type": "string"}
+        }
+      },
+      "description": "Input parameters"
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "type": {"type": "string"},
+          "description": {"type": "string"}
+        }
+      },
+      "description": "Output parameters"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step", "action"],
+        "properties": {
+          "step": {"type": "integer", "description": "Step sequence number"},
+          "action": {"type": "string", "description": "Skill or subprocess to execute"},
+          "name": {"type": "string", "description": "Step display name"},
+          "description": {"type": "string"},
+          "depends_on": {
+            "type": "array",
+            "items": {"type": "integer"},
+            "description": "Step IDs that must complete first"
+          },
+          "retry_policy": {
+            "type": "object",
+            "properties": {
+              "max_attempts": {"type": "integer"},
+              "backoff_ms": {"type": "integer"},
+              "backoff_multiplier": {"type": "number"}
+            }
+          },
+          "timeout_seconds": {"type": "integer"},
+          "on_failure": {
+            "type": "string",
+            "enum": ["stop", "continue", "retry", "repair", "manual_review"],
+            "description": "Action on step failure"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "if": {"type": "string", "description": "Condition expression"},
+                "then": {"type": "integer", "description": "Step ID if true"},
+                "else": {"type": "integer", "description": "Step ID if false"}
+              }
+            },
+            "description": "Conditional branching"
+          },
+          "parallel_with": {
+            "type": "array",
+            "items": {"type": "integer"},
+            "description": "Step IDs to run in parallel"
+          },
+          "input_mapping": {
+            "type": "object",
+            "description": "Map workflow inputs to step inputs"
+          },
+          "output_mapping": {
+            "type": "object",
+            "description": "Map step outputs to workflow outputs"
+          }
+        }
+      }
+    },
+    "stop_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gate_id": {"type": "string"},
+          "trigger": {"type": "string", "description": "Condition that stops workflow"},
+          "message": {"type": "string"},
+          "escalation_level": {"type": "integer", "enum": [0, 1, 2]},
+          "requires_approval": {"type": "boolean"}
+        }
+      },
+      "description": "Stop gates that halt execution"
+    },
+    "receipts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Receipt types generated by this workflow"
+    },
+    "acceptance_tests": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Test IDs to validate workflow success"
+    },
+    "error_handling": {
+      "type": "object",
+      "properties": {
+        "default_on_failure": {
+          "type": "string",
+          "enum": ["stop", "continue", "retry", "manual_review"]
+        },
+        "escalation_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "error_type": {"type": "string"},
+              "action": {"type": "string"},
+              "notify": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    },
+    "rollback_config": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "step": {"type": "integer"},
+              "undo_action": {"type": "string"},
+              "depends_on": {"type": "array", "items": {"type": "integer"}}
+            }
+          }
+        },
+        "savepoint_frequency": {"type": "integer", "description": "Steps between savepoints"}
+      }
+    },
+    "approval_config": {
+      "type": "object",
+      "properties": {
+        "required_before_step": {
+          "type": "array",
+          "items": {"type": "integer"}
+        },
+        "approvers": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "User roles or lanes authorized to approve"
+        },
+        "approval_timeout_minutes": {"type": "integer"},
+        "escalate_if_no_approval": {"type": "boolean"}
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "estimated_duration_seconds": {"type": "integer"},
+        "estimated_cost_usd": {"type": "number"},
+        "success_rate_target": {"type": "number", "minimum": 0, "maximum": 1},
+        "performance_sla_seconds": {"type": "integer"}
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Workflow IDs that must complete first"
+    }
+  },
+  "additionalProperties": false
+}
