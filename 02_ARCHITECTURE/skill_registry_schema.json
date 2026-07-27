@@ -1,0 +1,186 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skill Registry Schema - DCSE V7 Phase C",
+  "description": "Atomic and composite skills for runtime capability composition",
+  "type": "object",
+  "required": [
+    "skill_id",
+    "type",
+    "version",
+    "lane",
+    "status"
+  ],
+  "properties": {
+    "skill_id": {
+      "type": "string",
+      "pattern": "^SKILL-[A-Z0-9]+-[0-9]{3}$",
+      "description": "Unique skill identifier"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["atomic", "composite"],
+      "description": "Atomic (single capability) or Composite (combines skills)"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 1000
+    },
+    "lane": {
+      "type": "string",
+      "enum": ["SC", "DCSE", "SYSTEM", "RAG", "DDNA"],
+      "description": "Authorization lane: SC=construction, DCSE=governance, SYSTEM=infrastructure, RAG=knowledge, DDNA=analytics"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "tested", "stable", "promoted", "deprecated", "archived"],
+      "description": "Lifecycle state"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "file_operations",
+        "code_analysis",
+        "testing",
+        "deployment",
+        "governance",
+        "data_access",
+        "orchestration",
+        "validation",
+        "reporting",
+        "security"
+      ]
+    },
+    "atomic_skill": {
+      "type": "object",
+      "description": "Configuration for atomic skills (type=atomic)",
+      "properties": {
+        "capability": {
+          "type": "string",
+          "description": "Single capability name"
+        },
+        "requires": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Prerequisites (permissions, tools, resources)"
+        },
+        "provides": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Output capabilities or data provided"
+        },
+        "tools_used": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tools invoked by this skill"
+        },
+        "execution_config": {
+          "type": "object",
+          "properties": {
+            "timeout_seconds": {"type": "integer"},
+            "retry_on_failure": {"type": "boolean"},
+            "parallel_safe": {"type": "boolean"},
+            "requires_human_approval": {"type": "boolean"}
+          }
+        },
+        "input_schema": {
+          "type": "object",
+          "description": "JSON Schema for inputs"
+        },
+        "output_schema": {
+          "type": "object",
+          "description": "JSON Schema for outputs"
+        }
+      }
+    },
+    "composite_skill": {
+      "type": "object",
+      "description": "Configuration for composite skills (type=composite)",
+      "properties": {
+        "component_skills": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Skill IDs that compose this skill"
+        },
+        "execution_strategy": {
+          "type": "string",
+          "enum": ["sequential", "parallel", "conditional"],
+          "description": "How components are combined"
+        },
+        "data_flow": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from_skill": {"type": "string"},
+              "from_output": {"type": "string"},
+              "to_skill": {"type": "string"},
+              "to_input": {"type": "string"}
+            }
+          },
+          "description": "Data connections between component skills"
+        },
+        "error_handling": {
+          "type": "string",
+          "enum": ["fail_fast", "continue_on_error", "retry_with_backoff"],
+          "description": "How component failures are handled"
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "object",
+      "properties": {
+        "unit_tests_required": {"type": "integer"},
+        "coverage_minimum": {"type": "number", "minimum": 0, "maximum": 1},
+        "integration_tests": {"type": "array", "items": {"type": "string"}},
+        "performance_targets": {
+          "type": "object",
+          "properties": {
+            "max_duration_ms": {"type": "integer"},
+            "max_memory_mb": {"type": "integer"}
+          }
+        }
+      }
+    },
+    "versioning": {
+      "type": "object",
+      "properties": {
+        "current": {"type": "string"},
+        "breaking_changes": {"type": "array", "items": {"type": "string"}},
+        "deprecated_in": {"type": "string"},
+        "removal_planned": {"type": "string", "format": "date"}
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Skill IDs that must be available"
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Skill IDs that conflict with this one"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}
