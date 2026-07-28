@@ -1,212 +1,89 @@
 /**
- * V7 Result Bridge - Edge Function
+ * v7-result-bridge — HTTP entry point for the result bridge (B4)
  *
- * Polls v7_worker.result_submission for pending results.
- * Validates, writes to dcse_cp.agent_task_events, acknowledges.
+ * Bridges v7_worker.result_submission -> dcse_cp.agent_task_events.
  *
- * Triggers:
- * - POST /functions/v7-result-bridge (manual invoke)
- * - Scheduled: every 30 seconds via Supabase Cron
+ * The bridging logic itself lives in SQL (v7_worker.bridge_pending_results),
+ * reached here through public.v7_run_result_bridge, which is service_role only.
+ * Keeping the logic in the database means:
+ *   - the pg_cron job can run it without an HTTP callout, so no service-role key
+ *     has to be stored in the database for pg_net to authenticate;
+ *   - task resolution, event-type mapping and acknowledgement all happen in one
+ *     transaction per submission.
+ *
+ * This function exists for external and manual invocation.
+ *
+ * Replaces an earlier version that could not have worked: it wrote
+ * submission.task_id (TEXT) straight into dcse_cp.agent_task_events.task_id
+ * (UUID NOT NULL, FK to agent_tasks), and passed worker event types straight
+ * into a CHECK-constrained column. Both are handled in SQL now.
+ *
+ * POST /functions/v1/v7-result-bridge   { "limit": 25 }
+ *   200 { status, processed, failed, skipped, duration_ms, receipt_id }
+ *   401 caller is not service_role
+ *   500 bridge error
  */
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-interface ResultSubmission {
-  submission_id: number;
-  task_id: string;
-  claim_id: number;
-  agent_id: string;
-  submission_status: string;
-  result_event_type: string;
-  result_output: Record<string, unknown>;
-  worker_session_id: string;
-  submission_attempted_at: string;
-}
-
-interface TaskEventPayload {
-  task_id: string;
-  event_type: string;
-  event_summary: string;
-  event_details: Record<string, unknown>;
-  created_by_label: string;
-}
-
-async function processPendingResults() {
-  console.log("[v7-result-bridge] Starting result processing cycle");
-
-  const startTime = Date.now();
-  let processed = 0;
-  let failed = 0;
-  const receipts: unknown[] = [];
-
-  try {
-    // 1. Fetch pending submissions
-    const { data: submissions, error: fetchError } = await supabase
-      .from("v7_worker.result_submission")
-      .select("*")
-      .eq("submission_status", "pending")
-      .order("submission_attempted_at", { ascending: true })
-      .limit(10);
-
-    if (fetchError) {
-      throw new Error(`Failed to fetch submissions: ${fetchError.message}`);
-    }
-
-    console.log(`[v7-result-bridge] Found ${submissions?.length || 0} pending submissions`);
-
-    if (!submissions || submissions.length === 0) {
-      return {
-        status: "success",
-        processed: 0,
-        failed: 0,
-        receipts: [],
-        duration_ms: Date.now() - startTime,
-      };
-    }
-
-    // 2. Process each submission
-    for (const submission of submissions) {
-      const submissionReceipt: Record<string, unknown> = {
-        submission_id: submission.submission_id,
-        task_id: submission.task_id,
-        processing_started_at: new Date().toISOString(),
-      };
-
-      try {
-        // Validate result structure
-        if (!submission.task_id || !submission.result_event_type) {
-          throw new Error("Missing required fields: task_id or result_event_type");
-        }
-
-        // 3. Write to dcse_cp.agent_task_events
-        const eventPayload = {
-          task_id: submission.task_id,
-          event_type: submission.result_event_type,
-          event_summary: `Worker ${submission.agent_id} submitted: ${submission.result_event_type}`,
-          event_payload: {
-            submission_id: submission.submission_id,
-            claim_id: submission.claim_id,
-            agent_id: submission.agent_id,
-            worker_session_id: submission.worker_session_id,
-            result_output: submission.result_output,
-          },
-          actor_label: submission.agent_id,
-        };
-
-        const { data: eventData, error: eventError } = await supabase
-          .from("dcse_cp.agent_task_events")
-          .insert([eventPayload])
-          .select("id")
-          .single();
-
-        if (eventError) {
-          throw new Error(`Failed to write event: ${eventError.message}`);
-        }
-
-        submissionReceipt.dc_event_id = eventData?.id;
-
-        // 4. Update task status in v7_bootstrap.tasks
-        const newTaskStatus = mapEventTypeToTaskStatus(submission.result_event_type);
-        const { error: taskError } = await supabase
-          .from("v7_bootstrap.tasks")
-          .update({ status: newTaskStatus })
-          .eq("task_id", submission.task_id);
-
-        if (taskError) {
-          console.warn(
-            `[v7-result-bridge] Warning: Could not update task status: ${taskError.message}`
-          );
-          // Don't fail the entire submission for this
-        }
-
-        // 5. Mark result submission as acked
-        const { error: ackError } = await supabase
-          .from("v7_worker.result_submission")
-          .update({
-            submission_status: "acked",
-            submission_acked_at: new Date().toISOString(),
-            dc_event_id: eventData?.id ? String(eventData.id) : null,
-          })
-          .eq("submission_id", submission.submission_id);
-
-        if (ackError) {
-          throw new Error(`Failed to acknowledge submission: ${ackError.message}`);
-        }
-
-        submissionReceipt.status = "success";
-        submissionReceipt.processing_completed_at = new Date().toISOString();
-        processed++;
-      } catch (error) {
-        console.error(
-          `[v7-result-bridge] Error processing submission ${submission.submission_id}: ${error}`
-        );
-        submissionReceipt.status = "failed";
-        submissionReceipt.error = (error as Error).message;
-        failed++;
-
-        // Mark as failed so we don't retry forever
-        await supabase
-          .from("v7_worker.result_submission")
-          .update({
-            submission_status: "failed",
-            last_error: (error as Error).message,
-          })
-          .eq("submission_id", submission.submission_id);
-      }
-
-      receipts.push(submissionReceipt);
-    }
-
-    const duration = Date.now() - startTime;
-    console.log(
-      `[v7-result-bridge] Cycle complete: ${processed} processed, ${failed} failed, ${duration}ms`
-    );
-
-    return {
-      status: failed > 0 ? "partial" : "success",
-      processed,
-      failed,
-      receipts,
-      duration_ms: duration,
-    };
-  } catch (error) {
-    console.error(`[v7-result-bridge] Fatal error: ${error}`);
-    return {
-      status: "error",
-      error: (error as Error).message,
-      processed: 0,
-      failed: 0,
-      receipts: [],
-      duration_ms: Date.now() - startTime,
-    };
-  }
-}
-
-function mapEventTypeToTaskStatus(eventType: string): string {
-  const mapping: Record<string, string> = {
-    completed: "completed",
-    blocked: "blocked",
-    needs_review: "needs_review",
-    error: "needs_review",
-    handoff_ready: "handoff_ready",
-  };
-  return mapping[eventType] || "needs_review";
-}
+const json = (body: unknown, status: number) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
 
 Deno.serve(async (req) => {
-  if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405 });
+  if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
+
+  // Only the service role may drive the bridge. verify_jwt=true admits any valid
+  // project JWT, including anon, so the role claim is checked explicitly.
+  const auth = req.headers.get("Authorization") ?? "";
+  const token = auth.replace(/^Bearer\s+/i, "");
+  let role: string | undefined;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+    role = payload?.role;
+  } catch {
+    return json({ error: "unauthorized" }, 401);
+  }
+  if (role !== "service_role") {
+    console.warn(`[v7-result-bridge] refused caller with role=${role}`);
+    return json({ error: "unauthorized" }, 401);
   }
 
-  const result = await processPendingResults();
+  let limit = 25;
+  try {
+    const body = await req.json();
+    if (Number.isInteger(body?.limit)) limit = body.limit;
+  } catch {
+    // empty body is fine; use the default
+  }
 
-  return new Response(JSON.stringify(result), {
-    headers: { "Content-Type": "application/json" },
-    status: result.status === "error" ? 500 : 200,
+  const admin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
   });
+
+  const { data, error } = await admin.rpc("v7_run_result_bridge", { p_limit: limit });
+
+  if (error) {
+    console.error(`[v7-result-bridge] bridge error: ${error.message}`);
+    return json({ status: "error", error: error.message }, 500);
+  }
+
+  const row = Array.isArray(data) ? data[0] : data;
+  console.log(
+    `[v7-result-bridge] cycle complete: processed=${row?.processed} failed=${row?.failed} skipped=${row?.skipped}`,
+  );
+
+  return json({
+    status: (row?.failed ?? 0) > 0 ? "partial" : "success",
+    processed: row?.processed ?? 0,
+    failed: row?.failed ?? 0,
+    skipped: row?.skipped ?? 0,
+    duration_ms: row?.duration_ms ?? 0,
+    receipt_id: row?.receipt_id ?? null,
+  }, 200);
 });
