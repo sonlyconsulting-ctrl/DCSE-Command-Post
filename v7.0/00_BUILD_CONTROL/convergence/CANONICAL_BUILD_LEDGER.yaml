@@ -1,0 +1,42 @@
+ledger_id: DCSE-V7-CANONICAL-BUILD-LEDGER
+status: candidate
+baseline: v6.9-immutable
+review: DCSE-V7-CONVERGENCE-001
+completion_classes:
+  - architecture
+  - implementation
+  - certification
+  - operational
+artifacts:
+  communication_system:
+    claude_pr: 14
+    claude_head: dd269b0
+    architecture: complete
+    implementation: complete
+    certification: complete
+    operational: pending
+    remaining:
+      - B1 production worker credentials
+      - B5 durable worker host
+    promotion: pending_convergence
+  qwen_worker_runtime:
+    commit: 9b4d6c07398cb760e1273bfb08b58f93a8553b43
+    publication: pending
+    implementation: complete
+    certification: complete
+    operational: pending
+  codex_security_convergence:
+    implementation: complete_local
+    certification: static_pass
+    publication: pending
+  runtime_compiler:
+    status: candidate
+    owner: ChatGPT-Orchestrator
+    promotion: not_promoted
+rules:
+  - no_silent_promotion
+  - capability_before_vendor
+  - minimum_effective_context
+  - evidence_over_assertion
+  - content_as_product
+  - ps_firewall_absolute
