@@ -1,0 +1,28 @@
+workflow_id: WF-V7-RUNTIME-COMPILE-001
+status: candidate
+steps:
+  - normalize_objective
+  - resolve_entity_lane
+  - resolve_authority_firewall
+  - resolve_destination_risk
+  - resolve_doctrine
+  - resolve_rules
+  - resolve_skills
+  - resolve_workflow
+  - resolve_capabilities_workers
+  - resolve_repository_data_scope
+  - attach_eci_negative_tests
+  - attach_cost_time_retry_stopgates
+  - assemble_packet
+  - generate_runtime_hash
+  - validate_packet
+  - register_dispatch
+  - link_receipt
+  - capture_drift_learning
+failure_states:
+  - PASS
+  - REPAIRABLE
+  - DRIFT
+  - STOP_GATE
+  - BLOCKED
+promotion_status: not_promoted
