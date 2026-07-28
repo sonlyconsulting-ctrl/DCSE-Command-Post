@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DCSE V7 Runtime Packet",
+  "type": "object",
+  "required": [
+    "packet_id", "task_id", "objective", "entity", "lane", "authority",
+    "baseline", "source_refs", "doctrine_ids", "rule_ids", "skill_ids",
+    "workflow_id", "capability_ids", "worker_eligibility", "files_in_scope",
+    "files_prohibited", "acceptance_criteria", "negative_tests",
+    "eci_requirement_ids", "cost_limit_usd", "wall_time_limit_minutes",
+    "attempt_limit", "stop_gates", "output_contract", "receipt_contract",
+    "runtime_hash"
+  ],
+  "properties": {
+    "packet_id": {"type": "string"},
+    "task_id": {"type": "string"},
+    "objective": {"type": "string"},
+    "entity": {"type": "string"},
+    "lane": {"type": "string"},
+    "authority": {"type": "string"},
+    "baseline": {"type": "string"},
+    "source_refs": {"type": "array", "items": {"type": "string"}},
+    "doctrine_ids": {"type": "array", "items": {"type": "string"}},
+    "rule_ids": {"type": "array", "items": {"type": "string"}},
+    "skill_ids": {"type": "array", "items": {"type": "string"}},
+    "workflow_id": {"type": "string"},
+    "capability_ids": {"type": "array", "items": {"type": "string"}},
+    "worker_eligibility": {"type": "array", "items": {"type": "string"}},
+    "files_in_scope": {"type": "array", "items": {"type": "string"}},
+    "files_prohibited": {"type": "array", "items": {"type": "string"}},
+    "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
+    "negative_tests": {"type": "array", "items": {"type": "string"}},
+    "eci_requirement_ids": {"type": "array", "items": {"type": "string"}},
+    "cost_limit_usd": {"type": "number", "minimum": 0},
+    "wall_time_limit_minutes": {"type": "integer", "minimum": 1},
+    "attempt_limit": {"type": "integer", "minimum": 1},
+    "stop_gates": {"type": "array", "items": {"type": "string"}},
+    "output_contract": {"type": "object"},
+    "receipt_contract": {"type": "object"},
+    "runtime_hash": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"}
+  },
+  "additionalProperties": true
+}
