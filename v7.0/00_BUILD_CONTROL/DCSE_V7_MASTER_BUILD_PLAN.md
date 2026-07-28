@@ -1,6 +1,6 @@
 # DCSE V7 Master Build Plan
 
-Status: Communication Convergence Ready for Canonical Merge
+Status: Communication Operational on Staging
 Baseline: v6.9 immutable
 
 ## Completion classes
@@ -33,7 +33,7 @@ No subsystem may report generic completion without these states.
 - Gate 001: PASS on staging
 - Operational evidence: complete on the durable staging worker
 - CR-SEC-001: CLOSED on staging; `v7-worker-auth` version 2 is a deny-all HTTP 410 tombstone
-- Promotion: authorized pending canonical merge
+- Promotion: Operational on staging at canonical merge `6abb96fe1853982d7814df0aa13a8d4207c2e4a9`
 - Production activation: not claimed
 
 ### Runtime Compiler
@@ -53,11 +53,10 @@ No subsystem may report generic completion without these states.
 - Implementation: queued
 
 ## Immediate execution wave
-1. Publish the CR-SEC-001 remediation and bounded communication convergence carrier.
-2. Reconcile PR 14 and PR 15 and merge the canonical carrier while all checks remain green.
-3. Promote communication and record the canonical post-promotion commit.
-4. Create the Runtime Compiler MVP branch from that canonical commit and execute the prepared handoff.
-5. Keep Dashboard, OTI, DEE, and other later subsystems out of the communication closeout wave.
+1. Publish the post-merge communication promotion and activation record.
+2. Create `chatgpt/v7-runtime-compiler-mvp` from the canonical post-promotion commit.
+3. Execute the prepared Runtime Compiler MVP handoff in that branch as a separate work item.
+4. Keep Dashboard, OTI, DEE, and other later subsystems out of the Runtime Compiler MVP wave.
 
 ## Required evidence
 - Git commit and PR

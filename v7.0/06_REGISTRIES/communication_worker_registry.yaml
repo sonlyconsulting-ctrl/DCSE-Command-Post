@@ -1,9 +1,9 @@
 registry_id: DCSE-V7-COMMUNICATION-WORKERS
-updated_at_utc: 2026-07-28T06:15:50.0975831Z
+updated_at_utc: 2026-07-28T06:24:09.9376760Z
 workers:
   - agent_id: AGENT-CLAUDE-REVIEWER-01@STAGING
     role: architecture_review
-    status: operational_evidence_complete_ready_for_promotion
+    status: operational_staging
     model: claude-sonnet-5
     lanes: [DCSE, SC]
     canonical_source: workers/claude-reviewer-operational.js

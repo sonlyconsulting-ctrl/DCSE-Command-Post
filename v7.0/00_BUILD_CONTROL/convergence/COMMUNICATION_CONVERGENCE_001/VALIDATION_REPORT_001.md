@@ -11,7 +11,7 @@ Gate 001 rerun: No
 | PASS receipt SHA-256 | PASS | `9C5D6F485566ADBC035284F74EA5BDC10AA76BF4953D4DE3AD9753ABEA8B598C` |
 | Deterministic static suite | PASS, 11/11 | Canonical worker, token broker, bridge, decommission payload, archived v1 source, migration set, rollback guard, v6.9 presence |
 | Local CI harness | PASS, 0 failures | JSON parse, JavaScript syntax, deterministic suite, secret scan, v6.9 tree, package-lock boundary |
-| GitHub/Vercel checks | PENDING PUBLICATION RECHECK | Prior Vercel checks passed on PR 14 head `dd269b0` and PR 15 source head `1f3ae94` |
+| GitHub/Vercel checks | PASS | PR 15 published at `f4ece675`, Vercel Ready, then merged as `6abb96fe`; PR 14 closed unmerged as superseded |
 | GitHub Actions | NOT CONFIGURED | No pull-request workflow runs were returned for either head |
 | RLS/RPC read-only suite | PASS, 10/10 | RLS coverage, locked search paths, app-metadata identity, queue and Gate correlations |
 | Supabase security advisors | PASS WITH DOCUMENTED WARNINGS | Seven public authenticated worker RPC warnings remain identity-gated; anon execute is revoked and internal functions are service-role only |

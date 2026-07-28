@@ -1,6 +1,6 @@
 # Governed Gate 001 Evidence Packet
 
-Status: Gate evidence complete; CR-SEC-001 closed; communication ready for canonical merge.
+Status: Gate evidence complete; CR-SEC-001 closed; communication operational on staging and canonically merged.
 
 This packet contains exact copies of the PASS receipt, preserved BLOCKED receipt, authorization-transition receipt, worker and supervisor logs, prior-log archive, source PR certification receipts, hashes, cycle correlation evidence, restart and heartbeat evidence, repair summary, CR-SEC-001 remediation receipt, and a non-secret environment record.
 

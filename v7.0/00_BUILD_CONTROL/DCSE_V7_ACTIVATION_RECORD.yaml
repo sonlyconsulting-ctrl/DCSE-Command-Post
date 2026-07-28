@@ -1,12 +1,14 @@
 record_id: DCSE-V7-ACTIVATION-001
-updated_at_utc: 2026-07-28T06:15:50.0975831Z
-overall_status: communication_ready_for_canonical_merge
+updated_at_utc: 2026-07-28T06:24:09.9376760Z
+overall_status: communication_operational_runtime_compiler_handoff_ready
 subsystems:
   communication:
     staging_gate: PASS
     operational_evidence: complete
     security: PASS_CR_SEC_001_CLOSED
-    promotion: READY_AFTER_CANONICAL_MERGE
+    promotion: OPERATIONAL
+    staging_activation: true
+    canonical_merge_commit: 6abb96fe1853982d7814df0aa13a8d4207c2e4a9
     production_activation: false
   runtime_compiler:
     status: candidate

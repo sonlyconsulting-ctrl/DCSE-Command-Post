@@ -1,5 +1,5 @@
 ledger_id: DCSE-V7-CANONICAL-BUILD-LEDGER
-status: convergence_review_001_ready_for_merge
+status: communication_operational_staging
 baseline: v6.9-immutable
 review: DCSE-V7-CONVERGENCE-001
 completion_classes:
@@ -13,6 +13,8 @@ artifacts:
     source_head: dd269b00d6590a4420e142be56e2e56c7b723029
     convergence_pr: 15
     convergence_source_head: 1f3ae9491d2e455ae467a85a529c2bafa26f6899
+    remediation_commit: f4ece6751e8f2ead2481a505300f1c9d2f89b04b
+    canonical_merge_commit: 6abb96fe1853982d7814df0aa13a8d4207c2e4a9
     architecture: complete
     implementation: complete
     certification: complete
@@ -21,7 +23,7 @@ artifacts:
     gate_receipt_sha256: 9C5D6F485566ADBC035284F74EA5BDC10AA76BF4953D4DE3AD9753ABEA8B598C
     authoritative_queue: v7_worker.queue_message
     pgmq_physical_queue: absent
-    promotion: authorized_pending_canonical_merge
+    promotion: operational_staging
     security: PASS_CR_SEC_001_CLOSED
     blocker: none
     remediation_function: v7-worker-auth-version-2-http-410-tombstone
@@ -36,7 +38,9 @@ artifacts:
   codex_security_convergence:
     implementation: complete_staging
     certification: PASS
-    publication: pending
+    publication: published
+    commit: f4ece6751e8f2ead2481a505300f1c9d2f89b04b
+    merged_as: 6abb96fe1853982d7814df0aa13a8d4207c2e4a9
   runtime_compiler:
     status: candidate
     owner: ChatGPT-Orchestrator

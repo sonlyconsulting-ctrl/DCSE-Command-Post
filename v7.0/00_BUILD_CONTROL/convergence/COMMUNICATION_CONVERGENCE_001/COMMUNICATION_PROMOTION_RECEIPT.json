@@ -1,12 +1,15 @@
 {
   "receipt_type": "DCSE_V7_COMMUNICATION_PROMOTION",
-  "generated_at_utc": "2026-07-28T06:15:50.0975831Z",
+  "generated_at_utc": "2026-07-28T06:24:09.9376760Z",
   "gate_001": "PASS",
   "architecture": "complete",
   "implementation": "complete",
   "certification": "complete",
   "operational_evidence": "complete_staging",
-  "promotion_status": "READY_FOR_CANONICAL_MERGE",
+  "promotion_status": "PROMOTED_OPERATIONAL_STAGING",
+  "canonical_pr": 15,
+  "remediation_commit": "f4ece6751e8f2ead2481a505300f1c9d2f89b04b",
+  "canonical_merge_commit": "6abb96fe1853982d7814df0aa13a8d4207c2e4a9",
   "blocking_finding": {
     "id": "CR-SEC-001",
     "severity": "MATERIAL",
