@@ -1,0 +1,23 @@
+{
+  "record_type": "DCSE_V7_COMMUNICATION_RESTART_AND_HEARTBEAT",
+  "gate_restart": {
+    "scheduled_task_restarted_at_utc": "2026-07-28T04:50:05Z",
+    "runner_pid": 31496,
+    "worker_pid": 31440,
+    "parent_chain_valid": true,
+    "pre_restart_session": "dbad9afa-1120-43ab-8ea1-11d644e3e7e4",
+    "post_restart_session": "23e3e61e-fb60-430a-a608-8d7d42dd288e",
+    "session_changed": true
+  },
+  "current_read_only_verification": {
+    "verified_at_utc": "2026-07-28T05:36:50.151115Z",
+    "agent_id": "AGENT-CLAUDE-REVIEWER-01@STAGING",
+    "status": "approved",
+    "last_heartbeat_at_utc": "2026-07-28T05:36:40.762471Z",
+    "heartbeat_age_seconds": 9.389,
+    "auth_user_bound": true,
+    "enrollment_hash_present": true
+  },
+  "local_task_scheduler_read": "ACCESS_DENIED under Codex sandbox account; no permission broadening attempted",
+  "operational_liveness_basis": "current database heartbeat"
+}

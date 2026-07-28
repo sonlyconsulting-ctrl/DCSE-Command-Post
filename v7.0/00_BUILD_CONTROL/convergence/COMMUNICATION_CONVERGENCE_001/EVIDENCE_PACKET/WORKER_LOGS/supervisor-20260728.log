@@ -1,0 +1,12 @@
+2026-07-28T04:40:20.4203120Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:40:31.8555030Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:40:42.5762505Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:40:53.7072291Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:41:12.4590159Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:41:23.5970198Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:41:35.9879777Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:41:48.5460943Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:41:59.6169128Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:42:10.6630062Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T04:42:21.9859395Z supervisor_error Error: 401 https://liwdquzuigrlgfzgmpjp.supabase.co/functions/v1/v7-worker-token: {"error":"unauthorized"}
+2026-07-28T05:19:15.2356129Z supervisor_error heartbeat_error [TypeError: fetch failed] {

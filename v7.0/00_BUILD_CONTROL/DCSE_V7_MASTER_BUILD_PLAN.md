@@ -1,6 +1,6 @@
 # DCSE V7 Master Build Plan
 
-Status: Active Candidate
+Status: Communication Convergence Ready for Canonical Merge
 Baseline: v6.9 immutable
 
 ## Completion classes
@@ -30,7 +30,11 @@ No subsystem may report generic completion without these states.
 - Architecture: complete
 - Implementation: complete
 - Certification: complete
-- Operational: pending B1 credentials and B5 durable host
+- Gate 001: PASS on staging
+- Operational evidence: complete on the durable staging worker
+- CR-SEC-001: CLOSED on staging; `v7-worker-auth` version 2 is a deny-all HTTP 410 tombstone
+- Promotion: authorized pending canonical merge
+- Production activation: not claimed
 
 ### Runtime Compiler
 - Architecture: candidate created
@@ -49,12 +53,11 @@ No subsystem may report generic completion without these states.
 - Implementation: queued
 
 ## Immediate execution wave
-1. Complete Convergence Review 001 using Claude, Qwen, Codex, GitHub, Supabase, ECI, and deterministic evidence.
-2. Select canonical communication artifacts.
-3. Publish Qwen and Codex candidate branches or import governed artifact packages.
-4. Implement Runtime Compiler minimum viable path.
-5. Connect Runtime Compiler output to the v7 task queue.
-6. Build Dashboard live worker, task, receipt, ECI, drift, OTI, and DEE panels.
+1. Publish the CR-SEC-001 remediation and bounded communication convergence carrier.
+2. Reconcile PR 14 and PR 15 and merge the canonical carrier while all checks remain green.
+3. Promote communication and record the canonical post-promotion commit.
+4. Create the Runtime Compiler MVP branch from that canonical commit and execute the prepared handoff.
+5. Keep Dashboard, OTI, DEE, and other later subsystems out of the communication closeout wave.
 
 ## Required evidence
 - Git commit and PR

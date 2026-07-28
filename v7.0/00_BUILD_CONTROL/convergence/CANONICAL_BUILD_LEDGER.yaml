@@ -1,5 +1,5 @@
 ledger_id: DCSE-V7-CANONICAL-BUILD-LEDGER
-status: candidate
+status: convergence_review_001_ready_for_merge
 baseline: v6.9-immutable
 review: DCSE-V7-CONVERGENCE-001
 completion_classes:
@@ -9,16 +9,24 @@ completion_classes:
   - operational
 artifacts:
   communication_system:
-    claude_pr: 14
-    claude_head: dd269b0
+    source_pr: 14
+    source_head: dd269b00d6590a4420e142be56e2e56c7b723029
+    convergence_pr: 15
+    convergence_source_head: 1f3ae9491d2e455ae467a85a529c2bafa26f6899
     architecture: complete
     implementation: complete
     certification: complete
-    operational: pending
-    remaining:
-      - B1 production worker credentials
-      - B5 durable worker host
-    promotion: pending_convergence
+    operational_evidence: complete_staging
+    gate_001: PASS
+    gate_receipt_sha256: 9C5D6F485566ADBC035284F74EA5BDC10AA76BF4953D4DE3AD9753ABEA8B598C
+    authoritative_queue: v7_worker.queue_message
+    pgmq_physical_queue: absent
+    promotion: authorized_pending_canonical_merge
+    security: PASS_CR_SEC_001_CLOSED
+    blocker: none
+    remediation_function: v7-worker-auth-version-2-http-410-tombstone
+    remediation_sha256: d1e5964f817a0144dbad289c0546e471c9b2b63ab7df445f086cde96f3477773
+    production_activation: not_claimed
   qwen_worker_runtime:
     commit: 9b4d6c07398cb760e1273bfb08b58f93a8553b43
     publication: pending
@@ -26,8 +34,8 @@ artifacts:
     certification: complete
     operational: pending
   codex_security_convergence:
-    implementation: complete_local
-    certification: static_pass
+    implementation: complete_staging
+    certification: PASS
     publication: pending
   runtime_compiler:
     status: candidate

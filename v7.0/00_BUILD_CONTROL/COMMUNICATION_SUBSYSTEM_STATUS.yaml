@@ -1,0 +1,17 @@
+subsystem_id: DCSE-V7-COMMUNICATION
+status: certified_operational_ready_for_promotion
+environment: staging
+worker:
+  agent_id: AGENT-CLAUDE-REVIEWER-01@STAGING
+  model: claude-sonnet-5
+  durable_host_evidence: PASS
+  restart_evidence: PASS
+  current_heartbeat_evidence: PASS
+queue:
+  authoritative: v7_worker.queue_message
+  pgmq_physical_queue: absent
+bridge: operational
+rls_rpc: PASS_WITH_DOCUMENTED_ADVISOR_WARNINGS
+security: PASS_CR_SEC_001_CLOSED
+promotion: READY_FOR_CANONICAL_MERGE
+production: not_activated

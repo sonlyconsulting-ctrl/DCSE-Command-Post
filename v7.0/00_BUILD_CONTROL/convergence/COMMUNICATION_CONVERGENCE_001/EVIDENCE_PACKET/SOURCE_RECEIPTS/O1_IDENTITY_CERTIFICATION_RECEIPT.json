@@ -1,0 +1,123 @@
+{
+  "receipt_type": "DCSE_V7_O1_PER_WORKER_AUTHENTICATED_IDENTITY",
+  "receipt_version": "1.0",
+  "generated_at_utc": "2026-07-27T23:50:00Z",
+  "authorisation": "O1 approved per DCS/DCSE",
+  "readiness_state": "PASS",
+  "target_project": "liwdquzuigrlgfzgmpjp (PR #14 preview branch)",
+  "production_ddl_applied": false,
+  "pr_14_merged": false,
+  "rls_policies_modified": false,
+
+  "objective": "Replace caller-asserted worker identity with identity verified by Supabase, and provide the token-minting service the worker binary requires (blocker B2).",
+
+  "design": {
+    "principle": "Identity is a claim the database verifies, never an argument the caller supplies.",
+    "claim_source": "request.jwt.claims -> app_metadata -> agent_id",
+    "why_app_metadata": "app_metadata is writable only through the admin API or service_role. user_metadata is self-writable by the end user and is deliberately never consulted.",
+    "removed": "The app.worker_id GUC fallback in v7_worker_private.session_agent_id(). It was client-settable and therefore not authentication.",
+    "api_shape": "No function on the worker surface accepts an agent_id parameter. v7_worker_api.* derive the agent from the verified claim, so a caller cannot assert an identity it does not hold.",
+    "custom_jwt_signing": "None. Supabase Auth issues and verifies the token, so there is no bespoke signing key to hold or rotate."
+  },
+
+  "migrations_applied_to_preview": [
+    { "version": "20260727233604", "name": "v7_o1_jwt_verified_worker_identity",      "file": "supabase/migrations/20260727233604_v7_o1_jwt_verified_worker_identity.sql" },
+    { "version": "20260727233807", "name": "v7_o1_worker_api_return_claim_id",        "file": "supabase/migrations/20260727233807_v7_o1_worker_api_return_claim_id.sql" },
+    { "version": "20260727233927", "name": "v7_o1_worker_enrollment_credentials",     "file": "supabase/migrations/20260727233927_v7_o1_worker_enrollment_credentials.sql" },
+    { "version": "20260727234234", "name": "v7_o1_public_enrollment_rpc_bridge",      "file": "supabase/migrations/20260727234234_v7_o1_public_enrollment_rpc_bridge.sql" },
+    { "version": "20260727234505", "name": "v7_o1_public_worker_api_bridges",         "file": "supabase/migrations/20260727234505_v7_o1_public_worker_api_bridges.sql" }
+  ],
+  "edge_function_deployed": {
+    "slug": "v7-worker-token",
+    "version": 2,
+    "status": "ACTIVE",
+    "verify_jwt": false,
+    "verify_jwt_rationale": "This endpoint issues the very token a worker does not yet have, so it cannot require one. It authenticates callers itself against a bcrypt-hashed enrollment secret checked in the database, and re-checks agent approval on every request.",
+    "source": "supabase/functions/v7-worker-token/index.ts"
+  },
+
+  "identity_matrix": {
+    "suite": "8 impersonation cases, executed on the preview",
+    "passed": 8, "failed": 0, "total": 8,
+    "cases": [
+      { "no": 1, "name": "Ordinary authenticated user cannot claim",                    "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "no verified agent identity on this session" },
+      { "no": 2, "name": "Forged agent_id in self-writable user_metadata rejected",     "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "no verified agent identity on this session" },
+      { "no": 3, "name": "app.worker_id GUC no longer grants identity",                 "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "legacy bypass closed" },
+      { "no": 4, "name": "Suspended agent with a genuine claim denied",                 "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "agent CERT-DIS is suspended and is not authorised to act" },
+      { "no": 5, "name": "Approved agent resolves its own identity",                    "expected": "ALLOWED", "actual": "ALLOWED", "status": "PASS", "evidence": "whoami=CERT-OK" },
+      { "no": 6, "name": "Agent cannot release another agent's claim",                  "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "release refused, ownership mismatch" },
+      { "no": 7, "name": "Agent cannot submit against another agent's claim",           "expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "claim not found for agent CERT-OK" },
+      { "no": 8, "name": "Anon cannot reach the worker API even holding a forged claim","expected": "DENIED",  "actual": "DENIED",  "status": "PASS", "evidence": "permission denied for schema v7_worker_api" }
+    ]
+  },
+
+  "rls_role_matrix_regression": {
+    "suite": "tests/rls_role_matrix.sql, 15 cases",
+    "passed": 15, "failed": 0, "total": 15,
+    "adaptation": "Cases 8 and 14 previously used the app.worker_id GUC, which O1 removes. Case 8 now sets a JWT claim and still correctly fails to tamper with another agent's claim. Case 14 now exercises the real worker API end to end under a verified identity, with no direct table access and no service_role."
+  },
+
+  "http_end_to_end": {
+    "note": "Executed over real HTTP. The container's egress proxy denies CONNECT to the Supabase host, so requests were issued from inside the database using the http extension, which was dropped afterwards.",
+    "steps": [
+      { "step": "1. token request",                "http_status": 200, "result": "access_token issued, claims app_metadata.agent_id=CERT-OK, role=authenticated" },
+      { "step": "2. whoami with worker token",     "http_status": 200, "result": "CERT-OK, approved, lanes [DCSE, SYSTEM]" },
+      { "step": "3. heartbeat with worker token",  "http_status": 200, "result": "heartbeat_id=7 written at 2026-07-27T23:45:39Z; agent_identity.last_heartbeat_at updated to match" },
+      { "step": "4. whoami with anon token only",  "http_status": 401, "result": "permission denied for function v7_worker_whoami" },
+      { "step": "5. claim_next_task with token",   "http_status": 200, "result": "claim_id=20, task CERT-TASK-DCSE, lane DCSE, visibility timeout 30 minutes" }
+    ],
+    "significance": "This is the first heartbeat ever written to this system by an authenticated worker identity rather than by an operator's tool calls. It exercises the exact mechanism the polling smoke test requires."
+  },
+
+  "token_endpoint_matrix": {
+    "passed": 6, "failed": 0, "total": 6,
+    "cases": [
+      { "probe": "correct enrollment secret", "http_status": 200, "outcome": "token issued, agent claim CERT-OK" },
+      { "probe": "wrong enrollment secret",   "http_status": 401, "outcome": "unauthorized" },
+      { "probe": "suspended agent",           "http_status": 401, "outcome": "unauthorized" },
+      { "probe": "enrolled-but-unbound agent","http_status": 401, "outcome": "unauthorized" },
+      { "probe": "unknown agent",             "http_status": 401, "outcome": "unauthorized" },
+      { "probe": "malformed body",            "http_status": 400, "outcome": "agent_id and enrollment_secret are required" }
+    ],
+    "note": "The endpoint returns a coarse 401 to callers; the precise reason is logged server-side only, so it cannot be used to enumerate agent state."
+  },
+
+  "defects_found_and_repaired_during_o1": [
+    { "id": "O1-D1", "severity": "HIGH", "found_by": "role-matrix case 14",
+      "title": "Worker API returned no claim_id",
+      "detail": "v7_worker_api.claim_next_task returned the task but not the lease handle. Because workers have no direct access to v7_worker.task_claim by design, they had no way to renew or submit against the lease they had just acquired. The worker path was functionally dead.",
+      "repair": "claim_next_task now returns claim_id and visibility_timeout_at; my_active_claims() added so a worker can recover its handles after a restart." },
+    { "id": "O1-D2", "severity": "HIGH", "found_by": "live token endpoint test",
+      "title": "Token endpoint could not reach its verification function",
+      "detail": "The Edge Function called v7_worker.verify_worker_enrollment through PostgREST, but v7_worker is deliberately not an exposed API schema, so every request failed with verification_failed.",
+      "repair": "Added public.v7_verify_worker_enrollment, executable by service_role only. The same pattern was then applied to the worker API surface via public bridges." },
+    { "id": "O1-D3", "severity": "LOW", "found_by": "auth service logs",
+      "title": "Test fixture, not a product defect",
+      "detail": "An auth user created by direct SQL insert left GoTrue token columns NULL, and GoTrue cannot scan NULL into a string, so password grant returned 500. Recorded because it will recur for anyone provisioning worker users by SQL rather than the admin API.",
+      "repair": "Set confirmation_token and the related token columns to empty strings. Recommend provisioning real worker users through the Auth admin API instead." }
+  ],
+
+  "blocker_status_after_o1": {
+    "B1_no_credentials": "UNCHANGED. This environment still has no SUPABASE_URL, WORKER_ACCESS_TOKEN or ANTHROPIC_API_KEY, and its egress proxy denies CONNECT to the Supabase host. A worker process still cannot be started from here.",
+    "B2_no_token_minting_service": "RESOLVED on preview. v7-worker-token is deployed and proven to issue agent-bound tokens.",
+    "B3_worker_identity_unregistered": "OUTSTANDING. AGENT-CLAUDE-REVIEWER-01@STAGING is still not registered, and registration must now also include enrollment via provision_worker_credential.",
+    "B4_result_bridge_is_a_stub": "OUTSTANDING. result_bridge_invoke() still returns a constant and the v7-result-bridge Edge Function is still not deployed to production.",
+    "B5_ephemeral_container": "UNCHANGED. A persistent daemon cannot be hosted here."
+  },
+
+  "scope_and_limits": [
+    "Everything in this receipt was applied and proven on the PR #14 preview branch only. Production is untouched.",
+    "The worker binary workers/claude-reviewer-worker.js was not modified. It expects SUPABASE_URL and WORKER_ACCESS_TOKEN, both of which this design now supplies, but it has not been run against the new surface because of B1.",
+    "Independent second review of this identity design has not been performed.",
+    "Test fixtures, the test auth user, and the http extension used for the HTTP probes were all removed after testing. Preview verified clean: 0 CERT agents, 0 test users, http extension absent, 0 SECURITY DEFINER functions with a mutable search_path."
+  ],
+
+  "recommended_next_steps": [
+    "Register and enrol the real worker identities: create their auth users via the Auth admin API, then call v7_worker.provision_worker_credential for each (resolves B3).",
+    "Deploy the v7-result-bridge Edge Function and make result_bridge_invoke() actually invoke it (resolves B4).",
+    "Supply SUPABASE_URL and the enrollment secret to a durable host and run the worker there (resolves B1 and B5).",
+    "Only then run the Claude polling and heartbeat smoke test, followed by Qwen."
+  ],
+
+  "final_state": "PASS"
+}

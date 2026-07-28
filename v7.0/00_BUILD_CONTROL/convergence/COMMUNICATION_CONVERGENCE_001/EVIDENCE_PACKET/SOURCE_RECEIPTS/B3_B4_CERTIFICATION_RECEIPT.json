@@ -1,0 +1,129 @@
+{
+  "receipt_type": "DCSE_V7_B3_WORKER_ENROLLMENT_AND_B4_RESULT_BRIDGE",
+  "receipt_version": "1.0",
+  "generated_at_utc": "2026-07-28T00:05:00Z",
+  "authorisation": "B3 and B4 approved; O1 previously approved per DCS/DCSE",
+  "readiness_state": "PASS",
+  "target_project": "liwdquzuigrlgfzgmpjp (PR #14 preview branch)",
+  "production_ddl_applied": false,
+  "pr_14_merged": false,
+
+  "b3_enrolled_worker_ids": [
+    { "agent_id": "AGENT-CLAUDE-REVIEWER-01@STAGING",       "role": "Claude Reviewer",        "status": "approved", "lanes": ["DCSE","SC"],                 "task_types": ["architecture_review","evaluation","doctrine_reconciliation","blueprint"],                 "approval_mode": "governed-approval", "cost_ceiling_usd": 50.00, "retry_limit": 3, "jwt_principal_bound": true },
+    { "agent_id": "AGENT-QWEN-BUILDER-01@STAGING",          "role": "Qwen Coder",             "status": "approved", "lanes": ["DCSE","RAG","DDNA","SYSTEM"],"task_types": ["schema_generation","script","extraction","migration","implementation","repair"],           "approval_mode": "auto-edit",         "cost_ceiling_usd": 50.00, "retry_limit": 3, "jwt_principal_bound": true },
+    { "agent_id": "AGENT-DETERMINISTIC-VALIDATOR-01@STAGING","role": "Deterministic Validator","status": "approved", "lanes": ["DCSE","SYSTEM"],             "task_types": ["validation","test_execution","schema_check","rls_test","acceptance_criteria"],           "approval_mode": "read-only",         "cost_ceiling_usd": 10.00, "retry_limit": 2, "jwt_principal_bound": true },
+    { "agent_id": "AGENT-DISPATCHER-01@STAGING",            "role": "Dispatcher / Recovery",  "status": "approved", "lanes": ["SYSTEM"],                    "task_types": ["dispatch","recovery","escalation"],                                                       "approval_mode": "plan-only",         "cost_ceiling_usd": 10.00, "retry_limit": 1, "jwt_principal_bound": true }
+  ],
+  "b3_policy_notes": {
+    "ps_lane_granted_to_any_worker": false,
+    "tool_permissions": "Every agent carries an explicit tool_allowlist and tool_denylist. approve_own_output is denied for all four; write_main is denied for the two that can write; production_ddl is denied for the builder.",
+    "caller_supplied_identity_rejected": "No worker RPC accepts an agent_id argument. Identity is read only from the verified app_metadata.agent_id claim."
+  },
+
+  "b3_jwt_binding_evidence": {
+    "mechanism": "v7_worker.enroll_worker creates the auth principal, then provision_worker_credential writes app_metadata.agent_id and stores a bcrypt hash of the enrollment secret.",
+    "verified_for_all_four": {
+      "auth_user_id_bound": true,
+      "enrollment_secret_hash_present": true,
+      "hash_algorithm_prefix": "$2a$ (bcrypt)",
+      "app_metadata_agent_id_matches_agent_id": true
+    },
+    "credential_exposure": "None. Enrollment secrets were generated with gen_random_bytes(32), used once, and never stored, logged, returned or committed. Only bcrypt hashes persist. The operator must set their own secrets on the durable host via v7_worker.enroll_worker before B1.",
+    "reference_seed": "supabase/seed/v7_worker_identities.sql (registration only; contains no secrets)"
+  },
+
+  "b4_bridge_deployment_reference": {
+    "environment": "PR #14 preview branch, which now contains BOTH v7_worker and dcse_cp",
+    "how_combined_environment_was_created": "dcse_cp was mirrored into the preview as a faithful subset of the production contract: same lane_code and confidentiality_level enums, same NOT NULL columns, the same event_type CHECK, and the same foreign keys. Production DDL was not applied. This also closes O2.",
+    "edge_function": { "slug": "v7-result-bridge", "version": 1, "status": "ACTIVE", "verify_jwt": true, "additional_gate": "the function decodes the caller's token and refuses any role other than service_role" },
+    "sql_bridge": "v7_worker.bridge_pending_results(limit)",
+    "invocation_design": "result_bridge_invoke() now performs real bridging in SQL rather than calling out over HTTP. An HTTP callout from pg_cron would require the service-role key to be stored in the database for pg_net to authenticate, which is a worse posture than doing the work in-process. The Edge Function remains deployed for external and manual invocation."
+  },
+
+  "b4_invocation_evidence": {
+    "before": "result_bridge_invoke() returned the constant 'bridge_cycle_queued' and did nothing. The pg_cron job succeeded every 30 seconds while performing no work.",
+    "after": "bridge_cycle: processed=1 failed=0 skipped=0 duration_ms=4 receipt=5",
+    "dcse_cp_event_count": "0 -> 1 on the first real cycle",
+    "bridge_receipt_table": "v7_worker.bridge_receipt, latest receipt_id 9"
+  },
+
+  "b4_cycle_evidence": {
+    "task_id": "DCSE-V7-SMOKE-001",
+    "dcse_task_uuid": "8910f296-ef69-4bac-945c-c0e7c410d404",
+    "claim_id": 23,
+    "claiming_agent": "AGENT-CLAUDE-REVIEWER-01@STAGING",
+    "result_submission_id": 23,
+    "worker_event_type": "architecture_review",
+    "mapped_dcse_event_type": "review",
+    "dcse_cp_event_id": "0f812b99-c083-4523-a45c-5ff80062cc0a",
+    "acknowledgment_timestamp": "2026-07-27T23:58:43.821286+00:00",
+    "submission_status": "acked",
+    "chain": "task queued -> authenticated worker claimed -> result submitted -> bridge invoked -> dcse_cp.agent_task_events written -> submission acknowledged and linked -> bridge receipt recorded"
+  },
+
+  "tests_and_results": {
+    "total_passed": 34, "total_failed": 0,
+    "suites": [
+      { "suite": "rls_role_matrix",   "passed": 15, "failed": 0, "note": "re-run after all B3/B4 changes; no regression" },
+      { "suite": "identity_matrix",   "passed": 8,  "failed": 0, "note": "re-run against the four REAL enrolled agents, not test fixtures" },
+      { "suite": "b3_b4_matrix",      "passed": 11, "failed": 0, "note": "identity negatives plus the full communication cycle" }
+    ],
+    "b3_b4_cases": [
+      { "no": 1,  "phase": "B3", "name": "Unknown identity cannot act",                  "status": "PASS", "evidence": "agent AGENT-DOES-NOT-EXIST@STAGING is not registered" },
+      { "no": 2,  "phase": "B3", "name": "Disabled identity cannot act",                 "status": "PASS", "evidence": "agent AGENT-DISPATCHER-01@STAGING is suspended and is not authorised to act" },
+      { "no": 3,  "phase": "B3", "name": "Cross-lane claim refused",                     "status": "PASS", "evidence": "SC lane withheld from the validator" },
+      { "no": 4,  "phase": "B4", "name": "Authenticated worker claims bounded task",     "status": "PASS", "evidence": "claim_id=23 task=DCSE-V7-SMOKE-001" },
+      { "no": 5,  "phase": "B3", "name": "Mismatched identity cannot submit",            "status": "PASS", "evidence": "claim 23 not found for the validator" },
+      { "no": 6,  "phase": "B4", "name": "Owning worker submits result",                 "status": "PASS", "evidence": "submission_id=23" },
+      { "no": 7,  "phase": "B4", "name": "result_bridge_invoke performs real work",      "status": "PASS", "evidence": "processed=1, events 0 -> 1" },
+      { "no": 8,  "phase": "B4", "name": "dcse_cp.agent_task_events updated",            "status": "PASS", "evidence": "event 0f812b99..., mapped type review" },
+      { "no": 9,  "phase": "B4", "name": "Result acknowledged and linked",               "status": "PASS", "evidence": "status=acked, dc_event_id set" },
+      { "no": 10, "phase": "B4", "name": "Duplicate invocation is idempotent",           "status": "PASS", "evidence": "events stable at 1 across 2 extra cycles" },
+      { "no": 11, "phase": "B4", "name": "Malformed result rejected, no event written",  "status": "PASS", "evidence": "no dcse_cp.agent_tasks row with task_key = DCSE-V7-NO-SUCH-TASK" }
+    ]
+  },
+
+  "defects_found_and_repaired": [
+    { "id": "B4-D1", "severity": "HIGH", "title": "The bridge had no task-id resolution",
+      "detail": "v7_worker keys tasks by TEXT; dcse_cp.agent_task_events.task_id is UUID NOT NULL with an FK to dcse_cp.agent_tasks. The previous Edge Function assigned submission.task_id directly, which cannot work for a text key. Inspection of production showed both existing submissions pointing at the SAME task UUID despite different worker task keys, so no real mapping had ever existed.",
+      "repair": "Resolution by natural key: dcse_cp.agent_tasks.task_key = result_submission.task_id. If no row matches, the submission is failed with an explicit reason and NO event is written. The bridge never invents a task UUID." },
+    { "id": "B4-D2", "severity": "HIGH", "title": "The bridge had no event-type mapping",
+      "detail": "dcse_cp.agent_task_events.event_type is CHECK-constrained to twelve values. Worker types such as architecture_review, needs_review and handoff_ready are not among them and would have been rejected outright.",
+      "repair": "v7_worker_private.map_event_type translates worker result types onto the permitted set, defaulting to 'receipt'. The original worker type is preserved in event_payload.worker_event_type so nothing is lost." }
+  ],
+
+  "test_harness_defects_corrected": [
+    { "id": "H-1", "detail": "The first cycle run failed because the cross-lane probe message was given priority 9 while the bounded smoke task had priority 7, and the Claude Reviewer legitimately holds SC authority. The Reviewer therefore correctly claimed the probe rather than the intended task. The bridge then correctly refused it. Fixture priority corrected; this was a test design error, not a product defect." },
+    { "id": "H-2", "detail": "RLS case 14 initially reported 'no claim' because the only DCSE message was still held by another fixture agent. An unheld message was added. Again a fixture gap, not a product defect." }
+  ],
+
+  "remaining_b1_b5_requirements": {
+    "B1_credentials": {
+      "status": "OUTSTANDING",
+      "needed": ["SUPABASE_URL for the target project", "the enrollment secret for each worker, set by the operator via v7_worker.enroll_worker", "ANTHROPIC_API_KEY for the Claude Reviewer"],
+      "note": "This environment has none of these, and its egress proxy denies CONNECT to the Supabase host, so HTTP tests had to be issued from inside the database."
+    },
+    "B5_durable_host": {
+      "status": "OUTSTANDING",
+      "needed": "A host that outlives this session: the identity implies LAPTOP-PRIMARY or a staging VM, or any always-on runtime.",
+      "note": "This container is reclaimed on inactivity or session end, so it cannot host a persistent polling daemon."
+    },
+    "what_is_now_unblocked": "With B2, B3 and B4 resolved, a worker started on a durable host can obtain a token, authenticate as itself, claim, heartbeat, submit, and have its result bridged into dcse_cp. The only remaining gaps are the credentials and the host."
+  },
+
+  "convergence_review_001_status": {
+    "runtime_compiler_candidate_package": "NOT REVIEWED. The package was offered at sandbox:/mnt/data/DCSE_V7_Runtime_Compiler_Package.zip, which is not reachable from this execution environment. It remains a candidate, not promoted authority, and has not been assessed here.",
+    "independent_second_review": "STILL OUTSTANDING for the O1 identity design and the B3/B4 bridge work.",
+    "qwen_branch_review": "STILL OUTSTANDING. Branch qwen/v7-worker-repairs does not exist in the repository."
+  },
+
+  "environment_hygiene": {
+    "cert_fixtures_removed": true,
+    "malformed_probe_rows_removed": true,
+    "http_extension_present": false,
+    "security_definer_functions_with_mutable_search_path": 0,
+    "retained_as_evidence": ["dcse_cp.agent_tasks row DCSE-V7-SMOKE-001", "its bridged event", "v7_worker.bridge_receipt rows", "the four enrolled agent identities"]
+  },
+
+  "final_state": "PASS"
+}

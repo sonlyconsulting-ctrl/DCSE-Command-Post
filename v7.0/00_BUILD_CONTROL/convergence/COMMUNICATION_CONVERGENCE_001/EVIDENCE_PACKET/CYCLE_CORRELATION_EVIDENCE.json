@@ -1,0 +1,37 @@
+{
+  "record_type": "DCSE_V7_COMMUNICATION_CYCLE_CORRELATION",
+  "verified_at_utc": "2026-07-28T05:36:50.151115Z",
+  "project_ref": "liwdquzuigrlgfzgmpjp",
+  "authoritative_queue": "v7_worker.queue_message",
+  "pgmq_physical_queue_count": 0,
+  "cycles": [
+    {
+      "cycle": 1,
+      "task_id": "COMM-GATE-001-C1-20260728044358290",
+      "queue_message_id": 1785213838290911,
+      "claims": [32, 33],
+      "submissions": [31, 32],
+      "dc_event_ids": [
+        "641eabed-4669-4fb6-b48a-bc094eebfa04",
+        "b2cd1bd0-130d-464e-b77c-fcac60766773"
+      ],
+      "worker_session_id": "dbad9afa-1120-43ab-8ea1-11d644e3e7e4",
+      "status": "PASS_WITH_CONTAINED_DUPLICATE_RECLAIM",
+      "containment": "Both submissions acknowledged; both claims closed; queue message marked completed_bridge_acked_gate_cycle_1 and made ineligible for further reclaim."
+    },
+    {
+      "cycle": 2,
+      "task_id": "COMM-GATE-001-C2-20260728045102109",
+      "queue_message_id": 1785214262116298,
+      "claims": [34],
+      "submissions": [33],
+      "dc_event_ids": ["8823bf98-d02d-4436-8d57-739a5a315fc2"],
+      "worker_session_id": "23e3e61e-fb60-430a-a608-8d7d42dd288e",
+      "status": "PASS_POST_RESTART"
+    }
+  ],
+  "active_claims_at_verification": 0,
+  "unacknowledged_submissions_at_verification": 0,
+  "dead_letter_rows_at_verification": 0,
+  "evidence_origin": "Read-only Supabase catalog and row queries; no Gate execution"
+}
