@@ -1,0 +1,18 @@
+registry_id: DCSE-V7-COMMUNICATION-WORKERS
+updated_at_utc: 2026-07-28T06:15:50.0975831Z
+workers:
+  - agent_id: AGENT-CLAUDE-REVIEWER-01@STAGING
+    role: architecture_review
+    status: operational_evidence_complete_ready_for_promotion
+    model: claude-sonnet-5
+    lanes: [DCSE, SC]
+    canonical_source: workers/claude-reviewer-operational.js
+  - agent_id: AGENT-QWEN-BUILDER-01@STAGING
+    role: build
+    status: registered_not_operationally_proven
+  - agent_id: AGENT-DETERMINISTIC-VALIDATOR-01@STAGING
+    role: validation
+    status: registered_not_operationally_proven
+  - agent_id: AGENT-DISPATCHER-01@STAGING
+    role: recovery
+    status: registered_database_cron_authority

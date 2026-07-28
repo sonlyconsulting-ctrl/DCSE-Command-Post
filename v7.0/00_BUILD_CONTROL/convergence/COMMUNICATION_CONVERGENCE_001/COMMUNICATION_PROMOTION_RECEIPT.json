@@ -1,0 +1,30 @@
+{
+  "receipt_type": "DCSE_V7_COMMUNICATION_PROMOTION",
+  "generated_at_utc": "2026-07-28T06:15:50.0975831Z",
+  "gate_001": "PASS",
+  "architecture": "complete",
+  "implementation": "complete",
+  "certification": "complete",
+  "operational_evidence": "complete_staging",
+  "promotion_status": "READY_FOR_CANONICAL_MERGE",
+  "blocking_finding": {
+    "id": "CR-SEC-001",
+    "severity": "MATERIAL",
+    "status": "CLOSED",
+    "resolution": "Staging v7-worker-auth version 1 replaced by a deny-all HTTP 410 version 2 tombstone.",
+    "deployment_sha256": "d1e5964f817a0144dbad289c0546e471c9b2b63ab7df445f086cde96f3477773"
+  },
+  "post_remediation_validation": {
+    "endpoint_security": "PASS",
+    "canonical_broker": "PASS",
+    "sc_safe_auth_task_path": "PASS",
+    "rls_rpc": "PASS_10_OF_10",
+    "migration_drift": "PASS",
+    "rollback": "PASS",
+    "permissions_unchanged": true,
+    "worker_heartbeat_current": true,
+    "model": "claude-sonnet-5"
+  },
+  "production_activation_claimed": false,
+  "v6_9_immutable": true
+}

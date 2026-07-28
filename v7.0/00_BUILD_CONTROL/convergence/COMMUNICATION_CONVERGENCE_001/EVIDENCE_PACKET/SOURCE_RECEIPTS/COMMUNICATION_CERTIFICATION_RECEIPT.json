@@ -1,0 +1,108 @@
+{
+  "receipt_type": "DCSE_V7_WORKER_POLLING_AND_HEARTBEAT_CERTIFICATION",
+  "receipt_version": "1.0",
+  "generated_at_utc": "2026-07-27T23:35:00Z",
+  "readiness_state": "BLOCKED",
+  "objective": "Prove Claude Reviewer worker polling and heartbeat operation independently of the interactive Claude Code session.",
+  "target_project": "nevgdyfpxdaloacuutal (production)",
+  "rls_modified": false,
+  "pr_14_merged": false,
+
+  "requested_evidence": {
+    "worker_process_startup_evidence": "NONE — process was never started; see blockers B1 and B2.",
+    "agent_id": "AGENT-CLAUDE-REVIEWER-01@STAGING (declared in workers/claude-reviewer-worker.js line 31 and scripts/activate-claude-reviewer.sh line 18) — NOT PRESENT in v7_worker.agent_identity.",
+    "first_heartbeat_timestamp": "NONE — v7_worker.heartbeat contains 0 rows.",
+    "latest_heartbeat_timestamp": "NONE",
+    "polling_interval": "NOT OBSERVED — worker declares a heartbeat setInterval but was never able to start.",
+    "claimed_task_id": "NONE — no smoke-test task was queued, because a task queued to a worker that cannot start would sit unclaimed and then be dead-lettered by the retry policy.",
+    "result_submission_id": "NONE",
+    "bridge_acknowledgment": "NOT POSSIBLE — see blocker B4; the scheduled bridge is a no-op stub.",
+    "audit_receipt": "This document."
+  },
+
+  "blockers": [
+    {
+      "id": "B1",
+      "severity": "BLOCKING",
+      "title": "No Supabase or Anthropic credentials exist in this environment",
+      "detail": "SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_ANON_KEY, WORKER_ACCESS_TOKEN and ANTHROPIC_API_KEY are all unset, and there is no .env file in either repository. This session's Supabase access is exclusively through the MCP server, which is bound to the session's tool-call loop. A detached background process cannot use it. A worker started here would have no way to authenticate to the database.",
+      "unblock": "Provide SUPABASE_URL, a worker access token, and ANTHROPIC_API_KEY to the execution environment."
+    },
+    {
+      "id": "B2",
+      "severity": "BLOCKING",
+      "title": "The worker refuses service-role and no token-minting service exists",
+      "detail": "workers/claude-reviewer-worker.js line 89 throws 'SUPABASE_URL and WORKER_ACCESS_TOKEN required (service-role forbidden)'. It is designed to authenticate with a scoped per-worker token issued by an Edge Function. The deployed Edge Functions on the production project are dcse-agent-relay, dcse-relay and dcse-promotion-gateway. There is no token-minting function. The credential the worker requires cannot currently be produced by any deployed component.",
+      "consequence": "O1 (per-worker authenticated identity) is a PREREQUISITE for this smoke test, not a follow-on step. The proposed sequence needs reordering.",
+      "unblock": "Build and deploy the worker-token Edge Function, i.e. execute O1 first."
+    },
+    {
+      "id": "B3",
+      "severity": "BLOCKING",
+      "title": "Worker identity is not registered",
+      "detail": "The worker's declared identity AGENT-CLAUDE-REVIEWER-01@STAGING does not exist in v7_worker.agent_identity. The table holds three agents, all on device LAPTOP-PRIMARY: AGENT-CLAUDE-ARCH-01 (approved), AGENT-DETERMINISTIC-VALIDATOR-01 (candidate), AGENT-QWEN-CODER-01 (candidate). Objective step 2 fails on inspection. Additionally, claim_next_task requires status='approved', so the two candidate agents could not claim even if started.",
+      "unblock": "Register AGENT-CLAUDE-REVIEWER-01@STAGING with status='approved' and appropriate lanes/task-types, or repoint the worker at AGENT-CLAUDE-ARCH-01@LAPTOP-PRIMARY."
+    },
+    {
+      "id": "B4",
+      "severity": "BLOCKING_FOR_STEP_10",
+      "title": "The 30-second result bridge is a no-op stub",
+      "detail": "cron job v7_worker_result_bridge_cycle is active on '*/30 * * * * *' and its runs succeed, but the function it calls, v7_worker.result_bridge_invoke(), only writes a log line and returns the literal string 'bridge_cycle_queued'. It reads nothing and acknowledges nothing. The real bridge logic lives in the v7-result-bridge Edge Function, which is NOT deployed to the production project. The scheduled job is therefore succeeding at doing nothing.",
+      "unblock": "Deploy the v7-result-bridge Edge Function and have result_bridge_invoke() actually invoke it, or port the bridge logic into SQL."
+    },
+    {
+      "id": "B5",
+      "severity": "SCOPE_LIMIT",
+      "title": "This container is ephemeral and cannot host a persistent daemon",
+      "detail": "The execution environment is reclaimed after inactivity or when the session ends. Even with every credential supplied, a worker started here would prove independence from the chat turn loop but would NOT be a persistent daemon; it would die with the container.",
+      "unblock": "Run the worker on the durable host the identity implies (LAPTOP-PRIMARY or a staging VM), or a hosted always-on runtime."
+    }
+  ],
+
+  "verified_state_at_time_of_test": {
+    "v7_worker.heartbeat_rows": 0,
+    "v7_worker.agent_identity_rows": 3,
+    "v7_worker.queue_message_rows": 1,
+    "v7_worker.task_claim_rows": 1,
+    "v7_worker.result_submission_rows": 2,
+    "cron_jobs": [
+      { "name": "v7_worker_dispatcher_recovery",  "schedule": "*/5 * * * *",     "active": true, "calls": "v7_worker.dispatcher_recovery_cycle()", "functional": true },
+      { "name": "v7_worker_result_bridge_cycle",  "schedule": "*/30 * * * * *", "active": true, "calls": "v7_worker.result_bridge_invoke()",      "functional": false, "note": "stub; returns a constant" }
+    ],
+    "deployed_edge_functions": ["dcse-agent-relay", "dcse-relay", "dcse-promotion-gateway"],
+    "v7_result_bridge_edge_function_deployed": false
+  },
+
+  "corrections_to_prior_reporting": [
+    {
+      "prior_claim": "Full autonomous communication cycle proven for DCSE V7 COMP 001, 57.2 seconds queued to acked.",
+      "correction": "Every step of that cycle was executed by this session's own tool calls, not by an autonomous worker. The two rows in v7_worker.result_submission were acknowledged at 22:33:13 and 22:35:03 by direct MCP statements. No worker process claimed, submitted, or acknowledged anything. The timings were real, but they measured a manually driven sequence, not autonomy.",
+      "supporting_evidence": "v7_worker.heartbeat has 0 rows and agent_identity.last_heartbeat_at is null for all three agents. No worker has ever reported liveness against this database."
+    },
+    {
+      "prior_claim": "Result bridge is operational, deployed, and processing on a 30-second cycle.",
+      "correction": "The cron job exists and succeeds, but calls a stub. The v7-result-bridge Edge Function is not deployed to production. No submission has ever been processed by the bridge."
+    },
+    {
+      "prior_claim": "Claude Reviewer Worker activated in staging for autonomous task execution.",
+      "correction": "scripts/activate-claude-reviewer.sh is largely a documentation and SQL-emitting script; its phase 5 only prints the command a human would run. It never launched a worker. The worker's declared identity was never registered."
+    }
+  ],
+
+  "recommended_sequence_change": {
+    "as_proposed": "Claude heartbeat -> Qwen heartbeat -> ChatGPT verification -> O1 JWT identity -> combined-schema bridge test -> convergence",
+    "problem": "Steps 1 and 2 depend on a credential that only O1 can produce (B2), and step 10 depends on a bridge that is not deployed (B4).",
+    "recommended": "O1 worker-token identity -> register + approve worker identities -> deploy v7-result-bridge Edge Function -> Claude heartbeat and autonomous claim -> Qwen heartbeat and autonomous claim -> external verification -> combined-schema bridge test -> convergence",
+    "rationale": "O1 moves from a pre-production hardening item to the immediate unblocking dependency. Nothing in the polling smoke test can run before it."
+  },
+
+  "work_completed_this_cycle": [
+    "Confirmed 0 heartbeat rows and null last_heartbeat_at across all agents, corroborating the operator's observation that no worker is polling.",
+    "Established that the worker binary requires a scoped token that no deployed component can mint.",
+    "Established that the declared worker identity is unregistered.",
+    "Established that the 30-second bridge cron is a functioning schedule around a non-functioning stub.",
+    "Corrected three prior overstated claims about autonomy and bridge operation."
+  ],
+
+  "final_state": "BLOCKED"
+}

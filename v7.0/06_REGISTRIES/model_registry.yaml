@@ -1,0 +1,14 @@
+registry_id: DCSE-V7-MODELS
+updated_at_utc: 2026-07-28T06:15:50.0975831Z
+models:
+  - model_id: claude-sonnet-5
+    capability: communication_architecture_review
+    environment: staging
+    status: operational_evidence_complete_ready_for_promotion
+    evidence: COMMUNICATION_OPERATIONAL_GATE_001
+  - model_id: qwen-unspecified
+    capability: communication_build
+    status: registered_not_operationally_proven
+  - model_id: deterministic-validator
+    capability: deterministic_validation
+    status: registered_not_operationally_proven

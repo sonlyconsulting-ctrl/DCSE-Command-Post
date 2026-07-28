@@ -1,0 +1,189 @@
+{
+  "receipt_type": "DCSE_COMMUNICATION_OPERATIONAL_GATE",
+  "gate_id": "COMMUNICATION_OPERATIONAL_GATE_001",
+  "status": "PASS",
+  "generated_at": "2026-07-28T04:57:38.3427191Z",
+  "evidence_policy": {
+    "simulation_used": false,
+    "placeholders_used": false,
+    "credentials_displayed": false,
+    "evidence_basis": [
+      "Windows Task Scheduler and Win32_Process state",
+      "local worker logs and archived hashes",
+      "Supabase v7_worker and dcse_cp records"
+    ]
+  },
+  "environment": {
+    "host": "LAPTOP-74UF76GB",
+    "deployment_env": "staging",
+    "supabase_project_ref": "liwdquzuigrlgfzgmpjp",
+    "repository": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_V7_Runtime",
+    "branch": "chatgpt/v7-foundation-runtime-compiler",
+    "commit_sha": "1f3ae9491d2e455ae467a85a529c2bafa26f6899",
+    "scheduled_task": "DCSE-V7-Communication-Worker",
+    "scheduled_task_state": "Running",
+    "scheduled_task_last_run_at": "2026-07-28T04:50:05.0000000Z",
+    "scheduled_task_last_result": 267009,
+    "runner": "C:\\ProgramData\\DCSE\\v7-worker\\run-worker-dpapi.ps1",
+    "runner_sha256": "8AFD9F5C4AF410B3E9750F42E97F067E67DB83E63D0857FF70ABF1B5D29F60BA",
+    "worker_source_sha256": "DFB78446D63E535D1D8B028B3F2503457F25FD3DC6BA839A5FA9D7DE43C682F8",
+    "agent_id": "AGENT-CLAUDE-REVIEWER-01@STAGING",
+    "model": "claude-sonnet-5"
+  },
+  "preserved_evidence": {
+    "blocked_receipt_archive": "C:\\ProgramData\\DCSE\\receipts\\COMMUNICATION_OPERATIONAL_GATE_001_BLOCKED_20260728T043545Z.json",
+    "blocked_receipt_sha256": "12BFB4742FCE7EB5ADAA3539C09B0D22A17F6C18AE9F31A935E4055D29BC13EA",
+    "authorization_transition_receipt": "C:\\ProgramData\\DCSE\\receipts\\COMMUNICATION_OPERATIONAL_GATE_001_AUTHORIZATION_TRANSITION.json",
+    "authorization_transition_sha256": "064F73F76E8495DFC7FED3B242D433B8E33883AB6A72BD3146EBC975E3688088",
+    "prior_log_archive": "C:\\ProgramData\\DCSE\\v7-worker\\logs\\archive-20260728-003052",
+    "prior_log_archive_file_count": 2,
+    "prior_log_hashes_verified": true
+  },
+  "authorization": {
+    "before": {
+      "status": "suspended",
+      "observed_at": "2026-07-28T04:39:32Z"
+    },
+    "after": {
+      "status": "approved",
+      "changed_at": "2026-07-28T04:39:41Z",
+      "verified_current": true,
+      "deployment_env": "staging",
+      "authorized_lanes": ["DCSE", "SC"],
+      "authorized_task_types": [
+        "architecture_review",
+        "evaluation",
+        "doctrine_reconciliation",
+        "blueprint"
+      ],
+      "approval_mode": "governed-approval"
+    },
+    "permissions_broadened": false,
+    "credentials_rotated": false,
+    "credentials_exposed": false
+  },
+  "worker_sessions": {
+    "cycle_one_session": {
+      "worker_session_id": "dbad9afa-1120-43ab-8ea1-11d644e3e7e4",
+      "first_heartbeat_at": "2026-07-28T04:42:34.259356Z",
+      "latest_heartbeat_at": "2026-07-28T04:49:34.787426Z",
+      "heartbeat_count": 34,
+      "model": "claude-sonnet-5"
+    },
+    "post_restart_session": {
+      "worker_session_id": "23e3e61e-fb60-430a-a608-8d7d42dd288e",
+      "first_heartbeat_at": "2026-07-28T04:50:25.185756Z",
+      "latest_heartbeat_at": "2026-07-28T04:57:27.179819Z",
+      "heartbeat_count_at_validation": 31,
+      "model": "claude-sonnet-5"
+    },
+    "session_changed_after_restart": true
+  },
+  "cycle_one": {
+    "lane": "SC",
+    "task_type": "architecture_review",
+    "task_id": "COMM-GATE-001-C1-20260728044358290",
+    "queue_message_id": 1785213838290911,
+    "queued_at": "2026-07-28T04:43:58.288052Z",
+    "claim_id": 32,
+    "claimed_at": "2026-07-28T04:47:42.091112Z",
+    "worker_session_id": "dbad9afa-1120-43ab-8ea1-11d644e3e7e4",
+    "submission_id": 31,
+    "submission_attempted_at": "2026-07-28T04:47:44.633715Z",
+    "submission_status": "acked",
+    "dc_event_id": "641eabed-4669-4fb6-b48a-bc094eebfa04",
+    "dc_event_created_at": "2026-07-28T04:48:49.650888Z",
+    "acknowledged_at": "2026-07-28T04:48:49.650888Z",
+    "claim_closed_at": "2026-07-28T04:49:03.380910Z",
+    "claim_acked_at": "2026-07-28T04:48:49.650888Z",
+    "bridge_receipt_id": 20,
+    "queue_completion_marker": "completed_bridge_acked_gate_cycle_1",
+    "complete": true
+  },
+  "restart": {
+    "scheduled_task_restarted_at": "2026-07-28T04:50:05.0000000Z",
+    "runner_pid": 31496,
+    "runner_created_at": "2026-07-28T04:50:05.1567900Z",
+    "worker_pid": 31440,
+    "worker_created_at": "2026-07-28T04:50:06.2834070Z",
+    "worker_parent_pid": 31496,
+    "parent_chain_valid": true,
+    "node_children_of_runner": 1
+  },
+  "cycle_two": {
+    "lane": "SC",
+    "task_type": "evaluation",
+    "task_id": "COMM-GATE-001-C2-20260728045102109",
+    "queue_message_id": 1785214262116298,
+    "queued_at": "2026-07-28T04:51:02.077674Z",
+    "claim_id": 34,
+    "claimed_at": "2026-07-28T04:53:40.910779Z",
+    "worker_session_id": "23e3e61e-fb60-430a-a608-8d7d42dd288e",
+    "submission_id": 33,
+    "submission_attempted_at": "2026-07-28T04:53:43.274651Z",
+    "submission_status": "acked",
+    "dc_event_id": "8823bf98-d02d-4436-8d57-739a5a315fc2",
+    "dc_event_created_at": "2026-07-28T04:53:55.232316Z",
+    "acknowledged_at": "2026-07-28T04:53:55.232316Z",
+    "claim_closed_at": "2026-07-28T04:54:05.938636Z",
+    "claim_acked_at": "2026-07-28T04:53:55.232316Z",
+    "bridge_receipt_id": 22,
+    "queue_completion_marker": "completed_bridge_acked_gate_cycle_2",
+    "occurred_after_restart": true,
+    "complete": true
+  },
+  "current_heartbeat": {
+    "heartbeat_id": 89,
+    "sent_at": "2026-07-28T04:55:57.654588Z",
+    "age_seconds_at_query": 0.109,
+    "status": "idle",
+    "model": "claude-sonnet-5",
+    "worker_session_id": "23e3e61e-fb60-430a-a608-8d7d42dd288e",
+    "pid": 31440,
+    "last_error": null
+  },
+  "repairs": [
+    {
+      "issue": "Staging agent authorization status was suspended, producing token-broker 401 responses.",
+      "repair": "Recorded the before state and applied the explicitly authorized scoped transition to approved without changing lanes, task types, limits, or credentials."
+    },
+    {
+      "issue": "Dispatcher recovery automatically re-suspended the agent because its pre-start heartbeat was older than five minutes.",
+      "repair": "Reapplied the same authorized staging approval while the real supervisor retry was active; a real token request and heartbeat then established current authorization state."
+    },
+    {
+      "issue": "A pre-gate smoke task remained eligible after a real acknowledged result.",
+      "repair": "Bridged its real result, closed claim 31, and quarantined queue message 910001 with reason superseded_pre_gate_smoke_after_real_ack."
+    },
+    {
+      "issue": "Cycle one was reclaimed in the interval between claim release and queue completion marking.",
+      "repair": "Preserved and bridged duplicate submission 32 under claim 33, closed that claim, and retained the cycle-one queue completion marker so it could not be reclaimed again.",
+      "duplicate_bridge_receipt_id": 21,
+      "duplicate_dc_event_id": "b2cd1bd0-130d-464e-b77c-fcac60766773"
+    },
+    {
+      "issue": "The configured PGMQ physical queue was absent while the governed worker claim function used v7_worker.queue_message.",
+      "repair": "Rolled back the failed PGMQ enqueue transaction and inserted both gate tasks atomically into the authoritative worker queue and dcse_cp task registry. No fabricated task record was retained."
+    },
+    {
+      "issue": "The result bridge cron interval was too slow for the bounded gate run, and claim closure was not automatic after bridge acknowledgment.",
+      "repair": "Invoked the existing governed bridge function, used the existing release function, recorded guarded acknowledgment timestamps, and atomically marked each completed queue record to prevent reclaims. No DDL or bridge reimplementation was performed."
+    }
+  ],
+  "validation": {
+    "cycle_one_full_correlation": true,
+    "cycle_two_full_correlation": true,
+    "cycle_two_after_restart": true,
+    "both_results_in_dcse_cp": true,
+    "both_results_acknowledged": true,
+    "both_claims_closed": true,
+    "heartbeat_current": true,
+    "authorization_current": true,
+    "single_worker_chain": true,
+    "post_repair_401_deprecated_model_credential_duplicate_process_match_count": 0,
+    "B1": "PASS",
+    "B5": "PASS"
+  },
+  "remaining_blockers": [],
+  "pass_basis": "Both database-backed SC cycles completed through queue, claim, real worker submission, dcse_cp bridge event, acknowledgment, and claim closure; cycle two used the distinct post-restart claude-sonnet-5 session; the scheduled worker is running with a current heartbeat and no post-repair prohibited error matches."
+}

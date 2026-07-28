@@ -1,0 +1,43 @@
+{
+  "record_id": "COMMUNICATION_OPERATIONAL_GATE_001_AUTHORIZATION_TRANSITION",
+  "agent_id": "AGENT-CLAUDE-REVIEWER-01@STAGING",
+  "project_ref": "liwdquzuigrlgfzgmpjp",
+  "scope": "Communication Operational Gate 001 only",
+  "before": {
+    "captured_at": "2026-07-28T04:39:32.329459Z",
+    "status": "suspended",
+    "deployment_env": "staging",
+    "authorized_lanes": [
+      "DCSE",
+      "SC"
+    ],
+    "authorized_task_types": [
+      "architecture_review",
+      "evaluation",
+      "doctrine_reconciliation",
+      "blueprint"
+    ],
+    "approval_mode": "governed-approval",
+    "suspension_reason": "NOT_AVAILABLE_IN_STOP_GATE_OR_AUDIT_RECORDS"
+  },
+  "after": {
+    "captured_at": "2026-07-28T04:39:41.424068Z",
+    "status": "approved",
+    "deployment_env": "staging",
+    "authorized_lanes": [
+      "DCSE",
+      "SC"
+    ],
+    "authorized_task_types": [
+      "architecture_review",
+      "evaluation",
+      "doctrine_reconciliation",
+      "blueprint"
+    ],
+    "approval_mode": "governed-approval"
+  },
+  "permissions_broadened": false,
+  "credentials_rotated": false,
+  "credentials_exposed": false,
+  "authorized_by_user": true
+}

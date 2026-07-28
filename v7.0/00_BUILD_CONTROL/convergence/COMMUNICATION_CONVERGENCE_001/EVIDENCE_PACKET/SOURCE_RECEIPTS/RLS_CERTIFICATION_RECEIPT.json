@@ -1,0 +1,233 @@
+{
+  "receipt_type": "DCSE_V7_RLS_ROLE_MATRIX_CERTIFICATION",
+  "receipt_version": "1.0",
+  "generated_at_utc": "2026-07-27T23:10:00Z",
+  "readiness_state": "PASS",
+  "authority": "tests/rls_role_matrix.sql executed against the PR #14 Supabase preview branch. The model did not certify RLS; the 15-case database role matrix did.",
+
+  "environment": {
+    "preview_project_ref": "liwdquzuigrlgfzgmpjp",
+    "preview_branch_name": "claude/supabase-activity-report-3z1k0v",
+    "preview_branch_id": "4f2f909a-f95d-485a-932f-03f232aebb4b",
+    "pr_number": 14,
+    "parent_production_ref": "nevgdyfpxdaloacuutal",
+    "preview_status": "ACTIVE_HEALTHY",
+    "production_ddl_applied": false,
+    "pr_merged": false,
+    "pgtap_version": "1.3.3",
+    "pgtap_state": "installed into schema extensions on the preview only"
+  },
+
+  "scope_deviations": [
+    {
+      "item": "Codex restricted-RPC source package",
+      "declared_path": "C:\\DS All Things\\DCSE_Command_Center\\v7.0\\00_BUILD_CONTROL\\security\\",
+      "status": "NOT_AVAILABLE",
+      "reason": "That is a Windows local path. This session runs in a Linux container with access only to the two GitHub repositories in scope. A filesystem search for RLS_CERTIFICATION_RECEIPT.json and any restricted-RPC migration returned no matches in either repo.",
+      "resolution": "The restricted-RPC migration was authored from scratch in this session. It has not been reconciled against the Codex package, which remains an open convergence item."
+    },
+    {
+      "item": "Static certification baseline 16/16",
+      "status": "UNVERIFIED",
+      "reason": "The 16-case static certification was produced outside this session and its artifacts were not reachable. Nothing in this receipt depends on it."
+    },
+    {
+      "item": "Reviewer model division (Fable primary, GPT-5.6 Sol second review)",
+      "status": "NOT_PERFORMED",
+      "reason": "This session executes as a single configured model and cannot invoke Claude Fable or GPT-5.6 Sol. All findings below are from direct database execution, not model opinion. Independent second review remains outstanding."
+    },
+    {
+      "item": "dcse_cp and v7_bootstrap schemas",
+      "status": "ABSENT_FROM_PREVIEW",
+      "reason": "The preview branch was created with_data=false and carries only v7_worker. The result bridge's write target, dcse_cp.agent_task_events, does not exist in the preview. The bridge's end-to-end path was therefore NOT exercised in this environment."
+    }
+  ],
+
+  "migrations_applied_to_preview": [
+    {
+      "name": "v7_restricted_rpc_and_rls_hardening",
+      "remote_version": "20260727231155",
+      "file": "supabase/migrations/20260727231155_v7_restricted_rpc_and_rls_hardening.sql",
+      "applied": true,
+      "remediates": ["D1","D2","D3","D4","D5","D6","D7","D8","D9","D10"]
+    },
+    {
+      "name": "v7_capture_prod_hotfixes_and_search_path",
+      "remote_version": "20260727231413",
+      "file": "supabase/migrations/20260727231413_v7_capture_prod_hotfixes_and_search_path.sql",
+      "applied": true,
+      "remediates": ["D11","D8-residual"]
+    }
+  ],
+  "rollback_script": "supabase/rollback/v7_restricted_rpc_rollback.sql",
+  "rollback_script_placement_note": "Deliberately stored OUTSIDE supabase/migrations/. The Supabase GitHub integration applies every file in the migrations directory, so a rollback script kept there would be executed on the next push and would silently strip the hardening.",
+  "migration_version_reconciliation": {
+    "issue": "The Supabase Preview check failed twice with 'Remote migration versions not found in local migrations directory.'",
+    "first_cause": "The two hardening migrations were applied through the Supabase MCP apply_migration tool, which assigned remote versions 20260727231155 and 20260727231413, while the local files were named 20260729_*. Renaming them fixed that half of the mismatch but the check still failed.",
+    "actual_root_cause": "Two pre-existing repository migrations used 8-digit version prefixes (20260727_v7_result_bridge_and_dispatcher.sql and 20260728_v7_agent_worker_communication_system.sql). The Supabase CLI only recognises 14-digit YYYYMMDDHHMMSS versions, so it did not see those two files locally and reported their remote rows as missing. This defect predates the RLS work.",
+    "resolution": "Both files were renamed to the 14-digit versions production already uses for the same migrations (20260727223056 and 20260727223121), and the preview's schema_migrations rows were repaired to match. All five tracked versions are now 14-digit and map 1:1 to a local file.",
+    "final_version_set": ["20260716190000","20260727223056","20260727223121","20260727231155","20260727231413"]
+  },
+
+  "test_results": {
+    "suite": "tests/rls_role_matrix.sql",
+    "results_table": "v7_cert.results",
+    "baseline_before_repair": { "passed": 8, "failed": 7, "total": 15 },
+    "final_after_repair": { "passed": 15, "failed": 0, "total": 15 },
+    "false_passes_in_baseline": [
+      { "test_no": 4, "why": "denied by a capabilities NOT NULL violation, not by any status check" },
+      { "test_no": 6, "why": "denied by the claim_next_task ambiguous task_id error; lane authorization never executed" },
+      { "test_no": 7, "why": "denied by the same ambiguity error; PS authorization never executed" }
+    ],
+    "cases": [
+      { "no": 1,  "name": "Anonymous user cannot read worker tables",                  "role": "anon",          "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "SQLSTATE 42501" },
+      { "no": 2,  "name": "Ordinary authenticated user cannot read worker tables",     "role": "authenticated", "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "SQLSTATE 42501" },
+      { "no": 3,  "name": "Unknown worker cannot heartbeat",                           "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "Agent CERT-GHOST not found" },
+      { "no": 4,  "name": "Disabled worker cannot heartbeat",                          "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "Agent CERT-DIS is suspended and may not heartbeat" },
+      { "no": 5,  "name": "Disabled worker cannot claim",                              "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "Agent CERT-DIS not found or not approved" },
+      { "no": 6,  "name": "Worker cannot claim an unauthorized lane",                  "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "no out-of-lane rows served" },
+      { "no": 7,  "name": "Non-PS worker cannot claim a PS task",                      "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "PS task withheld from non-PS worker" },
+      { "no": 8,  "name": "Worker cannot modify another worker's claim",               "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "claim may not be modified by session agent CERT-OK" },
+      { "no": 9,  "name": "Worker cannot submit without an active claim",              "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "submission rejected: claim 999999999 does not exist" },
+      { "no": 10, "name": "Worker cannot submit after claim expiry",                   "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "submission rejected: lease expired" },
+      { "no": 11, "name": "Duplicate result submission is rejected",                   "role": "service_role",  "expected": "DENIED",  "final": "DENIED",  "status": "PASS", "evidence": "unique constraint uq_result_submission_claim_event" },
+      { "no": 12, "name": "Authorized worker can heartbeat",                           "role": "service_role",  "expected": "ALLOWED", "final": "ALLOWED", "status": "PASS", "evidence": "heartbeat accepted" },
+      { "no": 13, "name": "Authorized worker can claim an eligible task",              "role": "service_role",  "expected": "ALLOWED", "final": "ALLOWED", "status": "PASS", "evidence": "claimed 1 eligible DCSE row" },
+      { "no": 14, "name": "Authorized worker can renew and submit its own result",     "role": "service_role",  "expected": "ALLOWED", "final": "ALLOWED", "status": "PASS", "evidence": "renew + own-result submit ok" },
+      { "no": 15, "name": "Dispatcher recovers expired claim; audit immutable",        "role": "mixed",         "expected": "ALLOWED", "final": "ALLOWED", "status": "PASS", "evidence": "recovered=true; worker delete blocked" }
+    ]
+  },
+
+  "defects_found_and_repaired": [
+    { "id": "D1",  "severity": "HIGH",     "title": "claim_next_task ambiguous column reference \"task_id\"", "detail": "The subquery counting prior attempts referenced task_id unqualified. Every claim attempt raised 42702, so lane and task-type authorization never executed. Production had been hot-patched in place; the repo migration still carried the defect.", "repair": "Qualified as tc2.task_id inside the counting subquery." },
+    { "id": "D2",  "severity": "HIGH",     "title": "send_heartbeat accepted suspended and retired workers", "detail": "The function checked only that the agent row existed, never its status. A suspended worker could continue reporting liveness, defeating the dispatcher's stale-worker suspension.", "repair": "Reject status in ('suspended','retired') with SQLSTATE 42501." },
+    { "id": "D3",  "severity": "HIGH",     "title": "result_submission.claim_id had no foreign key", "detail": "Submissions referencing entirely non-existent claims were accepted.", "repair": "Added FK result_submission_claim_id_fkey referencing task_claim(claim_id) ON DELETE RESTRICT." },
+    { "id": "D4",  "severity": "HIGH",     "title": "No active-lease enforcement on submission", "detail": "A worker could submit a result against a released or expired lease, so crash-recovery could produce two authoritative results for one task.", "repair": "BEFORE INSERT trigger enforce_active_lease validates claim existence, agent ownership, non-release, and unexpired visibility timeout." },
+    { "id": "D5",  "severity": "HIGH",     "title": "No idempotency constraint on result_submission", "detail": "Identical (claim_id, result_event_type) rows were accepted repeatedly. The previously reported duplicate-suppression guarantee did not exist at the database level.", "repair": "Unique index uq_result_submission_claim_event on (claim_id, result_event_type)." },
+    { "id": "D6",  "severity": "HIGH",     "title": "No cross-worker claim mutation guard", "detail": "Any holder of the service_role key could release or rewrite another worker's claim. RLS did not apply because service_role bypasses it.", "repair": "BEFORE UPDATE trigger guard_claim_mutation: ownership immutable; mutation permitted only in dispatcher context or by the owning session agent." },
+    { "id": "D7",  "severity": "HIGH",     "title": "Dispatcher recovery window permanently orphaned stale claims", "detail": "Phase 1 required (now() - visibility_timeout_at) < interval '5 minutes'. Any claim expired for longer than five minutes was never recovered, so a worker crash outside one dispatcher cycle stranded the task forever.", "repair": "Removed the upper bound; all expired unreleased leases are now recovered." },
+    { "id": "D8",  "severity": "MEDIUM",   "title": "SECURITY DEFINER functions carried mutable search_path", "detail": "All ten privileged functions ran with search_path = 'public, v7_worker'. A writable public schema makes this a privilege-escalation surface.", "repair": "All ten functions set search_path = '' with fully schema-qualified relations. Verified: 0 SECURITY DEFINER functions remain with a mutable path." },
+    { "id": "D9",  "severity": "HIGH",     "title": "EXECUTE on privileged RPCs granted to PUBLIC", "detail": "All seven v7_worker functions carried the PUBLIC grant (=X/postgres); claim_next_task, send_heartbeat and release_task_claim were additionally granted to anon and authenticated. Exploitation was blocked only by the absence of USAGE on schema v7_worker, a single point of failure that would fall the moment the schema were exposed to the API.", "repair": "Revoked from PUBLIC, anon and authenticated on all ten functions; EXECUTE granted to service_role only; USAGE on v7_worker revoked from PUBLIC/anon/authenticated." },
+    { "id": "D10", "severity": "MEDIUM",   "title": "PS lane had no explicit hard denial", "detail": "PS exclusion relied solely on an array-membership match, with no independent guard.", "repair": "Added an explicit predicate: a PS message is served only when 'PS' is present in the agent's authorized_lanes." },
+    { "id": "D12", "severity": "HIGH",     "title": "Migration filenames encoded the wrong dependency order", "detail": "v7_result_bridge_and_dispatcher was numbered 20260727 and v7_agent_worker_communication_system was numbered 20260728, so the bridge migration sorted BEFORE the migration that creates the v7_worker schema it depends on. Any fresh deployment applying migrations in filename order would have failed. Both environments survived only because the two migrations were hand-applied out of filename order. The 8-digit prefixes also made the Supabase CLI unable to see the files at all, which is what broke the Preview check.", "repair": "Renamed to the 14-digit versions production already records for the same migrations: 20260727223056 (schema) then 20260727223121 (bridge), restoring correct dependency order, and repaired the preview's schema_migrations rows to match." },
+    { "id": "D11", "severity": "HIGH",     "title": "Production hot-fixes were never captured in migrations", "detail": "Both the dc_event_id BIGINT to TEXT change and the claim_next_task ambiguity fix were applied directly to production and never written into a migration. Preview still had dc_event_id as bigint. Any fresh deployment from the repository would have reintroduced both defects.", "repair": "Captured in migration: dc_event_id altered to text, acknowledge_result_processed re-created with a text parameter, and the claim_next_task fix committed." }
+  ],
+
+  "outstanding_findings_not_repaired": [
+    {
+      "id": "O1",
+      "severity": "CRITICAL_DESIGN",
+      "title": "Worker identity is caller-asserted, not authenticated",
+      "detail": "claim_next_task, send_heartbeat and release_task_claim all take agent_id as a parameter and never bind it to an authenticated principal. Any caller reaching these functions can act as any agent. The RLS policies use current_setting('app.worker_id'), a client-settable GUC, which is equally unauthenticated. Workers additionally hold the service_role key, which bypasses RLS entirely, so the per-worker policies on all eight tables are currently unreachable code.",
+      "current_mitigation": "EXECUTE is now service_role-only, USAGE on v7_worker is revoked from the API roles, and the lease/ownership/idempotency invariants are enforced by constraints and triggers that bind service_role as well. The matrix passes on that basis.",
+      "required_fix": "Issue per-worker JWTs carrying an agent_id claim, have v7_worker_private.session_agent_id() read only the verified claim, remove the app.worker_id fallback, and stop distributing the service_role key to workers.",
+      "recommended_gate": "Treat as a Stop-Gate before production worker rollout. It does not block the preview certification, which is scoped to the role matrix."
+    },
+    {
+      "id": "O2",
+      "severity": "MEDIUM",
+      "title": "Result bridge path unexercised in preview",
+      "detail": "dcse_cp does not exist in the preview branch, so the v7_worker to dcse_cp.agent_task_events write path could not be tested here. The earlier end-to-end cycle timing was measured against production, not this preview.",
+      "required_fix": "Re-run the bridge cycle in an environment that carries both schemas before convergence."
+    },
+    {
+      "id": "O3",
+      "severity": "INFO",
+      "title": "Advisor findings outside v7_worker",
+      "detail": "Supabase security advisors returned nine INFO-level rls_enabled_no_policy lints, all against family_vow_go tables (admin_feedback, budget_items, content_chapters, external_integrations, guests, music_items, vendors, wedding_events, wedding_settings). Zero findings against v7_worker or v7_worker_private.",
+      "required_fix": "Out of scope for this certification; flagged because those tables have RLS enabled with no policies."
+    }
+  ],
+
+  "advisor_results": {
+    "tool": "Supabase security advisors",
+    "run_after_migration": true,
+    "findings_against_v7_worker": 0,
+    "findings_against_v7_worker_private": 0,
+    "other_findings": 9,
+    "other_findings_level": "INFO",
+    "other_findings_schema": "family_vow_go"
+  },
+
+  "final_grant_and_policy_matrix": {
+    "schema_usage": {
+      "v7_worker": "revoked from PUBLIC, anon, authenticated; service_role retained",
+      "v7_worker_private": "revoked from PUBLIC, anon, authenticated; USAGE granted to service_role only"
+    },
+    "table_grants_v7_worker": "service_role only on all 8 tables; anon and authenticated hold no table privileges",
+    "security_definer_functions": 10,
+    "security_definer_with_empty_search_path": 10,
+    "security_definer_granted_to_public": 0,
+    "security_definer_granted_to_anon_or_authenticated": 0,
+    "rls_enabled_tables": 8,
+    "integrity_controls": [
+      "FK result_submission_claim_id_fkey (claim_id -> task_claim.claim_id, ON DELETE RESTRICT)",
+      "UNIQUE uq_result_submission_claim_event (claim_id, result_event_type)",
+      "TRIGGER trg_result_submission_active_lease (BEFORE INSERT on result_submission)",
+      "TRIGGER trg_task_claim_guard (BEFORE UPDATE on task_claim)"
+    ],
+    "note": "RLS policies on the eight v7_worker tables reference current_setting('app.worker_id') and target anon/authenticated, which hold no table grants. Those policies are presently unreachable and are retained for the future per-worker JWT model described in O1."
+  },
+
+  "rollback_verification": {
+    "method": "The rollback DDL was executed inside an explicit transaction against the preview and then rolled back, so the hardened state was preserved.",
+    "observed_mid_transaction": {
+      "triggers_remaining": 0,
+      "unique_index_remaining": 0,
+      "foreign_key_remaining": 0,
+      "private_schema_remaining": 0,
+      "claim_next_task_search_path": "search_path=public, v7_worker"
+    },
+    "post_rollback_state_confirmed": {
+      "triggers_present": 2,
+      "unique_index_present": 1,
+      "foreign_key_present": 1,
+      "private_schema_present": 1,
+      "security_definer_with_mutable_search_path": 0
+    },
+    "destructive_step_flagged": "Reverting dc_event_id from text back to bigint would fail while UUID values are present; that step is commented out in the rollback script and marked explicitly destructive.",
+    "result": "REVERSIBLE"
+  },
+
+  "test_fixture_hygiene": {
+    "fixtures_prefix": "CERT-",
+    "fixtures_remaining_after_run": 0,
+    "probe_side_effects_persisted": false,
+    "probe_isolation_method": "savepoint sub-block plus CERT_PROBE_ROLLBACK sentinel exception"
+  },
+
+  "corrections_to_prior_reporting": [
+    {
+      "prior_claim": "Deterministic test suite: all 17 tests passing, 100% pass rate",
+      "correction": "That suite was never executed. The claim was unverified when made. The authoritative run is the 15-case role matrix in this receipt, whose first execution was 8 PASS / 7 FAIL."
+    },
+    {
+      "prior_claim": "Duplicate result rejection verified",
+      "correction": "Case 11 showed duplicates were accepted. No uniqueness constraint existed until D5 was repaired in this session."
+    },
+    {
+      "prior_claim": "Worker cannot submit without an active claim verified",
+      "correction": "Case 9 showed submissions with non-existent claim ids were accepted. No foreign key or lease check existed until D3 and D4 were repaired in this session."
+    },
+    {
+      "prior_claim": "Supabase preview deployment green implies the v7 system is verified in preview",
+      "correction": "The preview carries only v7_worker. dcse_cp and v7_bootstrap are absent, so the bridge path was never exercised there."
+    }
+  ],
+
+  "merge_recommendation": {
+    "state": "PASS for the 15-case role matrix; NOT a merge approval on its own",
+    "blocking_before_merge": [
+      "The two hardening migrations are applied to the preview branch only and must be committed and pushed so the repository matches the certified preview state.",
+      "Independent second review of the migration diff, grant matrix, and the fifteen case outputs has not been performed."
+    ],
+    "blocking_before_production_worker_rollout": [
+      "O1: replace caller-asserted agent identity with verified per-worker JWT claims and stop distributing the service_role key to workers."
+    ],
+    "explicitly_not_done": [
+      "PR #14 was not merged.",
+      "No DDL was applied to the production project nevgdyfpxdaloacuutal.",
+      "DCSE-V7-CONVERGENCE-001 was not queued; it is gated on the two blocking items above."
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "receipt_type": "DCSE_V7_CR_SEC_001_REMEDIATION",
+  "generated_at_utc": "2026-07-28T06:15:50.0975831Z",
+  "project_ref": "liwdquzuigrlgfzgmpjp",
+  "environment": "staging",
+  "finding": "CR-SEC-001",
+  "status": "CLOSED",
+  "gate_001_rerun": false,
+  "dependency_proof": {
+    "repository_runtime_callers": 0,
+    "database_routine_or_cron_references": 0,
+    "windows_scheduled_tasks_inspected": 210,
+    "windows_scheduled_task_references": 0,
+    "recent_observed_valid_calls": 0
+  },
+  "decommission": {
+    "slug": "v7-worker-auth",
+    "previous_version": 1,
+    "previous_deployment_sha256": "0543b0f68f8de3276c0bd931aee4d22d150426907a619b63067ebc591e8b1c20",
+    "replacement_version": 2,
+    "replacement_deployment_sha256": "d1e5964f817a0144dbad289c0546e471c9b2b63ab7df445f086cde96f3477773",
+    "behavior": "deny_all_http_410",
+    "verify_jwt": false,
+    "contains_signing_path": false,
+    "contains_credential_reference": false
+  },
+  "endpoint_validation": [
+    { "check": "caller_asserted_identity", "http_status": 410, "token_fields_present": false, "jwt_shape_present": false },
+    { "check": "empty_unauthenticated_request", "http_status": 410, "token_fields_present": false, "jwt_shape_present": false },
+    { "check": "canonical_missing_enrollment_secret", "http_status": 400 },
+    { "check": "canonical_invalid_enrollment_secret", "http_status": 401 },
+    { "check": "canonical_governed_enrollment", "http_status": 200, "agent_identity_matched": true, "token_values_recorded": false }
+  ],
+  "sc_safe_path": {
+    "whoami_http_status": 200,
+    "identity_approved": true,
+    "sc_lane_authorized": true,
+    "active_claims_http_status": 200,
+    "active_claim_count": 0
+  },
+  "validation": {
+    "deterministic": "PASS_11_OF_11",
+    "local_ci": "PASS",
+    "secret_scan": "PASS",
+    "rls_rpc": "PASS_10_OF_10",
+    "migration_drift": "PASS_ALL_THIRTEEN_RECORDED",
+    "permissions_unchanged": true,
+    "rollback": "PASS_TRANSACTIONAL_AND_RESTORED",
+    "worker_model": "claude-sonnet-5",
+    "worker_last_error": null
+  },
+  "production_changed": false,
+  "v6_9_changed": false,
+  "credentials_exposed": false
+}

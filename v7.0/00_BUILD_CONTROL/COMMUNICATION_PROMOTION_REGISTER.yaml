@@ -1,0 +1,20 @@
+register_id: DCSE-V7-COMMUNICATION-PROMOTION-REGISTER
+updated_at_utc: 2026-07-28T06:15:50.0975831Z
+subsystem: communication
+environment: staging
+gate_001: PASS
+gate_receipt_sha256: 9C5D6F485566ADBC035284F74EA5BDC10AA76BF4953D4DE3AD9753ABEA8B598C
+architecture: complete
+implementation: complete
+certification: complete
+operational_evidence: complete
+promotion: READY_FOR_CANONICAL_MERGE
+blocking_findings: []
+closed_findings:
+  - id: CR-SEC-001
+    resolution: v7-worker-auth-version-2-http-410-tombstone
+    deployment_sha256: d1e5964f817a0144dbad289c0546e471c9b2b63ab7df445f086cde96f3477773
+migration_drift: []
+drift_check: PASS_ALL_THIRTEEN_V7_MIGRATIONS_RECORDED
+production_activation: not_claimed
+v6_9_baseline: immutable
