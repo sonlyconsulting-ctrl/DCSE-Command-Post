@@ -1,0 +1,44 @@
+registry_id: DCSE-V7-RUNTIME-COMPILER-REGISTRY
+status: candidate
+promotion_status: not_promoted
+selection_rule: capability_before_vendor
+minimum_effective_context: required
+resolvers:
+  - entity_lane
+  - authority_firewall
+  - destination_risk
+  - doctrine
+  - rules
+  - skills
+  - workflow
+  - capability_worker
+  - repository_data_scope
+  - eci_tests
+  - limits_stopgates
+content_product_controls:
+  required: true
+  fields:
+    - audience
+    - product_objective
+    - entity_owner
+    - source_control
+    - claim_control
+    - story_architecture
+    - illustration_media_requirements
+    - voice_tone
+    - accessibility_target
+    - delivery_path
+    - distribution
+    - commercial_readiness
+    - outcome_metrics
+oti:
+  age_native: true
+dee_domains:
+  - technology
+  - models_agents
+  - products
+  - content
+  - employment
+  - freelance
+  - consulting
+  - human_skills
