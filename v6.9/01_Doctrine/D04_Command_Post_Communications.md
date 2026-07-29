@@ -1,11 +1,11 @@
 # DCSE Doctrine D04: Command Post Communications
 
 **Document ID:** DCSE-D04  
-**Version:** v6.9  
+**Version:** v7.0  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
-**Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** DCSE Authorized version Pending Approval  
+**Last Doc Modified Date/Time:** 2026-07-29T18:07:30-04:00
+**Last Version/Release Date/Time:** 2026-07-29T18:07:30-04:00  
+**Status:** CANDIDATE PENDING DCS LEVEL 0 PROMOTION  
 **Classification:** INTERNAL  
 **Lane:** DCSE  
 **Canonical file:** D04_Command_Post_Communications.md  
@@ -42,15 +42,22 @@ Every packet must contain:
   "packet_id": "TRIBUNAL-[YYYYMMDD]-[AGENT]-[SHORT_LABEL]",
   "timestamp": "[ISO 8601 UTC]",
   "sender_id": "[model or agent name]",
-  "target_inbox": "OPERATIONAL | HUB",
+  "target_inbox": "OPERATIONAL | HUB | SUPABASE_RUNTIME",
   "priority": "High | Standard | Low",
   "status": "Pending | Active | Completed | Blocked",
-  "lane": "SC | SS | PS | DCSE | EMP | CROSS",
+  "lane": "SC | SS | PS | TI | PA | DCSE | EMP | CROSS",
+  "authority": "DCS | DCSC | named delegated authority",
+  "canonical_source": "repository/path@commit-or-null",
+  "content_sha256": "hash-or-null",
   "payload": {}
 }
 ```
 
 `target_inbox` is required so any agent reading a packet knows which system produced it and where the response should route.
+
+### 1.4 Supabase Runtime Communication
+
+Supabase may store governed task state, acknowledgements, execution queues, promotion logs, source references, and model-access records. Every distributed doctrine record must identify the canonical GitHub repository, path, commit SHA, and matching content SHA-256 under D22. A Supabase row does not create doctrine authority and must be classified `DRIFT` when its source identity or hash differs from the last verified promoted artifact.
 
 ---
 
@@ -71,6 +78,7 @@ Every model has a designated access method based on whether it can execute git c
 | **ChatGPT** | Web / Custom GPT | Operator upload | `v69` | GitHub raw URL | `01_Doctrine\` files uploaded to GPT |
 | **Qwen Coder** | CLI / API | `git pull origin v69` | `v69` | Local: `v6.9\01_Doctrine\` | N/A — CLI access |
 | **Codex / o-series** | API | `git pull origin v69` | `v69` | Local: `v6.9\01_Doctrine\` | N/A — CLI access |
+| **Anti-Gravity** | Secured execution interface | DCS-assigned scoped source | Assigned branch or runtime scope | Halt until source and access are confirmed | N/A — secured interface |
 | **NotebookLM** | Web upload only | Operator upload | `v69` | N/A | `01_Doctrine\` files uploaded as sources |
 | **Any new model** | Confirm before use | Operator assigns | `v69` | Halt until confirmed | N/A until confirmed |
 
@@ -85,9 +93,9 @@ Replace the filename to access any doctrine file directly. Web-bound models that
 **Staleness rule:** if a web-bound model's uploaded files are older than the last commit on `v69`, the model must notify the operator before proceeding. A model operating on stale doctrine is non-compliant. The operator re-uploads the updated files before the session continues.
 ### 2.10 v69 Candidate Mirror Rule
 
-The `v69` branch of `DCSE-Command-Post` is the candidate-published mirror of the approved local v6.9 Hub. After DCS Level 0 approval, the mirror scope includes the full Git-eligible local `C:\DS All Things\DCSE_Command_Center\v6.9\` tree, including support, review, archive, receipt, and auxiliary source folders required for doctrine reconciliation.
+The `v69` branch of `DCSE-Command-Post` is the versioned review and distribution branch for the reconciled Hub. Before DCS Level 0 promotion it is a candidate mirror. After promotion, only the exact repository path, commit SHA, and content SHA-256 recorded under D05 and D22 are controlling. The mirror scope may include approved Git-eligible support, review, archive, receipt, and auxiliary source folders required for reconciliation.
 
-The candidate mirror does not create promotion authority. `main` remains stable/promoted only after a separate DCS decision under D05. The `v69` branch is reviewable candidate evidence and source distribution, not final doctrine authority by existence.
+The branch or commit does not create promotion authority. `main` remains a separately controlled stable branch and is not altered by a v7 doctrine promotion to `v69` unless DCS issues a distinct production decision.
 
 Permanent no-Git exclusions in Section 2.6 still control. Credentials, quarantine files, and PS litigation material do not enter GitHub merely because they exist inside or near the local Hub. If a requested full-tree mirror encounters an excluded file, the agent records the exclusion in the Tribunal receipt and continues with the Git-eligible mirror set unless DCS issues a separate explicit override and safe repository destination.
 
@@ -261,6 +269,7 @@ The tribunal poller daemon syncs the Operational Inbox to `DCSE-Tribunal-Relay` 
 - [D06_File_System.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D06_File_System.md) - 14-directory layout governs Hub Inbox (05_Tribunal_Inbox); Operational Inbox is outside Hub
 - [D14_DART_PS_Protected.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D14_DART_PS_Protected.md) - PS litigation files are permanently excluded from all Git operations
 - [D15_Database_Administration.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D15_Database_Administration.md) - Credential safety rules enforced at Git staging gate (Section 2.6)
+- [D22_Source_Authority_Runtime_Distribution.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D22_Source_Authority_Runtime_Distribution.md) - Canonical GitHub identity and Supabase runtime distribution
 
 ---
 

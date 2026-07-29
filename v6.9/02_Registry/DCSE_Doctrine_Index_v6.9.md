@@ -1,22 +1,22 @@
-# DCSE Doctrine Index v6.9
+# DCSE Doctrine Index v7.0
 
-**Document ID:** DCSE-Doctrine-Index-v6.9  
-**Version:** v6.9  
+**Document ID:** DCSE-Doctrine-Index-v7.0  
+**Version:** v7.0  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
-**Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** DCSE Authorized version Pending Approval  
+**Last Doc Modified Date/Time:** 2026-07-29T18:07:30-04:00
+**Last Version/Release Date/Time:** 2026-07-29T18:07:30-04:00  
+**Status:** CANDIDATE PENDING DCS LEVEL 0 PROMOTION  
 **Classification:** INTERNAL  
 **Lane:** ALL  
 **Canonical file:** DCSE_Doctrine_Index_v6.9.md  
-**Doctrine Description:** The DCSE Doctrine Index (v6.9) regulates the hierarchical dependency mappings and minimal effective context loading modes of the ecosystem. It defines the parent-child relationships between authority files, indices, and second-tier doctrine modules (D01-D14). The index segments model context allocations into standard loading profiles (Lite, Standard, Full, Critical) to maintain efficient token usage and enforce security boundaries.  
-**Parent Document:** [DCSE_Master_Profile_v6.9_RC1.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/00_Authority/DCSE_Master_Profile_v6.9_RC1.md)  
+**Doctrine Description:** The DCSE Doctrine Index (v7.0) regulates the hierarchical dependency mappings and minimum effective context loading modes of the ecosystem. It defines the controlled doctrine set D01 through D22, preserves Product Assembly as D20, and identifies Source Authority and Runtime Distribution separately as D22. The index segments model context allocations into Lite, Standard, Full, and Critical profiles to maintain efficient loading and enforce security boundaries.  
+**Parent Document:** DCSE_Master_Profile_v6.9_RC2.md  
 
 ---
 
 ## 1. Parent-Child Relationships & File Index
 
-All subsequent doctrine files (D01 through D15) are child nodes of `DCSE_Master_Profile_v6.9_RC1.md`. This index defines their structural relationships and placement inside the `01_Doctrine/` folder.
+All indexed doctrine files (D01 through D22) are child nodes of the controlling Master Profile lineage. This index defines their structural relationships, lifecycle visibility, and placement inside the `01_Doctrine/` folder. Inclusion in the index does not independently promote a candidate.
 
 | File Code | Filename & Link | Parent Node | Domain / Description |
 | :--- | :--- | :--- | :--- |
@@ -36,6 +36,12 @@ All subsequent doctrine files (D01 through D15) are child nodes of `DCSE_Master_
 | **D14** | [D14_DART_PS_Protected.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D14_DART_PS_Protected.md) | `DCSE-MP-v6.9-RC1` | Offline Spoke rules, case facts, and legal strategy firewalls. |
 | **D15** | [D15_Database_Administration.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D15_Database_Administration.md) | `DCSE-MP-v6.9-RC1` | Database structure, credentials safety, pg_dump backups, RLS policies, and file bus checks. |
 | **D16** | [D16_DDNA_Governance.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D16_DDNA_Governance.md) | `DCSE-MP-v6.9-RC1` | Five-layer DDNA signal model, 12-step extraction sequence, canonical save destinations, asset promotion pipeline, and doctrine feedback loops. |
+| **D17** | [D17_DART_Universal_Methodology.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D17_DART_Universal_Methodology.md) | `DCSE-MP-v6.9-RC2` | DART adversarial analysis framework (Discovery, Attack, Rebuttal, Trial) extracted as universal methodology. Trigger mechanism, quality gates, tier access. |
+| **D18** | [D18_Media_Production_Pipeline.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D18_Media_Production_Pipeline.md) | `DCSE-MP-v6.9-RC2` | Media production pipeline extracted from D12. Four phases: Strategic Foundation, AI-Powered Asset Creation, Production Excellence, Strategic Distribution. Model-duty matrix. |
+| **D19** | [D19_Visual_Creation_Pipeline.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D19_Visual_Creation_Pipeline.md) | `DCSE-MP-v6.9-RC2` | Visual creation pipeline consolidated from D12, D09, D11. Five phases: Brief, Prompt Engineering, Generation, Brand QA, Format Delivery. |
+| **D20** | [D20_Product_Assembly_Methodology.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D20_Product_Assembly_Methodology.md) | `DCSE-MP-v6.9-RC2` | Product assembly methodology consolidated from D05, D06, D11, D07. Six phases: Intake, Build, Test, Package, Promote, Deploy. Live preview mandate, cybersecurity baseline. |
+| **D21** | [D21_Doctrine_Runtime_Engine.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D21_Doctrine_Runtime_Engine.md) | `DCSE-MP-v6.9-RC2` | Doctrine Runtime Engine: Dynamic Doctrine Router (DDR), Doctrine Consideration Log (DCL), Model Capability Watch (MCW), Cybersecurity Baseline, Live Preview Mandate. |
+| **D22** | [D22_Source_Authority_Runtime_Distribution.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D22_Source_Authority_Runtime_Distribution.md) | `DCSE-MP-v6.9-RC2` | Source authority, canonical GitHub artifact identity, Supabase runtime distribution, and drift reconciliation. Separate from Product Assembly D20. |
 
 ---
 
@@ -50,6 +56,7 @@ To satisfy the **Minimum Effective Context (MEC)** rule, agents must not load th
   2. `02_Registry/DCSE_Doctrine_Index_v6.9.md`
   3. `02_Registry/DCSE_Runtime_Access_Map_v6.9.md`
   4. `01_Doctrine/D03_AI_Orchestration.md` *(Session Open Protocol — Sections 6, 7, 8)*
+  5. `01_Doctrine/D22_Source_Authority_Runtime_Distribution.md` *(source identity and promotion linkage — always active)*
 
 ### 2.2 Mode: MP-Standard (General business, product, and campaign tasks)
 - **Target Tasks**: Copywriting, email generation, resume targeting, or web page drafting.
@@ -66,13 +73,15 @@ To satisfy the **Minimum Effective Context (MEC)** rule, agents must not load th
   10. `01_Doctrine/D10_Persona_Assets.md`
   11. `01_Doctrine/D11_HTML_Wix_App.md`
   12. `01_Doctrine/D16_DDNA_Governance.md`
+  13. `01_Doctrine/D17_DART_Universal_Methodology.md` *(triggered on adversarial tasks)*
+  14. `01_Doctrine/D21_Doctrine_Runtime_Engine.md` *(DDR, DCL, cybersecurity baseline — always active)*
 
 > **Note:** D03 is loaded in every mode because it contains the Universal Session Open Protocol (Section 6), the Forward Thinking Enforcement layer (Section 7), and the AI Model Update Monitoring Protocol (Section 8). No session at any complexity level is exempt from these three operational layers. D16 is loaded in MP-Standard and above because every content-producing session is a DDNA extraction candidate — signals must be capturable from the moment work begins.
 
 ### 2.3 Mode: MP-Full (Administrative, system sync, and codebase builds)
 - **Target Tasks**: Supabase migrations, poller daemon adjustments, and packaging/reconciliation actions.
 - **Doctrine Files Loaded**:
-  1. All files in **MP-Standard** (D03 already included).
+  1. All files in **MP-Standard** (D03, D17, D21 already included).
   2. `01_Doctrine/D02_Forward_Backward_Chaining.md`
   3. `01_Doctrine/D04_Command_Post_Communications.md`
   4. `01_Doctrine/D05_Baseline_Promotion.md`
@@ -80,6 +89,10 @@ To satisfy the **Minimum Effective Context (MEC)** rule, agents must not load th
   6. `01_Doctrine/D12_Video_Media.md`
   7. `01_Doctrine/D15_Database_Administration.md`
   8. `01_Doctrine/D16_DDNA_Governance.md` *(already loaded via MP-Standard inheritance)*
+  9. `01_Doctrine/D18_Media_Production_Pipeline.md` *(triggered on media tasks)*
+  10. `01_Doctrine/D19_Visual_Creation_Pipeline.md` *(triggered on visual creation tasks)*
+  11. `01_Doctrine/D20_Product_Assembly_Methodology.md` *(triggered on product build tasks)*
+  12. `01_Doctrine/D22_Source_Authority_Runtime_Distribution.md` *(already loaded through MP-Lite inheritance; re-verify before synchronization or promotion)*
 
 ### 2.4 Mode: MP-PS-Critical (Active Pro Se litigation tasks)
 - **Target Tasks**: Court filing review, exhibit audit, discovery fact cross-checking.

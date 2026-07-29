@@ -1,0 +1,99 @@
+{
+  "receipt_id": "DCSE-PR18-COMPARATIVE-RECONCILIATION-20260729",
+  "created_date": "2026-07-29",
+  "mode": "local_doctrine_reconciliation_github_read_only",
+  "gate": "HOLD_ON_MERGE",
+  "github": {
+    "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+    "pull_request": 18,
+    "url": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/pull/18",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "base": "v69",
+    "base_sha": "811518713a7882cf408771996a71b7ac7895cb20",
+    "head": "feature/d03-d06-d20-reconciliation",
+    "head_sha": "1ea507a47a189fefe066bc983a4c0e47f0c351de",
+    "changed_files": 7,
+    "read_method": "GitHub connector full-file fetch at exact head SHA",
+    "writes_performed": false
+  },
+  "local_sources": [
+    {
+      "doctrine": "D03",
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\doctrine\\v6.9\\01_Doctrine\\D03_AI_Orchestration.md",
+      "sha256": "083DB9EEB16B86565E7544C6D4F9314A37DAFCA921C3572472A8C928184BCA3D"
+    },
+    {
+      "doctrine": "D04",
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\doctrine\\v6.9\\01_Doctrine\\D04_Command_Post_Communications.md",
+      "sha256": "850CB096B1EDE8A1539AFC201F0922A58C9F086AE0F4282091CBFF139B892394"
+    },
+    {
+      "doctrine": "D05",
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\doctrine\\v6.9\\01_Doctrine\\D05_Baseline_Promotion.md",
+      "sha256": "C4912B2BB261D3CA3F1F27AE3289389D9852E65E2B141157E157D00EBEC4BAD0"
+    },
+    {
+      "doctrine": "D06",
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\doctrine\\v6.9\\01_Doctrine\\D06_File_System.md",
+      "sha256": "74C03A8212BD89F2EE200F7713876E8E5ABE03125D9F282D4967C93913DCCAB0"
+    },
+    {
+      "doctrine": "D20",
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\doctrine\\v6.9\\01_Doctrine\\D20_Product_Assembly_Methodology.md",
+      "sha256": "902EC78EA0184E8C1576BE5503EC216B5013C431F9B38DFD198795D3BDCE9B56"
+    }
+  ],
+  "github_candidate_hashes": {
+    "v6.9/01_Doctrine/D03_AI_Orchestration.md": "D9AD3B0EE24770F1B973804D9231B6975233D6B8D84FFEC093B818E40CFCF292",
+    "v6.9/01_Doctrine/D04_Command_Post_Communications.md": "D0CEB08C432A62896DE7A9221DB74E3F1CEAECF9B6D095B16CBD8CBEBB5AA685",
+    "v6.9/01_Doctrine/D05_Baseline_Promotion.md": "F2A56C2DBC971EF956051D33FE5A48F461DC75D50128B7DD6CAFDB561E5D35DC",
+    "v6.9/01_Doctrine/D06_File_System.md": "9CFD53A4602E271DCD018EEC00AE47FD31731E2D5B8099A297B5AF9FB6E63963",
+    "v6.9/01_Doctrine/D20_Source_Authority_Runtime_Distribution.md": "9510321AFC179E90D7B36B7A3DF879B5439BADC678B8C7177EEDCC83E0651BB7",
+    "v6.9/02_Registry/DCSE_Doctrine_Index_v6.9.md": "622A4032B3B09B68FC76885F23FFC77052C8FE9EF5D2D5EB7F55F43EC38116B8",
+    "v6.9/11_Receipts/TRIBUNAL_D03_D06_D20_RECONCILIATION_20260729.md": "9AAE313C47C221F87B9C381FDCEC97B40B410E4468B021EC4A1230F2BE40445F"
+  },
+  "line_comparison": {
+    "D03": { "local_lines": 322, "github_lines": 92, "lcs_lines": 30, "verbatim_nonblank_lines": 4 },
+    "D04": { "local_lines": 272, "github_lines": 115, "lcs_lines": 37, "verbatim_nonblank_lines": 3 },
+    "D05": { "local_lines": 50, "github_lines": 130, "lcs_lines": 14, "verbatim_nonblank_lines": 1 },
+    "D06": { "local_lines": 239, "github_lines": 123, "lcs_lines": 38, "verbatim_nonblank_lines": 3 },
+    "D20": { "local_lines": 360, "github_lines": 171, "lcs_lines": 47, "verbatim_nonblank_lines": 1 }
+  },
+  "d20_resolution": {
+    "last_promoted_version": "NONE_PROVEN",
+    "prior_hash_4A04_status": "PRE_CORRECTION_CANDIDATE_COMPATIBILITY_MIRROR_PROMOTION_INCOMPLETE",
+    "current_hash_902E_status": "CANDIDATE_PENDING_PROMOTION",
+    "prior_promoted_d20_controls": false,
+    "governing_sources_pending_d20_ratification": ["D05", "D06", "D11", "D07"],
+    "github_d20_disposition": "RENUMBER_TO_PROPOSED_D22_AND_REVIEW_SEPARATELY"
+  },
+  "conflict_count": 10,
+  "merge_safe_now": false,
+  "safe_after_correction": "DRAFT_REVIEW_ONLY",
+  "outputs": [
+    {
+      "name": "PR18_FILE_RECONCILIATION_MATRIX_20260729.csv",
+      "sha256": "14A6BC1FD1CD6D801D0A063F69232576794D3A12400B6451ED3AB124ECFDB98B"
+    },
+    {
+      "name": "PR18_SECTION_RECONCILIATION_MATRIX_20260729.md",
+      "sha256": "27E537CC422E54D0D2705C6A92F5F992DE42D8B7793F2EF1A663A68D650C9B70"
+    }
+  ],
+  "actions_not_performed": [
+    "copy_wave",
+    "source_file_mutation",
+    "rename",
+    "move",
+    "delete",
+    "stage",
+    "commit",
+    "push",
+    "merge",
+    "deploy",
+    "supabase_mutation",
+    "promotion"
+  ]
+}

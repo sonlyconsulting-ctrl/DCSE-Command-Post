@@ -1,11 +1,11 @@
 # DCSE Doctrine D03: AI Orchestration & Prompt Wrappers
 
 **Document ID:** DCSE-D03  
-**Version:** v6.9  
+**Version:** v7.0  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
-**Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** DCSE Authorized version Pending Approval  
+**Last Doc Modified Date/Time:** 2026-07-29T18:07:30-04:00
+**Last Version/Release Date/Time:** 2026-07-29T18:07:30-04:00  
+**Status:** CANDIDATE PENDING DCS LEVEL 0 PROMOTION  
 **Classification:** INTERNAL  
 **Lane:** ALL  
 **Canonical file:** D03_AI_Orchestration.md  
@@ -22,6 +22,10 @@ To prevent model hallucination and maximize efficiency, work is routed strictly 
 - **Claude (CTO)**: Operates narrative architecture and code logic. Handles high-complexity editing, strategy briefs, and constitutional reconciliations.
 - **Gemini**: Operates drive-state diagnostics and visual checks. Audits layouts and media files.
 - **ChatGPT**: Operates daemon management and packager scripts. Coordinates directory cleanups and updates.
+- **Codex**: Operates bounded repository implementation, patches, tests, technical verification, and explicitly authorized database work. Codex has no self-authorization, secret-disclosure, or cross-lane expansion authority.
+- **Anti-Gravity**: Operates as Keeper of Keys for secured database, Supabase, storage, schema, migration, recovery, and credential execution when DCS/DCSC has explicitly assigned that scope. Key custody is not universal DBA authority.
+
+GitHub is the versioned artifact repository and Supabase is a governed runtime registry. Neither platform promotes doctrine by existence. D22 controls source identity and runtime distribution.
 
 ---
 
@@ -55,6 +59,13 @@ Prepend this metadata block to every active agent instruction:
 
 ```text
 [BRAND]=PS | SC | SS | DCS | DCSE | PPR
+[LANE]=PS | TI | SC | PA | DCSE | MIXED
+[MODE]=planning | review | execution | deployment | migration | publication
+[SYSTEM]=repository, database, app, file set, or platform
+[AUTHORITY]=DCS/DCSC or named delegated authority
+[ACCESS]=read | write | deploy | migrate | delete
+[SECRET_EXPOSURE]=none | possible | detected
+[PS_EXPOSURE]=none | possible | detected
 [GOAL]=<what success looks like>
 [AUDIENCE]=<who it is for>
 [CONSTRAINTS]=<page limits, em-dash bans, specific exclusions>
@@ -312,6 +323,30 @@ When an update requires a doctrine revision (Class A or B):
 
 ---
 
+## 9. Execution-State Separation
+
+Discussion, direction, execution authorization, verification, and promotion are separate controlled states:
+
+1. **Discussion** explains options and risks.
+2. **Direction** defines a proposed task.
+3. **Execution authorization** permits a bounded action within named access and lane limits.
+4. **Verification** proves the stated exit criteria.
+5. **Promotion** changes authority status under D05.
+
+A spoken instruction, uploaded file, database row, branch, commit, deployment, model memory, or candidate label does not independently authorize execution or promotion.
+
+## 10. Credential and Database Boundary
+
+Before database, Supabase, storage, API, GitHub, deployment, migration, deletion, or credential work, the executing agent must identify the lane, system, authority holder, access level, secret exposure, PS exposure, action type, approval requirement, and rollback path.
+
+Secrets are never reproduced in prompts, doctrine, source files, receipts, logs, or model-visible payloads. Agents receive scoped interfaces and secured-location identifiers, not raw credentials. Secret or PS exposure triggers an immediate STOPGATE.
+
+## 11. Voice and Dictation Safeguard
+
+Voice, dictation, and typed prompts are instruction interfaces only; they do not expand permissions. Material execution instructions must be confirmed in durable text when a transcription error could affect scope, credentials, deployment, migration, deletion, publication, or promotion.
+
+---
+
 ## Related Doctrine
 
 - [D01_Forward_Thinking.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D01_Forward_Thinking.md) - Executive Penthouse philosophy; foundation for Section 7
@@ -320,3 +355,4 @@ When an update requires a doctrine revision (Class A or B):
 - [D06_File_System.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D06_File_System.md) - Canonical 01_Doctrine\ path and routing rules
 - [D08_Voice_Tone.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D08_Voice_Tone.md) - Voice isolation rules; enforced in Section 7
 - [D11_HTML_Wix_App.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D11_HTML_Wix_App.md) - HTML/Wix governance for UI-facing orchestration
+- [D22_Source_Authority_Runtime_Distribution.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D22_Source_Authority_Runtime_Distribution.md) - Canonical artifact identity, promotion linkage, and runtime distribution
