@@ -4,7 +4,7 @@
 **Version:** v6.9
 **Created Date/Time:** 2026-07-25T23:00:00-04:00
 **Last Doc Modified Date/Time:** 2026-07-25T23:00:00-04:00
-**Status:** DCSE Authorized Pending DCS Approval
+**Status:** ACTIVE_RATIFIED
 **Classification:** INTERNAL
 **Lane:** DCSE/ALL
 **Canonical file:** D19_Visual_Creation_Pipeline.md
