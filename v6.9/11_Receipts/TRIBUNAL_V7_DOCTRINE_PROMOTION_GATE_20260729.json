@@ -7,7 +7,8 @@
   "promotion_type": "not_yet_authorized",
   "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
   "target_branch": "v69",
-  "repository_commit": "8d0d946b3cdb862d6bb219dfc2fa512e674d6b77",
+  "candidate_content_commit": "8d0d946b3cdb862d6bb219dfc2fa512e674d6b77",
+  "receipt_correction_commit": "86dc3c836ef451686d7415a5be4f0a56e749157a",
   "base_commit": "811518713a7882cf408771996a71b7ac7895cb20",
   "scope": [
     {
@@ -70,6 +71,6 @@
   "stop_gate_scan": "CLEAR_FOR_LEVEL_0_REVIEW_ONLY",
   "supersedes": "Unpromoted local candidates for the scoped files; no prior promoted D20 was proven.",
   "rollback_path": "Restore origin/v69 at 811518713a7882cf408771996a71b7ac7895cb20 and retain this receipt plus the source-input hashes for reconstruction.",
-  "github_binding": "The draft PR exposes candidate commit 8d0d946b3cdb862d6bb219dfc2fa512e674d6b77 and the recorded content hashes for review. A later Level 0 receipt must bind any approved hashes before merge or Supabase activation.",
+  "github_binding": "PR #21 exposes candidate content commit 8d0d946b3cdb862d6bb219dfc2fa512e674d6b77 and the recorded content hashes for review. Receipt-only correction commits do not alter doctrine content. A later Level 0 receipt must bind the approved merge head and hashes before Supabase activation.",
   "final_status": "CANDIDATE_READY_FOR_LEVEL_0_REVIEW"
 }
