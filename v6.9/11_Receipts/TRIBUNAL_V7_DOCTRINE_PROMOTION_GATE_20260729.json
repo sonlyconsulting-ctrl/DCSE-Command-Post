@@ -8,7 +8,11 @@
   "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
   "target_branch": "v69",
   "candidate_content_commit": "8d0d946b3cdb862d6bb219dfc2fa512e674d6b77",
-  "receipt_correction_commit": "86dc3c836ef451686d7415a5be4f0a56e749157a",
+  "receipt_correction_commits": [
+    "93fe57aa5a19e41e03dc80c7d166f38c0dc8538e",
+    "86dc3c836ef451686d7415a5be4f0a56e749157a",
+    "9d7a2fdbfe4bc7b4396927a4e2369da14a9085a0"
+  ],
   "base_commit": "811518713a7882cf408771996a71b7ac7895cb20",
   "scope": [
     {
