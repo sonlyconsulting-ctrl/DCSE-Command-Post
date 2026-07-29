@@ -1,0 +1,20 @@
+{
+  "receipt_id": "RECEIPT-DCSE-2026-V7-D17-D18-D19-D21-LEVEL0-001",
+  "receipt_type": "DCS_LEVEL_0_PROMOTION_CLOSEOUT",
+  "timestamp": "2026-07-29T18:39:00-04:00",
+  "authority": "DCS Level 0",
+  "authority_evidence": "DCS explicitly directed promotion, merge, and synchronization of D17, D18, D19, and D21.",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "target_branch": "v7.0",
+  "base_commit": "3ebc85fe6eb8e5bb330d27eca351751218d0fdc8",
+  "promotion_status": "ACTIVE_RATIFIED",
+  "scope": [
+    {"doctrine_id":"D17","path":"v6.9/01_Doctrine/D17_DART_Universal_Methodology.md","sha256":"12186A59C0AEE0F83E08DBAB6E78ECFDC868E2078DE4835544164EDADBDE2392","prior_status":"DCSE_AUTHORIZED_PENDING_DCS_APPROVAL","final_status":"ACTIVE_RATIFIED"},
+    {"doctrine_id":"D18","path":"v6.9/01_Doctrine/D18_Media_Production_Pipeline.md","sha256":"4766766707E67D055E8FE073C964F3912A4645840518F82B65BA51ABB06F218C","prior_status":"DCSE_AUTHORIZED_PENDING_DCS_APPROVAL","final_status":"ACTIVE_RATIFIED"},
+    {"doctrine_id":"D19","path":"v6.9/01_Doctrine/D19_Visual_Creation_Pipeline.md","sha256":"C6F24726657B7D7042DAEF0353439DC923107B0F8F98AE62AB6DDADC4B480ECC","prior_status":"DCSE_AUTHORIZED_PENDING_DCS_APPROVAL","final_status":"ACTIVE_RATIFIED"},
+    {"doctrine_id":"D21","path":"v6.9/01_Doctrine/D21_Doctrine_Runtime_Engine.md","sha256":"224EB63AE6B1EED524E642CB1B6FE934395AAF4D4338E540A3720C1E9DBE74FF","prior_status":"DCSE_AUTHORIZED_PENDING_DCS_APPROVAL","final_status":"ACTIVE_RATIFIED"}
+  ],
+  "controls":{"doctrine_bodies_changed":false,"hash_manifest_verified":true,"d13_d14_untouched":true,"secret_scan":"PASS","ps_boundary":"PASS","supersession_rule":"This promotion receipt is the controlling status record and supersedes stale pending labels in the previously merged doctrine headers."},
+  "rollback_path":"Revert this promotion receipt commit and remove the four matching DCSE-DDNA governance_refs and promotion_log records.",
+  "final_status":"PROMOTION_APPROVED_READY_FOR_MERGE_AND_SYNC"
+}
