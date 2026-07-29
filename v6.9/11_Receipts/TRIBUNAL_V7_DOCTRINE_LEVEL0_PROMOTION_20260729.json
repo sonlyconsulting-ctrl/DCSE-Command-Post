@@ -1,0 +1,75 @@
+{
+  "receipt_id": "RECEIPT-DCSE-2026-V7-DOCTRINE-LEVEL0-001",
+  "receipt_type": "DCS_LEVEL_0_PROMOTION_GATE",
+  "timestamp": "2026-07-29T18:07:30-04:00",
+  "authority": "DCS",
+  "authority_evidence": "DCS authorizes pushing the validated candidate branch and opening a draft PR only. Merge, promotion, deployment, and Supabase synchronization are not authorized.",
+  "promotion_type": "not_yet_authorized",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "target_branch": "v69",
+  "repository_commit": "PENDING_DRAFT_PR_PUSH",
+  "base_commit": "811518713a7882cf408771996a71b7ac7895cb20",
+  "scope": [
+    {
+      "doctrine_id": "D03",
+      "path": "v6.9/01_Doctrine/D03_AI_Orchestration.md",
+      "sha256": "A5CA6376AE4101571343D09794F00901097DAE4E9184F3D710F84B3D0212290D",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "D04",
+      "path": "v6.9/01_Doctrine/D04_Command_Post_Communications.md",
+      "sha256": "513DFF0C525E7AD8BBDD59ED64C8D9C352944D3D89F8A12882CEF327A562FFDE",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "D05",
+      "path": "v6.9/01_Doctrine/D05_Baseline_Promotion.md",
+      "sha256": "693EEB94440C3B048117CD2E471A7628127A5B4AB081C0AC2B58D837CAC30E90",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "D06",
+      "path": "v6.9/01_Doctrine/D06_File_System.md",
+      "sha256": "CE8C57DBBA4334447BB88F49C070DA85083DD9067B7BD9CF7A9B2E759AB02B64",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "D20",
+      "path": "v6.9/01_Doctrine/D20_Product_Assembly_Methodology.md",
+      "source_input_sha256": "902EC78EA0184E8C1576BE5503EC216B5013C431F9B38DFD198795D3BDCE9B56",
+      "sha256": "D109CAECB9F2FC92B431745216AA300BF4F39FC1759E578095D7AD30455CD722",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "D22",
+      "path": "v6.9/01_Doctrine/D22_Source_Authority_Runtime_Distribution.md",
+      "sha256": "BE24661B9FC9C6A3E5E1D5EA9ADFA706C59AB9EF5DA925904A1BF814FD561885",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    },
+    {
+      "doctrine_id": "INDEX",
+      "path": "v6.9/02_Registry/DCSE_Doctrine_Index_v6.9.md",
+      "sha256": "8897467382B92FE1A2BF50EAA4CD6829BCF1E4EBB766C04329B87376F7DFB49D",
+      "final_status": "CANDIDATE_PENDING_DCS_LEVEL_0_PROMOTION"
+    }
+  ],
+  "distributed_without_promotion": ["D17", "D18", "D19", "D21"],
+  "mandatory_checks": {
+    "complete_local_sources_reviewed": "PASS",
+    "section_reconciliation_documented": "PASS",
+    "d03_d06_local_provisions_preserved": "PASS",
+    "d05_automatic_promotion_rejected": "PASS",
+    "d20_product_assembly_identity": "PASS",
+    "d22_independent_review": "PASS",
+    "index_complete_through_d22": "PASS",
+    "sha256_manifest": "PASS",
+    "secret_scan": "PASS",
+    "ps_protected_content_boundary": "PASS"
+  },
+  "stop_gate_scan": "CLEAR_FOR_BRANCH_PUSH_AND_DRAFT_PR_ONLY",
+  "supersedes": "Unpromoted local candidates for the scoped files; no prior promoted D20 was proven.",
+  "rollback_path": "Restore origin/v69 at 811518713a7882cf408771996a71b7ac7895cb20 and retain this receipt plus the source-input hashes for reconstruction.",
+  "github_binding": "The draft PR must expose the exact candidate commit and content hashes for review. A later Level 0 receipt must bind any approved hashes before merge or Supabase activation.",
+  "final_status": "CANDIDATE_READY_FOR_DRAFT_PR"
+}

@@ -1,11 +1,11 @@
 # DCSE Doctrine D06: File System and Device Governance
 
 **Document ID:** DCSE-D06  
-**Version:** v6.9  
+**Version:** v7.0  
 **Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
-**Last Version/Release Date/Time:** 2026-06-21T15:22:10-04:00  
-**Status:** DCSE Authorized version Pending Approval  
+**Last Doc Modified Date/Time:** 2026-07-29T18:07:30-04:00
+**Last Version/Release Date/Time:** 2026-07-29T18:07:30-04:00  
+**Status:** CANDIDATE PENDING DCS LEVEL 0 PROMOTION  
 **Classification:** INTERNAL  
 **Lane:** DCSE and PS Command Center  
 **Canonical file:** D06_File_System.md  
@@ -19,7 +19,7 @@
 All active, controlled files under the `C:\DS All Things\DCSE_Command_Center\v6.9` Hub must reside within one of the following directories:
 
 1. `00_Authority`: Contains the Master Profile and Constitution.
-2. `01_Doctrine`: Contains files D01 through D14.
+2. `01_Doctrine`: Contains the indexed doctrine set D01 through D22, subject to each file's recorded lifecycle status and D13/D14 protected-content controls.
 3. `02_Registry`: Contains access maps, doctrine indexes, and metadata registries.
 4. `03_Communications`: Contains protocols for inbox schemas.
 5. `04_Command_Packets`: Contains target task run instructions.
@@ -39,6 +39,22 @@ The local Hub remains the working authority and audit source. The GitHub `v69` b
 Auxiliary folders, including `video_image_written`, are classified as SUPPORT or REVIEW unless promoted by a later D05 baseline decision. Their presence in `v69` supports reconciliation and source availability. It does not convert them into ACTIVE doctrine and does not authorize promotion to `main`.
 
 The mirror scope remains bounded by D04 Section 2.6. Files containing live credentials, quarantine flags, or PS litigation material remain excluded from GitHub unless DCS separately assigns a safe destination and records that decision. All exclusions must be listed in the Tribunal push receipt.
+
+### 1.2 Source Authority and Storage Layers
+
+Before promotion, the complete local Hub source and its reconciliation evidence remain the working authority for candidate construction. After DCS Level 0 promotion, doctrine identity is the recorded GitHub repository, canonical path, commit SHA, and content SHA-256, with a matching constitutional runtime reference under D22.
+
+| Storage Layer | Governed Role | Authority Boundary |
+| :--- | :--- | :--- |
+| DCS decision record | Human authority | Controls promotion, exceptions, and delegated scope. |
+| GitHub | Versioned canonical artifact repository | Stores candidates, promoted artifacts, history, diffs, and receipts; a commit alone does not promote. |
+| DCSE-DDNA Supabase | Constitutional runtime governance registry | Stores canonical references, promotion state, integrity hashes, access scope, and runtime records; a row alone does not promote. |
+| SC Command Post Supabase | Operational application repository | Stores application and task state with governed references; it is not the constitutional doctrine source. |
+| Local Hub | Working and audit copy | Supports reconciliation, packaging, execution, and evidence; it does not silently supersede a promoted artifact. |
+| Offline PS Spoke | PS-only protected storage | Retains protected evidence, strategy, facts, and work product outside general GitHub, Supabase, and model retrieval. |
+| Deployment platforms | Published execution state | Run approved services but do not create doctrine authority. |
+
+Any mismatch among these layers is classified and reconciled under D05 and D22 before reliance.
 
 ---
 
@@ -168,6 +184,14 @@ The following rules carry the force of doctrine. Any AI agent, script, or human 
 - **REG-D06-10**: Any doctrine file that writes to a Hub directory (D03, D04, D05, D13, D15) must reference the target directory by its canonical label (e.g., `05_Tribunal_Inbox`, not a relative path or alias). This ensures D06 audits can parse cross-doctrine references unambiguously.
 - **REG-D06-11**: The 14-directory layout is frozen for v6.9. New directories may only be added as part of a formal version increment (e.g., v6.10 or v7.0), not by individual script or agent action.
 
+### 8.5 Secrets, Runtime References, and Drift
+
+- **REG-D06-12**: Secrets, passwords, tokens, service-role keys, recovery codes, MFA data, private connection strings, and unrestricted private URLs must not enter GitHub, ordinary Supabase content tables, model prompts, shared receipts, or public artifacts. References use secured-location identifiers only.
+- **REG-D06-13**: A device, model, agent, contractor, or automation receives no implied access from file visibility. Access must be explicit, scoped, logged, and revocable.
+- **REG-D06-14**: Before storage, migration, backup, deletion, or synchronization, record lane, system, authority holder, access level, secret exposure, PS exposure, action type, approval need, and rollback path.
+- **REG-D06-15**: A mismatch among GitHub, Supabase, local audit copy, or deployment is `DRIFT`; the mismatched copy is blocked from reliance until D05/D22 reconciliation is complete.
+- **REG-D06-16**: Duplicate identity is determined by content hash and authority, not filename alone. Hash equivalence never authorizes silent deletion.
+
 ---
 
 ## 9. Suggested Maintenance
@@ -189,6 +213,10 @@ Maintenance on the file system should be performed on a cadence that matches ope
 - **Full Pipeline Audit**: Before promoting any new Hub version (e.g., v6.9 → v6.10), run the complete seven-stage File Governance Pipeline against all 14 directories. Generate an audit receipt in `11_Receipts`.
 - **Device Matrix Review**: Confirm that all device role entries in Section 4 reflect current operational reality. Decommission any node no longer in service.
 - **Doctrine Cross-Reference Check**: Verify that all sibling doctrine files referencing Hub directory paths use the canonical labels defined in Section 1. Update any that have drifted.
+
+### 9.4 Backup and Recovery Verification
+
+Every governed backup record must identify its source system, timestamp, encryption status, retention period, storage destination, restoration procedure, and verification result. A backup claim is incomplete until recoverability is validated to the level required by the affected lane and system.
 
 ---
 
@@ -228,6 +256,7 @@ When a Hub directory is deprecated (e.g., a directory consolidated into another 
 - [D05_Baseline_Promotion.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D05_Baseline_Promotion.md) - Baselines stored in 06_Baselines directory
 - [D13_DART_Core.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D13_DART_Core.md) - Evidentiary receipts and SHA-256 audit logs routed to 11_Receipts
 - [D15_Database_Administration.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D15_Database_Administration.md) - DB backup exports routed to 10_Archive per REG-D06-09
+- [D22_Source_Authority_Runtime_Distribution.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D22_Source_Authority_Runtime_Distribution.md) - Canonical artifact, runtime registry, and drift controls
 
 ---
 
