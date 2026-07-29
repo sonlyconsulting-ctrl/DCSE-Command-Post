@@ -1,50 +1,130 @@
-# DCSE Doctrine D05: Baseline & Promotion
+# DCSE Doctrine D05: Baseline and Promotion
 
 **Document ID:** DCSE-D05  
-**Version:** v6.9  
-**Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-06-21T19:27:00-04:00
-**Last Version/Release Date/Time:** 2026-06-21T15:22:37-04:00  
-**Status:** DCSE Authorized version Pending Approval  
-**Classification:** INTERNAL  
-**Lane:** DCSE  
-**Canonical file:** D05_Baseline_Promotion.md  
-**Doctrine Description:** The Baseline and Promotion Doctrine (D05) establishes the lifecycle management and quality gates for committing system assets. It replaces traditional releases with signed "Baselines" containing cryptographic checksum mappings of the entire workspace. D05 defines the promotion gateway, which requires human Level 0 authorization to shift any candidate file into an active ratified status, preventing accidental or unverified promotion of volatile content.  
-**Parent Document:** [DCSE_Master_Profile_v6.9_RC1.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/00_Authority/DCSE_Master_Profile_v6.9_RC1.md)  
+**Version:** v7 reconciliation candidate  
+**Last Modified:** 2026-07-29  
+**Status:** CANDIDATE FOR PROMOTION  
+**Classification:** CONFIDENTIAL  
+**Lane:** DCSE / SC  
+**Canonical file:** `D05_Baseline_Promotion.md`
 
----
+## 1. Purpose
 
-## 1. Baseline System (Replaces "Releases")
+D05 governs baselines, verification, candidate handling, automatic promotion, manual promotion, rollback, and promotion receipts.
 
-The concept of a "Release" is replaced by a "Baseline".
-- A Baseline represents a verified state of the entire repository at a specific timestamp.
-- Baselines are committed to `06_Baselines/`.
-- Every baseline contains a `baseline_receipt.json` mapping all file paths to their current SHA-256 hash values.
+## 2. Baseline Standard
 
----
+A baseline is a verified state of a governed package, repository, project, doctrine set, database schema, or deployment at a specific point in time.
 
-## 2. Promotion Protocol
+Every baseline must identify:
 
-Promotion shifts a document's status from `CANDIDATE` to `ACTIVE_RATIFIED`.
-- Only DCS Level 0 may ratify a promotion.
-- Verification receipts are generated upon promotion, logging:
-  - Document ID and hash.
-  - Date and time of ratification.
-  - Sign-off block of the final approver.
-- If a document is modified after promotion, its status reverts to `CANDIDATE` until a new ratification event occurs.
+- package or system name;
+- version;
+- lane;
+- authority;
+- source files or objects;
+- repository and commit when applicable;
+- SHA-256 or equivalent integrity hashes;
+- exclusions;
+- validation performed;
+- unresolved risks;
+- rollback or recovery path;
+- exit criteria status.
 
----
+## 3. Promotion States
 
-## Related Doctrine
+```text
+DRAFT
+CANDIDATE
+VALIDATING
+BLOCKED
+PROMOTED
+SUPERSEDED
+ARCHIVED
+DRIFT
+```
 
-- [D02_Forward_Backward_Chaining.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D02_Forward_Backward_Chaining.md) - Backward chaining validates documents before promotion
-- [D06_File_System.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D06_File_System.md) - Baselines committed to 06_Baselines directory
+Candidate status is a lifecycle state, not an automatic approval requirement.
 
----
+## 4. Automatic Promotion Rule
 
-## Error-Catch Protocol
+A candidate promotes automatically when all mandatory checks pass and no true Stop-Gate exists, provided the governing workflow expressly permits automatic promotion.
 
-If this doctrine file is missing, unreadable, or not found by an executing agent, follow the canonical error-catch protocol defined in [D03_AI_Orchestration.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D03_AI_Orchestration.md) Section 5.3:
-1. **HALT** execution immediately. Do not guess or infer rules from pre-training.
-2. **LOG** `ERR_MISSING_DOCTRINE` to `05_Tribunal_Inbox`.
-3. **TRIGGER** STOPGATE and alert the user.
+Mandatory checks include:
+
+1. correct lane and authority;
+2. complete source manifest;
+3. required files present;
+4. naming and version controls satisfied;
+5. placeholders removed;
+6. secret scan passed;
+7. PS leakage scan passed;
+8. syntax or schema validation passed when applicable;
+9. dependencies resolved;
+10. rollback or recovery path documented;
+11. expected outputs produced;
+12. exit criteria verified.
+
+Routine candidate status, formatting review, or the mere existence of an approval field does not create a manual gate.
+
+## 5. Manual Promotion Rule
+
+DCS or DCSC manual approval is required when:
+
+- doctrine or constitutional authority changes;
+- PS material is involved;
+- public publication creates legal or reputational risk;
+- credentials, access, migration, deletion, or destructive actions are involved;
+- a source conflict remains unresolved;
+- the governing workflow expressly reserves promotion to Level 0;
+- a failed mandatory check requires an exception;
+- the action changes production ownership, security posture, or financial commitment.
+
+## 6. Promotion Receipt
+
+Every promotion receipt must include:
+
+```text
+item_id
+version
+lane
+promotion_type = automatic | manual
+promoted_by
+promotion_timestamp
+canonical_source
+repository_commit
+content_hash
+mandatory_checks
+stop_gate_scan
+supersedes
+rollback_path
+final_status
+```
+
+## 7. Modification After Promotion
+
+A material content change creates a new candidate version. The prior promoted version remains authoritative until the new version passes its promotion path. A minor non-substantive correction may preserve promotion only when the governing workflow defines that exception and records the new hash.
+
+## 8. Drift Control
+
+A mismatch among the promoted GitHub artifact, Supabase runtime record, local audit copy, or published deployment creates `DRIFT`.
+
+During DRIFT:
+
+- the last verified promoted version remains controlling;
+- the mismatched copy is not relied upon;
+- the source record and hashes are compared;
+- reconciliation is logged;
+- promotion resumes only after validation.
+
+## 9. Rollback
+
+Rollback must identify the prior promoted version, commit or baseline identifier, affected systems, restoration steps, data recovery requirements, and validation checks. A rollback is incomplete until the restored state is verified.
+
+## 10. Related Doctrine
+
+- D02: forward and backward validation
+- D03: model authority and execution routing
+- D04: communication and receipts
+- D06: file and storage placement
+- D20: source authority and runtime distribution
