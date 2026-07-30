@@ -1,0 +1,76 @@
+name: One-shot Ollama completion repair
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-shot-fix-ollama-completion.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch local Ollama transport
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('apps/sc-agent-os/api/index.js')
+          s = p.read_text(encoding='utf-8')
+          old = """    if(p==='ollama'){
+      const ollamaModel=model.replace('ollama:','');
+      const r=await fetch('http://localhost:11434/api/chat',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:ollamaModel,messages:chatHistory,stream:false})
+      });
+      if(!r.ok)throw new Error('Ollama '+r.status+' — CORS? Run: OLLAMA_ORIGINS=* ollama serve');
+      const d=await r.json();
+      const reply=d.message?.content||'[no response]';
+      chatHistory.push({role:'assistant',content:reply});
+      thinking.textContent=reply;thinking.className='msg agent';
+"""
+          new = """    if(p==='ollama'){
+      const ollamaModel=model.replace('ollama:','');
+      const completionOnly=new Set(['nous-hermes2:latest','dolphin-mistral:latest','smollm2:360m']);
+      const useGenerate=completionOnly.has(ollamaModel);
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),180000);
+      const promptParts=[];
+      if(activeSysPrompt)promptParts.push('System: '+activeSysPrompt);
+      chatHistory.forEach(m=>promptParts.push((m.role==='assistant'?'Assistant':'User')+': '+m.content));
+      if(useGenerate)promptParts.push('Assistant:');
+      let r;
+      try{
+        r=await fetch('http://127.0.0.1:11434/api/'+(useGenerate?'generate':'chat'),{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(useGenerate
+            ? {model:ollamaModel,prompt:promptParts.join('\\n\\n'),stream:false}
+            : {model:ollamaModel,messages:activeSysPrompt?[{role:'system',content:activeSysPrompt},...chatHistory]:chatHistory,stream:false}),
+          signal:controller.signal
+        });
+      }catch(error){
+        if(error&&error.name==='AbortError')throw new Error('Ollama timed out after 180 seconds while loading or generating.');
+        throw new Error('Local Ollama is unavailable or blocked for '+window.location.origin+'.');
+      }finally{clearTimeout(timer);}
+      let d={};
+      try{d=await r.json();}catch(_){d={};}
+      if(!r.ok)throw new Error('Ollama '+r.status+': '+(d.error||'Local model request failed'));
+      const reply=(useGenerate?d.response:d.message?.content)||d.response||'[no response]';
+      chatHistory.push({role:'assistant',content:reply});
+      thinking.textContent=reply;thinking.className='msg agent';
+"""
+          if old not in s:
+              raise SystemExit('Expected Ollama chat block not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+      - name: Remove one-shot workflow and commit
+        run: |
+          rm .github/workflows/one-shot-fix-ollama-completion.yml
+          git config user.name "dcse-automation"
+          git config user.email "actions@users.noreply.github.com"
+          git add apps/sc-agent-os/api/index.js .github/workflows/one-shot-fix-ollama-completion.yml
+          git commit -m "Fix completion-only Ollama models in SC Agent OS"
+          git push
