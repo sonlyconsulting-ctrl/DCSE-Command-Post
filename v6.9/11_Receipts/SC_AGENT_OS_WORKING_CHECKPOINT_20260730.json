@@ -1,0 +1,67 @@
+{
+  "record_id": "SC-AGENT-OS-WORKING-CHECKPOINT-20260730",
+  "classification": "SC_CONFIDENTIAL_INTERNAL_GOVERNANCE",
+  "authority": "DCS_LEVEL_0",
+  "timestamp": "2026-07-30T00:11:00-04:00",
+  "production_url": "https://os.sonlyconsulting.com",
+  "governance_issue": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/issues/27",
+  "verified_working": [
+    "supabase_environment_configured",
+    "authentication_successful",
+    "dashboard_loads",
+    "left_navigation_partially_functional",
+    "agent_chat_voice_route_opens",
+    "claude_provider_working",
+    "ollama_smollm2_1_7b_response_success",
+    "production_stable_during_verified_session"
+  ],
+  "pending_validation": [
+    "openai_provider",
+    "all_configured_cloud_providers",
+    "all_sidebar_routes",
+    "desktop_device_local_service_architecture",
+    "restart_and_redeploy_persistence",
+    "agent_docs_and_agent_operations_end_to_end",
+    "password_recovery_update_password_route"
+  ],
+  "working_version_lock": {
+    "instruction": "Treat the current production deployment as the rollback-safe checkpoint until exact repository, deployment ID, and production commit are identified.",
+    "production_replacement_allowed": false,
+    "replacement_conditions": [
+      "preview_validation_pass",
+      "rollback_reference_recorded",
+      "changed_file_list_recorded",
+      "provider_matrix_pass",
+      "navigation_matrix_pass",
+      "no_secret_or_ps_exposure"
+    ]
+  },
+  "lessons_learned": [
+    "Deployment environment variables must be verified in Vercel and cannot be inferred from Supabase project health.",
+    "Password recovery requires both approved Supabase redirect URLs and an application-side update-password route.",
+    "Restart testing exposes cached provider and runtime-state defects.",
+    "Cross-device reproduction separates browser-local failures from server-side failures.",
+    "Ollama success proves local-device reachability for the tested session and does not prove universal hosted availability.",
+    "Partial success must be checkpointed before additional remediation.",
+    "Manual user clicking does not replace automated provider and navigation validation.",
+    "Every governed task requires a closeout receipt before completion."
+  ],
+  "required_next_actions": [
+    "identify_exact_sc_agent_os_repository_and_production_commit",
+    "preserve_exact_commit_as_checkpoint_branch_or_tag",
+    "document_and_validate_desktop_ollama_bridge_cors_and_restart_behavior",
+    "audit_agent_docs_and_operations_source_routes_database_ui_and_receipts",
+    "complete_provider_validation_matrix",
+    "complete_sidebar_route_matrix",
+    "validate_preview_before_production_change",
+    "issue_final_closeout_receipt"
+  ],
+  "controls": {
+    "secrets_excluded": true,
+    "ps_excluded": true,
+    "login_removal_prohibited": true,
+    "production_change_without_preview_prohibited": true,
+    "completion_claim_without_agent_operations_evidence_prohibited": true
+  },
+  "status": "CHECKPOINT_LOCKED_PENDING_FULL_VALIDATION"
+}
