@@ -1326,8 +1326,10 @@ function nav(id,el,options){
 }
 
 function syncNavigationFromLocation(){
-  const id=panelFromLocation();
+  const requested=requestedPanelFromLocation();
+  const id=PANEL_IDS.has(requested)?requested:'mission';
   if(activePanelId!==id)nav(id,null,{updateHistory:false});
+  if(requested!==id)window.history.replaceState({panel:id},'','#'+id);
 }
 
 const sidebar=document.querySelector('.sidebar');
@@ -2225,9 +2227,7 @@ function addOpsEntry(){
 }
 
 // Init all renders
-const initialRequestedPanel=requestedPanelFromLocation();
-nav(panelFromLocation(),null,{updateHistory:false});
-if(!PANEL_IDS.has(initialRequestedPanel))window.history.replaceState({panel:activePanelId},'','#'+activePanelId);
+syncNavigationFromLocation();
 renderTasks();
 renderPortfolio();
 renderDDNA();

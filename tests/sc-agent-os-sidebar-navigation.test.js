@@ -93,6 +93,7 @@ test('navigation supports active state, hash routes, history, and task chat with
   assert.match(script, /aria-current','page'/);
   assert.match(script, /window\.history\.pushState/);
   assert.match(script, /window\.history\.replaceState/);
+  assert.match(script, /if\(requested!==id\)window\.history\.replaceState/);
   assert.match(script, /addEventListener\('keydown'/);
   assert.match(script, /event\.key!==\s*'Enter'/);
   assert.match(script, /addEventListener\('popstate',syncNavigationFromLocation\)/);
