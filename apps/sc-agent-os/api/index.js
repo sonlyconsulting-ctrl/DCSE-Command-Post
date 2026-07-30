@@ -108,9 +108,10 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
 .sidebar{width:var(--sidebar);background:var(--navy-mid);border-right:1px solid var(--navy-border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
 .sb-section{padding:8px 0}
 .sb-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;padding:0 12px 4px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;transition:all .12s;border-left:2px solid transparent;font-size:11px;color:var(--text-dim);user-select:none}
+.nav-item{appearance:none;width:100%;display:flex;align-items:center;gap:8px;padding:6px 12px;cursor:pointer;transition:all .12s;border:0;border-left:2px solid transparent;background:transparent;text-align:left;font-family:var(--font);font-size:11px;color:var(--text-dim);user-select:none}
 .nav-item:hover{background:var(--navy-light);color:var(--cream)}
 .nav-item.active{background:var(--navy-light);color:var(--cream);border-left-color:var(--gold)}
+.nav-item:focus-visible{outline:2px solid var(--gold);outline-offset:-2px;color:var(--cream)}
 .nav-icon{width:13px;text-align:center;flex-shrink:0;font-size:11px}
 .nav-badge{margin-left:auto;font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;flex-shrink:0}
 .nb-gold{background:var(--gold);color:var(--navy)}
@@ -257,55 +258,55 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
 </div>
 
 <div class="layout">
-  <div class="sidebar">
+  <nav class="sidebar" aria-label="SC Agent OS sections">
     <div class="sb-section">
       <div class="sb-label">Command</div>
-      <div class="nav-item active" onclick="nav('mission',this)"><span class="nav-icon">⚡</span>Mission Control</div>
-      <div class="nav-item" onclick="nav('chat',this)"><span class="nav-icon">💬</span>Agent Chat + Voice<span class="nav-badge nb-live">LIVE</span></div>
-      <div class="nav-item" onclick="nav('approvals',this)"><span class="nav-icon">✅</span>Approvals<span class="nav-badge nb-gold">1</span></div>
+      <button type="button" class="nav-item active" data-panel="mission" aria-controls="panel-mission" aria-current="page"><span class="nav-icon">⚡</span>Mission Control</button>
+      <button type="button" class="nav-item" data-panel="chat" aria-controls="panel-chat"><span class="nav-icon">💬</span>Agent Chat + Voice<span class="nav-badge nb-live">LIVE</span></button>
+      <button type="button" class="nav-item" data-panel="approvals" aria-controls="panel-approvals"><span class="nav-icon">✅</span>Approvals<span class="nav-badge nb-gold">1</span></button>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">Orchestration</div>
-      <div class="nav-item" onclick="nav('agents',this)"><span class="nav-icon">🤖</span>Agent Dock<span class="nav-badge nb-gold">12</span></div>
-      <div class="nav-item" onclick="nav('tasks',this)"><span class="nav-icon">▦</span>Task Queue<span class="nav-badge nb-blue" id="taskBadge">3</span></div>
-      <div class="nav-item" onclick="nav('portfolio',this)"><span class="nav-icon">◈</span>Portfolio<span class="nav-badge nb-gold" id="portBadge">4</span></div>
-      <div class="nav-item" onclick="nav('agentops',this)"><span class="nav-icon">⬢</span>Agent Operations<span class="nav-badge nb-amber" id="agentopsBadge">?</span></div>
+      <button type="button" class="nav-item" data-panel="agents" aria-controls="panel-agents"><span class="nav-icon">🤖</span>Agent Dock<span class="nav-badge nb-gold">12</span></button>
+      <button type="button" class="nav-item" data-panel="tasks" aria-controls="panel-tasks"><span class="nav-icon">▦</span>Task Queue<span class="nav-badge nb-blue" id="taskBadge">3</span></button>
+      <button type="button" class="nav-item" data-panel="portfolio" aria-controls="panel-portfolio"><span class="nav-icon">◈</span>Portfolio<span class="nav-badge nb-gold" id="portBadge">4</span></button>
+      <button type="button" class="nav-item" data-panel="agentops" aria-controls="panel-agentops"><span class="nav-icon">⬢</span>Agent Operations<span class="nav-badge nb-amber" id="agentopsBadge">?</span></button>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">DDNA + Intelligence</div>
-      <div class="nav-item" onclick="nav('ddna',this)"><span class="nav-icon">△</span>DDNA Harvest<span class="nav-badge nb-red">73</span></div>
-      <div class="nav-item" onclick="nav('models',this)"><span class="nav-icon">△</span>Local Models<span class="nav-badge nb-green" id="modelsBadge">?</span></div>
-      <div class="nav-item" onclick="nav('rag',this)"><span class="nav-icon">▤</span>RAG / Source<span class="nav-badge nb-gold" id="ragBadge">8</span></div>
-      <div class="nav-item" onclick="nav('runtime',this)"><span class="nav-icon">⬡</span>Runtime Health<span class="nav-badge nb-amber" id="runtimeBadge">?</span></div>
+      <button type="button" class="nav-item" data-panel="ddna" aria-controls="panel-ddna"><span class="nav-icon">△</span>DDNA Harvest<span class="nav-badge nb-red">73</span></button>
+      <button type="button" class="nav-item" data-panel="models" aria-controls="panel-models"><span class="nav-icon">△</span>Local Models<span class="nav-badge nb-green" id="modelsBadge">?</span></button>
+      <button type="button" class="nav-item" data-panel="rag" aria-controls="panel-rag"><span class="nav-icon">▤</span>RAG / Source<span class="nav-badge nb-gold" id="ragBadge">8</span></button>
+      <button type="button" class="nav-item" data-panel="runtime" aria-controls="panel-runtime"><span class="nav-icon">⬡</span>Runtime Health<span class="nav-badge nb-amber" id="runtimeBadge">?</span></button>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">Governance</div>
-      <div class="nav-item" onclick="nav('tribunal',this)"><span class="nav-icon">⚖</span>Tribunal<span class="nav-badge nb-red">5</span></div>
-      <div class="nav-item" onclick="nav('dispatch',this)"><span class="nav-icon">📦</span>Dispatch</div>
-      <div class="nav-item" onclick="nav('personas',this)"><span class="nav-icon">◉</span>Personas<span class="nav-badge nb-gold" id="personasBadge">6</span></div>
-      <div class="nav-item" onclick="nav('assets',this)"><span class="nav-icon">◫</span>Assets<span class="nav-badge nb-blue" id="assetsBadge">7</span></div>
-      <div class="nav-item" onclick="nav('phasegate',this)"><span class="nav-icon">▥</span>Phase Gates<span class="nav-badge nb-amber" id="phasegateBadge">10</span></div>
-      <div class="nav-item" onclick="nav('dcsqueue',this)"><span class="nav-icon">◆</span>DCS Queue<span class="nav-badge nb-red" id="dcsqueueBadge">?</span></div>
-      <div class="nav-item" onclick="nav('receipts',this)"><span class="nav-icon">▧</span>Receipts<span class="nav-badge nb-amber" id="receiptsBadge">?</span></div>
+      <button type="button" class="nav-item" data-panel="tribunal" aria-controls="panel-tribunal"><span class="nav-icon">⚖</span>Tribunal<span class="nav-badge nb-red">5</span></button>
+      <button type="button" class="nav-item" data-panel="dispatch" aria-controls="panel-dispatch"><span class="nav-icon">📦</span>Dispatch</button>
+      <button type="button" class="nav-item" data-panel="personas" aria-controls="panel-personas"><span class="nav-icon">◉</span>Personas<span class="nav-badge nb-gold" id="personasBadge">6</span></button>
+      <button type="button" class="nav-item" data-panel="assets" aria-controls="panel-assets"><span class="nav-icon">◫</span>Assets<span class="nav-badge nb-blue" id="assetsBadge">7</span></button>
+      <button type="button" class="nav-item" data-panel="phasegate" aria-controls="panel-phasegate"><span class="nav-icon">▥</span>Phase Gates<span class="nav-badge nb-amber" id="phasegateBadge">10</span></button>
+      <button type="button" class="nav-item" data-panel="dcsqueue" aria-controls="panel-dcsqueue"><span class="nav-icon">◆</span>DCS Queue<span class="nav-badge nb-red" id="dcsqueueBadge">?</span></button>
+      <button type="button" class="nav-item" data-panel="receipts" aria-controls="panel-receipts"><span class="nav-icon">▧</span>Receipts<span class="nav-badge nb-amber" id="receiptsBadge">?</span></button>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">Administration</div>
-      <div class="nav-item" onclick="nav('config',this)"><span class="nav-icon">⚙</span>Configuration<span class="nav-badge nb-amber" id="configBadge">?</span></div>
-      <div class="nav-item" onclick="nav('dba',this)"><span class="nav-icon">▣</span>DBA Console<span class="nav-badge nb-amber" id="dbaBadge">?</span></div>
-      <div class="nav-item" onclick="nav('apikeys',this)"><span class="nav-icon">⚿</span>API Keys Admin<span class="nav-badge nb-amber" id="apikeysBadge">?</span></div>
-      <div class="nav-item" onclick="nav('assurance',this)"><span class="nav-icon">◎</span>Assurance Loops<span class="nav-badge nb-amber" id="assuranceBadge">A0-A8</span></div>
+      <button type="button" class="nav-item" data-panel="config" aria-controls="panel-config"><span class="nav-icon">⚙</span>Configuration<span class="nav-badge nb-amber" id="configBadge">?</span></button>
+      <button type="button" class="nav-item" data-panel="dba" aria-controls="panel-dba"><span class="nav-icon">▣</span>DBA Console<span class="nav-badge nb-amber" id="dbaBadge">?</span></button>
+      <button type="button" class="nav-item" data-panel="apikeys" aria-controls="panel-apikeys"><span class="nav-icon">⚿</span>API Keys Admin<span class="nav-badge nb-amber" id="apikeysBadge">?</span></button>
+      <button type="button" class="nav-item" data-panel="assurance" aria-controls="panel-assurance"><span class="nav-icon">◎</span>Assurance Loops<span class="nav-badge nb-amber" id="assuranceBadge">A0-A8</span></button>
     </div>
     <div class="divider"></div>
     <div class="sb-section">
       <div class="sb-label">System</div>
-      <div class="nav-item" onclick="nav('ps',this)"><span class="nav-icon">🛡</span>PS Firewall</div>
-      <div class="nav-item" onclick="nav('log',this)"><span class="nav-icon">📋</span>Ops Log</div>
+      <button type="button" class="nav-item" data-panel="ps" aria-controls="panel-ps"><span class="nav-icon">🛡</span>PS Firewall</button>
+      <button type="button" class="nav-item" data-panel="log" aria-controls="panel-log"><span class="nav-icon">📋</span>Ops Log</button>
     </div>
-  </div>
+  </nav>
 
   <div class="main">
 
@@ -1279,14 +1280,35 @@ function tick(){document.getElementById('clock').textContent=new Date().toLocale
 tick();setInterval(tick,1000);
 
 // Nav
-function nav(id,el){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  if(el){el.classList.add('active');}
-  else{
-    const found=Array.from(document.querySelectorAll('.nav-item')).find(n=>(n.getAttribute('onclick')||'').includes("'"+id+"'"));
-    if(found)found.classList.add('active');
+const NAV_ITEMS=Array.from(document.querySelectorAll('.nav-item[data-panel]'));
+const PANEL_IDS=new Set(NAV_ITEMS.map(item=>item.dataset.panel).filter(id=>document.getElementById('panel-'+id)));
+let activePanelId=null;
+
+function requestedPanelFromLocation(){
+  let requested=window.location.hash.slice(1);
+  if(requested.startsWith('/'))requested=requested.slice(1);
+  return requested.trim();
+}
+
+function panelFromLocation(){
+  const requested=requestedPanelFromLocation();
+  return PANEL_IDS.has(requested)?requested:'mission';
+}
+
+function nav(id,el,options){
+  const opts=options||{};
+  const panel=document.getElementById('panel-'+id);
+  if(!PANEL_IDS.has(id)||!panel)return false;
+  document.querySelectorAll('.panel').forEach(p=>{p.classList.remove('active');p.setAttribute('aria-hidden','true');});
+  NAV_ITEMS.forEach(n=>{n.classList.remove('active');n.removeAttribute('aria-current');});
+  panel.classList.add('active');
+  panel.setAttribute('aria-hidden','false');
+  const item=el||NAV_ITEMS.find(n=>n.dataset.panel===id);
+  if(item){item.classList.add('active');item.setAttribute('aria-current','page');}
+  activePanelId=id;
+  if(opts.updateHistory!==false){
+    const hash='#'+id;
+    if(window.location.hash!==hash)window.history.pushState({panel:id},'',hash);
   }
   if(id==='personas')loadPersonas(_personasFilter);
   if(id==='assets')loadAssets(_assetsFilter);
@@ -1300,7 +1322,21 @@ function nav(id,el){
   if(id==='apikeys'&&!_apikeysChecked)refreshAPIKeys();
   if(id==='assurance'&&!_assuranceChecked)refreshAssurance();
   if(id==='dispatch')loadDispatchInbox('all');
+  return true;
 }
+
+function syncNavigationFromLocation(){
+  const id=panelFromLocation();
+  if(activePanelId!==id)nav(id,null,{updateHistory:false});
+}
+
+const sidebar=document.querySelector('.sidebar');
+if(sidebar)sidebar.addEventListener('click',event=>{
+  const item=event.target.closest('.nav-item[data-panel]');
+  if(item&&sidebar.contains(item))nav(item.dataset.panel,item);
+});
+window.addEventListener('popstate',syncNavigationFromLocation);
+window.addEventListener('hashchange',syncNavigationFromLocation);
 
 // Voice
 let voiceActive=false,recognition=null;
@@ -1450,7 +1486,7 @@ function renderTasks(filter){
       <div class="trib-info"><div class="trib-title">\${t.title}</div><div class="trib-meta">Owner: \${t.owner} · \${t.created}</div></div>
       <div class="flex gap-6">
         <button class="btn btn-ghost btn-sm" onclick="cycleTask(\${t.id})">Cycle</button>
-        <button class="btn btn-ghost btn-sm" onclick="chatAboutTask('\${t.title.replace(/'/g,'\\\\'')}')">Chat</button>
+        <button class="btn btn-ghost btn-sm" onclick="chatAboutTaskById(\${t.id})">Chat</button>
         <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteTask(\${t.id})">✕</button>
       </div>
     </div>\`).join(''):'<div class="mono text-dim" style="padding:8px">No tasks.</div>';
@@ -1473,6 +1509,7 @@ function cycleTask(id){
   t.status=cycle[t.status]||'queued';saveTasks();renderTasks();
 }
 function deleteTask(id){tasks=tasks.filter(x=>x.id!==id);saveTasks();renderTasks();}
+function chatAboutTaskById(id){const task=tasks.find(x=>x.id===id);if(task)chatAboutTask(task.title);}
 function chatAboutTask(title){
   document.getElementById('chatInput').value='Help me with this task: '+title;
   nav('chat',null);
@@ -2183,6 +2220,9 @@ function addOpsEntry(){
 }
 
 // Init all renders
+const initialRequestedPanel=requestedPanelFromLocation();
+nav(panelFromLocation(),null,{updateHistory:false});
+if(!PANEL_IDS.has(initialRequestedPanel))window.history.replaceState({panel:activePanelId},'','#'+activePanelId);
 renderTasks();
 renderPortfolio();
 renderDDNA();
