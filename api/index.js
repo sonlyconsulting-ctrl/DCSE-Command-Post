@@ -182,22 +182,38 @@ onModelChange();`;
   const splitFetch = `      let r;
       if(p==='ollama'){
         const controller=new AbortController();
-        const timer=setTimeout(()=>controller.abort(),30000);
+        const timer=setTimeout(()=>controller.abort(),180000);
         try{
           r=await fetch('http://127.0.0.1:11434/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:model.slice('ollama:'.length),messages:activeSysPrompt?[{role:'system',content:activeSysPrompt},...chatHistory]:chatHistory,stream:false}),signal:controller.signal});
         }catch(error){
-          const detail=error&&error.name==='AbortError'?'Local Ollama timed out.':'Local Ollama is unavailable or blocked by OLLAMA_ORIGINS.';
+          const detail=error&&error.name==='AbortError'?'Local Ollama timed out after 180 seconds.':'Local Ollama is unavailable or blocked by OLLAMA_ORIGINS.';
           throw new Error(detail+' Start Ollama and authorize '+window.location.origin+'.');
         }finally{clearTimeout(timer);}
       }else{
         r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,messages:chatHistory,system:activeSysPrompt})});
       }`;
 
+  const oldOllamaOptions = `<optgroup label="Ollama Local">
+              <option value="ollama:nous-hermes2">Nous-Hermes2 (DDNA)</option>
+              <option value="ollama:dolphin-mistral">Dolphin Mistral (Uncensored)</option>
+              <option value="ollama:qwen2.5">Qwen2.5 (Local)</option>
+            </optgroup>`;
+  const newOllamaOptions = `<optgroup label="Ollama Local">
+              <option value="ollama:nous-hermes2:latest">Nous-Hermes2 11B (DDNA)</option>
+              <option value="ollama:dolphin-mistral:latest">Dolphin Mistral 7B (Uncensored)</option>
+              <option value="ollama:llama3.1:8b">Llama 3.1 8B</option>
+              <option value="ollama:qwen2.5:1.5b">Qwen 2.5 1.5B</option>
+              <option value="ollama:smollm2:1.7b">SmolLM2 1.7B</option>
+              <option value="ollama:dolphin-phi:2.7b">Dolphin Phi 2.7B</option>
+              <option value="ollama:smollm2:360m">SmolLM2 360M</option>
+            </optgroup>`;
+
   return html
     .replace('<input class="key-input" id="apiKeyInput" type="password" placeholder="API key" style="width:170px" oninput="saveKey()" />', '<input id="apiKeyInput" type="hidden" value="server-managed" />')
     .replace('<span id="modelStatus" class="tag tag-amber">KEY NEEDED</span>', '<span id="modelStatus" class="tag tag-green">SERVER KEY</span>')
     .replace(oldKeyBlock, newKeyBlock)
     .replace(oldFetch, splitFetch)
+    .replace(oldOllamaOptions, newOllamaOptions)
     .replace(/Select provider, enter API key, and send\./g, 'Select provider and send. Cloud credentials are managed by the server; Ollama runs locally.')
     .replace(/Enter your (Anthropic|Google|OpenAI|Qwen) API key above[^<]*/g, 'Provider credentials are managed securely by the server.');
 }
