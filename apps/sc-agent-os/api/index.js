@@ -1335,6 +1335,11 @@ if(sidebar)sidebar.addEventListener('click',event=>{
   const item=event.target.closest('.nav-item[data-panel]');
   if(item&&sidebar.contains(item))nav(item.dataset.panel,item);
 });
+if(sidebar)sidebar.addEventListener('keydown',event=>{
+  if(event.key!=='Enter'&&event.key!==' ')return;
+  const item=event.target.closest('.nav-item[data-panel]');
+  if(item&&sidebar.contains(item)){event.preventDefault();nav(item.dataset.panel,item);}
+});
 window.addEventListener('popstate',syncNavigationFromLocation);
 window.addEventListener('hashchange',syncNavigationFromLocation);
 
