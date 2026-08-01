@@ -1,8 +1,10 @@
 # TSL Current Sports Availability Matrix
 
+**Governance:** DCSE v7 (promoted doctrine track). Filed under branch `tsl/phase2c-realtime-sports-v7`, based on `origin/v69` at commit `3ebc85f` ("Promote v7 doctrine package through D22"), not on the diverged local `v69` history.
 **Verification date:** 2026-08-01 (today) through 2026-08-03 (48h window)
 **Method:** Live query against ESPN's public site scoreboard API for every `feed_config.espn_path` currently in `tsl_sports`, using `?dates=YYYYMMDD[-YYYYMMDD]`. No results assumed from memory, prior TSL scope statements, or the 2026-07-30 seed data.
 **Default display timezone:** ET (`profiles.timezone_pref` default). Source timestamps are UTC; convert by the member's stored `timezone_pref` (ET = UTC-4, CT = UTC-5, MT = UTC-6, PT = UTC-7 during EDT/daylight offsets as of this date).
+**Revision note:** WNBA was missing from the original pass — added below (row + `tsl_sports` config) without altering any other verified provider finding.
 
 ## Matrix
 
@@ -12,6 +14,7 @@
 | NFL | NFL Football | true | `football/nfl` | Yes | No | 0 | 0 | none (empty array) | TEAM/HEAD_TO_HEAD (ready, just no games) | Off Season (2025 season window: Jul 31 2025 – Feb 12 2026) | Feed healthy, seasonal gap | **MONITOR** (config says active but nothing to sync — not a bug, just off-season) |
 | NCAAF | NCAA Football | true | `football/college-football` | Yes | No | 0 | 0 | none | TEAM/HEAD_TO_HEAD | Preseason (window Feb 1 2026 – Jan 28 2027) | Feed healthy | **MONITOR** |
 | NBA | NBA Basketball | true | `basketball/nba` | Yes | No | 0 | 0 | none | TEAM/HEAD_TO_HEAD | Preseason (2026-27 season starts Sep 30 2026) | Feed healthy; the `tsl_events` rows from the 07-30 seed are last season's playoffs (April), already `final` — correctly stale, not a bug | **MONITOR** |
+| WNBA | WNBA Basketball | true (added this pass) | `basketball/wnba` | Yes | **Yes** | 2 (both `Final`) | 6 (4 more `Scheduled` Aug 2–3) | `Final`, `Scheduled` | Standard TEAM/HEAD_TO_HEAD | 2026 Regular Season, in progress (Apr 3 – Oct 20 2026) | Live, real data confirmed — was missing from `tsl_sports` entirely until this pass, not just misconfigured | **ENABLE** |
 | NCAAB | NCAA Basketball | **false** | `basketball/mens-college-basketball` | Yes* | No (next event Nov 2) | 0 | 0 | `Scheduled` (1 event Nov 2, 2026 — outside window) | TEAM/HEAD_TO_HEAD | Regular season window opened Jul 13 2026, first real game not until Nov 2 | *First call with the date range 404'd; retried without the date param and got a valid response. Path is real — flaky/param-sensitive, needs a retry-with-fallback in the sync job, not a hardcoded working assumption | **REPAIR** (verify path reliability before enabling; config-inactive is currently correct given 0 games in the next 90 days) |
 | NHL | NHL Hockey | true | `hockey/nhl` | Yes | No | 0 | 0 | none | TEAM/HEAD_TO_HEAD | Off Season (2025-26 window: Sep 20 2025 – Jul 1 2026) | Feed healthy | **MONITOR** |
 | UFL | UFL Football | true | `football/ufl` | Yes | No | 0 | 0 | none | TEAM/HEAD_TO_HEAD | 2026 season already concluded (Mar 14 – Jun 17 2026) | Feed healthy, path confirmed real (no 404) | **MONITOR** (season over for the year — config-active is a real mismatch worth a product decision, not something I'm changing unilaterally) |
@@ -23,7 +26,8 @@
 
 ## Cross-cutting findings
 
-- **Three distinct normalization shapes are required**, not one: TEAM (head-to-head, 6 sports), FIELD (leaderboard, PGA/LPGA), CARD (multi-bout event, UFC/Boxing). A real-time engine built only around TEAM/head-to-head — which is what `tsl_events`'s current columns (`home_abbr`/`away_abbr`) assume — cannot represent PGA, LPGA, UFC, or Boxing correctly as-is. Schema needs to accommodate all three before those sports can sync.
+- **Three distinct normalization shapes are required**, not one: TEAM (head-to-head — MLB, NFL, NCAAF, NBA, NCAAB, NHL, UFL, WNBA), FIELD (leaderboard — PGA, LPGA), CARD (multi-bout event — UFC, Boxing). A real-time engine built only around TEAM/head-to-head — which is what `tsl_events`'s current columns (`home_abbr`/`away_abbr`) assume — cannot represent PGA, LPGA, UFC, or Boxing correctly as-is. Schema needs to accommodate all three before those sports can sync.
 - **ESPN's site API is public and unauthenticated** but is not an official, documented, SLA-backed API — it can change shape without notice. The NCAAB 404-then-success behavior on an identical path is a live example of that fragility. The sync engine needs defensive parsing and monitoring, not a hardcoded assumption that a 200 today means 200 tomorrow.
-- **Zero events right now is correct for 7 of 10 ESPN sports** (NFL, NCAAF, NBA, NCAAB, NHL, UFL all off-season/preseason) — this is real seasonal reality, not a coverage gap to "fix." Only MLB, PGA, LPGA, and UFC have anything to show a member today.
+- **Zero events right now is correct for 7 of 11 ESPN sports** (NFL, NCAAF, NBA, NCAAB, NHL, UFL all off-season/preseason) — this is real seasonal reality, not a coverage gap to "fix." MLB, WNBA, PGA, LPGA, and UFC have real data to show a member today.
+- **WNBA was entirely absent from `tsl_sports`**, not just misconfigured — a real gap in the initial config, not a provider issue. Live-verified and added this pass (2 finals today, 4 scheduled through Aug 3).
 - **MANUAL sports (Boxing, Special) have no code path at all** — `is_active=true` on both but there is nothing to enable; they need an admin UI, which is a Phase 2c/H007-adjacent build item, not a sync-config change.
