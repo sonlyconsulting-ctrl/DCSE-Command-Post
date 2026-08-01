@@ -1,0 +1,56 @@
+{
+  "receipt_id": "TRIBUNAL-DCSE-7DS-20260725-20260731-CHATGPT-CODEX",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-31T22:30:00-04:00",
+  "lane": "DCSE",
+  "confidentiality": "DCSE-Confidential",
+  "record_type": "seven_day_status_report",
+  "reporting_window": {
+    "start": "2026-07-25",
+    "end": "2026-07-31"
+  },
+  "reporting_node": "ChatGPT/Codex",
+  "report_file": "DCSE_COMPREHENSIVE_7_DAY_STATUS_20260725_20260731_CHATGPT_CODEX.md",
+  "report_sha256": "e75fad7ade9125aeb5cb51c93e4d5ca7125c2f4f9e940b785c0d4df8425d92e0",
+  "github": {
+    "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+    "branch": "main",
+    "path": "docs/status/7-day/DCSE_COMPREHENSIVE_7_DAY_STATUS_20260725_20260731_CHATGPT_CODEX.md",
+    "commit_sha": "46e815449cdb0ad8bdc812a8d2ba6bb6fbcfa4e6",
+    "status": "PASS"
+  },
+  "included_current_work": [
+    "DCSE v7 Orchestration Control Plane",
+    "Communication Gate and CR-SEC-001 staging closeout",
+    "SC Agent OS authentication, navigation, chat, and Ollama repairs",
+    "Employment and resume workflow development",
+    "Custom Digital Campaigns implementation",
+    "DCSE Bulk Video Production Module direction",
+    "Three-Layer Closeout Protocol"
+  ],
+  "qwen_submission_treatment": {
+    "status": "INCLUDED_WITH_CORRECTIONS",
+    "date_correction": "A June 19 report cannot contain July 30 and July 31 events.",
+    "window_correction": "June 3, June 4, and June 19 activities are historical carryover, not July 25 through July 31 activity.",
+    "evidence_control": "Unverified Qwen claims were not promoted as verified facts."
+  },
+  "campaign_closeout": {
+    "campaign_id": "SC-CDCP-2026-0730-001",
+    "status": "PARTIAL_LOCK_PENDING_TRIBUNAL_ACKNOWLEDGMENT",
+    "live_url": "https://www.sonlyconsulting.com/start-here/custom-digital-campaigns"
+  },
+  "supabase": {
+    "project_name": "SC-Command-Post",
+    "project_ref": "nevgdyfpxdaloacuutal",
+    "report_asset_id": "DCSE-7DS-20260725-20260731-CHATGPT-CODEX",
+    "audit_event_key": "DCSE-7DS-20260725-20260731-CHATGPT-CODEX-ISSUED",
+    "status": "PENDING_REGISTRATION"
+  },
+  "tribunal_delivery": {
+    "target": "C:\\DS All Things\\DCSE_Command_Center\\_Tribunal_Inbox",
+    "packet_status": "RELAY_READY_NOT_INGESTED",
+    "acknowledgment_status": "PENDING",
+    "blocker": "Windows Command Center Tribunal Inbox is not mounted in the current cloud session."
+  },
+  "overall_closeout_status": "PARTIAL_PENDING_SUPABASE_REGISTRATION_AND_TRIBUNAL_ACKNOWLEDGMENT"
+}
