@@ -1,0 +1,73 @@
+{
+  "receipt_id": "TRIBUNAL-SC-CDCP-2026-0730-001-IMPLEMENTATION-LOCK",
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-31T22:00:00-04:00",
+  "lane": "SC",
+  "confidentiality": "SC-Internal",
+  "record_type": "implemented_asset_lock",
+  "asset_record_id": "SC-CDCP-2026-0730-001",
+  "campaign_name": "Custom Digital Campaigns",
+  "featured_asset": "July 30 Birthday Race Results",
+  "live_url": "https://www.sonlyconsulting.com/start-here/custom-digital-campaigns",
+  "implementation_status": "IMPLEMENTED_LIVE_ASSET_LOCKED",
+  "implementation_confirmed_by": "DCS/DCSE",
+  "time_to_market": {
+    "reported_elapsed_hours_min": 9,
+    "reported_elapsed_hours_max": 11,
+    "work_pattern": "little_to_no_break_time",
+    "evidence_level": "DCS_REPORTED"
+  },
+  "video": {
+    "duration_seconds": 19.18,
+    "width": 720,
+    "height": 480,
+    "video_codec": "H.264",
+    "audio_codec": "AAC",
+    "includes_voice_audio": true
+  },
+  "github": {
+    "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+    "branch": "main",
+    "records": [
+      {
+        "path": "docs/campaigns/custom-digital-campaigns/SC_CUSTOM_DIGITAL_CAMPAIGNS_IMPLEMENTATION_RECORD_20260731.md",
+        "commit_sha": "b50fb613ea517e5b192d1f0df00b68d99db83647",
+        "sha256": "fb70168ec8c4a8b38e4594420567d1fdacc0bbfe1d4c3f091b5cd69c629bcb3f"
+      },
+      {
+        "path": "docs/campaigns/custom-digital-campaigns/DCSE_SC_Custom_Digital_Campaign_Wix_Master_20260731.md",
+        "commit_sha": "1a7b099c9db526f1b3ba93ddeec6ef51e3a24f9c",
+        "sha256": "f69c8d230dcfb0509af512a1c195cc7ee9e48c5f52d9210347d0c8cf25c6b1b8"
+      }
+    ]
+  },
+  "supabase": {
+    "project_name": "SC-Command-Post",
+    "project_ref": "nevgdyfpxdaloacuutal",
+    "asset_registry_ids": [
+      "SC-CDCP-2026-0730-001-MASTER",
+      "SC-CDCP-2026-0730-001-RECORD"
+    ],
+    "audit_event_key": "SC-CDCP-2026-0730-001-LOCK",
+    "verification": "PASS"
+  },
+  "contribution_receipts": {
+    "dcs_dcse": "DCS_CONFIRMED",
+    "chatgpt_codex": "RECORDED",
+    "gemini": "RETROSPECTIVE_ATTRIBUTION_DIRECT_RECEIPT_REQUIRED",
+    "lm_arena_models": "RETROSPECTIVE_ATTRIBUTION_DIRECT_RECEIPTS_REQUIRED",
+    "voice_audio_editing_tools": "FUNCTION_CONFIRMED_TOOL_RECEIPTS_REQUIRED"
+  },
+  "bulk_video_module": {
+    "name": "DCSE Bulk Video Production Module",
+    "status": "APPROVED_DIRECTION_BUILD_NOT_YET_VERIFIED",
+    "reference_record": "SC_CUSTOM_DIGITAL_CAMPAIGNS_IMPLEMENTATION_RECORD_20260731.md"
+  },
+  "tribunal_delivery": {
+    "target": "C:\\DS All Things\\DCSE_Command_Center\\_Tribunal_Inbox",
+    "packet_status": "RELAY_READY_NOT_INGESTED",
+    "acknowledgment_status": "PENDING",
+    "blocker": "Windows Command Center Tribunal Inbox is not mounted in the current execution environment."
+  },
+  "overall_closeout_status": "PARTIAL_PENDING_TRIBUNAL_ACKNOWLEDGMENT"
+}
