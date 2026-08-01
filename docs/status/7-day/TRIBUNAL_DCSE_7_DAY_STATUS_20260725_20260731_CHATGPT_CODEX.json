@@ -44,7 +44,7 @@
     "project_ref": "nevgdyfpxdaloacuutal",
     "report_asset_id": "DCSE-7DS-20260725-20260731-CHATGPT-CODEX",
     "audit_event_key": "DCSE-7DS-20260725-20260731-CHATGPT-CODEX-ISSUED",
-    "status": "PENDING_REGISTRATION"
+    "status": "PASS"
   },
   "tribunal_delivery": {
     "target": "C:\\DS All Things\\DCSE_Command_Center\\_Tribunal_Inbox",
@@ -52,5 +52,5 @@
     "acknowledgment_status": "PENDING",
     "blocker": "Windows Command Center Tribunal Inbox is not mounted in the current cloud session."
   },
-  "overall_closeout_status": "PARTIAL_PENDING_SUPABASE_REGISTRATION_AND_TRIBUNAL_ACKNOWLEDGMENT"
+  "overall_closeout_status": "PARTIAL_PENDING_TRIBUNAL_ACKNOWLEDGMENT"
 }
