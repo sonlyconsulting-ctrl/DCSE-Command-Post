@@ -6,7 +6,7 @@ Applies to: ChatGPT, Claude, Codex, Qwen, Copilot, local workers, cloud sandboxe
 
 ## 1. Purpose
 
-Prevent false `not found` conclusions caused by general web search, an unconfigured local checkout, one Supabase project, stale code indexes, or exact-name matching.
+Prevent false `not found` conclusions caused by general web search, an unconfigured local checkout, one Supabase project, stale code indexes, exact-name matching, or unauthorized credential requests.
 
 A negative result is valid only for the evidence surface actually queried.
 
@@ -26,7 +26,57 @@ Operational Command Post project: `SC-Command-Post` (`nevgdyfpxdaloacuutal`)
 
 There is no requirement for a branch named exactly `v7.1`. The canonical branch contains the version identifier and descriptive scope. Do not create an alias branch solely to satisfy an exact-name query.
 
-## 3. Mandatory Order of Operations
+## 3. Access Bootstrap
+
+### 3.1 GitHub
+
+A governed worker must use one of these access modes, in order of preference:
+
+1. authenticated GitHub connector or MCP;
+2. authenticated GitHub CLI using `gh auth status`;
+3. configured Git remote with fetched origin refs.
+
+For a local workspace, verify:
+
+```bash
+git remote -v
+git fetch --all --prune
+git branch -a
+git status --short --branch
+```
+
+If no remote exists, configure the canonical repository only through an authenticated environment:
+
+```bash
+git remote add origin https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post.git
+git fetch origin --prune
+git switch --track origin/governance/v7.1-owned-product-harness
+```
+
+Do not place GitHub tokens in prompts, files, issue bodies, logs, or command history.
+
+### 3.2 Supabase
+
+A governed model or sandbox must not request or receive a Supabase `service_role` key merely to inspect governance or operations data.
+
+Permitted access modes, in order of preference:
+
+1. authenticated Supabase MCP using OAuth and project-scoped tools;
+2. governed Control Plane API or Edge Function with JWT verification and narrow operations;
+3. approved local credential broker that does not disclose the credential to the model;
+4. publishable or anonymous client access only where RLS expressly permits the required read.
+
+Prohibited:
+
+- pasting a service-role key into chat;
+- placing a service-role key in a cloud sandbox environment for model access;
+- committing keys to GitHub;
+- exposing keys through browser code, logs, screenshots, task payloads, or database records;
+- treating absence of raw API credentials as proof that Supabase cannot be queried when MCP or the Control Plane is available.
+
+If Supabase tools are unavailable, report `SUPABASE ACCESS UNAVAILABLE IN THIS EXECUTION SURFACE`. Do not ask DCS to provide a service-role key to the model.
+
+## 4. Mandatory Order of Operations
 
 ### Step 0: Resolve the task and lane
 
@@ -40,7 +90,7 @@ Record:
 
 Stop if the lane cannot be resolved safely.
 
-### Step 1: Read the authority locator
+### Step 1: Load the canonical discovery manifest
 
 Read this protocol and the current governance reference record before searching broadly.
 
@@ -71,41 +121,25 @@ Search each required surface independently:
 
 Searching only branches does not establish absence from pull requests, issues, files, commits, tags, or Supabase.
 
-### Step 4: Query DCSE-DDNA first for governance and enterprise-memory work
+### Step 4: Select the Supabase starting project by task class
 
-Use `DCSE-DDNA` for:
+For governance, architecture, research, promotion, project plans, or enterprise memory, start with `DCSE-DDNA`.
 
-- governance directives
-- architecture decisions
-- project plans
-- promotion records
-- governance references
-- research sources
-- enterprise memory
+For runtime, worker state, assignments, task events, heartbeats, product operations, or execution receipts, start with `SC-Command-Post`.
 
-### Step 5: Query SC-Command-Post for runtime and operational work
+For mixed questions, query both.
 
-Use `SC-Command-Post` for:
+### Step 5: Query the second Supabase project when reconciliation is material
 
-- agent tasks
-- assignments
-- task events
-- runtime state
-- worker heartbeats
-- product-operation activity
-- execution receipts
+Governance and product-factory work normally requires comparison of:
 
-### Step 6: Reconcile GitHub and both Supabase projects
-
-For governance or product-factory work, compare:
-
-- GitHub branch, PR, issue, and file state
-- DCSE-DDNA governance and memory records
-- SC-Command-Post operational tasks and activity
+- GitHub branch, PR, issue, and file state;
+- DCSE-DDNA governance and memory records;
+- SC-Command-Post operational tasks and activity.
 
 Do not treat one system as a complete substitute for the others.
 
-### Step 7: Inspect local workspace only as an execution surface
+### Step 6: Inspect local workspace only as an execution surface
 
 A local workspace is authoritative only for its checked-out commit and files.
 
@@ -119,7 +153,7 @@ Before drawing repository-wide conclusions, verify:
 
 If no remote is configured, label every conclusion `LOCAL WORKSPACE ONLY`.
 
-### Step 8: Report evidence coverage
+### Step 7: Report evidence coverage
 
 Every review or search result must state:
 
@@ -130,17 +164,19 @@ Every review or search result must state:
 - GitHub files queried: YES or NO
 - DCSE-DDNA queried: YES or NO
 - SC-Command-Post queried: YES or NO
+- Supabase access mode used
 - local workspace status
 - authentication status
 - unresolved access limitations
 
-## 4. Negative-Finding Rule
+## 5. Negative-Finding Rule
 
 Permitted language:
 
 - `No exact branch named v7.1 was found. The canonical V7.1 branch is governance/v7.1-owned-product-harness.`
 - `No V7.1 record was found in SC-Command-Post. DCSE-DDNA was not inspected.`
 - `No V7.1 marker was found in the isolated local workspace. The live repository was not connected.`
+- `Supabase MCP was unavailable in this execution surface. Supabase was not inspected.`
 
 Prohibited language:
 
@@ -148,8 +184,9 @@ Prohibited language:
 - `The repository is private` without repository metadata verification.
 - `No issues or PRs exist` when only branch or code search was used.
 - `No GitHub material exists` when the local checkout has no remote.
+- `Supabase requires a service-role key` when MCP, a governed API, or a credential broker has not been checked.
 
-## 5. Automatic Discovery Manifest
+## 6. Automatic Discovery Manifest
 
 Every governed agent task should include or retrieve this manifest:
 
@@ -165,6 +202,14 @@ supabase:
   operations:
     name: SC-Command-Post
     project_id: nevgdyfpxdaloacuutal
+access_policy:
+  github:
+    preferred: authenticated_connector_or_mcp
+    fallback: authenticated_gh_cli_or_configured_remote
+  supabase:
+    preferred: oauth_mcp
+    fallback: governed_control_plane_api_or_credential_broker
+    service_role_to_model: prohibited
 required_surfaces:
   - github_repository
   - github_branches
@@ -178,14 +223,40 @@ negative_finding_policy: scoped_only
 
 The relay or task compiler should attach this manifest automatically for V7.1 tasks.
 
-## 6. Automatic Routing Rule
+## 7. Automatic Routing Rule
 
-- Governance, architecture, research, promotion, and enterprise-memory questions start in `DCSE-DDNA`, then reconcile to GitHub, then check `SC-Command-Post` for execution state.
-- Runtime, worker, product-operation, and task-execution questions start in `SC-Command-Post`, then reconcile to GitHub, then check `DCSE-DDNA` for authority.
+- Governance, architecture, research, promotion, and enterprise-memory questions start in `DCSE-DDNA`, then reconcile to authenticated GitHub, then check `SC-Command-Post` for execution state.
+- Runtime, worker, product-operation, and task-execution questions start in `SC-Command-Post`, then reconcile to authenticated GitHub, then check `DCSE-DDNA` for authority.
 - GitHub PR, issue, branch, or code-review questions start in authenticated GitHub, then reconcile to the applicable Supabase registry.
 - Local workspace questions start locally, but no enterprise-wide conclusion is permitted until authenticated GitHub and the applicable Supabase project are checked.
 
-## 7. Completion Gate
+## 8. Automatic Startup Self-Test
+
+Before a governed worker begins a V7.1 task, it should run or request these checks:
+
+1. Resolve the canonical repository.
+2. Confirm authenticated GitHub access.
+3. Confirm the canonical branch or PR exists.
+4. Confirm the required governance path is readable.
+5. Discover available Supabase tools.
+6. Verify access to both named projects through MCP or the governed API.
+7. Record the evidence-coverage manifest.
+8. Stop with a scoped access error if any required surface is unavailable.
+
+A successful startup acknowledgment should state:
+
+```text
+GITHUB: AUTHENTICATED
+REPOSITORY: VERIFIED
+CANONICAL BRANCH: VERIFIED
+PR #29: VERIFIED
+DCSE-DDNA: VERIFIED OR NOT APPLICABLE
+SC-COMMAND-POST: VERIFIED OR NOT APPLICABLE
+LOCAL WORKSPACE: CONNECTED OR LOCAL-ONLY
+SECRETS EXPOSED: NO
+```
+
+## 9. Completion Gate
 
 A V7.1 discovery or review task is incomplete unless:
 
@@ -193,12 +264,16 @@ A V7.1 discovery or review task is incomplete unless:
 2. authenticated GitHub was queried directly;
 3. the relevant GitHub surfaces were queried separately;
 4. both Supabase projects were queried or expressly marked not applicable;
-5. local workspace limitations were disclosed;
-6. every negative conclusion was scoped to the evidence surface;
-7. GitHub and Supabase records were reconciled.
+5. the Supabase access mode was disclosed;
+6. local workspace limitations were disclosed;
+7. every negative conclusion was scoped to the evidence surface;
+8. GitHub and Supabase records were reconciled;
+9. no privileged credential was exposed to the model.
 
-## 8. Current Resolution
+## 10. Current Resolution
 
 Copilot correctly found `governance/v7.1-owned-product-harness` but exact-name matching led it to suggest creating an unnecessary `v7.1` branch.
 
-Resolution: retain the existing canonical branch. Do not create a duplicate alias branch. Use the manifest and ordered discovery protocol above.
+Coder later connected the correct GitHub remote and verified the canonical branch. Its subsequent statement that Supabase required raw API credentials was incomplete. The approved path is Supabase MCP OAuth or the governed Control Plane API, not disclosure of service-role credentials.
+
+Resolution: retain the existing canonical branch, use the ordered discovery protocol, and prohibit direct privileged-key distribution to models or sandboxes.
