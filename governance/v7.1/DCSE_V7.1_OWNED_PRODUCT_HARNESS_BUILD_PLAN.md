@@ -85,6 +85,23 @@ Observation -> Evidence -> Root Cause -> Proposed Control -> Independent Review 
 
 Stores source materials, decisions, product requirements, evidence, model results, lessons learned, and supersession history.
 
+### V7.1-DQ Discovery and Query Control
+
+Defines the mandatory evidence order for all agents and prevents false enterprise-wide `not found` conclusions.
+
+Canonical V7.1 identifiers:
+
+- Repository: `sonlyconsulting-ctrl/DCSE-Command-Post`
+- Branch: `governance/v7.1-owned-product-harness`
+- Pull request: `#29`
+- Governance path: `governance/v7.1/`
+- Governance registry: `DCSE-DDNA`
+- Operations registry: `SC-Command-Post`
+
+The governing procedure is `governance/v7.1/AGENT_DISCOVERY_AND_QUERY_PROTOCOL.md`.
+
+No duplicate branch named exactly `v7.1` is authorized merely to satisfy exact-name search behavior.
+
 ## 5. Initial Product Scope
 
 ### Internal pilot 1: TSL Production Readiness Audit
@@ -117,6 +134,7 @@ Version 1 includes only:
 8. Independent review
 9. Promotion record
 10. Lessons-learned record
+11. Canonical discovery manifest and ordered evidence lookup
 
 Version 1 excludes autonomous self-modification, large agent swarms, automatic production deployment, and wholesale replacement of current tools.
 
@@ -137,6 +155,7 @@ DCSE-owned strategic layer:
 - Agent and voice profiles
 - Promotion workflow
 - Reusable web and product modules
+- Discovery locator and cross-system reconciliation protocol
 
 Replaceable infrastructure may include Ollama, LiteLLM-compatible routing, OpenHands-style execution, PostgreSQL/Supabase, React/Next.js/Astro, Playwright, GitHub, and modular observability.
 
@@ -166,7 +185,22 @@ ChatGPT/DCS response workflow:
 4. Update the plan only after DCS direction
 5. Preserve the complete review history
 
-## 9. Milestones
+Before making any absence finding, Claude and every other reviewer must follow the Agent Discovery and Query Protocol and disclose the evidence surfaces actually searched.
+
+## 9. Agent Order of Operations
+
+The harness must attach a canonical discovery manifest automatically.
+
+Routing order:
+
+1. GitHub-specific request: authenticated GitHub first, then applicable Supabase registry.
+2. Governance, architecture, research, or promotion request: DCSE-DDNA first, authenticated GitHub second, SC-Command-Post for execution state third.
+3. Runtime, worker, or task-execution request: SC-Command-Post first, authenticated GitHub second, DCSE-DDNA for authority third.
+4. Local workspace request: local inspection first, but no enterprise-wide conclusion until authenticated GitHub and applicable Supabase records are checked.
+
+Each result must identify authentication status, queried surfaces, and access limitations.
+
+## 10. Milestones
 
 ### M0: Preservation and Registration
 
@@ -174,6 +208,7 @@ ChatGPT/DCS response workflow:
 - Register source materials in Supabase
 - Register V7.1 plan and architecture decision
 - Open draft GitHub pull request
+- Register canonical discovery locator and query protocol
 
 ### M1: Existing-Work Inventory
 
@@ -197,6 +232,7 @@ ChatGPT/DCS response workflow:
 - Token and cost capture
 - Evidence manifest
 - Lessons-learned proposal
+- Automatic cross-system discovery manifest
 
 ### M4: SC Website Pilot
 
@@ -214,7 +250,7 @@ ChatGPT/DCS response workflow:
 - licensing
 - privacy and security boundaries
 
-## 10. Promotion Gates
+## 11. Promotion Gates
 
 V7.1 cannot be promoted until:
 
@@ -224,12 +260,14 @@ V7.1 cannot be promoted until:
 4. Model routing records cost and verified outcomes
 5. Existing work preservation controls are tested
 6. Security and lane isolation are verified
-7. DCS expressly approves promotion
+7. Canonical discovery and negative-finding controls are tested across at least two agents and both Supabase projects
+8. DCS expressly approves promotion
 
-## 11. Current Determination
+## 12. Current Determination
 
 Governance Version: V7.1 DRAFT
 Product Status: CONTROLLED PILOT AUTHORIZED
 Commercial Status: PRODUCT CONCEPT VALIDATED, NOT YET MARKET READY
 Migration Status: NON-DESTRUCTIVE INVENTORY FIRST
+Discovery Status: CANONICAL BRANCH AND QUERY ORDER DEFINED
 Promotion Authority: DCS ONLY
