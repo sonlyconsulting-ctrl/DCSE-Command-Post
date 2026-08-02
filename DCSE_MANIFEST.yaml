@@ -1,0 +1,91 @@
+dcse:
+  governance_version: "V7.1"
+  status: "ACTIVE_CONTROLLED_USE"
+  principle: "Reason once. Automate thereafter."
+
+canonical:
+  github:
+    repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
+    branch: "governance/v7.1-owned-product-harness"
+    pull_request: 29
+    governance_path: "governance/v7.1/"
+  supabase:
+    governance:
+      name: "DCSE-DDNA"
+      project_id: "uutpzaiqymyufljdgdaa"
+    operations:
+      name: "SC-Command-Post"
+      project_id: "nevgdyfpxdaloacuutal"
+
+startup_sequence:
+  - load_manifest
+  - resolve_lane_and_task
+  - verify_repository
+  - verify_branch
+  - verify_github_access
+  - verify_supabase_access
+  - load_governance
+  - load_assignment
+  - produce_startup_acknowledgment
+  - begin_work
+
+authority:
+  operational_authorized:
+    - documentation_updates
+    - artifact_registration
+    - pull_request_creation
+    - issue_creation
+    - bounded_infrastructure_repair
+    - replacement_staging_environment
+    - approved_comparison_jobs
+    - evidence_collection
+  dcs_reserved:
+    - governance_promotion
+    - constitutional_change
+    - production_release
+    - security_exception
+    - lane_boundary_change
+    - destructive_operation_outside_procedure
+
+credentials:
+  github_pat_in_chat: "PROHIBITED"
+  supabase_service_role_to_models: "PROHIBITED"
+  approved_access:
+    - github_mcp_oauth
+    - authenticated_git
+    - github_cli_oauth
+    - supabase_mcp_oauth
+    - dcse_control_plane
+
+artifact_policy:
+  essential_identity_required: true
+  canonical_source_required: true
+  checksum_required_when_material: true
+
+negative_finding_policy:
+  scoped_only: true
+
+poller:
+  role: "task transport and heartbeat, not source of truth"
+  availability_target: "24x7"
+  source_of_truth:
+    - github
+    - supabase
+  fallback: "manual authenticated agent session"
+  health_monitor_required: true
+
+strategic_direction:
+  decision_authority: "DCS"
+  coauthor_reviewers:
+    - ChatGPT
+    - Claude
+  execution_candidates:
+    - Coder
+    - Claude Code
+    - Codex
+    - Qwen
+    - DeepSeek
+    - Gemini
+    - Grok
+    - MiniMax
+    - Ollama
