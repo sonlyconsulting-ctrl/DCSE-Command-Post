@@ -1,11 +1,10 @@
 name: One-shot Ollama completion repair
 
+# MANUAL-ONLY GOVERNED REPAIR.
+# This workflow edits application code, deletes itself, commits, and pushes.
+# It must never run automatically on ordinary branch pushes.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/one-shot-fix-ollama-completion.yml'
 
 permissions:
   contents: write
