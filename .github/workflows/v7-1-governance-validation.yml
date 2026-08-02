@@ -1,0 +1,54 @@
+name: V7.1 governance validation
+
+on:
+  pull_request:
+    paths:
+      - 'governance/v7.1/**'
+      - '.github/workflows/v7-1-governance-validation.yml'
+  push:
+    branches:
+      - main
+      - governance/v7.1-owned-product-harness
+    paths:
+      - 'governance/v7.1/**'
+      - '.github/workflows/v7-1-governance-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required V7.1 controls
+        shell: python
+        run: |
+          from pathlib import Path
+
+          required = [
+              'governance/v7.1/DCSE_V7.1_OWNED_PRODUCT_HARNESS_BUILD_PLAN.md',
+              'governance/v7.1/AGENT_DISCOVERY_AND_QUERY_PROTOCOL.md',
+              'governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md',
+              'governance/v7.1/ESSENTIAL_ARTIFACT_IDENTITY_AND_TRACEABILITY_STANDARD.md',
+              'governance/v7.1/STRATEGIC_MODEL_AND_AGENT_PARTICIPATION_STANDARD.md',
+          ]
+
+          missing = [path for path in required if not Path(path).is_file()]
+          if missing:
+              raise SystemExit('Missing required V7.1 files: ' + ', '.join(missing))
+
+          prohibited = ['SUPABASE_SERVICE_ROLE_KEY=', 'GITHUB_TOKEN=', 'GH_TOKEN=']
+          violations = []
+          for path in Path('governance/v7.1').rglob('*'):
+              if not path.is_file():
+                  continue
+              text = path.read_text(encoding='utf-8', errors='replace')
+              for token in prohibited:
+                  if token in text:
+                      violations.append(f'{path}: contains prohibited credential assignment {token}')
+          if violations:
+              raise SystemExit('\n'.join(violations))
+
+          print('V7.1 governance validation passed.')
