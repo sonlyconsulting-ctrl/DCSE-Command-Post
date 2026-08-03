@@ -31,10 +31,11 @@ $WorkspacePath   = 'C:\DS All Things\DCSE_Command_Center'
 $StateFile       = Join-Path $PSScriptRoot 'poller_state.json'
 $LogFile         = Join-Path $PSScriptRoot 'poller_log.txt'
 
-# TEMPORARY validation restriction: prove one full cycle end-to-end before
-# letting AutoInvoke touch the rest of the backlog (MVT013/MVT014 etc.).
-# Remove this line once V69 has closed the loop successfully.
-$TaskKeyAllowlist             = @('V69-PROMOTION-COORDINATOR-RESPONSE-20260728')
+# BOUNDED unattended-execution allowlist. V69 completed successfully; BOW-003
+# is explicitly authorized by DCS for one controlled dispatch. Do not set this
+# to an empty or wildcard list. Durable follow-on: derive eligibility from an
+# attributable database authorization flag and retain all other gate checks.
+$TaskKeyAllowlist             = @('V7_1_BOW_003_TSL_AUDIT_INVENTORY')
 
 $ClaimTimeoutMinutes          = 20
 $MaxRetries                   = 2
