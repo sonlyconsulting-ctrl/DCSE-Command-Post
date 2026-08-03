@@ -5,7 +5,7 @@
 **Effective date:** 2026-08-03  
 **Authority:** DCS Level 0 explicit approval in the controlling governance session  
 **Adopted constitutional baseline:** DCSE Master Profile v6.9 RC2 Request Update  
-**Source Library file:** DCSE_Master_Profile_v6.9_RC2.md.md  
+**Source Library file:** DCSE_Master_Profile_v6.9_RC2.md  
 **Source Library ID:** libfile_2f6b491a095c819189c39fc0b07b8cc8  
 **Source SHA-256:** 65bebb11880f73496548290d9a9234eeae1cbcec1b11d64331e2e4e8a2312d52  
 **Canonical V7.1 source copy:** source/authority/DCSE_Master_Profile_v6.9_RC2.md  
