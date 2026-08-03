@@ -64,7 +64,7 @@ Controls:
 
 User-reported availability at admission: 53 percent.
 Verification timestamp: 2026-08-03.
-Verified reset date: UNKNOWN.
+Verified reset date: 2026-08-08.
 
 Codex allocation:
 
@@ -76,7 +76,7 @@ Codex allocation:
 - conservation warning: 40 percent remaining;
 - fallback below reserve: preserve Codex for final disposition and route bounded retests to another admitted runtime.
 
-The user-reported 53 percent is planning input, not a provider-verified token count.
+The user-reported 53 percent and August 8, 2026 reset date are DCS planning inputs. Provider-side metering remains authoritative when available.
 
 ## Rerun portfolio allocation
 
