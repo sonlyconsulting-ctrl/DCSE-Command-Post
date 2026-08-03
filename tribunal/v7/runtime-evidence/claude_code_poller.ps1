@@ -4,16 +4,19 @@
 # 60 seconds (see Register-ClaudeCodePollerTask.ps1). Task Scheduler handles
 # crash-restart and overlap prevention natively - this script does not loop.
 #
-# Credential sourcing: DPAPI CurrentUser bundle, NOT a plaintext env var.
-# Only SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are read from the bundle and
-# injected into this process's own environment for the duration of the RPC
-# calls below (cleared implicitly when this process exits). This poller does
-# NOT read or forward ANTHROPIC_API_KEY / WORKER_ENROLLMENT_SECRET - those
-# belong to a different consumer (the staging reviewer identity), not this one.
+# Credential sourcing: DPAPI CurrentUser bundles, NOT plaintext env vars.
+# SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY come from one bundle; an optional
+# ANTHROPIC_API_KEY for the child claude -p session (see below) comes from a
+# separate bundle, if registered. Both are injected into this process's own
+# environment only, never onto a child process command line (cleared
+# implicitly when this process exits). WORKER_ENROLLMENT_SECRET still
+# belongs to a different consumer (the staging reviewer identity), not this
+# one, and is never read here.
 #
 # Target project: nevgdyfpxdaloacuutal (SC-Command-Post / production).
 # Credential file must be created first via Register-DCSEWorkerCredentials.ps1
-# (run interactively by DCS - this script cannot create it).
+# and (optionally) Register-AnthropicAPIKeyCredential.ps1
+# (both run interactively by DCS - this script cannot create either).
 
 [CmdletBinding()]
 param(
@@ -73,6 +76,25 @@ $ServiceKey  = SecureToPlain $bundle.SUPABASE_SERVICE_ROLE_KEY
 if ($bundle.supabase_project_ref -and $bundle.supabase_project_ref -ne 'nevgdyfpxdaloacuutal') {
   Write-Log "FATAL: credential bundle targets project '$($bundle.supabase_project_ref)', expected 'nevgdyfpxdaloacuutal'. Refusing to proceed against the wrong project."
   exit 1
+}
+
+# Optional: Anthropic API key, for the child `claude -p` session below.
+# Prefers a stable API key over the ambient claude.ai OAuth session, which
+# can expire with no automated recovery (this is what caused the outage
+# documented in tribunal/v7/EVIDENCE_AND_CLASSIFICATION_REPORT.md). Falls
+# back to whatever ambient auth is configured if this bundle doesn't exist
+# yet -- registration is a separate, interactive, human-only step
+# (Register-AnthropicAPIKeyCredential.ps1), never something this script can
+# create itself. The key is decrypted into this process's own environment
+# only -- never placed on a child process's command line, where it would be
+# visible to any process-listing tool.
+$AnthropicKeyFile = 'C:\ProgramData\DCSE\secrets\anthropic-api-key.clixml'
+if (Test-Path $AnthropicKeyFile) {
+  $anthropicBundle = Import-Clixml $AnthropicKeyFile
+  $env:ANTHROPIC_API_KEY = SecureToPlain $anthropicBundle.ANTHROPIC_API_KEY
+  Write-Log "Anthropic auth: using registered API key bundle (registered $($anthropicBundle.registered_at_utc))."
+} else {
+  Write-Log "Anthropic auth: no API key bundle registered at $AnthropicKeyFile -- falling back to ambient claude.ai OAuth session."
 }
 
 $Headers = @{
