@@ -20,7 +20,9 @@ All files below are physically present on the canonical V7.1 branch.
 
 ### Authority
 
-- source/authority/DCSE_Master_Profile_v6.9_RC1.md
+- DCSE_Master_Profile_v7.1.md, authoritative V7.1 runtime artifact
+- source/authority/DCSE_Master_Profile_v6.9_RC2.md, exact adopted RC2 source
+- source/authority/DCSE_Master_Profile_v6.9_RC1.md, superseded lineage only
 
 ### Doctrines
 
@@ -71,7 +73,7 @@ The review must also include:
 
 ## Confirmed package defects
 
-1. The old Doctrine Index references DCSE_Master_Profile_v6.9_RC2.md, but that file is absent at the registered v7.0 location and was not fabricated.
+1. RESOLVED 2026-08-03: the complete RC2 was recovered from ChatGPT Library, identity-checked, hashed, preserved at the canonical V7.1 source path, and adopted by DCS Level 0 as DCSE_Master_Profile_v7.1.md. The stale v7.0 path remains a lineage defect.
 2. Adopted doctrines retain mixed internal versions and lifecycle statuses.
 3. The old Doctrine Index contains local Windows file links and legacy runtime paths.
 4. Several doctrines contain policy descriptions without complete machine-executable inputs, ordered steps, evidence schemas, gate tests, or rollback rules.
@@ -89,4 +91,4 @@ The package is complete for executability review when:
 - Codex independently validates Qwen's matrix;
 - approved corrections are committed and reconciled with Supabase.
 
-Package assembly does not constitute doctrine promotion.
+Package assembly alone does not constitute doctrine promotion. DCS Level 0 explicitly promoted the verified RC2 baseline as the V7.1 Master Profile on 2026-08-03. Doctrine executability corrections remain subject to the Qwen review and evidence-backed reconciliation.
