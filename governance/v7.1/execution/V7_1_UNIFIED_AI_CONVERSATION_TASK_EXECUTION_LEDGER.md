@@ -1,12 +1,16 @@
 # V7.1 Unified AI Conversation and Task Execution Ledger
 
 **Purpose:** Drive and record every governed AI conversation, task, assignment, execution event, artifact, review, decision, and promotion.  
+**Controlling authority:** `DCSE V7.1`  
+**Authority status:** `AUTHORITATIVE_UNTIL_FURTHER_NOTICE`  
 **Current compliance:** `NON_PASS`  
 **Verified gap:** Supabase contains four conversation records and five conversation turns. This does not represent every AI interaction.
 
 ## Governing principle
 
 No AI conversation is operationally authoritative until it is registered. No task is complete until its registered conversation, execution events, artifacts, tests, review, and promotion state reconcile.
+
+DCSE V7.1 supersedes v6.8, v6.9, v7.0, and every earlier governance version for current operations. Earlier versions are historical evidence only. Conflicting legacy prompts, profiles, memories, scripts, database records, or documentation are stale and must not control execution.
 
 ## Required identity chain
 
