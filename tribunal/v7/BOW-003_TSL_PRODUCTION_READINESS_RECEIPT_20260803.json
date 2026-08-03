@@ -1,0 +1,40 @@
+{
+  "receipt_id": "BOW-003-TSL-AUDIT-20260803-CODEX",
+  "task_key": "V7_1_BOW_003_TSL_AUDIT_INVENTORY",
+  "artifact": "tribunal/v7/BOW-003_TSL_PRODUCTION_READINESS_AUDIT_20260803.md",
+  "audit_disposition": "APPROVE_WITH_FINDINGS",
+  "production_readiness": "NON_PASS",
+  "categories_reviewed": 9,
+  "verified_surfaces": [
+    "github_pr_state",
+    "supabase_project_health",
+    "asset_registry",
+    "table_inventory",
+    "rls_policies",
+    "database_routines",
+    "security_advisors",
+    "performance_advisors",
+    "sports_event_integrity",
+    "task_assignment_history",
+    "heartbeat_state"
+  ],
+  "critical_findings": [
+    "security_definer_view_public_tsl_community_picks",
+    "exposed_security_definer_functions",
+    "canonical_application_source_not_reconciled_to_github",
+    "parallel_identity_models",
+    "parallel_favorites_models"
+  ],
+  "live_counts": {
+    "auth_users": 70,
+    "profiles": 70,
+    "global_users": 1,
+    "teams": 31,
+    "events": 110,
+    "picks": 336,
+    "contests": 3
+  },
+  "production_release_authorized": false,
+  "schema_changes_made": false,
+  "evidence_timestamp": "2026-08-03T09:20:00Z"
+}
