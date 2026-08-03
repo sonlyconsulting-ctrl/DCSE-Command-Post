@@ -13,8 +13,10 @@ if (-not (Test-Path $CredentialFile)) {
   exit 1
 }
 
-$Action  = New-ScheduledTaskAction -Execute 'powershell.exe' `
-             -Argument "-WindowStyle Hidden -NoProfile -ExecutionPolicy Bypass -File `"$ScriptPath`" -CredentialFile `"$CredentialFile`""
+# See Register-ClaudeCodePollerTask.ps1 for why this goes through a VBS
+# launcher rather than powershell.exe -WindowStyle Hidden directly.
+$VbsLauncher = Join-Path $PSScriptRoot 'Run-PollerHealthMonitor-Hidden.vbs'
+$Action  = New-ScheduledTaskAction -Execute 'wscript.exe' -Argument "//B `"$VbsLauncher`""
 
 $Trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) `
              -RepetitionInterval (New-TimeSpan -Minutes 5)
