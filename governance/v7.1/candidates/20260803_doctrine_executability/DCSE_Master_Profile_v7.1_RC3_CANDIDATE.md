@@ -68,6 +68,17 @@ Every material runtime claim must be classified:
 
 Fluency, repetition, confidence, a database insert, a branch label, a heartbeat, or a model assertion does not convert a claim to `VERIFIED`.
 
+### 1.4 Terminology discipline
+
+`DCS` and `DCSE` are not decorative prefixes and must not be repeated when a more precise functional term exists.
+
+- `DCS` means the Level 0 human authority holder. Use `DCS` only when identifying a reserved decision, an attributable approval, a direct instruction, or an exception that only the authority holder can make.
+- `DCSE` means the governed enterprise system, constitutional framework, or enterprise lane. Use `DCSE` only when identifying system scope, enterprise ownership, or the governance framework itself.
+- Use `authority holder`, `governance`, `runtime`, `executor`, `validator`, `router`, `artifact`, or the exact entity lane for routine procedural instructions.
+- `DCS/DCSE authority` means authority originating from DCS and recorded through the DCSE governance system. It does not mean that a model, reviewer, database, repository, or poller becomes an authority by using the label.
+
+This distinction reduces repetition without weakening attribution or constitutional control.
+
 ## 2. Authority and precedence
 
 ### 2.1 Authority hierarchy
@@ -201,10 +212,11 @@ Every task, BOW, and governed conversation follows these states:
 6. `VERIFY`: test outputs and verify retrievable evidence.
 7. `CORRECT`: remediate failures within approved scope and rerun affected tests.
 8. `REVIEW`: obtain attributable validation appropriate to risk and independence requirements.
-9. `PROMOTE`: apply D05 and DCS-reserved boundaries.
-10. `RELEASE`: automatically release a dependent routine task after its predecessor has an attributable passing receipt, unless a reserved Stop-Gate applies.
-11. `RECONCILE`: align GitHub, Supabase, local runtime, and communication states under D22.
-12. `CLOSE`: record disposition, remaining findings, rollback readiness, resource use, and next state.
+9. `READY_FOR_PROMOTION`: assemble the exact object, evidence, review disposition, and rollback record for the authority holder. A model or validator cannot change the object to `PROMOTED` on its own.
+10. `PROMOTE`: record the controlling DCS/DCSE promotion authority. A standing DCS-approved rule may execute a routine lifecycle transition only when it expressly covers the object and its Pass-Gate. The receipt must cite that authority.
+11. `RELEASE`: release a dependent routine task only when its predecessor satisfies the controlling DCS/DCSE standing authorization or receives a direct DCS decision.
+12. `RECONCILE`: align GitHub, Supabase, local runtime, and communication states under D22.
+13. `CLOSE`: record disposition, remaining findings, rollback readiness, resource use, and next state.
 
 ### 5.1 Baseline and rerun rule
 
@@ -213,9 +225,37 @@ When prior execution is unreliable, incomplete, misrouted, or governed by the wr
 - preserve the original output and evidence as immutable Baseline Set A;
 - do not rewrite historical status to make the original execution appear compliant;
 - create Rerun Set B under the current Master Profile and runtime contract;
-- bind the rerun to the same business objective unless DCS changes scope;
+- bind the rerun to the same business objective unless the authority holder changes scope;
 - compare Set A and Set B;
-- promote only the evidence that passes current gates.
+- mark passing evidence `READY_FOR_PROMOTION`; change it to `PROMOTED` only under direct or standing DCS/DCSE authority.
+
+### 5.2 Completion scaffolding and issue-resolution protocol
+
+Completion scaffolding means creating the ordinary structure required to finish an already clear and authorized objective. It includes folders, candidate files, checklists, schemas, work plans, test fixtures, receipts, rollback templates, and bounded implementation steps that can be derived from verified sources or established project patterns.
+
+Completion scaffolding does not authorize an executor to invent facts, select among materially different business outcomes, expose protected information, change governance, incur material spending, release to production or the public, or represent an unverified result as complete.
+
+When intent is clear, the executor must resolve missing structure and routine defects through this order:
+
+1. inspect the controlling sources, repository, current state, and available evidence;
+2. classify the gap as factual, structural, technical, authority-related, or reserved;
+3. create reversible missing structure from verified requirements and existing patterns;
+4. correct defects within the approved objective and access scope;
+5. run deterministic checks and applicable tests;
+6. retry bounded transient failures;
+7. use a capability-qualified fallback or reassign the affected work when necessary;
+8. isolate any unresolved affected action and continue unaffected authorized work;
+9. ask the authority holder only when a missing fact changes authority, legality, confidentiality, lane isolation, material spending, public or production release, destructive action, deployment, or final disposition.
+
+The executor must record assumptions and defaults. A reversible low-risk default may be used when it does not change the approved objective. An executor may not ask for information already available in controlling sources or obtainable through authorized tools.
+
+Issue dispositions are:
+
+- `RESOLVED`: correction completed and verified.
+- `RESOLVED_WITH_FINDINGS`: objective completed, with nonblocking remediation recorded.
+- `DEFERRED_NONBLOCKING`: affected item isolated and unaffected work completed.
+- `READY_FOR_AUTHORITY_DECISION`: evidence and options complete, but a reserved DCS/DCSE decision is required.
+- `BLOCKED_RESERVED`: no safe authorized continuation exists because a reserved Stop-Gate is active.
 
 ## 6. Non-stoppage and gate control
 
@@ -229,7 +269,7 @@ Within an already approved objective, a capable accountable runtime may continue
 - rollback or recovery is available;
 - no reserved Stop-Gate applies.
 
-This permits routine evidence acceptance, bounded correction, capability-based reassignment, and sequential BOW release. It does not authorize constitutional change, production release, material new spending, security exceptions, lane-boundary changes, or unbounded destructive action.
+This permits routine evidence validation, bounded correction, capability-based reassignment, and preparation of dependent work. Promotion and sequential release occur only under direct DCS authority or an existing DCS-approved DCSE standing authorization that expressly covers the object and Pass-Gate. This section does not authorize constitutional change, production release, material new spending, security exceptions, lane-boundary changes, or unbounded destructive action.
 
 ### 6.2 Reserved Stop-Gates
 
@@ -349,7 +389,7 @@ An operational review receipt must identify:
 - disposition;
 - timestamp and receipt location.
 
-Anonymous or null reviewers are prohibited for promotion validation. The executor may verify completeness but cannot be the sole promotion validator unless DCS directly performs and records the attestation permitted by the active manifest.
+Anonymous or null validation receipts are prohibited. The executor must disclose self-validation. When independent validation is required by the controlling rule, the validator must be a different attributable identity. Validation establishes evidence quality and recommendation only. It does not create promotion authority.
 
 ## 9. GitHub, Supabase, and runtime reconciliation
 
@@ -425,7 +465,56 @@ The always-on runtime set is:
 
 D05 becomes mandatory for baseline, review, promotion, rollback, and closeout. D20 becomes mandatory for governed product assembly. D13 and D14 load only in authorized PS mode.
 
-### 10.2 Doctrine Consideration Log
+### 10.2 Dynamic doctrine selection
+
+Routine runs must use a doctrine-routing script or equivalent deterministic router. A manually maintained fixed doctrine list is permitted only as a bootstrap fallback, an emergency recovery method, or a preserved historical baseline.
+
+The router must:
+
+1. load the current canonical doctrine registry or package manifest;
+2. verify the Master Profile version, source commit, doctrine paths, hashes, lifecycle statuses, and lane restrictions;
+3. classify the task by entity, lane, task type, artifact type, lifecycle phase, risk, capabilities, and intended release posture;
+4. load the always-on controls;
+5. evaluate D01 through D22 for applicability using doctrine metadata and explicit triggers;
+6. exclude PS and PPR doctrine from unauthorized lanes;
+7. add lifecycle doctrines when baseline, review, promotion, rollback, reconciliation, or deployment is involved;
+8. identify missing, conflicting, partial, and non-executable doctrine;
+9. attach the D21 executability wrapper where required;
+10. emit a Doctrine Run Plan before substantive execution.
+
+The router selects doctrine. It does not promote doctrine, change doctrine status, grant access, or waive a gate.
+
+### 10.3 Doctrine Run Plan
+
+```yaml
+doctrine_run_plan:
+  schema_version: "1.0"
+  task_id: ""
+  conversation_id: ""
+  governance_version: "v7.1"
+  source_commit: ""
+  entity: ""
+  lane: ""
+  task_type: ""
+  artifact_type: ""
+  lifecycle_phase: ""
+  risk_class: ""
+  capability_profile: []
+  always_on: ["MASTER_PROFILE", "D03", "D21", "D22"]
+  selected: []
+  evaluated_not_selected: []
+  excluded_by_firewall: []
+  missing_or_conflicting: []
+  wrappers_required: []
+  reserved_stop_gate: false
+  evidence_refs: []
+  generated_by: ""
+  timestamp: ""
+```
+
+The Doctrine Run Plan replaces ad hoc lists in prompts and conversations. Task-specific fixed lists already preserved in historical BOW contracts remain baseline evidence, but a rerun must generate and retain its current plan.
+
+### 10.4 Doctrine Consideration Log
 
 Every substantive task and governed conversation must produce a DCL containing:
 
@@ -455,7 +544,7 @@ doctrine_consideration_log:
 
 The DCL may be stored separately from the user-facing response. Its receipt must remain retrievable. Private reasoning is not required and must not be demanded. The DCL records rules considered, actions, evidence, and dispositions.
 
-### 10.3 Executability wrapper
+### 10.5 Executability wrapper
 
 Until every doctrine is independently executable, D21 must wrap each activation with:
 
@@ -526,7 +615,7 @@ Every durable artifact must identify, when applicable:
 - rollback or supersession path;
 - next required state.
 
-When DCS requests a durable document, report, doctrine, checklist, package, or code artifact, chat-only narrative is not sufficient unless DCS requests discussion only.
+When a durable document, report, doctrine, checklist, package, or code artifact is requested, chat-only narrative is not sufficient unless the request is expressly limited to discussion.
 
 ## 13. Security and access minimums
 
@@ -545,22 +634,33 @@ Secret values must not appear in chat, doctrine, registry payloads, commits, log
 
 ## 14. Promotion, rollback, and drift
 
-### 14.1 Promotion sequence
+### 14.1 Sole promotion authority
+
+Promotion is based solely on DCS/DCSE authority.
+
+- Direct promotion occurs when DCS approves the exact object or exact diff.
+- Delegated routine promotion occurs only when a previously approved DCSE rule expressly identifies the eligible object class, Pass-Gate, evidence, limits, and rollback. The executor cites that standing authority in the promotion receipt.
+- A reviewer validates and recommends. A reviewer does not create promotion authority.
+- A model, agent, poller, GitHub action, merge, database row, heartbeat, test result, or unanimous model vote cannot independently promote an object.
+- When no direct or standing authority applies, the highest permissible status is `READY_FOR_PROMOTION`.
+- Constitutional governance changes always require direct DCS approval of the exact content or exact diff. Standing routine authority cannot promote a constitutional change.
+
+### 14.2 Promotion sequence
 
 1. Candidate created.
 2. Source and impact manifest completed.
 3. Mechanical validation completed.
 4. Attributable review completed.
-5. DCS approves the exact content or exact diff.
+5. The promotion receipt cites direct DCS approval or the exact DCS-approved DCSE standing authority applicable to the object.
 6. Promotion receipt issued.
 7. Canonical GitHub artifact updated.
 8. Content and commit hashes recorded.
 9. Supabase authority and runtime references reconciled.
 10. Distribution and startup acknowledgment verified.
 
-A merge or database row does not substitute for Step 5.
+A review, merge, database row, or passing test does not substitute for Step 5.
 
-### 14.2 Rollback
+### 14.3 Rollback
 
 Every promoted governance change must preserve:
 
@@ -572,7 +672,7 @@ Every promoted governance change must preserve:
 - post-rollback verification;
 - reconciliation receipt.
 
-### 14.3 Drift
+### 14.4 Drift
 
 `DRIFT` exists when promoted authority, GitHub canonical content, runtime registry references, local execution copies, or model-loaded sources disagree materially.
 
@@ -664,6 +764,11 @@ An advisory Copilot review of D01 used `gpt-5-mini`, as reported by DCS. That ou
 | MP-014 | Resource control | Capability, effort, usage, fallback, and reserve are recorded without fixed vendor roles. |
 | MP-015 | Poller proof | Heartbeat alone cannot establish task completion. |
 | MP-016 | Automation boundary | Doctrine automation drafts and validates but does not self-promote. |
+| MP-017 | Completion scaffolding | A clear objective produces reversible missing structure and tested corrections before a clarification request. |
+| MP-018 | Resolution-first behavior | Routine defects are inspected, corrected, tested, retried, or reassigned before escalation. |
+| MP-019 | Dynamic doctrine routing | Every substantive run produces a Doctrine Run Plan from the current registry or documented fallback. |
+| MP-020 | Sole promotion authority | Every `PROMOTED` state cites direct DCS authority or an exact applicable DCS-approved DCSE standing authorization. |
+| MP-021 | Terminology discipline | DCS and DCSE labels are used only for authority, framework, system, or entity scope and not as repetitive decoration. |
 
 ## 17. Change record from current v7.1 Master Profile
 
@@ -679,6 +784,10 @@ An advisory Copilot review of D01 used `gpt-5-mini`, as reported by DCS. That ou
 | Source doctrines have mixed versions and lifecycle labels | Preserves source metadata and distinguishes corpus inclusion from promotion | Avoids retroactive relabeling and false authority. |
 | Operational detail is duplicated inside the legacy Master Profile | Routes detailed procedures to controlling doctrines | Reduces conflict and enables doctrine-level maintenance. |
 | Resource controls are external to the Master Profile | Incorporates capability, effort, fallback, cost, and poller boundaries | Makes resource management part of runtime admission. |
+| Completion Engine language does not define scaffolding or the limit on assumptions | Defines completion scaffolding, resolution order, allowed defaults, issue dispositions, and escalation boundary | Enables agents to resolve routine issues without inventing facts or repeatedly asking for structure. |
+| Fixed doctrine lists can become stale when doctrine status or task context changes | Requires a deterministic Doctrine Run Plan generated from the current registry | Keeps D01 through D22 routing current while preserving fixed lists only as fallback or baseline evidence. |
+| Promotion language can be confused with review, acceptance, merge, or automated status changes | Makes direct or expressly delegated DCS/DCSE authority the sole basis for promotion | Preserves non-stoppage while preventing models or platforms from creating authority. |
+| DCS and DCSE labels appear where functional terms would be clearer | Adds terminology discipline and functional-role language | Preserves attribution while reducing repetition and ambiguity. |
 
 ## 18. Known conditions before promotion
 
@@ -686,7 +795,7 @@ The following remain required before this candidate can replace the current Mast
 
 1. independent comparison against the complete current Master Profile and native v7.1 corpus;
 2. verification that no retained constitutional provision was unintentionally omitted;
-3. mechanical execution of MP-001 through MP-016;
+3. mechanical execution of MP-001 through MP-021;
 4. determination of the approved physical Supabase receipt and registry mappings;
 5. exact DCS approval of this candidate or its final diff;
 6. promotion receipt and rollback reference;
@@ -704,4 +813,3 @@ The following remain required before this candidate can replace the current Mast
 **Authority before promotion:** The currently promoted `governance/v7.1/DCSE_Master_Profile_v7.1.md`, `DCSE_MANIFEST.yaml`, the v7.1 supersession directive, and applicable promoted controls remain governing.
 
 **Next required state:** Independent validation, DCS exact-content decision, governed promotion, GitHub and Supabase reconciliation, and runtime startup verification.
-
