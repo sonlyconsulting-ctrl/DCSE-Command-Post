@@ -44,21 +44,37 @@ for the registry owner, not something to silently rewrite mid-audit.
   filesystem, not git-tracked (consistent with the broader pattern already found in BOW-001:
   governance-relevant files living outside version control).
 
+## Update: remaining rows checked
+
+- **14 `DCSE-2026-TSL-APP-*` rows (11 unique paths)** -- checked against
+  `C:\DS All Things\dcse-sc-sportsociety\scss-build\...`. 10 of 11 present. The one absence
+  (`api/favorites/route.ts`, asset `TSL-APP-009`) is correct: its own `lifecycle_status` is
+  `Retired`, so its absence matches the registry, not an orphaned reference.
+- Found in passing: `TSL-APP-003` and `TSL-APP-011` are duplicate rows for the identical file
+  (`profile/page.tsx`, same path) -- registry hygiene issue, not a broken reference.
+- **6 `DCSE-2026-TSL-DB-*` rows** -- checked against live migration history on
+  `nevgdyfpxdaloacuutal` via `list_migrations`. All 6 referenced migrations exist
+  (`add_preferred_theme_to_profiles`, `auto_provision_profile_on_signup`,
+  `backfill_missing_profiles`, `grant_select_team_to_public_roles`,
+  `favoriteteam_ownership_rls_and_audit_trigger`, `fix_tsl_audit_log_actor_fk_target`,
+  `add_sync_error_to_tsl_events`). No orphaned references in this group.
+
 ## Not covered in this pass
 
-- The 14 `DCSE-2026-TSL-APP-*` rows pointing into `C:\DS All Things\dcse-sc-sportsociety\...`
-  -- confirmed that directory exists on disk; individual file-level checks not run.
-- The 6 `DCSE-2026-TSL-DB-*` rows referencing Supabase migrations by name, not file path --
-  would need a migration-history query against `nevgdyfpxdaloacuutal`, not a file check.
 - No naming-convention sweep run across the repo's other ~30 top-level directories
   (`SC_ASP`, `SC_CTJ`, `SC_Gov-OS`, `SC_SASH`, `SC_SHY`, `SC_TSL`, `DCSE_ASSET_PORTAL_APP`,
-  etc.) -- this pass reconciled the registry's own 57 claimed assets, not a from-scratch
-  full-filesystem inventory. That would be a materially larger, separate pass.
+  etc.) that aren't already claimed as assets in the registry -- this pass reconciled the
+  registry's own 57 claimed assets exhaustively, not a from-scratch full-filesystem census of
+  everything that *isn't* registered. That would be a materially larger, separate pass (an
+  audit for missing/unregistered files, rather than broken references in existing entries).
 
 ## Disposition
 
-Registry data-quality issues found and documented, not silently corrected. BOW-002's stated
-acceptance ("all files inventoried, naming verified, no orphaned references") is **partially
-satisfied**: the registry's own claimed assets are now reconciled with two real defects found;
-a full independent inventory of the repo beyond what the registry already claims was not
-attempted in this pass.
+All 57 rows in `dcse_asset_registry` reconciled against real state (git branches, local
+filesystem, and live migration history). Confirmed defects: 26 rows with a systematic
+`storage_location` path-prefix bug, 2 rows referencing files that don't exist on any branch
+(one incorrectly marked `hash_verified: true`), 2 duplicate rows for the same file. Everything
+else checks out, including one correctly-absent retired asset. Registry corrections not
+applied -- that's a data-owner decision, not something to silently rewrite mid-audit.
+BOW-002's acceptance criterion of "no orphaned references" is now fully evaluated against the
+registry's own claims (not a from-scratch inventory beyond what's already registered).
