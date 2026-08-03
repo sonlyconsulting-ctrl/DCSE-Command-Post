@@ -50,39 +50,51 @@ authority:
     applies_when:
       - task_scope_is_already_approved
       - acceptance_evidence_is_complete
+      - accountable_validator_is_recorded
       - no_reserved_stop_gate_is_triggered
     effect:
       - accept_completed_bounded_work
       - record_findings_as_remediation_tasks
-      - promote_routine_evidence
+      - promote_routine_evidence_only
       - release_the_next_dependent_body_of_work
       - reassign_when_a_named_model_is_unavailable
     does_not_waive:
+      - attributable_validation
       - evidence
       - tests
       - rollback
       - lane_isolation
       - security_controls
   dcs_reserved:
-    - constitutional_change_without_current_dcs_direction
+    - constitutional_change
+    - governance_framework_promotion
     - production_release
     - security_exception
     - lane_boundary_change
     - destructive_operation_outside_procedure
     - material_new_spending
+  constitutional_change_control:
+    exact_diff_dcs_approval_required: true
+    agent_inference_from_general_operational_direction: "INSUFFICIENT"
+    emergency_restriction_only: "An agent may propose or apply a narrower temporary safeguard, but may not expand its own authority."
 
 workflow_lifecycle:
-  review_selection: "capability-based, not model-named"
-  named_model_unavailability: "automatic fallback; never a standalone stop gate"
-  self_review_rule: "executor may verify completeness; independent validation is used when available but model identity is not mandatory"
+  review_selection: "capability-based and attributable, not bound to a preselected named model"
+  named_model_unavailability: "automatic fallback to another attributable capable validator; never a standalone stop gate"
+  validation_accountability:
+    reviewer_agent_id_required: true
+    anonymous_or_null_reviewer: "PROHIBITED"
+    validation_scope_disclosure_required: true
+    evidence_not_reperformed_must_be_disclosed: true
+  self_review_rule: "The executor may verify completeness but may not be the sole promotion validator. Reassign automatically to another attributable validator. Direct DCS attestation may substitute when explicitly recorded."
   evidence_acceptance:
-    accepted: "advance automatically"
-    accepted_with_findings: "advance automatically and create remediation tasks"
+    accepted: "advance automatically after accountable validation"
+    accepted_with_findings: "advance automatically after accountable validation and create remediation tasks"
     rejected_or_insufficient: "correct automatically within approved scope, then revalidate"
   sequential_release:
     enabled: true
-    trigger: "predecessor acceptance recorded"
-    action: "promote predecessor and start successor without another conversational approval"
+    trigger: "predecessor acceptance recorded by an accountable validator"
+    action: "promote routine predecessor evidence and start successor without another conversational approval"
   audit_findings:
     block_promotion_only_when:
       - unresolved_critical_or_high_risk
