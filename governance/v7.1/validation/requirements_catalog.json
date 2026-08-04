@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0",
+  "catalog_id": "DCSE-V71-GOVERNANCE-VALIDATION",
+  "status": "CANDIDATE_NON_PROMOTING",
+  "dispositions": [
+    "PASS",
+    "PASS_WITH_CORRECTIONS",
+    "FAIL",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "rules": [
+    {
+      "rule_id": "V71-CORPUS-001",
+      "category": "COMPLETENESS",
+      "title": "Complete D01 through D22 coverage",
+      "applies_to": ["CORPUS"],
+      "severity": "BLOCKING",
+      "method": "DETERMINISTIC",
+      "requirement": "Exactly one selected candidate or promoted artifact must exist for every doctrine identifier D01 through D22.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-ID-001",
+      "category": "IDENTITY",
+      "title": "Exact source identity",
+      "applies_to": ["DOCTRINE"],
+      "severity": "BLOCKING",
+      "method": "DETERMINISTIC",
+      "requirement": "The source path must resolve and the recorded source SHA-256 must equal the physical source hash.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-ID-002",
+      "category": "IDENTITY",
+      "title": "Candidate identity and lifecycle",
+      "applies_to": ["DOCTRINE", "MASTER_PROFILE", "MANIFEST"],
+      "severity": "BLOCKING",
+      "method": "DETERMINISTIC",
+      "requirement": "Candidate identity, version, status, classification, authority holder, and non-promoting effect must be explicit.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-EXEC-001",
+      "category": "EXECUTABILITY",
+      "title": "Executable doctrine contract",
+      "applies_to": ["DOCTRINE"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "The doctrine must define purpose, scope, governing rules, inputs or prerequisites, outputs or receipts, runtime interfaces or procedures, failure behavior, mechanical tests, cross-doctrine boundaries, and candidate status.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-EXEC-002",
+      "category": "EXECUTABILITY",
+      "title": "No description-only obligations",
+      "applies_to": ["DOCTRINE"],
+      "severity": "HIGH",
+      "method": "MODEL_REVIEW",
+      "requirement": "Every material obligation must identify an actor or runtime, trigger, required behavior, evidence, and failure disposition, or reference a controlling contract that does.",
+      "failure_disposition": "PASS_WITH_CORRECTIONS",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-AUTH-001",
+      "category": "AUTHORITY",
+      "title": "No independent authority creation",
+      "applies_to": ["CORPUS", "DOCTRINE"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Models, reviewers, pollers, workflows, repositories, databases, votes, and insertions must not create promotion, access, disclosure, deployment, or exception authority.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-AUTH-002",
+      "category": "AUTHORITY",
+      "title": "Promotion boundary",
+      "applies_to": ["DOCTRINE", "MASTER_PROFILE", "MANIFEST"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "D05 controls promotion and rollback authority; D22 controls canonical reconciliation and distribution.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-ROUTE-001",
+      "category": "ORCHESTRATION",
+      "title": "Deterministic doctrine routing",
+      "applies_to": ["CORPUS", "D21", "TRIGGER_CATALOG"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Doctrine selection must derive from versioned triggers, task and artifact metadata, authority, lane, lifecycle, and admitted capability rather than model intuition alone.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-NONSTOP-001",
+      "category": "FAILURE_BEHAVIOR",
+      "title": "Affected-action isolation",
+      "applies_to": ["DOCTRINE"],
+      "severity": "BLOCKING",
+      "method": "MODEL_REVIEW",
+      "requirement": "Missing sources, tools, adapters, or capabilities must isolate dependent actions while unrelated safe work continues unless a reserved broader condition applies.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-TRUTH-001",
+      "category": "STATUS_ACCURACY",
+      "title": "Operational state accuracy",
+      "applies_to": ["DOCTRINE", "RECEIPT", "REPORT"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Created, inserted, queued, dispatched, delivered, acknowledged, tested, verified, promoted, deployed, operating, and reconciled states must not be conflated.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-EVID-001",
+      "category": "EVIDENCE",
+      "title": "Material claim evidence",
+      "applies_to": ["DOCTRINE", "REPORT", "RECEIPT"],
+      "severity": "BLOCKING",
+      "method": "MODEL_REVIEW",
+      "requirement": "Material factual, quantitative, security, readiness, delivery, commercial, or status claims must identify evidence, scope, environment, date, and known limitations.",
+      "failure_disposition": "INSUFFICIENT_EVIDENCE",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-EVID-002",
+      "category": "EVIDENCE",
+      "title": "Invalid-test detection",
+      "applies_to": ["DOCTRINE", "TEST", "RECEIPT"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "A test that fails before exercising the intended control must be classified INVALID_TEST and cannot support PASS.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-SEC-001",
+      "category": "SECURITY_PRIVACY",
+      "title": "Security and privacy at creation",
+      "applies_to": ["DOCTRINE", "APPLICATION", "DATA_CHANGE", "MEDIA"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Secrets, access, authorization, privacy, retention, protected data, negative tests, and exposure response must be governed at object or artifact creation.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-ACC-001",
+      "category": "ACCESSIBILITY",
+      "title": "Applicable accessibility requirements",
+      "applies_to": ["PUBLIC_ARTIFACT", "APPLICATION", "MEDIA", "WORKFLOW"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Applicable structural, interaction, visual, audio, cognitive, error, recovery, and alternative-format requirements must be declared and tested.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-REC-001",
+      "category": "RECOVERY",
+      "title": "Rollback or forward recovery",
+      "applies_to": ["MATERIAL_CHANGE", "DEPLOYMENT", "DATA_CHANGE", "PROMOTION"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Material change must define and, where required, test rollback, restoration, compensation, or forward recovery.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-DUP-001",
+      "category": "CROSS_DOCTRINE",
+      "title": "No competing control ownership",
+      "applies_to": ["CORPUS"],
+      "severity": "BLOCKING",
+      "method": "MODEL_REVIEW",
+      "requirement": "Overlapping doctrines must identify one controlling owner and explicit specialization boundaries rather than duplicate authority, promotion, routing, data, or distribution services.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-TEST-001",
+      "category": "TESTABILITY",
+      "title": "Unique mechanical tests",
+      "applies_to": ["DOCTRINE", "CORPUS"],
+      "severity": "BLOCKING",
+      "method": "DETERMINISTIC",
+      "requirement": "Every doctrine must contain unique scenario-based mechanical tests with observable required results.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-PORT-001",
+      "category": "PORTABILITY",
+      "title": "No fixed local authority paths",
+      "applies_to": ["DOCTRINE"],
+      "severity": "BLOCKING",
+      "method": "DETERMINISTIC",
+      "requirement": "Doctrine must not depend on file URLs, fixed Windows paths, named devices, or provider-specific behavior as universal authority.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    },
+    {
+      "rule_id": "V71-DART-001",
+      "category": "ASSURANCE",
+      "title": "DART final assurance",
+      "applies_to": ["FINAL_CORPUS", "MATERIAL_RELEASE"],
+      "severity": "BLOCKING",
+      "method": "HYBRID",
+      "requirement": "Final assurance must complete Define, Assess, Resolve, and Test and return an objective disposition.",
+      "failure_disposition": "FAIL",
+      "auto_fix_allowed": false
+    }
+  ]
+}
