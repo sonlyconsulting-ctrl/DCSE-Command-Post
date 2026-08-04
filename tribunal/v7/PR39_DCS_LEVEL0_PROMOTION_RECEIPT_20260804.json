@@ -1,0 +1,115 @@
+{
+  "document_id": "DCSE-PR39-DCS-LEVEL0-PROMOTION-RECEIPT-20260804",
+  "classification": "CONFIDENTIAL",
+  "lane": "SC",
+  "zone": "evidence",
+  "policy_authority": false,
+  "receipt_status": "COMPLETE",
+  "promotion_type": "DCS_LEVEL_0_EXACT_DIFF_MANUAL_PROMOTION",
+  "approved_by": "DCS Level 0",
+  "approval_timestamp": "2026-08-04T05:15:40.126759Z",
+  "approval_record": {
+    "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+    "pull_request": 39,
+    "comment_id": 5174885612,
+    "approved_head_sha": "10e41d0fea5dffbc5d8c54a7a67518e484b9ed6b"
+  },
+  "canonical_merge": {
+    "base_branch": "governance/v7.1-owned-product-harness",
+    "merge_method": "merge",
+    "merge_commit_sha": "2e66202b2a99521de60b55b66e57ceb0ab99a884",
+    "history_preserved": true
+  },
+  "validation": {
+    "workflow": "V7.1 governance validation",
+    "run_number": 133,
+    "conclusion": "SUCCESS",
+    "audit_script_001": "RESOLVED",
+    "unresolved_review_threads": 0,
+    "secret_scan": "PASS",
+    "ps_scan": "PASS",
+    "zone_integrity": "PASS"
+  },
+  "promoted_artifacts": [
+    {
+      "document_id": "DCSE-MP-v7.1",
+      "title": "DCSE Master Profile V7.1",
+      "version": "7.1",
+      "lane": "DCSE",
+      "zone": "authority",
+      "final_status": "ACTIVE_RATIFIED",
+      "parent_authority": "DCS_LEVEL_0",
+      "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+      "canonical_path": "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+      "canonical_commit": "2e66202b2a99521de60b55b66e57ceb0ab99a884",
+      "content_sha256": "728d6e4866d1dcaf527597b13a0ab1971198902aa325d0e1aa01e1d4aaf4d93f",
+      "source_lineage": "governance/v7.1/source/authority/DCSE_Master_Profile_v6.9_RC2.md",
+      "supersedes": "Prior RC2-derived V7.1 runtime baseline"
+    },
+    {
+      "document_id": "DCSE-D21",
+      "title": "Doctrine Runtime Engine",
+      "version": "7.1",
+      "lane": "DCSE",
+      "zone": "authority",
+      "final_status": "ACTIVE_RATIFIED",
+      "parent_authority": "DCSE-MP-v7.1",
+      "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+      "canonical_path": "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md",
+      "canonical_commit": "2e66202b2a99521de60b55b66e57ceb0ab99a884",
+      "content_sha256": "c2e48f1dc30386e6aade5c4291b96d38dbac38c522e519d9c409a6b297799597",
+      "source_lineage": "governance/v7.1/source/doctrines/D21_Doctrine_Runtime_Engine.md",
+      "supersedes": "D21 v7.1 candidate runtime reference"
+    },
+    {
+      "document_id": "DCSE-D22",
+      "title": "Source Authority and Runtime Distribution",
+      "version": "7.1",
+      "lane": "DCSE",
+      "zone": "authority",
+      "final_status": "ACTIVE_RATIFIED",
+      "parent_authority": "DCSE-MP-v7.1",
+      "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+      "canonical_path": "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+      "canonical_commit": "2e66202b2a99521de60b55b66e57ceb0ab99a884",
+      "content_sha256": "e2e91a9befeb745d2dbe7e4354599f8fd97fa8e583cac12c61ec16cc1c290115",
+      "source_lineage": "governance/v7.1/source/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+      "supersedes": "D22 v7.1 candidate runtime reference"
+    }
+  ],
+  "runtime_registry": {
+    "system": "Supabase DCSE-DDNA",
+    "project_id": "uutpzaiqymyufljdgdaa",
+    "schema": "dcse_cp",
+    "directive_table": "governance_directives",
+    "reference_table": "governance_refs",
+    "reconciled_at": "2026-08-04T05:15:40.126759Z",
+    "directive_status": "ACTIVE_RATIFIED",
+    "reference_version": "v7.1-promoted",
+    "verification": "PASS"
+  },
+  "rollback": {
+    "trigger": "Hash, path, approval, or registry drift",
+    "control": "Set affected runtime record to DRIFT or BLOCKED, restore the last verified registry snapshot, and require DCS Level 0 reconciliation before distribution resumes.",
+    "prior_master_profile_checksum": "65bebb11880f73496548290d9a9234eeae1cbcec1b11d64331e2e4e8a2312d52"
+  },
+  "exclusions": [
+    "No PS material",
+    "No credentials or secrets",
+    "No schema migration",
+    "No production deployment",
+    "No unrelated Supabase mutation",
+    "No authority granted to evidence records"
+  ],
+  "exit_criteria": {
+    "exact_content_identified": true,
+    "source_lineage_recorded": true,
+    "validation_complete": true,
+    "dcs_level_0_approval_recorded": true,
+    "canonical_commit_recorded": true,
+    "content_sha256_recorded": true,
+    "runtime_registry_reconciled": true,
+    "promotion_receipt_issued": true
+  },
+  "closeout": "PR #39 promotion sequence complete. Structure Precedes Scale."
+}
