@@ -1,110 +1,86 @@
+---
+dcse_zone: execution
+dcse_authority_level: RECORD
+dcse_document_id: V7_1_UNIFIED_AI_CONVERSATION_TASK_EXECUTION_LEDGER
+dcse_version: V7.1
+dcse_parent_authority: DCSE-MP-v7.1
+dcse_classification: CONFIDENTIAL
+dcse_lane: DCSE
+dcse_policy_authority: false
+---
+
 # V7.1 Unified AI Conversation and Task Execution Ledger
 
-**Purpose:** Drive and record every governed AI conversation, task, assignment, execution event, artifact, review, decision, and promotion.  
-**Controlling authority:** `DCSE V7.1`  
-**Authority status:** `AUTHORITATIVE_UNTIL_FURTHER_NOTICE`  
-**Current compliance:** `NON_PASS`  
-**Verified gap:** Supabase contains four conversation records and five conversation turns. This does not represent every AI interaction.
+## Record Purpose
 
-## Governing principle
+This ledger records governed AI conversations, task states, execution events, artifacts, reviews, decisions, and promotion references.
 
-No AI conversation is operationally authoritative until it is registered. No task is complete until its registered conversation, execution events, artifacts, tests, review, and promotion state reconcile.
+This file is an execution record. It does not create policy, define constitutional authority, promote artifacts, or amend the Master Profile, D21, or D22.
 
-DCSE V7.1 supersedes v6.8, v6.9, v7.0, and every earlier governance version for current operations. Earlier versions are historical evidence only. Conflicting legacy prompts, profiles, memories, scripts, database records, or documentation are stale and must not control execution.
+Controlling routes:
 
-## Required identity chain
+- Constitutional entry point: `../DCSE_Master_Profile_v7.1.md`
+- Source authority and reconciliation: `../doctrines/D22_Source_Authority_Runtime_Distribution.md`
+- Runtime routing and completion controls: `../doctrines/D21_Doctrine_Runtime_Engine.md`
 
-Every AI interaction must carry:
+## Current Compliance Observation
 
-`conversation_id → turn_id → directive_id → task_key → assignment_id → agent_id → event_id → artifact_id → review_id → promotion_id`
+**Status:** `NON_PASS`
 
-A conversation can create multiple tasks. A task can cite multiple turns. Every operational claim must resolve through this chain.
+**Verified gap:** Supabase contains four conversation records and five conversation turns. That record set does not represent every governed AI interaction.
 
-## Conversation registration
+The gap is an implementation and evidence deficiency. It does not authorize this ledger to define replacement policy.
 
-At session start, create or resume a `dcse_cp.conversations` row with:
+## Recorded Identity Linkage
 
-- stable external reference;
-- source system and exact model or agent identity;
-- lane and confidentiality;
-- purpose and governing authority version;
-- operator or originating system;
-- start timestamp and status.
+Where implemented, execution records should preserve the following relationship for audit retrieval:
 
-Every user and agent message must append one `conversation_turns` row containing sequence, role, timestamp, bounded summary or approved content, content hash, lane classification, referenced task keys, decisions, and artifacts. PS content remains isolated and confidential.
+`conversation_id -> turn_id -> directive_id -> task_key -> assignment_id -> agent_id -> event_id -> artifact_id -> review_id -> promotion_id`
 
-## Task creation rule
+The controlling field requirements and completion rules reside in D21 and applicable schema contracts.
 
-Any turn that requests execution, changes scope, accepts risk, makes a decision, reports a blocker, or claims completion must create or reference a task event. Pure discussion may remain conversation-only, but it still requires a turn record.
+## Current Workstream State
 
-## State model
+| Workstream | Active ledger | Verified current state |
+| --- | --- | --- |
+| BOW-001 | `V7_1_BOW_001_ACTIVE_EXECUTION_LEDGER.md` | `BLOCKED_PENDING_HOST_HARDENING`; initial restoration and PR #30 are historical evidence, but B1-01 through B1-08 remain required |
+| BOW-002 | `V7_1_BOW_002_ACTIVE_EXECUTION_LEDGER.md` | `BLOCKED_PENDING_30_FINDING_REMEDIATION`; the 57-row audit and PR #31 are historical evidence, but the 30 findings remain unresolved |
+| BOW-003 | `V7_1_BOW_003_ACTIVE_EXECUTION_LEDGER.md` | Active TSL remediation; exact state controlled by the named ledger |
+| BOW-004 | `V7_1_BOW_004_ACTIVE_EXECUTION_LEDGER.md` | Active CTJ remediation; exact state controlled by the named ledger |
 
-| State | Meaning |
-|---|---|
-| `REGISTERED` | Conversation or task exists |
-| `PLANNED` | Scope, outputs, tests, dependencies, and capability defined |
-| `ASSIGNED` | Eligible executor selected |
-| `CLAIMED` | Executor accepted the assignment |
-| `EXECUTING` | Tool-backed work started |
-| `EVIDENCE_SUBMITTED` | Retrievable artifacts and results recorded |
-| `VALIDATING` | Tests and reconciliation underway |
-| `CORRECTION_REQUIRED` | One or more acceptance tests failed |
-| `ACCEPTED` | Evidence satisfies the task contract |
-| `PROMOTED_TO_GOVERNANCE` | Reviewed result merged to governance branch |
-| `PROMOTED_TO_MAIN` | Release baseline merged to `main` |
-| `DEPLOYED` | Target environment deployment verified |
-| `ROLLED_BACK` | Verified rollback executed |
-| `BLOCKED` | Defined blocker and recovery path recorded |
+No row in this table creates or changes workstream status. Each named active ledger and its attributable evidence control the recorded operational state.
 
-## Mandatory event types
+## Implementation Gap Register
 
-Every task must record creation, assignment, claim, start, heartbeat, evidence submission, test result, failure, retry, reassignment, correction, review, decision, receipt, merge, promotion, deployment, rollback, and closeout when applicable.
+The following implementation work remains recorded for governed review and assignment:
 
-## Model and agent rules
+1. Expand conversation registration coverage.
+2. Capture each governed turn or an approved bounded representation.
+3. Preserve stable linkage among conversations, turns, tasks, assignments, events, artifacts, reviews, and promotions.
+4. Enforce completion and closeout through approved schemas and runtime controls.
+5. Provide dashboard views for unregistered turns, orphan tasks, unreceipted claims, unreconciled commits, and blocked promotions.
+6. Provide exportable logs by conversation, agent, model, task, product, lane, date, and promotion state.
+7. Prove one complete conversation-to-promotion test and one failure-to-reassignment test.
 
-- Route by verified capability, access, cost, and risk, not model name alone.
-- Qwen Coder may build and test bounded artifacts but cannot claim live host or database execution without tool evidence.
-- Claude Code may execute host work only when the poller, credentials, and receipt path prove current capability.
-- Codex may execute connector-backed work and independent review when it did not produce the evidence being reviewed.
-- No model may independently approve its own material implementation.
-- Provider unavailability triggers reassignment or bounded queuing without stopping unrelated tasks.
+These entries are recorded gaps, not self-authorized directives.
 
-## Completion contract
+## Record Update Rule
 
-Completion requires:
+A ledger update must state:
 
-- original and completed scope match;
-- successful assignment result;
-- retrievable output references;
-- artifact hashes;
-- required test results;
-- rollback instructions;
-- GitHub and Supabase reconciliation;
-- attributable independent validation when required;
-- successor remediation tasks for accepted findings;
-- exact promotion state.
+- evidence source;
+- event timestamp;
+- attributable actor;
+- affected task or artifact;
+- prior state;
+- new recorded state;
+- validation status;
+- promotion reference, when applicable.
 
-Structural validation must be supplemented by semantic validation. Expected field names do not prove that the delivered artifact concerns the assigned product.
+A ledger may record a DCS decision. It may not manufacture one.
 
-## BOW workstream routing
+## Closeout Record
 
-| Workstream | Active ledger | Current state |
-|---|---|---|
-| BOW-001 | `V7_1_BOW_001_ACTIVE_EXECUTION_LEDGER.md` | Host hardening pending |
-| BOW-002 | `V7_1_BOW_002_ACTIVE_EXECUTION_LEDGER.md` | 30 registry findings pending |
-| BOW-003 | `V7_1_BOW_003_ACTIVE_EXECUTION_LEDGER.md` | TSL `NON_PASS` remediation |
-| BOW-004 | `V7_1_BOW_004_ACTIVE_EXECUTION_LEDGER.md` | CTJ `NON_PASS` remediation |
+A governed session record should identify final conversation state, referenced task states, GitHub commits where files changed, runtime event and artifact references, unresolved blockers, next tasks, and reconciliation status.
 
-## Required implementation work
-
-1. Register every active and future AI session in `conversations`.
-2. Capture every turn or a governed bounded representation in `conversation_turns`.
-3. Add stable linkage fields or mapping records between turns, tasks, assignments, events, artifacts, reviews, and promotions.
-4. Enforce task completion and conversation closeout contracts.
-5. Add dashboard views for unregistered turns, orphan tasks, unreceipted claims, unreconciled commits, and blocked promotions.
-6. Add exportable execution logs by conversation, agent, model, task, product, lane, date, and promotion.
-7. Prove the system with one complete conversation-to-promotion test and one failure-to-reassignment test.
-
-## Closeout rule
-
-Every AI session closes with a final conversation turn, referenced task states, GitHub commits where files changed, Supabase event and artifact inserts, unresolved blockers, next tasks, and explicit reconciliation status. A chat statement alone cannot close a governed session.
+A chat statement alone does not prove closeout. The controlling completion rule remains in D21.
