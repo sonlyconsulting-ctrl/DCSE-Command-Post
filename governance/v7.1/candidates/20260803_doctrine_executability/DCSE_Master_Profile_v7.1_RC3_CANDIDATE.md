@@ -247,7 +247,15 @@ When intent is clear, the executor must resolve missing structure and routine de
 8. isolate any unresolved affected action and continue unaffected authorized work;
 9. ask the authority holder only when a missing fact changes authority, legality, confidentiality, lane isolation, material spending, public or production release, destructive action, deployment, or final disposition.
 
-The executor must record assumptions and defaults. A reversible low-risk default may be used when it does not change the approved objective. An executor may not ask for information already available in controlling sources or obtainable through authorized tools.
+The executor must record assumptions and defaults. A reversible low-risk default may be used only when all of the following are true:
+
+- it does not change authority, legality, confidentiality, lane isolation, material spending, public or production release, destructive-action posture, deployment authority, or the approved objective;
+- it produces no unapproved external effect;
+- it is reversible through a recorded rollback action;
+- verified requirements, controlling sources, or an established project convention support the choice;
+- the execution receipt records the default, supporting evidence, risk rationale, and rollback action.
+
+An executor may not ask for information already available in controlling sources or obtainable through authorized tools. If more than one safe default remains materially different after retrieval, the executor must stage the alternatives and route only the unresolved choice to the authority holder.
 
 Issue dispositions are:
 
@@ -514,6 +522,8 @@ doctrine_run_plan:
 
 The Doctrine Run Plan replaces ad hoc lists in prompts and conversations. Task-specific fixed lists already preserved in historical BOW contracts remain baseline evidence, but a rerun must generate and retain its current plan.
 
+Before deployment, the router must bind to an approved registry-schema adapter derived from verified live schema, promoted migration, or other controlling schema source. The package manifest identifies the corpus but does not define physical database fields or types. If no approved adapter is available, the router may generate a read-only plan from canonical repository metadata, must classify registry synchronization as `UNKNOWN`, and must not invent field names, enum values, tables, or write behavior. The adapter identity and mapping evidence must be recorded in the DCL before database-backed routing is enabled.
+
 ### 10.4 Doctrine Consideration Log
 
 Every substantive task and governed conversation must produce a DCL containing:
@@ -728,6 +738,8 @@ doctrine_review_receipt:
   source_sha256: ""
   drafting_runtime: ""
   drafting_model: ""
+  model_exposed: false
+  execution_identity_mechanism: ""
   authority_sources_loaded: []
   missing_sources: []
   findings_count: 0
@@ -739,6 +751,8 @@ doctrine_review_receipt:
   accountable_identity: ""
   timestamp: ""
 ```
+
+Record `drafting_runtime` and `drafting_model` exactly as exposed by the runtime. When the model name or version is not exposed, retain `model_exposed: false`, leave `drafting_model` empty, and record the mechanism used to establish the accountable execution identity. Do not infer or invent a model identifier.
 
 ### 15.4 Advisory model provenance
 
@@ -769,6 +783,8 @@ An advisory Copilot review of D01 used `gpt-5-mini`, as reported by DCS. That ou
 | MP-019 | Dynamic doctrine routing | Every substantive run produces a Doctrine Run Plan from the current registry or documented fallback. |
 | MP-020 | Sole promotion authority | Every `PROMOTED` state cites direct DCS authority or an exact applicable DCS-approved DCSE standing authorization. |
 | MP-021 | Terminology discipline | DCS and DCSE labels are used only for authority, framework, system, or entity scope and not as repetitive decoration. |
+| MP-022 | Registry adapter | Database-backed doctrine routing is disabled until a verified approved schema adapter and mapping evidence are recorded. |
+| MP-023 | Model provenance | An unexposed model identifier is recorded as unexposed and is never inferred or invented. |
 
 ## 17. Change record from current v7.1 Master Profile
 
@@ -795,7 +811,7 @@ The following remain required before this candidate can replace the current Mast
 
 1. independent comparison against the complete current Master Profile and native v7.1 corpus;
 2. verification that no retained constitutional provision was unintentionally omitted;
-3. mechanical execution of MP-001 through MP-021;
+3. mechanical execution of MP-001 through MP-023;
 4. determination of the approved physical Supabase receipt and registry mappings;
 5. exact DCS approval of this candidate or its final diff;
 6. promotion receipt and rollback reference;
