@@ -1,7 +1,19 @@
+---
+dcse_zone: execution
+dcse_subzone: instructions
+dcse_authority_level: INSTRUCTION
+dcse_document_id: CODER_ACTIONS_1_2_INSTRUCTIONS
+dcse_version: V7.1
+dcse_parent_authority: DCSE-MP-v7.1
+dcse_classification: CONFIDENTIAL
+dcse_lane: SC
+dcse_policy_authority: false
+---
+
 # Coder Instructions: V7.1 Actions 1 and 2
 
-Status: AUTHORIZED FOR IMMEDIATE CONTROLLED EXECUTION
-Authority: DCSE_MANIFEST.yaml
+Status: AUTHORIZED FOR BOUNDED EXECUTION SUBJECT TO CONTROLLING GOVERNANCE
+Authority route: `../DCSE_Master_Profile_v7.1.md`, D21, D22, and applicable DCS decision
 Assignee class: Coder or equivalent bounded implementation agent
 
 ## Startup Gate
@@ -17,7 +29,7 @@ Before work, read `/DCSE_MANIFEST.yaml` and report:
 
 ## Action 1: Restore and Harden Poller and Heartbeat
 
-Objective: establish reliable 24x7 task transport without making the poller a source of truth or single point of failure.
+Objective: establish reliable task transport without making the poller a source of truth or single point of failure.
 
 Required work:
 
@@ -73,7 +85,7 @@ Completion evidence:
 
 ## Stop Gates
 
-Stop and escalate only for:
+Stop and escalate for:
 
 - production impact
 - destructive operation outside approved procedure
@@ -82,4 +94,8 @@ Stop and escalate only for:
 - constitutional governance change
 - unavailable required credentials that cannot be resolved through approved OAuth or Control Plane access
 
-Do not stop for ordinary documentation, artifact registration, PR creation, bounded repair, staging replacement, or evidence collection.
+Ordinary documentation, artifact registration, draft PR creation, bounded repair, staging preparation, and evidence collection remain subject to the governing task authorization and applicable access controls.
+
+## Instruction Boundary
+
+This packet directs bounded work. It does not create standing policy, expand model authority, promote artifacts, or override the Master Profile, D21, D22, D05, or DCS reserved stop-gates.

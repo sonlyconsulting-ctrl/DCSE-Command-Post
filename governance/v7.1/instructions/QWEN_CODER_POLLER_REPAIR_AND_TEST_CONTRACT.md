@@ -1,24 +1,36 @@
+---
+dcse_zone: execution
+dcse_subzone: instructions
+dcse_authority_level: INSTRUCTION
+dcse_document_id: QWEN_CODER_POLLER_REPAIR_AND_TEST_CONTRACT
+dcse_version: V7.1
+dcse_parent_authority: DCSE-MP-v7.1
+dcse_classification: CONFIDENTIAL
+dcse_lane: SC
+dcse_policy_authority: false
+---
+
 # Qwen Coder Poller Repair and Test Contract
 
-Status: ASSIGNED
-Authority: V7.1 immediate controlled use
+Status: ASSIGNED SUBJECT TO CONTROLLING GOVERNANCE
+Authority route: Master Profile, D21, D22, and the recorded task authorization
 Primary executor: Qwen Coder
-Independent reviewer: Claude Code
+Independent reviewer: Claude Code or another attributable independent reviewer
 Task key: `V7_1_ACTION_1_POLLER_HARDENING`
 
 ## Objective
 
 Restore and harden the existing poller system without creating another poller architecture.
 
-## Mandatory source order
+## Mandatory Source Order
 
 1. Read repository-root `DCSE_MANIFEST.yaml`.
-2. Read `governance/v7.1/POLLER_SOURCE_INTAKE_AND_BASELINE_DECISION.md`.
+2. Read `../POLLER_SOURCE_INTAKE_AND_BASELINE_DECISION.md`.
 3. Read this contract.
-4. Locate the uploaded-source equivalents and prior canonical files on `DESKTOP-PG1JATE`.
-5. Query authenticated GitHub and both Supabase projects before concluding that any dependency is absent.
+4. Locate the uploaded-source equivalents and prior canonical files on the authorized host.
+5. Query authenticated GitHub and both authorized Supabase projects before concluding that any dependency is absent.
 
-## Baseline rule
+## Baseline Rule
 
 Use `job_tribunal_poller_v7.py` as the architectural repair baseline.
 
@@ -26,7 +38,7 @@ Treat `claude_code_poller.ps1` as the currently evidenced SC-Command-Post operat
 
 Legacy `job_tribunal_poller.py` variants and `start_tribunal_poller_20260604.cmd` are evidence only. Do not activate them.
 
-## Phase 1: Evidence and location audit
+## Phase 1: Evidence and Location Audit
 
 Record exact paths, hashes, Git status, branch, scheduled-task names, last-run timestamps, last heartbeat, and last successful task claim for:
 
@@ -39,20 +51,20 @@ Record exact paths, hashes, Git status, branch, scheduled-task names, last-run t
 - credential-registration script
 - poller state and log files
 
-If two competing canonical implementations exist, STOP and report both. Do not select silently.
+If two competing canonical implementations exist, stop the affected selection and report both. Do not select silently.
 
-## Phase 2: Reproduce before patch
+## Phase 2: Reproduce Before Patch
 
-Run audit-only tests first. Do not use `--dispatch` until the source and authorization controls are verified.
+Run audit-only tests first. Do not use `--dispatch` until source and authorization controls are verified.
 
 Required reproduction targets:
 
 1. Confirm whether the scheduled task is firing.
 2. Confirm whether the PowerShell poller can authenticate and write a heartbeat.
 3. Confirm whether task claiming is atomic and limited to one concurrent task.
-4. Confirm whether the temporary task allowlist is the reason valid work remains blocked.
+4. Confirm whether a temporary allowlist is blocking valid work.
 5. Confirm whether missing CLI availability, credential decryption, branch mismatch, or stopped Task Scheduler is the actual outage cause.
-6. Confirm whether the v7 Python candidate imports are resolvable.
+6. Confirm whether the V7 Python candidate imports are resolvable.
 
 ## Phase 3: Classification
 
@@ -65,7 +77,7 @@ For every touched component, report one classification:
 
 REPLACE requires direct evidence that repair is unsafe or impractical. Architectural preference is insufficient.
 
-## Authorized changes
+## Authorized Changes
 
 - repair confirmed defects in existing scripts;
 - narrow or replace temporary validation allowlists with capability and authority checks from `DCSE_MANIFEST.yaml`;
@@ -74,9 +86,9 @@ REPLACE requires direct evidence that repair is unsafe or impractical. Architect
 - add overlap prevention and idempotency tests;
 - add a health monitor only if it monitors the existing scheduled poller rather than becoming another dispatcher;
 - update tests and operational documentation;
-- create a branch and PR for review.
+- create a branch and draft PR for review.
 
-## Prohibited changes
+## Prohibited Changes
 
 - create a parallel poller or orchestration service;
 - activate legacy Git bridge behavior;
@@ -89,7 +101,7 @@ REPLACE requires direct evidence that repair is unsafe or impractical. Architect
 - merge or promote the changes;
 - change production deployment state.
 
-## Acceptance tests
+## Acceptance Tests
 
 1. Startup reads `DCSE_MANIFEST.yaml` and records a startup acknowledgment.
 2. GitHub repository and expected branch are verified.
@@ -104,9 +116,9 @@ REPLACE requires direct evidence that repair is unsafe or impractical. Architect
 11. Restart recovery is demonstrated.
 12. GitHub and Supabase remain independently usable while the poller is stopped.
 13. No new canonical poller is introduced.
-14. All changed files have exact reasons and before/after hashes.
+14. All changed files have exact reasons and before-and-after hashes.
 
-## Required output
+## Required Output
 
 Return:
 
@@ -122,4 +134,8 @@ Return:
 - unresolved blockers;
 - recommendation to RETAIN, WRAP, REFACTOR, or REPLACE each component.
 
-Stop after the draft PR and evidence submission. Claude Code reviews. DCS retains promotion authority.
+Stop after the draft PR and evidence submission. Independent review follows. DCS retains promotion authority.
+
+## Instruction Boundary
+
+This contract assigns bounded work. It does not create standing doctrine, choose constitutional authority, grant credentials, authorize production changes, or promote its own output.
