@@ -1,6 +1,6 @@
 dcse:
   governance_version: "V7.1"
-  package_status: "CANDIDATE_REMEDIATION"
+  package_status: "ACTIVE_RATIFIED"
   principle: "Structure Precedes Scale."
   constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"
   manifest_role: "machine-readable routing index; not independent authority"
@@ -8,9 +8,12 @@ dcse:
 canonical:
   github:
     repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
-    candidate_branch: "agent/v7.1-zone-integrity-remediation"
-    parent_candidate_branch: "governance/v7.1-owned-product-harness"
-    pull_request: null
+    canonical_branch: "governance/v7.1-owned-product-harness"
+    promoted_from_branch: "agent/v7.1-zone-integrity-remediation"
+    pull_request: 39
+    approved_head: "10e41d0fea5dffbc5d8c54a7a67518e484b9ed6b"
+    merge_commit: "2e66202b2a99521de60b55b66e57ceb0ab99a884"
+    promotion_receipt: "tribunal/v7/PR39_DCS_LEVEL0_PROMOTION_RECEIPT_20260804.json"
     governance_path: "governance/v7.1/"
     zone_index: "governance/v7.1/ZONE_INDEX.json"
   supabase:
@@ -64,7 +67,7 @@ zones:
 
 startup_sequence:
   - verify_repository
-  - verify_candidate_branch
+  - verify_canonical_branch
   - load_master_profile
   - verify_source_authority_through_d22
   - classify_lane_and_task
@@ -170,4 +173,4 @@ promotion_gate:
     - runtime_registry_reconciliation
     - attributable_independent_validation
     - promotion_receipt
-  current_package_state: "CANDIDATE_NOT_PROMOTED"
+  current_package_state: "ACTIVE_RATIFIED"
