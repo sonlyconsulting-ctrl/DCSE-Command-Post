@@ -7,7 +7,7 @@
   "receipt_status": "COMPLETE",
   "promotion_type": "DCS_LEVEL_0_EXACT_DIFF_MANUAL_PROMOTION",
   "approved_by": "DCS Level 0",
-  "approval_timestamp": "2026-08-04T05:15:40.126759Z",
+  "approval_timestamp": "2026-08-04T05:13:09Z",
   "approval_record": {
     "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
     "pull_request": 39,
