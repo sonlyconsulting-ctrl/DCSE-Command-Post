@@ -1,20 +1,22 @@
 ---
 dcse_zone: authority
-dcse_authority_level: PROMOTED
+dcse_authority_level: CANDIDATE
 dcse_document_id: DCSE-MP-v7.1
 dcse_version: V7.1
-dcse_promoted_by: DCS_LEVEL_0
-dcse_promotion_date: 2026-08-03
+dcse_promoted_by: null
+dcse_promotion_date: null
 dcse_classification: CONFIDENTIAL
 dcse_lane: DCSE
-dcse_source_of_truth: true
+dcse_source_of_truth: proposed
+dcse_required_approval: DCS_LEVEL_0_EXACT_DIFF
+dcse_parent_authority: DCS_LEVEL_0
 ---
 
 # DCSE Master Profile v7.1
 
 ## 1. Constitutional Position
 
-This Master Profile is the mandatory first-load document for every DCSE-governed agent, model, worker, poller, reviewer, project, and session.
+Upon DCS Level 0 promotion of this exact version, this Master Profile is the mandatory first-load document for every DCSE-governed agent, model, worker, poller, reviewer, project, and session.
 
 DCS Level 0 is the final human authority. This Master Profile is the sole constitutional entry point beneath DCS Level 0. All doctrines, standards, manifests, registries, directives, instructions, execution records, evidence, source copies, and runtime systems are subordinate to this Master Profile.
 
@@ -28,7 +30,7 @@ Classification precedes retrieval. Authority precedes routing. Routing precedes 
 
 ## 3. Mandatory Session Entry Sequence
 
-Every governed session must load and apply the following sequence before substantive execution:
+After promotion, every governed session must load and apply the following sequence before substantive execution:
 
 1. `governance/v7.1/DCSE_Master_Profile_v7.1.md`
 2. `governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md`
@@ -57,7 +59,7 @@ The Master Profile routes authority rather than duplicating subject doctrine.
 | How are file and device boundaries handled? | `source/doctrines/D06_File_System.md`, subject to V7.1 routing |
 | How are database actions handled? | `source/doctrines/D15_Database_Administration.md` and the Access Governance Check |
 
-The table is a routing index. The routed doctrine contains the detailed rule. Where a routed legacy source conflicts with this Master Profile or a V7.1-normalized doctrine, the Master Profile and normalized V7.1 doctrine control.
+The table is a routing index. The routed doctrine contains the detailed rule. Where a routed legacy source conflicts with this Master Profile or a V7.1-normalized doctrine, the Master Profile and normalized V7.1 doctrine control after promotion.
 
 ## 5. Authority Hierarchy
 
@@ -188,7 +190,7 @@ The D01 through D22 historical and adopted source corpus remains under:
 
 `governance/v7.1/source/doctrines/`
 
-Those files preserve lineage and subject content. Their internal version labels and lifecycle statements do not override V7.1. Active runtime reliance occurs only through this Master Profile and the V7.1-normalized D21 and D22 routes.
+Those files preserve lineage and subject content. Their internal version labels and lifecycle statements do not override V7.1. Active runtime reliance occurs only through this Master Profile and the V7.1-normalized D21 and D22 routes after promotion.
 
 ## 15. Required Output Discipline
 
