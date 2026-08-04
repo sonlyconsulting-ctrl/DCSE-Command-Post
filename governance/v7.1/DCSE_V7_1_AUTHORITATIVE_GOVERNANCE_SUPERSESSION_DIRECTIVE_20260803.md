@@ -1,46 +1,56 @@
-# DCSE V7.1 Authoritative Governance Supersession Directive
+---
+dcse_zone: authority
+dcse_authority_level: CANDIDATE
+dcse_document_id: DCSE_V7_1_AUTHORITATIVE_GOVERNANCE_SUPERSESSION_DIRECTIVE_20260803
+dcse_version: V7.1
+dcse_parent_authority: DCSE-MP-v7.1
+dcse_classification: CONFIDENTIAL
+dcse_lane: DCSE
+dcse_required_approval: DCS_LEVEL_0_EXACT_DIFF
+---
 
-**Authority:** Direct DCS approval  
-**Effective:** August 3, 2026  
-**Status:** `AUTHORITATIVE_UNTIL_FURTHER_NOTICE`
+# DCSE V7.1 Governance Supersession Decision Record
 
-## Directive
+## Purpose
 
-DCSE V7.1 is the sole current and authoritative governance version for DCSE operations until DCS expressly adopts a later version.
+This document records the August 3, 2026 DCS decision to supersede earlier DCSE governance versions with V7.1.
 
-V7.1 supersedes v6.8, v6.9, v7.0, and every earlier DCSE governance version for present interpretation, orchestration, task execution, AI conversation control, evidence, review, promotion, deployment, and closeout.
+It is subordinate to `DCSE_Master_Profile_v7.1.md`. It does not independently define the authority hierarchy, runtime routing, source reconciliation, or promotion procedure.
 
-Earlier versions remain available only as historical evidence, lineage, and lessons learned. They have no controlling effect where they conflict with V7.1.
+## Recorded Decision
 
-## Precedence
+DCS Level 0 directed that DCSE V7.1 supersede V6.8, V6.9, V7.0, and earlier DCSE governance versions for current operations.
 
-1. A later direct DCS instruction controls within its express scope.
-2. DCSE V7.1 governs all current DCSE operations.
-3. Earlier governance may be consulted only for historical context or provisions expressly retained by V7.1.
-4. Conflicting legacy prompts, custom instructions, startup text, cached profiles, agent memories, scripts, documentation, database rows, and branch labels must be treated as stale and corrected.
+Earlier versions remain preserved as historical evidence, lineage, and lessons learned. They do not control where they conflict with a promoted V7.1 Master Profile or promoted V7.1 doctrine.
 
-## Required agent behavior
+## Controlling Routes
 
-Every AI model, agent, worker, poller, reviewer, and orchestrator must:
+- Constitutional entry point: `DCSE_Master_Profile_v7.1.md`
+- Source authority and reconciliation: `doctrines/D22_Source_Authority_Runtime_Distribution.md`
+- Runtime doctrine selection: `doctrines/D21_Doctrine_Runtime_Engine.md`
+- Promotion and baseline controls: D05 as routed by the Master Profile
 
-- load and acknowledge V7.1 before operational work;
-- report the canonical governance version and commit in its startup receipt;
-- reject prior-version instructions that conflict with V7.1;
-- preserve lane isolation and reserved Stop-Gates;
-- use capability-based routing and fallback reassignment;
-- record every governed conversation, task, event, artifact, review, and promotion;
-- reconcile GitHub and Supabase at closeout.
+## Required Migration Effect
 
-## Migration requirement
+After promotion of the amended V7.1 package:
 
-Legacy materials must not be deleted merely because they are superseded. They must be labeled `HISTORICAL_SUPERSEDED`, excluded from active routing, and linked to this directive. Active bootstrap sources must be updated to reference V7.1.
+1. Active bootstrap sources must load the Master Profile first.
+2. Legacy materials must be labeled `HISTORICAL_SUPERSEDED` or equivalent.
+3. Legacy materials must be excluded from active routing unless the Master Profile or D21 expressly adopts their subject content.
+4. Runtime registries must reference the canonical V7.1 paths, commit SHAs, content hashes, and promotion records.
+5. Execution and evidence files must not declare constitutional or promoted authority.
 
-## Acceptance gate
+## Acceptance Gate
 
-Supersession is fully operational when:
+Supersession is fully operational only when:
 
-- the directive is committed to the canonical V7.1 governance branch;
-- Supabase records the decision and current authority;
-- the unified conversation and task ledger identifies V7.1 as controlling authority;
-- startup acknowledgments report V7.1;
-- scans find no active execution source declaring an earlier version authoritative.
+- the amended Master Profile is promoted for the exact diff;
+- normalized D21 and D22 are promoted;
+- active startup paths load the Master Profile first;
+- DCSE-DDNA records the canonical paths and promotion states;
+- scans find no active execution or evidence source claiming promoted authority;
+- GitHub and runtime registry reconciliation is complete.
+
+## Amendment Status
+
+The August 3, 2026 DCS decision remains a verified source event. This rewritten record is a candidate representation of that decision and requires exact-diff review before replacing the prior artifact.
