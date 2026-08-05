@@ -1,5 +1,28 @@
 # CLAUDE.md — DCSE Command Post
 
+## v7.1 Governance Mandate (Read First — Applies to Every Session)
+
+This section binds every Claude Code session that touches this repository — new conversations and continued ones alike. It is not a reminder to be re-negotiated per chat; it is a standing instruction, same as the rest of this file.
+
+**The six doctrines, and what each one requires of this session specifically:**
+
+1. **D1 — Atomic Single-Instance Lease.** Before claiming or acting on a Tribunal task, check for an existing lease/lock rather than assuming none exists.
+2. **D2 — Heartbeat Separation.** State transitions get logged as they happen, independently per task — not reconstructed after the fact from memory.
+3. **D3 — Policy Routing.** Task eligibility comes from the policy table (`get_eligible_policy_tasks` or equivalent), never from a hardcoded allowlist in this session's own reasoning.
+4. **D4 — Provider Failure Handling.** A failed or timed-out step is reported as failed. It is never silently upgraded to "completed" to make a task look finished.
+5. **D5 — Idempotency.** Before writing a receipt or marking anything complete, check whether a terminal receipt already exists for that task. Re-running work must not fabricate a second, different outcome.
+6. **D6 — State Machine Transitions.** Every state change is written to a receipt file or DB row at the time it happens, with a timestamp — not summarized afterward as a narrative.
+
+**The rule underneath all six, stated plainly:** a claim of "done," "verified," "passed," or "complete" is only true in this project if it is backed by something checkable — a receipt file, a Supabase row, a command's actual output, a rendered screenshot. If it isn't checkable, say what's actually known and what isn't, instead of asserting completion. This project has already had one incident (documented in `tribunal/v7/runtime-evidence/`) of an agent (Qwen) reporting task completion it had not performed. Do not repeat that failure mode. When resuming after context compaction, re-derive status from evidence files and Supabase state, not from a summarized recollection of what was "probably" done.
+
+**Where to check governance state before starting new work:**
+- `tribunal/v7/runtime-evidence/` — B1-* evidence files and receipt JSON.
+- `tribunal/v7/BOW-*` — completed Bounded Outcome Work packages and their findings.
+- Supabase `dcse_cp` schema, `agent_tasks` / `agent_task_events` tables — live task and event state.
+- Governance branch: `governance/v7.1-promotion-metadata-reconciliation`.
+
+**Scope and limits, stated honestly:** this file is read automatically by any Claude Code session working in this repository, which makes it a durable mechanism for Claude specifically. It has no effect on other models or tools (Qwen, Codex, or any other agent) unless a human explicitly gives it to them — this file cannot reach across tools on its own. For any claim made by a non-Claude agent, verify it the same way this section requires Claude to verify its own claims: against a receipt, a DB row, or other checkable evidence, not against the agent's self-report. Where a doctrine can be enforced mechanically instead of relying on any agent's compliance — e.g. `trg_enforce_task_completion_contract` at the database layer — prefer that over instruction-following every time.
+
 ## Project Overview
 
 SC Agent OS v1.3: a single-file Vercel serverless Node.js application serving both API endpoints and a full HTML/CSS/JS dashboard UI. The entire application lives in `apps/sc-agent-os/api/index.js` (~2750 lines). A root `api/index.js` proxy re-exports it for Vercel's function detection.
