@@ -4,7 +4,7 @@
 
 This section binds every Claude Code session that touches this repository — new conversations and continued ones alike. It is not a reminder to be re-negotiated per chat; it is a standing instruction, same as the rest of this file.
 
-**The six doctrines, and what each one requires of this session specifically:**
+**The six doctrines, and what each one requires of this session specifically** (this D1–D6 labeling is the working set this file uses operationally; as of 2026-08-05 it has not been found registered in `dcse_cp.governance_directives` — see "DDNA authority" below before treating it as DCS-ratified):
 
 1. **D1 — Atomic Single-Instance Lease.** Before claiming or acting on a Tribunal task, check for an existing lease/lock rather than assuming none exists.
 2. **D2 — Heartbeat Separation.** State transitions get logged as they happen, independently per task — not reconstructed after the fact from memory.
@@ -22,6 +22,12 @@ This section binds every Claude Code session that touches this repository — ne
 - Governance branch: `governance/v7.1-promotion-metadata-reconciliation`.
 
 **Scope and limits, stated honestly:** this file is read automatically by any Claude Code session working in this repository, which makes it a durable mechanism for Claude specifically. It has no effect on other models or tools (Qwen, Codex, or any other agent) unless a human explicitly gives it to them — this file cannot reach across tools on its own. For any claim made by a non-Claude agent, verify it the same way this section requires Claude to verify its own claims: against a receipt, a DB row, or other checkable evidence, not against the agent's self-report. Where a doctrine can be enforced mechanically instead of relying on any agent's compliance — e.g. `trg_enforce_task_completion_contract` at the database layer — prefer that over instruction-following every time.
+
+**DDNA authority, and what "the truth" actually requires here:** per `01_GOVERNANCE/DCSE_GOVERNANCE_MILESTONE_DDNA_HUB_ACTIVATION_20260709.md` (Rule 003, "Single Authority Reference Model"), canonical governance directives reside in DCSE-DDNA — the `dcse_cp.governance_directives` table and related DDNA objects in this same Supabase project (`nevgdyfpxdaloacuutal`). This file is an operational reference and pointer, not a competing source of authority, and must not be treated as one.
+
+That authority is conditional on ratification, not automatic by virtue of living in a DDNA-labeled table. As of 2026-08-05, `dcse_cp.governance_directives` contains exactly two rows (D15, D16), both `status: candidate`, `checksum: pending`, with bodies explicitly marked as recovered placeholders "pending Level 0 ratification." `dcse_cp.ddna_characteristics` is a separate table holding SC brand-voice extraction rules, not governance doctrine — every row there is `status: observed`, `approved_by: null`, unpromoted. Neither table currently contains a ratified, checkable version of the D1–D6 set above, or of D17 (`docs/governance/DCSE_D17_SUPABASE_SECURITY_AND_AUTOMATION_DOCTRINE_v7.md`), which exists only as a markdown file.
+
+The operating rule this implies: DDNA outranks this file or any other repository's governance claim once a directive is actually promoted — but a `candidate` or `observed` row is a proposal, not settled doctrine, and must be verified against its live `status`/`promotion_status` before being relied on, the same as any other unverified claim this file requires checking. Query `dcse_cp.governance_directives` and `dcse_cp.ddna_characteristics` directly (Supabase MCP) rather than assuming their contents; both were empty of ratified content as of this writing, which is itself a governance gap worth closing before more doctrine text accumulates in files instead of in the ratified DB record.
 
 ## Project Overview
 
