@@ -1,0 +1,38 @@
+{
+  "schema": "tribunal-poller-v7-receipt/1.0",
+  "task_id": "V7_1_RERUN_BOW_002_STRICT_RUNTIME",
+  "source_file": "/home/user/DCSE-Command-Post/tribunal/v7/runtime-evidence/inbox/TRIBUNAL_RERUN_BOW_002_20260805.json",
+  "source_sha256": "E840D851D5B2BB0CA699736859A3514AE4A5D91F777D42E0076F721FAAA4A189",
+  "state": "AUTHORIZED",
+  "created_at": "2026-08-05T05:01:43+00:00",
+  "updated_at": "2026-08-05T05:01:43+00:00",
+  "history": [
+    {
+      "from": null,
+      "to": "RECEIVED",
+      "at": "2026-08-05T05:01:43+00:00",
+      "detail": "Source packet observed; source was not modified."
+    },
+    {
+      "from": "RECEIVED",
+      "to": "VALIDATED",
+      "at": "2026-08-05T05:01:43+00:00",
+      "detail": "Packet schema and path boundaries validated."
+    },
+    {
+      "from": "VALIDATED",
+      "to": "AUTHORIZED",
+      "at": "2026-08-05T05:01:43+00:00",
+      "detail": "GO recorded by claude-haiku-4.5-code at 2026-08-05T05:01:22.721150Z."
+    }
+  ],
+  "worker_result": null,
+  "authorized_scope": {
+    "worker": "codex",
+    "working_directory": "/home/user/DCSE-Command-Post",
+    "sandbox": "read-only",
+    "expected_outputs": [],
+    "timeout_seconds": 300
+  },
+  "outcome": "AUTHORIZED_DRY_RUN_HOLD"
+}
