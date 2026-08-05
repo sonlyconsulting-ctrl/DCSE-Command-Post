@@ -251,3 +251,30 @@ def test_d21_016b_dcl_writer_marks_pending_reconciliation_with_no_remote_sink():
         receipt = writer.write(dcl)
         assert receipt["reconciliation_status"] == "PENDING_RECONCILIATION"
         assert Path(receipt["path"]).exists()
+
+
+# Not one of D21's original 16 -- added 2026-08-05 when the DCS-override
+# PROMOTED_WITH_KNOWN_GAPS status was introduced. Proves the router treats
+# override-promotion as real availability (selected) without letting that
+# selection erase the wrapper requirement the 2026-08-03 audit found.
+def test_d21_017_dcs_override_promotion_is_selected_but_still_needs_wrapper():
+    override_record = DoctrineRecord(
+        doctrine_id="D01", promotion_status="PROMOTED_WITH_KNOWN_GAPS",
+        executability_status="DCS_OVERRIDE_KNOWN_GAPS", content_sha256="c" * 64,
+    )
+    assert override_record.is_promoted() is True
+    assert override_record.needs_wrapper() is True
+
+    registry = _registry(*[_promoted(d) for d in ALWAYS_ON_DOCTRINES], override_record)
+    router = Router(registry, SourceMode.REGISTRY_PRIMARY)
+    plan = router.route(_task(), candidate_doctrine_ids=["D01"])
+
+    assert any(s["doctrine_id"] == "D01" for s in plan.selected)
+    assert "D01" in plan.wrappers_required
+    assert not any(s["doctrine_id"] == "D01" for s in plan.evaluated_not_selected)
+
+
+def test_d21_017b_clean_promoted_doctrine_needs_no_wrapper():
+    clean = _promoted("D22")
+    assert clean.is_promoted() is True
+    assert clean.needs_wrapper() is False

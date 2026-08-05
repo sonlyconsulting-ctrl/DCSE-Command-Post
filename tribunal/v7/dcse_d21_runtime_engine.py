@@ -187,7 +187,25 @@ class DoctrineRecord:
     promotion_authority_ref: str = ""
 
     def is_promoted(self) -> bool:
-        return self.promotion_status.upper() == "PROMOTED"
+        """True for both a clean PROMOTED row and a DCS-override
+        PROMOTED_WITH_KNOWN_GAPS row -- both carry real DIRECT_DCS authority
+        per D05 Sec 2. What distinguishes them is needs_wrapper(), not
+        promotion status; conflating the two would hide the override in the
+        routing behavior instead of just in the label.
+        """
+        return self.promotion_status.upper().startswith("PROMOTED")
+
+    def needs_wrapper(self) -> bool:
+        """D21 Sec 8: any promoted-but-not-structurally-clean doctrine still
+        requires the executability wrapper at the point of use, regardless
+        of promotion status. A DCS override authorizes using the doctrine;
+        it does not retroactively supply the receipt/gate-schema/rollback
+        structure the 2026-08-03 audit found missing.
+        """
+        return self.promotion_status.upper() == "PROMOTED_WITH_KNOWN_GAPS" or (
+            self.executability_status
+            and self.executability_status.upper() not in {"DCSE_OPERATIONAL", "DCSE_CONSTITUTIONAL"}
+        )
 
 
 @dataclass
@@ -542,16 +560,24 @@ class Router:
                     "reason": f"promotion_status={record.promotion_status or 'unset'}, not PROMOTED",
                     "source_hash": record.content_sha256,
                 })
-                if record.executability_status and record.executability_status.upper() not in {"DCSE_OPERATIONAL", "DCSE_CONSTITUTIONAL"}:
+                if record.needs_wrapper():
                     plan.wrappers_required.append(doctrine_id)
                 continue
 
-            # Selected
+            # Selected -- promoted (clean or DCS-override-with-gaps alike).
+            # A DCS override makes a doctrine available for use; it does not
+            # retroactively close the audit's structural finding, so the
+            # wrapper requirement is tracked independently of selection.
             plan.selected.append({
                 "doctrine_id": doctrine_id,
                 "source_hash": record.content_sha256,
-                "decision_reason": "promoted, entity/lane in scope, not firewalled",
+                "decision_reason": (
+                    "promoted (DCS override, known gaps preserved)" if record.needs_wrapper()
+                    else "promoted, entity/lane in scope, not firewalled"
+                ),
             })
+            if record.needs_wrapper():
+                plan.wrappers_required.append(doctrine_id)
 
         return plan
 
