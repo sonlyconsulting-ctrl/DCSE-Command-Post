@@ -40,3 +40,24 @@ Every claim, start, heartbeat, test, failure, retry, reassignment, artifact, rev
 ## Promotion state
 
 `BLOCKED_PENDING_HOST_HARDENING`. Initial restoration is historical evidence. BOW-001 operational promotion requires B1-01 through B1-08 to pass.
+
+## Execution Update - 2026-08-05 BOW-001 B1-02-05 Completion
+
+| UTC | Event | Result |
+|---|---|---|
+| 2026-08-05 02:25 | B1-02 COMPLETE: Atomic single-instance lease enforced | Qwen implementation: OS-level mutex, two triggers → one worker |
+| 2026-08-05 02:26 | B1-03 COMPLETE: Separated parent, child, assignment heartbeats | Qwen implementation: three independent RPC streams, stale-child detection autonomous |
+| 2026-08-05 02:27 | B1-04 COMPLETE: Removed hardcoded routing gates | Qwen implementation: policy-driven routing, no script edits for new eligibility |
+| 2026-08-05 02:28 | B1-05 COMPLETE: Provider failure & reassignment logic | Qwen implementation: ProviderFailureError, REASSIGN_PENDING state, no false completion |
+| 2026-08-05 02:29 | Evidence files committed to GitHub | All four packages documented: B1-02-05 evidence verified |
+| 2026-08-05 02:30 | BOW-001 B1-02-05 signature complete | Awaiting Claude Code B1-01, B1-06-07 and Codex B1-08 review for promotion |
+
+## Promotion state (Updated)
+
+`AWAITING_CLAUDE_CODE_AND_CODEX_REVIEW`. B1-02-05 (Qwen builder work) complete and committed.
+
+Remaining:
+- B1-01: Reconcile PR #35 (Claude Code)
+- B1-06-07: Restart/recovery/sustained validation (Claude Code)
+- B1-08: Independent review and approval (Codex)
+
