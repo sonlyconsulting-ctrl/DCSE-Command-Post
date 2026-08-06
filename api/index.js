@@ -233,7 +233,9 @@ module.exports = async function handler(req, res) {
     clearSessionCookies(res); res.statusCode = 302; res.setHeader('Location', '/'); return res.end();
   }
 
-  if (url.pathname.startsWith('/command-center') || url.pathname.startsWith('/api/command-center')) {
+  if (url.pathname.startsWith('/command-center') || url.pathname.startsWith('/api/command-center')
+      || url.pathname.startsWith('/api/tribunal') || url.pathname.startsWith('/api/runtime')
+      || url.pathname.startsWith('/api/agentops') || url.pathname.startsWith('/api/receipts')) {
     return innerHandler(req, res);
   }
 
