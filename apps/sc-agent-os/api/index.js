@@ -2899,6 +2899,8 @@ ccInit();
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://nevgdyfpxdaloacuutal.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const DCSE_SCHEMA = 'dcse_cp';
+const SCHEMA_HEADERS = {'Accept-Profile': DCSE_SCHEMA, 'Content-Profile': DCSE_SCHEMA};
 
 async function handlePersonas(req, res) {
   res.setHeader('Content-Type', 'application/json');
@@ -2913,7 +2915,7 @@ async function handlePersonas(req, res) {
     const lifecycle = url.searchParams.get('lifecycle');
     let query = `${SUPABASE_URL}/rest/v1/personas?select=id,code,display_name,release_posture,dcse_lifecycle,privacy_class,dcs_lane,identity_mask,family_product,child_safe,agent_promote_locked&order=code.asc`;
     if (lifecycle) query += `&dcse_lifecycle=eq.${lifecycle}`;
-    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json', ...SCHEMA_HEADERS}});
     const personas = await r.json();
     res.statusCode = r.status;
     res.end(JSON.stringify({personas: Array.isArray(personas) ? personas : [], total: Array.isArray(personas) ? personas.length : 0}));
@@ -2938,7 +2940,7 @@ async function handleAssets(req, res) {
     let query = `${SUPABASE_URL}/rest/v1/assets?select=id,asset_name,asset_label,asset_type,url,dcse_state,privacy_class,dcs_lane,persona_fk,source_id,agent_approve_locked,agent_deploy_locked,tribunal_pr_url&order=asset_type.asc`;
     if (state) query += `&dcse_state=eq.${state}`;
     if (persona) query += `&persona_fk=eq.${persona}`;
-    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json', ...SCHEMA_HEADERS}});
     const assets = await r.json();
     res.statusCode = r.status;
     res.end(JSON.stringify({assets: Array.isArray(assets) ? assets : [], total: Array.isArray(assets) ? assets.length : 0}));
@@ -3068,7 +3070,7 @@ async function handleAgentOps(req, res) {
     pending_assignments: []
   };
   if (SUPABASE_KEY) {
-    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS};
     const base = SUPABASE_URL + '/rest/v1';
     try {
       const [hbr, tsr, aer, arr, par] = await Promise.all([
@@ -3115,7 +3117,7 @@ async function handleDBA(req, res) {
     if (SUPABASE_KEY) {
       const tr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`},
+        headers: {'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS},
         body: JSON.stringify({})
       }).catch(() => null);
       const tableQuery = `${SUPABASE_URL}/rest/v1/?select=*&limit=0`;
@@ -3132,7 +3134,7 @@ async function handleDBA(req, res) {
       for (const t of result.tables.slice(0, 5)) {
         try {
           const cr = await fetch(`${SUPABASE_URL}/rest/v1/${t.name}?select=id&limit=1&offset=0`, {
-            headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0'}
+            headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0', ...SCHEMA_HEADERS}
           });
           const range = cr.headers.get('content-range');
           if (range) {
@@ -3186,7 +3188,7 @@ async function handleAssurance(req, res) {
   if (SUPABASE_KEY) {
     try {
       const ar = await fetch(`${SUPABASE_URL}/rest/v1/agent_tasks?select=id,task_type,status,updated_at&task_type=like.assurance_*&order=updated_at.desc&limit=20`, {
-        headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`}
+        headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS}
       });
       if (ar.ok) {
         const tasks = await ar.json();
@@ -3219,7 +3221,7 @@ async function handleTribunalInbox(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const result = {tasks: [], agents: [], events: [], assignments: [], stats: {total: 0, planned: 0, assigned: 0, running: 0, completed: 0, blocked: 0, awaiting_dcs: 0}};
   if (!SUPABASE_KEY) { res.statusCode = 200; res.end(JSON.stringify(result)); return; }
-  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS};
   const base = SUPABASE_URL + '/rest/v1';
   try {
     const [tr, ar, er, asr] = await Promise.all([
@@ -3263,7 +3265,7 @@ async function handleTribunalDispatch(req, res) {
       const taskLane = validLanes.includes(lane) ? lane : 'DCSE';
       const taskType = validTypes.includes(task_type) ? task_type : 'other';
       const taskKey = 'TRIB-' + Date.now().toString(36).toUpperCase();
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const taskPayload = {
         task_key: taskKey, title, description: description || null,
@@ -3305,7 +3307,7 @@ async function handleTribunalReceipt(req, res) {
       const {task_id, event_type, actor_label, summary, result_status} = JSON.parse(body);
       if (!task_id) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id required'})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const evType = event_type || 'receipt';
       const er = await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
@@ -3340,7 +3342,7 @@ async function handleTribunalStatus(req, res) {
       const validStatuses = ['planned','assigned','running','blocked','completed','needs_review','handoff_ready','parallel_review','awaiting_dcs','approved','rejected','archived'];
       if (!validStatuses.includes(status)) { res.statusCode = 400; res.end(JSON.stringify({error: 'Invalid status: ' + status})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const updatePayload = {status};
       if (status === 'completed' || status === 'approved') updatePayload.completed_at = new Date().toISOString();
@@ -3368,7 +3370,7 @@ async function handleCommandCenterAttachments(req, res) {
   res.setHeader('Content-Type', 'application/json');
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'Database not configured'})); return; }
-  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json'};
+  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', ...SCHEMA_HEADERS};
   const base = SUPABASE_URL + '/rest/v1';
 
   if (req.method === 'GET') {
