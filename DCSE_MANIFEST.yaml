@@ -1,0 +1,173 @@
+dcse:
+  governance_version: "V7.1"
+  package_status: "CANDIDATE_REMEDIATION"
+  principle: "Structure Precedes Scale."
+  constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  manifest_role: "machine-readable routing index; not independent authority"
+
+canonical:
+  github:
+    repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
+    candidate_branch: "agent/v7.1-zone-integrity-remediation"
+    parent_candidate_branch: "governance/v7.1-owned-product-harness"
+    pull_request: null
+    governance_path: "governance/v7.1/"
+    zone_index: "governance/v7.1/ZONE_INDEX.json"
+  supabase:
+    governance:
+      name: "DCSE-DDNA"
+      project_id: "uutpzaiqymyufljdgdaa"
+      role: "constitutional runtime registry"
+    operations:
+      name: "SC-Command-Post"
+      project_id: "nevgdyfpxdaloacuutal"
+      role: "operational state registry"
+
+mandatory_entry_sequence:
+  - "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  - "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
+  - "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  - "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
+  - "task-routed doctrines selected by D21"
+  - "applicable assignment or instruction"
+
+authority_routes:
+  final_human_authority: "DCS Level 0"
+  constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
+  runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  baseline_and_promotion: "governance/v7.1/source/doctrines/D05_Baseline_Promotion.md"
+  agent_onboarding: "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
+  reserved_stop_gates: "governance/v7.1/DCS_LEVEL_0_CONDITIONAL_AUTHORIZATION_FOUNDATIONAL_TRILOGY.md"
+  rule: "This manifest points to authority. It does not create, restate, or supersede authority."
+
+zones:
+  authority:
+    path:
+      - "governance/v7.1/*.md"
+      - "governance/v7.1/doctrines/*.md"
+    effect: "constitutional and standing governance candidates or promoted files"
+  source:
+    path:
+      - "governance/v7.1/source/**"
+    effect: "lineage and adopted subject content without independent V7.1 authority"
+  execution:
+    path:
+      - "governance/v7.1/execution/**"
+      - "governance/v7.1/instructions/**"
+    effect: "bounded instructions, contracts, plans, ledgers, corrections, and activity records"
+  evidence:
+    path:
+      - "tribunal/v7/**"
+    effect: "audits, receipts, scripts, logs, snapshots, and proof of events"
+  invariant: "Execution and evidence files may not declare promoted or constitutional authority."
+
+startup_sequence:
+  - verify_repository
+  - verify_candidate_branch
+  - load_master_profile
+  - verify_source_authority_through_d22
+  - classify_lane_and_task
+  - route_doctrines_through_d21
+  - verify_github_access
+  - verify_supabase_access_when_required
+  - load_assignment
+  - produce_startup_acknowledgment
+  - begin_bounded_work
+
+authority_boundaries:
+  operational_actions_may_be_allowed_when_task_scope_is_recorded:
+    - documentation_updates
+    - artifact_registration
+    - draft_pull_request_creation
+    - issue_creation
+    - bounded_infrastructure_repair
+    - approved_comparison_jobs
+    - evidence_collection
+    - non_destructive_data_correction_with_rollback
+  standing_conditions:
+    - task_scope_is_approved
+    - acceptance_evidence_is_complete
+    - accountable_validator_is_recorded
+    - no_reserved_stop_gate_is_triggered
+  conditions_do_not_waive:
+    - attributable_validation
+    - evidence
+    - tests
+    - rollback
+    - lane_isolation
+    - security_controls
+    - exact_promotion_state
+  dcs_reserved:
+    - constitutional_change
+    - master_profile_or_doctrine_promotion
+    - production_release
+    - public_release
+    - security_exception
+    - lane_boundary_change
+    - destructive_operation_outside_procedure
+    - material_new_spending
+    - unresolved_authoritative_conflict
+  self_expansion_rule: "An agent may impose a narrower temporary safeguard but may not expand its own authority."
+
+workflow_lifecycle:
+  review_selection: "capability-based and attributable"
+  validation_accountability:
+    reviewer_agent_id_required: true
+    anonymous_or_null_reviewer: "PROHIBITED"
+    validation_scope_disclosure_required: true
+    evidence_not_reperformed_must_be_disclosed: true
+  self_review_rule: "The executor may verify completeness but may not be the sole promotion validator."
+  evidence_acceptance:
+    accepted: "record result and advance only within approved scope"
+    accepted_with_findings: "record result, create remediation tasks, and apply controlling gate"
+    rejected_or_insufficient: "correct within approved scope, then revalidate"
+  audit_findings:
+    block_when:
+      - unresolved_critical_or_high_risk
+      - credential_exposure_or_security_exception
+      - destructive_action_outside_approved_procedure
+      - production_or_public_release
+      - lane_conflict
+      - material_architecture_replacement
+      - irreconcilable_authoritative_evidence
+    otherwise: "register remediation and continue within approved scope"
+
+credentials:
+  github_pat_in_chat: "PROHIBITED"
+  supabase_service_role_to_models: "PROHIBITED"
+  approved_access:
+    - github_mcp_oauth
+    - authenticated_git
+    - github_cli_oauth
+    - supabase_mcp_oauth
+    - dcse_control_plane
+
+artifact_policy:
+  essential_identity_required: true
+  canonical_source_required: true
+  checksum_required_when_material: true
+  promotion_receipt_required_for_authority: true
+
+negative_finding_policy:
+  scoped_only: true
+  finding_does_not_equal_failure: true
+  disposition: "record remediation and continue unless a reserved stop gate is triggered"
+
+poller:
+  role: "task transport and heartbeat, not source of truth"
+  source_of_truth:
+    - github_canonical_artifact
+    - dcse_ddna_runtime_registry
+  fallback: "manual authenticated agent session"
+  health_monitor_required: true
+
+promotion_gate:
+  required:
+    - exact_diff_dcs_level_0_approval
+    - canonical_github_commit
+    - content_sha256
+    - runtime_registry_reconciliation
+    - attributable_independent_validation
+    - promotion_receipt
+  current_package_state: "CANDIDATE_NOT_PROMOTED"

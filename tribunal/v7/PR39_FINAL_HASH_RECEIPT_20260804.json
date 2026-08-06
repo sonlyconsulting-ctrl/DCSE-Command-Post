@@ -1,0 +1,36 @@
+﻿{
+    "classification":  "CONFIDENTIAL",
+    "lane":  "SC",
+    "document_id":  "DCSE-PR39-FINAL-HASH-RECEIPT-20260804",
+    "pr_number":  39,
+    "head_sha":  "e5ef5a88c4815fb89665bf1f4a6ed0246f83a41a",
+    "status":  "EXACT_DIFF_REVIEW_BOUNDARY",
+    "generated_at":  "2026-08-04T01:00:20.7131475-04:00",
+    "files":  [
+                  {
+                      "path":  "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+                      "sha256":  "728d6e4866d1dcaf527597b13a0ab1971198902aa325d0e1aa01e1d4aaf4d93f"
+                  },
+                  {
+                      "path":  "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md",
+                      "sha256":  "c2e48f1dc30386e6aade5c4291b96d38dbac38c522e519d9c409a6b297799597"
+                  },
+                  {
+                      "path":  "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+                      "sha256":  "e2e91a9befeb745d2dbe7e4354599f8fd97fa8e583cac12c61ec16cc1c290115"
+                  },
+                  {
+                      "path":  "tribunal/v7/GATE4_BEHAVIORAL_TEST_EVIDENCE_20260804.md",
+                      "sha256":  "49499bcdf8c27edb8ae3bcb93177014c2f7f319145aa262f0f2cdb45f6f415d6"
+                  },
+                  {
+                      "path":  "tribunal/v7/PR39_CTO_REVIEW_AND_PROMOTION_PACKAGE_20260804.md",
+                      "sha256":  "d42ab337ebf78cd8cf9bd90af029ff7093f505a35c5a6241133b2f6b804c3e95"
+                  },
+                  {
+                      "path":  "tribunal/v7/PR39_REMOTE_RECONCILIATION_ADDENDUM_20260804.md",
+                      "sha256":  "a2524876237a1c1f086d28a3b43b67576fdbf259869c05bd047a2194129bf8fc"
+                  }
+              ],
+    "authority":  "EVIDENCE_ONLY_NO_PROMOTION_AUTHORITY"
+}

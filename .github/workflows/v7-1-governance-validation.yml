@@ -1,0 +1,203 @@
+name: V7.1 governance validation
+
+on:
+  pull_request:
+    paths:
+      - 'governance/v7.1/**'
+      - 'tribunal/v7/**'
+      - 'DCSE_MANIFEST.yaml'
+      - '.github/workflows/v7-1-governance-validation.yml'
+  push:
+    branches:
+      - main
+      - governance/v7.1-owned-product-harness
+      - agent/v7.1-zone-integrity-remediation
+    paths:
+      - 'governance/v7.1/**'
+      - 'tribunal/v7/**'
+      - 'DCSE_MANIFEST.yaml'
+      - '.github/workflows/v7-1-governance-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate V7.1 hierarchy and zones
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          errors = []
+
+          master = Path('governance/v7.1/DCSE_Master_Profile_v7.1.md')
+          d22 = Path('governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md')
+          d21 = Path('governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md')
+          onboarding = Path('governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md')
+          zone_index_path = Path('governance/v7.1/ZONE_INDEX.json')
+          manifest = Path('DCSE_MANIFEST.yaml')
+
+          required = [master, d22, d21, onboarding, zone_index_path, manifest]
+          missing = [str(path) for path in required if not path.is_file()]
+          if missing:
+              errors.append('Missing required V7.1 files: ' + ', '.join(missing))
+
+          def read(path):
+              return path.read_text(encoding='utf-8', errors='replace')
+
+          def frontmatter(text):
+              if not text.startswith('---\n'):
+                  return {}
+              end = text.find('\n---\n', 4)
+              if end < 0:
+                  return {}
+              data = {}
+              for line in text[4:end].splitlines():
+                  if ':' not in line:
+                      continue
+                  key, value = line.split(':', 1)
+                  data[key.strip()] = value.strip().strip('"').strip("'")
+              return data
+
+          if master.is_file() and d22.is_file() and d21.is_file():
+              master_text = read(master)
+              d22_text = read(d22)
+              d21_text = read(d21)
+
+              master_meta = frontmatter(master_text)
+              d22_meta = frontmatter(d22_text)
+              d21_meta = frontmatter(d21_text)
+
+              if master_meta.get('dcse_document_id') != 'DCSE-MP-v7.1':
+                  errors.append('Master Profile missing DCSE-MP-v7.1 metadata.')
+              if master_meta.get('dcse_zone') != 'authority':
+                  errors.append('Master Profile must be in authority zone.')
+              if master_meta.get('dcse_authority_level') not in {'CANDIDATE', 'PROMOTED'}:
+                  errors.append('Master Profile authority level must be CANDIDATE or PROMOTED.')
+
+              for path, meta, expected_id in [
+                  (d22, d22_meta, 'DCSE-D22'),
+                  (d21, d21_meta, 'DCSE-D21'),
+              ]:
+                  if meta.get('dcse_document_id') != expected_id:
+                      errors.append(f'{path}: wrong or missing document ID.')
+                  if meta.get('dcse_zone') != 'authority':
+                      errors.append(f'{path}: normalized doctrine must be in authority zone.')
+                  if meta.get('dcse_parent_authority') != 'DCSE-MP-v7.1':
+                      errors.append(f'{path}: must declare DCSE-MP-v7.1 as parent authority.')
+
+              master_sequence = [
+                  'governance/v7.1/DCSE_Master_Profile_v7.1.md',
+                  'governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md',
+                  'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md',
+                  'governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md',
+              ]
+              positions = [master_text.find(item) for item in master_sequence]
+              if any(position < 0 for position in positions):
+                  errors.append('Master Profile does not contain the complete mandatory entry sequence.')
+              elif positions != sorted(positions):
+                  errors.append('Master Profile entry sequence must load Master, D22, D21, then onboarding.')
+
+              if 'D22 does not replace this Master Profile' not in master_text:
+                  errors.append('Master Profile must state that D22 does not replace it.')
+              if 'D21 does not promote doctrine or alter the authority hierarchy' not in master_text:
+                  errors.append('Master Profile must state the D21 authority boundary.')
+
+          if zone_index_path.is_file():
+              try:
+                  zone_index = json.loads(read(zone_index_path))
+              except Exception as exc:
+                  errors.append(f'ZONE_INDEX.json is invalid JSON: {exc}')
+                  zone_index = {}
+
+              expected_zones = {'authority', 'source', 'execution', 'evidence'}
+              actual_zones = set(zone_index.get('zones', {}))
+              if actual_zones != expected_zones:
+                  errors.append(f'ZONE_INDEX zones must be {sorted(expected_zones)}; found {sorted(actual_zones)}.')
+
+          relocated_old_paths = [
+              'governance/v7.1/COPILOT_REVIEW_RESOLUTION_20260802.md',
+              'governance/v7.1/CLAUDE_REVIEW_INSTRUCTIONS.md',
+              'governance/v7.1/CODER_ACTIONS_1_2_INSTRUCTIONS.md',
+              'governance/v7.1/CODER_CONNECTOR_MEDIATED_PUBLICATION_FALLBACK.md',
+              'governance/v7.1/CODER_GITHUB_AUTHENTICATION_RECOVERY_AND_PUSH_PROTOCOL.md',
+              'governance/v7.1/QWEN_CODER_POLLER_REPAIR_AND_TEST_CONTRACT.md',
+          ]
+          for old_path in relocated_old_paths:
+              if Path(old_path).exists():
+                  errors.append(f'Relocated instruction or record remains in authority root: {old_path}')
+
+          metadata_authority_patterns = [
+              re.compile(r'dcse_authority_level:\s*(PROMOTED|AUTHORITATIVE)', re.I),
+              re.compile(r'\*\*Authority status:\*\*\s*`?AUTHORITATIVE', re.I),
+              re.compile(r'^Status:\s*AUTHORITATIVE', re.I | re.M),
+              re.compile(r'\*\*Status:\*\*\s*`?AUTHORITATIVE', re.I),
+          ]
+
+          for root in [Path('governance/v7.1/execution'), Path('governance/v7.1/instructions'), Path('tribunal/v7')]:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.md', '.json', '.yaml', '.yml', '.txt'}:
+                      continue
+                  text = read(path)
+                  metadata_window = '\n'.join(text.splitlines()[:45])
+                  for pattern in metadata_authority_patterns:
+                      if pattern.search(metadata_window):
+                          errors.append(f'{path}: execution or evidence zone claims promoted authority.')
+                          break
+
+          frontmatter_required = [
+              master,
+              d22,
+              d21,
+              Path('governance/v7.1/execution/V7_1_UNIFIED_AI_CONVERSATION_TASK_EXECUTION_LEDGER.md'),
+              Path('governance/v7.1/execution/COPILOT_REVIEW_RESOLUTION_20260802.md'),
+          ]
+          frontmatter_required.extend(Path('governance/v7.1/instructions').glob('*.md'))
+
+          for path in frontmatter_required:
+              if path.is_file() and not frontmatter(read(path)):
+                  errors.append(f'{path}: required machine-readable frontmatter is missing.')
+
+          prohibited_credentials = [
+              'SUPABASE_SERVICE_ROLE_KEY=',
+              'GITHUB_TOKEN=',
+              'GH_TOKEN=',
+              'DATABASE_PASSWORD=',
+              'JWT_SECRET=',
+          ]
+          for root in [Path('governance/v7.1'), Path('tribunal/v7')]:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file():
+                      continue
+                  text = read(path)
+                  for token in prohibited_credentials:
+                      if token in text:
+                          errors.append(f'{path}: contains prohibited credential assignment {token}')
+
+          if manifest.is_file():
+              manifest_text = read(manifest)
+              required_manifest_values = [
+                  'constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"',
+                  'source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"',
+                  'runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"',
+                  'current_package_state: "CANDIDATE_NOT_PROMOTED"',
+              ]
+              for value in required_manifest_values:
+                  if value not in manifest_text:
+                      errors.append(f'DCSE_MANIFEST.yaml missing required routing value: {value}')
+
+          if errors:
+              raise SystemExit('\n'.join(f'ERROR: {error}' for error in errors))
+
+          print('V7.1 Master-first hierarchy and zone validation passed.')

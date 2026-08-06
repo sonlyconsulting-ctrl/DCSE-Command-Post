@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "governance_version": "V7.1",
+  "execution_mode": "MP-Full",
+  "primary_runtime_doctrine": "D21",
+  "always_on": ["D03", "D21", "D22"],
+  "gate_authority": {
+    "readiness_stop_gate": ["D03", "D21"],
+    "promotion_pass_gate": ["D05", "D20"],
+    "source_reconciliation": ["D22"]
+  },
+  "baseline_policy": {
+    "original_set": "A",
+    "originals_immutable": true,
+    "rerun_set": "B"
+  },
+  "required_receipts": [
+    "authority",
+    "doctrine_consideration_log",
+    "readiness",
+    "execution",
+    "test",
+    "evidence",
+    "review",
+    "promotion",
+    "rollback",
+    "reconciliation"
+  ],
+  "completion_invariants": {
+    "nonempty_output_refs": true,
+    "accountable_runtime_identity": true,
+    "github_supabase_reconciled": true,
+    "named_model_unavailability_blocks": false,
+    "automatic_dependency_release_after_pass": true
+  },
+  "reruns": [
+    {"task_key":"V7_1_RERUN_BOW_001_STRICT_RUNTIME","target":"Poller hardening and recovery","doctrines":["D01","D02","D03","D04","D05","D06","D15","D17","D20","D21","D22"]},
+    {"task_key":"V7_1_RERUN_BOW_002_STRICT_RUNTIME","target":"True CTJ audit and inventory","doctrines":["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D15","D16","D17","D20","D21","D22"]},
+    {"task_key":"V7_1_RERUN_BOW_003_STRICT_RUNTIME","target":"TSL production readiness audit","doctrines":["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D15","D16","D17","D20","D21","D22"]},
+    {"task_key":"V7_1_RERUN_BOW_004_STRICT_RUNTIME","target":"CTJ remediation build test and promotion plan","doctrines":["D01","D02","D03","D04","D05","D06","D07","D08","D09","D10","D11","D15","D16","D17","D20","D21","D22"]}
+  ],
+  "excluded_lanes": ["D13", "D14"]
+}

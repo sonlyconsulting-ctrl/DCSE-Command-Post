@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "governance_version": "V7.1",
+  "status": "CANDIDATE",
+  "parent_authority": "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+  "zones": {
+    "authority": {
+      "paths": [
+        "governance/v7.1/*.md",
+        "governance/v7.1/doctrines/*.md"
+      ],
+      "allowed_authority_levels": [
+        "CANDIDATE",
+        "PROMOTED",
+        "DECISION_RECORD",
+        "REGISTER"
+      ],
+      "restrictions": [
+        "Promotion requires DCS Level 0 exact-diff approval and receipt.",
+        "Root placement does not create authority.",
+        "Only the Master Profile may be the constitutional entry point."
+      ]
+    },
+    "source": {
+      "paths": [
+        "governance/v7.1/source/**"
+      ],
+      "allowed_authority_levels": [
+        "REFERENCE",
+        "HISTORICAL",
+        "ADOPTED_SOURCE"
+      ],
+      "restrictions": [
+        "Source files preserve lineage and subject content.",
+        "Source files have no independent V7.1 authority.",
+        "Legacy status text cannot override the Master Profile."
+      ]
+    },
+    "execution": {
+      "paths": [
+        "governance/v7.1/execution/**",
+        "governance/v7.1/instructions/**"
+      ],
+      "allowed_authority_levels": [
+        "RECORD",
+        "INSTRUCTION",
+        "CONTRACT",
+        "PLAN"
+      ],
+      "restrictions": [
+        "Execution files may direct bounded work or record events.",
+        "Execution files may not claim PROMOTED or constitutional authority.",
+        "Standing policy found in execution must be extracted and promoted separately."
+      ]
+    },
+    "evidence": {
+      "paths": [
+        "tribunal/v7/**"
+      ],
+      "allowed_authority_levels": [
+        "EVIDENCE",
+        "AUDIT",
+        "RECEIPT",
+        "SNAPSHOT",
+        "SCRIPT"
+      ],
+      "restrictions": [
+        "Evidence may prove or disprove an event.",
+        "Evidence may not create policy, exceptions, or promotion decisions.",
+        "Logs and runtime state are not canonical governance."
+      ]
+    }
+  },
+  "mandatory_entry_sequence": [
+    "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+    "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+    "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md",
+    "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
+  ],
+  "known_relocations": {
+    "governance/v7.1/COPILOT_REVIEW_RESOLUTION_20260802.md": "governance/v7.1/execution/COPILOT_REVIEW_RESOLUTION_20260802.md",
+    "governance/v7.1/CODER_ACTIONS_1_2_INSTRUCTIONS.md": "governance/v7.1/instructions/CODER_ACTIONS_1_2_INSTRUCTIONS.md",
+    "governance/v7.1/CODER_CONNECTOR_MEDIATED_PUBLICATION_FALLBACK.md": "governance/v7.1/instructions/CODER_CONNECTOR_MEDIATED_PUBLICATION_FALLBACK.md",
+    "governance/v7.1/CODER_GITHUB_AUTHENTICATION_RECOVERY_AND_PUSH_PROTOCOL.md": "governance/v7.1/instructions/CODER_GITHUB_AUTHENTICATION_RECOVERY_AND_PUSH_PROTOCOL.md",
+    "governance/v7.1/QWEN_CODER_POLLER_REPAIR_AND_TEST_CONTRACT.md": "governance/v7.1/instructions/QWEN_CODER_POLLER_REPAIR_AND_TEST_CONTRACT.md"
+  }
+}
