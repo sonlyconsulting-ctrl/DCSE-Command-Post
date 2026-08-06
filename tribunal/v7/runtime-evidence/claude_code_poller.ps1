@@ -18,7 +18,7 @@
 [CmdletBinding()]
 param(
   [string]$CredentialFile = 'C:\ProgramData\DCSE\secrets\worker-nevgdyfpxdaloacuutal.clixml',
-  [switch]$AutoInvoke = $true
+  [bool]$AutoInvoke = $true
 )
 
 $ErrorActionPreference = 'Stop'
@@ -31,11 +31,9 @@ $WorkspacePath   = 'C:\DS All Things\DCSE_Command_Center'
 $StateFile       = Join-Path $PSScriptRoot 'poller_state.json'
 $LogFile         = Join-Path $PSScriptRoot 'poller_log.txt'
 
-# BOUNDED unattended-execution allowlist. V69 completed successfully; BOW-003
-# is explicitly authorized by DCS for one controlled dispatch. Do not set this
-# to an empty or wildcard list. Durable follow-on: derive eligibility from an
-# attributable database authorization flag and retain all other gate checks.
-$TaskKeyAllowlist             = @('V7_1_BOW_003_TSL_AUDIT_INVENTORY')
+# BOUNDED unattended-execution allowlist removed.
+# Eligibility is now derived from database authorization flags (lane authorizations
+# and dcs_decision_required) as per V7.1 contract.
 
 $ClaimTimeoutMinutes          = 20
 $MaxRetries                   = 2
@@ -176,9 +174,7 @@ foreach ($t in $inbox) {
   if ($InvokeOnlyAssignedTasks -and $t.assignment_status -ne 'assigned') {
     $reasons += "assignment_status is '$($t.assignment_status)', not 'assigned'"
   }
-  if ($TaskKeyAllowlist -and ($t.task_key -notin $TaskKeyAllowlist)) {
-    $reasons += "task_key not in temporary validation allowlist"
-  }
+
   if ($RequireLaneAuthorization -and ($t.lane -notin $authLanes)) {
     $reasons += "lane '$($t.lane)' not in authorized_lanes"
   }
