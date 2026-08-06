@@ -153,6 +153,7 @@ $receipt = [ordered]@{
   assignment_status = $assignmentRow.status
   assignment_id = $assignmentRow.id
   disposition = $claimDisposition
+  event_write_status = 'NOT_ATTEMPTED'
   rollback = "Stop $PollerTaskName; restore $BackupPath to $TargetPollerPath; restart task."
   secrets_exposed = $false
 }
@@ -160,13 +161,15 @@ $receipt | ConvertTo-Json -Depth 10 | Set-Content $ReceiptPath
 
 if ($taskRow) {
   $eventHeaders = $Headers.Clone()
+  $eventHeaders['Content-Profile'] = 'dcse_cp'
   $eventHeaders['Prefer'] = 'return=minimal'
   $eventBody = @{
     task_id = $taskRow.id
-    event_type = 'host_sync'
+    event_type = 'receipt'
     actor_label = 'V7.1 Poller Runtime Sync'
     event_summary = "Canonical poller installed; $claimDisposition"
     event_payload = @{
+      receipt_class = 'HOST_SYNC'
       canonical_commit = $CanonicalCommit
       canonical_git_blob_sha = $CanonicalBlobSha
       before_git_blob_sha = $beforeBlobSha
@@ -175,7 +178,16 @@ if ($taskRow) {
       receipt_path = $ReceiptPath
     }
   } | ConvertTo-Json -Depth 10 -Compress
-  Invoke-RestMethod -Method Post -Uri "$SupabaseUrl/rest/v1/agent_task_events" -Headers $eventHeaders -Body $eventBody | Out-Null
+
+  try {
+    Invoke-RestMethod -Method Post -Uri "$SupabaseUrl/rest/v1/agent_task_events" -Headers $eventHeaders -Body $eventBody | Out-Null
+    $receipt['event_write_status'] = 'PASS'
+  } catch {
+    # Receipt publication must not mask a successful binary install and claim.
+    $receipt['event_write_status'] = "NON_PASS: $($_.Exception.Message)"
+    Write-Warning "Canonical poller sync succeeded, but the Supabase receipt event could not be posted: $($_.Exception.Message)"
+  }
+  $receipt | ConvertTo-Json -Depth 10 | Set-Content $ReceiptPath
 }
 
 Remove-Item $TempPath -Force -ErrorAction SilentlyContinue
