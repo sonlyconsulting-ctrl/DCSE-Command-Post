@@ -72,11 +72,8 @@ try {
   }
 
   try {
-    # Ask PostgREST/Postgres to evaluate the boolean. Windows PowerShell never
-    # deserializes admitted_for_autonomous_claim for the controller decision.
-    $admissions = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_admission?select=agent_key,admission_status" -Headers $Headers)
-    $admittedRows = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_admission?admitted_for_autonomous_claim=eq.true&select=agent_key" -Headers $Headers)
-    $admittedKeys = @($admittedRows | ForEach-Object { [string]$_.agent_key })
+    # Database returns text-only mode so Windows never interprets a boolean.
+    $runtimeStates = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_runtime_state?select=agent_key,admission_status,dispatch_mode" -Headers $Headers)
   } catch {
     Write-Log "FATAL admission view unavailable: $(Get-HttpErrorBody $_)"
     exit 2
@@ -89,13 +86,13 @@ try {
   )
 
   foreach ($adapter in $adapters) {
-    $row = $admissions | Where-Object { $_.agent_key -eq $adapter.AgentKey } | Select-Object -First 1
+    $row = $runtimeStates | Where-Object { $_.agent_key -eq $adapter.AgentKey } | Select-Object -First 1
     if (-not $row) {
       Write-Log "SKIP agent=$($adapter.AgentKey) no admission row"
       continue
     }
 
-    $isAdmitted = ($admittedKeys -contains [string]$adapter.AgentKey)
+    $isAdmitted = ([string]$row.dispatch_mode -eq 'normal')
     $mode = 'normal'
     $switches = @()
 
