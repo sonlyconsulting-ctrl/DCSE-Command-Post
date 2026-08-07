@@ -776,6 +776,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       </div>
       <div class="card mb-8" id="dispatchForm" style="display:none">
         <div class="card-title">Create Dispatch</div>
+        <div id="dispatchError" style="display:none;background:var(--danger,#e05555);color:#fff;padding:8px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;font-family:monospace"></div>
         <div class="form-row">
           <input class="inp" id="dispatchTitle" placeholder="Task title" style="flex:2" />
           <select class="inp" id="dispatchLane" style="flex:1"><option value="DCSE">DCSE</option><option value="SC">SC</option><option value="TSL">TSL</option><option value="TRIBUNAL">TRIBUNAL</option><option value="DDNA">DDNA</option><option value="RAG">RAG</option><option value="SYSTEM">SYSTEM</option></select>
@@ -785,9 +786,23 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
           <select class="inp" id="dispatchType" style="flex:1"><option value="build">Build</option><option value="review">Review</option><option value="tribunal">Tribunal</option><option value="qa">QA</option><option value="database">Database</option><option value="github">GitHub</option><option value="decision">Decision</option><option value="monitor">Monitor</option><option value="other">Other</option></select>
         </div>
         <div class="form-row">
+          <select class="inp" id="dispatchAgent" style="flex:1">
+            <option value="">Agent (optional)</option>
+            <option value="claude_code">claude_code</option>
+            <option value="qwen_windows_cli">qwen_windows_cli</option>
+            <option value="codex">codex</option>
+            <option value="chatgpt">chatgpt</option>
+          </select>
           <select class="inp" id="dispatchPriority" style="flex:1"><option value="1">P1 Critical</option><option value="2">P2 High</option><option value="3" selected>P3 Normal</option><option value="4">P4 Low</option><option value="5">P5 Backlog</option></select>
+        </div>
+        <div class="form-row">
+          <div id="dispatchAttachZone" style="flex:2;border:1px dashed var(--border);border-radius:4px;padding:8px 12px;font-size:11px;color:var(--text-dim);cursor:pointer" onclick="document.getElementById('dispatchFileInput').click()">
+            Drop files here or click to attach (stored as task reference)
+          </div>
+          <input type="file" id="dispatchFileInput" style="display:none" multiple onchange="dispatchFilesChanged(this)">
           <button class="btn btn-gold" onclick="createDispatch()">Dispatch</button>
         </div>
+        <div id="dispatchAttachList" style="font-size:11px;color:var(--text-dim);margin-top:4px"></div>
       </div>
       <div class="card mb-8">
         <div class="card-title">Task Queue</div>
@@ -1873,22 +1888,53 @@ async function loadDispatchInbox(filter){
   }catch(e){console.error('Dispatch inbox error:',e);}
 }
 
+let _dispatchAttachedFiles=[];
+function dispatchFilesChanged(input){
+  _dispatchAttachedFiles=Array.from(input.files||[]);
+  const list=document.getElementById('dispatchAttachList');
+  if(list) list.innerHTML=_dispatchAttachedFiles.map(f=>'<span style="margin-right:8px">📎 '+f.name+' ('+(f.size/1024).toFixed(1)+'KB)</span>').join('');
+  const zone=document.getElementById('dispatchAttachZone');
+  if(zone) zone.textContent=_dispatchAttachedFiles.length?(_dispatchAttachedFiles.length+' file(s) attached — will be stored as task references'):'Drop files here or click to attach (stored as task reference)';
+}
+function dispatchShowError(msg,statusCode){
+  const el=document.getElementById('dispatchError');
+  if(!el)return;
+  el.style.display='block';
+  el.textContent=(statusCode?('HTTP '+statusCode+' — '):'')+msg;
+}
+function dispatchClearError(){
+  const el=document.getElementById('dispatchError');
+  if(el){el.style.display='none';el.textContent='';}
+}
 async function createDispatch(){
+  dispatchClearError();
   const title=(document.getElementById('dispatchTitle')||{}).value?.trim();
-  if(!title){alert('Title required');return;}
+  if(!title){dispatchShowError('Title required');return;}
   const desc=(document.getElementById('dispatchDesc')||{}).value?.trim();
   const lane=(document.getElementById('dispatchLane')||{}).value||'DCSE';
   const task_type=(document.getElementById('dispatchType')||{}).value||'other';
   const priority=parseInt((document.getElementById('dispatchPriority')||{}).value)||3;
+  const assigned_agent_key=(document.getElementById('dispatchAgent')||{}).value||'';
+  const input_refs=_dispatchAttachedFiles.map(f=>({name:f.name,size:f.size,type:f.type,attached_at:new Date().toISOString()}));
   try{
-    const r=await fetch('/api/tribunal/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,description:desc,lane,task_type,priority})});
-    const data=await r.json();
-    if(data.ok){
-      document.getElementById('dispatchTitle').value='';document.getElementById('dispatchDesc').value='';
+    const payload={title,description:desc||null,lane,task_type,priority,input_refs};
+    if(assigned_agent_key) payload.assigned_agent_key=assigned_agent_key;
+    const r=await fetch('/api/tribunal/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    let data;
+    try{data=await r.json();}catch(je){dispatchShowError('Server returned non-JSON response',r.status);return;}
+    if(r.ok&&data.ok){
+      document.getElementById('dispatchTitle').value='';
+      document.getElementById('dispatchDesc').value='';
+      if(document.getElementById('dispatchAgent')) document.getElementById('dispatchAgent').value='';
+      _dispatchAttachedFiles=[];
+      const fi=document.getElementById('dispatchFileInput');if(fi)fi.value='';
+      dispatchFilesChanged({files:[]});
       document.getElementById('dispatchForm').style.display='none';
       loadDispatchInbox('all');
-    }else{alert('Dispatch error: '+(data.error||'Unknown'));}
-  }catch(e){alert('Dispatch failed: '+e.message);}
+    }else{
+      dispatchShowError(data.error||'Unknown dispatch error',r.status);
+    }
+  }catch(e){dispatchShowError('Dispatch failed: '+e.message);}
 }
 
 function addDispatch(){createDispatch();}
@@ -2685,7 +2731,7 @@ async function handleTribunalDispatch(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     try {
-      const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key} = JSON.parse(body);
+      const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key, input_refs} = JSON.parse(body);
       if (!title) { res.statusCode = 400; res.end(JSON.stringify({error: 'title required'})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
       const validLanes = ['DCSE','SC','SS','TSL','TRIBUNAL','DDNA','RAG','SYSTEM'];
@@ -2700,13 +2746,20 @@ async function handleTribunalDispatch(req, res) {
         lane: taskLane, task_type: taskType,
         priority: Math.min(5, Math.max(1, parseInt(priority) || 3)),
         assignment_mode: assignment_mode || 'single',
-        status: 'planned', created_by_label: 'CP Dispatch'
+        status: 'planned', created_by_label: 'CP Dispatch',
+        dcs_decision_required: true, review_required: true
       };
+      if (Array.isArray(input_refs) && input_refs.length) taskPayload.input_refs = input_refs;
+      let assignedAgentId = null;
       if (assigned_agent_key) {
         const agentR = await fetch(`${base}/agent_registry?agent_key=eq.${encodeURIComponent(assigned_agent_key)}&select=id&limit=1`, {headers});
         if (agentR.ok) {
           const agents = await agentR.json();
-          if (agents.length) { taskPayload.assigned_agent_id = agents[0].id; taskPayload.status = 'assigned'; }
+          if (agents.length) {
+            assignedAgentId = agents[0].id;
+            taskPayload.assigned_agent_id = assignedAgentId;
+            taskPayload.status = 'assigned';
+          }
         }
       }
       const cr = await fetch(`${base}/agent_tasks`, {method: 'POST', headers, body: JSON.stringify(taskPayload)});
@@ -2718,6 +2771,17 @@ async function handleTribunalDispatch(req, res) {
           task_id: taskId, event_type: 'created', actor_label: 'CP Dispatch',
           event_summary: `Task dispatched: ${title} [${taskKey}]`
         })}).catch(() => {});
+        if (assignedAgentId) {
+          await fetch(`${base}/agent_task_assignments`, {method: 'POST', headers, body: JSON.stringify({
+            task_id: taskId, agent_id: assignedAgentId,
+            assignment_role: 'primary', sequence_order: 1, status: 'assigned'
+          })}).catch(() => {});
+          await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
+            task_id: taskId, event_type: 'assigned', actor_label: 'V7.1 Dispatch Router',
+            event_summary: `Task assigned to ${assigned_agent_key} through CP Dispatch`,
+            event_payload: {task_key: taskKey, agent_key: assigned_agent_key, routing_source: 'cp_dispatch_ui'}
+          })}).catch(() => {});
+        }
       }
       res.statusCode = 201;
       res.end(JSON.stringify({ok: true, task: created[0], task_key: taskKey}));
