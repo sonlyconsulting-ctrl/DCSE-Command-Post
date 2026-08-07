@@ -21,7 +21,7 @@ function SecureToPlain($Value) {
 function Get-DescendantProcessIds([int[]]$RootIds, $ProcessRows) {
   $seen = New-Object 'System.Collections.Generic.HashSet[int]'
   $queue = New-Object 'System.Collections.Generic.Queue[int]'
-  foreach($id in $RootIds){ if($seen.Add($id)){ $queue.Enqueue($id) } }
+  foreach($rootId in $RootIds){ if($seen.Add($rootId)){ $queue.Enqueue($rootId) } }
   while($queue.Count -gt 0){
     $parent=$queue.Dequeue()
     foreach($row in $ProcessRows | Where-Object { $_.ParentProcessId -eq $parent }){
@@ -67,8 +67,8 @@ $seedRows=@($rows | Where-Object {
 $seedIds=@($seedRows | ForEach-Object { [int]$_.ProcessId })
 if($seedIds.Count -gt 0){
   $treeIds=Get-DescendantProcessIds -RootIds $seedIds -ProcessRows $rows
-  foreach($pid in ($treeIds | Sort-Object -Descending)){
-    try { Stop-Process -Id $pid -Force -ErrorAction Stop } catch {}
+  foreach($processId in ($treeIds | Sort-Object -Descending)){
+    try { Stop-Process -Id $processId -Force -ErrorAction Stop } catch {}
   }
 }
 
