@@ -129,6 +129,30 @@ if (Test-Path $StateFile) {
 
 try { $branch = (git -C $WorkspacePath rev-parse --abbrev-ref HEAD 2>$null) } catch { $branch = 'unknown' }
 
+# ---- 0. Startup restore: resolve orphaned running assignments -----------
+# If a previous poller cycle claimed an assignment and then the claude -p process
+# was killed (SIGKILL, timeout, host reboot) before submit_agent_result was called,
+# the assignment is stuck in 'running'. Detect and fail-safe it here so the next
+# eligible task isn't blocked by the concurrency guard ($alreadyInProgress check).
+try {
+  $orphanCheck = Invoke-Rpc 'get_agent_inbox' @{ p_agent_key = $AgentKeyCP; p_limit = 5 }
+  if ($orphanCheck) {
+    $orphans = @($orphanCheck | Where-Object {
+      $_.assignment_status -eq 'running' -and
+      ([DateTime]::UtcNow - [DateTime]::Parse($_.updated_at)).TotalMinutes -gt $ClaimTimeoutMinutes
+    })
+    foreach ($orph in $orphans) {
+      Write-Log "STARTUP_RESTORE: orphaned running assignment task_key=$($orph.task_key) age=$(([DateTime]::UtcNow - [DateTime]::Parse($orph.updated_at)).TotalMinutes -as [int])min -- submitting blocked."
+      Invoke-Rpc 'submit_agent_result' @{
+        p_agent_key    = $AgentKeyCP
+        p_task_key     = $orph.task_key
+        p_result_payload = @{ outcome = 'blocked'; reason = 'startup_restore: prior cycle terminated before submit' }
+        p_status       = 'blocked'
+      } | Out-Null
+    }
+  }
+} catch { Write-Log "STARTUP_RESTORE check error: $($_.Exception.Message)" }
+
 # ---- 1. Heartbeats (both identities; only claude_code executes) --------
 Invoke-Rpc 'agent_heartbeat' @{ p_agent_key = $AgentKeyCP; p_task_key = $null; p_status = 'online'
   p_capability_status = @{ poller = 'active'; host = $env:COMPUTERNAME }; p_notes = 'automated poller cycle' } 'dcse_cp' | Out-Null
@@ -246,7 +270,25 @@ foreach ($t in $inbox) {
             -WorkingDirectory $WorkspacePath -PassThru -NoNewWindow `
             -RedirectStandardOutput $outFile -RedirectStandardError "$outFile.err"
 
+  # Intermediate heartbeat background job: keeps the agent_heartbeat fresh
+  # while claude -p runs. Without this the health monitor fires 'degraded'
+  # after 300s even during legitimate long-running work, producing false alerts.
+  $hbJobScript = {
+    param($url, $key, $taskKey, $agentKey, $intervalSecs)
+    $h = @{ 'apikey' = $key; 'Authorization' = "Bearer $key"; 'Content-Type' = 'application/json'; 'Content-Profile' = 'dcse_cp' }
+    while ($true) {
+      Start-Sleep -Seconds $intervalSecs
+      $body = @{ p_agent_key = $agentKey; p_task_key = $taskKey; p_status = 'working'
+                 p_capability_status = @{ poller = 'executing_claude_p' }
+                 p_notes = 'intermediate heartbeat during claude -p' } | ConvertTo-Json -Compress
+      try { Invoke-RestMethod -Method Post -Uri "$url/rest/v1/rpc/agent_heartbeat" -Headers $h -Body $body | Out-Null } catch {}
+    }
+  }
+  $hbJob = Start-Job -ScriptBlock $hbJobScript -ArgumentList @($SupabaseUrl, $ServiceKey, $t.task_key, $AgentKeyCP, 45)
+
   $timedOut = -not $proc.WaitForExit($ClaimTimeoutMinutes * 60 * 1000)
+  Stop-Job $hbJob -ErrorAction SilentlyContinue | Out-Null
+  Remove-Job $hbJob -Force -ErrorAction SilentlyContinue | Out-Null
   if ($timedOut) {
     Write-Log "TIMEOUT: claude -p exceeded $ClaimTimeoutMinutes min for task_key=$($t.task_key), killing."
     try { $proc.Kill() } catch {}
