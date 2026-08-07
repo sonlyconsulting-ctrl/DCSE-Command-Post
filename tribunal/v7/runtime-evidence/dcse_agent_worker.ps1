@@ -51,6 +51,13 @@ function Escape-SingleQuoted([string]$Value) {
   return $Value.Replace("'","''")
 }
 
+function Test-StrictTrue($Value) {
+  if ($Value -is [bool]) { return $Value }
+  if ($null -eq $Value) { return $false }
+  $text = ([string]$Value).Trim().ToLowerInvariant()
+  return ($text -eq 'true' -or $text -eq 't' -or $text -eq '1')
+}
+
 function Copy-Capabilities([hashtable]$Base, [bool]$CanClaim) {
   $copy = @{}
   foreach ($key in $Base.Keys) { $copy[$key] = $Base[$key] }
@@ -89,7 +96,7 @@ $TableBase = "$SupabaseUrl/rest/v1"
 function Invoke-Rpc([string]$Name, [hashtable]$Body) {
   $h = $Headers.Clone(); $h['Content-Profile'] = 'dcse_cp'
   try {
-    return Invoke-RestMethod -Method Post -Uri "$RpcBase/$Name" -Headers $h -Body ($Body | ConvertTo-Json -Depth 20 -Compress)
+    return Invoke-RestMethod -Method Post -Uri "$RpcBase/$Name" -Headers $h -Body ($Body | ConvertTo-Json -Depth 20 -Compress) -TimeoutSec 30
   } catch {
     Write-Log "RPC_ERROR name=$Name detail=$(Get-HttpErrorBody $_)"
     return $null
@@ -99,7 +106,7 @@ function Invoke-Rpc([string]$Name, [hashtable]$Body) {
 function Get-Table([string]$Table, [string]$Query) {
   $h = $Headers.Clone(); $h['Accept-Profile'] = 'dcse_cp'
   try {
-    return @(Invoke-RestMethod -Method Get -Uri "$TableBase/$Table`?$Query" -Headers $h)
+    return @(Invoke-RestMethod -Method Get -Uri "$TableBase/$Table`?$Query" -Headers $h -TimeoutSec 30)
   } catch {
     Write-Log "TABLE_ERROR table=$Table detail=$(Get-HttpErrorBody $_)"
     return @()
@@ -125,6 +132,11 @@ function Get-Admission() {
   $rows = Get-Table 'autonomous_dispatch_admission' "agent_key=eq.$AgentKey&select=*"
   if ($rows.Count -eq 0) { return $null }
   return $rows[0]
+}
+
+function Test-ServerAdmitted() {
+  $rows = Get-Table 'autonomous_dispatch_admission' "agent_key=eq.$AgentKey&admitted_for_autonomous_claim=eq.true&select=agent_key"
+  return ($rows.Count -gt 0)
 }
 
 function Get-CliInfo() {
@@ -238,7 +250,8 @@ try {
     try {
       $help = ((& $cli.path exec --help 2>&1) | Out-String)
       if ($help -notmatch 'workspace-write') { throw 'codex exec help does not advertise workspace-write sandbox' }
-      if ($help -notmatch 'ask-for-approval') { throw 'codex exec help does not advertise ask-for-approval' }
+      if ($help -notmatch '--ephemeral') { throw 'codex exec help does not advertise ephemeral mode' }
+      if ($help -notmatch '(?m)-c|--config') { throw 'codex exec help does not advertise config overrides required for approval_policy=never' }
     } catch {
       Send-Heartbeat 'blocked' $null @{ poller='preflight'; can_claim=$false; cli_available=$true; cli_version=$cli.version } "Codex noninteractive/sandbox preflight failed: $($_.Exception.Message)" | Out-Null
       Write-Log "PREFLIGHT_FAILED codex $($_.Exception.Message)"
@@ -252,7 +265,7 @@ try {
     exit 5
   }
 
-  $isAdmitted = [bool]$admission.admitted_for_autonomous_claim
+  $isAdmitted = Test-ServerAdmitted
   $cap = @{ poller = if ($PreflightOnly -or (-not $isAdmitted)) { 'preflight' } else { 'active' }; can_claim=$isAdmitted; cli_version=$cli.version; host=$HostName }
   if ($sandboxProvider) { $cap.sandbox_provider = $sandboxProvider }
 
@@ -279,11 +292,7 @@ try {
       Write-Log 'NOT_ADMITTED no claim attempted'
       exit 0
     }
-    $candidates = @($candidates | Where-Object {
-      $flag = $false
-      try { $flag = [bool]$_.policy_flags.runtime_admission_smoke } catch {}
-      $flag
-    })
+    $candidates = @($candidates | Where-Object { Test-StrictTrue $_.policy_flags.runtime_admission_smoke })
   }
 
   if ($candidates.Count -eq 0) {
@@ -296,7 +305,7 @@ try {
 
   $reasons = @()
   if ($task.confidentiality -eq 'ps_confidential') { $reasons += 'PS confidentiality firewall' }
-  if ([bool]$task.dcs_decision_required) { $reasons += 'dcs_decision_required=true' }
+  if (Test-StrictTrue $task.dcs_decision_required) { $reasons += 'dcs_decision_required=true' }
   if ($admission.authorized_lanes -and ($task.lane -notin @($admission.authorized_lanes))) { $reasons += "lane '$($task.lane)' not authorized" }
   if (Test-StopGate $task) { $reasons += 'unresolved stop-gate' }
   if ($reasons.Count -gt 0) {
@@ -356,7 +365,8 @@ Execution contract:
       $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' -p `$p --output-format json --approval-mode auto --sandbox=$sandboxProvider --max-wall-time $($MaxWallMinutes)m"
     }
     'codex' {
-      $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' exec --ephemeral --sandbox workspace-write --ask-for-approval never -C '$workspaceEsc' `$p"
+      # Codex 0.145.x exposes approval policy through config overrides in exec.
+      $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' exec --ephemeral --sandbox workspace-write -c 'approval_policy=`"never`"' -C '$workspaceEsc' `$p"
     }
   }
 
@@ -394,7 +404,7 @@ Execution contract:
   $artifactEvidence = Get-ExpectedArtifactEvidence $task
 
   $status = if ($proc.ExitCode -eq 0) { 'completed' } else { 'blocked' }
-  if ($artifactEvidence -and -not [bool]$artifactEvidence.exists) { $status='blocked' }
+  if ($artifactEvidence -and -not (Test-StrictTrue $artifactEvidence.exists)) { $status='blocked' }
   $resultPayload = @{
     outcome = if ($status -eq 'completed') { 'completed' } else { 'runtime_failed_or_unverified' }
     exit_code = $proc.ExitCode
