@@ -44,12 +44,6 @@ function Get-HttpErrorBody($ErrorRecord) {
   return $ErrorRecord.Exception.Message
 }
 
-function Test-StrictTrue($Value) {
-  if ($Value -is [bool]) { return $Value }
-  if ($null -eq $Value) { return $false }
-  return ([string]$Value).Trim().ToLowerInvariant() -eq 'true'
-}
-
 function Quote-ProcessArgument([string]$Value) {
   if ($null -eq $Value) { return '""' }
   return '"' + ($Value -replace '"','\"') + '"'
@@ -78,7 +72,11 @@ try {
   }
 
   try {
-    $admissions = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_admission?select=*" -Headers $Headers)
+    # Ask PostgREST/Postgres to evaluate the boolean. Windows PowerShell never
+    # deserializes admitted_for_autonomous_claim for the controller decision.
+    $admissions = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_admission?select=agent_key,admission_status" -Headers $Headers)
+    $admittedRows = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_admission?admitted_for_autonomous_claim=eq.true&select=agent_key" -Headers $Headers)
+    $admittedKeys = @($admittedRows | ForEach-Object { [string]$_.agent_key })
   } catch {
     Write-Log "FATAL admission view unavailable: $(Get-HttpErrorBody $_)"
     exit 2
@@ -97,13 +95,13 @@ try {
       continue
     }
 
-    $isAdmitted = Test-StrictTrue $row.admitted_for_autonomous_claim
+    $isAdmitted = ($admittedKeys -contains [string]$adapter.AgentKey)
     $mode = 'normal'
     $switches = @()
 
     if (-not $isAdmitted) {
       if (-not $adapter.PreflightWhenDormant) {
-        Write-Log "SKIP agent=$($adapter.AgentKey) not admitted for autonomous claim"
+        Write-Log "SKIP agent=$($adapter.AgentKey) not admitted for autonomous claim admission_status=$($row.admission_status)"
         continue
       }
       $switches += '-PreflightOnly'
@@ -129,8 +127,8 @@ try {
     if ($switches.Count -gt 0) { $argLine += ' ' + ($switches -join ' ') }
 
     try {
-      Start-Process -FilePath 'powershell.exe' -ArgumentList $argLine -WindowStyle Hidden | Out-Null
-      Write-Log "LAUNCHED agent=$($adapter.AgentKey) runtime=$($adapter.RuntimeSurface) mode=$mode admitted=$isAdmitted"
+      $proc = Start-Process -FilePath 'powershell.exe' -ArgumentList $argLine -WindowStyle Hidden -PassThru
+      Write-Log "LAUNCHED agent=$($adapter.AgentKey) runtime=$($adapter.RuntimeSurface) mode=$mode admitted=$isAdmitted pid=$($proc.Id)"
     } catch {
       Write-Log "LAUNCH_FAILED agent=$($adapter.AgentKey) detail=$($_.Exception.Message)"
     }
