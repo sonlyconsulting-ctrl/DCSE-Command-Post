@@ -1,1 +1,10 @@
-{"version":2,"routes":[{"src":"/api/(.*)","dest":"/api/index.js"},{"src":"/(.*)","dest":"/api/index.js"}]}
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "ignoreCommand": "if git diff HEAD^ HEAD --name-only | grep -qE '^(api/|vercel\\.json$|package(-lock)?\\.json$|public/|apps/sc-agent-os/(api/|public/|vercel\\.json$|package(-lock)?\\.json$))'; then exit 1; else exit 0; fi",
+  "routes": [
+    {"src": "/api/tribunal/dispatch", "dest": "/api/tribunal/dispatch.js"},
+    {"src": "/api/(.*)", "dest": "/api/index.js"},
+    {"src": "/(.*)", "dest": "/api/index.js"}
+  ]
+}
