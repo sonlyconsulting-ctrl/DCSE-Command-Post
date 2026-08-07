@@ -1,9 +1,8 @@
 # DCSE v7.1 Universal Dispatch Controller cutover
 #
-# Installs the pinned neutral controller + worker wrapper, verifies the existing
-# Qwen smoke artifact, optionally admits Qwen only after host evidence passes,
-# and replaces the active schedule while preserving the legacy Claude task as
-# immediate rollback. Does not delete the old poller.
+# Installs the exact current neutral controller + worker wrapper, verifies Qwen
+# host prerequisites, and registers the recurring neutral controller while
+# preserving the legacy Claude task as rollback-only. No silent wait loops.
 
 [CmdletBinding()]
 param(
@@ -16,9 +15,13 @@ param(
 )
 
 $ErrorActionPreference='Stop'
-$RepoCommit='a890aba38f318cb1691a13113c30ccb7a6fd0429'
-$ControllerBlob='c2834bf6a84649135183849736d70a50b851ad72'
-$WorkerBlob='08f2dac0f04f526c3eec405089104ef86f132050'
+
+# NON-REGRESSION PIN: this commit contains the corrected per-agent admission
+# lookup plus the currently reviewed worker. Do not point this back to an older
+# cutover/controller commit.
+$RepoCommit='31c5e1c9a66bf3deef8abf605ff156a10c39a119'
+$ControllerBlob='cd393b495dfafaf8cbc5cf0568219989954f7e08'
+$WorkerBlob='c602031a9ab05dd4babd4b8bdaba0ac8af25c4de'
 $ControllerName='dcse_dispatch_controller.ps1'
 $WorkerName='dcse_agent_worker.ps1'
 $ControllerUrl="https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/$RepoCommit/tribunal/v7/runtime-evidence/$ControllerName"
@@ -33,6 +36,7 @@ $SmokeTaskKey='QWEN-POLLER-SMOKE-20260807-001'
 $SmokeRelative='scratch\qwen_poller_hello_20260807.txt'
 $SmokePath=Join-Path $WorkspacePath $SmokeRelative
 
+function Stage([string]$Message) { Write-Host "[V7.1] $Message" }
 function Get-GitBlobSha1([byte[]]$Bytes) {
   $header=[Text.Encoding]::ASCII.GetBytes("blob $($Bytes.Length)`0")
   $combined=New-Object byte[] ($header.Length+$Bytes.Length)
@@ -70,6 +74,24 @@ function Get-QwenSandboxProvider {
   }
   return $null
 }
+function Get-SingleRestRow([string]$Uri,[hashtable]$Headers) {
+  $response=Invoke-RestMethod -Method Get -Uri $Uri -Headers $Headers -TimeoutSec 20
+  if($null -eq $response){ return $null }
+  if($response -is [System.Array]){
+    if($response.Count -ne 1){ return $null }
+    return $response[0]
+  }
+  if($response.PSObject.Properties['id'] -and $response.id -is [System.Array]){
+    if(@($response.id).Count -ne 1){ return $null }
+    $row=[ordered]@{}
+    foreach($p in $response.PSObject.Properties){
+      $values=@($p.Value)
+      $row[$p.Name]=if($values.Count -gt 0){$values[0]}else{$null}
+    }
+    return [pscustomobject]$row
+  }
+  return $response
+}
 
 if (-not (Test-Path $CredentialFile)) { throw "Credential bundle missing: $CredentialFile" }
 if (-not (Test-Path $InstallRoot)) { throw "Install root missing: $InstallRoot" }
@@ -82,54 +104,58 @@ $Headers=@{apikey=$ServiceKey;Authorization="Bearer $ServiceKey";'Content-Type'=
 $ReadHeaders=$Headers.Clone(); $ReadHeaders['Accept-Profile']='dcse_cp'
 $WriteHeaders=$Headers.Clone(); $WriteHeaders['Content-Profile']='dcse_cp'; $WriteHeaders['Prefer']='return=representation'
 
-# Download exact pinned controller/worker and verify Git blob identities.
-Invoke-WebRequest -UseBasicParsing -Uri $ControllerUrl -OutFile $TempController
-Invoke-WebRequest -UseBasicParsing -Uri $WorkerUrl -OutFile $TempWorker
+Stage "Downloading pinned controller/worker from $RepoCommit"
+Invoke-WebRequest -UseBasicParsing -Uri $ControllerUrl -OutFile $TempController -TimeoutSec 30
+Invoke-WebRequest -UseBasicParsing -Uri $WorkerUrl -OutFile $TempWorker -TimeoutSec 30
 $controllerSha=Get-GitBlobSha1 ([IO.File]::ReadAllBytes($TempController))
 $workerSha=Get-GitBlobSha1 ([IO.File]::ReadAllBytes($TempWorker))
 if($controllerSha -ne $ControllerBlob){ throw "Controller blob mismatch: $controllerSha" }
 if($workerSha -ne $WorkerBlob){ throw "Worker blob mismatch: $workerSha" }
 Parse-OrThrow $TempController
 Parse-OrThrow $TempWorker
+Stage 'Pinned files verified and PowerShell parsed'
 
 $backupController=$null; $backupWorker=$null
 if(Test-Path $ControllerPath){ $backupController="$ControllerPath.pre_cutover_$Timestamp.bak"; Copy-Item $ControllerPath $backupController -Force }
 if(Test-Path $WorkerPath){ $backupWorker="$WorkerPath.pre_cutover_$Timestamp.bak"; Copy-Item $WorkerPath $backupWorker -Force }
 Copy-Item $TempController $ControllerPath -Force
 Copy-Item $TempWorker $WorkerPath -Force
+Stage 'Current controller/worker installed with backups preserved'
 
 # Host Qwen verification: executable, version, Windows sandbox provider, existing smoke artifact.
 $qwenCmd=Get-Command qwen -ErrorAction SilentlyContinue
-$qwenVersion=$null; $sandboxProvider=$null; $smokeExists=$false; $smokeHash=$null; $smokeContent=$null; $smokeVerified=$false
+$qwenVersion=$null; $sandboxProvider=$null; $smokeHash=$null; $smokeContent=$null; $smokeVerified=$false
 if($qwenCmd){
   try { $qwenVersion=((& $qwenCmd.Source --version 2>&1)|Out-String).Trim() } catch {}
   $sandboxProvider=Get-QwenSandboxProvider
 }
 if(Test-Path $SmokePath){
-  $smokeExists=$true
   $smokeHash=(Get-FileHash -LiteralPath $SmokePath -Algorithm SHA256).Hash.ToLowerInvariant()
   $smokeContent=(Get-Content -LiteralPath $SmokePath -Raw)
   $smokeVerified=([bool]$qwenCmd -and [bool]$qwenVersion -and [bool]$sandboxProvider -and $smokeContent.Length -gt 0 -and $smokeContent -match '(?i)qwen' -and $smokeContent -match '(?i)poller')
 }
+Stage "Qwen preflight cli=$qwenVersion sandbox=$sandboxProvider smoke_verified=$smokeVerified"
 
 # Add a non-destructive host-verification event to the existing smoke task.
-$taskRows=@(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/agent_tasks?task_key=eq.$SmokeTaskKey&select=id,status" -Headers $ReadHeaders)
-if($taskRows.Count -gt 0){
+$taskUri="$SupabaseUrl/rest/v1/agent_tasks?task_key=eq.$SmokeTaskKey&select=id,status&limit=1"
+$taskRow=Get-SingleRestRow $taskUri $ReadHeaders
+if($taskRow){
   $preview=if($smokeContent -and $smokeContent.Length -gt 500){$smokeContent.Substring(0,500)}else{$smokeContent}
   $event=@{
-    task_id=$taskRows[0].id; event_type='review'; actor_label='V7.1 Universal Dispatch Cutover';
+    task_id=$taskRow.id; event_type='review'; actor_label='V7.1 Universal Dispatch Cutover';
     event_summary=if($smokeVerified){'Qwen Windows smoke artifact independently verified on host'}else{'Qwen Windows smoke artifact verification incomplete'};
     event_payload=@{verified=$smokeVerified;artifact=$SmokeRelative;sha256=$smokeHash;content_preview=$preview;qwen_version=$qwenVersion;sandbox_provider=$sandboxProvider;host=$env:COMPUTERNAME;controller_commit=$RepoCommit}
   }|ConvertTo-Json -Depth 10 -Compress
-  Invoke-RestMethod -Method Post -Uri "$SupabaseUrl/rest/v1/agent_task_events" -Headers $WriteHeaders -Body $event|Out-Null
+  Invoke-RestMethod -Method Post -Uri "$SupabaseUrl/rest/v1/agent_task_events" -Headers $WriteHeaders -Body $event -TimeoutSec 20|Out-Null
 }
 
 $qwenAdmitted=$false
 if($AdmitQwenAfterVerifiedSmoke -and $smokeVerified){
-  $reg=@(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/agent_registry?agent_key=eq.qwen_windows_cli&select=id,restricted_actions,metadata" -Headers $ReadHeaders)
-  if($reg.Count -eq 0){throw 'qwen_windows_cli registry row missing'}
-  $restricted=@($reg[0].restricted_actions|Where-Object{$_ -notin @('automatic_task_claim','autonomous_polling')})
-  $metadata=Clone-ObjectToHashtable $reg[0].metadata
+  $regUri="$SupabaseUrl/rest/v1/agent_registry?agent_key=eq.qwen_windows_cli&select=id,restricted_actions,metadata&limit=1"
+  $reg=Get-SingleRestRow $regUri $ReadHeaders
+  if(-not $reg){throw 'qwen_windows_cli registry row missing or ambiguous'}
+  $restricted=@($reg.restricted_actions|Where-Object{$_ -notin @('automatic_task_claim','autonomous_polling')})
+  $metadata=Clone-ObjectToHashtable $reg.metadata
   $metadata['poller_eligible']=$true
   $metadata['automatic_claim_eligible']=$true
   $metadata['admission_status']='VERIFIED_WINDOWS_SMOKE'
@@ -139,22 +165,23 @@ if($AdmitQwenAfterVerifiedSmoke -and $smokeVerified){
   $metadata['verified_sandbox_provider']=$sandboxProvider
   $metadata['verified_smoke_sha256']=$smokeHash
   $patch=@{restricted_actions=$restricted;metadata=$metadata;updated_at=(Get-Date).ToUniversalTime().ToString('o')}|ConvertTo-Json -Depth 20 -Compress
-  Invoke-RestMethod -Method Patch -Uri "$SupabaseUrl/rest/v1/agent_registry?id=eq.$($reg[0].id)" -Headers $WriteHeaders -Body $patch|Out-Null
+  Invoke-RestMethod -Method Patch -Uri "$SupabaseUrl/rest/v1/agent_registry?id=eq.$($reg.id)" -Headers $WriteHeaders -Body $patch -TimeoutSec 20|Out-Null
   $qwenAdmitted=$true
+  Stage 'Qwen registry admission reconciled from verified host evidence'
 }
 
-# Do not cut over while the legacy scheduled process is actively executing.
+# No silent wait. This script assumes the caller has already quiesced legacy
+# execution. If not, fail immediately and preserve the installed-file backups.
 $oldTask=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
+$oldTaskWasEnabled=($oldTask -and $oldTask.State -ne 'Disabled')
 if($oldTask -and $oldTask.State -eq 'Running'){
-  $deadline=(Get-Date).AddSeconds(120)
-  do { Start-Sleep -Seconds 5; $oldTask=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue } while($oldTask.State -eq 'Running' -and (Get-Date) -lt $deadline)
-  if($oldTask.State -eq 'Running'){ throw "Legacy task $OldTaskName is still Running; controller files installed but scheduler cutover was not attempted." }
+  throw "Legacy task $OldTaskName is Running. Quiesce it first; no scheduler cutover attempted."
 }
 
-$rollbackNeeded=$false
 try {
-  if($oldTask){ Disable-ScheduledTask -TaskName $OldTaskName|Out-Null; $rollbackNeeded=$true }
+  if($oldTask){ Disable-ScheduledTask -TaskName $OldTaskName|Out-Null }
 
+  Stage "Registering $NewTaskName"
   Unregister-ScheduledTask -TaskName $NewTaskName -Confirm:$false -ErrorAction SilentlyContinue
   $action=New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$ControllerPath`" -CredentialFile `"$CredentialFile`" -WorkspacePath `"$WorkspacePath`" -WorkerRoot `"$InstallRoot`""
   $trigger=New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(20) -RepetitionInterval (New-TimeSpan -Minutes 1)
@@ -164,16 +191,23 @@ try {
 
   $controllerLog=Join-Path $InstallRoot 'dispatch_controller.log'
   $beforeLogTime=if(Test-Path $controllerLog){(Get-Item $controllerLog).LastWriteTimeUtc}else{[datetime]::MinValue}
+  Stage 'Smoke-starting neutral controller once'
   Start-ScheduledTask -TaskName $NewTaskName
-  Start-Sleep -Seconds 12
-  $newInfo=Get-ScheduledTaskInfo -TaskName $NewTaskName
-  $logAdvanced=(Test-Path $controllerLog) -and ((Get-Item $controllerLog).LastWriteTimeUtc -gt $beforeLogTime)
-  if(-not $logAdvanced){ throw 'New controller did not advance dispatch_controller.log during smoke start.' }
-  $rollbackNeeded=$false
+  $deadline=(Get-Date).AddSeconds(20)
+  do {
+    Start-Sleep -Seconds 2
+    $logAdvanced=(Test-Path $controllerLog) -and ((Get-Item $controllerLog).LastWriteTimeUtc -gt $beforeLogTime)
+  } while(-not $logAdvanced -and (Get-Date) -lt $deadline)
+  if(-not $logAdvanced){ throw 'New controller did not advance dispatch_controller.log within 20 seconds.' }
+  Stage 'Controller smoke log advanced; recurring task registered'
 }
 catch {
+  Stage "CUTOVER FAILED: $($_.Exception.Message) -- restoring prior state"
   Disable-ScheduledTask -TaskName $NewTaskName -ErrorAction SilentlyContinue|Out-Null
-  if($oldTask){ Enable-ScheduledTask -TaskName $OldTaskName|Out-Null; Start-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue }
+  if($oldTaskWasEnabled -and (Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue)){
+    Enable-ScheduledTask -TaskName $OldTaskName|Out-Null
+    Start-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
+  }
   if($backupController){Copy-Item $backupController $ControllerPath -Force}
   if($backupWorker){Copy-Item $backupWorker $WorkerPath -Force}
   throw
@@ -182,6 +216,8 @@ finally {
   Remove-Item $TempController,$TempWorker -Force -ErrorAction SilentlyContinue
 }
 
+$oldNow=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
+$newNow=Get-ScheduledTask -TaskName $NewTaskName -ErrorAction SilentlyContinue
 $receipt=[ordered]@{
   receipt_type='V7_1_UNIVERSAL_DISPATCH_CUTOVER'
   generated_at=(Get-Date).ToUniversalTime().ToString('o')
@@ -190,17 +226,18 @@ $receipt=[ordered]@{
   controller_blob_sha=$ControllerBlob
   worker_blob_sha=$WorkerBlob
   old_task=$OldTaskName
-  old_task_state=(Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue).State.ToString()
+  old_task_state=if($oldNow){$oldNow.State.ToString()}else{'MISSING'}
   new_task=$NewTaskName
-  new_task_state=(Get-ScheduledTask -TaskName $NewTaskName -ErrorAction SilentlyContinue).State.ToString()
+  new_task_state=if($newNow){$newNow.State.ToString()}else{'MISSING'}
   qwen_cli_version=$qwenVersion
   qwen_sandbox_provider=$sandboxProvider
   qwen_smoke_artifact=$SmokeRelative
   qwen_smoke_sha256=$smokeHash
   qwen_smoke_verified=$smokeVerified
   qwen_admitted=$qwenAdmitted
-  rollback="Disable $NewTaskName; enable/start $OldTaskName; restore .pre_cutover backups if required."
+  rollback="Disable $NewTaskName; restore .pre_cutover backups; restore $OldTaskName only if it was enabled before cutover."
   secrets_exposed=$false
 }
 $receipt|ConvertTo-Json -Depth 10|Set-Content -LiteralPath $ReceiptPath -Encoding UTF8
+Stage "Cutover receipt: $ReceiptPath"
 $receipt|ConvertTo-Json -Depth 10
