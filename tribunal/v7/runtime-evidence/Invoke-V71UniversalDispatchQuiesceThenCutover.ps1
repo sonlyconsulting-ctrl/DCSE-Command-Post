@@ -4,11 +4,12 @@ param(
   [string]$CredentialFile = 'C:\ProgramData\DCSE\secrets\worker-nevgdyfpxdaloacuutal.clixml',
   [string]$OldTaskName = 'DCSE_ClaudeCode_Poller',
   [string]$OldHealthTaskName = 'DCSE_PollerHealthMonitor',
-  [string]$CutoverUrl = 'https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/97cf0208161b2a0f4702931a521a2d5ba675acc9/tribunal/v7/runtime-evidence/Invoke-V71UniversalDispatchCutover.ps1',
+  [string]$CutoverUrl = 'https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/d9db82c282fde4ceaf826a6666b63e3251ba4267/tribunal/v7/runtime-evidence/Invoke-V71UniversalDispatchCutover.ps1',
   [int]$RecentAssignmentMinutes = 30
 )
 
 $ErrorActionPreference='Stop'
+function Stage([string]$Message){ Write-Host "[V7.1 QUIESCE] $Message" }
 
 function SecureToPlain($Value) {
   if ($Value -is [Security.SecureString]) {
@@ -40,20 +41,25 @@ $SupabaseUrl=[string]$bundle.SUPABASE_URL
 $ServiceKey=SecureToPlain $bundle.SUPABASE_SERVICE_ROLE_KEY
 $ReadHeaders=@{apikey=$ServiceKey;Authorization="Bearer $ServiceKey";'Accept-Profile'='dcse_cp'}
 
-# Safety gate: refuse to quiesce if any assignment has transitioned recently and is still running.
-$running=@(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/agent_task_assignments?status=eq.running&select=id,updated_at&order=updated_at.desc" -Headers $ReadHeaders)
-$cutoff=(Get-Date).ToUniversalTime().AddMinutes(-1*$RecentAssignmentMinutes)
-$recent=@($running | Where-Object { $_.updated_at -and ([datetime]$_.updated_at).ToUniversalTime() -gt $cutoff })
-if($recent.Count -gt 0){
-  throw "Refusing cutover: $($recent.Count) running assignment(s) updated within the last $RecentAssignmentMinutes minutes."
+# Safety gate: query at most one recently updated running assignment and inspect
+# raw JSON so Windows PowerShell cannot collapse an array into property arrays.
+$cutoff=(Get-Date).ToUniversalTime().AddMinutes(-1*$RecentAssignmentMinutes).ToString('o')
+$cutoffEsc=[uri]::EscapeDataString($cutoff)
+$recentUri="$SupabaseUrl/rest/v1/agent_task_assignments?status=eq.running&updated_at=gte.$cutoffEsc&select=id,updated_at&limit=1"
+Stage 'Checking for legitimate recent running assignments'
+$recentResponse=Invoke-WebRequest -UseBasicParsing -Method Get -Uri $recentUri -Headers $ReadHeaders -TimeoutSec 20
+$recentContent=([string]$recentResponse.Content).Trim()
+if($recentContent -and $recentContent -ne '[]'){
+  throw "Refusing cutover: a running assignment was updated within the last $RecentAssignmentMinutes minutes."
 }
 
-# Prevent both the one-minute poll trigger and its five-minute self-heal monitor from racing the cutover.
 $old=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
 $oldHealth=Get-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue
-$healthWasEnabled=$false
+$oldWasEnabled=($old -and $old.State -ne 'Disabled')
+$healthWasEnabled=($oldHealth -and $oldHealth.State -ne 'Disabled')
+
+Stage 'Disabling legacy health monitor and Claude poll trigger'
 if($oldHealth){
-  $healthWasEnabled=($oldHealth.State -ne 'Disabled')
   Disable-ScheduledTask -TaskName $OldHealthTaskName | Out-Null
   Stop-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue
 }
@@ -62,7 +68,7 @@ if($old){
   Stop-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
 }
 
-Start-Sleep -Seconds 2
+Start-Sleep -Seconds 1
 
 # Kill ONLY the legacy poller/health-monitor process trees. Do not kill unrelated interactive Claude/Qwen sessions.
 $rows=@(Get-CimInstance Win32_Process | Select-Object ProcessId,ParentProcessId,Name,CommandLine)
@@ -76,29 +82,41 @@ $seedRows=@($rows | Where-Object {
 })
 $seedIds=@($seedRows | ForEach-Object { [int]$_.ProcessId })
 if($seedIds.Count -gt 0){
+  Stage "Stopping legacy poller process tree roots=$($seedIds -join ',')"
   $treeIds=Get-DescendantProcessIds -RootIds $seedIds -ProcessRows $rows
   foreach($processId in ($treeIds | Sort-Object -Descending)){
     try { Stop-Process -Id $processId -Force -ErrorAction Stop } catch {}
   }
 }
 
-Start-Sleep -Seconds 2
+Start-Sleep -Seconds 1
 $old=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
 if($old -and $old.State -eq 'Running'){ throw "Legacy task $OldTaskName remains Running after disable/stop." }
 
-# Run the pinned reversible cutover now that legacy restart paths are quiesced.
+# Run the exact reconciled reversible cutover now that legacy restart paths are quiesced.
 $cutover=Join-Path $env:TEMP 'Invoke-V71UniversalDispatchCutover.ps1'
 try {
-  Invoke-WebRequest -UseBasicParsing -Uri $CutoverUrl -OutFile $cutover
-  & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $cutover
+  Stage 'Downloading reconciled universal cutover'
+  Invoke-WebRequest -UseBasicParsing -Uri $CutoverUrl -OutFile $cutover -TimeoutSec 30
+  Stage 'Invoking universal cutover'
+  & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $cutover -CredentialFile $CredentialFile
   if($LASTEXITCODE -ne 0){ throw "Universal cutover returned exit code $LASTEXITCODE" }
+  Stage 'Universal cutover completed'
 }
 catch {
-  # Inner cutover restores the old poller on failure. Restore its legacy health monitor too if it was previously enabled.
+  Stage "Cutover failed: $($_.Exception.Message) -- restoring pre-quiesce scheduler state"
+  if($oldWasEnabled -and (Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue)){
+    Enable-ScheduledTask -TaskName $OldTaskName | Out-Null
+    Start-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
+  }
   if($healthWasEnabled -and (Get-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue)){
     Enable-ScheduledTask -TaskName $OldHealthTaskName | Out-Null
   }
   throw
 }
+finally {
+  Remove-Item -LiteralPath $cutover -Force -ErrorAction SilentlyContinue
+}
 
-# Successful universal cutover intentionally leaves the Claude-specific legacy health monitor disabled.
+# Successful universal cutover intentionally leaves both Claude-specific legacy
+# scheduler components disabled as rollback-only artifacts.
