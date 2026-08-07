@@ -36,3 +36,9 @@ This avoids the unsafe inverse-match pattern `grep -qvE`, which can incorrectly 
 ## Branch policy
 
 Branch-wide preview suppression (for example, disabling all `chatgpt/*` previews) is not the default policy because it would also suppress legitimate UI/API validation on those branches. Path-aware ignored builds are the preferred control. Branch suppression may be added later as a project-specific cost-control measure when an explicit preview allowlist is desired.
+
+## Preview lineage rule
+
+A preview URL is valid evidence only for the exact source branch/commit that produced it. Older branch previews may remain useful for regression comparison, but they MUST NOT be cited as validation of fixes that exist only on another branch or a later commit.
+
+For the 2026-08-07 incident, the older `claud-f0e056` preview predates both the PR #48 Dispatch fix branch (`claude/dispatch-fix-agent-file-assignment-20260807`) and the later login-removal work. It is therefore a clean regression reference only, not evidence for either fix.
