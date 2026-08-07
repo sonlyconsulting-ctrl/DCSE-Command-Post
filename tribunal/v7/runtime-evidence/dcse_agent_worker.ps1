@@ -51,6 +51,13 @@ function Escape-SingleQuoted([string]$Value) {
   return $Value.Replace("'","''")
 }
 
+function Copy-Capabilities([hashtable]$Base, [bool]$CanClaim) {
+  $copy = @{}
+  foreach ($key in $Base.Keys) { $copy[$key] = $Base[$key] }
+  $copy['can_claim'] = $CanClaim
+  return $copy
+}
+
 function Get-HttpErrorBody($ErrorRecord) {
   if ($ErrorRecord.ErrorDetails -and $ErrorRecord.ErrorDetails.Message) { return $ErrorRecord.ErrorDetails.Message }
   if ($ErrorRecord.Exception -and $ErrorRecord.Exception.Response) {
@@ -167,6 +174,38 @@ function Get-ExpectedArtifactEvidence($Task) {
   return @{ expected_artifact=$relative; exists=$true; sha256=$hash; full_path=$full }
 }
 
+function Restore-StaleRunningAssignments($Inbox, [hashtable]$BaseCapabilities) {
+  $cutoff = (Get-Date).ToUniversalTime().AddMinutes(-1 * ($MaxWallMinutes + 5))
+  foreach ($running in @($Inbox | Where-Object { $_.assignment_status -eq 'running' })) {
+    $updated = $null
+    try { $updated = [datetimeoffset]::Parse([string]$running.updated_at) } catch { continue }
+    if ($updated.UtcDateTime -gt $cutoff) { continue }
+
+    $taskIdEsc = [uri]::EscapeDataString([string]$running.task_id)
+    $freshCutoff = [uri]::EscapeDataString((Get-Date).ToUniversalTime().AddMinutes(-3).ToString('o'))
+    $fresh = Get-Table 'agent_heartbeats' "select=id&task_id=eq.$taskIdEsc&last_seen_at=gte.$freshCutoff"
+    if ($fresh.Count -gt 0) { continue }
+
+    $payload = @{
+      outcome='orphaned_assignment_recovered'
+      prior_assignment_status='running'
+      stale_since=[string]$running.updated_at
+      recovery_runtime_surface=$RuntimeSurface
+      recovery_runtime_instance=$RuntimeInstance
+    }
+    $result = Invoke-Rpc 'submit_agent_result' @{
+      p_agent_key=$AgentKey; p_task_key=$running.task_key; p_result_payload=$payload; p_status='blocked';
+      p_runtime_surface=$RuntimeSurface; p_runtime_instance=$RuntimeInstance; p_host=$HostName; p_session_id=$SessionId
+    }
+    if ($result -and $result.ok) {
+      Write-Log "RECOVERED_ORPHAN task=$($running.task_key)"
+      Send-Heartbeat 'online' $null (Copy-Capabilities $BaseCapabilities $false) "orphaned assignment recovered: $($running.task_key)" | Out-Null
+    } else {
+      Write-Log "ORPHAN_RECOVERY_FAILED task=$($running.task_key)"
+    }
+  }
+}
+
 $mutexName = "Local\DCSE_AgentWorker_$SafeAgent"
 $mutex = New-Object Threading.Mutex($false,$mutexName)
 $lockHeld = $false
@@ -199,6 +238,7 @@ try {
     try {
       $help = ((& $cli.path exec --help 2>&1) | Out-String)
       if ($help -notmatch 'workspace-write') { throw 'codex exec help does not advertise workspace-write sandbox' }
+      if ($help -notmatch 'ask-for-approval') { throw 'codex exec help does not advertise ask-for-approval' }
     } catch {
       Send-Heartbeat 'blocked' $null @{ poller='preflight'; can_claim=$false; cli_available=$true; cli_version=$cli.version } "Codex noninteractive/sandbox preflight failed: $($_.Exception.Message)" | Out-Null
       Write-Log "PREFLIGHT_FAILED codex $($_.Exception.Message)"
@@ -223,6 +263,9 @@ try {
   }
 
   $inbox = @(Invoke-Rpc 'get_agent_inbox' @{ p_agent_key=$AgentKey; p_limit=20 })
+  Restore-StaleRunningAssignments $inbox $cap
+  $inbox = @(Invoke-Rpc 'get_agent_inbox' @{ p_agent_key=$AgentKey; p_limit=20 })
+
   if ($inbox.Count -eq 0) {
     Send-Heartbeat 'idle' $null $cap 'no assigned work' | Out-Null
     Write-Log 'IDLE no inbox assignments'
@@ -244,7 +287,7 @@ try {
   }
 
   if ($candidates.Count -eq 0) {
-    Send-Heartbeat 'idle' $null $cap 'no eligible assigned work' | Out-Null
+    Send-Heartbeat 'idle' $null $cap 'no eligible assignments' | Out-Null
     Write-Log 'IDLE no eligible assignments'
     exit 0
   }
@@ -257,7 +300,7 @@ try {
   if ($admission.authorized_lanes -and ($task.lane -notin @($admission.authorized_lanes))) { $reasons += "lane '$($task.lane)' not authorized" }
   if (Test-StopGate $task) { $reasons += 'unresolved stop-gate' }
   if ($reasons.Count -gt 0) {
-    Send-Heartbeat 'blocked' $task.task_key ($cap + @{ can_claim=$false }) ($reasons -join '; ') | Out-Null
+    Send-Heartbeat 'blocked' $task.task_key (Copy-Capabilities $cap $false) ($reasons -join '; ') | Out-Null
     Write-Log "BLOCKED task=$($task.task_key) reasons=$($reasons -join '; ')"
     exit 6
   }
@@ -276,7 +319,7 @@ try {
   }
 
   Write-Log "CLAIMED task=$($task.task_key) assignment=$($claim.assignment_id)"
-  Send-Heartbeat 'working' $task.task_key ($cap + @{ can_claim=$true }) 'worker executing claimed assignment' | Out-Null
+  Send-Heartbeat 'working' $task.task_key (Copy-Capabilities $cap $true) 'worker executing claimed assignment' | Out-Null
 
   $prompt = @"
 DCSE v7.1 task assignment.
@@ -313,18 +356,19 @@ Execution contract:
       $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' -p `$p --output-format json --approval-mode auto --sandbox=$sandboxProvider --max-wall-time $($MaxWallMinutes)m"
     }
     'codex' {
-      $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' exec --ephemeral --sandbox workspace-write --ask-for-approval never -C '$workspaceEsc' --disable plugins `$p"
+      $childScript = "`$p=Get-Content -LiteralPath '$promptEsc' -Raw; & '$cmdEsc' exec --ephemeral --sandbox workspace-write --ask-for-approval never -C '$workspaceEsc' `$p"
     }
   }
 
-  $proc = Start-Process -FilePath 'powershell.exe' -ArgumentList @('-NoProfile','-Command',$childScript) -WorkingDirectory $WorkspacePath -PassThru -NoNewWindow -RedirectStandardOutput $outFile -RedirectStandardError $errFile
+  $encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($childScript))
+  $proc = Start-Process -FilePath 'powershell.exe' -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-EncodedCommand',$encoded) -WorkingDirectory $WorkspacePath -PassThru -NoNewWindow -RedirectStandardOutput $outFile -RedirectStandardError $errFile
   $deadline = (Get-Date).AddMinutes($MaxWallMinutes)
   $nextHeartbeat = (Get-Date).AddSeconds(45)
   $timedOut = $false
   while (-not $proc.HasExited) {
     if ((Get-Date) -ge $deadline) { $timedOut=$true; break }
     if ((Get-Date) -ge $nextHeartbeat) {
-      Send-Heartbeat 'working' $task.task_key ($cap + @{ can_claim=$true }) 'worker child process active' | Out-Null
+      Send-Heartbeat 'working' $task.task_key (Copy-Capabilities $cap $true) 'worker child process active' | Out-Null
       $nextHeartbeat = (Get-Date).AddSeconds(45)
     }
     Start-Sleep -Seconds 3
