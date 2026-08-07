@@ -44,6 +44,17 @@ function Get-HttpErrorBody($ErrorRecord) {
   return $ErrorRecord.Exception.Message
 }
 
+function Test-StrictTrue($Value) {
+  if ($Value -is [bool]) { return $Value }
+  if ($null -eq $Value) { return $false }
+  return ([string]$Value).Trim().ToLowerInvariant() -eq 'true'
+}
+
+function Quote-ProcessArgument([string]$Value) {
+  if ($null -eq $Value) { return '""' }
+  return '"' + ($Value -replace '"','\"') + '"'
+}
+
 if (-not (Test-Path -LiteralPath $CredentialFile)) { throw "Credential bundle not found: $CredentialFile" }
 if (-not (Test-Path -LiteralPath $WorkerScript)) { throw "Worker script not found: $WorkerScript" }
 
@@ -86,32 +97,40 @@ try {
       continue
     }
 
-    $args = @(
-      '-NoProfile','-ExecutionPolicy','Bypass','-File',$WorkerScript,
-      '-AgentKey',$adapter.AgentKey,
-      '-RuntimeSurface',$adapter.RuntimeSurface,
-      '-CredentialFile',$CredentialFile,
-      '-WorkspacePath',$WorkspacePath,
-      '-WorkerRoot',$WorkerRoot
-    )
-
+    $isAdmitted = Test-StrictTrue $row.admitted_for_autonomous_claim
     $mode = 'normal'
-    if (-not [bool]$row.admitted_for_autonomous_claim) {
+    $switches = @()
+
+    if (-not $isAdmitted) {
       if (-not $adapter.PreflightWhenDormant) {
         Write-Log "SKIP agent=$($adapter.AgentKey) not admitted for autonomous claim"
         continue
       }
-      $args += '-PreflightOnly'
+      $switches += '-PreflightOnly'
       $mode = 'preflight'
       if ($adapter.AdmissionSmoke) {
-        $args += '-AdmissionSmoke'
+        $switches += '-AdmissionSmoke'
         $mode = 'preflight+admission-smoke'
       }
     }
 
+    # Windows PowerShell Start-Process does not reliably preserve spaces when an
+    # ArgumentList array is flattened. Build one explicitly quoted command line.
+    $argLine = @(
+      '-NoProfile',
+      '-ExecutionPolicy Bypass',
+      '-File ' + (Quote-ProcessArgument $WorkerScript),
+      '-AgentKey ' + (Quote-ProcessArgument $adapter.AgentKey),
+      '-RuntimeSurface ' + (Quote-ProcessArgument $adapter.RuntimeSurface),
+      '-CredentialFile ' + (Quote-ProcessArgument $CredentialFile),
+      '-WorkspacePath ' + (Quote-ProcessArgument $WorkspacePath),
+      '-WorkerRoot ' + (Quote-ProcessArgument $WorkerRoot)
+    ) -join ' '
+    if ($switches.Count -gt 0) { $argLine += ' ' + ($switches -join ' ') }
+
     try {
-      Start-Process -FilePath 'powershell.exe' -ArgumentList $args -WindowStyle Hidden | Out-Null
-      Write-Log "LAUNCHED agent=$($adapter.AgentKey) runtime=$($adapter.RuntimeSurface) mode=$mode"
+      Start-Process -FilePath 'powershell.exe' -ArgumentList $argLine -WindowStyle Hidden | Out-Null
+      Write-Log "LAUNCHED agent=$($adapter.AgentKey) runtime=$($adapter.RuntimeSurface) mode=$mode admitted=$isAdmitted"
     } catch {
       Write-Log "LAUNCH_FAILED agent=$($adapter.AgentKey) detail=$($_.Exception.Message)"
     }
