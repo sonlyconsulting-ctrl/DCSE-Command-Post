@@ -1,8 +1,9 @@
-# DCSE v7.1 - quiesce recurring legacy poller, then invoke universal cutover
+# DCSE v7.1 - quiesce recurring legacy poller + legacy health monitor, then invoke universal cutover
 [CmdletBinding()]
 param(
   [string]$CredentialFile = 'C:\ProgramData\DCSE\secrets\worker-nevgdyfpxdaloacuutal.clixml',
   [string]$OldTaskName = 'DCSE_ClaudeCode_Poller',
+  [string]$OldHealthTaskName = 'DCSE_PollerHealthMonitor',
   [string]$CutoverUrl = 'https://raw.githubusercontent.com/sonlyconsulting-ctrl/DCSE-Command-Post/97cf0208161b2a0f4702931a521a2d5ba675acc9/tribunal/v7/runtime-evidence/Invoke-V71UniversalDispatchCutover.ps1',
   [int]$RecentAssignmentMinutes = 30
 )
@@ -47,8 +48,15 @@ if($recent.Count -gt 0){
   throw "Refusing cutover: $($recent.Count) running assignment(s) updated within the last $RecentAssignmentMinutes minutes."
 }
 
-# Prevent the once-per-minute trigger from racing the cutover.
+# Prevent both the one-minute poll trigger and its five-minute self-heal monitor from racing the cutover.
 $old=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
+$oldHealth=Get-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue
+$healthWasEnabled=$false
+if($oldHealth){
+  $healthWasEnabled=($oldHealth.State -ne 'Disabled')
+  Disable-ScheduledTask -TaskName $OldHealthTaskName | Out-Null
+  Stop-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue
+}
 if($old){
   Disable-ScheduledTask -TaskName $OldTaskName | Out-Null
   Stop-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
@@ -56,12 +64,14 @@ if($old){
 
 Start-Sleep -Seconds 2
 
-# Kill ONLY the legacy poller process tree. Do not kill unrelated interactive Claude/Qwen sessions.
+# Kill ONLY the legacy poller/health-monitor process trees. Do not kill unrelated interactive Claude/Qwen sessions.
 $rows=@(Get-CimInstance Win32_Process | Select-Object ProcessId,ParentProcessId,Name,CommandLine)
 $seedRows=@($rows | Where-Object {
   $_.CommandLine -and (
     $_.CommandLine -match '(?i)claude_code_poller\.ps1' -or
-    $_.CommandLine -match '(?i)Run-ClaudeCodePoller-Hidden\.vbs'
+    $_.CommandLine -match '(?i)Run-ClaudeCodePoller-Hidden\.vbs' -or
+    $_.CommandLine -match '(?i)poller_health_monitor\.ps1' -or
+    $_.CommandLine -match '(?i)Run-PollerHealthMonitor-Hidden\.vbs'
   )
 })
 $seedIds=@($seedRows | ForEach-Object { [int]$_.ProcessId })
@@ -76,8 +86,19 @@ Start-Sleep -Seconds 2
 $old=Get-ScheduledTask -TaskName $OldTaskName -ErrorAction SilentlyContinue
 if($old -and $old.State -eq 'Running'){ throw "Legacy task $OldTaskName remains Running after disable/stop." }
 
-# Run the pinned reversible cutover now that the recurring legacy trigger is quiesced.
+# Run the pinned reversible cutover now that legacy restart paths are quiesced.
 $cutover=Join-Path $env:TEMP 'Invoke-V71UniversalDispatchCutover.ps1'
-Invoke-WebRequest -UseBasicParsing -Uri $CutoverUrl -OutFile $cutover
-& powershell.exe -NoProfile -ExecutionPolicy Bypass -File $cutover
-if($LASTEXITCODE -ne 0){ throw "Universal cutover returned exit code $LASTEXITCODE" }
+try {
+  Invoke-WebRequest -UseBasicParsing -Uri $CutoverUrl -OutFile $cutover
+  & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $cutover
+  if($LASTEXITCODE -ne 0){ throw "Universal cutover returned exit code $LASTEXITCODE" }
+}
+catch {
+  # Inner cutover restores the old poller on failure. Restore its legacy health monitor too if it was previously enabled.
+  if($healthWasEnabled -and (Get-ScheduledTask -TaskName $OldHealthTaskName -ErrorAction SilentlyContinue)){
+    Enable-ScheduledTask -TaskName $OldHealthTaskName | Out-Null
+  }
+  throw
+}
+
+# Successful universal cutover intentionally leaves the Claude-specific legacy health monitor disabled.
