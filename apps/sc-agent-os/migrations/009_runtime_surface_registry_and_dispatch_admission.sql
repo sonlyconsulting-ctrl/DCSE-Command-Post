@@ -6,6 +6,8 @@
 --   2. Expose one read-only view the neutral Windows dispatcher can use to
 --      determine whether a logical agent is presently eligible for autonomous
 --      claim. Registry policy remains authoritative; the dispatcher fails closed.
+--   3. Preserve the already-verified Claude Windows poller admission while Qwen
+--      and Codex remain fail-closed until their host/runtime preflight succeeds.
 --
 -- Depends on migrations 007/008 from PR #46 (runtime identity columns/RPCs).
 
@@ -57,6 +59,42 @@ alter table dcse_cp.agent_heartbeats
 
 comment on table dcse_cp.runtime_surface_registry is
   'Governed vocabulary for runtime surfaces. Logical agent role remains dcse_cp.agent_registry.agent_key; this table describes the execution surface, polling mode, and whether the surface class may claim tasks.';
+
+-- Preserve the one runtime already proven on the Windows host. This is keyed by
+-- agent_key, not generated UUID, and does not widen any lane/action permission.
+update dcse_cp.agent_registry
+set metadata = coalesce(metadata,'{}'::jsonb) || jsonb_build_object(
+      'poller_eligible', true,
+      'automatic_claim_eligible', true,
+      'admission_status', 'VERIFIED_WINDOWS_POLLER',
+      'verified_runtime_surface', 'claude_code_windows_cli'
+    ),
+    updated_at = now()
+where agent_key='claude_code';
+
+-- Qwen is intentionally NOT admitted here. The controller may run a bounded
+-- preflight/admission-smoke worker while these restrictions remain in force.
+update dcse_cp.agent_registry
+set metadata = coalesce(metadata,'{}'::jsonb) || jsonb_build_object(
+      'poller_eligible', false,
+      'automatic_claim_eligible', false,
+      'admission_status', 'HOST_HEARTBEAT_REQUIRED',
+      'expected_runtime_surface', 'qwen_windows_cli'
+    ),
+    updated_at = now()
+where agent_key='qwen_windows_cli';
+
+-- Codex stays registered-but-dormant until its installed Windows CLI/sandbox
+-- path is independently preflighted.
+update dcse_cp.agent_registry
+set metadata = coalesce(metadata,'{}'::jsonb) || jsonb_build_object(
+      'poller_eligible', false,
+      'automatic_claim_eligible', false,
+      'admission_status', 'WINDOWS_PREFLIGHT_REQUIRED',
+      'expected_runtime_surface', 'codex_windows_cli'
+    ),
+    updated_at = now()
+where agent_key='codex';
 
 create or replace view dcse_cp.autonomous_dispatch_admission as
 select
