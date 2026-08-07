@@ -26,6 +26,35 @@ function send(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+function sanitizeInputRefs(value) {
+  if (value == null) return [];
+  if (!Array.isArray(value)) throw new Error('input_refs must be an array');
+  if (value.length > 20) throw new Error('too many attachment references (max 20)');
+
+  return value.map((ref, index) => {
+    if (!ref || typeof ref !== 'object' || Array.isArray(ref)) {
+      throw new Error(`input_refs[${index}] must be an object`);
+    }
+    // CP Dispatch records metadata/reference information only. Never accept
+    // browser-provided binary/base64 content through the task JSON envelope.
+    const name = String(ref.name || '').trim();
+    if (!name) throw new Error(`input_refs[${index}].name required`);
+    if (name.length > 255) throw new Error(`input_refs[${index}].name too long`);
+    const size = Number(ref.size || 0);
+    if (!Number.isFinite(size) || size < 0) throw new Error(`input_refs[${index}].size invalid`);
+    const type = String(ref.type || '').slice(0, 160);
+    const attachedAt = ref.attached_at ? String(ref.attached_at) : new Date().toISOString();
+    return {
+      kind: 'dispatch_attachment_reference',
+      name,
+      size,
+      type,
+      attached_at: attachedAt,
+      binary_embedded: false
+    };
+  });
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -37,11 +66,11 @@ module.exports = async (req, res) => {
     return;
   }
   if (req.method !== 'POST') {
-    send(res, 405, {error: 'method not allowed'});
+    send(res, 405, {error: 'method not allowed', stage: 'method'});
     return;
   }
   if (!SUPABASE_KEY) {
-    send(res, 503, {error: 'No database connection'});
+    send(res, 503, {error: 'No database connection', stage: 'configuration'});
     return;
   }
 
@@ -53,11 +82,19 @@ module.exports = async (req, res) => {
       task_type,
       priority,
       assignment_mode,
-      assigned_agent_key
+      assigned_agent_key,
+      input_refs
     } = await readJsonBody(req);
 
     if (!title || !String(title).trim()) {
-      send(res, 400, {error: 'title required'});
+      send(res, 400, {error: 'title required', stage: 'validation'});
+      return;
+    }
+
+    let governedInputRefs;
+    try { governedInputRefs = sanitizeInputRefs(input_refs); }
+    catch (err) {
+      send(res, 400, {error: err.message, stage: 'attachment_validation'});
       return;
     }
 
@@ -81,8 +118,9 @@ module.exports = async (req, res) => {
 
     let assignedAgentId = null;
     if (assigned_agent_key) {
+      const canonicalAgentKey = String(assigned_agent_key).trim();
       const agentR = await fetch(
-        `${base}/agent_registry?agent_key=eq.${encodeURIComponent(assigned_agent_key)}&select=id,agent_key,status&limit=1`,
+        `${base}/agent_registry?agent_key=eq.${encodeURIComponent(canonicalAgentKey)}&select=id,agent_key,status,authorized_lanes&limit=1`,
         {headers}
       );
       if (!agentR.ok) {
@@ -91,10 +129,19 @@ module.exports = async (req, res) => {
       }
       const agents = await agentR.json();
       if (!agents.length) {
-        send(res, 400, {error: `Unknown assigned_agent_key: ${assigned_agent_key}`});
+        send(res, 400, {error: `Unknown assigned_agent_key: ${canonicalAgentKey}`, stage: 'agent_lookup'});
         return;
       }
-      assignedAgentId = agents[0].id;
+      const agent = agents[0];
+      if (agent.status !== 'active') {
+        send(res, 409, {error: `Agent is not active: ${canonicalAgentKey}`, stage: 'agent_validation'});
+        return;
+      }
+      if (!Array.isArray(agent.authorized_lanes) || !agent.authorized_lanes.includes(taskLane)) {
+        send(res, 409, {error: `Agent ${canonicalAgentKey} is not authorized for lane ${taskLane}`, stage: 'agent_validation'});
+        return;
+      }
+      assignedAgentId = agent.id;
     }
 
     const taskPayload = {
@@ -107,6 +154,7 @@ module.exports = async (req, res) => {
       assignment_mode: assignment_mode || 'single',
       assigned_agent_id: assignedAgentId,
       status: assignedAgentId ? 'assigned' : 'planned',
+      input_refs: governedInputRefs,
       created_by_label: 'CP Dispatch'
     };
 
@@ -125,16 +173,21 @@ module.exports = async (req, res) => {
       return;
     }
 
-    // The production AFTER INSERT trigger auto_route_cp_dispatch_task routes
-    // CP Dispatch rows into agent_task_assignments. Verify that contract before
-    // reporting success to the UI instead of silently accepting an unrouted task.
+    // Production trg_route_cp_dispatch_task invokes route_task_assignment after
+    // task insertion. That function is idempotent and owns creation of the one
+    // executor assignment + assigned telemetry event. Never duplicate that
+    // assignment in this API handler.
     const assignmentR = await fetch(
       `${base}/agent_task_assignments?task_id=eq.${task.id}&select=id,task_id,agent_id,status,assignment_role,created_at&order=created_at.asc`,
       {headers}
     );
-    const assignments = assignmentR.ok ? await assignmentR.json() : [];
+    if (!assignmentR.ok) {
+      send(res, assignmentR.status, {error: await assignmentR.text(), stage: 'assignment_verify', task, task_key: taskKey});
+      return;
+    }
+    const assignments = await assignmentR.json();
 
-    await fetch(`${base}/agent_task_events`, {
+    const createdEventR = await fetch(`${base}/agent_task_events`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -145,29 +198,37 @@ module.exports = async (req, res) => {
         event_payload: {
           assigned_agent_key: assigned_agent_key || null,
           assignment_count: assignments.length,
-          api_contract: 'dcse_cp_profile_explicit_v1'
+          attachment_ref_count: governedInputRefs.length,
+          api_contract: 'dcse_cp_profile_explicit_v2'
         }
       })
-    }).catch(() => {});
+    });
+    if (!createdEventR.ok) {
+      send(res, 502, {error: await createdEventR.text(), stage: 'telemetry_create', task, task_key: taskKey, assignments});
+      return;
+    }
 
-    if (assignedAgentId && assignments.length === 0) {
+    if (assignedAgentId && assignments.length !== 1) {
       send(res, 502, {
         ok: false,
-        error: 'Task was created but no assignment row was routed',
+        error: `Task was created but expected exactly one assignment; found ${assignments.length}`,
         stage: 'assignment_verify',
         task,
-        task_key: taskKey
+        task_key: taskKey,
+        assignments
       });
       return;
     }
 
     send(res, 201, {
       ok: true,
+      stage: 'complete',
       task,
       task_key: taskKey,
-      assignments
+      assignments,
+      attachment_refs: governedInputRefs
     });
   } catch (err) {
-    send(res, 500, {error: err.message});
+    send(res, 500, {error: err.message, stage: 'unhandled'});
   }
 };
