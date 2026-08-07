@@ -219,43 +219,6 @@ onModelChange();`;
 }
 
 module.exports = async function handler(req, res) {
-  const url = new URL(req.url || '/', 'https://dcse.local');
-  const action = url.searchParams.get('dcse_auth');
-
-  if (url.pathname === '/auth/update-password' || url.pathname === '/auth/update-password/') {
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      res.statusCode = 405; res.setHeader('Allow', 'GET, HEAD'); return res.end('Method Not Allowed');
-    }
-    return sendAuthPage(res, recoveryPage());
-  }
-
-  if (action === 'logout') {
-    clearSessionCookies(res); res.statusCode = 302; res.setHeader('Location', '/'); return res.end();
-  }
-
-  if (action === 'login' && req.method === 'POST') {
-    try {
-      const raw = await readBody(req), form = new URLSearchParams(raw);
-      const email = String(form.get('email') || '').toLowerCase(), password = String(form.get('password') || '');
-      if (email !== OPERATOR_EMAIL) throw new Error('This account is not authorized.');
-      const response = await supabaseRequest('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email, password }) });
-      if (!response.ok) throw new Error('Sign-in failed. Check the email and password.');
-      const session = await response.json(), user = await validateAccessToken(session.access_token);
-      if (!user) throw new Error('This account is not authorized.');
-      setSessionCookies(res, session); res.statusCode = 302; res.setHeader('Location', '/'); return res.end();
-    } catch (error) { return sendAuthPage(res, loginPage(error.message), 401); }
-  }
-
-  let user = null;
-  try { user = await authenticate(req, res); } catch (error) { return sendAuthPage(res, loginPage(error.message), 503); }
-  if (!user) {
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      res.statusCode = 401; res.setHeader('Content-Type', 'application/json'); return res.end(JSON.stringify({ error: 'Authentication required' }));
-    }
-    const notice = url.searchParams.get('password_updated') === '1' ? 'Password updated successfully. Sign in with the new password.' : '';
-    return sendAuthPage(res, loginPage('', notice));
-  }
-
   const origin = req.headers.origin, originalSetHeader = res.setHeader.bind(res);
   res.setHeader = (name, value) => {
     if (String(name).toLowerCase() === 'access-control-allow-origin') {
