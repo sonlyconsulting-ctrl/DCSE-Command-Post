@@ -1,1 +1,1 @@
-{"version":2,"routes":[{"src":"/api/(.*)","dest":"/api/index.js"},{"src":"/(.*)","dest":"/api/index.js"}]}
+{"version":2,"routes":[{"src":"/api/tribunal/dispatch","dest":"/api/tribunal/dispatch.js"},{"src":"/api/(.*)","dest":"/api/index.js"},{"src":"/(.*)","dest":"/api/index.js"}]}
