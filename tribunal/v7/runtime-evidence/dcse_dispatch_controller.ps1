@@ -71,12 +71,40 @@ try {
     'Accept-Profile'='dcse_cp'
   }
 
-  try {
-    # Database returns text-only mode so Windows never interprets a boolean.
-    $runtimeStates = @(Invoke-RestMethod -Method Get -Uri "$SupabaseUrl/rest/v1/autonomous_dispatch_runtime_state?select=agent_key,admission_status,dispatch_mode" -Headers $Headers)
-  } catch {
-    Write-Log "FATAL admission view unavailable: $(Get-HttpErrorBody $_)"
-    exit 2
+  function Get-DispatchState([string]$AgentKey) {
+    # Windows PowerShell 5.1 can preserve a JSON array returned by
+    # Invoke-RestMethod as a single object whose properties are arrays. Never
+    # bulk-read admission state and filter it client-side. Query exactly one
+    # agent so every returned property is scalar and fail closed otherwise.
+    $agentEsc = [uri]::EscapeDataString($AgentKey)
+    $uri = "$SupabaseUrl/rest/v1/autonomous_dispatch_runtime_state?agent_key=eq.$agentEsc&select=agent_key,admission_status,dispatch_mode&limit=1"
+    try {
+      $response = Invoke-RestMethod -Method Get -Uri $uri -Headers $Headers -TimeoutSec 15
+    } catch {
+      Write-Log "ADMISSION_LOOKUP_FAILED agent=$AgentKey detail=$(Get-HttpErrorBody $_)"
+      return $null
+    }
+    if ($null -eq $response) { return $null }
+
+    # One-row PostgREST responses are scalar PSCustomObjects in the affected
+    # Windows PowerShell path. If an enumerable collection is returned, take
+    # exactly one row and reject ambiguity.
+    $rows = @()
+    if ($response -is [System.Array]) { $rows = @($response) }
+    elseif ($response.PSObject.Properties['agent_key'] -and $response.agent_key -is [System.Array]) {
+      # Defensive handling for a property-array object: reconstruct only when
+      # it contains exactly one row. More than one row is an admission error.
+      if (@($response.agent_key).Count -ne 1) { return $null }
+      return [pscustomobject]@{
+        agent_key = [string]@($response.agent_key)[0]
+        admission_status = [string]@($response.admission_status)[0]
+        dispatch_mode = [string]@($response.dispatch_mode)[0]
+      }
+    }
+    else { $rows = @($response) }
+
+    if ($rows.Count -ne 1) { return $null }
+    return $rows[0]
   }
 
   $adapters = @(
@@ -86,9 +114,13 @@ try {
   )
 
   foreach ($adapter in $adapters) {
-    $row = $runtimeStates | Where-Object { $_.agent_key -eq $adapter.AgentKey } | Select-Object -First 1
+    $row = Get-DispatchState $adapter.AgentKey
     if (-not $row) {
-      Write-Log "SKIP agent=$($adapter.AgentKey) no admission row"
+      Write-Log "SKIP agent=$($adapter.AgentKey) no unambiguous admission row"
+      continue
+    }
+    if ([string]$row.agent_key -ne [string]$adapter.AgentKey) {
+      Write-Log "SKIP agent=$($adapter.AgentKey) admission row identity mismatch returned=$($row.agent_key)"
       continue
     }
 
