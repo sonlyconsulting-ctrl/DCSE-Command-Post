@@ -1,0 +1,31 @@
+{
+  "lint_id": "DCSE-V72-R4-MECHANICAL-LINT",
+  "candidate_sha256": "0590bb5349ac66f96ca757db628761fba18106da8e2a4e7a4c25c38bc2c08509",
+  "source_manifest_sha256": "29c85aa1f9b2048d192b136da6a5d43c9db4632864a747d4f0a3b9f15c84f447",
+  "runtime_manifest_sha256": "45a504d8195656758cada4834c4d67fa049b3070520ac9651a5bb2f774fe466a",
+  "checks": {
+    "section_sequence_0_42": true,
+    "no_duplicate_top_sections": true,
+    "r4_identity_present": true,
+    "readiness_ready_authority_candidate": true,
+    "d17_resolved": true,
+    "d17_not_still_blocked": true,
+    "d17_tombstone_commit_pinned": true,
+    "d13_d14_protected": true,
+    "no_ps_case_identifier_in_shared_controller": true,
+    "runtime_manifest_pinned": true,
+    "minimum_inactivity_60": true,
+    "no_15_minute_runtime_rule": true,
+    "migration_required_present": true,
+    "interactive_sanitization_test_present": true,
+    "toolset_rule_present": true,
+    "reverse_chain_present": true,
+    "gemini_closed": true,
+    "operative_false": true,
+    "dcs_gate_present": true,
+    "no_double_separator": true
+  },
+  "errors": [],
+  "status": "PASS",
+  "scope_note": "Mechanical/source-structure lint only. Operative cutover tests MP72-040/045/056-059 remain deployment evidence gates."
+}
