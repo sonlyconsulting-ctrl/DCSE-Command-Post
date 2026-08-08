@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap');
+
+:root {
+  --color-primary: #6C63FF;
+  --color-primary-light: #8B85FF;
+  --color-secondary: #FF6584;
+  --color-accent-yellow: #FFD93D;
+  --color-accent-green: #6BCB77;
+  --color-accent-blue: #4D96FF;
+  --color-accent-orange: #FF8B4D;
+  --color-accent-purple: #C77DFF;
+  --color-accent-pink: #FF85A1;
+  --color-bg: #FAFAFE;
+  --color-surface: #FFFFFF;
+  --color-text: #2D2B55;
+  --color-text-light: #6E6B99;
+  --color-border: #E8E6F0;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --shadow-sm: 0 2px 8px rgba(108, 99, 255, 0.08);
+  --shadow-md: 0 4px 16px rgba(108, 99, 255, 0.12);
+  --shadow-lg: 0 8px 32px rgba(108, 99, 255, 0.16);
+  --font-display: 'Fredoka One', cursive;
+  --font-body: 'Nunito', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+}
