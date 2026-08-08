@@ -11,11 +11,12 @@
 **Evolution State:** CONTROLLED  
 **Architecture Principle:** Structure Precedes Scale  
 **Execution Model:** Goal-State Orchestration  
-**Integration Basis:** R2 candidate plus independent Claude Code review (2026-08-08) incorporating live operational DB cross-reference, lane topology DCS decisions, D17 identity resolution, and D01-D22 compiled section completion  
+**Integration Basis:** R2 candidate plus independent Claude Code review (2026-08-08) incorporating live operational DB cross-reference, lane topology DCS decisions, D17 identity resolution, D01-D22 compiled section completion, and all open DCS item resolutions (2026-08-08)  
 **Base Candidate Commit:** `d2d87789dbed8c31d12ada671019f6761a35762e` (R2 base)  
 **R3 Correction Branch:** `claude/governance-poller-validation-ytqwz2`  
 **R3 Correction Timestamp:** 2026-08-08  
-**Important:** This artifact is not yet the operative controller. R3 corrects CRITICAL finding F-01 (lane registry) and blocks F-02 through F-08 identified in the Claude Code independent review. One review (Antigravity) remains before four-review convergence and DCS operative designation. Readiness state is NOT_READY pending resolution of open DCS lane decisions documented in Section 11.
+**R3.1 DCS Resolutions Timestamp:** 2026-08-08  
+**Important:** This artifact is not yet the operative controller. R3 corrects all findings from the Claude Code independent review. All Section 36 open DCS items resolved (2026-08-08). One review (Antigravity) remains before four-review convergence and DCS operative designation. Remaining blockers: lint, source hashes, rollback package, and Antigravity convergence.
 
 ---
 
@@ -526,7 +527,7 @@ The following labels appear in `dcse_cp.agent_tasks` but are NOT enterprise lane
 | TSL | 11 | Demoted from R2 draft; now dispositioned | DCSE | TSL operational tasks route to DCSE infrastructure lane |
 | TRIBUNAL | 2 | Governance operational subdomain | DCSE | Tribunal workflow is DCSE operational function |
 | DDNA | 1 | Data governance subdomain | DCSE | DDNA extraction is DCSE operational function |
-| RAG | 0 | Operational infrastructure label | DCSE | Routes to DCSE; retain label, zero current tasks |
+| RAG | 0 | RETIRED | — | Zero tasks; label retired from registry. Any future RAG-typed work dispatches under DCSE. |
 | INFRA/TECH | 0 | Consolidated | DCSE | Renamed/superseded by DCSE operational lane |
 
 ## 11.5 DCS Identity Classification
@@ -535,7 +536,7 @@ The following labels appear in `dcse_cp.agent_tasks` but are NOT enterprise lane
 
 ## 11.6 TI Classification
 
-**TI** (Training/Instruction) appears in the R2 lane registry with no v7.1 source grounding found. Under the R3 DCS topology decision, TI is treated as an operational training subdomain routing to DCSE until a source-grounded TI lane definition is produced by DCS. If TI requires separate enterprise lane status, a distinct source-grounded designation is required before the next review.
+**TI** (Training/Instruction) is **confirmed as a DCSE operational subdomain** (DCS decision, 2026-08-08). TI is not a distinct enterprise lane. TI-labeled tasks route under the DCSE enterprise lane. No separate TI lane definition is required.
 
 ## 11.7 MP72-003 Alignment
 
@@ -1422,8 +1423,8 @@ MP72-002  PPR lane present and protected
 
 MP72-003  Operative lane set validates: DCSE, SC, SS, PS, PPR (enterprise); routing labels
           dispositioned per Section 11.4; DCS is authority identity not dispatch lane
-          [R3: UPDATED from R2 to reflect DCS lane topology decision 2026-08-08]
-          [OPEN: TI disposition pending v7.1 source grounding — see Section 36]
+          [R3: UPDATED — DCS topology decision 2026-08-08; TI confirmed DCSE subdomain;
+           RAG retired; TSL permanent DCSE label; all lane dispositions resolved]
 
 MP72-004  TSL/FAMILY not silently promoted to enterprise lanes
           [R3: TSL dispositioned as DCSE routing label in Section 11.4; FAMILY not present]
@@ -1618,9 +1619,14 @@ The four-review convergence artifact SHALL preserve:
     "authority transition record not produced (MP72-029)",
     "surface acknowledgment not yet collected (MP72-030)",
     "controller hash not finalized (MP72-034)",
-    "four-review convergence artifact pending (MP72-035)",
-    "TI lane grounding pending (Section 36)",
-    "Supabase security doctrine number pending (Section 36)"
+    "four-review convergence artifact pending (MP72-035)"
+  ],
+  "dcs_items_resolved": [
+    "TI confirmed DCSE subdomain",
+    "Supabase security doctrine assigned D23",
+    "TSL permanent DCSE routing label confirmed",
+    "RAG label retired",
+    "DCS decision queue: handleDCSQueue endpoint sufficient"
   ],
   "operative": false
 }
@@ -1628,17 +1634,17 @@ The four-review convergence artifact SHALL preserve:
 
 ---
 
-# 36. OPEN DCS ITEMS (Pending Resolution)
+# 36. DCS ITEM RESOLUTIONS (Closed 2026-08-08)
 
-The following items require DCS disposition before this candidate can achieve readiness `READY` or move to operative designation. These are not blocking the four-review convergence but SHALL be resolved before final DCS operative designation.
+All items previously listed as open are now resolved by DCS decision (2026-08-08).
 
-| Item | Description | Blocking? |
-|---|---|---|
-| TI lane grounding | TI (Training/Instruction) is in R2 registry with no v7.1 source-grounded definition. Is TI a distinct enterprise lane (requiring source document and DCS designation) or confirmed as DCSE operational subdomain? | MP72-003 partial |
-| Supabase security doctrine number | `docs/governance/DCSE_D17_SUPABASE_SECURITY_AND_AUTOMATION_DOCTRINE_v7.md` requires a doctrine number that is not D17. Suggested D23 or next available number. DCS assignment required. | Named reference integrity |
-| TSL routing confirmation | TSL is dispositioned as DCSE routing label in Section 11.4. Is this confirmed as permanent disposition, or does TSL require its own enterprise lane definition? | MP72-003 partial |
-| RAG disposition | RAG has zero active tasks and is used as a routing label. Keep with DCSE routing, or retire the label entirely? | Label registry hygiene |
-| DCS decision queue routing | DCS tasks currently appearing in `dcse_cp.agent_tasks` with `lane: DCSE` or `lane: SYSTEM` — should a separate DCS decision queue be established, or does the existing `handleDCSQueue` endpoint handle this? | Operational |
+| Item | Resolution |
+|---|---|
+| TI lane grounding | **CONFIRMED DCSE SUBDOMAIN.** TI is not a distinct enterprise lane. TI tasks route under DCSE. No source-grounded TI lane definition required. |
+| Supabase security doctrine number | **ASSIGNED D23.** The file `docs/governance/DCSE_D17_SUPABASE_SECURITY_AND_AUTOMATION_DOCTRINE_v7.md` is designated doctrine D23 — Supabase Security and Automation Doctrine. The naming conflict notice on that file SHALL be updated to reflect the D23 assignment. |
+| TSL routing confirmation | **CONFIRMED PERMANENT.** TSL is a permanent DCSE routing label. No separate enterprise lane definition required. |
+| RAG disposition | **RETIRED.** RAG label retired from the routing registry. Zero current tasks. Future RAG-typed work dispatches under DCSE. |
+| DCS decision queue routing | **CURRENT ENDPOINT SUFFICIENT.** The existing `handleDCSQueue` endpoint (`/api/dcsqueue`) is the operative DCS decision queue. No separate DB table required at this time. |
 
 ---
 

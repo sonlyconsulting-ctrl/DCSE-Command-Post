@@ -1,6 +1,6 @@
 # DCSE Supabase Security and Automation Doctrine v7
 
-> **NAMING CONFLICT — 2026-08-08:** This file was labeled D17 at creation (2026-07-29) but D17 is canonically assigned to the DART Universal Assurance Methodology (`governance/v7.1/source/doctrines/D17_DART_Universal_Methodology.md`, DB row `D17 — promoted`). This document's subject (Supabase security implementation) requires a separate doctrine identifier assigned by DCS. Do not cite this file as "D17" in any governance artifact, compilation, or review. Pending DCS identifier assignment, treat this as an unnumbered operational doctrine.
+> **IDENTIFIER CORRECTION — 2026-08-08:** This file was labeled D17 at creation (2026-07-29) but D17 is canonically assigned to the DART Universal Assurance Methodology (`governance/v7.1/source/doctrines/D17_DART_Universal_Methodology.md`, DB row `D17 — promoted`). DCS has assigned this document the identifier **D23** (Supabase Security and Automation Doctrine). Do not cite this file as "D17" in any governance artifact, compilation, or review. Cite it as D23. A formal D23 source file should be created at `governance/v7.1/source/doctrines/D23_Supabase_Security_Automation.md` to canonicalize this doctrine in the standard location.
 
 Status: DCSE AUTHORIZED OPERATIONAL DOCTRINE
 Effective: 2026-07-29
