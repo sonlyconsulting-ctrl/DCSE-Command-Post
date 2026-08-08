@@ -41,6 +41,12 @@ function Backup-And-Copy([string]$Source, [string]$Destination) {
   Copy-Item -LiteralPath $Source -Destination $Destination -Force
 }
 
+function Get-TaskStateOrMissing([string]$TaskName) {
+  $task = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
+  if (-not $task) { return 'MISSING' }
+  return $task.State.ToString()
+}
+
 if (-not (Test-Path -LiteralPath $CredentialFile)) { throw "Credential bundle missing: $CredentialFile" }
 if (-not (Test-Path -LiteralPath $InstallRoot)) { throw "Install root missing: $InstallRoot" }
 
@@ -155,8 +161,8 @@ $receipt = [ordered]@{
   wake_probe_state = $probeTask.State.ToString()
   wake_probe_last_run_time = $probeInfo.LastRunTime.ToUniversalTime().ToString('o')
   wake_probe_last_task_result = $probeInfo.LastTaskResult
-  legacy_poller_state = (Get-ScheduledTask -TaskName $LegacyPollerTaskName -ErrorAction SilentlyContinue).State.ToString()
-  legacy_monitor_state = (Get-ScheduledTask -TaskName $LegacyMonitorTaskName -ErrorAction SilentlyContinue).State.ToString()
+  legacy_poller_state = Get-TaskStateOrMissing $LegacyPollerTaskName
+  legacy_monitor_state = Get-TaskStateOrMissing $LegacyMonitorTaskName
   controller_path = $ControllerPath
   worker_path = $WorkerPath
   wake_probe_path = $WakeProbePath
