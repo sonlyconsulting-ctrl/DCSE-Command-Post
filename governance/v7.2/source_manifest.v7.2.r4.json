@@ -1,0 +1,206 @@
+{
+  "manifest_id": "DCSE-V72-R4-SOURCE-MANIFEST",
+  "controller_candidate": "7.2.0-CANDIDATE-R4",
+  "created_at": "2026-08-07T20:46:00-04:00",
+  "source_model": {
+    "shared_directives": [
+      "D01-D12",
+      "D15-D22"
+    ],
+    "protected_modules": [
+      "D13",
+      "D14"
+    ],
+    "no_d00": true
+  },
+  "hash_semantics": {
+    "artifact_sha256": "exact canonical source bytes as verified by asset registry or direct R4 hash",
+    "promoted_source_checksum": "promotion evidence checksum from dcse_cp.governance_directives; not assumed to equal database body sha256",
+    "repository_blob_id": "repository-native object identifier; not a SHA-256 substitute"
+  },
+  "d17_resolution": {
+    "canonical": "D17_DART_Universal_Methodology.md",
+    "canonical_sha256": "12186A59C0AEE0F83E08DBAB6E78ECFDC868E2078DE4835544164EDADBDE2392",
+    "promoted_source_checksum": "568a8f2b3b2f8a960ebcf30dc94679dbb66f94a51aa2a51a0a0f86dc1da633f1",
+    "mislabel_tombstone_commit": "98d3c6ccf1765a4aa5e9bfc0134a078696e011c8",
+    "status": "RESOLVED"
+  },
+  "doctrines": [
+    {
+      "id": "D01",
+      "title": "Forward Thinking",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "DA45B7AB01ED4A978167510A6B0D77106B6C7BA26747E31AF77DDAEDC8EAAE17",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "b1eb4f764ec80722ee5040837561994bba42403284de0ae2de4269074e13033d"
+    },
+    {
+      "id": "D02",
+      "title": "Forward and Backward Chaining",
+      "disposition": "RETAIN_LAYER3 + MP reasoning primitive",
+      "artifact_sha256": "CA8894F1D7E95CC22D277421A9EB0DE55EED4B41E49DC8978C152AA15DFE19C2",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "a9d1acb4dd2bdc89d3bcb6ac27c7f77b514fab00a822317887fd281fa52d6885"
+    },
+    {
+      "id": "D03",
+      "title": "AI Orchestration and Prompt Wrappers",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "083DB9EEB16B86565E7544C6D4F9314A37DAFCA921C3572472A8C928184BCA3D",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "88e80cf310ea55b36571d565218863f60171de228c13d9cead81e69b0a60beb0"
+    },
+    {
+      "id": "D04",
+      "title": "Command Post Communications",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "850CB096B1EDE8A1539AFC201F0922A58C9F086AE0F4282091CBFF139B892394",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "c9dacaad9ef89016dbcab991402f33435508b71aff1483ea01638597c13f26a0"
+    },
+    {
+      "id": "D05",
+      "title": "Baseline and Promotion",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "C4912B2BB261D3CA3F1F27AE3289389D9852E65E2B141157E157D00EBEC4BAD0",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "9fb13438dff5dd97d31a54b6daab58d33d7cf028b85057b27a54b6834170cd71"
+    },
+    {
+      "id": "D06",
+      "title": "File System and Device Governance",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "74C03A8212BD89F2EE200F7713876E8E5ABE03125D9F282D4967C93913DCCAB0",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "8b100e242f8439d403cfb6b88ca923c79f327b7d2a082f6fac9be42075defd36"
+    },
+    {
+      "id": "D07",
+      "title": "Campaign Governance",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "E81483C20D586E01BB4D31CC32998FAE92E0A5C3C557BB334879C13BEFD7B5DE",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "fd65f3983eada0d02e905b3974aac7d235f0915c8e8825046e531a9315b53ce6"
+    },
+    {
+      "id": "D08",
+      "title": "Voice and Tone",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "606CAC058B76FE90A8A763CC93676FE77FCFD5B3D94AC97593A60F8414432885",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "9605f1a5abc45ee104a2a460e708d488f27e57952b7542bdb1e8637e2dac4c64"
+    },
+    {
+      "id": "D09",
+      "title": "Brand Identity",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "096735521A5B2986C7B598AE653A836070DF93683E68139F52B46A3D9DD69555",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "2f3985b79bcc3f389d07d737f91d3fb36dd8f420c7f36cf78028c3f1ffa595ed"
+    },
+    {
+      "id": "D10",
+      "title": "Persona Assets",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "9F9D1C72444D60CFC0F10F4C6BFF9DC0AC19C99683871B3E50D81EA035CCC1CE",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "cc6ad446c2b2000ec5bc57f91b2206ef25ce87d501e297c781abb798c0e3c8bd"
+    },
+    {
+      "id": "D11",
+      "title": "HTML, Wix, and App Governance",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "6E31CC245DEE4C922172F55C3AD9C5692D65E5E180CAE0BCB98814EAC5B3F516",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "78a3e088125205641bf523c8254f6764d26056bfbae1e6a2090f42ef7b8a5a9c"
+    },
+    {
+      "id": "D12",
+      "title": "Video and Media",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "5AE4F1593D19EAE66B517A9819046980EDD011C506E0359A124B8096D79919A9",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "488039e82a0431c47592ca03ee16ad3f52d11caa450ef6aa0948cb329c5ac142"
+    },
+    {
+      "id": "D13",
+      "title": "DART Core",
+      "disposition": "PROTECTED_MODULE",
+      "artifact_sha256": "8FF25A019954070B3AAFF53FA77324E8FA5A13D9863DE77329563F035D79662E",
+      "promotion_status": "EXCLUDED",
+      "promoted_source_checksum": null
+    },
+    {
+      "id": "D14",
+      "title": "DART PS Protected & Litigation Blueprints",
+      "disposition": "PROTECTED_MODULE",
+      "artifact_sha256": "EC6B810BAD47E245CA33902AAA68C5B0D01438B017C94E47F7AFB0FD734394F8",
+      "promotion_status": "EXCLUDED",
+      "promoted_source_checksum": null
+    },
+    {
+      "id": "D15",
+      "title": "Database Administration",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "6A8F4A5BF66A53C902F0F74D1FD99A7FD484D2FC12F5F8CBA62E9AD9FAEC6ABD",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "e8c588916d8f241c5966cf782d9c5c2651cf860abb408d8aa9fa6598463710be"
+    },
+    {
+      "id": "D16",
+      "title": "DDNA Governance",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "AF856F66A3A4405D27438D84150E17561A83DAA927F20A5A88DE9826EC3B7D61",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "9014465c7fa824b48ecf83c424a1ccd88fe841aa62f370fc23650d23246670ac"
+    },
+    {
+      "id": "D17",
+      "title": "DART Universal Assurance Methodology",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "12186A59C0AEE0F83E08DBAB6E78ECFDC868E2078DE4835544164EDADBDE2392",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "568a8f2b3b2f8a960ebcf30dc94679dbb66f94a51aa2a51a0a0f86dc1da633f1"
+    },
+    {
+      "id": "D18",
+      "title": "Media Production Pipeline",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "4766766707E67D055E8FE073C964F3912A4645840518F82B65BA51ABB06F218C",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "49b6007405a569829528db1d8e876a72be22c4ac720853f3048ede3ec9316c30"
+    },
+    {
+      "id": "D19",
+      "title": "Visual Creation Pipeline",
+      "disposition": "RETAIN_LAYER3",
+      "artifact_sha256": "C6F24726657B7D7042DAEF0353439DC923107B0F8F98AE62AB6DDADC4B480ECC",
+      "promotion_status": "PROMOTED_WITH_KNOWN_GAPS",
+      "promoted_source_checksum": "75f41e2fe811ef960fcc12f1d76dd05c889a20c9223ed6726d6d825fbffd337b"
+    },
+    {
+      "id": "D20",
+      "title": "Product Assembly Methodology",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "902EC78EA0184E8C1576BE5503EC216B5013C431F9B38DFD198795D3BDCE9B56",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "2773cb8009e086f96df69cba5b00104ddd1efc4f34045e61eedca7ed9854f7a3"
+    },
+    {
+      "id": "D21",
+      "title": "Doctrine Runtime Engine",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "224EB63AE6B1EED524E642CB1B6FE934395AAF4D4338E540A3720C1E9DBE74FF",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "5c2eccad502538a2defae73662c75dbabf10a3d8dd6c94219e1033f829cea995"
+    },
+    {
+      "id": "D22",
+      "title": "Source Authority and Runtime Distribution",
+      "disposition": "SUBSUMED_IN_MP + RETAIN_LAYER3",
+      "artifact_sha256": "BE24661B9FC9C6A3E5E1D5EA9ADFA706C59AB9EF5DA925904A1BF814FD561885",
+      "promotion_status": "PROMOTED",
+      "promoted_source_checksum": "0f27e111e429e53c94ee9a7f73d925089a854fb88e2739a23416e2afd86a830a"
+    }
+  ]
+}
