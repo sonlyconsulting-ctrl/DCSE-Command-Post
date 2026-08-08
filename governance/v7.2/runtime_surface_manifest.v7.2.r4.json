@@ -1,0 +1,109 @@
+{
+  "manifest_id": "DCSE-RUNTIME-SURFACE-MANIFEST-v7.2-R4",
+  "controller_family": "7.2",
+  "candidate_revision": "7.2.0-CANDIDATE-R4",
+  "manifest_state": "FROZEN_REQUIREMENTS",
+  "created_at": "2026-08-07T20:46:00-04:00",
+  "authority": "DCS",
+  "source_evidence": {
+    "github_universal_dispatch_pr": 47,
+    "github_pr_head": "43d44f15c3d7641852feaad3f444f1d37afb8437",
+    "supabase_project": "nevgdyfpxdaloacuutal",
+    "schema": "dcse_cp"
+  },
+  "session_policy": {
+    "active_poll_interval_seconds": 60,
+    "minimum_inactivity_minutes": 60,
+    "wake_probe_interval_minutes": 5,
+    "sleep_requires": [
+      "no_claimable_assignments",
+      "no_running_workers",
+      "no_pending_recovery",
+      "no_unconsumed_wake_request",
+      "no_recent_dispatch_or_actionable_event_activity_for_minimum_inactivity_window"
+    ],
+    "actionable_activity_events": [
+      "task_assignment",
+      "comment",
+      "review_complete",
+      "result_submitted",
+      "handoff_ready",
+      "dcs_instruction"
+    ],
+    "no_model_launch_when_no_work": true
+  },
+  "surfaces": [
+    {
+      "surface_id": "github_controller_source",
+      "class": "SOURCE_AUTHORITY",
+      "mandatory_for_readiness": true,
+      "mandatory_for_cutover": true,
+      "repo": "sonlyconsulting-ctrl/DCSE-Command-Post",
+      "controller_branch": "governance/v7.2-master-profile-controller",
+      "status": "VERIFIED"
+    },
+    {
+      "surface_id": "supabase_control_plane",
+      "class": "CONTROL_STATE",
+      "mandatory_for_readiness": true,
+      "mandatory_for_cutover": true,
+      "project_id": "nevgdyfpxdaloacuutal",
+      "schema": "dcse_cp",
+      "routing_rpc": "route_task_assignment",
+      "wake_request_table": "poller_wake_requests",
+      "status": "VERIFIED"
+    },
+    {
+      "surface_id": "windows_neutral_dispatch_controller",
+      "class": "RUNTIME_ENFORCEMENT",
+      "mandatory_for_readiness": false,
+      "mandatory_for_cutover": true,
+      "task_name": "DCSE_Universal_Dispatch_Controller",
+      "repo_path": "tribunal/v7/runtime-evidence/dcse_dispatch_controller.ps1",
+      "repo_branch": "chatgpt/v7.1-universal-dispatch-controller-20260807",
+      "repo_blob_sha1": "cd393b495dfafaf8cbc5cf0568219989954f7e08",
+      "status": "HOST_VERIFICATION_PENDING"
+    },
+    {
+      "surface_id": "windows_runtime_worker",
+      "class": "RUNTIME_ENFORCEMENT",
+      "mandatory_for_readiness": false,
+      "mandatory_for_cutover": true,
+      "repo_path": "tribunal/v7/runtime-evidence/dcse_agent_worker.ps1",
+      "repo_branch": "chatgpt/v7.1-universal-dispatch-controller-20260807",
+      "repo_blob_sha1": "c602031a9ab05dd4babd4b8bdaba0ac8af25c4de",
+      "status": "HOST_VERIFICATION_PENDING"
+    },
+    {
+      "surface_id": "windows_wake_probe",
+      "class": "RUNTIME_WAKE",
+      "mandatory_for_readiness": false,
+      "mandatory_for_cutover": true,
+      "task_name": "DCSE_Universal_Dispatch_WakeProbe",
+      "contract": "poll dcse_cp.poller_wake_requests; ACK before controller start; consume only after verified start",
+      "status": "IMPLEMENTATION_PENDING"
+    },
+    {
+      "surface_id": "command_post_dispatch",
+      "class": "CONTROL_INTERFACE",
+      "mandatory_for_readiness": false,
+      "mandatory_for_cutover": true,
+      "api_path": "apps/sc-agent-os/api/tribunal/dispatch.js",
+      "routing_owner": "dcse_cp.route_task_assignment",
+      "status": "STAGED_IN_PR47"
+    },
+    {
+      "surface_id": "tribunal_evidence_sync",
+      "class": "EVIDENCE_CLOSEOUT",
+      "mandatory_for_readiness": false,
+      "mandatory_for_cutover": false,
+      "status": "SYNCHRONIZATION_SURFACE"
+    }
+  ],
+  "cutover_rule": "No authority transition to OPERATIVE until every mandatory_for_cutover surface is verified against the operative controller identity and required runtime evidence.",
+  "notes": [
+    "Repository blob SHA-1 values are repository-native identifiers and are not represented as artifact SHA-256.",
+    "The existing v7.1 cutover helper is not treated as operative v7.2 evidence until its pins and session-lifecycle behavior are reconciled.",
+    "Runtime activation is a deployment gate separate from controller readiness."
+  ]
+}
