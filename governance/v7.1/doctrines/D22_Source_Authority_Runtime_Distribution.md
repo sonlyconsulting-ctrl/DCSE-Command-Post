@@ -1,9 +1,11 @@
 ---
 dcse_zone: authority
-dcse_authority_level: CANDIDATE
+dcse_authority_level: PROMOTED
 dcse_document_id: DCSE-D22
 dcse_version: V7.1
 dcse_parent_authority: DCSE-MP-v7.1
+dcse_promoted_by: DCS_LEVEL_0
+dcse_promotion_date: 2026-08-04
 dcse_classification: CONFIDENTIAL
 dcse_lane: DCSE
 dcse_required_approval: DCS_LEVEL_0_EXACT_DIFF
