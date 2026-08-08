@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "receipt_id": "CHATGPT-V7.1-ADOPTION-20260806",
+  "classification": "CONFIDENTIAL",
+  "lane": "SYSTEM",
+  "participant": {
+    "agent_key": "chatgpt",
+    "display_name": "ChatGPT",
+    "model": "GPT-5.6 Thinking",
+    "role": [
+      "strategy",
+      "orchestration",
+      "synthesis",
+      "connector_mediated_review"
+    ]
+  },
+  "authority": {
+    "authority_holder": "DCS Level 0",
+    "adoption_direction_date": "2026-08-06",
+    "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+    "canonical_branch": "governance/v7.1-owned-product-harness",
+    "canonical_reconciliation_commit": "6b461077f6c11d5fe3d80235c7c590553367cc98",
+    "master_profile": {
+      "path": "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+      "git_blob_sha": "1fbb6f3f431c65b735425c420c760cadeffff45e",
+      "sha256": "fda7c66a2557b3ba7d29fa5564f313d4474dd5367ebb0406c568780157ccd409",
+      "status": "ACTIVE_RATIFIED"
+    },
+    "d21": {
+      "path": "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md",
+      "git_blob_sha": "1036da1919b13b1ac0c3be77efe1459ad6421a26",
+      "sha256": "b35d32bd4396270b9f2146858745c6cbbf8639c2650d43c06bf4044ca7e74c04",
+      "status": "ACTIVE_RATIFIED"
+    },
+    "d22": {
+      "path": "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+      "git_blob_sha": "f99c02a2fb8b3371419e2067f67b258b9127cf62",
+      "sha256": "6d385d10f998c57ba20dbc477eed2bf01820c79ef5012885daebd90601b0d9cf",
+      "status": "ACTIVE_RATIFIED"
+    }
+  },
+  "adoption": {
+    "disposition": "ADOPT_WITH_LIMITS",
+    "adoption_scope": "interactive_connector_mediated_runtime",
+    "github_authenticated": true,
+    "repository_verified": true,
+    "canonical_branch_verified": true,
+    "pr_29_verified": true,
+    "dcse_ddna_verified": true,
+    "sc_command_post_verified": true,
+    "secrets_exposed": false,
+    "ps_access": "DENIED",
+    "dcs_final_authority": false,
+    "self_certification_of_technical_execution": false
+  },
+  "access": {
+    "github": "VERIFIED_READ_WRITE_CONNECTOR",
+    "dcse_ddna": "VERIFIED_READ_WRITE_CONNECTOR",
+    "sc_command_post": "VERIFIED_READ_WRITE_CONNECTOR",
+    "windows_local_path": {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_V71_Qwen_Review\\tribunal\\v7.1",
+      "status": "NOT_MOUNTED_NOT_ACCESSIBLE"
+    },
+    "qwen_review_outputs": "UNVERIFIED_LOCAL_ONLY"
+  },
+  "polling": {
+    "observation_time": "2026-08-06T20:50:26.085056Z",
+    "chatgpt_runtime": "ON_DEMAND_CONNECTOR_ACCESS_VERIFIED",
+    "chatgpt_autonomous_polling": false,
+    "chatgpt_last_recorded_heartbeat": "2026-07-09T06:18:09.133250Z",
+    "chatgpt_heartbeat_disposition": "STALE_LEGACY_HEARTBEAT",
+    "claude_code_last_recorded_heartbeat": "2026-08-06T20:49:48.158843Z",
+    "claude_code_polling_disposition": "LIVE_AUTOMATED_POLLER",
+    "codex_last_recorded_heartbeat": "2026-07-28T21:01:14.125948Z",
+    "qwen_coder_last_recorded_heartbeat": null
+  },
+  "drift": {
+    "main_commit_observed": "d5ead62093982632b7612e4748c182a036220314",
+    "finding": "Current main contains candidate frontmatter for the three promoted authority artifacts.",
+    "disposition": "AUTHORITY_PINNED_TO_PROMOTED_COMMIT_PENDING_MAIN_RECONCILIATION"
+  },
+  "evidence": {
+    "adoption_record_path": "governance/v7.1/execution/CHATGPT_V7_1_RUNTIME_ADOPTION_20260806.md",
+    "adoption_record_commit": "94d317ad011d31705f95597a12c4a055c098f820",
+    "receipt_branch": "chatgpt/v7.1-runtime-adoption-20260806"
+  },
+  "full_polling_exit_criteria": [
+    "approved ChatGPT or OpenAI API worker adapter",
+    "fresh distinct runtime heartbeat",
+    "authorized task claim enforcement",
+    "D21 admission before execution",
+    "durable result and failure receipts",
+    "restart and duplicate-delivery tests",
+    "rollback and disable controls",
+    "independent review",
+    "GitHub and Supabase and Tribunal reconciliation"
+  ]
+}
