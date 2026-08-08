@@ -79,8 +79,14 @@ jobs:
                   errors.append('Master Profile missing DCSE-MP-v7.1 metadata.')
               if master_meta.get('dcse_zone') != 'authority':
                   errors.append('Master Profile must be in authority zone.')
-              if master_meta.get('dcse_authority_level') not in {'CANDIDATE', 'PROMOTED'}:
-                  errors.append('Master Profile authority level must be CANDIDATE or PROMOTED.')
+              if master_meta.get('dcse_authority_level') != 'PROMOTED':
+                  errors.append('Master Profile authority level must be PROMOTED.')
+              if master_meta.get('dcse_promoted_by') != 'DCS_LEVEL_0':
+                  errors.append('Master Profile must identify DCS_LEVEL_0 as promoter.')
+              if master_meta.get('dcse_promotion_date') != '2026-08-04':
+                  errors.append('Master Profile promotion date must be 2026-08-04.')
+              if master_meta.get('dcse_source_of_truth') != 'canonical':
+                  errors.append('Master Profile source of truth must be canonical.')
 
               for path, meta, expected_id in [
                   (d22, d22_meta, 'DCSE-D22'),
@@ -92,6 +98,12 @@ jobs:
                       errors.append(f'{path}: normalized doctrine must be in authority zone.')
                   if meta.get('dcse_parent_authority') != 'DCSE-MP-v7.1':
                       errors.append(f'{path}: must declare DCSE-MP-v7.1 as parent authority.')
+                  if meta.get('dcse_authority_level') != 'PROMOTED':
+                      errors.append(f'{path}: authority level must be PROMOTED.')
+                  if meta.get('dcse_promoted_by') != 'DCS_LEVEL_0':
+                      errors.append(f'{path}: must identify DCS_LEVEL_0 as promoter.')
+                  if meta.get('dcse_promotion_date') != '2026-08-04':
+                      errors.append(f'{path}: promotion date must be 2026-08-04.')
 
               master_sequence = [
                   'governance/v7.1/DCSE_Master_Profile_v7.1.md',
@@ -188,10 +200,16 @@ jobs:
           if manifest.is_file():
               manifest_text = read(manifest)
               required_manifest_values = [
+                  'package_status: "ACTIVE_RATIFIED"',
                   'constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"',
+                  'canonical_branch: "governance/v7.1-owned-product-harness"',
+                  'pull_request: 39',
+                  'approved_head: "10e41d0fea5dffbc5d8c54a7a67518e484b9ed6b"',
+                  'merge_commit: "2e66202b2a99521de60b55b66e57ceb0ab99a884"',
+                  'promotion_receipt: "tribunal/v7/PR39_DCS_LEVEL0_PROMOTION_RECEIPT_20260804.json"',
                   'source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"',
                   'runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"',
-                  'current_package_state: "CANDIDATE_NOT_PROMOTED"',
+                  'current_package_state: "ACTIVE_RATIFIED"',
               ]
               for value in required_manifest_values:
                   if value not in manifest_text:
@@ -200,4 +218,4 @@ jobs:
           if errors:
               raise SystemExit('\n'.join(f'ERROR: {error}' for error in errors))
 
-          print('V7.1 Master-first hierarchy and zone validation passed.')
+          print('V7.1 promoted hierarchy, metadata, and zone validation passed.')

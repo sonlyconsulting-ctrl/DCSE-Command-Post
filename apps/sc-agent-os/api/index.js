@@ -776,6 +776,7 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
       </div>
       <div class="card mb-8" id="dispatchForm" style="display:none">
         <div class="card-title">Create Dispatch</div>
+        <div id="dispatchError" style="display:none;background:var(--danger,#e05555);color:#fff;padding:8px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;font-family:monospace"></div>
         <div class="form-row">
           <input class="inp" id="dispatchTitle" placeholder="Task title" style="flex:2" />
           <select class="inp" id="dispatchLane" style="flex:1"><option value="DCSE">DCSE</option><option value="SC">SC</option><option value="TSL">TSL</option><option value="TRIBUNAL">TRIBUNAL</option><option value="DDNA">DDNA</option><option value="RAG">RAG</option><option value="SYSTEM">SYSTEM</option></select>
@@ -785,9 +786,23 @@ body{font-family:var(--font);background:var(--navy);color:var(--cream);height:10
           <select class="inp" id="dispatchType" style="flex:1"><option value="build">Build</option><option value="review">Review</option><option value="tribunal">Tribunal</option><option value="qa">QA</option><option value="database">Database</option><option value="github">GitHub</option><option value="decision">Decision</option><option value="monitor">Monitor</option><option value="other">Other</option></select>
         </div>
         <div class="form-row">
+          <select class="inp" id="dispatchAgent" style="flex:1">
+            <option value="">Agent (optional)</option>
+            <option value="claude_code">claude_code</option>
+            <option value="qwen_windows_cli">qwen_windows_cli</option>
+            <option value="codex">codex</option>
+            <option value="chatgpt">chatgpt</option>
+          </select>
           <select class="inp" id="dispatchPriority" style="flex:1"><option value="1">P1 Critical</option><option value="2">P2 High</option><option value="3" selected>P3 Normal</option><option value="4">P4 Low</option><option value="5">P5 Backlog</option></select>
+        </div>
+        <div class="form-row">
+          <div id="dispatchAttachZone" style="flex:2;border:1px dashed var(--border);border-radius:4px;padding:8px 12px;font-size:11px;color:var(--text-dim);cursor:pointer" onclick="document.getElementById('dispatchFileInput').click()">
+            Drop files here or click to attach (stored as task reference)
+          </div>
+          <input type="file" id="dispatchFileInput" style="display:none" multiple onchange="dispatchFilesChanged(this)">
           <button class="btn btn-gold" onclick="createDispatch()">Dispatch</button>
         </div>
+        <div id="dispatchAttachList" style="font-size:11px;color:var(--text-dim);margin-top:4px"></div>
       </div>
       <div class="card mb-8">
         <div class="card-title">Task Queue</div>
@@ -1846,8 +1861,9 @@ async function loadDispatchInbox(filter){
         return a?a.display_name:'Agent '+id.slice(0,8);
       };
       if(!tasks.length){tl.innerHTML='<div class="text-dim mono" style="padding:16px;font-size:11px">No tasks matching filter</div>';return;}
+      const resultEligible=(st)=>['completed','approved','awaiting_dcs','needs_review','blocked','rejected'].includes(st);
       tl.innerHTML=tasks.map(t=>\`
-        <div class="trib-item">
+        <div class="trib-item" \${resultEligible(t.status)?'style="cursor:pointer" onclick="openTaskResult(\\''+t.task_key+'\\')" title="Open submitted result"':''}>
           \${statusTag(t.status)}
           <div class="trib-info">
             <div class="trib-title">\${t.task_key}: \${t.title}</div>
@@ -1855,6 +1871,7 @@ async function loadDispatchInbox(filter){
             \${t.description?'<div class="trib-meta" style="margin-top:2px;font-size:9px">'+t.description+'</div>':''}
           </div>
           <div class="flex gap-6">
+            \${resultEligible(t.status)?'<span class="mono" style="font-size:8px;color:var(--gold,#c9a24b)">View Result →</span>':''}
             <span class="mono" style="font-size:8px;color:var(--text-dim)">\${t.updated_at?new Date(t.updated_at).toLocaleDateString():''}</span>
           </div>
         </div>\`).join('');
@@ -1871,22 +1888,53 @@ async function loadDispatchInbox(filter){
   }catch(e){console.error('Dispatch inbox error:',e);}
 }
 
+let _dispatchAttachedFiles=[];
+function dispatchFilesChanged(input){
+  _dispatchAttachedFiles=Array.from(input.files||[]);
+  const list=document.getElementById('dispatchAttachList');
+  if(list) list.innerHTML=_dispatchAttachedFiles.map(f=>'<span style="margin-right:8px">📎 '+f.name+' ('+(f.size/1024).toFixed(1)+'KB)</span>').join('');
+  const zone=document.getElementById('dispatchAttachZone');
+  if(zone) zone.textContent=_dispatchAttachedFiles.length?(_dispatchAttachedFiles.length+' file(s) attached — will be stored as task references'):'Drop files here or click to attach (stored as task reference)';
+}
+function dispatchShowError(msg,statusCode){
+  const el=document.getElementById('dispatchError');
+  if(!el)return;
+  el.style.display='block';
+  el.textContent=(statusCode?('HTTP '+statusCode+' — '):'')+msg;
+}
+function dispatchClearError(){
+  const el=document.getElementById('dispatchError');
+  if(el){el.style.display='none';el.textContent='';}
+}
 async function createDispatch(){
+  dispatchClearError();
   const title=(document.getElementById('dispatchTitle')||{}).value?.trim();
-  if(!title){alert('Title required');return;}
+  if(!title){dispatchShowError('Title required');return;}
   const desc=(document.getElementById('dispatchDesc')||{}).value?.trim();
   const lane=(document.getElementById('dispatchLane')||{}).value||'DCSE';
   const task_type=(document.getElementById('dispatchType')||{}).value||'other';
   const priority=parseInt((document.getElementById('dispatchPriority')||{}).value)||3;
+  const assigned_agent_key=(document.getElementById('dispatchAgent')||{}).value||'';
+  const input_refs=_dispatchAttachedFiles.map(f=>({name:f.name,size:f.size,type:f.type,attached_at:new Date().toISOString()}));
   try{
-    const r=await fetch('/api/tribunal/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,description:desc,lane,task_type,priority})});
-    const data=await r.json();
-    if(data.ok){
-      document.getElementById('dispatchTitle').value='';document.getElementById('dispatchDesc').value='';
+    const payload={title,description:desc||null,lane,task_type,priority,input_refs};
+    if(assigned_agent_key) payload.assigned_agent_key=assigned_agent_key;
+    const r=await fetch('/api/tribunal/dispatch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    let data;
+    try{data=await r.json();}catch(je){dispatchShowError('Server returned non-JSON response',r.status);return;}
+    if(r.ok&&data.ok){
+      document.getElementById('dispatchTitle').value='';
+      document.getElementById('dispatchDesc').value='';
+      if(document.getElementById('dispatchAgent')) document.getElementById('dispatchAgent').value='';
+      _dispatchAttachedFiles=[];
+      const fi=document.getElementById('dispatchFileInput');if(fi)fi.value='';
+      dispatchFilesChanged({files:[]});
       document.getElementById('dispatchForm').style.display='none';
       loadDispatchInbox('all');
-    }else{alert('Dispatch error: '+(data.error||'Unknown'));}
-  }catch(e){alert('Dispatch failed: '+e.message);}
+    }else{
+      dispatchShowError(data.error||'Unknown dispatch error',r.status);
+    }
+  }catch(e){dispatchShowError('Dispatch failed: '+e.message);}
 }
 
 function addDispatch(){createDispatch();}
@@ -2050,7 +2098,27 @@ async function refreshAgentOps(){
     }
     const arl=document.getElementById('agentRegistryList');
     if(arl&&data.agents&&data.agents.length){
-      arl.innerHTML=data.agents.map(a=>'<div class="trib-row"><div class="trib-title">'+(a.agent_name||a.agent_id||'agent')+'</div><div class="trib-meta">Type: '+(a.agent_type||'unknown')+' · Status: '+(a.status||'unknown')+'</div></div>').join('');
+      const rsByKey={};(data.runtime_surfaces||[]).forEach(rs=>{rsByKey[rs.agent_key]=rs;});
+      arl.innerHTML=data.agents.map(a=>{
+        const rs=rsByKey[a.agent_key];
+        let surfaceHtml='';
+        if(rs&&rs.surfaces&&rs.surfaces.length){
+          // Runtime identity: logical agent_key (role) can legitimately have
+          // multiple Claude-family runtime surfaces heartbeating under it
+          // (CLI poller, remote/cloud CCR, Claude Chat browser, Claude
+          // Desktop). What must NOT happen is two surfaces of the SAME type
+          // both active at once -- that's a duplicate poller/session, not a
+          // separate legitimate surface.
+          const now=Date.now();
+          const active=rs.surfaces.filter(s=>s.last_seen_at&&(now-new Date(s.last_seen_at).getTime())<600000);
+          const typeCounts={};active.forEach(s=>{typeCounts[s.runtime_surface]=(typeCounts[s.runtime_surface]||0)+1;});
+          const dupType=Object.keys(typeCounts).find(k=>typeCounts[k]>1);
+          surfaceHtml='<div class="trib-meta" style="margin-top:4px">Runtime surfaces: '+rs.surfaces.map(s=>
+            '<span class="mono" style="margin-right:6px">'+(s.runtime_surface||'unspecified')+(s.host?'@'+s.host:'')+(active.some(x=>x.runtime_instance===s.runtime_instance)?' (active)':'')+'</span>'
+          ).join('')+'</div>'+(dupType?'<div class="trib-meta" style="color:var(--danger,#e05555)">⚠ Duplicate active '+dupType+' surfaces detected under this agent_key</div>':'');
+        }
+        return '<div class="trib-row"><div class="trib-title">'+(a.display_name||a.agent_key||a.agent_id||'agent')+'</div><div class="trib-meta">Type: '+(a.agent_type||'unknown')+' · Status: '+(a.status||'unknown')+'</div>'+surfaceHtml+'</div>';
+      }).join('');
     }else if(arl&&data.agents){
       arl.innerHTML='<div class="text-dim mono" style="padding:12px;font-size:11px">No agents registered.</div>';
     }
@@ -2224,6 +2292,70 @@ function addOpsEntry(){
   const d=document.createElement('div');d.className='mono text-dim';
   d.textContent=new Date().toISOString().split('T')[0]+' · '+t;
   log.insertBefore(d,log.firstChild);
+}
+
+// ===== RESULT INSPECTOR (V7_1_POLLER_RESULT_ACCESS_UI_FIX_20260807) =====
+// Opens the delivered result for a task: result_payload, artifact/output
+// references, source task/assignment, timestamps, and the audit-trail
+// events. Read-only by design -- the "Request Follow-up" action posts a NEW
+// event via the existing /api/tribunal/receipt endpoint rather than mutating
+// result_payload, so the original submitted evidence is never overwritten.
+function ensureResultModal(){
+  if(document.getElementById('resultInspectorModal'))return;
+  const div=document.createElement('div');
+  div.id='resultInspectorModal';
+  div.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:24px';
+  div.innerHTML=\`
+    <div style="background:var(--bg-panel,#161616);border:1px solid var(--border,#333);border-radius:8px;max-width:820px;width:100%;max-height:85vh;overflow:auto;padding:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div id="riTitle" class="trib-title" style="font-size:14px"></div>
+        <button class="btn btn-ghost btn-sm" onclick="closeTaskResult()">Close ✕</button>
+      </div>
+      <div id="riBody" class="mono" style="font-size:11px;white-space:pre-wrap"></div>
+    </div>\`;
+  document.body.appendChild(div);
+}
+async function openTaskResult(taskKey){
+  ensureResultModal();
+  const modal=document.getElementById('resultInspectorModal');
+  const body=document.getElementById('riBody');
+  document.getElementById('riTitle').textContent='Result: '+taskKey;
+  body.textContent='Loading...';
+  modal.style.display='flex';
+  try{
+    const r=await fetch('/api/tribunal/result?task_key='+encodeURIComponent(taskKey));
+    const data=await r.json();
+    if(!data.ok){body.textContent='Error loading result: '+(data.error||'unknown');return;}
+    if(!data.assignments.length){body.textContent='No assignment/result found for this task_key yet.';return;}
+    const html=data.assignments.map(a=>\`
+      <div style="border:1px solid var(--border,#333);border-radius:6px;padding:10px;margin-bottom:10px">
+        <div><b>\${a.agent_display_name||a.agent_key}</b> (\${a.assignment_role}) — status: \${a.assignment_status}</div>
+        <div style="color:var(--text-dim);font-size:9px;margin:2px 0 8px">Assigned: \${a.assignment_created_at||''} · Result submitted: \${a.result_submitted_at||'not yet'} \${a.review_required||a.dcs_decision_required?' · GOVERNED (review/DCS decision required)':''}</div>
+        <div style="background:var(--bg-input,#0d0d0d);border-radius:4px;padding:8px;overflow-x:auto">\${JSON.stringify(a.result_payload||{},null,2).replace(/</g,'&lt;')}</div>
+      </div>\`).join('');
+    const eventsHtml='<div style="margin-top:12px"><div class="trib-title" style="font-size:11px;margin-bottom:6px">Audit trail</div>'+
+      (data.events||[]).map(e=>'<div style="font-size:9px;color:var(--text-dim);padding:2px 0;border-bottom:1px solid var(--border,#222)">'+
+        (e.created_at||'')+' · '+e.event_type+' · '+(e.actor_label||'')+' — '+(e.event_summary||'')+'</div>').join('')+'</div>';
+    const followupHtml='<div style="margin-top:14px;display:flex;gap:8px;align-items:center">'+
+      '<input id="riFollowupText" placeholder="Follow-up / correction note for DCS review..." style="flex:1;font-size:11px;padding:6px;background:var(--bg-input,#0d0d0d);border:1px solid var(--border,#333);color:inherit;border-radius:4px">'+
+      '<button class="btn btn-gold btn-sm" onclick="submitFollowUp(\\''+data.assignments[0].task_id+'\\',\\''+taskKey+'\\')">Request Follow-up</button></div>'+
+      '<div style="font-size:9px;color:var(--text-dim);margin-top:4px">This records a new event against the task. It never overwrites the result shown above.</div>';
+    body.innerHTML=html+eventsHtml+followupHtml;
+  }catch(e){body.textContent='Error: '+e.message;}
+}
+function closeTaskResult(){const m=document.getElementById('resultInspectorModal');if(m)m.style.display='none';}
+async function submitFollowUp(taskId,taskKey){
+  const el=document.getElementById('riFollowupText');
+  const note=el?el.value.trim():'';
+  if(!note){alert('Enter a follow-up note first.');return;}
+  try{
+    const r=await fetch('/api/tribunal/receipt',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      task_id:taskId,event_type:'follow_up_requested',actor_label:'DCS',summary:note
+    })});
+    const data=await r.json();
+    if(data.ok){alert('Follow-up recorded.');openTaskResult(taskKey);}
+    else alert('Follow-up failed: '+(data.error||'unknown'));
+  }catch(e){alert('Follow-up failed: '+e.message);}
 }
 
 // Init all renders
@@ -2406,19 +2538,22 @@ async function handleAgentOps(req, res) {
     decisions: {awaiting_dcs: 0, awaiting_review: 0, blockers: 0},
     recent_events: [],
     agents: [],
-    pending_assignments: []
+    pending_assignments: [],
+    runtime_surfaces: []
   };
   if (SUPABASE_KEY) {
     const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
     const base = SUPABASE_URL + '/rest/v1';
     try {
-      const [hbr, tsr, aer, arr, par] = await Promise.all([
-        fetch(`${base}/agent_heartbeats?select=id,agent_id,heartbeat_status,last_seen_at,capability_status,notes&order=last_seen_at.desc&limit=20`, {headers}).catch(() => null),
+      const [hbr, tsr, aer, arr, par, rsr] = await Promise.all([
+        fetch(`${base}/agent_heartbeats?select=id,agent_id,heartbeat_status,last_seen_at,capability_status,notes,runtime_surface,runtime_instance,host&order=last_seen_at.desc&limit=20`, {headers}).catch(() => null),
         fetch(`${base}/agent_tasks?select=id,task_key,title,task_type,status,priority,lane,assignment_mode,assigned_agent_id,updated_at&order=updated_at.desc&limit=30`, {headers}).catch(() => null),
         fetch(`${base}/agent_task_events?select=id,task_id,event_type,actor_label,event_summary,created_at&order=created_at.desc&limit=10`, {headers}).catch(() => null),
         fetch(`${base}/agent_registry?select=id,agent_key,display_name,agent_type,status,authorized_lanes&order=display_name.asc&limit=30`, {headers}).catch(() => null),
-        fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,status,created_at&status=eq.assigned&order=created_at.desc&limit=10`, {headers}).catch(() => null)
+        fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,status,created_at&status=eq.assigned&order=created_at.desc&limit=10`, {headers}).catch(() => null),
+        fetch(`${base}/agent_runtime_surfaces?select=agent_key,display_name,surface_count,active_surface_count,surfaces,multi_surface_flag`, {headers}).catch(() => null)
       ]);
+      if (rsr && rsr.ok) result.runtime_surfaces = await rsr.json();
       if (hbr && hbr.ok) {
         const hb = await hbr.json();
         const now = Date.now();
@@ -2567,7 +2702,7 @@ async function handleTribunalInbox(req, res) {
       fetch(`${base}/agent_tasks?select=id,task_key,title,description,lane,task_type,status,priority,assignment_mode,assigned_agent_id,dcs_decision_required,review_required,created_by_label,created_at,updated_at,completed_at&order=priority.asc,created_at.desc&limit=50`, {headers}).catch(() => null),
       fetch(`${base}/agent_registry?select=id,agent_key,display_name,agent_type,status,authorized_lanes,current_task_id&order=display_name.asc`, {headers}).catch(() => null),
       fetch(`${base}/agent_task_events?select=id,task_id,event_type,actor_label,event_summary,from_agent_id,to_agent_id,created_at&order=created_at.desc&limit=25`, {headers}).catch(() => null),
-      fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,sequence_order,status,created_at&order=created_at.desc&limit=30`, {headers}).catch(() => null)
+      fetch(`${base}/agent_task_assignments?select=id,task_id,agent_id,assignment_role,sequence_order,status,result_payload,created_at,updated_at&order=created_at.desc&limit=30`, {headers}).catch(() => null)
     ]);
     if (tr && tr.ok) {
       result.tasks = await tr.json();
@@ -2596,7 +2731,7 @@ async function handleTribunalDispatch(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');
     try {
-      const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key} = JSON.parse(body);
+      const {title, description, lane, task_type, priority, assignment_mode, assigned_agent_key, input_refs} = JSON.parse(body);
       if (!title) { res.statusCode = 400; res.end(JSON.stringify({error: 'title required'})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
       const validLanes = ['DCSE','SC','SS','TSL','TRIBUNAL','DDNA','RAG','SYSTEM'];
@@ -2611,13 +2746,20 @@ async function handleTribunalDispatch(req, res) {
         lane: taskLane, task_type: taskType,
         priority: Math.min(5, Math.max(1, parseInt(priority) || 3)),
         assignment_mode: assignment_mode || 'single',
-        status: 'planned', created_by_label: 'CP Dispatch'
+        status: 'planned', created_by_label: 'CP Dispatch',
+        dcs_decision_required: true, review_required: true
       };
+      if (Array.isArray(input_refs) && input_refs.length) taskPayload.input_refs = input_refs;
+      let assignedAgentId = null;
       if (assigned_agent_key) {
         const agentR = await fetch(`${base}/agent_registry?agent_key=eq.${encodeURIComponent(assigned_agent_key)}&select=id&limit=1`, {headers});
         if (agentR.ok) {
           const agents = await agentR.json();
-          if (agents.length) { taskPayload.assigned_agent_id = agents[0].id; taskPayload.status = 'assigned'; }
+          if (agents.length) {
+            assignedAgentId = agents[0].id;
+            taskPayload.assigned_agent_id = assignedAgentId;
+            taskPayload.status = 'assigned';
+          }
         }
       }
       const cr = await fetch(`${base}/agent_tasks`, {method: 'POST', headers, body: JSON.stringify(taskPayload)});
@@ -2629,6 +2771,17 @@ async function handleTribunalDispatch(req, res) {
           task_id: taskId, event_type: 'created', actor_label: 'CP Dispatch',
           event_summary: `Task dispatched: ${title} [${taskKey}]`
         })}).catch(() => {});
+        if (assignedAgentId) {
+          await fetch(`${base}/agent_task_assignments`, {method: 'POST', headers, body: JSON.stringify({
+            task_id: taskId, agent_id: assignedAgentId,
+            assignment_role: 'primary', sequence_order: 1, status: 'assigned'
+          })}).catch(() => {});
+          await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
+            task_id: taskId, event_type: 'assigned', actor_label: 'V7.1 Dispatch Router',
+            event_summary: `Task assigned to ${assigned_agent_key} through CP Dispatch`,
+            event_payload: {task_key: taskKey, agent_key: assigned_agent_key, routing_source: 'cp_dispatch_ui'}
+          })}).catch(() => {});
+        }
       }
       res.statusCode = 201;
       res.end(JSON.stringify({ok: true, task: created[0], task_key: taskKey}));
@@ -2698,6 +2851,36 @@ async function handleTribunalStatus(req, res) {
   });
 }
 
+// Result-detail read path (V7_1_POLLER_RESULT_ACCESS_UI_FIX_20260807): a
+// submitted result was durably written by submit_agent_result but had no
+// endpoint that exposed the full result_payload + audit trail for a single
+// task, so DCS could never open/inspect what an agent delivered from the UI.
+// This is read-only -- it never writes result_payload. Editing a delivered
+// result happens via handleTribunalReceipt posting a new 'follow_up_requested'
+// event (see below), which preserves the original submission as evidence.
+async function handleTribunalResult(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    const taskKey = url.searchParams.get('task_key');
+    if (!taskKey) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_key required'})); return; }
+    if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
+    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+    const base = SUPABASE_URL + '/rest/v1';
+    const rr = await fetch(`${base}/agent_task_result_view?task_key=eq.${encodeURIComponent(taskKey)}&order=result_submitted_at.desc`, {headers});
+    if (!rr.ok) { const err = await rr.text(); res.statusCode = rr.status; res.end(JSON.stringify({error: err})); return; }
+    const assignments = await rr.json();
+    let events = [];
+    if (assignments.length) {
+      const er = await fetch(`${base}/agent_task_events?task_id=eq.${assignments[0].task_id}&select=id,event_type,actor_label,event_summary,event_payload,created_at&order=created_at.desc&limit=50`, {headers}).catch(() => null);
+      if (er && er.ok) events = await er.json();
+    }
+    res.statusCode = 200;
+    res.end(JSON.stringify({ok: true, task_key: taskKey, assignments, events}));
+  } catch (e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -2709,6 +2892,7 @@ module.exports = (req, res) => {
   if (req.method === 'POST' && req.url.includes('/api/tribunal/dispatch')) return handleTribunalDispatch(req, res);
   if (req.method === 'POST' && req.url.includes('/api/tribunal/receipt')) return handleTribunalReceipt(req, res);
   if (req.method === 'POST' && req.url.includes('/api/tribunal/status')) return handleTribunalStatus(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/tribunal/result')) return handleTribunalResult(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/tribunal/inbox')) return handleTribunalInbox(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
