@@ -144,14 +144,37 @@ try {
     foreach ($orph in $orphans) {
       Write-Log "STARTUP_RESTORE: orphaned running assignment task_key=$($orph.task_key) age=$(([DateTime]::UtcNow - [DateTime]::Parse($orph.updated_at)).TotalMinutes -as [int])min -- submitting blocked."
       Invoke-Rpc 'submit_agent_result' @{
-        p_agent_key    = $AgentKeyCP
-        p_task_key     = $orph.task_key
-        p_result_payload = @{ outcome = 'blocked'; reason = 'startup_restore: prior cycle terminated before submit' }
-        p_status       = 'blocked'
+        p_agent_key        = $AgentKeyCP
+        p_task_key         = $orph.task_key
+        p_result_payload   = @{ outcome = 'blocked'; reason = 'startup_restore: prior cycle terminated before submit' }
+        p_status           = 'blocked'
+        p_runtime_surface  = 'claude_code_windows_cli'
+        p_runtime_instance = "claude_code_windows_cli@$env:COMPUTERNAME"
+        p_host             = $env:COMPUTERNAME
+        p_session_id       = $null
       } | Out-Null
     }
   }
 } catch { Write-Log "STARTUP_RESTORE check error: $($_.Exception.Message)" }
+
+# ---- 0b. Wake request acknowledgment -----------------------------------
+# Acknowledge any REQUESTED wake directed at this host before doing any work.
+# Must be done before claiming tasks (ack_request_before_start contract).
+$activeWake = $null
+try {
+  $wakeRows = Invoke-RestMethod -Method Get `
+    -Uri "$TableBase/poller_wake_requests?status=eq.REQUESTED&order=created_at.asc&limit=1" `
+    -Headers ($Headers.Clone() + @{ 'Accept-Profile' = 'dcse_cp' })
+  if ($wakeRows -and $wakeRows.Count -gt 0) {
+    $activeWake = $wakeRows[0]
+    $ackBody = @{ status = 'ACKNOWLEDGED'; acknowledged_at = (Get-Date -Format 'o'); acknowledged_host = $env:COMPUTERNAME } | ConvertTo-Json -Compress
+    $patchH = $Headers.Clone(); $patchH['Content-Profile'] = 'dcse_cp'; $patchH['Prefer'] = 'return=minimal'
+    Invoke-RestMethod -Method Patch `
+      -Uri "$TableBase/poller_wake_requests?id=eq.$($activeWake.id)" `
+      -Headers $patchH -Body $ackBody | Out-Null
+    Write-Log "WAKE_ACK: acknowledged wake request id=$($activeWake.id) target=$($activeWake.target_runtime) reason=$($activeWake.reason)"
+  }
+} catch { Write-Log "WAKE_ACK: error reading/acknowledging wake requests: $($_.Exception.Message)" }
 
 # ---- 1. Heartbeats (both identities; only claude_code executes) --------
 Invoke-Rpc 'agent_heartbeat' @{ p_agent_key = $AgentKeyCP; p_task_key = $null; p_status = 'online'
@@ -228,7 +251,15 @@ foreach ($t in $inbox) {
   }
 
   # ---- Claim ---------------------------------------------------------
-  $claim = Invoke-Rpc 'claim_agent_assignment' @{ p_agent_key = $AgentKeyCP; p_task_key = $t.task_key }
+  # Pass all 6 args to force the 6-arg overload; 2-arg call is ambiguous in PostgreSQL.
+  $claim = Invoke-Rpc 'claim_agent_assignment' @{
+    p_agent_key       = $AgentKeyCP
+    p_task_key        = $t.task_key
+    p_runtime_surface = 'claude_code_windows_cli'
+    p_runtime_instance = "claude_code_windows_cli@$env:COMPUTERNAME"
+    p_host            = $env:COMPUTERNAME
+    p_session_id      = $null
+  }
   if (-not $claim -or -not $claim.ok) {
     Write-Log "CLAIM FAILED: task_key=$($t.task_key) response=$($claim | ConvertTo-Json -Compress)"
     continue
@@ -292,8 +323,14 @@ foreach ($t in $inbox) {
   if ($timedOut) {
     Write-Log "TIMEOUT: claude -p exceeded $ClaimTimeoutMinutes min for task_key=$($t.task_key), killing."
     try { $proc.Kill() } catch {}
-    Invoke-Rpc 'submit_agent_result' @{ p_agent_key = $AgentKeyCP; p_task_key = $t.task_key
-      p_result_payload = @{ outcome = 'timeout'; wall_time_minutes = $ClaimTimeoutMinutes }; p_status = 'blocked' } | Out-Null
+    Invoke-Rpc 'submit_agent_result' @{
+      p_agent_key        = $AgentKeyCP; p_task_key = $t.task_key
+      p_result_payload   = @{ outcome = 'timeout'; wall_time_minutes = $ClaimTimeoutMinutes }
+      p_status           = 'blocked'
+      p_runtime_surface  = 'claude_code_windows_cli'
+      p_runtime_instance = "claude_code_windows_cli@$env:COMPUTERNAME"
+      p_host             = $env:COMPUTERNAME; p_session_id = $null
+    } | Out-Null
     Write-Log "SUBMITTED (blocked/timeout): task_key=$($t.task_key)"
     continue
   }
@@ -304,9 +341,14 @@ foreach ($t in $inbox) {
     $outputSummary = if ($raw.Length -gt 2000) { $raw.Substring(0, 2000) + '...(truncated)' } else { $raw }
   }
 
-  $result = Invoke-Rpc 'submit_agent_result' @{ p_agent_key = $AgentKeyCP; p_task_key = $t.task_key
-    p_result_payload = @{ outcome = 'completed'; exit_code = $proc.ExitCode; summary = $outputSummary }
-    p_status = 'completed' }
+  $result = Invoke-Rpc 'submit_agent_result' @{
+    p_agent_key        = $AgentKeyCP; p_task_key = $t.task_key
+    p_result_payload   = @{ outcome = 'completed'; exit_code = $proc.ExitCode; summary = $outputSummary }
+    p_status           = 'completed'
+    p_runtime_surface  = 'claude_code_windows_cli'
+    p_runtime_instance = "claude_code_windows_cli@$env:COMPUTERNAME"
+    p_host             = $env:COMPUTERNAME; p_session_id = $null
+  }
 
   if ($result -and $result.ok) {
     Write-Log "SUBMITTED: task_key=$($t.task_key) status=$($result.status) remaining_open_assignments=$($result.remaining_open_assignments)"
@@ -315,6 +357,19 @@ foreach ($t in $inbox) {
     # dcs_decision_required were set, rather than 'complete'. Only mark locally
     # processed once the RPC confirms the submission was recorded.
     $state.processed[$t.task_key] = (Get-Date).ToString('o')
+
+    # Consume the wake request that triggered this session, if any.
+    if ($activeWake -and $activeWake.metadata.task_key -eq $t.task_key) {
+      try {
+        $consumeBody = @{ status = 'CONSUMED'; consumed_at = (Get-Date -Format 'o') } | ConvertTo-Json -Compress
+        $patchH = $Headers.Clone(); $patchH['Content-Profile'] = 'dcse_cp'; $patchH['Prefer'] = 'return=minimal'
+        Invoke-RestMethod -Method Patch `
+          -Uri "$TableBase/poller_wake_requests?id=eq.$($activeWake.id)" `
+          -Headers $patchH -Body $consumeBody | Out-Null
+        Write-Log "WAKE_CONSUMED: wake request id=$($activeWake.id) marked CONSUMED after task $($t.task_key) submitted."
+        $activeWake = $null
+      } catch { Write-Log "WAKE_CONSUME: error marking wake consumed: $($_.Exception.Message)" }
+    }
   } else {
     Write-Log "SUBMIT FAILED: task_key=$($t.task_key) response=$($result | ConvertTo-Json -Compress)"
   }
