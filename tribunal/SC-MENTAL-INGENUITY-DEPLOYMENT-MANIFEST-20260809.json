@@ -1,0 +1,63 @@
+{
+  "deployment_id": "mental-ingenuity-qa-20260809",
+  "project": "Mental Ingenuity",
+  "lane": "SC",
+  "status": "Ready for Production",
+  "timestamp": "2026-08-09T23:55:00Z",
+  "build_info": {
+    "version": "0.9.1",
+    "framework": "React + TypeScript + Vite",
+    "build_command": "tsc --noEmit && vite build",
+    "output_directory": "dist",
+    "build_stats": {
+      "modules_transformed": 57,
+      "html_size": "0.98 kB (gzip: 0.49 kB)",
+      "css_size": "20.17 kB (gzip: 5.02 kB)",
+      "js_size": "243.30 kB (gzip: 78.06 kB)",
+      "total_dist_size": "8.8 MB",
+      "build_time": "1.45s"
+    },
+    "dependencies": 73,
+    "vulnerabilities": 0
+  },
+  "deployment_platform": "Vercel",
+  "deployment_project": "sonlyconsulting-ctrls-projects/mental-ingenuity-qa",
+  "deployment_urls": {
+    "vercel_production": "https://mental-ingenuity-ir1r1hfgp-sonlyconsulting-ctrls-projects.vercel.app",
+    "vercel_alias": "https://mental-ingenuity-qa.vercel.app",
+    "website_page": "https://www.sonlyconsulting.com/mental-ingenuity",
+    "vercel_inspector": "https://vercel.com/sonlyconsulting-ctrls-projects/mental-ingenuity-qa/94aDvMG9EhR8GhHeLubEuzY7Mn47"
+  },
+  "deployment_id_vercel": "dpl_94aDvMG9EhR8GhHeLubEuzY7Mn47",
+  "deployment_state": "READY",
+  "deployment_target": "production",
+  "verification": {
+    "http_status": 200,
+    "response_body_size": 980,
+    "login_gate": "disabled",
+    "app_loads": true,
+    "verified_at": "2026-08-09T23:55:30Z"
+  },
+  "source_materials": {
+    "source_directory": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\MENTAL_INGENUITY_CORRECTED_SOURCE_R3",
+    "git_status": "isolated (not in shared monorepo)",
+    "build_output_location": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\MENTAL_INGENUITY_CORRECTED_SOURCE_R3\\dist",
+    "node_modules_cleaned": "2026-08-09T23:50:01Z",
+    "npm_ci_completed": "2026-08-09T23:50:05Z",
+    "build_completed": "2026-08-09T23:50:07Z",
+    "deployment_completed": "2026-08-09T23:55:00Z"
+  },
+  "use_case": "Wix embedded iframe for Mental Ingenuity app on SC website",
+  "deployment_authorization": "User-initiated via Claude Code session",
+  "approvals": [],
+  "next_actions": [
+    "Start tribunal poller for status tracking",
+    "Monitor Vercel deployment for stability",
+    "Verify Wix embed rendering and responsiveness",
+    "Capture performance baselines from production"
+  ],
+  "artifacts": {
+    "manifest": "tribunal/SC-MENTAL-INGENUITY-DEPLOYMENT-MANIFEST-20260809.json",
+    "receipt": "tribunal/SC-MENTAL-INGENUITY-DEPLOYMENT-RECEIPT-20260809.json"
+  }
+}
