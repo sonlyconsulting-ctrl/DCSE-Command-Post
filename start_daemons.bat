@@ -1,4 +1,5 @@
 @echo off
+cd /d "%~dp0"
 title DCSE Command Center — Startup Launcher
 mode con: cols=85 lines=25
 color 0B
@@ -22,12 +23,12 @@ python job_ps_inventory.py
 echo.
 
 echo [Step 4/5] Launching main Tribunal Poller (Persistent)...
-start "DCSE Tribunal Poller v6+" /min python -u -X utf8 job_tribunal_poller.py
+start "DCSE Tribunal Poller v6+" /min python -u -X utf8 _Tribunal_Inbox\job_tribunal_poller.py
 echo   - Launched in background (minimized).
 echo.
 
 echo [Step 5/7] Launching Anti-Gravity Agent Daemon (Persistent)...
-start "DCSE Anti-Gravity Agent v6+" /min python -u -X utf8 job_ag_agent.py
+start "DCSE Anti-Gravity Agent v6+" /min python -u -X utf8 _Tribunal_Inbox\job_ag_agent.py
 echo   - Launched in background (minimized).
 echo.
 
