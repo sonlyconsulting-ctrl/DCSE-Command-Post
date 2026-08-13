@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Patch local Ollama transport
-        shell: python
+        shell: python {0}
         run: |
           from pathlib import Path
           p = Path('apps/sc-agent-os/api/index.js')
