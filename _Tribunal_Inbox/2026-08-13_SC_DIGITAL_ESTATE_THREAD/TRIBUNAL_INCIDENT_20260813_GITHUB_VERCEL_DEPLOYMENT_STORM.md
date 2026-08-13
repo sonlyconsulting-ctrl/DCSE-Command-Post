@@ -74,10 +74,11 @@ Disposition: `DISCONNECT-CANDIDATE` from this repository.
 VERIFIED:
 
 - current repository contains no dedicated Mental Ingenuity source root;
-- an accidental root-repository deployment caused the project production surface to serve the DCSE secure-access wrapper instead of the Mental Ingenuity application;
-- prior immutable Mental Ingenuity deployments remained available and a later immutable deployment was verified to return the correct Mental Ingenuity application.
+- the current production alias `mental-ingenuity-qa.vercel.app` was fetched on 2026-08-13 after containment and returned `DCSE Secure Access`, not Mental Ingenuity;
+- therefore the production regression is still present and must be restored before Git disconnection;
+- immutable deployment `dpl_94aDvMG9EhR8GhHeLubEuzY7Mn47` at `mental-ingenuity-ir1r1hfgp-sonlyconsulting-ctrls-projects.vercel.app` was fetched on 2026-08-13 and returned the correct `Mental Ingenuity` application HTML with its expected title and product metadata.
 
-Disposition: verify the production alias, then `DISCONNECT-CANDIDATE` from this repository.
+Disposition: `RESTORE PRODUCTION -> VERIFY -> DISCONNECT GIT`.
 
 ### sc-agent-os
 
@@ -154,19 +155,19 @@ Affected projects now temporarily frozen:
 
 ## Containment verification
 
-After containment, Git branch commit:
+Post-containment branch documentation commits were observed in the affected Vercel projects as `CANCELED` deployment records rather than executed builds.
 
-`481076213132c43515f0fc02cb822704a1f43a93`
+Verified examples include the incident-record commit and ownership-record commit on:
 
-created a `consumer-shell` Vercel deployment record in state:
-
-`CANCELED`
-
-rather than performing the previous failing build.
+- `consumer-shell`;
+- `dcse-asset-portal`;
+- `mental-ingenuity-qa`;
+- `sc-agent-os`;
+- `sc-command-post`.
 
 Conclusion:
 
-**Temporary build containment is functioning, but Git integration still creates deployment records. Final remediation requires project/source ownership correction.**
+**Temporary build containment is functioning across the five affected projects, but Git integration still creates deployment records. Final remediation requires project/source ownership correction.**
 
 ## Cleanup branch
 
@@ -206,10 +207,12 @@ Required end state:
 - [x] Remove obsolete one-shot Ollama workflow on cleanup branch.
 - [x] Verify no GitHub Actions run for the post-deletion branch commit.
 - [x] Inventory current repository source roots.
-- [ ] Verify Mental Ingenuity QA production alias serves Mental Ingenuity.
+- [x] Verify current Mental Ingenuity QA production alias is incorrect and identify a known-good immutable Mental Ingenuity deployment.
+- [ ] Restore `mental-ingenuity-qa` production to `dpl_94aDvMG9EhR8GhHeLubEuzY7Mn47` or another independently verified Mental Ingenuity deployment.
+- [ ] Verify restored Mental Ingenuity production alias by content, not READY state alone.
 - [ ] Disconnect `consumer-shell` from `DCSE-Command-Post` Git integration.
 - [ ] Disconnect `dcse-asset-portal` from `DCSE-Command-Post` Git integration.
-- [ ] Disconnect `mental-ingenuity-qa` from `DCSE-Command-Post` Git integration after production verification.
+- [ ] Disconnect `mental-ingenuity-qa` from `DCSE-Command-Post` Git integration after production restoration.
 - [ ] Set `sc-agent-os` Root Directory to `apps/sc-agent-os`.
 - [ ] Replace SC Agent OS temporary freeze with a validated path-aware ignored-build rule.
 - [ ] Reconcile `sc-command-post` product and domain ownership.
@@ -234,4 +237,4 @@ Do not unfreeze automatic Git deployment for any affected Vercel project until t
 
 ## Current disposition
 
-**CONTAINED. REMEDIATION IN PROGRESS. NOT CLOSED.**
+**CONTAINED. REMEDIATION IN PROGRESS. MENTAL INGENUITY PRODUCTION RESTORATION REQUIRED. NOT CLOSED.**
