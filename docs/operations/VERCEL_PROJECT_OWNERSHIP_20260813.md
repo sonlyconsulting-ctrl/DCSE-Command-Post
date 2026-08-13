@@ -3,7 +3,7 @@
 **Record date:** 2026-08-13  
 **Repository:** `sonlyconsulting-ctrl/DCSE-Command-Post`  
 **Branch:** `fix/github-vercel-trigger-containment-20260813`  
-**Status:** CANDIDATE OPERATIONS RECORD  
+**Status:** CANDIDATE OPERATIONS RECORD / REMEDIATION IN PROGRESS  
 **Production authority:** NONE BY THIS DOCUMENT
 
 ## Finding
@@ -17,27 +17,30 @@ Repository inspection establishes that only two of those five projects have a pl
 
 No source root named or dedicated to `consumer-shell`, `dcse-asset-portal`, or `mental-ingenuity-qa` exists in the current repository tree.
 
-## Temporary containment applied by DCS
+## Incident containment and completed remediation
 
-DCS set Vercel `Ignored Build Step` to `Don't build anything` for:
+DCS first set Vercel `Ignored Build Step` to `Don't build anything` for the five affected projects to stop active Git-triggered builds while ownership was investigated.
 
-- `consumer-shell`
-- `dcse-asset-portal`
-- `mental-ingenuity-qa`
-- `sc-agent-os`
-- `sc-command-post`
+The following remediation is now complete:
 
-This prevents actual Git-triggered builds while the project/source mapping is repaired. Vercel can still create a canceled deployment record for a Git push, so this is containment, not the final architecture.
+- `consumer-shell` Git connection to `DCSE-Command-Post`: **DISCONNECTED**.
+- `dcse-asset-portal` Git connection to `DCSE-Command-Post`: **DISCONNECTED**.
+- `mental-ingenuity-qa`: prior known-good Mental Ingenuity deployment promoted back to production and production alias independently verified to return the Mental Ingenuity application; Git connection to `DCSE-Command-Post`: **DISCONNECTED**.
+- `sc-agent-os` Root Directory: **SET TO `apps/sc-agent-os`**.
+- `sc-agent-os` Vercel root-aware option **Skip deployments when there are no changes to the root directory or its dependencies**: **ENABLED**.
+- `sc-agent-os` temporary `Don't build anything` freeze: **REMAINS ENABLED PENDING ACCEPTANCE TEST**.
+- `sc-command-post`: **REMAINS FROZEN / OWNERSHIP REVIEW REQUIRED**.
+- obsolete repository script `scripts/vercel-git-ignore.sh`: **REMOVED** after source remapping made the shared-project freeze script unnecessary.
 
 ## Current project map
 
-| Vercel project | Project ID | Current source relationship | Current disposition | Target action |
+| Vercel project | Project ID | Source relationship | Current state | Next action |
 |---|---|---|---|---|
-| `sc-agent-os` | `prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM` | VERIFIED: `apps/sc-agent-os` | KEEP / REWORK GIT MAPPING | Set Root Directory to `apps/sc-agent-os`, then use path-aware build skipping |
-| `sc-command-post` | `prj_a9pbcrfvQczbmH2Cr1S2Q08p2975` | VERIFIED code at repository root, exact business role/domain ownership not yet reconciled | HOLD | Keep frozen until domain and product role are verified; then use a bounded root-path trigger or separate app root |
-| `consumer-shell` | `prj_xVHcFD74DWyVD0QtizARSGIRSP2T` | VERIFIED: no dedicated source root in current repository | DISCONNECT-CANDIDATE | Disconnect this Git repository unless source is intentionally restored/migrated later |
-| `dcse-asset-portal` | `prj_WJLnWl2RrdUcELBZHwPI6Qw8ZIZ9` | VERIFIED: no dedicated source root in current repository | DISCONNECT-CANDIDATE | Disconnect this Git repository unless source is intentionally restored/migrated later |
-| `mental-ingenuity-qa` | `prj_3t9SKxOUuW0peitSq97OHWDWCQy9` | VERIFIED: no dedicated source root in current repository | DISCONNECT-CANDIDATE | Verify production Mental Ingenuity deployment, then disconnect this Git repository |
+| `sc-agent-os` | `prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM` | VERIFIED: `apps/sc-agent-os` | ROOT MAPPED / FROZEN | Run documentation-only acceptance test, then remove temporary freeze and validate targeted app change |
+| `sc-command-post` | `prj_a9pbcrfvQczbmH2Cr1S2Q08p2975` | VERIFIED root wrapper at `api/`; exact product/domain ownership not yet reconciled | HOLD / FROZEN | Reconcile application role, custom domains, auth wrapper, source boundary, and rollback before re-enabling Git deployment |
+| `consumer-shell` | `prj_xVHcFD74DWyVD0QtizARSGIRSP2T` | VERIFIED: no dedicated source root in current repository | DISCONNECTED | Inventory separately; reconnect only if source is intentionally restored/migrated later |
+| `dcse-asset-portal` | `prj_WJLnWl2RrdUcELBZHwPI6Qw8ZIZ9` | VERIFIED: no dedicated source root in current repository | DISCONNECTED | Inventory separately; reconnect only if source is intentionally restored/migrated later |
+| `mental-ingenuity-qa` | `prj_3t9SKxOUuW0peitSq97OHWDWCQy9` | VERIFIED: no dedicated source root in current repository | PRODUCTION RESTORED / DISCONNECTED | Preserve current known-good deployment; reconnect only to the actual Mental Ingenuity source repository/path when established |
 | `dist` | `prj_QwjI6vtxDjkRoAXs0QHEBtblDMAf` | UNKNOWN | INVENTORY | Leave unchanged pending estate classification |
 | `magical-learning-gift-review` | `prj_k1YwaMS7tHM06hVxB3vXOacs2tPT` | UNKNOWN / review asset | INVENTORY | Leave unchanged pending classification |
 | `vow-and-go-review` | `prj_6mpgeMIZlmYSLZzNf2fRbv6ChhwZ` | LIKELY family-product review asset | INVENTORY | Leave unchanged pending classification |
@@ -69,30 +72,31 @@ The repository contains only one `package.json`, at `apps/sc-agent-os/package.js
 
 Every deployed application should have an explicit ownership record:
 
-`APPLICATION -> VERCEL PROJECT -> SOURCE REPOSITORY -> ROOT DIRECTORY -> PRODUCTION BRANCH -> DOMAIN -> DATA OWNER -> BUILD TRIGGER -> ROLLBACK -> STATUS`
+`APPLICATION -> HOST PROJECT -> SOURCE REPOSITORY -> ROOT DIRECTORY -> PRODUCTION BRANCH -> ENVIRONMENT -> DOMAIN -> DATA OWNER -> BUILD TRIGGER -> ROLLBACK -> OWNER -> STATUS`
 
 Required principles:
 
-1. One Vercel project must map to one intentional application source root.
-2. Documentation-only changes must not build unrelated applications.
-3. A Git integration must not remain attached to a project with no matching source root.
-4. Production domains must be explicitly owned and must not be inferred from historical Vercel configuration.
-5. A project with a shared repository must use either:
-   - a correct Root Directory plus path-aware Ignored Build Step; or
-   - a purpose-built monorepo affected-project mechanism when the repository actually uses a compatible monorepo tool.
-6. Do not introduce Turborepo merely to solve this incident. The current repository has no root package workspace/turbo configuration.
+1. One host project maps to one intentional application source root.
+2. Documentation-only changes do not build unrelated applications.
+3. A Git integration does not remain attached to a project with no matching source root.
+4. Production domains are explicitly owned and are not inferred from historical host configuration.
+5. Shared-repository applications use a verified Root Directory plus affected-project/root-aware deployment behavior where supported.
+6. Do not introduce a monorepo framework merely to solve change detection when native host root-awareness is sufficient.
 7. Supabase preview integration remains path-scoped to `supabase/` and should not be changed merely because Vercel was misconfigured.
-8. GitHub Actions must contain only intentional workflows with valid triggers.
+8. GitHub Actions contains only intentional workflows with valid triggers.
 
-## Proposed `sc-agent-os` final Git behavior
+## `sc-agent-os` final Git behavior
 
-After its Vercel Root Directory is set to `apps/sc-agent-os`, replace the temporary `Don't build anything` rule with a path-aware rule that skips builds when that application root is unchanged.
+Current Vercel configuration now establishes:
 
-A simple Git-diff based Ignored Build Step is preferred over adding a monorepo framework solely for this purpose.
+- Root Directory: `apps/sc-agent-os`
+- include files outside root directory in Build Step: enabled
+- skip deployments when no changes to root directory or dependencies: enabled
+- temporary `Don't build anything`: still enabled
 
-Exact command must be validated in the Vercel project context before production activation.
+The preferred steady state is to rely on Vercel's root-aware change detection rather than a custom repository-wide ignore script, provided acceptance testing proves the behavior.
 
-## Proposed `sc-command-post` hold
+## `sc-command-post` hold
 
 Do not unfreeze `sc-command-post` yet.
 
@@ -100,20 +104,33 @@ The repository-root wrapper currently imports `apps/sc-agent-os/api/index.js` an
 
 ## Acceptance test for final repair
 
-Use one documentation-only commit after all Vercel project mappings are corrected.
+### Test 1: documentation-only commit
 
 Expected behavior:
 
 - `consumer-shell`: no Git deployment because repository is disconnected.
 - `dcse-asset-portal`: no Git deployment because repository is disconnected.
 - `mental-ingenuity-qa`: no Git deployment because repository is disconnected.
-- `sc-agent-os`: no build when `apps/sc-agent-os` is unchanged.
-- `sc-command-post`: no build for unrelated documentation until its bounded trigger is approved.
+- `sc-agent-os`: no application build when `apps/sc-agent-os` and its dependencies are unchanged.
+- `sc-command-post`: no active build because the project remains frozen.
 - Supabase: ignore when `supabase/` is unchanged.
 - GitHub Actions: no obsolete one-shot Ollama workflow failure.
 
-A second test should modify only `apps/sc-agent-os` and prove that only the intended SC Agent OS deployment executes.
+### Test 2: targeted `sc-agent-os` change
+
+After Test 1 passes and DCS removes the temporary `Don't build anything` setting only for `sc-agent-os`, make one bounded change under `apps/sc-agent-os`.
+
+PASS requires:
+
+- only the intended SC Agent OS deployment executes;
+- unrelated disconnected Vercel projects remain silent;
+- `sc-command-post` remains frozen;
+- build and smoke test pass;
+- expected domain/preview behavior is preserved;
+- evidence is recorded.
 
 ## Rollback
 
-Until final acceptance, retain the Vercel `Don't build anything` setting on the five affected projects. If a mapping change produces unexpected deployment activity, restore that setting immediately and do not continue to the next project.
+Until final acceptance, retain the temporary `Don't build anything` setting on `sc-agent-os` and `sc-command-post`.
+
+If `sc-agent-os` produces unexpected deployment activity after unfreezing, immediately restore `Don't build anything`, preserve the last known good deployment, and stop the acceptance sequence.
