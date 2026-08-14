@@ -325,7 +325,7 @@ After an authorized write or external action, report only what direct evidence s
 
 ## 16. Source Lineage and Review Disposition
 
-This candidate reconciles:
+This operative repository instruction file reconciles:
 
 - `AGENTS (3).md` as the strongest prior DCSE Command Center repository source.
 - `SUPPORT_00062_B74AFAC7_AGENTS.md` for simplicity, surgical-change, and goal-driven execution principles.
@@ -339,4 +339,4 @@ Excluded from control:
 - `AGENTS (2).md`, which is an incomplete Claude Cowork import.
 - `ai-agents.md` and its identical copies, which are Next.js reference material rather than DCSE authority.
 
-Approval of this candidate should result in exactly one active root file named `AGENTS.md` for the Command Center project. Prior variants should remain preserved as source evidence until a separate governed archive decision.
+Exactly one active root file named `AGENTS.md` governs the Command Center project. Prior variants remain preserved as source evidence until a separate governed archive decision.
