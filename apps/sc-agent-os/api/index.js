@@ -2238,8 +2238,669 @@ renderDispatch();
 </body>
 </html>`;
 
+const COMMAND_CENTER_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DCSE Command Center v7.1</title>
+<style>
+:root{
+  --navy:#0a1628;--navy-mid:#0d1f3c;--navy-light:#132a4a;--navy-border:#1a3a6a;
+  --gold:#c9a84c;--gold-dim:#9a7e38;--gold-glow:rgba(201,168,76,0.12);
+  --cream:#f0ebe0;--text-dim:#8fa3c0;--text-muted:#4d6a8a;
+  --green:#00e676;--green-dim:rgba(0,230,118,0.12);
+  --cyan:#00e5ff;--cyan-dim:rgba(0,229,255,0.1);
+  --amber:#ffc107;--amber-dim:rgba(255,193,7,0.12);
+  --red:#ff5252;--red-dim:rgba(255,82,82,0.12);
+  --blue:#448aff;--blue-dim:rgba(68,138,255,0.12);
+  --teal:#1de9b6;--teal-dim:rgba(29,233,182,0.12);
+  --purple:#b388ff;--purple-dim:rgba(179,136,255,0.12);
+  --surface:rgba(13,31,60,0.85);--surface-2:rgba(19,42,74,0.7);
+  --font:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'SF Mono','Cascadia Code','Fira Code',monospace;
+  --r:6px;--rl:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--navy);color:var(--cream);min-height:100vh;overflow-x:hidden}
+body.embed-mode{background:transparent}
+.cc-header{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));border-bottom:1px solid var(--navy-border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.cc-header-left{display:flex;align-items:center;gap:12px}
+.cc-logo{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--navy);flex-shrink:0}
+.cc-title{font-size:16px;font-weight:700;color:var(--cream);letter-spacing:0.5px}
+.cc-version{font-size:9px;color:var(--gold);font-family:var(--mono);letter-spacing:2px;text-transform:uppercase}
+.cc-header-right{display:flex;align-items:center;gap:10px}
+.cc-clock{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:1px}
+.cc-status-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:cc-pulse 2s infinite}
+@keyframes cc-pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.cc-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.5px;padding:3px 8px;border-radius:4px;text-transform:uppercase}
+.cc-badge-green{background:var(--green-dim);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.cc-badge-amber{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(255,193,7,.2)}
+.cc-badge-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,82,82,.2)}
+.cc-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px;max-width:1600px;margin:0 auto}
+@media(max-width:960px){.cc-layout{grid-template-columns:1fr}}
+.cc-panel{background:var(--surface);border:1px solid var(--navy-border);border-radius:var(--rl);overflow:hidden;display:flex;flex-direction:column}
+.cc-panel-full{grid-column:1/-1}
+.cc-panel-header{padding:12px 16px;border-bottom:1px solid var(--navy-border);display:flex;align-items:center;justify-content:space-between;gap:8px;background:rgba(19,42,74,0.4)}
+.cc-panel-title{font-size:12px;font-weight:700;color:var(--cream);letter-spacing:1px;text-transform:uppercase}
+.cc-panel-body{padding:14px 16px;flex:1;overflow-y:auto;max-height:500px}
+.cc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.cc-stat{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:12px;text-align:center}
+.cc-stat-value{font-size:24px;font-weight:800;font-family:var(--mono);color:var(--cream);font-variant-numeric:tabular-nums}
+.cc-stat-label{font-size:8px;font-weight:700;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+.cc-telemetry{display:flex;flex-direction:column;gap:2px;font-family:var(--mono);font-size:11px;max-height:380px;overflow-y:auto}
+.cc-telemetry-line{padding:4px 8px;border-radius:3px;display:flex;gap:8px;align-items:baseline;transition:background .15s}
+.cc-telemetry-line:hover{background:rgba(255,255,255,.03)}
+.cc-telemetry-time{color:var(--text-muted);font-size:9px;flex-shrink:0;min-width:70px}
+.cc-telemetry-type{font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;flex-shrink:0;letter-spacing:.5px;text-transform:uppercase}
+.cc-telemetry-msg{color:var(--cream);flex:1;word-break:break-word}
+.tt-created{background:var(--blue-dim);color:var(--blue)}
+.tt-assigned{background:var(--teal-dim);color:var(--teal)}
+.tt-started{background:var(--green-dim);color:var(--green)}
+.tt-completed{background:var(--green-dim);color:var(--green)}
+.tt-blocked{background:var(--red-dim);color:var(--red)}
+.tt-status_change{background:var(--amber-dim);color:var(--amber)}
+.tt-decision{background:var(--gold-glow);color:var(--gold)}
+.tt-receipt{background:var(--purple-dim);color:var(--purple)}
+.tt-handoff{background:var(--cyan-dim);color:var(--cyan)}
+.tt-review{background:var(--amber-dim);color:var(--amber)}
+.tt-comment{background:var(--blue-dim);color:var(--blue)}
+.tt-heartbeat{background:var(--cyan-dim);color:var(--cyan)}
+.cc-form{display:flex;flex-direction:column;gap:10px}
+.cc-form-row{display:flex;gap:8px;flex-wrap:wrap}
+.cc-input{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:12px;padding:8px 12px;border-radius:var(--r);outline:none;flex:1;min-width:140px;transition:border .15s}
+.cc-input:focus{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-glow)}
+.cc-input::placeholder{color:var(--text-muted)}
+.cc-select{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:12px;padding:8px 12px;border-radius:var(--r);outline:none;cursor:pointer;min-width:120px}
+.cc-select:focus{border-color:var(--gold)}
+.cc-textarea{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);font-family:var(--font);font-size:12px;padding:8px 12px;border-radius:var(--r);outline:none;width:100%;resize:vertical;min-height:60px}
+.cc-textarea:focus{border-color:var(--gold)}
+.cc-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:var(--r);font-size:11px;font-weight:700;font-family:var(--font);cursor:pointer;border:none;transition:all .15s;letter-spacing:.5px;text-transform:uppercase}
+.cc-btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-dim));color:var(--navy)}
+.cc-btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.cc-btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--navy-border)}
+.cc-btn-ghost:hover{color:var(--cream);border-color:var(--gold);background:var(--gold-glow)}
+.cc-btn-red{background:var(--red-dim);color:var(--red);border:1px solid rgba(255,82,82,.3)}
+.cc-btn-red:hover{background:var(--red);color:#fff}
+.cc-btn-sm{padding:4px 10px;font-size:9px}
+.cc-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.cc-task-list{display:flex;flex-direction:column;gap:6px}
+.cc-task-item{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px 14px;display:flex;align-items:center;gap:10px;transition:all .15s;cursor:pointer;flex-wrap:wrap}
+.cc-task-item:hover{border-color:var(--gold);background:rgba(19,42,74,0.9)}
+.cc-task-item.expanded{border-color:var(--gold)}
+.cc-task-status{font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:4px;flex-shrink:0}
+.ts-planned{background:var(--amber-dim);color:var(--amber)}
+.ts-assigned{background:var(--blue-dim);color:var(--blue)}
+.ts-running{background:var(--teal-dim);color:var(--teal)}
+.ts-completed{background:var(--green-dim);color:var(--green)}
+.ts-approved{background:var(--green-dim);color:var(--green)}
+.ts-blocked{background:var(--red-dim);color:var(--red)}
+.ts-rejected{background:var(--red-dim);color:var(--red)}
+.ts-needs_review{background:var(--amber-dim);color:var(--amber)}
+.ts-awaiting_dcs{background:var(--gold-glow);color:var(--gold)}
+.ts-handoff_ready{background:var(--cyan-dim);color:var(--cyan)}
+.ts-parallel_review{background:var(--purple-dim);color:var(--purple)}
+.ts-archived{background:rgba(100,100,100,.15);color:#888}
+.cc-task-info{flex:1;min-width:0}
+.cc-task-key{font-size:10px;font-weight:700;color:var(--gold);font-family:var(--mono)}
+.cc-task-title{font-size:12px;color:var(--cream);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc-task-meta{font-size:9px;color:var(--text-muted);font-family:var(--mono);margin-top:2px}
+.cc-task-detail{width:100%;padding:10px 0 0;border-top:1px solid var(--navy-border);margin-top:8px;display:none}
+.cc-task-item.expanded .cc-task-detail{display:block}
+.cc-task-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.cc-filter-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
+.cc-filter-btn{font-size:9px;padding:4px 10px;border-radius:4px;border:1px solid var(--navy-border);background:transparent;color:var(--text-dim);cursor:pointer;font-family:var(--font);font-weight:600;transition:all .12s}
+.cc-filter-btn:hover,.cc-filter-btn.active{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.cc-voice-btn{background:var(--navy-light);border:1px solid var(--navy-border);color:var(--cream);padding:8px 14px;border-radius:var(--r);font-size:11px;font-family:var(--font);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+.cc-voice-btn:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.cc-voice-btn.recording{background:var(--red);border-color:var(--red);animation:cc-pulse .7s infinite}
+.cc-attach-zone{border:2px dashed var(--navy-border);border-radius:var(--r);padding:16px;text-align:center;color:var(--text-muted);font-size:11px;cursor:pointer;transition:all .15s}
+.cc-attach-zone:hover,.cc-attach-zone.drag-over{border-color:var(--gold);background:var(--gold-glow);color:var(--cream)}
+.cc-attach-list{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.cc-attach-item{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text-dim);padding:4px 8px;background:var(--surface-2);border-radius:var(--r)}
+.cc-attach-item .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc-attach-item .size{color:var(--text-muted);font-family:var(--mono);font-size:9px}
+.cc-attach-item .remove{color:var(--red);cursor:pointer;font-weight:700}
+.cc-toast{position:fixed;bottom:20px;right:20px;background:var(--navy-mid);border:1px solid var(--gold);color:var(--cream);padding:10px 18px;border-radius:var(--r);font-size:12px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.cc-toast.show{opacity:1;transform:translateY(0)}
+.cc-empty{text-align:center;padding:24px;color:var(--text-muted);font-size:11px;font-family:var(--mono)}
+.cc-tag{display:inline-flex;font-size:8px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;padding:2px 6px;border-radius:3px}
+.cc-spinner{width:14px;height:14px;border:2px solid var(--navy-border);border-top-color:var(--gold);border-radius:50%;animation:cc-spin .6s linear infinite;display:inline-block}
+@keyframes cc-spin{to{transform:rotate(360deg)}}
+.cc-agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.cc-agent-card{background:var(--surface-2);border:1px solid var(--navy-border);border-radius:var(--r);padding:10px;display:flex;align-items:center;gap:8px}
+.cc-agent-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cc-agent-name{font-size:11px;font-weight:600;color:var(--cream)}
+.cc-agent-type{font-size:9px;color:var(--text-muted)}
+input[type="file"]{display:none}
+</style>
+</head>
+<body>
+<div class="cc-header">
+  <div class="cc-header-left">
+    <div class="cc-logo">CP</div>
+    <div>
+      <div class="cc-title">DCSE Command Center</div>
+      <div class="cc-version">v7.1 Governance Runtime</div>
+    </div>
+  </div>
+  <div class="cc-header-right">
+    <span class="cc-badge cc-badge-green" id="ccDbBadge">DB Connected</span>
+    <span class="cc-badge cc-badge-green" id="ccHeartbeatBadge">Heartbeat Active</span>
+    <span class="cc-clock" id="ccClock">--:--:--</span>
+    <span class="cc-status-dot" id="ccStatusDot"></span>
+  </div>
+</div>
+
+<div class="cc-layout">
+  <!-- LIVE TELEMETRY -->
+  <div class="cc-panel">
+    <div class="cc-panel-header">
+      <span class="cc-panel-title">Live Telemetry Heartbeat</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="cc-badge cc-badge-green" id="ccEventCount">0 events</span>
+        <button class="cc-btn cc-btn-ghost cc-btn-sm" onclick="ccRefreshTelemetry()">Refresh</button>
+      </div>
+    </div>
+    <div class="cc-panel-body">
+      <div class="cc-telemetry" id="ccTelemetryFeed">
+        <div class="cc-empty">Loading telemetry...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INJECT TASK -->
+  <div class="cc-panel">
+    <div class="cc-panel-header">
+      <span class="cc-panel-title">Inject Task (DCS Authority)</span>
+      <span class="cc-tag" style="background:var(--gold-glow);color:var(--gold)">Dispatch</span>
+    </div>
+    <div class="cc-panel-body">
+      <div class="cc-form" id="ccDispatchForm">
+        <div class="cc-form-row">
+          <input class="cc-input" id="ccTaskKey" placeholder="Task Key (auto-generated if blank)" style="flex:1" />
+          <input class="cc-input" id="ccTaskTitle" placeholder="Task Title *" style="flex:2" />
+        </div>
+        <div class="cc-form-row">
+          <select class="cc-select" id="ccAgentType">
+            <option value="">Agent Type (optional)</option>
+            <option value="model">Model</option>
+            <option value="code_agent">Code Agent</option>
+            <option value="builder_agent">Builder Agent</option>
+            <option value="reviewer_agent">Reviewer Agent</option>
+            <option value="tribunal_agent">Tribunal Agent</option>
+            <option value="database_agent">Database Agent</option>
+            <option value="rag_agent">RAG Agent</option>
+            <option value="github_agent">GitHub Agent</option>
+            <option value="synthesis_agent">Synthesis Agent</option>
+          </select>
+          <select class="cc-select" id="ccLane">
+            <option value="DCSE">DCSE</option>
+            <option value="SC">SC</option>
+            <option value="SS">SS</option>
+            <option value="TSL">TSL</option>
+            <option value="TRIBUNAL">TRIBUNAL</option>
+            <option value="DDNA">DDNA</option>
+            <option value="RAG">RAG</option>
+            <option value="SYSTEM" selected>SYSTEM</option>
+          </select>
+          <select class="cc-select" id="ccTaskType">
+            <option value="build">Build</option>
+            <option value="review">Review</option>
+            <option value="tribunal">Tribunal</option>
+            <option value="qa">QA</option>
+            <option value="database">Database</option>
+            <option value="github">GitHub</option>
+            <option value="decision">Decision</option>
+            <option value="monitor">Monitor</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="cc-form-row">
+          <select class="cc-select" id="ccPriority" style="min-width:100px">
+            <option value="1">P1 Critical</option>
+            <option value="2">P2 High</option>
+            <option value="3" selected>P3 Normal</option>
+            <option value="4">P4 Low</option>
+            <option value="5">P5 Backlog</option>
+          </select>
+          <select class="cc-select" id="ccAssignMode">
+            <option value="single">Single</option>
+            <option value="sequential">Sequential</option>
+            <option value="parallel">Parallel</option>
+            <option value="broadcast">Broadcast</option>
+            <option value="review_board">Review Board</option>
+          </select>
+          <button class="cc-voice-btn" id="ccVoiceBtn" onclick="ccToggleVoice()">
+            <span id="ccVoiceIcon">&#127908;</span>
+            <span id="ccVoiceLabel">Dictate</span>
+          </button>
+        </div>
+        <textarea class="cc-textarea" id="ccDescription" placeholder="Description (supports voice dictation)"></textarea>
+        <div class="cc-attach-zone" id="ccAttachZone" onclick="document.getElementById('ccFileInput').click()">
+          Drop files here or click to attach
+          <input type="file" id="ccFileInput" multiple />
+        </div>
+        <div class="cc-attach-list" id="ccAttachList"></div>
+        <div class="cc-form-row" style="justify-content:flex-end">
+          <button class="cc-btn cc-btn-ghost" onclick="ccClearForm()">Clear</button>
+          <button class="cc-btn cc-btn-gold" id="ccDispatchBtn" onclick="ccDispatchTask()">Dispatch Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE DATABASE QUEUE -->
+  <div class="cc-panel cc-panel-full">
+    <div class="cc-panel-header">
+      <span class="cc-panel-title">Active Database Queue</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="cc-badge cc-badge-amber" id="ccQueueCount">-- tasks</span>
+        <button class="cc-btn cc-btn-ghost cc-btn-sm" onclick="ccRefreshQueue()">Refresh</button>
+      </div>
+    </div>
+    <div class="cc-panel-body" style="max-height:600px">
+      <div class="cc-stats" id="ccQueueStats">
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatPlanned">-</div><div class="cc-stat-label">Planned</div></div>
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatAssigned">-</div><div class="cc-stat-label">Assigned</div></div>
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatRunning">-</div><div class="cc-stat-label">Running</div></div>
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatBlocked">-</div><div class="cc-stat-label">Blocked</div></div>
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatCompleted">-</div><div class="cc-stat-label">Completed</div></div>
+        <div class="cc-stat"><div class="cc-stat-value" id="ccStatTotal">-</div><div class="cc-stat-label">Total</div></div>
+      </div>
+      <div class="cc-filter-row" id="ccFilterRow">
+        <button class="cc-filter-btn active" data-filter="all" onclick="ccFilterQueue('all',this)">All</button>
+        <button class="cc-filter-btn" data-filter="active" onclick="ccFilterQueue('active',this)">Active</button>
+        <button class="cc-filter-btn" data-filter="blocked" onclick="ccFilterQueue('blocked',this)">Blocked</button>
+        <button class="cc-filter-btn" data-filter="completed" onclick="ccFilterQueue('completed',this)">Completed</button>
+        <button class="cc-filter-btn" data-filter="awaiting" onclick="ccFilterQueue('awaiting',this)">Awaiting DCS</button>
+      </div>
+      <div class="cc-task-list" id="ccTaskList">
+        <div class="cc-empty">Loading task queue...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENT REGISTRY -->
+  <div class="cc-panel">
+    <div class="cc-panel-header">
+      <span class="cc-panel-title">Agent Registry</span>
+      <span class="cc-badge cc-badge-green" id="ccAgentCount">-- agents</span>
+    </div>
+    <div class="cc-panel-body">
+      <div class="cc-agent-grid" id="ccAgentGrid">
+        <div class="cc-empty">Loading agents...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK ATTACHMENTS -->
+  <div class="cc-panel">
+    <div class="cc-panel-header">
+      <span class="cc-panel-title">Recent Attachments</span>
+      <span class="cc-badge cc-badge-amber" id="ccAttachCount">-- files</span>
+    </div>
+    <div class="cc-panel-body">
+      <div id="ccAttachments">
+        <div class="cc-empty">Loading attachments...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cc-toast" id="ccToast"></div>
+
+<script>
+const CC_API_BASE = (window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1'))
+  ? window.location.origin : window.location.origin;
+let _ccData = null;
+let _ccFilter = 'all';
+let _ccAttachedFiles = [];
+let _ccVoiceRecording = false;
+let _ccRecognition = null;
+let _ccPollTimer = null;
+
+function ccEl(id){return document.getElementById(id)}
+function ccToast(msg,ms){
+  const t=ccEl('ccToast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),ms||3000);
+}
+function ccTimeStr(iso){
+  if(!iso)return '';
+  const d=new Date(iso);
+  return d.toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function ccDateStr(iso){
+  if(!iso)return '';
+  const d=new Date(iso);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' '+ccTimeStr(iso);
+}
+function ccRelTime(iso){
+  if(!iso)return '';
+  const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);
+  if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';
+  if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';
+}
+function ccStatusClass(st){return 'ts-'+(st||'planned')}
+function ccStatusLabel(st){return (st||'planned').toUpperCase().replace(/_/g,' ')}
+function ccPrioLabel(p){return{1:'P1',2:'P2',3:'P3',4:'P4',5:'P5'}[p]||'P3'}
+function ccFormatSize(b){
+  if(!b)return'';if(b<1024)return b+'B';if(b<1048576)return(b/1024).toFixed(1)+'KB';
+  return(b/1048576).toFixed(1)+'MB';
+}
+
+function ccStartClock(){
+  function tick(){ccEl('ccClock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});}
+  tick();setInterval(tick,1000);
+}
+
+async function ccFetchInbox(){
+  try{
+    const r=await fetch(CC_API_BASE+'/api/tribunal/inbox');
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    _ccData=await r.json();
+    return _ccData;
+  }catch(e){
+    ccEl('ccDbBadge').textContent='DB Error';
+    ccEl('ccDbBadge').className='cc-badge cc-badge-red';
+    ccEl('ccStatusDot').style.background='var(--red)';
+    ccEl('ccStatusDot').style.boxShadow='0 0 8px var(--red)';
+    console.error('Inbox fetch error:',e);
+    return null;
+  }
+}
+
+function ccRenderStats(data){
+  if(!data||!data.stats)return;
+  const s=data.stats;
+  ccEl('ccStatPlanned').textContent=s.planned||0;
+  ccEl('ccStatAssigned').textContent=s.assigned||0;
+  ccEl('ccStatRunning').textContent=s.running||0;
+  ccEl('ccStatBlocked').textContent=s.blocked||0;
+  ccEl('ccStatCompleted').textContent=(s.completed||0)+(s.approved||0);
+  const total=(data.tasks||[]).length;
+  ccEl('ccStatTotal').textContent=total;
+  ccEl('ccQueueCount').textContent=total+' tasks';
+}
+
+function ccRenderTelemetry(data){
+  if(!data)return;
+  const events=(data.events||[]).slice(0,50);
+  ccEl('ccEventCount').textContent=events.length+' events';
+  if(!events.length){ccEl('ccTelemetryFeed').innerHTML='<div class="cc-empty">No telemetry events</div>';return;}
+  ccEl('ccTelemetryFeed').innerHTML=events.map(e=>{
+    const tc='tt-'+(e.event_type||'comment');
+    return '<div class="cc-telemetry-line">'
+      +'<span class="cc-telemetry-time">'+ccTimeStr(e.created_at)+'</span>'
+      +'<span class="cc-telemetry-type '+tc+'">'+(e.event_type||'event')+'</span>'
+      +'<span class="cc-telemetry-msg">'+(e.event_summary||'')+'</span>'
+      +'<span style="font-size:9px;color:var(--text-muted);flex-shrink:0">'+(e.actor_label||'')+'</span>'
+      +'</div>';
+  }).join('');
+}
+
+function ccAgentName(id,data){
+  if(!id)return 'Unassigned';
+  const a=(data.agents||[]).find(a=>a.id===id);
+  return a?a.display_name:'Agent '+id.slice(0,8);
+}
+
+function ccRenderQueue(data,filter){
+  if(!data||!data.tasks){ccEl('ccTaskList').innerHTML='<div class="cc-empty">No data</div>';return;}
+  let tasks=data.tasks;
+  const activeStatuses=['planned','assigned','running','needs_review','awaiting_dcs','handoff_ready','parallel_review'];
+  const blockedStatuses=['blocked','rejected'];
+  const doneStatuses=['completed','approved','archived'];
+  if(filter==='active')tasks=tasks.filter(t=>activeStatuses.includes(t.status));
+  else if(filter==='blocked')tasks=tasks.filter(t=>blockedStatuses.includes(t.status));
+  else if(filter==='completed')tasks=tasks.filter(t=>doneStatuses.includes(t.status));
+  else if(filter==='awaiting')tasks=tasks.filter(t=>t.status==='awaiting_dcs'||t.dcs_decision_required);
+  if(!tasks.length){ccEl('ccTaskList').innerHTML='<div class="cc-empty">No tasks matching filter</div>';return;}
+  ccEl('ccTaskList').innerHTML=tasks.map(t=>{
+    const agName=ccAgentName(t.assigned_agent_id,data);
+    const desc=t.description?'<div style="font-size:10px;color:var(--text-dim);margin-top:6px;line-height:1.5">'+t.description+'</div>':'';
+    return '<div class="cc-task-item" onclick="ccToggleTask(this)" data-taskid="'+t.id+'">'
+      +'<span class="cc-task-status '+ccStatusClass(t.status)+'">'+ccStatusLabel(t.status)+'</span>'
+      +'<div class="cc-task-info">'
+        +'<div class="cc-task-key">'+(t.task_key||'--')+'</div>'
+        +'<div class="cc-task-title">'+(t.title||'Untitled')+'</div>'
+        +'<div class="cc-task-meta">'+t.lane+' / '+(t.task_type||'other')+' / '+ccPrioLabel(t.priority)+' / '+agName+' / '+ccRelTime(t.updated_at)+'</div>'
+      +'</div>'
+      +'<div class="cc-task-detail">'
+        +desc
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;font-size:9px;color:var(--text-muted)">'
+          +'<div>Created: '+ccDateStr(t.created_at)+'</div>'
+          +'<div>Updated: '+ccDateStr(t.updated_at)+'</div>'
+          +'<div>By: '+(t.created_by_label||'system')+'</div>'
+          +'<div>Mode: '+(t.assignment_mode||'single')+'</div>'
+        +'</div>'
+        +'<div class="cc-task-actions">'
+          +'<select class="cc-select" style="font-size:9px;padding:3px 6px;min-width:90px" id="ccStatusSelect_'+t.id+'">'
+            +'<option value="">Change Status</option>'
+            +'<option value="planned">Planned</option><option value="assigned">Assigned</option><option value="running">Running</option>'
+            +'<option value="blocked">Blocked</option><option value="completed">Completed</option><option value="needs_review">Needs Review</option>'
+            +'<option value="handoff_ready">Handoff Ready</option><option value="awaiting_dcs">Awaiting DCS</option>'
+            +'<option value="approved">Approved</option><option value="rejected">Rejected</option><option value="archived">Archived</option>'
+          +'</select>'
+          +'<button class="cc-btn cc-btn-ghost cc-btn-sm" onclick="event.stopPropagation();ccUpdateTaskStatus(&quot;'+t.id+'&quot;)">Update</button>'
+          +'<button class="cc-btn cc-btn-red cc-btn-sm" onclick="event.stopPropagation();ccArchiveTask(&quot;'+t.id+'&quot;)">Archive</button>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function ccRenderAgents(data){
+  if(!data||!data.agents||!data.agents.length){ccEl('ccAgentGrid').innerHTML='<div class="cc-empty">No agents registered</div>';return;}
+  const statusColor=(s)=>({active:'var(--green)',standby:'var(--amber)',disabled:'var(--red)',retired:'var(--text-muted)'}[s]||'var(--text-muted)');
+  ccEl('ccAgentCount').textContent=data.agents.length+' agents';
+  ccEl('ccAgentGrid').innerHTML=data.agents.map(a=>
+    '<div class="cc-agent-card">'
+      +'<div class="cc-agent-dot" style="background:'+statusColor(a.status)+'"></div>'
+      +'<div><div class="cc-agent-name">'+(a.display_name||a.agent_key)+'</div>'
+      +'<div class="cc-agent-type">'+(a.agent_type||'unknown')+' / '+(a.status||'?')+'</div></div>'
+    +'</div>'
+  ).join('');
+}
+
+async function ccRenderAttachments(){
+  try{
+    const r=await fetch(CC_API_BASE+'/api/command-center/attachments');
+    if(!r.ok)return;
+    const data=await r.json();
+    const list=data.attachments||[];
+    ccEl('ccAttachCount').textContent=list.length+' files';
+    if(!list.length){ccEl('ccAttachments').innerHTML='<div class="cc-empty">No attachments</div>';return;}
+    ccEl('ccAttachments').innerHTML=list.slice(0,20).map(a=>
+      '<div class="cc-attach-item">'
+        +'<span style="font-size:10px">&#128206;</span>'
+        +'<span class="name">'+(a.file_name||'file')+'</span>'
+        +'<span class="size">'+ccFormatSize(a.size_bytes)+'</span>'
+        +'<span style="font-size:9px;color:var(--text-muted)">'+ccRelTime(a.created_at)+'</span>'
+      +'</div>'
+    ).join('');
+  }catch(e){console.error('Attach error:',e)}
+}
+
+function ccToggleTask(el){el.classList.toggle('expanded')}
+
+function ccFilterQueue(filter,btn){
+  _ccFilter=filter;
+  document.querySelectorAll('.cc-filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  if(_ccData)ccRenderQueue(_ccData,filter);
+}
+
+async function ccUpdateTaskStatus(taskId){
+  const sel=ccEl('ccStatusSelect_'+taskId);
+  if(!sel||!sel.value){ccToast('Select a status first');return;}
+  try{
+    const r=await fetch(CC_API_BASE+'/api/tribunal/status',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({task_id:taskId,status:sel.value,actor_label:'CP Dashboard',summary:'Status updated via Command Center'})
+    });
+    const data=await r.json();
+    if(data.ok){ccToast('Status updated to '+sel.value);ccRefreshQueue();}
+    else{ccToast('Error: '+(data.error||'Unknown'));}
+  }catch(e){ccToast('Update failed: '+e.message);}
+}
+
+async function ccArchiveTask(taskId){
+  try{
+    const r=await fetch(CC_API_BASE+'/api/tribunal/status',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({task_id:taskId,status:'archived',actor_label:'CP Dashboard',summary:'Archived via Command Center'})
+    });
+    const data=await r.json();
+    if(data.ok){ccToast('Task archived');ccRefreshQueue();}
+    else{ccToast('Error: '+(data.error||'Unknown'));}
+  }catch(e){ccToast('Archive failed: '+e.message);}
+}
+
+async function ccDispatchTask(){
+  const title=(ccEl('ccTaskTitle')||{}).value?.trim();
+  if(!title){ccToast('Title is required');return;}
+  const btn=ccEl('ccDispatchBtn');
+  btn.disabled=true;btn.innerHTML='<span class="cc-spinner"></span> Dispatching...';
+  try{
+    const payload={
+      title:title,
+      description:(ccEl('ccDescription')||{}).value?.trim()||'',
+      lane:(ccEl('ccLane')||{}).value||'SYSTEM',
+      task_type:(ccEl('ccTaskType')||{}).value||'other',
+      priority:parseInt((ccEl('ccPriority')||{}).value)||3,
+      assignment_mode:(ccEl('ccAssignMode')||{}).value||'single'
+    };
+    const taskKey=(ccEl('ccTaskKey')||{}).value?.trim();
+    if(taskKey)payload.task_key=taskKey;
+    const r=await fetch(CC_API_BASE+'/api/tribunal/dispatch',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)
+    });
+    const data=await r.json();
+    if(data.ok){
+      ccToast('Task dispatched: '+(data.task_key||''));
+      if(_ccAttachedFiles.length&&data.task){
+        for(const f of _ccAttachedFiles){
+          await fetch(CC_API_BASE+'/api/command-center/attachments',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({task_id:data.task.id,file_name:f.name,file_type:f.type,size_bytes:f.size,uploaded_by:'CP Dashboard'})
+          }).catch(()=>{});
+        }
+      }
+      ccClearForm();ccRefreshQueue();ccRefreshTelemetry();
+    }else{ccToast('Dispatch error: '+(data.error||'Unknown'));}
+  }catch(e){ccToast('Dispatch failed: '+e.message);}
+  finally{btn.disabled=false;btn.innerHTML='Dispatch Task';}
+}
+
+function ccClearForm(){
+  ['ccTaskKey','ccTaskTitle','ccDescription'].forEach(id=>{const e=ccEl(id);if(e)e.value='';});
+  _ccAttachedFiles=[];ccEl('ccAttachList').innerHTML='';
+}
+
+function ccToggleVoice(){
+  if(!('webkitSpeechRecognition' in window)&&!('SpeechRecognition' in window)){
+    ccToast('Voice dictation not supported in this browser');return;
+  }
+  if(_ccVoiceRecording){
+    _ccRecognition.stop();_ccVoiceRecording=false;
+    ccEl('ccVoiceBtn').classList.remove('recording');
+    ccEl('ccVoiceLabel').textContent='Dictate';
+    return;
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  _ccRecognition=new SR();
+  _ccRecognition.continuous=true;_ccRecognition.interimResults=true;_ccRecognition.lang='en-US';
+  _ccRecognition.onresult=function(ev){
+    let final='',interim='';
+    for(let i=ev.resultIndex;i<ev.results.length;i++){
+      if(ev.results[i].isFinal)final+=ev.results[i][0].transcript;
+      else interim+=ev.results[i][0].transcript;
+    }
+    const desc=ccEl('ccDescription');
+    if(final)desc.value+=(desc.value?' ':'')+final;
+  };
+  _ccRecognition.onerror=function(e){
+    ccToast('Voice error: '+e.error);
+    _ccVoiceRecording=false;ccEl('ccVoiceBtn').classList.remove('recording');
+    ccEl('ccVoiceLabel').textContent='Dictate';
+  };
+  _ccRecognition.onend=function(){
+    if(_ccVoiceRecording){_ccRecognition.start();}
+  };
+  _ccRecognition.start();_ccVoiceRecording=true;
+  ccEl('ccVoiceBtn').classList.add('recording');
+  ccEl('ccVoiceLabel').textContent='Stop';
+}
+
+(function ccSetupAttach(){
+  const zone=ccEl('ccAttachZone');
+  const input=ccEl('ccFileInput');
+  if(!zone||!input)return;
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
+  zone.addEventListener('drop',e=>{
+    e.preventDefault();zone.classList.remove('drag-over');
+    ccHandleFiles(e.dataTransfer.files);
+  });
+  input.addEventListener('change',()=>ccHandleFiles(input.files));
+})();
+
+function ccHandleFiles(files){
+  for(const f of files){_ccAttachedFiles.push({name:f.name,type:f.type||'application/octet-stream',size:f.size});}
+  ccRenderAttachedFiles();
+}
+function ccRenderAttachedFiles(){
+  ccEl('ccAttachList').innerHTML=_ccAttachedFiles.map((f,i)=>
+    '<div class="cc-attach-item">'
+      +'<span>&#128206;</span>'
+      +'<span class="name">'+f.name+'</span>'
+      +'<span class="size">'+ccFormatSize(f.size)+'</span>'
+      +'<span class="remove" onclick="ccRemoveFile('+i+')">&times;</span>'
+    +'</div>'
+  ).join('');
+}
+function ccRemoveFile(i){_ccAttachedFiles.splice(i,1);ccRenderAttachedFiles();}
+
+async function ccRefreshTelemetry(){
+  const data=await ccFetchInbox();
+  if(data)ccRenderTelemetry(data);
+}
+
+async function ccRefreshQueue(){
+  const data=await ccFetchInbox();
+  if(data){
+    ccRenderStats(data);ccRenderQueue(data,_ccFilter);
+    ccRenderTelemetry(data);ccRenderAgents(data);
+  }
+}
+
+async function ccInit(){
+  ccStartClock();
+  if(window.location.search.includes('embed=1'))document.body.classList.add('embed-mode');
+  const data=await ccFetchInbox();
+  if(data){
+    ccEl('ccDbBadge').textContent='DB Connected';
+    ccEl('ccDbBadge').className='cc-badge cc-badge-green';
+    ccRenderStats(data);ccRenderQueue(data,'all');
+    ccRenderTelemetry(data);ccRenderAgents(data);
+  }
+  ccRenderAttachments();
+  _ccPollTimer=setInterval(async()=>{
+    const d=await ccFetchInbox();
+    if(d){ccRenderStats(d);ccRenderTelemetry(d);}
+  },15000);
+}
+
+ccInit();
+</script>
+</body>
+</html>`;
+
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://nevgdyfpxdaloacuutal.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const DCSE_SCHEMA = 'dcse_cp';
+const SCHEMA_HEADERS = {'Accept-Profile': DCSE_SCHEMA, 'Content-Profile': DCSE_SCHEMA};
 
 async function handlePersonas(req, res) {
   res.setHeader('Content-Type', 'application/json');
@@ -2254,7 +2915,7 @@ async function handlePersonas(req, res) {
     const lifecycle = url.searchParams.get('lifecycle');
     let query = `${SUPABASE_URL}/rest/v1/personas?select=id,code,display_name,release_posture,dcse_lifecycle,privacy_class,dcs_lane,identity_mask,family_product,child_safe,agent_promote_locked&order=code.asc`;
     if (lifecycle) query += `&dcse_lifecycle=eq.${lifecycle}`;
-    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json', ...SCHEMA_HEADERS}});
     const personas = await r.json();
     res.statusCode = r.status;
     res.end(JSON.stringify({personas: Array.isArray(personas) ? personas : [], total: Array.isArray(personas) ? personas.length : 0}));
@@ -2279,7 +2940,7 @@ async function handleAssets(req, res) {
     let query = `${SUPABASE_URL}/rest/v1/assets?select=id,asset_name,asset_label,asset_type,url,dcse_state,privacy_class,dcs_lane,persona_fk,source_id,agent_approve_locked,agent_deploy_locked,tribunal_pr_url&order=asset_type.asc`;
     if (state) query += `&dcse_state=eq.${state}`;
     if (persona) query += `&persona_fk=eq.${persona}`;
-    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json'}});
+    const r = await fetch(query, {headers:{'apikey': SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json', ...SCHEMA_HEADERS}});
     const assets = await r.json();
     res.statusCode = r.status;
     res.end(JSON.stringify({assets: Array.isArray(assets) ? assets : [], total: Array.isArray(assets) ? assets.length : 0}));
@@ -2409,7 +3070,7 @@ async function handleAgentOps(req, res) {
     pending_assignments: []
   };
   if (SUPABASE_KEY) {
-    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+    const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS};
     const base = SUPABASE_URL + '/rest/v1';
     try {
       const [hbr, tsr, aer, arr, par] = await Promise.all([
@@ -2456,7 +3117,7 @@ async function handleDBA(req, res) {
     if (SUPABASE_KEY) {
       const tr = await fetch(`${SUPABASE_URL}/rest/v1/rpc/`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`},
+        headers: {'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS},
         body: JSON.stringify({})
       }).catch(() => null);
       const tableQuery = `${SUPABASE_URL}/rest/v1/?select=*&limit=0`;
@@ -2473,7 +3134,7 @@ async function handleDBA(req, res) {
       for (const t of result.tables.slice(0, 5)) {
         try {
           const cr = await fetch(`${SUPABASE_URL}/rest/v1/${t.name}?select=id&limit=1&offset=0`, {
-            headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0'}
+            headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'count=exact', 'Range': '0-0', ...SCHEMA_HEADERS}
           });
           const range = cr.headers.get('content-range');
           if (range) {
@@ -2527,7 +3188,7 @@ async function handleAssurance(req, res) {
   if (SUPABASE_KEY) {
     try {
       const ar = await fetch(`${SUPABASE_URL}/rest/v1/agent_tasks?select=id,task_type,status,updated_at&task_type=like.assurance_*&order=updated_at.desc&limit=20`, {
-        headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`}
+        headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS}
       });
       if (ar.ok) {
         const tasks = await ar.json();
@@ -2560,7 +3221,7 @@ async function handleTribunalInbox(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   const result = {tasks: [], agents: [], events: [], assignments: [], stats: {total: 0, planned: 0, assigned: 0, running: 0, completed: 0, blocked: 0, awaiting_dcs: 0}};
   if (!SUPABASE_KEY) { res.statusCode = 200; res.end(JSON.stringify(result)); return; }
-  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`};
+  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, ...SCHEMA_HEADERS};
   const base = SUPABASE_URL + '/rest/v1';
   try {
     const [tr, ar, er, asr] = await Promise.all([
@@ -2604,7 +3265,7 @@ async function handleTribunalDispatch(req, res) {
       const taskLane = validLanes.includes(lane) ? lane : 'DCSE';
       const taskType = validTypes.includes(task_type) ? task_type : 'other';
       const taskKey = 'TRIB-' + Date.now().toString(36).toUpperCase();
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const taskPayload = {
         task_key: taskKey, title, description: description || null,
@@ -2646,7 +3307,7 @@ async function handleTribunalReceipt(req, res) {
       const {task_id, event_type, actor_label, summary, result_status} = JSON.parse(body);
       if (!task_id) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id required'})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const evType = event_type || 'receipt';
       const er = await fetch(`${base}/agent_task_events`, {method: 'POST', headers, body: JSON.stringify({
@@ -2681,7 +3342,7 @@ async function handleTribunalStatus(req, res) {
       const validStatuses = ['planned','assigned','running','blocked','completed','needs_review','handoff_ready','parallel_review','awaiting_dcs','approved','rejected','archived'];
       if (!validStatuses.includes(status)) { res.statusCode = 400; res.end(JSON.stringify({error: 'Invalid status: ' + status})); return; }
       if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'No database connection'})); return; }
-      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+      const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...SCHEMA_HEADERS};
       const base = SUPABASE_URL + '/rest/v1';
       const updatePayload = {status};
       if (status === 'completed' || status === 'approved') updatePayload.completed_at = new Date().toISOString();
@@ -2698,6 +3359,62 @@ async function handleTribunalStatus(req, res) {
   });
 }
 
+function handleCommandCenter(req, res) {
+  res.setHeader('Content-Type', 'text/html;charset=utf-8');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.statusCode = 200;
+  res.end(COMMAND_CENTER_HTML);
+}
+
+async function handleCommandCenterAttachments(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (!SUPABASE_KEY) { res.statusCode = 503; res.end(JSON.stringify({error: 'Database not configured'})); return; }
+  const headers = {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', ...SCHEMA_HEADERS};
+  const base = SUPABASE_URL + '/rest/v1';
+
+  if (req.method === 'GET') {
+    try {
+      const r = await fetch(`${base}/task_attachments?select=id,task_id,file_name,file_type,storage_path,external_url,size_bytes,description,uploaded_by,created_at&order=created_at.desc&limit=30`, {headers});
+      if (!r.ok) { res.statusCode = r.status; res.end(JSON.stringify({error: await r.text()})); return; }
+      const attachments = await r.json();
+      res.statusCode = 200;
+      res.end(JSON.stringify({ok: true, attachments}));
+    } catch(e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+    return;
+  }
+
+  if (req.method === 'POST') {
+    let body = '';
+    req.on('data', d => body += d);
+    req.on('end', async () => {
+      try {
+        const {task_id, file_name, file_type, size_bytes, description, uploaded_by, external_url, storage_path} = JSON.parse(body);
+        if (!task_id) { res.statusCode = 400; res.end(JSON.stringify({error: 'task_id required'})); return; }
+        if (!file_name) { res.statusCode = 400; res.end(JSON.stringify({error: 'file_name required'})); return; }
+        const payload = {task_id, file_name, uploaded_by: uploaded_by || 'CP Dashboard'};
+        if (file_type) payload.file_type = file_type;
+        if (size_bytes) payload.size_bytes = size_bytes;
+        if (description) payload.description = description;
+        if (external_url) payload.external_url = external_url;
+        if (storage_path) payload.storage_path = storage_path;
+        const r = await fetch(`${base}/task_attachments`, {
+          method: 'POST', headers: {...headers, 'Prefer': 'return=representation'},
+          body: JSON.stringify(payload)
+        });
+        if (!r.ok) { const err = await r.text(); res.statusCode = r.status; res.end(JSON.stringify({error: err})); return; }
+        const created = await r.json();
+        res.statusCode = 201;
+        res.end(JSON.stringify({ok: true, attachment: created[0]}));
+      } catch(e) { res.statusCode = 500; res.end(JSON.stringify({error: e.message})); }
+    });
+    return;
+  }
+
+  res.statusCode = 405;
+  res.end(JSON.stringify({error: 'Method not allowed'}));
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -2705,6 +3422,8 @@ module.exports = (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.statusCode = 200; res.end(); return;
   }
+  if (req.url.startsWith('/api/command-center/attachments')) return handleCommandCenterAttachments(req, res);
+  if (req.url.startsWith('/api/command-center') || req.url.startsWith('/command-center')) return handleCommandCenter(req, res);
   if (req.method === 'POST' && req.url.includes('/api/chat')) return handleChat(req, res);
   if (req.method === 'POST' && req.url.includes('/api/tribunal/dispatch')) return handleTribunalDispatch(req, res);
   if (req.method === 'POST' && req.url.includes('/api/tribunal/receipt')) return handleTribunalReceipt(req, res);
