@@ -13,7 +13,7 @@
   "canonical_branch": "governance/v7.2-master-profile-controller",
   "canonical_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
   "artifact_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
-  "canonical_commit": null,
+  "canonical_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
   "superseded_controller": "DCSE Master Profile v7.1",
   "runtime_manifest": "governance/v7.2/runtime_surface_manifest.v7.2.r5.json",
   "lane_mapping_artifact": "governance/v7.2/lane_mappings.v7.2.r5.json",
@@ -34,7 +34,6 @@
     }
   ],
   "open_evidence": [
-    "Canonical incorporation commit must be written back after commit creation",
     "Supabase constitutional runtime acknowledgment",
     "Windows controller and worker acknowledgment",
     "Command Post dispatch acknowledgment",

@@ -16,8 +16,8 @@
         "MP section 44 open evidence",
         "MP section 45 ratification items"
       ],
-      "incorporation_commit": null,
-      "status": "ACTIVE",
+      "incorporation_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
+      "status": "INCORPORATED",
       "supersedes": null,
       "authority_effect": "OPERATIVE",
       "deployment_effect": "NO_AUTOMATIC_DEPLOYMENT",
@@ -43,8 +43,8 @@
         "D22",
         "SS lane registry"
       ],
-      "incorporation_commit": null,
-      "status": "ACTIVE",
+      "incorporation_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
+      "status": "INCORPORATED",
       "supersedes": null,
       "authority_effect": "OPERATIVE_PATCH",
       "deployment_effect": "CONTEXT_COMPILER_AND_RUNTIME_PREFLIGHT_REQUIRED",

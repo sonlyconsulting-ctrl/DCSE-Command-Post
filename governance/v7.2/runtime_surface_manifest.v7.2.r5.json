@@ -9,7 +9,7 @@
   "controller": {
     "path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
     "artifact_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
-    "canonical_commit": null,
+    "canonical_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
     "directive_id": "DCS-DIR-20260814-R5-OPERATIVE-001"
   },
   "compiler_logging": {
@@ -37,7 +37,7 @@
     {
       "surface_id": "github_controller_source",
       "mandatory_for_cutover": true,
-      "status": "INTEGRATION_IN_PROGRESS"
+      "status": "VERIFIED_ON_CUTOVER_BRANCH"
     },
     {
       "surface_id": "supabase_constitutional_registry",
