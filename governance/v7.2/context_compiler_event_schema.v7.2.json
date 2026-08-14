@@ -18,7 +18,7 @@
     "task_id": {"type":"string","minLength":1},
     "context_packet_id": {"type":"string","minLength":1},
     "controller_revision": {"const":"7.2.0-R5"},
-    "controller_sha256": {"const":"2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"},
+    "controller_sha256": {"const":"5ddde8ec057ea51747d83191aabe13ab5983c3e306a0373bf6ae85c8737b8a03"},
     "phase": {
       "enum": [
         "TASK_DECLARATION",

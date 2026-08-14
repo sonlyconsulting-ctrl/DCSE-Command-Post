@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-CONTROLLER_SHA256 = "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
+CONTROLLER_SHA256 = "5ddde8ec057ea51747d83191aabe13ab5983c3e306a0373bf6ae85c8737b8a03"
 CONTROLLER_REVISION = "7.2.0-R5"
 
 

@@ -9,6 +9,8 @@
 
 R5 is designated `OPERATIVE` by registered directive `DCS-DIR-20260814-R5-OPERATIVE-001`.
 
+The runtime-facing controller is `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_OPERATIVE.md`, SHA-256 `5ddde8ec057ea51747d83191aabe13ab5983c3e306a0373bf6ae85c8737b8a03`. The reviewed source remains preserved at `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`, SHA-256 `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`, for lineage.
+
 The candidate language embedded in the reviewed R5 source is preserved as historical evidence. It no longer controls the authority-state decision. Deployment remains independently `PARTIAL` until required surfaces acknowledge the exact R5 artifact, canonical commit, runtime manifest, and lane mapping.
 
 ## 2. Why v7.1 Kept Appearing

@@ -19,7 +19,8 @@ The canonical GitHub v7.2 controller branch contained R4 candidate artifacts onl
 - R5 authority state: `OPERATIVE`.
 - Readiness state: `READY_WITH_FINDINGS`.
 - Deployment state: `PARTIAL`.
-- R5 source SHA-256: `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`.
+- Operative R5 controller SHA-256: `5ddde8ec057ea51747d83191aabe13ab5983c3e306a0373bf6ae85c8737b8a03`.
+- Reviewed R5 source SHA-256: `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`.
 - Canonical incorporation commit: `71973b0a15d4c7dc4d778d52f921cf37dd3d5be5`.
 - Canonical merge commit: `ea7601d9a5c339c6953ecf4eada95d5f81c39cee`.
 - Canonical repository: `sonlyconsulting-ctrl/DCSE-Command-Post`.

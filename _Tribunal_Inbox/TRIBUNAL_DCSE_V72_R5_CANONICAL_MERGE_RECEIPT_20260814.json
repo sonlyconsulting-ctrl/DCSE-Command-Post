@@ -10,8 +10,10 @@
   "head_commit": "e824b46687c7283c3915012c64ea62bbdb93a99e",
   "merge_commit": "ea7601d9a5c339c6953ecf4eada95d5f81c39cee",
   "merged": true,
-  "controller_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
-  "controller_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
+  "controller_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_OPERATIVE.md",
+  "controller_sha256": "5ddde8ec057ea51747d83191aabe13ab5983c3e306a0373bf6ae85c8737b8a03",
+  "reviewed_source_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
+  "reviewed_source_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
   "authority_state": "OPERATIVE",
   "deployment_state": "PARTIAL",
   "remaining_acknowledgments": [
