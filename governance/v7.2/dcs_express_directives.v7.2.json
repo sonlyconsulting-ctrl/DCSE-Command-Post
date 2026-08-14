@@ -1,0 +1,57 @@
+{
+  "registry_id": "DCSE-DCS-EXPRESS-DIRECTIVES-v7.2",
+  "registry_version": "7.2.1",
+  "updated_at": "2026-08-14T19:11:56-04:00",
+  "authority": "DCS",
+  "directives": [
+    {
+      "directive_id": "DCS-DIR-20260814-R5-OPERATIVE-001",
+      "issued_at": "2026-08-14T19:11:56-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "DCSE Master Profile v7.2 R5 is approved and designated OPERATIVE. Repeated candidate-only language is superseded for authority-state decisions. Runtime deployment and surface synchronization remain independently evidenced states.",
+      "affected_sections": [
+        "MP metadata Current Authority State",
+        "MP section 4 authority state",
+        "MP section 42 DCS operative gate",
+        "MP section 44 open evidence",
+        "MP section 45 ratification items"
+      ],
+      "incorporation_commit": null,
+      "status": "ACTIVE",
+      "supersedes": null,
+      "authority_effect": "OPERATIVE",
+      "deployment_effect": "NO_AUTOMATIC_DEPLOYMENT",
+      "source_evidence": [
+        "Current DCS directive dated 2026-08-14",
+        "Prior DCS v7.2 approval and promotion instructions retained in project history"
+      ]
+    },
+    {
+      "directive_id": "DCS-DIR-20260814-SS-CONTEXT-002",
+      "issued_at": "2026-08-14T19:11:56-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "SS website builds shall use a deterministic registered context profile. Legacy orange-brown SS palette language is DRIFT and shall not be used. SS personality, voice, tone, brand, product, visual, implementation, runtime, source-authority, and validation controls are mandatory. SC and SS remain separate lanes.",
+      "affected_sections": [
+        "D07",
+        "D08",
+        "D09",
+        "D10",
+        "D11",
+        "D19",
+        "D20",
+        "D21",
+        "D22",
+        "SS lane registry"
+      ],
+      "incorporation_commit": null,
+      "status": "ACTIVE",
+      "supersedes": null,
+      "authority_effect": "OPERATIVE_PATCH",
+      "deployment_effect": "CONTEXT_COMPILER_AND_RUNTIME_PREFLIGHT_REQUIRED",
+      "source_evidence": [
+        "DCS correction dated 2026-08-14 rejecting orange-brown",
+        "Current DCS direction requiring immediate integration"
+      ]
+    }
+  ]
+}

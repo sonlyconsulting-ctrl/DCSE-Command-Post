@@ -1,0 +1,43 @@
+{
+  "designation_id": "DCSE-MP-v7.2-R5-OPERATIVE-20260814",
+  "controller_family": "7.2",
+  "controller_revision": "7.2.0-R5",
+  "authority_state": "OPERATIVE",
+  "readiness_state": "READY_WITH_FINDINGS",
+  "deployment_state": "PARTIAL",
+  "evolution_state": "CONTROLLED",
+  "effective_at": "2026-08-14T19:11:56-04:00",
+  "designated_by": "DCS",
+  "authority_directive_id": "DCS-DIR-20260814-R5-OPERATIVE-001",
+  "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "canonical_branch": "governance/v7.2-master-profile-controller",
+  "canonical_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
+  "artifact_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
+  "canonical_commit": null,
+  "superseded_controller": "DCSE Master Profile v7.1",
+  "runtime_manifest": "governance/v7.2/runtime_surface_manifest.v7.2.r5.json",
+  "lane_mapping_artifact": "governance/v7.2/lane_mappings.v7.2.r5.json",
+  "cutover_disposition": "R5 authority is operative immediately. Each runtime surface remains PARTIAL or PENDING until it acknowledges this exact controller identity and hash.",
+  "rollback_target": {
+    "controller": "DCSE Master Profile v7.1",
+    "trigger": "Critical governance defect, PS firewall failure, or unrecoverable context-compiler failure",
+    "authority": "DCS"
+  },
+  "supersession_rules": [
+    {
+      "source": "R5 header candidate authority statement",
+      "disposition": "SUPERSEDED_BY_REGISTERED_DCS_DIRECTIVE"
+    },
+    {
+      "source": "R5 section 42 statement that v7.1 remains controlling",
+      "disposition": "SATISFIED_AND_SUPERSEDED_BY_THIS_DESIGNATION"
+    }
+  ],
+  "open_evidence": [
+    "Canonical incorporation commit must be written back after commit creation",
+    "Supabase constitutional runtime acknowledgment",
+    "Windows controller and worker acknowledgment",
+    "Command Post dispatch acknowledgment",
+    "Tribunal reconciliation"
+  ]
+}

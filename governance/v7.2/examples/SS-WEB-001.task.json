@@ -1,0 +1,19 @@
+{
+  "task_id": "SS-WEB-001",
+  "objective": "Build the Smoove Spots website using current approved identity, content, voice, personality, and design sources.",
+  "task_type": "build",
+  "entity_scope": "SS",
+  "security_class": "NON_PS",
+  "triggers": {
+    "video_or_audio_in_scope": false,
+    "database_auth_cms_or_persistence_in_scope": false,
+    "media_production_in_scope": false
+  },
+  "source_evidence": [
+    {"source":"current SS design source","status":"UNKNOWN","reference":"smoove-spots-design-doc.md requires canonical verification"},
+    {"source":"current SS content and page requirements","status":"VERIFIED","reference":"Current DCS SS website objective"},
+    {"source":"current SS voice and tone registry","status":"LIKELY","reference":"D08 plus current desktop bridge require reconciliation"},
+    {"source":"current SS persona registry","status":"UNKNOWN","reference":"Current canonical persona registry not supplied"},
+    {"source":"current DCS corrections affecting SS","status":"VERIFIED","reference":"DCS-DIR-20260814-SS-CONTEXT-002"}
+  ]
+}

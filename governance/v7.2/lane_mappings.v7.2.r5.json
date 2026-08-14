@@ -1,0 +1,21 @@
+{
+  "artifact_id": "DCSE-LANE-MAPPINGS-v7.2-R5",
+  "version": "7.2.0",
+  "effective_at": "2026-08-14T19:11:56-04:00",
+  "authority": "DCS",
+  "lanes": [
+    {"lane_id":"DCSE","classification":"INTERNAL","aliases":["COMMAND_CENTER","GOVERNANCE"]},
+    {"lane_id":"DCS","classification":"INTERNAL","aliases":["EMPLOYMENT","DCS_PERSONA"]},
+    {"lane_id":"SC","classification":"NON_PS","aliases":["SONLY_CONSULTING"]},
+    {"lane_id":"SS","classification":"NON_PS","aliases":["SMOOVE_SPOTS"]},
+    {"lane_id":"TI","classification":"NON_PS","aliases":["TRAINING","EDUCATION"]},
+    {"lane_id":"TSL","classification":"NON_PS","aliases":["TEDOS_SPORTS_LOUNGE"]},
+    {"lane_id":"FAMILY","classification":"NON_PS","aliases":["FAMILY_PRODUCT_LINE"]},
+    {"lane_id":"PS","classification":"CONFIDENTIAL","aliases":["PRO_SE","LITIGATION"],"firewall":"ABSOLUTE"}
+  ],
+  "separation_rules": [
+    {"left":"SC","right":"SS","rule":"SEPARATE_LANES_NO_SILENT_MERGE"},
+    {"left":"PS","right":"*","rule":"PS_CONTENT_EXCLUDED_FROM_ALL_NON_PS_PACKETS"}
+  ],
+  "unknown_mapping_action": "MIGRATION_REQUIRED_THEN_LANE_MAPPING_STOP_GATE"
+}

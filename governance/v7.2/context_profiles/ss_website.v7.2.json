@@ -1,0 +1,80 @@
+{
+  "profile_id": "DCSE-CONTEXT-SS-WEBSITE-v7.2",
+  "profile_state": "OPERATIVE_PATCH",
+  "authority_directive_id": "DCS-DIR-20260814-SS-CONTEXT-002",
+  "task_type": "build",
+  "entity_scope": "SS",
+  "security_class": "NON_PS",
+  "direct_rule_sources": [
+    "MP-CONTROLLER-HEADER",
+    "MP-STOP-GATES",
+    "MP-LANE-CONTROLS",
+    "MP-EVIDENCE-REQUIREMENTS",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "D05",
+    "D06",
+    "D07",
+    "D08",
+    "D09",
+    "D10",
+    "D11",
+    "D17",
+    "D19",
+    "D20",
+    "D21",
+    "D22"
+  ],
+  "conditional_rule_sources": [
+    {"source":"D12","condition":"video_or_audio_in_scope"},
+    {"source":"D15","condition":"database_auth_cms_or_persistence_in_scope"},
+    {"source":"D18","condition":"media_production_in_scope"}
+  ],
+  "protected_controls": [
+    "D13_IDENTITY_AND_ROUTING_ONLY",
+    "D14_IDENTITY_AND_ROUTING_ONLY",
+    "PS_FIREWALL"
+  ],
+  "protected_bodies_loaded": false,
+  "mandatory_ss_sources": [
+    "current SS design source",
+    "current SS content and page requirements",
+    "current SS voice and tone registry",
+    "current SS persona registry",
+    "current DCS corrections affecting SS"
+  ],
+  "drift_controls": [
+    {
+      "control_id": "SS-DRIFT-PALETTE-001",
+      "rule": "Legacy orange-brown SS palette language is rejected and shall not be used.",
+      "status": "ACTIVE"
+    },
+    {
+      "control_id": "SS-DRIFT-LANE-002",
+      "rule": "SC and SS identities, content, and design decisions shall not be silently merged.",
+      "status": "ACTIVE"
+    },
+    {
+      "control_id": "SS-DRIFT-PERSONA-003",
+      "rule": "SS voice, tone, and personality are mandatory acceptance criteria, not optional copy polish.",
+      "status": "ACTIVE"
+    }
+  ],
+  "unknown_policy": "Any unresolved current palette, typography, persona, naming, or source authority is logged UNKNOWN and blocks only the affected design decision.",
+  "acceptance_evidence": [
+    "context packet manifest",
+    "source and authority references",
+    "conflict dispositions",
+    "implementation diff",
+    "targeted tests",
+    "live browser preview",
+    "responsive checks",
+    "accessibility checks",
+    "console and network checks",
+    "brand and lane validation",
+    "secret and PS firewall scans",
+    "completion receipt"
+  ]
+}
