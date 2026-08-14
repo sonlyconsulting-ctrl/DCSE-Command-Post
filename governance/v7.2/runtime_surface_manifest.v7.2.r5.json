@@ -1,0 +1,80 @@
+{
+  "manifest_id": "DCSE-RUNTIME-SURFACE-MANIFEST-v7.2-R5",
+  "controller_family": "7.2",
+  "controller_revision": "7.2.0-R5",
+  "authority_state": "OPERATIVE",
+  "manifest_state": "OPERATIVE_WITH_PARTIAL_DEPLOYMENT",
+  "effective_at": "2026-08-14T19:11:56-04:00",
+  "authority": "DCS",
+  "controller": {
+    "path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
+    "artifact_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
+    "canonical_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
+    "directive_id": "DCS-DIR-20260814-R5-OPERATIVE-001"
+  },
+  "compiler_logging": {
+    "format": "JSONL",
+    "event_schema": "governance/v7.2/context_compiler_event_schema.v7.2.json",
+    "task_log_path_pattern": "logs/context_compiler/YYYY-MM-DD/{task_id}.jsonl",
+    "packet_manifest_path_pattern": "receipts/context_packets/{context_packet_id}.manifest.json",
+    "required_events": [
+      "TASK_DECLARATION",
+      "AUTHORITY_RESOLUTION",
+      "LANE_RESOLUTION",
+      "DIRECT_RULE_SELECTION",
+      "TRANSITIVE_DEPENDENCY",
+      "FIREWALL_DECISION",
+      "CONFLICT_DISPOSITION",
+      "CLOSURE_COMPLETE",
+      "PACKET_BUILD",
+      "RUNTIME_PREFLIGHT",
+      "EXECUTION_DECISION"
+    ],
+    "closure_depth_limit": 12,
+    "fail_closed": true
+  },
+  "surfaces": [
+    {
+      "surface_id": "github_controller_source",
+      "mandatory_for_cutover": true,
+      "status": "VERIFIED_ON_CUTOVER_BRANCH"
+    },
+    {
+      "surface_id": "supabase_constitutional_registry",
+      "mandatory_for_cutover": true,
+      "status": "ACKNOWLEDGMENT_PENDING"
+    },
+    {
+      "surface_id": "windows_neutral_dispatch_controller",
+      "mandatory_for_cutover": true,
+      "status": "ACKNOWLEDGMENT_PENDING"
+    },
+    {
+      "surface_id": "windows_runtime_worker",
+      "mandatory_for_cutover": true,
+      "status": "ACKNOWLEDGMENT_PENDING"
+    },
+    {
+      "surface_id": "command_post_dispatch",
+      "mandatory_for_cutover": true,
+      "status": "ACKNOWLEDGMENT_PENDING"
+    },
+    {
+      "surface_id": "chatgpt_desktop_project",
+      "mandatory_for_cutover": false,
+      "status": "OPERATIVE_DIRECTION_PRESENT"
+    },
+    {
+      "surface_id": "codex_repository_agent",
+      "mandatory_for_cutover": false,
+      "status": "OPERATIVE_DIRECTION_PRESENT"
+    },
+    {
+      "surface_id": "tribunal_evidence_sync",
+      "mandatory_for_cutover": false,
+      "status": "RECEIPT_PENDING"
+    }
+  ],
+  "state_rule": "Authority is OPERATIVE. Deployment remains PARTIAL until required surfaces acknowledge the exact controller identity, artifact hash, and canonical commit.",
+  "rollback_target": "DCSE Master Profile v7.1"
+}

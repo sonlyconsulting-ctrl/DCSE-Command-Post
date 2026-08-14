@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:dcse:context-compiler-event:v7.2",
+  "title": "DCSE Context Compiler Event",
+  "type": "object",
+  "required": [
+    "timestamp",
+    "task_id",
+    "context_packet_id",
+    "controller_revision",
+    "controller_sha256",
+    "phase",
+    "decision",
+    "reason"
+  ],
+  "properties": {
+    "timestamp": {"type":"string","format":"date-time"},
+    "task_id": {"type":"string","minLength":1},
+    "context_packet_id": {"type":"string","minLength":1},
+    "controller_revision": {"const":"7.2.0-R5"},
+    "controller_sha256": {"const":"2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"},
+    "phase": {
+      "enum": [
+        "TASK_DECLARATION",
+        "AUTHORITY_RESOLUTION",
+        "LANE_RESOLUTION",
+        "DIRECT_RULE_SELECTION",
+        "TRANSITIVE_DEPENDENCY",
+        "FIREWALL_DECISION",
+        "CONFLICT_DISPOSITION",
+        "CLOSURE_COMPLETE",
+        "PACKET_BUILD",
+        "RUNTIME_PREFLIGHT",
+        "EXECUTION_DECISION"
+      ]
+    },
+    "source_id": {"type":["string","null"]},
+    "rule_id": {"type":["string","null"]},
+    "inclusion_basis": {"enum":["DIRECT","TRANSITIVE","MANDATORY_HEADER","STOP_GATE","LANE_CONTROL","NOT_APPLICABLE","EXCLUDED_BY_FIREWALL",null]},
+    "decision": {"enum":["INCLUDE","EXCLUDE","PASS","FAIL","STOP","RESOLVE","UNKNOWN"]},
+    "reason": {"type":"string","minLength":1},
+    "evidence_refs": {"type":"array","items":{"type":"string"}},
+    "dependency_depth": {"type":["integer","null"],"minimum":0},
+    "status": {"enum":["VERIFIED","LIKELY","UNKNOWN","ASSUMPTION"]}
+  },
+  "additionalProperties": true
+}
