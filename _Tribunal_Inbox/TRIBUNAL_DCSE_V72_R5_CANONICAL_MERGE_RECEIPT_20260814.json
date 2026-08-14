@@ -1,0 +1,24 @@
+{
+  "receipt_id": "TRIBUNAL-DCSE-v7.2-R5-CANONICAL-MERGE-20260814",
+  "status": "VERIFIED",
+  "classification": "INTERNAL_NON_PS",
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "pull_request": 55,
+  "source_branch": "agent/v72-r5-operative-cutover",
+  "target_branch": "governance/v7.2-master-profile-controller",
+  "incorporation_commit": "71973b0a15d4c7dc4d778d52f921cf37dd3d5be5",
+  "head_commit": "e824b46687c7283c3915012c64ea62bbdb93a99e",
+  "merge_commit": "ea7601d9a5c339c6953ecf4eada95d5f81c39cee",
+  "merged": true,
+  "controller_path": "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
+  "controller_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae",
+  "authority_state": "OPERATIVE",
+  "deployment_state": "PARTIAL",
+  "remaining_acknowledgments": [
+    "supabase_constitutional_runtime",
+    "windows_controller_and_worker",
+    "command_post_dispatch",
+    "local_command_center",
+    "model_distribution"
+  ]
+}

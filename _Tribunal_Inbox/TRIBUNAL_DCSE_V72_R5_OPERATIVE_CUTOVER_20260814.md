@@ -21,6 +21,7 @@ The canonical GitHub v7.2 controller branch contained R4 candidate artifacts onl
 - Deployment state: `PARTIAL`.
 - R5 source SHA-256: `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`.
 - Canonical incorporation commit: `71973b0a15d4c7dc4d778d52f921cf37dd3d5be5`.
+- Canonical merge commit: `ea7601d9a5c339c6953ecf4eada95d5f81c39cee`.
 - Canonical repository: `sonlyconsulting-ctrl/DCSE-Command-Post`.
 - Cutover branch: `agent/v72-r5-operative-cutover`.
 - Target branch: `governance/v7.2-master-profile-controller`.
@@ -57,13 +58,12 @@ The canonical GitHub v7.2 controller branch contained R4 candidate artifacts onl
 
 The following do not reverse the operative authority decision. They remain required for synchronized deployment evidence:
 
-1. Merge the cutover branch into the canonical v7.2 controller branch.
-2. Update the Supabase constitutional runtime registry.
-3. Obtain Windows controller and worker acknowledgments.
-4. Obtain Command Post dispatch acknowledgment.
-5. Run the PowerShell inspector on the Windows host.
-6. Reconcile local Command Center and model-distribution copies.
-7. Record the final cross-surface synchronization receipt.
+1. Update the Supabase constitutional runtime registry.
+2. Obtain Windows controller and worker acknowledgments.
+3. Obtain Command Post dispatch acknowledgment.
+4. Run the PowerShell inspector on the Windows host.
+5. Reconcile local Command Center and model-distribution copies.
+6. Record the final cross-surface synchronization receipt.
 
 ## SS Drift Disposition
 
