@@ -1,6 +1,6 @@
 # DCSE Desktop Authority and Context Packet
 
-**Packet ID:** DCSE-DESKTOP-SYNC-20260814-02  
+**Packet ID:** DCSE-DESKTOP-SYNC-20260814-03  
 **Status:** OPERATIVE BRIDGE, NOT CANONICAL PROMOTION EVIDENCE  
 **Authority date:** 2026-08-14  
 **Classification:** INTERNAL, NON-PS  
@@ -70,7 +70,9 @@ Classify the lane before retrieval, generation, storage, delegation, or publicat
 
 Load only the controlling sections, registry entries, facts, and sources needed for the task. Do not use a long chat or a broad memory dump as the universal worker.
 
-Every substantive context compilation must produce an auditable JSONL event stream and packet manifest. Required phases are `TASK_DECLARATION`, `AUTHORITY_RESOLUTION`, `LANE_RESOLUTION`, `DIRECT_RULE_SELECTION`, `TRANSITIVE_DEPENDENCY`, `FIREWALL_DECISION`, `CONFLICT_DISPOSITION`, `CLOSURE_COMPLETE`, `PACKET_BUILD`, `RUNTIME_PREFLIGHT`, and `EXECUTION_DECISION`.
+Detailed runtime and compiler logs are diagnostic controls. Enable them when needed to investigate doctrine routing, drift, authority resolution, lane classification, Stop-Gates, worker failures, execution defects, or synchronization discrepancies. Routine chats do not require continuous local-script execution or exhaustive activity logging. Required governance receipts, evidence, security controls, and accurate status reporting remain mandatory.
+
+When the context compiler is invoked, it must produce an auditable JSONL event stream and packet manifest. Required phases are `TASK_DECLARATION`, `AUTHORITY_RESOLUTION`, `LANE_RESOLUTION`, `DIRECT_RULE_SELECTION`, `TRANSITIVE_DEPENDENCY`, `FIREWALL_DECISION`, `CONFLICT_DISPOSITION`, `CLOSURE_COMPLETE`, `PACKET_BUILD`, `RUNTIME_PREFLIGHT`, and `EXECUTION_DECISION`.
 
 For SS website work, use the registered deterministic profile `context_profiles/ss_website.v7.2.json`. Its direct dependency set is fixed. Conditional doctrines are included only when their recorded trigger is true.
 

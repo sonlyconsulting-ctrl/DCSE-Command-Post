@@ -1,6 +1,6 @@
 # DCSE AGENTS.md
 
-**Document ID:** DCSE-AGENTS-V7.2-R2  
+**Document ID:** DCSE-AGENTS-V7.2-R3  
 **Status:** OPERATIVE  
 **Updated:** 2026-08-14  
 **Classification:** INTERNAL, NON-PS  
@@ -74,7 +74,9 @@ Classify the lane before reading, generating, moving, storing, committing, deplo
 
 Load only the controlling sources needed for the task. Do not load every doctrine file or use a long chat as the universal worker.
 
-Every substantive context compilation must produce an auditable JSONL event stream and packet manifest. Required phases are `TASK_DECLARATION`, `AUTHORITY_RESOLUTION`, `LANE_RESOLUTION`, `DIRECT_RULE_SELECTION`, `TRANSITIVE_DEPENDENCY`, `FIREWALL_DECISION`, `CONFLICT_DISPOSITION`, `CLOSURE_COMPLETE`, `PACKET_BUILD`, `RUNTIME_PREFLIGHT`, and `EXECUTION_DECISION`.
+Detailed runtime and compiler logs are diagnostic controls. Enable them when needed to investigate doctrine routing, drift, authority resolution, lane classification, Stop-Gates, worker failures, execution defects, or synchronization discrepancies. Routine chats do not require continuous local-script execution or exhaustive activity logging. Required governance receipts, evidence, security controls, and accurate status reporting remain mandatory.
+
+When the context compiler is invoked, it must produce an auditable JSONL event stream and packet manifest. Required phases are `TASK_DECLARATION`, `AUTHORITY_RESOLUTION`, `LANE_RESOLUTION`, `DIRECT_RULE_SELECTION`, `TRANSITIVE_DEPENDENCY`, `FIREWALL_DECISION`, `CONFLICT_DISPOSITION`, `CLOSURE_COMPLETE`, `PACKET_BUILD`, `RUNTIME_PREFLIGHT`, and `EXECUTION_DECISION`.
 
 For SS website work, use the registered deterministic profile `context_profiles/ss_website.v7.2.json`. Do not describe its direct dependency set as likely. Conditional doctrines are included only when their recorded trigger is true.
 

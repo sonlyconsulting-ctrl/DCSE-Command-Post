@@ -1,7 +1,7 @@
 {
   "registry_id": "DCSE-DCS-EXPRESS-DIRECTIVES-v7.2",
-  "registry_version": "7.2.1",
-  "updated_at": "2026-08-14T19:11:56-04:00",
+  "registry_version": "7.2.2",
+  "updated_at": "2026-08-14T21:04:38-04:00",
   "authority": "DCS",
   "directives": [
     {
@@ -51,6 +51,25 @@
       "source_evidence": [
         "DCS correction dated 2026-08-14 rejecting orange-brown",
         "Current DCS direction requiring immediate integration"
+      ]
+    },
+    {
+      "directive_id": "DCS-DIR-20260814-RUNTIME-LOGGING-003",
+      "issued_at": "2026-08-14T21:04:38-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "Detailed runtime and compiler logs are to be enabled when necessary for debugging purposes. Routine chats do not require continuous local-script execution or exhaustive activity logging. Required governance receipts, evidence, security controls, and accurate status reporting remain mandatory.",
+      "affected_sections": [
+        "AGENTS section 4",
+        "Desktop Source section 4",
+        "D21 runtime logging implementation",
+        "Context compiler diagnostic operation"
+      ],
+      "status": "INCORPORATED",
+      "supersedes": "Universal continuous detailed logging expectation",
+      "authority_effect": "OPERATIVE_PATCH",
+      "deployment_effect": "DIAGNOSTIC_LOGGING_ON_DEMAND",
+      "source_evidence": [
+        "DCS statement dated 2026-08-14: Agreed. logs are to be enabled when necessary for debugging purposes"
       ]
     }
   ]
