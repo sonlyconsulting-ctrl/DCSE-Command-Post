@@ -1,7 +1,7 @@
 # Tribunal Record: DCSE v7.2 Runtime Logging Disposition
 
 **Record ID:** TRIBUNAL-DCSE-v7.2-RUNTIME-LOGGING-20260814  
-**Status:** OPERATIVE DECISION, POSTING PENDING  
+**Status:** OPERATIVE DECISION, POSTED  
 **Classification:** INTERNAL, NON-PS  
 **Lane:** DCSE  
 **Authority:** DCS  
@@ -59,4 +59,9 @@ The following files are updated by this decision:
 
 ## 7. Posting Receipt
 
-Repository, branch, commit, and final posting status shall be added or evidenced through the resulting canonical GitHub commit. Until that evidence exists, this record remains `POSTING PENDING`.
+**Repository:** `sonlyconsulting-ctrl/DCSE-Command-Post`  
+**Branch:** `governance/v7.2-master-profile-controller`  
+**Posting commit:** `ac1e8998b289e283cd6a131c4880a114a523b2e5`  
+**Posting result:** `VERIFIED`
+
+The posting commit added this Tribunal record and incorporated the decision into root `AGENTS.md`, the desktop companion, and the DCS express-directive registry. A subsequent reconciliation commit may update receipt metadata without changing the operative decision.

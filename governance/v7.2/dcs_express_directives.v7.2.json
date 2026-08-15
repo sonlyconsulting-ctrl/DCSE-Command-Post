@@ -64,6 +64,7 @@
         "D21 runtime logging implementation",
         "Context compiler diagnostic operation"
       ],
+      "incorporation_commit": "ac1e8998b289e283cd6a131c4880a114a523b2e5",
       "status": "INCORPORATED",
       "supersedes": "Universal continuous detailed logging expectation",
       "authority_effect": "OPERATIVE_PATCH",
