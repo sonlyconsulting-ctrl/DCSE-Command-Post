@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GYTO Clarity Compass — v1.3.2 (Voice + Likert Optimized)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* === Cinematic SC/SS styling === */
+:root {--gold:#D4AF37;--emerald:#2E8B57;--silver:#C0C0C0;--graphite:#1C3B29;--ivory:#F5F5F0;--onyx:#0b1712;}
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--ivory);
+background:radial-gradient(circle at 20% 0%, #243c2d 0%, #0f1f17 60%, var(--onyx) 100%);}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:24px;
+backdrop-filter:blur(10px) saturate(120%);box-shadow:0 8px 30px rgba(0,0,0,.4);}
+.q-title{font-size:20px;font-weight:700;margin:8px 0 10px}
+.mic-btn{margin-left:8px;background:transparent;border:1px solid var(--emerald);border-radius:50%;
+cursor:pointer;padding:6px;color:var(--emerald);}
+.mic-btn.active{background:var(--emerald);color:#09140f;}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1c2620;color:#fff;
+border:1px solid rgba(255,255,255,.14);padding:10px 14px;border-radius:12px;opacity:0;transition:opacity .25s}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <h1>GYTO Clarity Compass — v1.3.2</h1>
+  <div style="font-size:14px;color:var(--silver)">Crafting Success on Your Own Terms</div>
+</header>
+
+<main>
+  <div class="card" id="assessment-card">
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="small"><span id="stepLabel">Question 1</span></div>
+    <div id="question-block">
+      <div style="display:flex;align-items:center;">
+        <div class="q-title" id="q-title"></div>
+        <button id="micBtn" class="mic-btn" title="Speak your answer">🎤</button>
+      </div>
+      <div class="q-help" id="q-help"></div>
+      <div class="options" id="options"></div>
+    </div>
+    <div class="question-buttons">
+      <button id="back-btn" class="btn btn-secondary" style="display:none;">◀ Back</button>
+      <button id="next-btn" class="btn btn-primary">Next ▶</button>
+    </div>
+  </div>
+
+  <section class="result" id="result" style="display:none;">
+    <div class="card"><h2>Your Compass Reading</h2><canvas id="radar" width="600" height="380"></canvas>
+      <div id="persona" style="font-weight:700;color:var(--gold)"></div>
+      <div id="diagnosis" style="opacity:.9;margin-top:6px"></div></div>
+    <div class="card"><h3>Your 7-Day Micro-Plan</h3><div id="plan"></div></div>
+    <div class="card"><h3>Recommended Modules</h3><ul id="modules"></ul></div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // === Example minimal questions array (replace with full v1.2 spec) ===
+  const questions = [
+    {qid:'q1',type:'likert',text:'My long-term goal is clearly defined.',
+     options:[1,2,3,4,5].map(v=>({text:String(v)}))}
+  ];
+  const answers=Array(questions.length).fill(null);
+  let current=0;
+
+  const qTitle=document.getElementById('q-title');
+  const qHelp=document.getElementById('q-help');
+  const optionsEl=document.getElementById('options');
+  const micBtn=document.getElementById('micBtn');
+  const toast=document.getElementById('toast');
+
+  const showToast=(m)=>{toast.textContent=m;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2000);};
+
+  // === Render Question ===
+  function renderQuestion(idx){
+    const q=questions[idx];
+    qTitle.textContent=q.text;qHelp.textContent=q.help||'';optionsEl.innerHTML='';
+    if(q.type==='likert'){
+      const wrap=document.createElement('div');wrap.className='likert';
+      q.options.forEach((opt,i)=>{
+        const id=`q${idx}_likert_${i}`;
+        const label=document.createElement('label');
+        const input=document.createElement('input');input.type='radio';input.name='option';input.id=id;input.value=i;
+        const span=document.createElement('span');span.textContent=opt.text;
+        label.appendChild(input);label.appendChild(span);wrap.appendChild(label);
+      });optionsEl.appendChild(wrap);
+    }
+  }
+
+  renderQuestion(current);
+
+  // === Voice Setup ===
+  let recognition,recognizing=false;
+  if('webkitSpeechRecognition' in window){
+    recognition=new webkitSpeechRecognition();
+    recognition.lang='en-US';recognition.interimResults=false;recognition.maxAlternatives=1;
+    recognition.onresult=(event)=>{
+      const spoken=event.results[0][0].transcript.toLowerCase().trim();
+      matchSpokenToOption(spoken);
+      showToast(`Heard: "${spoken}"`);
+    };
+    recognition.onend=()=>{recognizing=false;micBtn.classList.remove('active');};
+  } else {micBtn.style.display='none';}
+
+  micBtn.onclick=()=>{
+    if(!recognition) return;
+    if(recognizing){recognition.stop();return;}
+    recognition.start();recognizing=true;micBtn.classList.add('active');showToast("Listening…");
+  };
+
+  // === Speech Matching Logic ===
+  function matchSpokenToOption(spoken){
+    const q=questions[current];
+    const inputs=[...document.querySelectorAll('#options input')];
+    // Direct Likert number mapping
+    if(q.type==='likert'){
+      const numMap={'one':0,'1':0,'two':1,'2':1,'three':2,'3':2,'four':3,'4':3,'five':4,'5':4};
+      for(const [key,val] of Object.entries(numMap)){
+        if(spoken.includes(key)){
+          inputs[val].checked=true;return;
+        }
+      }
+    }
+    // General keyword match
+    inputs.forEach(inp=>{
+      const text=inp.nextSibling.textContent.toLowerCase();
+      if(spoken.includes(text)){inp.checked=true;}
+    });
+  }
+});
+</script>
+</body>
+</html>

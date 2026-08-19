@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Critical Thinker’s Journey™: Part 3 - Finding Meaning and Balance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-gold: #F7E6B5;
+            --text-navy: #0E2A47;
+            --accent-gold: #C89E4F;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            background-color: var(--text-navy); /* Dark navy background for cover */
+            color: var(--background-gold); /* Gold text for cover */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .cover-page img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-page h1 {
+            font-size: 3.5em;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            color: var(--background-gold); /* Gold for main title on cover */
+        }
+
+        .cover-page h2 {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-top: 0;
+            color: var(--accent-gold); /* Muted gold for subtitle on cover */
+        }
+
+        .cover-page .author, .cover-page .copyright {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: var(--background-gold); /* Gold for author/copyright on cover */
+        }
+        .cover-page .copyright {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9em;
+        }
+
+
+        /* General Section Styling */
+        .section-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .section-container:last-of-type {
+            page-break-after: auto; /* No page break after the very last section */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-navy); /* Dark navy for all headings */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 { font-size: 2.5em; text-align: center; }
+        h2 { font-size: 2em; border-bottom: 2px solid var(--accent-gold); padding-bottom: 5px; margin-top: 2em;}
+        h3 { font-size: 1.5em; color: var(--text-navy); margin-top: 1.5em;} /* Ensure h3 also dark navy */
+        h4 { font-size: 1.2em; color: var(--text-navy); margin-top: 1.2em;} /* Ensure h4 also dark navy */
+
+        .header-footer-section { /* Renamed to avoid conflict with global footer */
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            padding: 10px 5%;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid var(--accent-gold);
+            border-bottom: 1px solid var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .page-break {
+            page-break-after: always;
+            height: 0; /* Ensures no extra space from the div */
+            overflow: hidden; /* Hides any content if somehow present */
+        }
+
+        /* Table of Contents */
+        .toc-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .toc-container h1 {
+            color: var(--text-navy); /* Dark navy for TOC title */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-navy); /* Dark navy for links */
+            text-decoration: none;
+            font-size: 1.1em;
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px dashed var(--text-navy); /* Changed to navy for better contrast */
+            transition: color 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-navy); /* Changed to navy for better contrast */
+            border-bottom-color: var(--accent-gold); /* Optional: can change border on hover for effect */
+        }
+
+        .toc-list .part-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            color: var(--text-navy); /* Dark navy for part titles */
+        }
+
+        .toc-list .day-title {
+            margin-left: 20px;
+            font-size: 1em;
+        }
+
+        /* Workbook Specifics */
+        .mini-framework-box, .visual-aid-box {
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            background-color: rgba(200, 158, 79, 0.1); /* Slightly transparent accent gold */
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .mini-framework-box strong, .visual-aid-box strong {
+            color: var(--text-navy); /* Dark navy for strong text */
+        }
+
+        .prompt-section {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .prompt-section p {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px; /* Default height for response areas */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            color: var(--text-navy); /* Dark navy text */
+            background-color: var(--white); /* White background */
+            box-sizing: border-box;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        /* Specific heights for prompts */
+        textarea.short-response { min-height: 40px; } /* Up to 25 words */
+        textarea.medium-response { min-height: 80px; } /* 50-75 words */
+        textarea.long-response { min-height: 100px; } /* 50-100 words */
+        textarea.bonus-response { min-height: 120px; } /* 100-word explanation */
+        textarea.checkpoint-response { min-height: 150px; } /* 100-150 words */
+        textarea.final-reflection-response { min-height: 150px; } /* 100-150 words */
+
+
+        .word-count-guide {
+            font-size: 0.85em;
+            color: var(--text-navy); /* Dark navy for guide text */
+            margin-top: 2px;
+            display: block;
+        }
+
+        .visual-aid-space {
+            border: 1px dashed var(--accent-gold); /* Accent gold dashed border */
+            padding: 20px;
+            min-height: 150px;
+            margin: 20px 0;
+            text-align: center;
+            color: var(--text-navy); /* Dark navy text */
+            font-style: italic;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+            color: var(--text-navy); /* Dark navy for icons */
+        }
+
+        /* Global Footer */
+        .global-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: var(--text-navy); /* Dark navy text */
+            border-top: 1px solid var(--accent-gold); /* Accent gold border */
+            margin-top: 50px;
+            padding: 10px 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-page, .section-container, .toc-container {
+                page-break-after: always;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .cover-page {
+                background-color: var(--text-navy) !important;
+                color: var(--background-gold) !important;
+            }
+            .cover-page h1 { color: var(--background-gold) !important; }
+            .cover-page h2 { color: var(--accent-gold) !important; }
+            .cover-page .author, .cover-page .copyright { color: var(--background-gold) !important; }
+
+
+            .section-container, .toc-container {
+                background-color: white !important;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            .mini-framework-box, .visual-aid-box {
+                background-color: rgba(200, 158, 79, 0.05) !important; /* Lighter for print */
+                border-color: var(--accent-gold) !important;
+            }
+
+            .header-footer-section {
+                background-color: var(--background-gold) !important;
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            textarea {
+                border: 1px solid var(--accent-gold) !important;
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                min-height: 1.5in;
+                height: auto !important;
+                overflow: hidden !important;
+            }
+
+            .icon {
+                color: var(--text-navy) !important;
+            }
+
+            .global-footer {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+                background-color: white !important; /* Ensure footer background is white for print */
+            }
+
+            .day-section, .checkpoint-section, .reflection-section, .prompt-section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .cover-page h1 { font-size: 2.5em; }
+            .cover-page h2 { font-size: 1.4em; }
+            .section-container, .toc-container { padding: 20px 3%; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            h3 { font-size: 1.2em; }
+            .toc-list a { font-size: 1em; }
+            .toc-list .part-title { font-size: 1.2em; }
+            .global-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .global-footer span {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cover-page">
+        <img src="https://googleusercontent.com/file_content/0" alt="The Critical Thinker's Journey™">
+        <h1>The Critical Thinker’s Journey™</h1>
+        <h2>Part 3: Finding Meaning and Balance</h2>
+        <div class="author">Published by Sonly Consulting</div>
+        <div class="copyright">© 2025 Sonly Consulting</div>
+    </div>
+
+    <div class="section-container" id="author-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Author's Note</h2>
+        </div>
+        <p>This is more than a journal — it's an invitation to awaken the thinker within you and discover the profound power of how you think. In a world spinning with constant change, challenges, and crises, the ability to pause, breathe deeply, and approach life with crystalline clarity isn't just helpful — it's life‑changing magic.</p>
+        <p>The Critical Thinker's Journey™ is woven from the very fabric of real life itself — those unexpected setbacks that steal your breath, the sudden opportunities that make your heart race, the hard decisions that test your core, and the milestone moments that lift your spirit skyward. Life also gifts us unexpected joys: a goal achieved sooner than your wildest dreams imagined, a beautiful outcome that emerges from nowhere like morning light, or that electric spark of vision that suddenly opens infinite new horizons. This journey embraces all of that — the raw struggles and the pure celebrations — so you can see your unique path with the perspective of a wise observer and the heart of a courageous explorer.</p>
+        <p>Structure becomes your sanctuary because it gives sacred shape to your experiences. It helps you see intricate patterns instead of bewildering chaos, boundless possibilities instead of towering walls, and clear steps forward instead of paralyzing standstills. Engaging with The Critical Thinker's Journey™ helps you recognize profound clarity in the very center of uncertainty and nurture visionary thoughts when inspiration strikes like lightning.</p>
+        <p>Sonly Consulting walks alongside you in that sacred process. Literally, through the carefully crafted tools we've built — the journals that become your trusted confidants, the audio companions that speak directly to your soul, and the resources designed to meet you exactly wherever you are in this moment. And figuratively, through the ethos we share with our creative arm (SS): an unwavering belief that thoughtful design, intentional reflection, and transformative personal growth are meant to be woven seamlessly into the beautiful tapestry of everyday life.</p>
+        <p>This journey is not meant to be finished and kicked to the curb. It is meant to be lived with passion, revisited with wonder, and carried forward with purpose — a trusted companion for the extraordinary real journey you're courageously walking. When you close these pages, the journey continues within you, radiating outward into every decision, every relationship, every dream you dare to chase.</p>
+    </div>
+
+    <div class="section-container" id="intro-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Introduction</h2>
+        </div>
+        <p>Step boldly into something extraordinary. You're about to embark on The Critical Thinker's Journey™ — not just a collection of pages, but a transformative experience that will reshape how you see yourself, your challenges, and your infinite potential.</p>
+        <p>🌟 The Heart of This Journey</p>
+        <p>This isn't traditional learning — it's experiential awakening. Every reflection and challenge stretches different dimensions of your thinking:</p>
+        <ul>
+            <li>Analytical Precision</li>
+            <li>Creative Innovation</li>
+            <li>Intuitive Wisdom</li>
+            <li>Systems Thinking</li>
+            <li>Empathetic Understanding</li>
+            <li>Strategic Visioning</li>
+        </ul>
+        <p>🗺 Your Journey Map</p>
+        <ul>
+            <li>PART 1: FOUNDATION → Clarity & Confidence</li>
+            <li>PART 2: EXPLORATION → Movement & Adaptation</li>
+            <li>PART 3: INTEGRATION → Purpose & Balance</li>
+            <li>THE FULL SERIES → Complete Transformation</li>
+        </ul>
+        <p>🎯 How This Journey Challenges You</p>
+        <p>Question assumptions, synthesize viewpoints, generate solutions, build mental models, practice metacognition, and develop intellectual courage.</p>
+        <p>You're not just learning about critical thinking — you're becoming a critical thinker.</p>
+    </div>
+
+    <div class="section-container" id="part3-welcome" data-part="3" data-subtitle="Finding Meaning and Balance">
+        
+        <h2>🎯 WELCOME TO<br>Part 3: Finding Meaning and Balance<br><span style="font-size:0.9em; font-weight:normal;">Integration · Purpose · Balance</span></h2>
+        <p>This workbook deepens your journey by exploring your inner landscape. Building on Parts 1 and 2, you’ll reflect on mindsets, manage emotions, and align actions with purpose. Over 10 days, you’ll practice metacognition and emotional intelligence to live intentionally.</p>
+        <p>Use this digital workbook to type in digital fields. Each day offers a theme, mini-framework, tip, and prompts. Stay reflective, stay purposeful, and <strong>GET YOUR THINK ON!</strong> 🤔</p>
+    </div>
+
+    <div class="section-container" id="how-to-use-global" data-part="3" data-subtitle="Finding Meaning and Balance">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>How to Use This Workbook (Digital Version)</h2>
+        </div>
+        <ul>
+            <li><strong>Daily Commitment:</strong> Work this into your schedule in a set or impromptu setting, aiming for consecutive and persistent engagement (10-15 minutes daily).</li>
+            <li><strong>Response Areas:</strong> Type your responses directly into the digital fields. Word count guides encourage concise and focused thinking. Note: Visual Aid sections have been repurposed for textual descriptions or structured outlines, allowing for deeper digital reflection.</li>
+            <li><strong>Methods:</strong> Type, speak aloud, or outline responses.</li>
+            <li><strong>Structure:</strong> 10 days, 2 weekly checkpoints, 1 final reflection.</li>
+        </ul>
+        <h3>Who It’s For:</h3>
+        <ul>
+            <li>Leaders seeking purposeful decisions</li>
+            <li>Individuals exploring self-awareness</li>
+            <li>Anyone aligning actions with values</li>
+        </ul>
+        <h3>Weekly Topics:</h3>
+        <ul>
+            <li><strong>Week 1:</strong> Mindset & Emotional Clarity (Days 1–5)</li>
+            <li><strong>Week 2:</strong> Purposeful Living (Days 6–10)</li>
+            <li>Weekly Checkpoints</li>
+            <li>Final Reflection</li>
+        </ul>
+
+        <h2 id="part3-about-frameworks">About the Mini-Frameworks</h2>
+        <p>Mini-Frameworks guide your self-reflection, drawn from metacognition, emotional intelligence, and purpose. They foster awareness and alignment. Use them flexibly and revisit what resonates.</p>
+
+        <h2 id="part3-response-fields">How to Use the Response Fields</h2>
+        <p>Each prompt includes a Response Area with word count guides. Type in digital fields. Clear responses deepen self-awareness.</p>
+        <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+    </div>
+
+    <div class="toc-container">
+        <h1>The Critical Thinker’s Journey™: Table of Contents</h1>
+        <ul class="toc-list">
+            <li><a href="#how-to-use-global" class="part-title">How to Use This Workbook (Digital Version)</a></li>
+            <li><a href="#part3-welcome" class="part-title">Part 3: Finding Meaning and Balance</a></li>
+            <li><a href="#part3-week1" class="day-title">WEEK 1: MINDSET & EMOTIONAL CLARITY</a></li>
+            <li><a href="#part3-day1" class="day-title">Day 1 | Understanding Mindsets</a></li>
+            <li><a href="#part3-day2" class="day-title">Day 2 | Affective Labeling</a></li>
+            <li><a href="#part3-day3" class="day-title">Day 3 | Cognitive Scripts</a></li>
+            <li><a href="#part3-day4" class="day-title">Day 4 | Decision Clarity</a></li>
+            <li><a href="#part3-day5" class="day-title">Day 5 | Self-Anthropology</a></li>
+            <li><a href="#part3-checkpoint1" class="day-title">WEEK 1 CHECKPOINT</a></li>
+            <li><a href="#part3-week2" class="day-title">WEEK 2: PURPOSEFUL LIVING</a></li>
+            <li><a href="#part3-day6" class="day-title">Day 6 | Aligning with Purpose</a></li>
+            <li><a href="#part3-day7" class="day-title">Day 7 | Managing Emotional Triggers</a></li>
+            <li><a href="#part3-day8" class="day-title">Day 8 | Complex Life Scenarios</a></li>
+            <li><a href="#part3-day9" class="day-title">Day 9 | Mapping a Conscious Life</a></li>
+            <li><a href="#part3-day10" class="day-title">Day 10 | Living with Intention</a></li>
+            <li><a href="#part3-checkpoint2" class="day-title">WEEK 2 CHECKPOINT</a></li>
+            <li><a href="#part3-final-reflection" class="day-title">FINAL REFLECTION</a></li>
+        </ul>
+    </div>
+
+    <div id="part3-content" class="section-container" data-part="3" data-subtitle="Finding Meaning and Balance">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™: Part 3</h1>
+            <h2>Part 3: Finding Meaning and Balance</h2>
+            <p>Published by Sonly Consulting</p>
+            <p><em>Digital Workbook Edition with Fillable Fields</em></p>
+        </div>
+
+        <h1 id="part3-week1">WEEK 1: MINDSET & EMOTIONAL CLARITY</h1>
+
+        <div class="day-section" id="part3-day1">
+            <h2>Day 1 | Understanding Mindsets</h2>
+            <p><strong>Theme Overview:</strong> Mindsets shape how you perceive and act. Identifying subconscious mindsets (e.g., cynical, perfectionist) enables conscious change.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Mindset Audit: Identify your mindset, its impact, and an alternative.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Your mindset isn’t fixed; you can choose a new lens.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a 'mindset' (e.g., cynical, perfectionist, growth-oriented) that often shapes your decisions in a particular area of your life. Outline its 'Impact' on your actions and propose an 'Alternative Mindset' you'd like to adopt. Reflect on how consciously choosing a new 'lens' can transform your approach.
+                <textarea class="long-response" placeholder="Describe a 'Mindset' (Current, Impact, Alternative). Reflect on choosing a new 'lens' for transformation."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a mindset (e.g., cynical, optimistic) that shapes your decisions.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Mindset Audit, describe how this mindset affects your actions. Propose an alternative mindset.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might this mindset stem from past experiences or fears?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “The mind is everything. What you think, you become.” —Buddha. How does this relate to mindsets?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain your mindset to a friend to spark discussion.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day2">
+            <h2>Day 2 | Affective Labeling</h2>
+            <p><strong>Theme Overview:</strong> Naming emotions (affective labeling) clarifies feelings, enabling rational decisions.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Emotion Map: Name your emotion, describe its trigger, and assess its impact.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Labeling emotions reduces their control over your choices.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall a recent situation where a strong emotion influenced a decision. Describe your 'Emotion Map': name the 'Emotion', identify its 'Trigger', and assess its 'Impact' on your thinking. Reflect on how simply labeling emotions can reduce their control and lead to more rational choices.
+                <textarea class="long-response" placeholder="Outline an 'Emotion Map' (Emotion, Trigger, Impact). Reflect on how labeling emotions improves rational choices."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent strong emotion that influenced a decision.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Emotion Map, name the emotion, its trigger, and its impact on your thinking.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can labeling this emotion improve your future decisions?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Practice affective labeling for a current situation. Explain its effect.</p>
+                <textarea class="bonus-response" placeholder="Labeling + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Labeling + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain affective labeling to a 10-year-old using a story.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day3">
+            <h2>Day 3 | Cognitive Scripts</h2>
+            <p><strong>Theme Overview:</strong> Cognitive scripts (e.g., sequel, crowd-pleaser) are unconscious patterns driving decisions. Recognizing them fosters conscious choice.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Script Analysis: Identify your script, its origin, and a new script.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Scripts aren’t destiny; rewrite them for empowerment.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Identify a 'recurring decision pattern' in your life that feels like an unconscious 'Cognitive Script' (e.g., always saying yes, procrastinating). Describe its 'Origin' (where it might have come from) and then 'Rewrite' a new, empowering 'Script' for a specific situation. Reflect on how consciously rewriting these patterns fosters intentional choice.
+                <textarea class="long-response" placeholder="Identify a 'Cognitive Script' (Origin, New Script). Reflect on rewriting patterns for intentional choice."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recurring decision pattern in your life.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Script Analysis, identify the script’s origin and propose a new script.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How does this script limit or empower your choices?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Rewrite your script for a specific decision. Explain its potential.</p>
+                <textarea class="bonus-response" placeholder="New script + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: New script + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your script with one from a year ago.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day4">
+            <h2>Day 4 | Decision Clarity</h2>
+            <p><strong>Theme Overview:</strong> Conscious decisions balance logic, emotion, and purpose. Clarity comes from aligning choices with values.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Triple Check (Head, Heart, Hand): Check logic (head), emotion (heart), and action (hand).
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Misaligned decisions create inner conflict; align them with purpose.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Think of a recent decision you're unsure about. Describe how you would apply the 'Head-Heart-Hand' framework: what does your 'Head' (logic) suggest, what does your 'Heart' (emotion/intuition) feel, and what 'Action' (hand) aligns with your purpose? Reflect on how aligning these three aspects brings clarity and reduces inner conflict.
+                <textarea class="long-response" placeholder="Apply 'Head-Heart-Hand' to a decision. Reflect on how aligning these aspects brings clarity."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent decision you’re unsure about.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Triple Check (Head, Heart, Hand), analyze logic, emotion, and action. Are they aligned?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can you align this decision with your core values?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “The heart has its reasons which reason knows not.” —Pascal. How does this relate to decision clarity?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain decision clarity to a colleague using a workplace example.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day5">
+            <h2>Day 5 | Self-Anthropology</h2>
+            <p><strong>Theme Overview:</strong> Self-anthropology is observing your energy, emotions, and executive function to understand your inner world.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Observation Log: Track your energy, emotions, and decisions daily.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Observing yourself like an anthropologist reveals hidden patterns.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a typical day, focusing on your 'Observation Log': track your fluctuating 'Energy' levels, the 'Emotions' you experience, and key 'Decisions' you make. Reflect on what patterns emerge and how observing yourself like an anthropologist can reveal hidden insights for better decision-making.
+                <textarea class="long-response" placeholder="Outline a day's 'Observation Log' (Energy, Emotions, Decisions). Reflect on patterns and insights from self-observation."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent day when your energy or emotions shifted noticeably.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Observation Log, track energy, emotions, and decisions for that day. What patterns emerge?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can self-observation improve your decision-making?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Log a current day’s energy and emotions. Explain insights.</p>
+                <textarea class="bonus-response" placeholder="Log + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Log + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Share your self-observation insights with a trusted friend.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part3-checkpoint1">
+            <h2>WEEK 1 CHECKPOINT</h2>
+            <p>Reflect on your progress in mindset and emotional clarity. Which mini-framework deepened your awareness most? What surprised you about your inner world?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h1 id="part3-week2">WEEK 2: PURPOSEFUL LIVING</h1>
+
+        <div class="day-section" id="part3-day6">
+            <h2>Day 6 | Aligning with Purpose</h2>
+            <p><strong>Theme Overview:</strong> Purposeful living aligns actions with core values, creating meaningful decisions.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Purpose Map: Identify values, actions, and alignment gaps.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Actions not tied to purpose feel empty; align them consciously.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Identify a core 'Value' that drives you. Describe your 'Purpose Map': list specific 'Actions' you take that reflect this value, and identify any 'Gaps' where your actions might not align. Reflect on how consciously aligning your daily actions with your core values creates a more meaningful life.
+                <textarea class="long-response" placeholder="Outline your 'Purpose Map' (Value, Actions, Gaps). Reflect on aligning actions with values for meaning."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a core value that drives you.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Purpose Map, list actions reflecting this value. Identify gaps.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can you close one alignment gap?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Propose a purposeful action tied to your value. Explain its impact.</p>
+                <textarea class="bonus-response" placeholder="Action + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Action + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain purposeful living to a 10-year-old using a story.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day7">
+            <h2>Day 7 | Managing Emotional Triggers</h2>
+            <p><strong>Theme Overview:</strong> Emotional triggers can derail purposeful decisions. Managing them fosters clarity.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Trigger Response: Identify trigger, emotion, and conscious response.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Pause and respond, don’t react, to triggers.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall a recent 'Emotional Trigger' you experienced. Describe your 'Trigger Response': identify the 'Trigger' itself, the 'Emotion' it evoked, and a 'Conscious Response' you could choose instead of a reactive one. Reflect on how pausing before responding to triggers fosters greater clarity and control.
+                <textarea class="long-response" placeholder="Outline a 'Trigger Response' (Trigger, Emotion, Conscious Response). Reflect on pausing for clarity and control."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent emotional trigger.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Trigger Response, identify the trigger, emotion, and a conscious response.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can you prepare for this trigger in the future?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “You can’t control the wind, but you can adjust your sails.” —Unknown. How does this relate to triggers?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Diagram your trigger response as a flowchart.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day8">
+            <h2>Day 8 | Complex Life Scenarios</h2>
+            <p><strong>Theme Overview:</strong> Complex life scenarios require balancing purpose, emotion, and logic. Breaking them down consciously clarifies paths.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Scenario Breakdown: List factors, emotions, and purpose-driven solutions.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Complexity is manageable when aligned with purpose.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a 'Complex Life Scenario' you're currently navigating that has no easy answers. Outline a 'Scenario Breakdown': identify the key 'Factors' involved, the 'Emotions' it evokes, and potential 'Purpose-Driven Solutions'. Reflect on how breaking down complexity with purpose as your guide clarifies your path forward.
+                <textarea class="long-response" placeholder="Outline a 'Scenario Breakdown' (Factors, Emotions, Purpose-Driven Solutions). Reflect on clarifying complex paths."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a complex life scenario with no easy answers.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Scenario Breakdown, list factors, emotions, and a purpose-driven solution.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How does your purpose guide your approach to this scenario?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Create a visual map of the scenario with purpose as the center.</p>
+                <textarea class="bonus-response" placeholder="Map description + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Map description + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your approach with someone you admire.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day9">
+            <h2>Day 9 | Mapping a Conscious Life</h2>
+            <p><strong>Theme Overview:</strong> Mapping your thoughts, emotions, and values creates a blueprint for intentional living.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Life Blueprint: Outline thoughts, emotions, and values for a decision.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> A conscious life is designed, not drifted into.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Think about a significant decision shaping your life's direction. Describe your 'Life Blueprint': outline the 'Thoughts', 'Emotions', and core 'Values' that underpin this decision. Reflect on how consciously mapping these elements creates a clear blueprint for intentional living.
+                <textarea class="long-response" placeholder="Outline a 'Life Blueprint' (Thoughts, Emotions, Values). Reflect on mapping for intentional living."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent decision shaping your life’s direction.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Life Blueprint, outline thoughts, emotions, and values for this decision.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> Where might misalignment with values affect this decision?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Create a blueprint for a community project tied to your values.</p>
+                <textarea class="bonus-response" placeholder="Blueprint + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Blueprint + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain the value of conscious living to a community group.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part3-day10">
+            <h2>Day 10 | Living with Intention</h2>
+            <p><strong>Theme Overview:</strong> Intentional living means every choice reflects your purpose, creating a fulfilling life.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Before & After: Compare past and purposeful decision-making.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Intention turns actions into steps toward purpose.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall your most meaningful life choice and a less intentional one. Describe your 'Before & After' comparison: outline the 'Past Choice' and the 'Purposeful Choice', highlighting how intention transformed the latter. Reflect on how every choice can become a step towards a more fulfilling, purpose-driven life.
+                <textarea class="long-response" placeholder="Compare a 'Past Choice' and 'Purposeful Choice' using 'Before & After'. Reflect on how intention transforms actions."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about your most meaningful life choice.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Before & After, compare this choice with a less intentional one.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How will you make future choices more intentional?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Write a letter to your future self about living intentionally.</p>
+                <textarea class="bonus-response" placeholder="Letter + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Letter + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Share your biggest insight on intentional living.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part3-checkpoint2">
+            <h2>WEEK 2 CHECKPOINT</h2>
+            <p>Reflect on purposeful living. Which mini-framework aligned your actions most? How has your sense of purpose evolved?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="reflection-section" id="part3-final-reflection">
+            <h2>FINAL REFLECTION</h2>
+            <p>You’ve crafted a conscious life! Review your journey and reflect:</p>
+            <ul>
+                <li>What’s your biggest insight on purpose and emotion?</li>
+                <li>How will you live intentionally?</li>
+                <li>Who can you inspire with your clarity?</li>
+            </ul>
+            <textarea class="final-reflection-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+            <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+        </div>
+    </div>
+
+    <div class="global-footer">
+        <span id="footer-part-info">The Critical Thinker’s Journey™ – Part 3: Finding Meaning and Balance</span>
+        <span id="footer-page-info">Page 1 of 1</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerPageInfo = document.getElementById('footer-page-info');
+            const footerPartInfo = document.getElementById('footer-part-info');
+            const sections = document.querySelectorAll('.section-container');
+            
+            // Function to update footer based on scroll position
+            function updateFooter() {
+                let currentSectionIndex = 0;
+                for (let i = 0; i < sections.length; i++) {
+                    const rect = sections[i].getBoundingClientRect();
+                    // If the top of the section is in view (or mostly in view)
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        currentSectionIndex = i;
+                        break;
+                    }
+                }
+
+                // Update page number
+                footerPageInfo.textContent = `Page ${currentSectionIndex + 1} of ${sections.length}`;
+
+                // Update part info (static for single part file)
+                footerPartInfo.textContent = `The Critical Thinker’s Journey™ – Part 3: Finding Meaning and Balance`;
+            }
+
+            window.addEventListener('scroll', updateFooter);
+            window.addEventListener('resize', updateFooter);
+            updateFooter(); // Initial call
+        });
+    </script>
+</body>
+</html>

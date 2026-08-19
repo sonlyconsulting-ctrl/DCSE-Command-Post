@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  a { color: #D4AF37; text-decoration: none; }
+  a:hover { color: #E4C662; text-decoration: underline; }
+  body { margin: 0; }
+  :focus-visible { outline: 2px solid #D4AF37; outline-offset: 2px; }
+</style>
+</helmet>
+<div style="font-family: Tahoma, Verdana, 'Segoe UI', sans-serif; color: #1B1B1B; background: #FFFFFF; line-height: 1.55;">
+  <header style="background: #0A192F; padding: 20px clamp(20px,4vw,48px);">
+    <a href="index.html" style="color: #D4AF37; font-size: 14px; font-weight: 700;">&larr; Back to Sonly Consulting</a>
+  </header>
+
+  <section style="background: #0A192F; padding: clamp(48px,7vw,88px) clamp(20px,5vw,48px);">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <p style="color: #D4AF37; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 14px;">Sonly Consulting | Get Your Think On!&trade;</p>
+      <h1 style="font-family: Georgia, serif; color: #FFFFFF; font-size: clamp(32px,4.5vw,48px); margin: 0 0 20px; text-wrap: pretty;">The Critical Thinker&rsquo;s Journey&trade;</h1>
+      <p style="color: #C9D2DC; font-size: 18px; max-width: 62ch; margin: 0;">Think of this as a strategic sparring partner. Built from decades of systems architecture and decision design, The Critical Thinker&rsquo;s Journey&trade; (CTJ) provides the structure needed to cut through noise, test assumptions, and move with steady confidence before committing resources.</p>
+    </div>
+  </section>
+
+  <section style="background: #F7F3EA; padding: clamp(48px,7vw,88px) clamp(20px,5vw,48px);">
+    <div style="max-width: 1100px; margin: 0 auto;">
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 24px;">
+        <sc-for list="{{ parts }}" as="p" hint-placeholder-count="3">
+          <div style="background: #FFFFFF; border: 1px solid #E7DFC9; border-radius: 8px; padding: 28px; display: flex; flex-direction: column; gap: 12px;">
+            <p style="color: #B08D2B; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin: 0;">{{ p.kicker }}</p>
+            <h2 style="color: #0A192F; font-family: Georgia, serif; font-size: 20px; margin: 0;">{{ p.title }}</h2>
+            <p style="color: #4A5568; font-size: 14.5px; margin: 0; flex: 1;">{{ p.desc }}</p>
+            <p style="color: #0A192F; font-size: 24px; font-weight: 700; margin: 6px 0 0;">$35.00</p>
+            <a href="index.html#start-here" style="display: inline-block; text-align: center; background: #0A192F; color: #F2EFE6; font-weight: 700; font-size: 14px; padding: 12px 20px; border-radius: 6px; white-space: nowrap;" style-hover="background:#13324B; text-decoration:none;">{{ p.cta }}</a>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background: #FFFFFF; border: 2px solid #D4AF37; border-radius: 8px; padding: clamp(28px,4vw,40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: center; margin-bottom: 24px;">
+        <div>
+          <p style="display: inline-block; background: #D4AF37; color: #0A192F; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; padding: 5px 12px; border-radius: 999px; margin: 0 0 14px; white-space: nowrap;">Most Popular</p>
+          <h2 style="color: #0A192F; font-family: Georgia, serif; font-size: 26px; margin: 0 0 12px;">Full Series: Parts 1, 2, and 3</h2>
+          <p style="color: #4A5568; font-size: 15.5px; margin: 0;">The complete progressive path. Move from foundational clarity to dynamic execution and long term equilibrium with all three core editions in one synchronized workflow.</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="margin: 0 0 4px;"><span style="color: #9AA3AC; font-size: 16px; text-decoration: line-through;">$105.00</span></p>
+          <p style="color: #0A192F; font-size: 32px; font-weight: 700; margin: 0 0 16px;">$85.00</p>
+          <a href="index.html#start-here" style="display: inline-block; background: #D4AF37; color: #0A192F; font-weight: 700; font-size: 15px; padding: 14px 26px; border-radius: 6px; white-space: nowrap;" style-hover="background:#E4C662; text-decoration:none;">Unlock Full Series &mdash; $85</a>
+        </div>
+      </div>
+
+      <div style="background: #0B192C; border: 2px solid #D4AF37; border-radius: 8px; padding: clamp(28px,4vw,40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; align-items: center;">
+        <div>
+          <p style="display: inline-block; border: 1px solid #D4AF37; color: #D4AF37; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; padding: 5px 12px; border-radius: 999px; margin: 0 0 14px; white-space: nowrap;">Flagship</p>
+          <h2 style="color: #FFFFFF; font-family: Georgia, serif; font-size: 26px; margin: 0 0 12px;">CTJ UNIFIED&trade; Complete Master Suite</h2>
+          <p style="color: #C9D2DC; font-size: 15.5px; margin: 0;">The entire architectural system consolidated into a single continuous master workspace. Includes all three progressive parts, the complete prompt and exercise repository, plus the entry diagnostic Strategic Clarity Assessment&trade;.</p>
+        </div>
+        <div style="text-align: right;">
+          <p style="color: #FFFFFF; font-size: 32px; font-weight: 700; margin: 0 0 16px;">$125.00</p>
+          <a href="index.html#start-here" style="display: inline-block; background: #D4AF37; color: #0A192F; font-weight: 700; font-size: 15px; padding: 14px 26px; border-radius: 6px; white-space: nowrap;" style-hover="background:#E4C662; text-decoration:none;">Deploy CTJ UNIFIED&trade; Suite &mdash; $125</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="background: #FFFFFF; padding: clamp(40px,6vw,64px) clamp(20px,5vw,48px); text-align: center; border-top: 1px solid #E7DFC9;">
+    <p style="color: #33404F; font-size: 16px; margin: 0 0 16px;">Unsure where to start? Start with the Strategic Clarity Assessment&trade; ($25.00).</p>
+    <a href="ctj-strategic-clarity-assessment.html" style="display: inline-block; border: 1px solid #D4AF37; color: #B08D2B; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 6px; white-space: nowrap;" style-hover="background:#D4AF37; color:#0A192F; text-decoration:none;">Take the Assessment</a>
+  </section>
+
+  <footer style="background: #061020; padding: 28px clamp(20px,5vw,48px); text-align: center;">
+    <p style="color: #5A6472; font-size: 13px; margin: 0;">&copy; 2026 Sonly Consulting | The Critical Thinker&rsquo;s Journey&trade;<br />sonlyconsulting.com</p>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      parts: [
+        { kicker: 'Part 1', title: 'Building Clarity and Confidence', desc: 'Clear the cognitive fog. Isolate verified facts from inherited assumptions, audit cognitive blind spots, and build steady confidence in baseline judgment before committing resources.', cta: 'Get Part 1 \u2014 $35' },
+        { kicker: 'Part 2', title: 'Exploring Ideas and Making Moves', desc: 'Transition from passive analysis to active execution. Test strategic hypotheses, map scenario dynamics, and structure calculated risks so complex decisions hold up under real world pressure.', cta: 'Get Part 2 \u2014 $35' },
+        { kicker: 'Part 3', title: 'Finding Meaning and Balance', desc: 'Anchor strategic rigor in long term equilibrium. Build sustainable intellectual stamina, navigate changing terrain, and align high stakes tactics with core personal principles.', cta: 'Get Part 3 \u2014 $35' }
+      ]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

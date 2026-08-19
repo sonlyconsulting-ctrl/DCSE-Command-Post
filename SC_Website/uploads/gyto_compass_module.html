@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYTO Clarity Compass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --smoove-gold: #D4AF37;
+            --emerald-flow: #2E8B57;
+            --silver-mist: #C0C0C0;
+            --graphite-green: #1C3B29;
+            --soft-ivory: #F5F5F0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--soft-ivory) 0%, #fafafa 100%);
+            color: var(--graphite-green);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--graphite-green), var(--emerald-flow));
+            color: var(--soft-ivory);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(28, 59, 41, 0.2);
+        }
+
+        .header h1 {
+            font-family: Tahoma, sans-serif;
+            font-weight: 600;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            display: flex;
+            background: var(--soft-ivory);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-segment {
+            flex: 1;
+            transition: all 0.5s ease;
+        }
+
+        .progress-segment.vision { background: var(--smoove-gold); }
+        .progress-segment.strategy { background: var(--emerald-flow); }
+        .progress-segment.execution { background: var(--graphite-green); }
+        .progress-segment.reflection { background: var(--silver-mist); }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            margin-top: 8px;
+            color: var(--graphite-green);
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--smoove-gold);
+            display: none;
+        }
+
+        .question-card.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: var(--smoove-gold);
+            color: var(--graphite-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .question-text {
+            font-family: Tahoma, sans-serif;
+            font-size: 1.3em;
+            color: var(--graphite-green);
+            flex: 1;
+        }
+
+        .options {
+            margin-top: 25px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--soft-ivory);
+        }
+
+        .option:hover {
+            border-color: var(--smoove-gold);
+            background: white;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: var(--emerald-flow);
+            background: rgba(46, 139, 87, 0.1);
+        }
+
+        .option input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .likert-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            flex: 1;
+            margin: 5px;
+            min-width: 80px;
+        }
+
+        .likert-option:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .likert-option.selected {
+            background: var(--smoove-gold);
+            color: var(--graphite-green);
+        }
+
+        .likert-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .likert-label {
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: var(--graphite-green);
+            color: var(--soft-ivory);
+            border: 2px solid var(--smoove-gold);
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--smoove-gold);
+            color: var(--graphite-green);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            background: var(--emerald-flow);
+            color: var(--silver-mist);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, var(--emerald-flow), var(--smoove-gold));
+            color: var(--soft-ivory);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .results-header h2 {
+            font-family: Tahoma, sans-serif;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .compass-chart {
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+        }
+
+        .persona-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--smoove-gold);
+        }
+
+        .persona-avatar {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        .persona-name {
+            font-family: Tahoma, sans-serif;
+            font-size: 1.8em;
+            color: var(--graphite-green);
+            margin-bottom: 10px;
+        }
+
+        .diagnosis {
+            font-size: 1.2em;
+            color: var(--emerald-flow);
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        .micro-plan {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .day-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--soft-ivory);
+            border-radius: 10px;
+            border-left: 4px solid var(--emerald-flow);
+        }
+
+        .day-number {
+            background: var(--emerald-flow);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .cta-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .consent-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            color: var(--graphite-green);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .likert-scale {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .likert-option {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .compass-chart {
+                width: 250px;
+                height: 250px;
+            }
+
+            .cta-section {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🧭 GYTO Clarity Compass</h1>
+            <p>Every business move begins with clarity. This Compass reads your direction and returns a plan you can act on this week.</p>
+        </div>
+
+        <!-- Consent Screen -->
+        <div id="consentScreen" class="consent-screen">
+            <div class="intro-text">
+                <p>This assessment will take 5-8 minutes to diagnose your business mindset across four key dimensions: <strong>Vision, Strategy, Execution, and Reflection</strong>.</p>
+                <br>
+                <p>You'll receive a personalized 7-day action plan and recommended tools tailored to your unique business archetype.</p>
+            </div>
+            <button class="btn" onclick="startAssessment()">🧭 Take the Compass Assessment</button>
+        </div>
+
+        <!-- Assessment -->
+        <div id="assessmentContainer" style="display: none;">
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-segment vision" style="width: 0%"></div>
+                    <div class="progress-segment strategy" style="width: 0%"></div>
+                    <div class="progress-segment execution" style="width: 0%"></div>
+                    <div class="progress-segment reflection" style="width: 0%"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>Vision</span>
+                    <span>Strategy</span>
+                    <span>Execution</span>
+                    <span>Reflection</span>
+                </div>
+            </div>
+
+            <!-- Questions will be inserted here -->
+            <div id="questionsContainer"></div>
+
+            <!-- Navigation -->
+            <div class="navigation">
+                <button class="btn" id="prevBtn" onclick="previousQuestion()" disabled>← Previous</button>
+                <span id="questionCounter">1 of 16</span>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Next →</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="results-screen">
+            <div class="results-header">
+                <h2>Your Compass Reading</h2>
+                <p id="completionMessage">Here's where you stand today—and a week that moves you forward.</p>
+            </div>
+
+            <!-- Compass Chart -->
+            <canvas id="compassChart" class="compass-chart" width="300" height="300"></canvas>
+
+            <!-- Persona Card -->
+            <div class="persona-card">
+                <div id="personaAvatar" class="persona-avatar">👤</div>
+                <div id="personaName" class="persona-name">Your Business Archetype</div>
+                <div id="personaNarrative" class="persona-narrative">Discovering your unique path...</div>
+            </div>
+
+            <!-- Diagnosis -->
+            <div id="diagnosis" class="diagnosis">Analyzing your business compass...</div>
+
+            <!-- 7-Day Micro Plan -->
+            <div class="micro-plan">
+                <h3 style="color: var(--graphite-green); margin-bottom: 20px; font-family: Tahoma, sans-serif;">Your 7-Day Micro-Plan</h3>
+                <div id="microPlan"></div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="cta-section">
+                <button class="btn" onclick="downloadPDF()">📧 Email My Plan (PDF)</button>
+                <button class="btn" onclick="retakeCompass()">🧭 Retake Compass</button>
+                <button class="btn" onclick="startBlueprints()">📐 Blueprints to Strategy - Start Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Assessment Data Structure
+        let currentQuestion = 0;
+        let answers = {};
+        let scores = { vision: 0, strategy: 0, execution: 0, reflection: 0 };
+        let userPersona = '';
+
+        // Questions Database
+        const questions = [
+            {
+                id: 'q1',
+                text: 'My long-term business vision is clearly defined and compelling.',
+                type: 'likert',
+                weights: { 1: [0,0,0,2], 2: [2,1,0,1], 3: [5,2,1,1], 4: [8,2,2,0], 5: [10,2,2,0] }
+            },
+            {
+                id: 'q2',
+                text: 'I manage my projects and tasks with a written plan or digital tool.',
+                type: 'likert',
+                weights: { 1: [0,0,0,3], 2: [0,2,1,2], 3: [0,5,3,1], 4: [0,8,5,0], 5: [0,10,5,0] }
+            },
+            {
+                id: 'q3',
+                text: 'I consistently ship small tasks and projects, even when they\'re not perfect.',
+                type: 'likert',
+                weights: { 1: [0,0,0,3], 2: [0,1,2,2], 3: [0,2,5,1], 4: [0,2,8,0], 5: [0,2,10,0] }
+            },
+            {
+                id: 'q4',
+                text: 'I regularly review what worked and what failed in my business efforts.',
+                type: 'likert',
+                weights: { 1: [0,0,0,2], 2: [0,0,1,5], 3: [0,0,2,7], 4: [0,0,2,9], 5: [0,0,2,10] }
+            },
+            {
+                id: 'q5',
+                text: 'Which platforms do you currently use for your business? (Select all that apply)',
+                type: 'multi',
+                options: [
+                    { text: 'YouTube', value: 'youtube', weights: [0,2,3,0] },
+                    { text: 'TikTok/Instagram Reels', value: 'tiktok', weights: [0,0,3,0] },
+                    { text: 'Substack/Newsletter', value: 'substack', weights: [0,3,0,2] },
+                    { text: 'Wix/WordPress Website', value: 'website', weights: [0,3,2,0] },
+                    { text: 'Facebook/LinkedIn', value: 'social', weights: [1,2,1,1] },
+                    { text: 'None of the above', value: 'none', weights: [0,0,0,2] }
+                ]
+            },
+            {
+                id: 'q6',
+                text: 'How much time per week can you realistically dedicate to your business?',
+                type: 'single',
+                options: [
+                    { text: 'Less than 3 hours', value: '<3h', weights: [0,0,0,3] },
+                    { text: '3-7 hours', value: '3-7h', weights: [0,0,5,0] },
+                    { text: '8-12 hours', value: '8-12h', weights: [0,3,4,0] },
+                    { text: '12+ hours', value: '12+h', weights: [5,3,3,0] }
+                ]
+            },
+            {
+                id: 'q7',
+                text: 'What\'s your comfort level for investing in business tools and software?',
+                type: 'single',
+                options: [
+                    { text: '$0-10 per month', value: '$0-10', weights: [0,0,0,2] },
+                    { text: '$10-30 per month', value: '$10-30', weights: [0,2,1,0] },
+                    { text: '$30-99 per month', value: '$30-99', weights: [0,3,2,0] },
+                    { text: '$100+ per month', value: '$100+', weights: [3,3,2,0] }
+                ]
+            },
+            {
+                id: 'q8',
+                text: 'Which business archetype resonates most with your current situation?',
+                type: 'single',
+                options: [
+                    { text: 'Parenting while building a blog/community', value: 'tina', weights: [2,3,2,3] },
+                    { text: 'Sports podcast with friends, looking for subscribers/investors', value: 'sports_pod', weights: [3,2,3,2] },
+                    { text: 'Health-focused content creator interested in clean entertainment', value: 'leslie_camelia', weights: [2,3,2,3] },
+                    { text: 'Young working parent, travel-focused, social media native', value: 'crystal_shy', weights: [2,1,4,1] },
+                    { text: 'Faith-based content creator (YouTube series on Bible/history)', value: 'jjr', weights: [4,3,3,2] },
+                    { text: 'Newly retired, interested in quizzes/games for mental agility', value: 'fred_clarence', weights: [1,2,2,4] },
+                    { text: 'Ex-professional looking to revamp existing business/website', value: 'bmp', weights: [3,4,3,2] },
+                    { text: 'Nonprofit leader focused on fundraising and operations', value: 'nonprofit', weights: [3,4,2,3] },
+                    { text: 'Local service provider needing better SEO and lead funnels', value: 'x5o', weights: [2,4,3,1] },
+                    { text: 'Engineer/expert building lifestyle brand (teaching/photography)', value: 'ivan', weights: [4,3,3,2] }
+                ]
+            },
+            {
+                id: 'q9',
+                text: 'What\'s your biggest blocker right now?',
+                type: 'single',
+                options: [
+                    { text: 'Lack of clarity on direction/goals', value: 'clarity', weights: [6,0,0,0] },
+                    { text: 'Need better planning and systems', value: 'planning', weights: [0,6,0,0] },
+                    { text: 'Time management and productivity', value: 'time', weights: [0,0,6,0] },
+                    { text: 'Consistency and follow-through', value: 'consistency', weights: [0,0,0,6] }
+                ]
+            },
+            {
+                id: 'q10',
+                text: 'What\'s your preferred learning style?',
+                type: 'single',
+                options: [
+                    { text: 'Video tutorials and demonstrations', value: 'video', weights: [0,0,2,0] },
+                    { text: 'Written guides and documentation', value: 'written', weights: [0,0,0,3] },
+                    { text: 'Templates and frameworks I can customize', value: 'templates', weights: [0,3,0,0] },
+                    { text: 'One-on-one calls and live guidance', value: 'calls', weights: [2,0,0,0] }
+                ]
+            },
+            {
+                id: 'q11',
+                text: 'How comfortable are you with AI tools and automation?',
+                type: 'likert',
+                weights: { 1: [0,0,0,5], 2: [0,0,1,3], 3: [0,1,2,1], 4: [0,2,3,0], 5: [0,3,3,0] }
+            },
+            {
+                id: 'q12',
+                text: 'If you could solve one business challenge this month, what would it be?',
+                type: 'single',
+                options: [
+                    { text: 'Get clear on my niche and target audience', value: 'niche', weights: [4,2,0,0] },
+                    { text: 'Build a systematic content creation process', value: 'content_system', weights: [0,4,2,0] },
+                    { text: 'Launch my first product or service offering', value: 'first_launch', weights: [1,1,4,0] },
+                    { text: 'Develop better habits for consistent execution', value: 'habits', weights: [0,0,2,4] }
+                ]
+            },
+            {
+                id: 'q13',
+                text: 'When starting a new project, I typically:',
+                type: 'single',
+                options: [
+                    { text: 'Jump right in and figure it out as I go', value: 'jump_in', weights: [0,0,3,1] },
+                    { text: 'Do extensive research before taking action', value: 'research', weights: [2,0,0,3] },
+                    { text: 'Create a detailed plan with milestones', value: 'plan', weights: [1,4,1,0] },
+                    { text: 'Start with the end goal and work backwards', value: 'backwards', weights: [3,2,0,1] }
+                ]
+            },
+            {
+                id: 'q14',
+                text: 'Your biggest win in the past 6 months was probably:',
+                type: 'single',
+                options: [
+                    { text: 'Having a breakthrough insight about my direction', value: 'insight', weights: [3,1,0,2] },
+                    { text: 'Implementing a new system or process', value: 'system', weights: [0,3,2,1] },
+                    { text: 'Completing and shipping something important', value: 'shipping', weights: [0,1,4,0] },
+                    { text: 'Learning from a major mistake or failure', value: 'learning', weights: [0,0,1,4] }
+                ]
+            },
+            {
+                id: 'q15',
+                text: 'If your business was a vehicle, it would be:',
+                type: 'single',
+                options: [
+                    { text: 'A rocket ship - high potential but needs the right fuel', value: 'rocket', weights: [4,1,1,0] },
+                    { text: 'A well-tuned sports car - fast and efficient when focused', value: 'sports_car', weights: [1,3,3,0] },
+                    { text: 'A reliable pickup truck - steady progress, gets things done', value: 'pickup', weights: [0,2,3,2] },
+                    { text: 'A GPS device - good at finding direction but needs someone to drive', value: 'gps', weights: [0,1,0,4] }
+                ]
+            },
+            {
+                id: 'q16',
+                text: 'Success for you means:',
+                type: 'single',
+                options: [
+                    { text: 'Building something meaningful that lasts', value: 'meaningful', weights: [4,2,1,1] },
+                    { text: 'Creating efficient systems that scale', value: 'systems', weights: [1,4,2,1] },
+                    { text: 'Consistently shipping value to people who need it', value: 'value', weights: [1,1,4,0] },
+                    { text: 'Continuously growing and learning from experience', value: 'growth', weights: [0,1,1,4] }
+                ]
+            }
+        ];
+
+        // Persona Database
+        const personas = {
+            'tina': {
+                name: 'The Community Builder',
+                avatar: '👩‍👧‍👦',
+                narrative: 'You balance family life with building meaningful connections through content and community.',
+                tools: ['Blog templates', 'Community management tools', 'Content calendars', 'Email automation'],
+                plan: {
+                    day1: 'Define your community niche and first week\'s content themes',
+                    day2: 'Set up blog structure and email capture system',
+                    day3: 'Create first authentic story post + engagement prompts',
+                    day4: 'Share in 2-3 relevant Facebook/LinkedIn groups',
+                    day5: 'Launch weekly email newsletter with personal insights',
+                    day6: 'Engage with comments and start conversations',
+                    day7: 'Reflect: what resonated most? Plan next week\'s themes'
+                }
+            },
+            'sports_pod': {
+                name: 'The Sports Pod Crew',
+                avatar: '🎙️',
+                narrative: 'You and your friends have great chemistry and sports insights—time to build your audience and revenue.',
+                tools: ['Podcast hosting', 'Video editing', 'Sponsorship templates', 'Social media scheduler'],
+                plan: {
+                    day1: 'Create show brand kit (logo, intro, social templates)',
+                    day2: 'Record pilot episode with clear format and segments',
+                    day3: 'Edit and publish with SEO-optimized title and description',
+                    day4: 'Create Instagram/TikTok highlight clips',
+                    day5: 'Launch on Spotify, Apple, YouTube with cross-promotion',
+                    day6: 'Reach out to 5 potential interview guests',
+                    day7: 'Review analytics, gather feedback, plan episode 2'
+                }
+            },
+            'leslie_camelia': {
+                name: 'The Wellness Curator',
+                avatar: '🌱',
+                narrative: 'You\'re passionate about health and clean living, ready to share curated insights with like-minded families.',
+                tools: ['Health content templates', 'Recipe formatters', 'Instagram schedulers', 'Email funnels'],
+                plan: {
+                    day1: 'Choose 3 wellness pillars (nutrition, mindfulness, family)',
+                    day2: 'Create content calendar with tips, recipes, recommendations',
+                    day3: 'Film/photograph first week of content (batch creation)',
+                    day4: 'Write email sequence introducing your wellness philosophy',
+                    day5: 'Post daily across Instagram/Facebook with engagement hooks',
+                    day6: 'Connect with other wellness creators for collaboration',
+                    day7: 'Reflect: which content got most engagement? Double down'
+                }
+            },
+            'crystal_shy': {
+                name: 'The Travel Social',
+                avatar: '✈️',
+                narrative: 'You\'re balancing work and family while building a travel-focused brand on social platforms.',
+                tools: ['TikTok scheduler', 'Travel templates', 'Photo editing apps', 'Booking affiliate links'],
+                plan: {
+                    day1: 'Plan 7 days of travel content (tips, destinations, family hacks)',
+                    day2: 'Create TikTok templates for quick daily videos',
+                    day3: 'Film batch content: packing tips, travel with kids',
+                    day4: 'Set up affiliate partnerships (hotels, travel gear)',
+                    day5: 'Post daily TikToks with trending audio and hashtags',
+                    day6: 'Cross-post to Instagram Reels and Facebook',
+                    day7: 'Analyze what went viral, plan next week\'s content'
+                }
+            },
+            'jjr': {
+                name: 'The Faith Builder',
+                avatar: '✝️',
+                narrative: 'You\'re passionate about sharing biblical history and faith insights through engaging YouTube content.',
+                tools: ['YouTube Studio', 'Video templates', 'Scripture graphics', 'Voiceover tools'],
+                plan: {
+                    day1: 'Choose first series topic + create channel art and intro',
+                    day2: 'Script first episode with AI assistance and B-roll list',
+                    day3: 'Record voiceover and edit with visual storytelling',
+                    day4: 'Upload with SEO-optimized title, description, and tags',
+                    day5: 'Create YouTube Shorts from main content',
+                    day6: 'Share in faith communities and via email newsletter',
+                    day7: 'Review metrics and plan episode 2 based on feedback'
+                }
+            },
+            'fred_clarence': {
+                name: 'The Quiz Masters',
+                avatar: '🧠',
+                narrative: 'You\'re newly retired and excited to create engaging brain games and quizzes for mental agility.',
+                tools: ['Quiz builders', 'Canva templates', 'Email sequences', 'WordPress plugins'],
+                plan: {
+                    day1: 'Choose quiz themes and create 20 sample questions',
+                    day2: 'Design Canva cards and PDF mini-book templates',
+                    day3: 'Build interactive quiz page on your website',
+                    day4: 'Launch email challenge: "7 Days of Brain Games"',
+                    day5: 'Send daily quiz with explanations and tips',
+                    day6: 'Create social media teasers for weekend bonus round',
+                    day7: 'Gather feedback and plan monthly quiz calendar'
+                }
+            },
+            'bmp': {
+                name: 'The Business Revamper',
+                avatar: '🔧',
+                narrative: 'You\'re leveraging professional experience to revamp and modernize your business approach.',
+                tools: ['Website builders', 'CRM systems', 'Analytics tools', 'Process automation'],
+                plan: {
+                    day1: 'Audit current business: what\'s working, what needs updating',
+                    day2: 'Redesign website homepage with clear value proposition',
+                    day3: 'Set up CRM and automated follow-up sequences',
+                    day4: 'Create lead magnet (guide/checklist) for your expertise',
+                    day5: 'Launch LinkedIn content series showcasing insights',
+                    day6: 'Reach out to past clients with new service offerings',
+                    day7: 'Review week 1 metrics and refine messaging/offers'
+                }
+            },
+            'nonprofit': {
+                name: 'The Nonprofit Navigator',
+                avatar: '🤝',
+                narrative: 'You\'re focused on scaling fundraising and operations through strategic automation and AI.',
+                tools: ['Donor CRM', 'Grant databases', 'Email automation', 'Impact tracking'],
+                plan: {
+                    day1: 'Map donor journey and identify automation opportunities',
+                    day2: 'Set up donor segmentation and personalized campaigns',
+                    day3: 'Create grant application template and tracking system',
+                    day4: 'Launch monthly newsletter with impact stories',
+                    day5: 'Implement volunteer management automation',
+                    day6: 'Develop corporate partnership outreach sequence',
+                    day7: 'Review KPIs and plan next month\'s fundraising focus'
+                }
+            },
+            'x5o': {
+                name: 'The Local Service Pro',
+                avatar: '🚗',
+                narrative: 'You provide essential local services and need better online visibility and lead generation.',
+                tools: ['Google My Business', 'Local SEO tools', 'Landing page builders', 'Review management'],
+                plan: {
+                    day1: 'Optimize Google My Business with photos and services',
+                    day2: 'Create service-specific landing pages with local keywords',
+                    day3: 'Set up automated review request system',
+                    day4: 'Launch Facebook/NextDoor local community presence',
+                    day5: 'Create referral program for existing customers',
+                    day6: 'Build email sequence for service reminders/upsells',
+                    day7: 'Track local search rankings and optimize based on data'
+                }
+            },
+            'ivan': {
+                name: 'The Lifestyle Builder',
+                avatar: '📸',
+                narrative: 'You\'re an engineer-explorer building a lifestyle brand around teaching, photography, and adventure.',
+                tools: ['Portfolio builders', 'Course platforms', 'Booking systems', 'Affiliate programs'],
+                plan: {
+                    day1: 'Define signature service: lessons, tours, or photo packages',
+                    day2: 'Build portfolio website with booking and payment system',
+                    day3: 'Create first digital product (photo presets/travel guide)',
+                    day4: 'Set up course platform for teaching your expertise',
+                    day5: 'Launch newsletter: "Field Notes" sharing adventures',
+                    day6: 'Create Instagram content showcasing lifestyle/skills',
+                    day7: 'Analyze what sells best and plan next month\'s offerings'
+                }
+            }
+        };
+
+        function startAssessment() {
+            document.getElementById('consentScreen').style.display = 'none';
+            document.getElementById('assessmentContainer').style.display = 'block';
+            generateQuestions();
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function generateQuestions() {
+            const container = document.getElementById('questionsContainer');
+            
+            questions.forEach((question, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+                
+                let optionsHtml = '';
+                
+                if (question.type === 'likert') {
+                    optionsHtml = `
+                        <div class="likert-scale">
+                            ${[1,2,3,4,5].map(num => `
+                                <div class="likert-option" onclick="selectLikert(${index}, ${num})">
+                                    <div class="likert-number">${num}</div>
+                                    <div class="likert-label">${num === 1 ? 'Strongly Disagree' : num === 2 ? 'Disagree' : num === 3 ? 'Neutral' : num === 4 ? 'Agree' : 'Strongly Agree'}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (question.type === 'single') {
+                    optionsHtml = question.options.map((option, optIndex) => `
+                        <div class="option" onclick="selectSingle(${index}, '${option.value}')">
+                            <input type="radio" name="q${index}" value="${option.value}">
+                            <label>${option.text}</label>
+                        </div>
+                    `).join('');
+                } else if (question.type === 'multi') {
+                    optionsHtml = question.options.map((option, optIndex) => `
+                        <div class="option" onclick="toggleMulti(${index}, '${option.value}')">
+                            <input type="checkbox" name="q${index}" value="${option.value}">
+                            <label>${option.text}</label>
+                        </div>
+                    `).join('');
+                }
+                
+                questionCard.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">${index + 1}</div>
+                        <div class="question-text">${question.text}</div>
+                    </div>
+                    <div class="options">
+                        ${optionsHtml}
+                    </div>
+                `;
+                
+                container.appendChild(questionCard);
+            });
+        }
+
+        function selectLikert(questionIndex, value) {
+            // Remove previous selection
+            document.querySelectorAll(`#question-${questionIndex} .likert-option`).forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.currentTarget.classList.add('selected');
+            
+            // Store answer
+            answers[questions[questionIndex].id] = value;
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function selectSingle(questionIndex, value) {
+            // Remove previous selections
+            document.querySelectorAll(`#question-${questionIndex} .option`).forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection
+            event.currentTarget.classList.add('selected');
+            event.currentTarget.querySelector('input').checked = true;
+            
+            // Store answer
+            answers[questions[questionIndex].id] = value;
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function toggleMulti(questionIndex, value) {
+            const option = event.currentTarget;
+            const checkbox = option.querySelector('input');
+            const questionId = questions[questionIndex].id;
+            
+            // Toggle selection
+            option.classList.toggle('selected');
+            checkbox.checked = !checkbox.checked;
+            
+            // Store answers array
+            if (!answers[questionId]) answers[questionId] = [];
+            
+            if (checkbox.checked) {
+                if (!answers[questionId].includes(value)) {
+                    answers[questionId].push(value);
+                }
+            } else {
+                answers[questionId] = answers[questionId].filter(v => v !== value);
+            }
+            
+            // Enable next button if any option selected
+            document.getElementById('nextBtn').disabled = answers[questionId].length === 0;
+        }
+
+        function showQuestion(index) {
+            // Hide all questions
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Show current question
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            // Update counter
+            document.getElementById('questionCounter').textContent = `${index + 1} of 16`;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = !answers[questions[index].id];
+            
+            if (index === 15) {
+                document.getElementById('nextBtn').textContent = 'Complete Assessment →';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next →';
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+                updateProgress();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+                updateProgress();
+            } else {
+                completeAssessment();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            const segmentWidth = progress / 4;
+            
+            document.querySelectorAll('.progress-segment').forEach((segment, index) => {
+                const startPercent = index * 25;
+                const endPercent = (index + 1) * 25;
+                
+                if (progress >= endPercent) {
+                    segment.style.width = '25%';
+                } else if (progress > startPercent) {
+                    segment.style.width = `${progress - startPercent}%`;
+                } else {
+                    segment.style.width = '0%';
+                }
+            });
+        }
+
+        function completeAssessment() {
+            calculateScores();
+            determinePersona();
+            showResults();
+        }
+
+        function calculateScores() {
+            scores = { vision: 0, strategy: 0, execution: 0, reflection: 0 };
+            
+            questions.forEach(question => {
+                const answer = answers[question.id];
+                if (!answer) return;
+                
+                if (question.type === 'likert') {
+                    const weights = question.weights[answer];
+                    scores.vision += weights[0];
+                    scores.strategy += weights[1];
+                    scores.execution += weights[2];
+                    scores.reflection += weights[3];
+                } else if (question.type === 'single') {
+                    const option = question.options.find(opt => opt.value === answer);
+                    if (option && option.weights) {
+                        scores.vision += option.weights[0];
+                        scores.strategy += option.weights[1];
+                        scores.execution += option.weights[2];
+                        scores.reflection += option.weights[3];
+                    }
+                } else if (question.type === 'multi') {
+                    answer.forEach(value => {
+                        const option = question.options.find(opt => opt.value === value);
+                        if (option && option.weights) {
+                            scores.vision += option.weights[0];
+                            scores.strategy += option.weights[1];
+                            scores.execution += option.weights[2];
+                            scores.reflection += option.weights[3];
+                        }
+                    });
+                }
+            });
+            
+            // Normalize to 0-100
+            const maxScore = Math.max(scores.vision, scores.strategy, scores.execution, scores.reflection);
+            const normalizeScore = (score) => Math.min(100, Math.floor((score / (maxScore || 1)) * 100));
+            
+            scores.vision = normalizeScore(scores.vision);
+            scores.strategy = normalizeScore(scores.strategy);
+            scores.execution = normalizeScore(scores.execution);
+            scores.reflection = normalizeScore(scores.reflection);
+        }
+
+        function determinePersona() {
+            // Primary determination from Q8
+            const q8Answer = answers['q8'];
+            if (q8Answer && personas[q8Answer]) {
+                userPersona = q8Answer;
+            } else {
+                // Fallback to highest scoring axis
+                const highestAxis = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+                
+                // Map to persona based on patterns
+                const personaMap = {
+                    vision: ['ivan', 'jjr', 'bmp'],
+                    strategy: ['nonprofit', 'x5o', 'bmp'],
+                    execution: ['crystal_shy', 'sports_pod', 'ivan'],
+                    reflection: ['fred_clarence', 'tina', 'leslie_camelia']
+                };
+                
+                const candidates = personaMap[highestAxis];
+                userPersona = candidates[Math.floor(Math.random() * candidates.length)];
+            }
+        }
+
+        function showResults() {
+            document.getElementById('assessmentContainer').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            
+            // Update persona display
+            const persona = personas[userPersona];
+            document.getElementById('personaAvatar').textContent = persona.avatar;
+            document.getElementById('personaName').textContent = persona.name;
+            document.getElementById('personaNarrative').textContent = persona.narrative;
+            
+            // Generate diagnosis
+            const highestAxis = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const secondAxis = Object.keys(scores).filter(k => k !== highestAxis).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            
+            const diagnosis = `You're primed for ${highestAxis.charAt(0).toUpperCase() + highestAxis.slice(1)} and ${secondAxis.charAt(0).toUpperCase() + secondAxis.slice(1)}—let's turn clarity into motion.`;
+            document.getElementById('diagnosis').textContent = diagnosis;
+            
+            // Create compass chart
+            drawCompassChart();
+            
+            // Display micro plan
+            displayMicroPlan();
+        }
+
+        function drawCompassChart() {
+            const canvas = document.getElementById('compassChart');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 120;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background circles
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 4; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, (radius * i) / 4, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            
+            // Draw axes
+            ctx.strokeStyle = '#c0c0c0';
+            ctx.lineWidth = 1;
+            const axes = [
+                { label: 'Vision', angle: -Math.PI / 2, color: '#D4AF37' },
+                { label: 'Strategy', angle: 0, color: '#2E8B57' },
+                { label: 'Execution', angle: Math.PI / 2, color: '#1C3B29' },
+                { label: 'Reflection', angle: Math.PI, color: '#C0C0C0' }
+            ];
+            
+            axes.forEach(axis => {
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(
+                    centerX + radius * Math.cos(axis.angle),
+                    centerY + radius * Math.sin(axis.angle)
+                );
+                ctx.stroke();
+            });
+            
+            // Draw data polygon
+            ctx.beginPath();
+            ctx.strokeStyle = '#2E8B57';
+            ctx.fillStyle = 'rgba(46, 139, 87, 0.2)';
+            ctx.lineWidth = 3;
+            
+            axes.forEach((axis, index) => {
+                const score = scores[axis.label.toLowerCase()] / 100;
+                const x = centerX + radius * score * Math.cos(axis.angle);
+                const y = centerY + radius * score * Math.sin(axis.angle);
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            
+            // Draw score points and labels
+            ctx.fillStyle = '#1C3B29';
+            ctx.font = '14px Tahoma, sans-serif';
+            ctx.textAlign = 'center';
+            
+            axes.forEach(axis => {
+                const score = scores[axis.label.toLowerCase()] / 100;
+                const pointX = centerX + radius * score * Math.cos(axis.angle);
+                const pointY = centerY + radius * score * Math.sin(axis.angle);
+                
+                // Draw point
+                ctx.beginPath();
+                ctx.arc(pointX, pointY, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = axis.color;
+                ctx.fill();
+                
+                // Draw label
+                const labelX = centerX + (radius + 30) * Math.cos(axis.angle);
+                const labelY = centerY + (radius + 30) * Math.sin(axis.angle);
+                
+                ctx.fillStyle = '#1C3B29';
+                ctx.fillText(axis.label, labelX, labelY);
+                ctx.fillText(scores[axis.label.toLowerCase()], labelX, labelY + 15);
+            });
+        }
+
+        function displayMicroPlan() {
+            const persona = personas[userPersona];
+            const planContainer = document.getElementById('microPlan');
+            
+            let planHtml = '';
+            Object.entries(persona.plan).forEach(([day, task], index) => {
+                planHtml += `
+                    <div class="day-item">
+                        <div class="day-number">${index + 1}</div>
+                        <div class="day-content">
+                            <strong>Day ${index + 1}:</strong> ${task}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            planContainer.innerHTML = planHtml;
+        }
+
+        function downloadPDF() {
+            alert('📧 Your personalized plan has been sent to your email! Check your inbox in a few minutes.');
+        }
+
+        function retakeCompass() {
+            // Reset everything
+            currentQuestion = 0;
+            answers = {};
+            scores = { vision: 0, strategy: 0, execution: 0, reflection: 0 };
+            userPersona = '';
+            
+            // Reset form states
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+                const input = option.querySelector('input');
+                if (input) input.checked = false;
+            });
+            
+            document.querySelectorAll('.likert-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Show assessment screen
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('assessmentContainer').style.display = 'block';
+            
+            showQuestion(0);
+            updateProgress();
+        }
+
+        function startBlueprints() {
+            alert('🚀 Redirecting to your Strategic Clarity Blueprint dashboard...');
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            // Auto-show consent screen
+        });
+    </script>
+</body>
+</html>
