@@ -1,0 +1,44 @@
+name: V7.1 promoted artifact SHA-256 report
+
+on:
+  pull_request:
+    paths:
+      - 'governance/v7.1/DCSE_Master_Profile_v7.1.md'
+      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md'
+      - '.github/workflows/v7-1-promoted-artifact-hashes.yml'
+  push:
+    branches:
+      - governance/v7.1-owned-product-harness
+    paths:
+      - 'governance/v7.1/DCSE_Master_Profile_v7.1.md'
+      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md'
+      - '.github/workflows/v7-1-promoted-artifact-hashes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hash-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate SHA-256 report
+        shell: bash
+        run: |
+          sha256sum \
+            governance/v7.1/DCSE_Master_Profile_v7.1.md \
+            governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md \
+            governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md \
+            | tee v7.1-promoted-artifact-sha256.txt
+
+      - name: Upload SHA-256 report
+        uses: actions/upload-artifact@v4
+        with:
+          name: v7.1-promoted-artifact-sha256
+          path: v7.1-promoted-artifact-sha256.txt
+          if-no-files-found: error
+          retention-days: 30

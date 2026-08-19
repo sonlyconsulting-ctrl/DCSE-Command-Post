@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" data-bg-color="#07090e">
+    <rect width="200" height="200" fill="#07090e"/>
+    <circle cx="100" cy="85" r="28" fill="#ea580c"/>
+    <path d="M72 85h56M100 57v56M79 66a40 40 0 0 0 0 38M121 66a40 40 0 0 1 0 38" stroke="#07090e" stroke-width="3" fill="none"/>
+    <text x="100" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="20" fill="#ffffff">B4L</text>
+  </svg>
+</template>
+<helmet data-dc-atomics>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="./image-slot.js"></script>
+  <style>
+    body { margin: 0; background: #07090e; font-family: 'Plus Jakarta Sans', sans-serif; }
+    a { color: #0ea5e9; }
+    a:hover { color: #38bdf8; }
+    @keyframes rec-pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } }
+    @keyframes bounce-ball { 0%,50%,100% { transform: translateY(0); } 25% { transform: translateY(-9px); } }
+    @keyframes letter-swing { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+    input, textarea, button { font-family: inherit; }
+  </style>
+</helmet>
+
+<div style="min-height: 100vh; display: flex; justify-content: center; padding: 0; background: #07090e; background-image: radial-gradient(circle at 15% 10%, rgba(14,165,233,0.10) 0%, transparent 40%), radial-gradient(circle at 85% 90%, rgba(99,102,241,0.10) 0%, transparent 45%);">
+  <div style="width: 100%; max-width: 480px; min-height: 100vh; display: flex; flex-direction: column; background: rgba(9,12,20,0.6); box-shadow: 0 0 60px rgba(0,0,0,0.5); position: relative; --accent: {{ accentHex }}; --accent-rgb: {{ accentRgb }}; --tscale: {{ textScale }};">
+
+    <!-- Top bar -->
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 20; background: rgba(9,12,20,0.85); backdrop-filter: blur(10px);">
+      <div style="display: flex; align-items: center; gap: 7px;">
+        <img src="assets/b4l_logo.jpg" alt="Logo" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent); flex: none;">
+        <div style="width: 11px; height: 11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fb923c, #ea580c); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35); animation: bounce-ball 1s ease-in-out infinite; flex: none;"></div>
+        <div style="display: flex; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: calc(13.5px * var(--tscale)); letter-spacing: 0.01em; color: #fff; white-space: nowrap;">
+          <span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0s;">B</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.06s;">a</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.12s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.18s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.24s;">e</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.3s;">r</span><span style="display:inline-block; color: var(--accent); animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.36s;">4</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.42s;">L</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.48s;">i</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.54s;">f</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.6s;">e</span>
+        </div>
+      </div>
+      <div style="flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent);"></div>
+    </div>
+
+    <!-- Body -->
+    <div style="flex: 1; overflow-y: auto; padding: 20px 18px 90px;">
+
+      <!-- HOME TAB -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <div style="font-size: calc(11px * var(--tscale)); font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;">Welcome back</div>
+            <h1 style="font-family: 'Outfit', sans-serif; font-size: calc(26px * var(--tscale)); font-weight: 800; color: #fff; margin: 0; letter-spacing: -0.02em;">{{ displayName }}</h1>
+            <p style="font-size: calc(13px * var(--tscale)); color: #94a3b8; margin: 6px 0 0;">Here's where your program stands today.</p>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.03); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 14px 16px;">
+            <div style="font-family: 'Outfit', sans-serif; font-size: calc(11px * var(--tscale)); font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 4px;">Core Definition</div>
+            <div style="font-size: calc(13px * var(--tscale)); color: #f1f5f9; font-style: italic; line-height: 1.5;">A Baller is a person who consistently develops their Character, Stewardship, Responsibility, Discernment, Discipline, and Service to transition successfully to total independent adulthood.</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 14px;">
+              <div style="font-size: calc(10.5px * var(--tscale)); font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Modules</div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: calc(22px * var(--tscale)); font-weight: 800; color: #fff; margin: 4px 0 8px;">0 / 6</div>
+              <div style="height: 6px; background: rgba(0,0,0,0.4); border-radius: 99px; overflow: hidden;"><div style="height: 100%; width: 0%; background: var(--accent); border-radius: 99px;"></div></div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 14px;">
+              <div style="font-size: calc(10.5px * var(--tscale)); font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Readiness</div>
+              <div style="font-family: 'Outfit', sans-serif; font-size: calc(22px * var(--tscale)); font-weight: 800; color: #fff; margin: 4px 0 8px;">0%</div>
+              <div style="height: 6px; background: rgba(0,0,0,0.4); border-radius: 99px; overflow: hidden;"><div style="height: 100%; width: 0%; background: var(--accent); border-radius: 99px;"></div></div>
+            </div>
+          </div>
+
+          <div style="background: rgba(var(--accent-rgb), 0.08); border: 1px solid rgba(var(--accent-rgb), 0.25); border-radius: 12px; padding: 10px 14px; font-size: calc(12px * var(--tscale)); color: #fff; font-weight: 600;">Current phase &middot; Level 1: Getting Started</div>
+
+          <div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;">
+              <sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
+                <div onclick="{{ v.onTap }}" style="background: {{ v.bg }}; border: 1px solid {{ v.border }}; border-radius: 20px; padding: 6px 12px; font-size: calc(11.5px * var(--tscale)); font-weight: 700; color: {{ v.color }}; cursor: pointer;">{{ v.label }}</div>
+              </sc-for>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 16px;">
+              <div style="font-family: 'Outfit', sans-serif; font-size: calc(11.5px * var(--tscale)); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px;">{{ activeValueLabel }}</div>
+              <div style="font-size: calc(13px * var(--tscale)); color: #f1f5f9; line-height: 1.5; min-height: calc(38px * var(--tscale));">{{ activeValueText }}</div>
+              <div style="display: flex; gap: 4px; margin-top: 10px;">
+                <sc-for list="{{ valueDots }}" as="d" hint-placeholder-count="7">
+                  <div style="width: 6px; height: 6px; border-radius: 50%; background: {{ d.color }};"></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-family: 'Outfit', sans-serif; font-size: calc(15px * var(--tscale)); font-weight: 700; color: #fff; margin-bottom: 10px;">Featured Media</div>
+            <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.2); margin-bottom: 10px;">
+              <video controls="{{ true }}" poster="assets/feature-poster.jpg" style="width: 100%; display: block; background: #000; max-height: 220px;" src="assets/feature-video.mp4"></video>
+              <div style="padding: 10px 12px;">
+                <div style="font-family: 'Outfit', sans-serif; font-size: calc(13px * var(--tscale)); font-weight: 700; color: #fff;">Community Spotlight</div>
+                <div style="font-size: calc(11.5px * var(--tscale)); color: #94a3b8;">Real stories from the program.</div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                <video src="https://video.wixstatic.com/video/83ba7d_56d11ef2344942f5a576edd2bce0acfb/1080p/mp4/file.mp4" controls="{{ true }}" playsinline="{{ true }}" style="width: 100%; height: 110px; object-fit: cover; display: block; background: #000;"></video>
+                <div style="padding: 8px 10px; font-size: calc(11px * var(--tscale)); color: #cbd5e1; font-weight: 600;">Night Awareness</div>
+              </div>
+              <div style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                <img src="assets/night-scene-2.png" alt="Crosswalk awareness" style="width: 100%; height: 110px; object-fit: cover; display: block;">
+                <div style="padding: 8px 10px; font-size: calc(11px * var(--tscale)); color: #cbd5e1; font-weight: 600;">Crosswalk Focus</div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="{{ goLearn }}" style="background: linear-gradient(135deg, var(--accent), rgba(var(--accent-rgb),0.7)); border: none; color: #fff; font-weight: 700; padding: 14px; border-radius: 12px; font-size: calc(14px * var(--tscale)); font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">Continue Learning</button>
+        </div>
+      </sc-if>
+
+      <!-- LEARN TAB -->
+      <sc-if value="{{ isLearn }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <h1 style="font-family: 'Outfit', sans-serif; font-size: calc(22px * var(--tscale)); font-weight: 800; color: #fff; margin: 0;">Your Program</h1>
+            <p style="font-size: calc(13px * var(--tscale)); color: #94a3b8; margin: 6px 0 0;">Complete modules in order to build your record.</p>
+          </div>
+          <sc-for list="{{ modules }}" as="m" hint-placeholder-count="5">
+            <div onclick="{{ m.onTap }}" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; cursor: pointer;">
+              <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+                <div style="font-size: calc(10.5px * var(--tscale)); font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">{{ m.num }}</div>
+                <div style="font-family: 'Outfit', sans-serif; font-size: calc(14.5px * var(--tscale)); font-weight: 700; color: #fff;">{{ m.title }}</div>
+                <div style="font-size: calc(12px * var(--tscale)); color: #94a3b8;">{{ m.desc }}</div>
+                <div style="font-size: calc(11px * var(--tscale)); color: #64748b; margin-top: 2px;">{{ m.scoreText }}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- MY SPACE TAB -->
+      <sc-if value="{{ isSpace }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+
+          <!-- Profile -->
+          <div>
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <image-slot id="avatar" shape="circle" style="width: 72px; height: 72px; border: 2px solid var(--accent);" placeholder="Photo"></image-slot>
+              <div style="flex: 1; min-width: 0;">
+                <input value="{{ displayName }}" oninput="{{ onNameInput }}" placeholder="Your name" style="width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Outfit', sans-serif; font-size: calc(18px * var(--tscale)); font-weight: 700; padding: 4px 0;">
+                <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
+                  <sc-for list="{{ roles }}" as="r" hint-placeholder-count="3">
+                    <button onclick="{{ r.onTap }}" style="border: 1px solid {{ r.border }}; background: {{ r.bg }}; color: {{ r.color }}; border-radius: 20px; padding: 4px 10px; font-size: calc(11px * var(--tscale)); font-weight: 700; cursor: pointer;">{{ r.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appearance & Preferences -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px;">
+            <div style="font-family: 'Outfit', sans-serif; font-size: calc(15px * var(--tscale)); font-weight: 700; color: #fff; margin-bottom: 12px;">Customize the app</div>
+
+            <div style="font-size: calc(11px * var(--tscale)); font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Accent color</div>
+            <div style="display: flex; gap: 10px; margin-bottom: 16px;">
+              <sc-for list="{{ accents }}" as="a" hint-placeholder-count="4">
+                <button onclick="{{ a.onTap }}" style="width: 30px; height: 30px; border-radius: 50%; background: {{ a.hex }}; border: 2px solid {{ a.ring }}; cursor: pointer; box-shadow: {{ a.shadow }};"></button>
+              </sc-for>
+            </div>
+
+            <div style="font-size: calc(11px * var(--tscale)); font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Text size</div>
+            <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+              <sc-for list="{{ textSizes }}" as="t" hint-placeholder-count="3">
+                <button onclick="{{ t.onTap }}" style="flex: 1; border: 1px solid {{ t.border }}; background: {{ t.bg }}; color: {{ t.color }}; border-radius: 10px; padding: 8px; font-size: calc(12px * var(--tscale)); font-weight: 700; cursor: pointer;">{{ t.label }}</button>
+              </sc-for>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.06);">
+              <span style="font-size: calc(13px * var(--tscale)); color: #f1f5f9; font-weight: 600;">Push reminders</span>
+              <div onclick="{{ toggleNotifPush }}" style="width: 40px; height: 22px; border-radius: 99px; background: {{ notifPushTrack }}; position: relative; cursor: pointer; transition: background 0.2s;">
+                <div style="width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: {{ notifPushPos }}; transition: left 0.2s;"></div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.06);">
+              <span style="font-size: calc(13px * var(--tscale)); color: #f1f5f9; font-weight: 600;">Weekly digest</span>
+              <div onclick="{{ toggleNotifDigest }}" style="width: 40px; height: 22px; border-radius: 99px; background: {{ notifDigestTrack }}; position: relative; cursor: pointer; transition: background 0.2s;">
+                <div style="width: 18px; height: 18px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: {{ notifDigestPos }}; transition: left 0.2s;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checklists -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px;">
+            <div style="font-family: 'Outfit', sans-serif; font-size: calc(15px * var(--tscale)); font-weight: 700; color: #fff; margin-bottom: 10px;">Checklists</div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <sc-for list="{{ checklists }}" as="c" hint-placeholder-count="4">
+                <div onclick="{{ c.onTap }}" style="display: flex; gap: 10px; align-items: flex-start; cursor: pointer;">
+                  <div style="flex: none; width: 18px; height: 18px; border-radius: 5px; border: 2px solid {{ c.boxBorder }}; background: {{ c.boxBg }}; margin-top: 2px;"></div>
+                  <div>
+                    <div style="font-size: calc(13px * var(--tscale)); font-weight: 700; color: #f1f5f9; text-decoration: {{ c.strike }};">{{ c.title }}</div>
+                    <div style="font-size: calc(11.5px * var(--tscale)); color: #94a3b8; margin-top: 2px;">{{ c.desc }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- Notes & Ideas -->
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div style="font-family: 'Outfit', sans-serif; font-size: calc(15px * var(--tscale)); font-weight: 700; color: #fff;">Notes &amp; ideas</div>
+              <button onclick="{{ openComposer }}" style="background: rgba(var(--accent-rgb), 0.12); border: 1px solid rgba(var(--accent-rgb), 0.3); color: var(--accent); border-radius: 8px; padding: 6px 10px; font-size: calc(11.5px * var(--tscale)); font-weight: 700; cursor: pointer;">+ New note</button>
+            </div>
+
+            <sc-if value="{{ addingNote }}" hint-placeholder-val="{{ false }}">
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; margin-bottom: 12px;">
+                <textarea value="{{ draftNote }}" oninput="{{ onDraftInput }}" rows="3" placeholder="Type a note, or use the mic to dictate..." style="width: 100%; background: transparent; border: none; color: #fff; font-size: calc(13px * var(--tscale)); resize: vertical;"></textarea>
+                <sc-if value="{{ hasDictationHint }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size: calc(11px * var(--tscale)); color: #f59e0b; margin-bottom: 8px;">{{ dictationNote }}</div>
+                </sc-if>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                  <button onclick="{{ toggleRecording }}" style="display: flex; align-items: center; gap: 6px; background: {{ micBg }}; border: 1px solid {{ micBorder }}; color: {{ micColor }}; border-radius: 20px; padding: 6px 12px; font-size: calc(12px * var(--tscale)); font-weight: 700; cursor: pointer;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: {{ micDotAnim }};"></span>{{ micLabel }}
+                  </button>
+                  <div style="display: flex; gap: 8px;">
+                    <button onclick="{{ closeComposer }}" style="background: transparent; border: 1px solid rgba(255,255,255,0.15); color: #94a3b8; border-radius: 8px; padding: 6px 12px; font-size: calc(12px * var(--tscale)); font-weight: 700; cursor: pointer;">Cancel</button>
+                    <button onclick="{{ saveNote }}" style="background: var(--accent); border: none; color: #07090e; border-radius: 8px; padding: 6px 12px; font-size: calc(12px * var(--tscale)); font-weight: 800; cursor: pointer;">Save</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ hasNotes }}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <sc-for list="{{ notes }}" as="n" hint-placeholder-count="2">
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 12px; display: flex; justify-content: space-between; gap: 8px;">
+                    <div style="min-width: 0;">
+                      <div style="font-size: calc(13px * var(--tscale)); color: #f1f5f9;">{{ n.text }}</div>
+                      <div style="font-size: calc(10.5px * var(--tscale)); color: #64748b; margin-top: 4px;">{{ n.ts }}</div>
+                    </div>
+                    <button onclick="{{ n.onDelete }}" style="flex: none; background: transparent; border: none; color: #64748b; font-size: calc(15px * var(--tscale)); cursor: pointer; line-height: 1;">&times;</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasNoNotes }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align: center; padding: 14px; font-size: calc(12.5px * var(--tscale)); color: #64748b;">No notes yet &mdash; tap "+ New note" to add one.</div>
+            </sc-if>
+          </div>
+
+          <!-- Files -->
+          <sc-if value="{{ enableFiles }}" hint-placeholder-val="{{ true }}">
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 16px;">
+            <div style="font-family: 'Outfit', sans-serif; font-size: calc(15px * var(--tscale)); font-weight: 700; color: #fff; margin-bottom: 10px;">Files</div>
+            <div onclick="{{ browseFiles }}" ondragover="{{ onDragOver }}" ondragleave="{{ onDragLeave }}" ondrop="{{ onDrop }}" style="border: 2px dashed {{ dropBorder }}; background: {{ dropBg }}; border-radius: 12px; padding: 18px; text-align: center; cursor: pointer;">
+              <div style="font-size: calc(13px * var(--tscale)); font-weight: 700; color: #f1f5f9;">Drop any file here, or tap to browse</div>
+              <div style="font-size: calc(11px * var(--tscale)); color: #64748b; margin-top: 4px;">Photos, PDFs, docs, audio, video &mdash; anything</div>
+            </div>
+            <input ref="{{ fileInputRef }}" type="file" multiple="{{ true }}" onchange="{{ onFileInputChange }}" style="display: none;">
+
+            <sc-if value="{{ hasFiles }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px;">
+                <sc-for list="{{ files }}" as="f" hint-placeholder-count="0">
+                  <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 10px;">
+                    <span style="flex: none; font-size: calc(9.5px * var(--tscale)); font-weight: 800; color: var(--accent); background: rgba(var(--accent-rgb),0.12); border-radius: 6px; padding: 4px 6px; font-family: ui-monospace, monospace;">{{ f.ext }}</span>
+                    <div style="flex: 1; min-width: 0;">
+                      <div style="font-size: calc(12.5px * var(--tscale)); color: #f1f5f9; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ f.name }}</div>
+                      <div style="font-size: calc(10.5px * var(--tscale)); color: #64748b;">{{ f.size }}</div>
+                    </div>
+                    <a href="{{ f.url }}" target="_blank" rel="noopener" style="flex: none; font-size: calc(11px * var(--tscale)); font-weight: 700; color: var(--accent); text-decoration: none; border: 1px solid rgba(var(--accent-rgb),0.35); border-radius: 7px; padding: 5px 9px;">View</a>
+                    <a href="{{ f.url }}" download="{{ f.name }}" style="flex: none; font-size: calc(11px * var(--tscale)); font-weight: 600; color: #94a3b8; text-decoration: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 7px; padding: 5px 9px;">Download</a>
+                    <button onclick="{{ f.onDelete }}" title="Delete" style="flex: none; background: transparent; border: none; color: #64748b; font-size: calc(15px * var(--tscale)); cursor: pointer; line-height: 1;">&times;</button>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ hasNoFiles }}" hint-placeholder-val="{{ true }}">
+              <div style="text-align: center; padding: 10px; font-size: calc(12px * var(--tscale)); color: #64748b;">No files yet.</div>
+            </sc-if>
+          </div>
+          </sc-if>
+
+          <div style="text-align: center; padding: 14px 0 0; border-top: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fb923c, #ea580c); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35); animation: bounce-ball 1s ease-in-out infinite;"></div>
+              <div style="display: flex; align-items: baseline; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: calc(12px * var(--tscale)); color: #94a3b8;">
+                <span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0s;">B</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.06s;">a</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.12s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.18s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.24s;">e</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.3s;">r</span><span style="display:inline-block; color: var(--accent); animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.36s;">4</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.42s;">L</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.48s;">i</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.54s;">f</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.6s;">e</span><sup style="font-size: 0.55em; margin-left: 1px;">&trade;</sup>
+              </div>
+            </div>
+            <div style="font-size: calc(10.5px * var(--tscale)); color: #475569;">Powered by <a href="https://smoove-spots.vercel.app/" target="_blank" style="color: #64748b;">SmooveSpots.com</a></div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- Toast -->
+    <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+      <div style="position: absolute; bottom: 78px; left: 18px; right: 18px; background: rgba(20,24,34,0.95); border: 1px solid rgba(255,255,255,0.1); color: #fff; font-size: calc(12.5px * var(--tscale)); font-weight: 600; padding: 10px 14px; border-radius: 10px; text-align: center; z-index: 30; box-shadow: 0 8px 20px rgba(0,0,0,0.4);">{{ toastMsg }}</div>
+    </sc-if>
+
+    <!-- Module Detail Overlay -->
+    <sc-if value="{{ hasActiveModule }}" hint-placeholder-val="{{ false }}">
+      <div style="position: absolute; inset: 0; z-index: 60; background: #07090e; display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; background: rgba(9,12,20,0.92); backdrop-filter: blur(10px); z-index: 5;">
+          <button onclick="{{ closeModule }}" style="background: transparent; border: none; color: #fff; font-size: calc(20px * var(--tscale)); cursor: pointer; padding: 0 4px 0 0; line-height: 1;">&larr;</button>
+          <img src="assets/b4l_logo.jpg" alt="Logo" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent); flex: none;">
+          <div style="width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fb923c, #ea580c); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.35); animation: bounce-ball 1s ease-in-out infinite; flex: none;"></div>
+          <div style="display: flex; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: calc(13px * var(--tscale)); color: #fff; white-space: nowrap;">
+            <span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0s;">B</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.06s;">a</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.12s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.18s;">l</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.24s;">e</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.3s;">r</span><span style="display:inline-block; color: var(--accent); animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.36s;">4</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.42s;">L</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.48s;">i</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.54s;">f</span><span style="display:inline-block; animation: letter-swing 1.6s ease-in-out infinite; animation-delay: 0.6s;">e</span>
+          </div>
+        </div>
+
+        <div style="flex: 1; overflow-y: auto; padding: 18px 18px 40px;">
+          <div style="font-size: calc(10.5px * var(--tscale)); font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;">{{ activeModuleNum }}</div>
+          <h1 style="font-family: 'Outfit', sans-serif; font-size: calc(19px * var(--tscale)); font-weight: 800; color: #fff; margin: 4px 0 16px;">{{ activeModuleTitle }}</h1>
+
+          <sc-if value="{{ showContent }}" hint-placeholder-val="{{ true }}">
+            <sc-for list="{{ moduleSections }}" as="sec" hint-placeholder-count="3">
+              <div style="margin-bottom: 14px;">
+                <div style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: calc(14px * var(--tscale)); color: #fff; margin-bottom: 4px;">{{ sec.h }}</div>
+                <div style="font-size: calc(13px * var(--tscale)); color: #cbd5e1; line-height: 1.6;">{{ sec.p }}</div>
+              </div>
+            </sc-for>
+            <button onclick="{{ startQuiz }}" style="width: 100%; background: linear-gradient(135deg, var(--accent), rgba(var(--accent-rgb),0.7)); border: none; color: #fff; font-weight: 700; padding: 14px; border-radius: 12px; font-size: calc(14px * var(--tscale)); font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; margin-top: 6px;">Take the Quiz</button>
+          </sc-if>
+
+          <sc-if value="{{ showQuiz }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size: calc(12px * var(--tscale)); color: #94a3b8; margin-bottom: 14px;">Answer every question, then submit to see your score.</div>
+            <sc-for list="{{ quizQuestions }}" as="q" hint-placeholder-count="5">
+              <div style="margin-bottom: 16px;">
+                <div style="font-size: calc(13.5px * var(--tscale)); font-weight: 700; color: #fff; margin-bottom: 8px;">{{ q.num }}. {{ q.text }}</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <sc-for list="{{ q.options }}" as="opt" hint-placeholder-count="4">
+                    <div onclick="{{ opt.onTap }}" style="background: {{ opt.bg }}; border: 1px solid {{ opt.border }}; color: {{ opt.color }}; border-radius: 10px; padding: 9px 12px; font-size: calc(12.5px * var(--tscale)); cursor: pointer;">{{ opt.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+            <button onclick="{{ submitQuiz }}" style="width: 100%; background: linear-gradient(135deg, var(--accent), rgba(var(--accent-rgb),0.7)); border: none; color: #fff; font-weight: 700; padding: 14px; border-radius: 12px; font-size: calc(14px * var(--tscale)); font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer;">Submit Quiz</button>
+          </sc-if>
+
+          <sc-if value="{{ showResult }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align: center; padding: 10px 0 20px;">
+              <div style="font-family: 'Outfit', sans-serif; font-size: calc(42px * var(--tscale)); font-weight: 800; color: var(--accent);">{{ resultScore }}%</div>
+              <div style="font-size: calc(13px * var(--tscale)); color: #cbd5e1; margin-top: 6px;">{{ resultMsg }}</div>
+              <div style="font-size: calc(10.5px * var(--tscale)); color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 18px;">Top scores</div>
+              <div style="display: flex; gap: 6px; justify-content: center; margin-top: 8px;">
+                <sc-for list="{{ resultTop3 }}" as="t" hint-placeholder-count="3">
+                  <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 6px 10px; font-size: calc(12px * var(--tscale)); color: #fff; font-weight: 700;">{{ t }}%</div>
+                </sc-for>
+              </div>
+              <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="{{ retakeQuiz }}" style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-weight: 700; padding: 12px; border-radius: 12px; font-size: calc(13px * var(--tscale)); cursor: pointer;">Retake Quiz</button>
+                <button onclick="{{ closeModule }}" style="flex: 1; background: var(--accent); border: none; color: #07090e; font-weight: 800; padding: 12px; border-radius: 12px; font-size: calc(13px * var(--tscale)); cursor: pointer;">Back to Program</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Tab bar -->
+    <div style="position: sticky; bottom: 0; display: flex; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(9,12,20,0.92); backdrop-filter: blur(10px); z-index: 20;">
+      <button onclick="{{ goHome }}" style="flex: 1; background: transparent; border: none; padding: 10px 0 12px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; color: {{ homeColor }};">
+        <div style="width: 20px; height: 20px; border: 2px solid currentColor; border-radius: 6px;"></div>
+        <span style="font-size: calc(10.5px * var(--tscale)); font-weight: 700;">Home</span>
+      </button>
+      <button onclick="{{ goLearn }}" style="flex: 1; background: transparent; border: none; padding: 10px 0 12px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; color: {{ learnColor }};">
+        <div style="display: flex; flex-direction: column; gap: 3px;"><div style="width: 20px; height: 3px; background: currentColor; border-radius: 2px;"></div><div style="width: 20px; height: 3px; background: currentColor; border-radius: 2px;"></div></div>
+        <span style="font-size: calc(10.5px * var(--tscale)); font-weight: 700;">Learn</span>
+      </button>
+      <button onclick="{{ goSpace }}" style="flex: 1; background: transparent; border: none; padding: 10px 0 12px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; color: {{ spaceColor }};">
+        <div style="width: 20px; height: 20px; border: 2px solid currentColor; border-radius: 50%;"></div>
+        <span style="font-size: calc(10.5px * var(--tscale)); font-weight: 700;">My Space</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 420, &quot;height&quot;: 860}, &quot;startTab&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;home&quot;, &quot;options&quot;: [&quot;home&quot;, &quot;learn&quot;, &quot;space&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Behavior&quot;}, &quot;accentDefault&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#0ea5e9&quot;, &quot;options&quot;: [&quot;#0ea5e9&quot;, &quot;#6366f1&quot;, &quot;#10b981&quot;, &quot;#f59e0b&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Behavior&quot;}, &quot;enableFileUploads&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot;}}">
+const ACCENTS = { teal: '#0ea5e9', indigo: '#6366f1', green: '#10b981', amber: '#f59e0b' };
+const ACCENTS_RGB = { teal: '14,165,233', indigo: '99,102,241', green: '16,185,129', amber: '245,158,11' };
+const MODULES = [
+  { num: 'Part 1', title: '1. Turn The Key', desc: 'Mindset, risk management, and pre-drive checks.' },
+  { num: 'Part 2', title: '2. The Vehicle', desc: 'Dashboard warnings, oil levels, and tire checks.' },
+  { num: 'Part 3', title: '3. The Road', desc: 'Defensive driving, blind spots, and merging.' },
+  { num: 'Part 3A', title: '3A. GPS & Phones', desc: 'The 90% rule and glance vs. stare thresholds.' },
+  { num: 'Part 4', title: '4. The Money', desc: 'Insurance, deductibles, and ticket costs.' },
+];
+
+const VALUE_CONTENT = {
+  Focus: [
+    'Set one clear target before you start the car — know where you\u2019re going and why.',
+    'Phones face-down, mounted, or silenced before you shift into drive.',
+    'Scan far ahead \u2014 eyes up the road, not just the bumper in front of you.',
+    'Give the task in front of you your full attention, one thing at a time.',
+    'Notice when your mind wanders and gently bring it back to the task.',
+    'A distraction-free five minutes beats a distracted hour every time.',
+    'Review your goal for the week each morning \u2014 keep it in view.',
+  ],
+  Discipline: [
+    'Small habits, done daily, beat big efforts done rarely.',
+    'Do the pre-drive checklist even when you\u2019re running late.',
+    'Show up on time \u2014 for practice, for work, for yourself.',
+    'Finish the checklist before the reward, not after.',
+    'Discipline is choosing what you want most over what you want now.',
+    'Track your progress \u2014 what gets measured gets improved.',
+    'Consistency built over weeks outlasts intensity that lasts a day.',
+  ],
+  Faith: [
+    'Trust the process even when results are slow to show.',
+    'Believe you can improve \u2014 skill is built, not fixed.',
+    'Lean on your support system when the road gets hard.',
+    'Stay grounded in your values when no one is watching.',
+    'Hope is a discipline \u2014 practice it on the hard days too.',
+    'Character shows up most in the choices nobody sees.',
+    'Every setback is data, not a verdict on who you are.',
+  ],
+  Future: [
+    'Your driving record follows you \u2014 protect it like an asset.',
+    'Every good choice today is a deposit into tomorrow\u2019s options.',
+    'Explore one new skill or field this month, just to learn.',
+    'Independence is built one responsible decision at a time.',
+    'Map out what "adulthood ready" looks like for you, specifically.',
+    'Ask a mentor what they wish they knew at your age.',
+    'The future rewards people who prepared quietly before it arrived.',
+  ],
+};
+
+const MODULE_CONTENT = {
+  '1. Turn The Key': {
+    sections: [
+      { h: 'Get Your Head Right First', p: 'Driving well starts before you touch the key. Rushed, angry, or exhausted drivers make worse decisions than calm, rested ones. Take thirty seconds to breathe and focus on the drive ahead, not on what happened five minutes ago.' },
+      { h: 'The Walk-Around', p: 'Before you start the engine, walk around the car. Check that all four tires look properly inflated, headlights and taillights are clean, and nothing is leaking underneath. This two-minute habit catches small problems before they become expensive or dangerous ones.' },
+      { h: 'Buckle, Adjust, Go', p: 'Adjust your seat and mirrors every time you drive, even if someone else used the car last. Your seatbelt should sit low across your hips and snug across your chest, never under your arm. Only shift into drive once every check is done.' },
+    ],
+    questions: [
+      { q: 'What\u2019s the first thing you should do before starting the car?', options: ['Check your phone notifications', 'Take a moment to calm your mind and focus', 'Turn on the radio', 'Call a friend'], correct: 1 },
+      { q: 'Why walk around your car before driving?', options: ['To catch tire, light, or leak problems early', 'It\u2019s required by law every time', 'To wash the windows', 'No real reason'], correct: 0 },
+      { q: 'Where should a seatbelt\u2019s shoulder strap rest?', options: ['Under your arm', 'Behind your back', 'Across your chest, not under the arm', 'Loose around your neck'], correct: 2 },
+      { q: 'How often should you adjust mirrors and seat?', options: ['Once a year', 'Every time you drive, even if someone else used the car', 'Never, factory settings are fine', 'Only on long trips'], correct: 1 },
+      { q: 'Which mental state most increases driving risk?', options: ['Calm and rested', 'Focused and prepared', 'Angry, rushed, or exhausted', 'Relaxed and alert'], correct: 2 },
+    ],
+  },
+  '2. The Vehicle': {
+    sections: [
+      { h: 'Reading the Dashboard', p: 'Warning lights aren\u2019t decoration \u2014 they\u2019re your car talking to you. A steady check-engine light means something needs attention soon; a flashing one means stop and get it checked immediately. Learn the shapes: an oil can means low oil pressure, a horseshoe with an exclamation point means low tire pressure, and a battery icon means a charging problem.' },
+      { h: 'Oil and Fluids', p: 'Check your oil level monthly with the engine off and the car on level ground. Pull the dipstick, wipe it clean, reinsert it fully, then pull it again to read the level. Oil that looks dark and gritty, or sits below the minimum mark, means it\u2019s time for a change.' },
+      { h: 'Tires You Can Trust', p: 'Press a penny into your tire tread with the top of the head pointing down; if you can see all of it, it\u2019s time for new tires. Check tire pressure monthly when tires are cold, using the number on the driver\u2019s door frame, not the number printed on the tire.' },
+    ],
+    questions: [
+      { q: 'A flashing check-engine light means...', options: ['Everything is fine', 'Stop and get it checked immediately', 'Only check it next month', 'It\u2019s just a reminder to get gas'], correct: 1 },
+      { q: 'What does an oil-can shaped warning light usually mean?', options: ['Low oil pressure', 'Low fuel', 'Flat tire', 'Weak battery'], correct: 0 },
+      { q: 'How should you check engine oil level?', options: ['While driving', 'With the engine off, car level, using the dipstick', 'By looking through the windshield', 'By listening to the engine'], correct: 1 },
+      { q: 'Where do you find the correct tire pressure number?', options: ['On the tire sidewall', 'On the driver\u2019s door frame', 'In the trunk', 'On the dashboard cluster'], correct: 1 },
+      { q: 'The penny test checks...', options: ['Battery charge', 'Tire tread depth', 'Oil level', 'Brake pads'], correct: 1 },
+    ],
+  },
+  '3. The Road': {
+    sections: [
+      { h: 'Following at a Safe Distance', p: 'Use the three-second rule: pick a fixed point like a sign, and count how long it takes you to reach it after the car ahead passes it. Less than three seconds means you\u2019re following too closely, especially in rain, fog, or heavy traffic, where you should double that gap.' },
+      { h: 'Know Your Blind Spots', p: 'Mirrors don\u2019t show everything. Before changing lanes, glance quickly over your shoulder to check the blind spot next to you \u2014 a full head turn, not just a glance in the mirror. Adjust your side mirrors so you barely see the side of your own car, which shrinks the blind spot.' },
+      { h: 'Merging With Confidence', p: 'Match your speed to traffic before you merge, not after. Signal early, check your mirrors and blind spot, then merge smoothly into a gap \u2014 don\u2019t force your way in or stop on the ramp unless traffic is completely blocked.' },
+    ],
+    questions: [
+      { q: 'The three-second rule helps you...', options: ['Save fuel', 'Keep a safe following distance', 'Find parking', 'Time traffic lights'], correct: 1 },
+      { q: 'In heavy rain, your following distance should...', options: ['Stay the same', 'Be cut in half', 'Double', 'Not matter'], correct: 2 },
+      { q: 'Checking your blind spot means...', options: ['Looking only in the mirror', 'Turning your head briefly to look beside you', 'Trusting your mirrors completely', 'Asking a passenger'], correct: 1 },
+      { q: 'When merging onto a highway, you should...', options: ['Stop and wait on the ramp', 'Match traffic speed before merging', 'Merge as slow as possible', 'Merge without signaling'], correct: 1 },
+      { q: 'Properly adjusted side mirrors should...', options: ['Show the side of your own car clearly', 'Barely show the side of your own car', 'Only show the sky', 'Be angled toward the driver'], correct: 1 },
+    ],
+  },
+  '3A. GPS & Phones': {
+    sections: [
+      { h: 'The 90% Rule', p: 'Keep your eyes on the road at least 90% of the time you\u2019re driving. That means your GPS, phone, or radio gets brief glances only, never a steady stare, no matter how tempting the notification sounds.' },
+      { h: 'Glance, Don\u2019t Stare', p: 'A glance should last under two seconds \u2014 about the time it takes to read three or four words. At 55 mph, two seconds covers over 160 feet, roughly half the length of a football field, driven blind.' },
+      { h: 'Set It Before You Go', p: 'Enter your destination and start navigation before you shift into drive. Use voice commands for changes, mount your phone where it doesn\u2019t block your view, and let a passenger handle texts and calls whenever possible.' },
+    ],
+    questions: [
+      { q: 'The 90% rule means...', options: ['Drive 90% of the speed limit', 'Keep your eyes on the road at least 90% of the time', 'Use GPS on 90% of trips', 'Charge your phone to 90%'], correct: 1 },
+      { q: 'A safe glance away from the road should last...', options: ['Under 2 seconds', '5 seconds', '10 seconds', 'As long as needed'], correct: 0 },
+      { q: 'At 55 mph, a 2-second glance covers roughly...', options: ['10 feet', '50 feet', 'Over 160 feet', 'A mile'], correct: 2 },
+      { q: 'When should you set your GPS destination?', options: ['While merging onto the highway', 'Before you start driving', 'At every red light', 'It doesn\u2019t matter'], correct: 1 },
+      { q: 'The best way to handle texts while driving is...', options: ['Read them at red lights', 'Type quickly between turns', 'Let a passenger handle them or wait until stopped', 'Use one hand to text and one to drive'], correct: 2 },
+    ],
+  },
+  '4. The Money': {
+    sections: [
+      { h: 'Understanding Your Deductible', p: 'A deductible is the amount you pay out of pocket before insurance covers the rest of a claim. A higher deductible usually means a lower monthly premium, but only choose one you could actually afford to pay after a real accident.' },
+      { h: 'Coverage Types That Matter', p: 'Liability coverage pays for damage you cause to others; it\u2019s required almost everywhere. Collision coverage pays to fix your own car after a crash, regardless of fault, which matters most on newer or financed vehicles.' },
+      { h: 'What Tickets Really Cost', p: 'A single speeding ticket can raise your premium for three years or more, often costing far more in higher rates than the ticket itself. Safe driving isn\u2019t just about safety \u2014 it\u2019s one of the biggest financial decisions you\u2019ll make every year.' },
+    ],
+    questions: [
+      { q: 'A deductible is...', options: ['Your monthly payment', 'The amount you pay before insurance covers a claim', 'A discount for safe driving', 'The car\u2019s resale value'], correct: 1 },
+      { q: 'Liability coverage pays for...', options: ['Your own car\u2019s repairs', 'Damage you cause to others', 'Your gas', 'Your phone bill'], correct: 1 },
+      { q: 'Collision coverage is most important for...', options: ['Very old, paid-off cars', 'Newer or financed vehicles', 'Bicycles', 'Motorcycles only'], correct: 1 },
+      { q: 'A speeding ticket can raise your premium for about...', options: ['One week', 'One month', 'Three years or more', 'It never affects your premium'], correct: 2 },
+      { q: 'Choosing a higher deductible usually means...', options: ['A higher monthly premium', 'A lower monthly premium', 'No insurance needed', 'Free coverage'], correct: 1 },
+    ],
+  },
+};
+
+const CHECKLISTS = [
+  { key: 'pre', title: 'Pre-Drive Checklist', desc: 'Quick safety and readiness check before you start the car \u2014 seatbelt, mirrors, fuel, and phone away.' },
+  { key: 'post', title: 'Post-Drive Checklist', desc: 'Wrap up right \u2014 lock up, log mileage, and note any dashboard warnings for next time.' },
+  { key: 'school', title: 'School / Homework Checklist', desc: 'Stay ahead of assignments and deadlines so driving privileges and grades both stay on track.' },
+  { key: 'stem', title: 'STEM Internships (Indianapolis, IN) Checklist', desc: 'Track local STEM internship leads, application deadlines, and required materials around the Indy area.' },
+];
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+function extLabel(name) {
+  const parts = name.split('.');
+  if (parts.length < 2) return 'FILE';
+  return parts[parts.length - 1].slice(0, 4).toUpperCase();
+}
+
+class Component extends DCLogic {
+  state = {
+    tab: this.props.startTab || 'home',
+    accent: this.props.accentDefault || 'teal',
+    textScale: 1,
+    displayName: 'Member',
+    role: 'Learner',
+    notifPush: true,
+    notifDigest: false,
+    notes: [
+      { id: 1, text: 'Check tire pressure before Friday\u2019s drive.', ts: 'Today \u00b7 8:14 AM' },
+      { id: 2, text: 'Ask about deductible options before renewing coverage.', ts: 'Yesterday \u00b7 6:40 PM' },
+    ],
+    files: [],
+    addingNote: false,
+    draftNote: '',
+    isRecording: false,
+    dictationNote: '',
+    dragOver: false,
+    toastMsg: '',
+    activeValue: 'Focus',
+    valueIndex: { Focus: 0, Discipline: 0, Faith: 0, Future: 0 },
+    moduleScores: {},
+    checklistDone: {},
+    activeModule: null,
+    quizMode: false,
+    answers: {},
+    quizResult: null,
+  };
+
+  fileInputRef = React.createRef();
+
+  componentDidMount() {
+    this._valueTimer = setInterval(() => {
+      this.setState((s) => ({
+        valueIndex: { ...s.valueIndex, [s.activeValue]: (s.valueIndex[s.activeValue] + 1) % 7 },
+      }));
+    }, 6000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._valueTimer);
+    clearTimeout(this._toastTimer);
+  }
+
+  selectValue(key) {
+    this.setState((s) => {
+      if (s.activeValue === key) {
+        return { valueIndex: { ...s.valueIndex, [key]: (s.valueIndex[key] + 1) % 7 } };
+      }
+      return { activeValue: key };
+    });
+  }
+
+  completeModule(title, score) {
+    const finalScore = typeof score === 'number' ? score : Math.floor(65 + Math.random() * 36);
+    this.setState((s) => {
+      const prev = s.moduleScores[title] || [];
+      const next = [...prev, finalScore].sort((a, b) => b - a).slice(0, 3);
+      return { moduleScores: { ...s.moduleScores, [title]: next } };
+    });
+    this.showToast(`Attempt recorded \u2014 scored ${finalScore}%`);
+  }
+
+  openModule(title) { this.setState({ activeModule: title, quizMode: false, answers: {}, quizResult: null }); }
+  closeModule() { this.setState({ activeModule: null }); }
+  startQuiz() { this.setState({ quizMode: true, answers: {}, quizResult: null }); }
+  retakeQuiz() { this.setState({ quizMode: true, answers: {}, quizResult: null }); }
+  selectAnswer(qi, oi) { this.setState((s) => ({ answers: { ...s.answers, [qi]: oi } })); }
+  submitQuiz() {
+    const data = MODULE_CONTENT[this.state.activeModule];
+    let correct = 0;
+    data.questions.forEach((q, i) => { if (this.state.answers[i] === q.correct) correct++; });
+    const score = Math.round((correct / data.questions.length) * 100);
+    this.completeModule(this.state.activeModule, score);
+    this.setState({ quizResult: score });
+  }
+
+  toggleChecklist(key) {
+    this.setState((s) => ({ checklistDone: { ...s.checklistDone, [key]: !s.checklistDone[key] } }));
+  }
+
+  showToast(msg) {
+    this.setState({ toastMsg: msg });
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => this.setState({ toastMsg: '' }), 2200);
+  }
+
+  toggleRecording() {
+    if (this.state.isRecording) {
+      if (this.recognition) this.recognition.stop();
+      this.setState({ isRecording: false });
+      return;
+    }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+      try {
+        const rec = new SR();
+        rec.continuous = false;
+        rec.interimResults = false;
+        rec.lang = 'en-US';
+        rec.onresult = (e) => {
+          const transcript = e.results[0][0].transcript;
+          this.setState((s) => ({ draftNote: (s.draftNote ? s.draftNote + ' ' : '') + transcript, isRecording: false }));
+        };
+        rec.onerror = () => this.setState({ isRecording: false, dictationNote: 'Mic access denied or unavailable \u2014 try typing instead.' });
+        rec.onend = () => this.setState({ isRecording: false });
+        this.recognition = rec;
+        this.setState({ isRecording: true, dictationNote: '' });
+        rec.start();
+        return;
+      } catch (e) { /* fall through to simulation */ }
+    }
+    this.setState({ isRecording: true, dictationNote: 'Voice input isn\u2019t available in this preview \u2014 try typing your note.' });
+    setTimeout(() => this.setState({ isRecording: false }), 1200);
+  }
+
+  handleFiles(fileList) {
+    const arr = Array.from(fileList).map((f) => ({
+      id: Date.now() + Math.random(),
+      name: f.name,
+      size: formatSize(f.size),
+      ext: extLabel(f.name),
+      url: URL.createObjectURL(f),
+    }));
+    this.setState((s) => ({ files: [...arr, ...s.files] }));
+    this.showToast(arr.length > 1 ? `${arr.length} files added` : 'File added');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const accentHex = ACCENTS[s.accent] || ACCENTS.teal;
+    const accentRgb = ACCENTS_RGB[s.accent] || ACCENTS_RGB.teal;
+
+    const accents = Object.keys(ACCENTS).map((key) => ({
+      hex: ACCENTS[key],
+      ring: s.accent === key ? '#fff' : 'rgba(255,255,255,0.15)',
+      shadow: s.accent === key ? `0 0 0 3px rgba(${ACCENTS_RGB[key]},0.35)` : 'none',
+      onTap: () => this.setState({ accent: key }),
+    }));
+
+    const sizeMap = { sm: 0.9, md: 1, lg: 1.14 };
+    const textSizes = [
+      { key: 'sm', label: 'Small' },
+      { key: 'md', label: 'Medium' },
+      { key: 'lg', label: 'Large' },
+    ].map((t) => {
+      const active = sizeMap[t.key] === s.textScale;
+      return {
+        label: t.label,
+        onTap: () => this.setState({ textScale: sizeMap[t.key] }),
+        border: active ? accentHex : 'rgba(255,255,255,0.12)',
+        bg: active ? `rgba(${accentRgb},0.12)` : 'transparent',
+        color: active ? accentHex : '#94a3b8',
+      };
+    });
+
+    const roles = ['Learner', 'Coach', 'Guardian'].map((label) => {
+      const active = s.role === label;
+      return {
+        label,
+        onTap: () => this.setState({ role: label }),
+        border: active ? accentHex : 'rgba(255,255,255,0.15)',
+        bg: active ? `rgba(${accentRgb},0.14)` : 'transparent',
+        color: active ? accentHex : '#94a3b8',
+      };
+    });
+
+    const modules = MODULES.map((m) => {
+      const scores = s.moduleScores[m.title] || [];
+      return {
+        num: m.num,
+        title: m.title,
+        desc: m.desc,
+        scoreText: scores.length ? `Top scores: ${scores.join('%, ')}%` : 'No attempts yet \u2014 tap to start',
+        onTap: () => this.openModule(m.title),
+      };
+    });
+
+    const activeModuleData = s.activeModule ? MODULE_CONTENT[s.activeModule] : null;
+    const activeModuleMeta = s.activeModule ? MODULES.find((m) => m.title === s.activeModule) : null;
+    const quizQuestions = activeModuleData ? activeModuleData.questions.map((q, qi) => ({
+      num: qi + 1,
+      text: q.q,
+      options: q.options.map((label, oi) => {
+        const selected = s.answers[qi] === oi;
+        return {
+          label,
+          onTap: () => this.selectAnswer(qi, oi),
+          bg: selected ? `rgba(${accentRgb},0.18)` : 'rgba(255,255,255,0.03)',
+          border: selected ? accentHex : 'rgba(255,255,255,0.1)',
+          color: selected ? '#fff' : '#cbd5e1',
+        };
+      }),
+    })) : [];
+    const resultTop3 = s.activeModule ? (s.moduleScores[s.activeModule] || []) : [];
+    const resultMsg = s.quizResult === null ? '' : s.quizResult >= 80 ? 'Great job! You know this material.' : s.quizResult >= 60 ? 'Solid effort \u2014 review the sections above and try again.' : 'Keep at it \u2014 reread the content and take another shot.';
+
+    const valueKeys = Object.keys(VALUE_CONTENT);
+    const values = valueKeys.map((key) => {
+      const active = s.activeValue === key;
+      return {
+        label: key,
+        onTap: () => this.selectValue(key),
+        bg: active ? `rgba(${accentRgb},0.16)` : 'rgba(255,255,255,0.04)',
+        border: active ? accentHex : 'rgba(255,255,255,0.08)',
+        color: active ? '#fff' : '#cbd5e1',
+      };
+    });
+    const activeItems = VALUE_CONTENT[s.activeValue];
+    const activeIdx = s.valueIndex[s.activeValue] || 0;
+    const valueDots = activeItems.map((_, i) => ({ color: i === activeIdx ? accentHex : 'rgba(255,255,255,0.15)' }));
+
+    const checklists = CHECKLISTS.map((c) => {
+      const done = !!s.checklistDone[c.key];
+      return {
+        title: c.title,
+        desc: c.desc,
+        onTap: () => this.toggleChecklist(c.key),
+        boxBorder: done ? accentHex : 'rgba(255,255,255,0.2)',
+        boxBg: done ? accentHex : 'transparent',
+        strike: done ? 'line-through' : 'none',
+      };
+    });
+
+    const notes = s.notes.map((n) => ({
+      ...n,
+      onDelete: () => this.setState((st) => ({ notes: st.notes.filter((x) => x.id !== n.id) })),
+    }));
+
+    const files = s.files.map((f) => ({
+      ...f,
+      onDelete: () => this.setState((st) => ({ files: st.files.filter((x) => x.id !== f.id) })),
+    }));
+
+    return {
+      accentHex,
+      accentRgb,
+      textScale: s.textScale,
+      displayName: s.displayName,
+      onNameInput: (e) => this.setState({ displayName: e.target.value }),
+
+      isHome: s.tab === 'home',
+      isLearn: s.tab === 'learn',
+      isSpace: s.tab === 'space',
+      goHome: () => this.setState({ tab: 'home' }),
+      goLearn: () => this.setState({ tab: 'learn' }),
+      goSpace: () => this.setState({ tab: 'space' }),
+      homeColor: s.tab === 'home' ? accentHex : '#64748b',
+      learnColor: s.tab === 'learn' ? accentHex : '#64748b',
+      spaceColor: s.tab === 'space' ? accentHex : '#64748b',
+
+      values,
+      activeValueLabel: s.activeValue,
+      activeValueText: activeItems[activeIdx],
+      valueDots,
+      checklists,
+      modules,
+      roles,
+      accents,
+      textSizes,
+
+      notifPushTrack: s.notifPush ? accentHex : 'rgba(255,255,255,0.12)',
+      notifPushPos: s.notifPush ? '20px' : '2px',
+      toggleNotifPush: () => this.setState((st) => ({ notifPush: !st.notifPush })),
+      notifDigestTrack: s.notifDigest ? accentHex : 'rgba(255,255,255,0.12)',
+      notifDigestPos: s.notifDigest ? '20px' : '2px',
+      toggleNotifDigest: () => this.setState((st) => ({ notifDigest: !st.notifDigest })),
+
+      addingNote: s.addingNote,
+      draftNote: s.draftNote,
+      onDraftInput: (e) => this.setState({ draftNote: e.target.value }),
+      openComposer: () => this.setState({ addingNote: true, draftNote: '', dictationNote: '' }),
+      closeComposer: () => this.setState({ addingNote: false, draftNote: '', dictationNote: '' }),
+      saveNote: () => {
+        const text = s.draftNote.trim();
+        if (!text) return;
+        this.setState((st) => ({
+          notes: [{ id: Date.now(), text, ts: 'Just now' }, ...st.notes],
+          addingNote: false,
+          draftNote: '',
+          dictationNote: '',
+        }));
+      },
+      toggleRecording: () => this.toggleRecording(),
+      isRecording: s.isRecording,
+      micLabel: s.isRecording ? 'Listening...' : 'Dictate',
+      micBg: s.isRecording ? 'rgba(244,63,94,0.12)' : `rgba(${accentRgb},0.1)`,
+      micBorder: s.isRecording ? 'rgba(244,63,94,0.35)' : `rgba(${accentRgb},0.3)`,
+      micColor: s.isRecording ? '#f43f5e' : accentHex,
+      micDotAnim: s.isRecording ? 'rec-pulse 1s ease-in-out infinite' : 'none',
+      hasDictationHint: !!s.dictationNote,
+      dictationNote: s.dictationNote,
+      hasNotes: notes.length > 0,
+      hasNoNotes: notes.length === 0,
+      notes,
+
+      enableFiles: this.props.enableFileUploads !== false,
+      fileInputRef: this.fileInputRef,
+      browseFiles: () => this.fileInputRef.current && this.fileInputRef.current.click(),
+      onFileInputChange: (e) => { if (e.target.files.length) this.handleFiles(e.target.files); e.target.value = ''; },
+      onDragOver: (e) => { e.preventDefault(); this.setState({ dragOver: true }); },
+      onDragLeave: () => this.setState({ dragOver: false }),
+      onDrop: (e) => { e.preventDefault(); this.setState({ dragOver: false }); if (e.dataTransfer.files.length) this.handleFiles(e.dataTransfer.files); },
+      dropBorder: s.dragOver ? accentHex : 'rgba(255,255,255,0.15)',
+      dropBg: s.dragOver ? `rgba(${accentRgb},0.06)` : 'rgba(0,0,0,0.15)',
+      hasFiles: files.length > 0,
+      hasNoFiles: files.length === 0,
+      files,
+
+      hasToast: !!s.toastMsg,
+      toastMsg: s.toastMsg,
+
+      hasActiveModule: !!s.activeModule,
+      activeModuleTitle: s.activeModule || '',
+      activeModuleNum: activeModuleMeta ? activeModuleMeta.num : '',
+      closeModule: () => this.closeModule(),
+      startQuiz: () => this.startQuiz(),
+      retakeQuiz: () => this.retakeQuiz(),
+      submitQuiz: () => this.submitQuiz(),
+      showContent: !!s.activeModule && !s.quizMode && s.quizResult === null,
+      showQuiz: !!s.activeModule && s.quizMode && s.quizResult === null,
+      showResult: !!s.activeModule && s.quizResult !== null,
+      moduleSections: activeModuleData ? activeModuleData.sections : [],
+      quizQuestions,
+      resultScore: s.quizResult,
+      resultMsg,
+      resultTop3,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

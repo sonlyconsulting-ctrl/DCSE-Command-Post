@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A complimentary CTJ self-assessment from Sonly Consulting that identifies patterns across six dimensions of strategic clarity.">
+  <title>Strategic Clarity Assessment | Sonly Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Inviting Silver Theme */
+      --ctj-silver: #e4e5ea;
+      --ctj-silver-light: #f0f1f4;
+      --ctj-silver-mid: #d3d4d9;
+      --ctj-silver-dark: #b8b9be;
+      --ctj-charcoal: #1a1a1a;
+      --ctj-charcoal-mid: #444444;
+      --ctj-charcoal-light: #777777;
+      --ctj-gold: #d4af37;
+      --ctj-gold-light: #e8cc6a;
+      --ctj-gold-dark: #b8962e;
+      --ctj-white: #ffffff;
+      
+      /* Elevations */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+      --shadow-md: 0 2px 12px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
+      
+      /* Structure */
+      --border-radius: 8px;
+      --border-radius-btn: 6px;
+      --nav-height: 64px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--ctj-silver);
+      color: var(--ctj-charcoal);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: var(--ctj-white);
+      border-bottom: 1px solid var(--ctj-silver-mid);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      color: var(--ctj-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-brand span {
+      font-weight: 700;
+      font-style: italic;
+    }
+
+    .nav-brand::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ctj-gold);
+      margin-left: 0.5rem;
+    }
+
+    .nav-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ctj-charcoal-mid);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-badge {
+      background: var(--ctj-silver-light);
+      border: 1px solid var(--ctj-gold);
+      color: var(--ctj-gold-dark);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Layout */
+    .app-container {
+      margin-top: var(--nav-height);
+      flex: 1;
+      display: flex;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .overall-progress-container {
+      background: var(--ctj-white);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 1rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ctj-charcoal-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: var(--ctj-silver);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--ctj-gold);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    [role="button"]:focus-visible {
+      outline: 3px solid var(--ctj-gold-dark);
+      outline-offset: 3px;
+    }
+
+    .section-card {
+      background: var(--ctj-white);
+      padding: 1.25rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .section-card.active {
+      border-color: var(--ctj-gold);
+    }
+    
+    .section-card.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--ctj-gold);
+    }
+
+    .section-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-num {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ctj-charcoal-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+    
+    .status-not_started {
+      background: var(--ctj-silver-light);
+      color: var(--ctj-charcoal-light);
+      border: 1px solid var(--ctj-silver-mid);
+    }
+    
+    .status-in_progress {
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--ctj-gold-dark);
+      border: 1px solid var(--ctj-gold-light);
+      animation: pulse 2s infinite;
+    }
+    
+    .status-completed {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+      70% { box-shadow: 0 0 0 4px rgba(212, 175, 55, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ctj-charcoal);
+      margin-bottom: 0.25rem;
+    }
+    
+    .section-progress-text {
+      font-size: 0.8rem;
+      color: var(--ctj-charcoal-mid);
+      margin-top: 0.5rem;
+    }
+
+    .session-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--ctj-charcoal-light);
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      flex: 1;
+      text-align: center;
+      transition: color 0.2s;
+    }
+    
+    .btn-text:hover {
+      color: var(--ctj-charcoal);
+      text-decoration: underline;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      position: relative;
+      min-width: 0;
+    }
+
+    .view {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+    
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Welcome View */
+    .welcome-card {
+      background: var(--ctj-white);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0,0,0,0.08);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .welcome-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--ctj-gold-light), var(--ctj-gold), var(--ctj-gold-dark));
+    }
+
+    .welcome-subtitle {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ctj-charcoal-light);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .welcome-card h1 {
+      font-size: 2.5rem;
+      color: var(--ctj-charcoal);
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--ctj-gold-dark);
+      margin-bottom: 2rem;
+    }
+
+    .welcome-details {
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      color: var(--ctj-charcoal-mid);
+    }
+    
+    .welcome-details ul {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+    
+    .welcome-details li {
+      margin-bottom: 0.75rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .welcome-details li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: var(--ctj-gold);
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--ctj-gold);
+      color: var(--ctj-white);
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: var(--border-radius-btn);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      background: var(--ctj-gold-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      color: var(--ctj-charcoal);
+      border: 1px solid var(--ctj-charcoal-light);
+    }
+    
+    .btn-outline:hover {
+      background: var(--ctj-silver-light);
+      border-color: var(--ctj-charcoal);
+      color: var(--ctj-charcoal);
+    }
+
+    /* Questions View */
+    .section-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--ctj-silver-mid);
+    }
+
+    .question-block {
+      background: var(--ctj-white);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--ctj-silver-mid);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .question-block.answered {
+      border-left-color: var(--ctj-gold);
+    }
+
+    .question-badge {
+      position: absolute;
+      left: -14px;
+      top: 2rem;
+      width: 24px;
+      height: 24px;
+      background: var(--ctj-gold);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--ctj-charcoal);
+      margin-bottom: 1.5rem;
+      margin-left: 0.5rem;
+    }
+
+    .likert-scale {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-left: 0.5rem;
+      position: relative;
+    }
+    
+    .likert-scale::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--ctj-silver-mid);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .likert-option {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 2;
+    }
+
+    .likert-radio {
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ctj-white);
+      border: 2px solid var(--ctj-silver-dark);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .likert-radio:hover {
+      border-color: var(--ctj-gold-light);
+      transform: scale(1.1);
+    }
+
+    .likert-radio:checked {
+      border-color: var(--ctj-gold);
+      background: var(--ctj-gold);
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2);
+    }
+
+    .likert-label {
+      font-size: 0.8rem;
+      color: var(--ctj-charcoal-mid);
+      text-align: center;
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    
+    .likert-option:hover .likert-label,
+    .likert-radio:checked ~ .likert-label {
+      color: var(--ctj-charcoal);
+    }
+
+    .submit-section-wrap {
+      margin-top: 2rem;
+      text-align: right;
+      display: none;
+      animation: slideInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Interstitial View */
+    .interstitial-card {
+      background: var(--ctj-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    
+    .promo-banner {
+      background: rgba(212, 175, 55, 0.05);
+      border-left: 4px solid var(--ctj-gold);
+      padding: 2rem;
+    }
+    
+    .promo-banner h3 {
+      color: var(--ctj-gold-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .interstitial-content {
+      padding: 2rem;
+    }
+    
+    .fun-fact {
+      background: var(--ctj-silver-light);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      font-style: italic;
+      color: var(--ctj-charcoal-mid);
+    }
+    
+    .exercise-box {
+      border: 1px solid var(--ctj-silver-mid);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    
+    .timer-container {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+    }
+    
+    .timer-svg {
+      transform: rotate(-90deg);
+    }
+    
+    .timer-circle-bg {
+      fill: none;
+      stroke: var(--ctj-silver-mid);
+      stroke-width: 4;
+    }
+    
+    .timer-circle {
+      fill: none;
+      stroke: var(--ctj-gold);
+      stroke-width: 4;
+      stroke-dasharray: 100;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+    }
+    
+    .timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.75rem;
+      font-weight: bold;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Results Views */
+    .results-card {
+      background: var(--ctj-white);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 2rem;
+    }
+    
+    .score-display {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .score-number {
+      font-size: 4rem;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--ctj-gold-dark);
+      line-height: 1;
+    }
+    
+    .tier-label {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ctj-charcoal);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .analysis-box h4 {
+      margin-bottom: 1rem;
+      color: var(--ctj-charcoal);
+      border-bottom: 1px solid var(--ctj-silver-mid);
+      padding-bottom: 0.5rem;
+    }
+    
+    .analysis-list {
+      list-style: none;
+    }
+    
+    .analysis-list li {
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .analysis-list li span.dim {
+      color: var(--ctj-charcoal-mid);
+    }
+    
+    .analysis-list li span.val {
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .recommendation-block {
+      background: var(--ctj-charcoal);
+      color: var(--ctj-white);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--ctj-gold);
+    }
+    
+    .recommendation-block h4 {
+      color: var(--ctj-gold);
+      margin-bottom: 1rem;
+    }
+    
+    .recommendation-block a {
+      color: var(--ctj-gold-light);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    /* Final Results Specific */
+    .radar-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+    
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(26, 26, 26, 0.4);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .modal-content {
+      background: var(--ctj-white);
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-content h2 {
+      margin-bottom: 1rem;
+      color: var(--ctj-charcoal);
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--ctj-charcoal-light);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--ctj-silver-mid);
+      margin-top: auto;
+    }
+    
+    footer a {
+      color: var(--ctj-charcoal-mid);
+      text-decoration: none;
+    }
+
+    /* Exercises */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      gap: 10px;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .pattern-cell {
+      width: 60px; height: 60px;
+      background: var(--ctj-silver);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pattern-cell.odd { background: var(--ctj-gold-light); }
+    
+    .speed-cards {
+      display: flex; gap: 10px; justify-content: center; margin: 1rem 0;
+    }
+    .speed-card {
+      padding: 1rem; background: var(--ctj-silver-light); border: 1px solid var(--ctj-silver-mid);
+      border-radius: 4px; cursor: pointer; flex: 1; max-width: 150px;
+      font-size: 0.85rem;
+    }
+
+    .reflection-input {
+      width: 100%; padding: 1rem; border: 1px solid var(--ctj-silver-mid);
+      border-radius: 4px; font-family: inherit; margin: 1rem 0; resize: vertical;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .app-container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .overall-progress-container, .session-controls {
+        width: 100%;
+      }
+      .section-card {
+        flex: 1;
+        min-width: 250px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .likert-scale {
+        flex-direction: column;
+        gap: 1rem;
+        margin-left: 0;
+      }
+      .likert-scale::before {
+        display: none;
+      }
+      .likert-option {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+      .archetype-name { font-size: 1.75rem; }
+      .archetype-narrative { font-size: 0.9rem; padding: 0 1rem; }
+      
+      .dimension-pills { 
+        flex-direction: column; 
+        align-items: stretch; 
+      }
+      .dim-pill { 
+        justify-content: space-between; 
+        white-space: normal;
+      }
+      
+      .pattern-card { padding: 1rem; }
+      
+      .results-ctas { 
+        flex-direction: column; 
+        align-items: stretch; 
+      }
+      .results-ctas .btn { 
+        min-width: auto; 
+        width: 100%; 
+      }
+      
+      #radar-canvas {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 350px;
+      }
+      
+      .score-display .score-number { font-size: 3rem; }
+      .recommendation-block { padding: 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .archetype-name { font-size: 1.5rem; }
+      .interstitial-card { padding: 1.5rem; }
+      .question-block { padding: 1.25rem; }
+      .likert-option { padding: 0.75rem 0.5rem; font-size: 0.8rem; }
+    }
+
+    /* Dimension pills */
+    .dimension-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .dim-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.4rem 0.75rem;
+      border: 1px solid var(--ctj-gold);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: var(--ctj-charcoal);
+      white-space: nowrap;
+    }
+
+    .dim-pill .dim-rating {
+      color: var(--ctj-gold-dark);
+      font-weight: 600;
+    }
+
+    /* Pattern breakdown */
+    .pattern-section {
+      margin: 2rem 0;
+    }
+
+    .pattern-card {
+      background: var(--ctj-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-left: 3px solid var(--ctj-gold);
+      border-radius: var(--border-radius);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pattern-card h5 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pattern-card .strengths { color: #2d7d46; }
+    .pattern-card .constraints { color: #a0522d; }
+    .pattern-card span { font-size: 0.85rem; }
+
+    /* Blueprint card */
+    .blueprint-card {
+      background: var(--ctj-white);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-left: 4px solid var(--ctj-gold);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .blueprint-card h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Archetype display */
+    .archetype-badge {
+      display: inline-block;
+      padding: 0.35rem 1rem;
+      background: var(--ctj-gold);
+      color: var(--ctj-charcoal);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .archetype-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--ctj-charcoal);
+      margin-bottom: 1rem;
+    }
+
+    .archetype-narrative {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--ctj-charcoal-mid);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Results CTAs */
+    .results-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .results-ctas .btn {
+      min-width: 200px;
+    }
+
+    /* Print Styles */
+    @media print {
+      nav, .sidebar, footer, .btn, .interstitial-card, #welcome-view, .session-controls { 
+        display: none !important; 
+      }
+      body { 
+        background: white; 
+        color: black; 
+      }
+      .main-content { 
+        margin: 0; 
+        width: 100%; 
+      }
+      #final-results-view { 
+        display: block !important; 
+        opacity: 1 !important;
+      }
+      .results-card {
+        box-shadow: none;
+        border: none;
+        padding: 0;
+      }
+      .score-display, .tier-label, h2, h3, h4 { 
+        color: #1a1a1a !important; 
+      }
+      .recommendation-block {
+        background: white;
+        color: black;
+        border: 2px solid #d4af37;
+      }
+      .recommendation-block h4 {
+        color: black;
+      }
+      body::before {
+        content: "SONLY CONSULTING: CTJ Strategic Clarity Assessment Results";
+        display: block;
+        font-family: 'Playfair Display', serif;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #d4af37;
+      }
+      body::after {
+        content: "Learn more at sonlyconsulting.com | © 2026 Sonly Consulting";
+        display: block;
+        text-align: center;
+        font-size: 10px;
+        margin-top: 30px;
+        color: #999;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav aria-label="Assessment navigation">
+    <div class="nav-brand">SONLY<span>CONSULTING</span></div>
+    <div class="nav-title">
+      <span class="hide-mobile">Strategic Clarity Assessment</span>
+      <span class="nav-badge">Free Introduction</span>
+    </div>
+  </nav>
+
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" style="display: none;">
+      <div class="overall-progress-container">
+        <div class="progress-header">
+          <span>Overall Progress</span>
+          <span id="progress-percent" class="font-mono" aria-live="polite">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="section-card" id="nav-s1" role="button" tabindex="0" aria-label="Open Section 1: Building Clarity and Confidence" onclick="app.switchView('section-1')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+        <div class="section-meta">
+          <span class="section-num">Section 1</span>
+          <span class="status-badge status-not_started" id="status-badge-1">Not Started</span>
+        </div>
+        <div class="section-title">Building Clarity & Confidence</div>
+        <div class="section-progress-text" id="nav-prog-1">0 of 10 completed</div>
+      </div>
+
+      <div class="section-card" id="nav-s2" role="button" tabindex="0" aria-label="Open Section 2: Exploring Ideas and Making Moves" onclick="app.switchView('section-2')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+        <div class="section-meta">
+          <span class="section-num">Section 2</span>
+          <span class="status-badge status-not_started" id="status-badge-2">Not Started</span>
+        </div>
+        <div class="section-title">Exploring Ideas & Making Moves</div>
+        <div class="section-progress-text" id="nav-prog-2">0 of 10 completed</div>
+      </div>
+
+      <div class="section-card" id="nav-s3" role="button" tabindex="0" aria-label="Open Section 3: Finding Meaning and Balance" onclick="app.switchView('section-3')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+        <div class="section-meta">
+          <span class="section-num">Section 3</span>
+          <span class="status-badge status-not_started" id="status-badge-3">Not Started</span>
+        </div>
+        <div class="section-title">Finding Meaning & Balance</div>
+        <div class="section-progress-text" id="nav-prog-3">0 of 11 completed</div>
+      </div>
+
+      <div class="session-controls">
+        <button class="btn-text" onclick="app.saveAndExit()">Save & Exit</button>
+        <button class="btn-text" onclick="app.startFresh(false)">Clear Session</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+      
+      <!-- Welcome View -->
+      <div id="welcome-view" class="view active">
+        <div class="welcome-card">
+          <span class="welcome-subtitle">The Critical Thinker's Journey™</span>
+          <h1>Strategic Clarity Assessment</h1>
+          <div class="welcome-quote">Identify your cognitive strengths and strategic patterns in about 10 minutes.</div>
+          
+          <div class="welcome-details">
+            <p>This complimentary self-assessment evaluates your thinking across six dimensions drawn from Sonly Consulting's CTJ framework.</p>
+            <ul>
+              <li>31 precision-crafted questions</li>
+              <li>3 progressive sections</li>
+              <li>Personalized dimensional analysis</li>
+              <li>Tailored CTJ pathway recommendations</li>
+            </ul>
+            <p><small><em>Your assessment responses are stored locally in this browser. They are not transmitted.</em></small></p>
+          </div>
+          
+          <button class="btn" onclick="app.startAssessment()">Begin Assessment &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Section Views Container -->
+      <div id="sections-container"></div>
+      
+      <!-- Interstitial Views Container -->
+      <div id="interstitials-container"></div>
+
+      <!-- Final Results View -->
+      <div id="final-results-view" class="view">
+        <div class="results-card">
+          <h2 style="text-align: center; margin-bottom: 0.5rem;">Results Summary</h2>
+          <p style="text-align: center; color: var(--ctj-charcoal-mid); margin-bottom: 2rem;">The Critical Thinker's Journey™</p>
+          
+          <div class="score-display">
+            <div class="score-number font-mono" id="final-score-val" aria-live="polite">0</div>
+            <p style="margin-top: 0.5rem; color: var(--ctj-charcoal-mid);" id="final-score-pct"></p>
+          </div>
+
+          <div id="archetype-container" style="text-align: center; margin-bottom: 2rem;"></div>
+
+          <div class="radar-container">
+            <canvas id="radar-canvas" width="500" height="400">Radar chart of six assessment dimensions.</canvas>
+          </div>
+
+          <div id="dimension-pills-container" class="dimension-pills"></div>
+
+          <div id="pattern-breakdown-container"></div>
+
+          <div id="blueprint-container"></div>
+
+          <div class="results-ctas">
+            <a href="https://sonlyconsulting.com" target="_blank" rel="noopener noreferrer" class="btn">Complete the Blueprint Online</a>
+            <a href="https://sonlyconsulting.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Schedule a Diagnostic Review</a>
+          </div>
+          <div class="results-ctas">
+            <button class="btn btn-outline" onclick="app.downloadMD()">Download Summary (.md)</button>
+            <button class="btn btn-outline" onclick="window.print()">Save as PDF (Print)</button>
+          </div>
+          <div class="results-ctas">
+            <button class="btn btn-outline" onclick="app.startFresh(true)">Retake Assessment</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <footer>
+    &copy; 2026 Sonly Consulting | The Critical Thinker's Journey™<br>
+    <a href="https://sonlyconsulting.com" target="_blank" rel="noopener noreferrer">sonlyconsulting.com</a><br>
+    <small>This assessment is a complimentary introduction to the CTJ series.</small>
+  </footer>
+
+  <!-- Resume Session Modal -->
+  <div class="modal-overlay" id="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
+    <div class="modal-content">
+      <h2 id="resume-modal-title">Welcome Back</h2>
+      <p style="color: var(--ctj-charcoal-mid); margin-bottom: 1.5rem;">We found an existing assessment session saved on this device.</p>
+      
+      <div style="background: var(--ctj-silver-light); padding: 1rem; border-radius: var(--border-radius); margin-bottom: 1.5rem; text-align: left; font-size: 0.9rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: var(--ctj-charcoal-light);">Questions Answered:</span>
+          <strong id="modal-answered" class="font-mono">0 / 31</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span style="color: var(--ctj-charcoal-light);">Last Active:</span>
+          <strong id="modal-date">Just now</strong>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="app.startFresh(true)">Start Fresh</button>
+        <button class="btn" onclick="app.resumeSession()">Resume Session</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA ---
+    const QUESTIONS = [
+      // Section 1
+      { id: 1, text: "I can clearly articulate my top three priorities at any given time.", dim: "Cognitive Clarity", reverse: false, section: 1 },
+      { id: 2, text: "When facing a complex problem, I break it into smaller, manageable parts before acting.", dim: "Cognitive Clarity", reverse: false, section: 1 },
+      { id: 3, text: "I regularly question my own assumptions before making important decisions.", dim: "Self-Awareness", reverse: false, section: 1 },
+      { id: 4, text: "I can distinguish between facts and opinions in most conversations.", dim: "Cognitive Clarity", reverse: false, section: 1 },
+      { id: 5, text: "I feel confident presenting my ideas, even when they differ from the majority.", dim: "Emotional Intelligence", reverse: false, section: 1 },
+      { id: 6, text: "I recognize when my emotions are influencing my judgment.", dim: "Self-Awareness", reverse: false, section: 1 },
+      { id: 7, text: "I often find myself reacting to the latest urgent task rather than focusing on what's truly important.", dim: "Execution Discipline", reverse: true, section: 1 },
+      { id: 8, text: "When I receive criticism, I evaluate it objectively rather than reacting defensively.", dim: "Emotional Intelligence", reverse: false, section: 1 },
+      { id: 9, text: "I have a reliable method for organizing my thoughts before communicating.", dim: "Cognitive Clarity", reverse: false, section: 1 },
+      { id: 10, text: "I can identify at least two cognitive biases that commonly affect my thinking.", dim: "Self-Awareness", reverse: false, section: 1 },
+      
+      // Section 2
+      { id: 11, text: "I evaluate multiple options before committing to a course of action.", dim: "Strategic Thinking", reverse: false, section: 2 },
+      { id: 12, text: "I can make decisions under pressure without sacrificing quality of thought.", dim: "Execution Discipline", reverse: false, section: 2 },
+      { id: 13, text: "When information is incomplete, I develop reasonable hypotheses to move forward.", dim: "Strategic Thinking", reverse: false, section: 2 },
+      { id: 14, text: "I actively seek out perspectives that challenge my own viewpoint.", dim: "Self-Awareness", reverse: false, section: 2 },
+      { id: 15, text: "I can identify the key leverage point in a complex situation.", dim: "Strategic Thinking", reverse: false, section: 2 },
+      { id: 16, text: "I set measurable milestones when pursuing long-term goals.", dim: "Execution Discipline", reverse: false, section: 2 },
+      { id: 17, text: "I adjust my strategy when initial results don't match expectations.", dim: "Execution Discipline", reverse: false, section: 2 },
+      { id: 18, text: "I sometimes struggle to explain the reasoning behind my decisions to others.", dim: "Cognitive Clarity", reverse: true, section: 2 },
+      { id: 19, text: "I allocate my time and energy based on strategic importance, not urgency alone.", dim: "Execution Discipline", reverse: false, section: 2 },
+      { id: 20, text: "I have a framework for evaluating risk versus reward in decisions.", dim: "Strategic Thinking", reverse: false, section: 2 },
+
+      // Section 3
+      { id: 21, text: "My daily activities align with my core personal values.", dim: "Purpose Alignment", reverse: false, section: 3 },
+      { id: 22, text: "I practice self-reflection at least weekly.", dim: "Self-Awareness", reverse: false, section: 3 },
+      { id: 23, text: "I can manage my emotional responses during high-stakes interactions.", dim: "Emotional Intelligence", reverse: false, section: 3 },
+      { id: 24, text: "I actively invest in relationships that support my growth.", dim: "Emotional Intelligence", reverse: false, section: 3 },
+      { id: 25, text: "I frequently feel that work consumes time I should dedicate to personal restoration.", dim: "Purpose Alignment", reverse: true, section: 3 },
+      { id: 26, text: "I can articulate my personal definition of success beyond financial metrics.", dim: "Purpose Alignment", reverse: false, section: 3 },
+      { id: 27, text: "I regularly engage in activities that challenge me intellectually.", dim: "Purpose Alignment", reverse: false, section: 3 },
+      { id: 28, text: "I approach failures as data points rather than personal deficiencies.", dim: "Self-Awareness", reverse: false, section: 3 },
+      { id: 29, text: "I feel a sense of purpose that guides my major life decisions.", dim: "Purpose Alignment", reverse: false, section: 3 },
+      { id: 30, text: "I can sit with uncertainty without rushing to premature conclusions.", dim: "Emotional Intelligence", reverse: false, section: 3 },
+      { id: 31, text: "I regularly assess whether my habits serve my long-term vision.", dim: "Purpose Alignment", reverse: false, section: 3 }
+    ];
+
+    const DIMENSIONS = [
+      "Cognitive Clarity", 
+      "Self-Awareness", 
+      "Strategic Thinking", 
+      "Execution Discipline", 
+      "Emotional Intelligence", 
+      "Purpose Alignment"
+    ];
+
+    const ARCHETYPES = {
+      'Cognitive Clarity': { name: 'The Architect', badge: 'Structural Thinking', desc: 'You build with precision. Your ability to organize complex information into clear frameworks is a demonstrated strength.' },
+      'Self-Awareness': { name: 'The Mirror', badge: 'Reflective Intelligence', desc: 'You see what others miss, especially in yourself. Your self-examination supports continued growth.' },
+      'Strategic Thinking': { name: 'The Strategist', badge: 'Tactical Foresight', desc: 'You think in systems and sequences. Where others see chaos, you find the leverage point that moves everything.' },
+      'Execution Discipline': { name: 'The Closer', badge: 'Decisive Action', desc: 'You perform when stakes rise. You move, adjust, and recover quickly. Pressure becomes momentum.' },
+      'Emotional Intelligence': { name: 'The Navigator', badge: 'Relational Mastery', desc: 'You read the room before you enter it. Your emotional precision creates trust and supports influence.' },
+      'Purpose Alignment': { name: 'The Compass', badge: 'Intentional Living', desc: 'You operate from a deep center. Every decision passes through your values filter, supporting meaningful action.' }
+    };
+
+    const Q_LABELS = {
+      1: 'Priority articulation', 2: 'Problem decomposition', 3: 'Assumption questioning',
+      4: 'Fact-opinion distinction', 5: 'Confident advocacy', 6: 'Emotional recognition',
+      7: 'Focus discipline', 8: 'Objective evaluation', 9: 'Thought organization',
+      10: 'Bias identification', 11: 'Option evaluation', 12: 'Pressure decisions',
+      13: 'Hypothesis formation', 14: 'Perspective seeking', 15: 'Leverage identification',
+      16: 'Milestone setting', 17: 'Strategy adaptation', 18: 'Decision communication',
+      19: 'Strategic allocation', 20: 'Risk-reward framework', 21: 'Values alignment',
+      22: 'Self-reflection practice', 23: 'Emotional management', 24: 'Growth relationships',
+      25: 'Work-life boundaries', 26: 'Success definition', 27: 'Intellectual challenge',
+      28: 'Failure resilience', 29: 'Purpose-driven decisions', 30: 'Uncertainty tolerance',
+      31: 'Habit assessment'
+    };
+
+    const QUICK_NOTES = {
+      1: [
+        'Naming the assumption behind a decision makes that assumption easier to test.',
+        'Clear priorities make it easier to distinguish important work from merely urgent work.',
+        'Breaking a complex problem into smaller parts can reveal the decision that matters most.'
+      ],
+      2: [
+        'A useful decision filter reduces options before urgency chooses for you.',
+        'Comparing options against the same criteria makes tradeoffs easier to see.',
+        'A reasonable next step can create useful evidence when complete information is unavailable.'
+      ],
+      3: [
+        'Reflection becomes more practical when it ends with a specific next action.',
+        'A habit is easier to evaluate when its connection to a long-term priority is clear.',
+        'Making room for uncertainty can prevent a premature conclusion from becoming a fixed decision.'
+      ]
+    };
+
+    const STORAGE_KEY = 'ctj-assessment-session';
+    const QUICK_NOTE_KEY = 'ctj-quick-note-rotation';
+
+    // --- APPLICATION LOGIC ---
+    const app = {
+      state: {
+        visitorId: crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now(),
+        startedAt: new Date().toISOString(),
+        lastUpdated: new Date().toISOString(),
+        answers: {},
+        sectionStatus: { 1: "not_started", 2: "not_started", 3: "not_started" },
+        sectionScores: { 1: null, 2: null, 3: null },
+        sectionCompletedAt: { 1: null, 2: null, 3: null },
+        currentSection: 1,
+        currentView: "welcome",
+        interstitialSeen: { 1: false, 2: false, 3: false },
+        reflection: ""
+      },
+      
+      init() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) this.advanceQuickNoteRotation();
+        this.buildDOM();
+
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            this.state = { ...this.state, ...parsed };
+            
+            const answeredCount = Object.keys(this.state.answers).length;
+            const lastDate = new Date(this.state.lastUpdated).toLocaleDateString(undefined, {
+              month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+            
+            document.getElementById('modal-answered').textContent = `${answeredCount} / 31`;
+            document.getElementById('modal-date').textContent = lastDate;
+            
+            document.getElementById('resume-modal').classList.add('active');
+          } catch(e) {
+            this.startFresh(true);
+          }
+        }
+      },
+
+      buildDOM() {
+        const sectionsContainer = document.getElementById('sections-container');
+        const interstitialsContainer = document.getElementById('interstitials-container');
+        
+        // Build Sections
+        [1, 2, 3].forEach(secNum => {
+          const secQs = QUESTIONS.filter(q => q.section === secNum);
+          
+          const sectionHTML = `
+            <div id="section-${secNum}" class="view">
+              <div class="section-header">
+                <h2>Section ${secNum}: ${this.getSectionTitle(secNum)}</h2>
+                <p style="color: var(--ctj-charcoal-mid);">Answer each question based on how you actually behave, not how you wish to behave.</p>
+              </div>
+              <div class="questions-list">
+                ${secQs.map((q, idx) => `
+                  <div class="question-block" id="qblock-${q.id}">
+                    <div class="question-badge">${q.id}</div>
+                    <div class="question-text" id="question-text-${q.id}">${q.text}</div>
+                    <div class="likert-scale" role="radiogroup" aria-labelledby="question-text-${q.id}">
+                      ${[1,2,3,4,5].map(val => `
+                        <label class="likert-option">
+                          <input type="radio" name="q${q.id}" value="${val}" class="likert-radio" onchange="app.answerQuestion(${q.id}, ${val}, ${secNum})">
+                          <span class="likert-label">${this.getLikertLabel(val)}</span>
+                        </label>
+                      `).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="submit-section-wrap" id="submit-wrap-${secNum}">
+                <button class="btn" onclick="app.submitSection(${secNum})">Submit Section ${secNum}</button>
+              </div>
+            </div>
+          `;
+          sectionsContainer.insertAdjacentHTML('beforeend', sectionHTML);
+          
+          // Build Interstitials
+          const intHTML = `
+            <div id="interstitial-${secNum}" class="view">
+              <div class="interstitial-card">
+                <div class="promo-banner">
+                  <h3>CTJ Series Highlight</h3>
+                  <p>${this.getPromoText(secNum)}</p>
+                </div>
+                <div class="interstitial-content">
+                  <div class="fun-fact">
+                    <strong>Quick Note:</strong> <span id="quick-note-${secNum}">${this.getFunFact(secNum)}</span>
+                  </div>
+                  
+                  <div class="exercise-box">
+                    ${this.getExerciseHTML(secNum)}
+                  </div>
+                  
+                  <div id="int-results-${secNum}" style="display:none; text-align:center; margin-bottom: 2rem; border-top:1px solid var(--ctj-silver-mid); padding-top: 2rem;">
+                    <h3 style="margin-bottom:1rem;">Section ${secNum} Results</h3>
+                    <div class="score-display">
+                      <div class="score-number font-mono" id="score-counter-${secNum}" aria-live="polite">0</div>
+                      <div class="tier-label" id="tier-label-${secNum}">Evaluating...</div>
+                    </div>
+                    <div style="text-align:left; background:var(--ctj-silver-light); padding:1.5rem; border-radius:var(--border-radius); font-size:0.9rem;">
+                      <strong style="color:var(--ctj-gold-dark);">Recommendation:</strong>
+                      <span id="rec-text-${secNum}"></span>
+                    </div>
+                  </div>
+                  
+                  <div style="text-align:right;">
+                    <button id="btn-show-res-${secNum}" class="btn" onclick="app.showInterstitialResults(${secNum})">View Section ${secNum} Results</button>
+                    <button id="btn-cont-${secNum}" class="btn" style="display:none;" onclick="app.continueFromInterstitial(${secNum})">${secNum === 3 ? 'View Final Results' : 'Continue to Section ' + (secNum+1)}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          interstitialsContainer.insertAdjacentHTML('beforeend', intHTML);
+        });
+      },
+
+      getSectionTitle(num) {
+        return num === 1 ? "Building Clarity & Confidence" : num === 2 ? "Exploring Ideas & Making Moves" : "Finding Meaning & Balance";
+      },
+
+      getLikertLabel(val) {
+        return ["Rarely", "Occasionally", "Sometimes", "Often", "Almost Always"][val-1];
+      },
+
+      getPromoText(num) {
+        if(num === 1) return "This section explored themes from <em>Part 1: Building Clarity & Confidence</em>, the first module in the CTJ series. The full module explores 12 cognitive frameworks for reducing distortion and developing steadier judgment.";
+        if(num === 2) return "This section drew from <em>Part 2: Exploring Ideas & Making Moves</em>. The complete module provides decision matrices, strategic prioritization tools, and execution-mapping systems for evaluating complex choices.";
+        return "This final section reflects the themes of <em>Part 3: Finding Meaning & Balance</em>. The full module connects emotional intelligence, mindset alignment, and habit architecture to support reflection and more sustainable practice.";
+      },
+
+      getFunFact(num) {
+        const current = Number.parseInt(localStorage.getItem(QUICK_NOTE_KEY) || '0', 10);
+        const rotation = Number.isFinite(current) ? current : 0;
+        const pool = QUICK_NOTES[num];
+        return pool[(rotation + num - 1) % pool.length];
+      },
+
+      advanceQuickNoteRotation() {
+        const current = Number.parseInt(localStorage.getItem(QUICK_NOTE_KEY) || '', 10);
+        const next = Number.isFinite(current) ? current + 1 : 0;
+        localStorage.setItem(QUICK_NOTE_KEY, String(next));
+      },
+
+      refreshQuickNotes() {
+        [1, 2, 3].forEach(num => {
+          const note = document.getElementById(`quick-note-${num}`);
+          if (note) note.textContent = this.getFunFact(num);
+        });
+      },
+
+      getExerciseHTML(num) {
+        if (num === 1) {
+          return `
+            <h4>Quick Exercise: Pattern Recognition</h4>
+            <p style="font-size:0.85rem; color:var(--ctj-charcoal-mid);">Find the odd shape out before the timer ends.</p>
+            <div class="timer-container">
+              <svg class="timer-svg" viewBox="0 0 36 36">
+                <path class="timer-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="timer-circle" id="timer-path-1" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="timer-text" id="timer-txt-1" aria-live="polite">8s</div>
+            </div>
+            <div class="pattern-grid">
+              ${Array(9).fill(0).map((_,i) => `<div class="pattern-cell ${i===4?'odd':''}" role="button" tabindex="0" aria-label="Pattern cell ${i+1}" onclick="this.style.background='var(--ctj-gold)'; this.innerHTML='✓'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">⬟</div>`).join('')}
+            </div>
+          `;
+        }
+        if (num === 2) {
+          return `
+            <h4>Quick Exercise: Speed Prioritization</h4>
+            <p style="font-size:0.85rem; color:var(--ctj-charcoal-mid);">Click to rank 1-2-3.</p>
+            <div class="timer-container">
+              <svg class="timer-svg" viewBox="0 0 36 36">
+                <path class="timer-circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path class="timer-circle" id="timer-path-2" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
+              <div class="timer-text" id="timer-txt-2" aria-live="polite">10s</div>
+            </div>
+            <div class="speed-cards">
+              <div class="speed-card" role="button" tabindex="0" onclick="this.innerHTML='Rank 1'; this.style.borderColor='var(--ctj-gold)'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">Urgent Client Email</div>
+              <div class="speed-card" role="button" tabindex="0" onclick="this.innerHTML='Rank 2'; this.style.borderColor='var(--ctj-gold)'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">Strategic Planning</div>
+              <div class="speed-card" role="button" tabindex="0" onclick="this.innerHTML='Rank 3'; this.style.borderColor='var(--ctj-gold)'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">Team Sync Meeting</div>
+            </div>
+          `;
+        }
+        return `
+          <h4>Quick Exercise: Reflection</h4>
+          <p style="font-size:0.85rem; color:var(--ctj-charcoal-mid);">Summarize your biggest takeaway from this assessment in one sentence.</p>
+          <textarea class="reflection-input" rows="2" aria-label="Assessment reflection" placeholder="My biggest realization is..."></textarea>
+        `;
+      },
+
+      startFresh(force = false) {
+        if (!force && !confirm("Are you sure you want to clear your progress and start over?")) return;
+        localStorage.removeItem(STORAGE_KEY);
+        this.advanceQuickNoteRotation();
+        this.state = {
+          visitorId: crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now(),
+          startedAt: new Date().toISOString(),
+          lastUpdated: new Date().toISOString(),
+          answers: {},
+          sectionStatus: { 1: "not_started", 2: "not_started", 3: "not_started" },
+          sectionScores: { 1: null, 2: null, 3: null },
+          sectionCompletedAt: { 1: null, 2: null, 3: null },
+          currentSection: 1,
+          currentView: "welcome",
+          interstitialSeen: { 1: false, 2: false, 3: false },
+          reflection: ""
+        };
+        document.getElementById('resume-modal').classList.remove('active');
+        
+        // Reset DOM state
+        document.querySelectorAll('.likert-radio').forEach(r => r.checked = false);
+        document.querySelectorAll('.question-block').forEach(b => b.classList.remove('answered'));
+        document.querySelectorAll('.submit-section-wrap').forEach(w => w.style.display = 'none');
+        this.refreshQuickNotes();
+        
+        this.save();
+        this.updateSidebarUI();
+        this.switchView('welcome');
+      },
+
+      resumeSession() {
+        document.getElementById('resume-modal').classList.remove('active');
+        
+        // Restore answers to UI
+        Object.entries(this.state.answers).forEach(([qId, val]) => {
+          const radio = document.querySelector(`input[name="q${qId}"][value="${val}"]`);
+          if (radio) {
+            radio.checked = true;
+            document.getElementById(`qblock-${qId}`).classList.add('answered');
+          }
+        });
+
+        // Check if sections are complete to show submit buttons
+        [1,2,3].forEach(s => this.checkSectionComplete(s));
+
+        this.updateSidebarUI();
+        this.switchView(this.state.currentView);
+      },
+
+      save() {
+        this.state.lastUpdated = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      },
+
+      startAssessment() {
+        document.getElementById('sidebar').style.display = 'flex';
+        this.switchView('section-1');
+      },
+
+      switchView(viewId) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        
+        if (viewId.startsWith('section-')) {
+          const sNum = parseInt(viewId.split('-')[1]);
+          if(this.state.sectionStatus[sNum] === 'not_started') {
+            this.state.sectionStatus[sNum] = 'in_progress';
+          }
+          this.state.currentSection = sNum;
+          document.getElementById(viewId).classList.add('active');
+          document.getElementById('sidebar').style.display = 'flex';
+        } 
+        else if (viewId.startsWith('interstitial-')) {
+          const sNum = parseInt(viewId.split('-')[1]);
+          document.getElementById(viewId).classList.add('active');
+          document.getElementById('sidebar').style.display = 'flex';
+          this.startTimer(sNum);
+        }
+        else if (viewId === 'final-results') {
+          document.getElementById('final-results-view').classList.add('active');
+          this.generateFinalResults();
+        }
+        else {
+          document.getElementById('welcome-view').classList.add('active');
+          document.getElementById('sidebar').style.display = 'none';
+        }
+        
+        this.state.currentView = viewId;
+        this.save();
+        this.updateSidebarUI();
+      },
+
+      answerQuestion(qId, value, secNum) {
+        this.state.answers[qId] = value;
+        document.getElementById(`qblock-${qId}`).classList.add('answered');
+        
+        if(this.state.sectionStatus[secNum] === 'not_started') {
+          this.state.sectionStatus[secNum] = 'in_progress';
+        }
+        
+        this.save();
+        this.updateSidebarUI();
+        this.checkSectionComplete(secNum);
+      },
+
+      checkSectionComplete(secNum) {
+        const secQs = QUESTIONS.filter(q => q.section === secNum);
+        const answeredInSec = secQs.filter(q => this.state.answers[q.id]);
+        
+        if (answeredInSec.length === secQs.length && this.state.sectionStatus[secNum] !== 'completed') {
+          document.getElementById(`submit-wrap-${secNum}`).style.display = 'block';
+        }
+      },
+
+      updateSidebarUI() {
+        let totalAnswered = Object.keys(this.state.answers).length;
+        let progressPct = Math.round((totalAnswered / 31) * 100);
+        
+        document.getElementById('progress-percent').textContent = `${progressPct}%`;
+        document.getElementById('progress-fill').style.width = `${progressPct}%`;
+
+        [1,2,3].forEach(sNum => {
+          const card = document.getElementById(`nav-s${sNum}`);
+          const badge = document.getElementById(`status-badge-${sNum}`);
+          const progTxt = document.getElementById(`nav-prog-${sNum}`);
+          
+          const sQs = QUESTIONS.filter(q => q.section === sNum);
+          const ansCount = sQs.filter(q => this.state.answers[q.id]).length;
+          
+          progTxt.textContent = `${ansCount} of ${sQs.length} completed`;
+          
+          const status = this.state.sectionStatus[sNum];
+          badge.className = `status-badge status-${status}`;
+          badge.textContent = status === 'not_started' ? 'Not Started' : status === 'in_progress' ? 'In Progress' : 'Completed';
+          
+          if(this.state.currentSection === sNum && this.state.currentView.startsWith('section-')) {
+            card.classList.add('active');
+          } else {
+            card.classList.remove('active');
+          }
+        });
+      },
+
+      submitSection(secNum) {
+        // Calculate Score
+        const secQs = QUESTIONS.filter(q => q.section === secNum);
+        let score = 0;
+        secQs.forEach(q => {
+          let raw = this.state.answers[q.id];
+          score += q.reverse ? (6 - raw) : raw;
+        });
+        
+        this.state.sectionScores[secNum] = score;
+        this.state.sectionStatus[secNum] = 'completed';
+        this.state.sectionCompletedAt[secNum] = new Date().toISOString();
+        
+        this.save();
+        this.updateSidebarUI();
+        this.switchView(`interstitial-${secNum}`);
+      },
+
+      startTimer(secNum) {
+        if(secNum === 3) return; // No timer for reflection
+        const timeLimit = secNum === 1 ? 8 : 10;
+        let timeLeft = timeLimit;
+        const txt = document.getElementById(`timer-txt-${secNum}`);
+        const path = document.getElementById(`timer-path-${secNum}`);
+        
+        const intv = setInterval(() => {
+          timeLeft--;
+          if(txt) txt.textContent = timeLeft + 's';
+          if(path) {
+            const offset = 100 - ((timeLeft / timeLimit) * 100);
+            path.style.strokeDashoffset = offset;
+          }
+          if(timeLeft <= 0) clearInterval(intv);
+        }, 1000);
+      },
+
+      showInterstitialResults(secNum) {
+        document.getElementById(`btn-show-res-${secNum}`).style.display = 'none';
+        document.getElementById(`btn-cont-${secNum}`).style.display = 'inline-block';
+        
+        const resDiv = document.getElementById(`int-results-${secNum}`);
+        resDiv.style.display = 'block';
+        
+        const score = this.state.sectionScores[secNum];
+        const maxScore = secNum === 3 ? 55 : 50;
+        const pct = score / maxScore;
+        
+        // Recommendation logic
+        let tier, rec;
+        if (pct >= 0.9) {
+          tier = "Architect";
+          rec = `Your responses indicate a strong current pattern. <em>Part ${secNum}</em> offers advanced frameworks for continuing to develop it.`;
+        } else if (pct >= 0.7) {
+          tier = "Strategist";
+          rec = `<em>Part ${secNum}</em> will help you refine and sharpen these skills.`;
+        } else if (pct >= 0.5) {
+          tier = "Explorer";
+          rec = `We recommend <em>Part ${secNum}</em> to strengthen this dimension and build consistency.`;
+        } else {
+          tier = "Seeker";
+          rec = `We strongly recommend <em>Part ${secNum}</em> to establish foundational capability in this dimension.`;
+        }
+        
+        document.getElementById(`tier-label-${secNum}`).textContent = tier;
+        document.getElementById(`rec-text-${secNum}`).innerHTML = rec;
+        
+        this.animateScore(`score-counter-${secNum}`, 0, score, 1500);
+      },
+
+      continueFromInterstitial(secNum) {
+        this.state.interstitialSeen[secNum] = true;
+        this.save();
+        
+        if (secNum < 3) {
+          this.switchView(`section-${secNum+1}`);
+        } else {
+          this.switchView('final-results');
+        }
+      },
+
+      animateScore(elId, start, end, duration) {
+        const obj = document.getElementById(elId);
+        if(!obj) return;
+        let startTime = null;
+        const step = (timestamp) => {
+          if (!startTime) startTime = timestamp;
+          const progress = Math.min((timestamp - startTime) / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 4);
+          obj.innerHTML = Math.floor(easeOut * (end - start) + start);
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            obj.innerHTML = end;
+          }
+        };
+        window.requestAnimationFrame(step);
+      },
+
+      generateFinalResults() {
+        const scoresByDim = {};
+        const maxByDim = {};
+        const qScoresByDim = {};
+        let minQScore = {id: null, val: Infinity};
+        let qScores = {};
+        
+        DIMENSIONS.forEach(d => { 
+          scoresByDim[d] = 0; 
+          maxByDim[d] = 0; 
+          qScoresByDim[d] = [];
+        });
+        
+        QUESTIONS.forEach(q => {
+          if(this.state.answers[q.id]) {
+            let raw = this.state.answers[q.id];
+            let val = q.reverse ? (6 - raw) : raw;
+            scoresByDim[q.dim] += val;
+            maxByDim[q.dim] += 5;
+            qScoresByDim[q.dim].push({id: q.id, val: val});
+            qScores[q.id] = val;
+            if (val < minQScore.val) {
+              minQScore = {id: q.id, val: val, dim: q.dim};
+            }
+          }
+        });
+
+        const totalScore = Object.values(this.state.sectionScores).reduce((a,b)=>a+b,0);
+        const maxTotal = 155;
+        const totalPct = totalScore / maxTotal;
+        this.totalScore = totalScore;
+        this.pct = Math.round(totalPct*100);
+        
+        document.getElementById('final-score-val').textContent = totalScore;
+        document.getElementById('final-score-pct').textContent = `${Math.round(totalPct*100)}% Overall Score`;
+        
+        // Archetype System
+        const sortedDims = DIMENSIONS.map(d => ({ dim: d, pct: scoresByDim[d]/maxByDim[d], avg: scoresByDim[d]/(maxByDim[d]/5) }))
+                                     .sort((a,b) => b.pct - a.pct);
+        
+        const dominant = sortedDims[0].dim;
+        const constraint = sortedDims[sortedDims.length-1].dim;
+        this.archetype = ARCHETYPES[dominant];
+        this.blueprintQ = minQScore.id;
+        this.sortedDims = sortedDims;
+
+        const archetypeHtml = `
+          <div class="archetype-badge">${this.archetype.badge}</div>
+          <h2 class="archetype-name">${this.archetype.name}</h2>
+          <p class="archetype-narrative">${this.archetype.desc} Your strongest signal is <strong>${dominant}</strong>, while your primary constraint currently appears in <strong>${constraint}</strong>.</p>
+        `;
+        document.getElementById('archetype-container').innerHTML = archetypeHtml;
+
+        // Dimension Score Pills
+        const pillsHtml = sortedDims.map(d => {
+          let rating = "Emerging";
+          if (d.avg >= 4.0) rating = "Strong";
+          else if (d.avg >= 3.0) rating = "Steady";
+          else if (d.avg >= 2.0) rating = "Developing";
+          return `<div class="dim-pill"><span>${d.dim}:</span> <span class="dim-rating">${d.avg.toFixed(1)}/5 &bull; ${rating}</span></div>`;
+        }).join('');
+        document.getElementById('dimension-pills-container').innerHTML = pillsHtml;
+
+        // Pattern Breakdown
+        let patternHtml = `<div class="pattern-section"><h3>What's Driving Your Pattern</h3>`;
+        DIMENSIONS.forEach(d => {
+          let qs = qScoresByDim[d].sort((a,b) => b.val - a.val);
+          if (qs.length === 0) return;
+          let highest = qs.filter(q => q.val >= 4).map(q => Q_LABELS[q.id]);
+          let lowest = qs.filter(q => q.val <= 2).map(q => Q_LABELS[q.id]);
+          
+          let breakdown = "";
+          if (highest.length === 0 && lowest.length === 0) {
+            breakdown = `<span>Developing across the board</span>`;
+          } else {
+            if (highest.length > 0) breakdown += `<div class="strengths"><strong>Strengths:</strong> ${highest.join(', ')}</div>`;
+            if (lowest.length > 0) breakdown += `<div class="constraints"><strong>Constraints:</strong> ${lowest.join(', ')}</div>`;
+          }
+          
+          patternHtml += `
+            <div class="pattern-card">
+              <h5>${d}</h5>
+              ${breakdown}
+            </div>
+          `;
+        });
+        patternHtml += `</div>`;
+        document.getElementById('pattern-breakdown-container').innerHTML = patternHtml;
+
+        // Immediate Blueprint
+        const blueprintHtml = `
+          <div class="blueprint-card">
+            <h4>Your Immediate Blueprint</h4>
+            <p>Next: strengthen <strong>${Q_LABELS[this.blueprintQ]}</strong> first. One targeted improvement here can support progress across related dimensions.</p>
+          </div>
+        `;
+        document.getElementById('blueprint-container').innerHTML = blueprintHtml;
+
+        // Radar Chart
+        const radarScores = DIMENSIONS.map(d => scoresByDim[d] / maxByDim[d]);
+        this.drawRadarChart(radarScores);
+      },
+
+      downloadMD() {
+        let md = `# CTJ Strategic Clarity Assessment Results\n\n`;
+        md += `**Date:** ${new Date().toLocaleDateString()}\n`;
+        md += `**Archetype:** ${this.archetype.name}\n`;
+        md += `**Overall Score:** ${this.totalScore}/155 (${this.pct}%)\n\n`;
+        md += `## Dimensional Scores\n\n`;
+        this.sortedDims.forEach(d => {
+           let rating = "Emerging";
+           if (d.avg >= 4.0) rating = "Strong";
+           else if (d.avg >= 3.0) rating = "Steady";
+           else if (d.avg >= 2.0) rating = "Developing";
+           md += `- **${d.dim}:** ${d.avg.toFixed(1)}/5 (${rating})\n`;
+        });
+        md += `\n## Your Immediate Blueprint\n\n`;
+        md += `Next: strengthen **${Q_LABELS[this.blueprintQ]}** first. One targeted improvement here can support progress across related dimensions.\n\n`;
+        md += `---\n\n*Assessment by Sonly Consulting | sonlyconsulting.com*\n`;
+        
+        const blob = new Blob([md], {type: 'text/markdown'});
+        const a = document.createElement('a');
+        const downloadUrl = URL.createObjectURL(blob);
+        a.href = downloadUrl;
+        a.download = 'ctj-assessment-results.md';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+      },
+
+      drawRadarChart(scores) {
+        const canvas = document.getElementById('radar-canvas');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const radius = Math.min(centerX, centerY) - 60;
+        
+        let startTime = null;
+        
+        const draw = (scale) => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          
+          // Draw Grid (Hexagons)
+          ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+          ctx.lineWidth = 1;
+          for(let level = 1; level <= 5; level++) {
+            const r = radius * (level/5);
+            ctx.beginPath();
+            for(let i=0; i<6; i++) {
+              const angle = (Math.PI * 2 * i) / 6 - Math.PI/2;
+              const x = centerX + r * Math.cos(angle);
+              const y = centerY + r * Math.sin(angle);
+              if(i===0) ctx.moveTo(x,y);
+              else ctx.lineTo(x,y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+          }
+          
+          // Draw Axes & Labels
+          ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+          ctx.fillStyle = '#444444';
+          ctx.font = '12px Inter';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          for(let i=0; i<6; i++) {
+            const angle = (Math.PI * 2 * i) / 6 - Math.PI/2;
+            
+            // Axis
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(centerX + radius * Math.cos(angle), centerY + radius * Math.sin(angle));
+            ctx.stroke();
+            
+            // Label
+            const labelR = radius + 25;
+            const lx = centerX + labelR * Math.cos(angle);
+            const ly = centerY + labelR * Math.sin(angle);
+            
+            // Wrap text if needed or just draw
+            const words = DIMENSIONS[i].split(' ');
+            if (words.length > 1) {
+              ctx.fillText(words[0], lx, ly - 8);
+              ctx.fillText(words[1], lx, ly + 8);
+            } else {
+              ctx.fillText(DIMENSIONS[i], lx, ly);
+            }
+          }
+          
+          // Draw Data Polygon
+          ctx.beginPath();
+          for(let i=0; i<6; i++) {
+            const angle = (Math.PI * 2 * i) / 6 - Math.PI/2;
+            const r = radius * scores[i] * scale;
+            const x = centerX + r * Math.cos(angle);
+            const y = centerY + r * Math.sin(angle);
+            if(i===0) ctx.moveTo(x,y);
+            else ctx.lineTo(x,y);
+          }
+          ctx.closePath();
+          
+          ctx.fillStyle = 'rgba(212, 175, 55, 0.2)'; // Gold 20%
+          ctx.fill();
+          ctx.strokeStyle = '#d4af37';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          
+          // Draw Data Points
+          ctx.fillStyle = '#d4af37';
+          for(let i=0; i<6; i++) {
+            const angle = (Math.PI * 2 * i) / 6 - Math.PI/2;
+            const r = radius * scores[i] * scale;
+            const x = centerX + r * Math.cos(angle);
+            const y = centerY + r * Math.sin(angle);
+            
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, Math.PI*2);
+            ctx.fill();
+          }
+        };
+
+        const animate = (time) => {
+          if(!startTime) startTime = time;
+          const progress = Math.min((time - startTime) / 1000, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 4);
+          draw(easeOut);
+          if(progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+      },
+
+      saveAndExit() {
+        this.save();
+        alert("Session saved in this browser on this device. You can return to this page anytime to resume.");
+      }
+    };
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => app.init());
+
+  </script>
+</body>
+</html>

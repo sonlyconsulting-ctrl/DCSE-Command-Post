@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  @keyframes logoSpin360 { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+  @keyframes logoGlow { 0%, 100% { filter: drop-shadow(0 0 6px rgba(212,175,55,0.35)); } 50% { filter: drop-shadow(0 0 22px rgba(212,175,55,0.85)); } }
+  @keyframes shineSweep { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  a { color: #D4AF37; text-decoration: none; }
+  a:hover { color: #E4C662; text-decoration: underline; }
+  body { margin: 0; }
+  :focus-visible { outline: 2px solid #D4AF37; outline-offset: 2px; }
+</style>
+</helmet>
+
+<div style="font-family: Tahoma, Verdana, 'Segoe UI', sans-serif; color: #1B1B1B; background: #FFFFFF; line-height: 1.6;">
+
+  <header style="background: #0A192F; padding: 20px clamp(20px,4vw,48px);">
+    <a href="index.html" style="color: #D4AF37; font-size: 14px; font-weight: 700;">&larr; Back to Sonly Consulting</a>
+  </header>
+
+  <!-- HERO WITH VIDEO -->
+  <section style="background: #0A192F; padding: 0;">
+    <div style="max-width: 1280px; margin: 0 auto; padding: clamp(56px,8vw,96px) clamp(20px,5vw,48px); display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: clamp(36px,5vw,64px); align-items: center;">
+      <div>
+        <div style="perspective: 800px; display: inline-flex; align-items: center; margin: 0 0 20px; animation: logoGlow 3.5s ease-in-out infinite;">
+          <div style="animation: logoSpin360 9s linear infinite; transform-style: preserve-3d; font-family: Georgia, 'Times New Roman', serif; font-weight: 700; line-height: 1.05; text-align: left;">
+            <div style="background: linear-gradient(90deg, #B08D2B 0%, #F2EFE6 45%, #D4AF37 55%, #B08D2B 100%); background-size: 250% 100%; animation: shineSweep 3.5s linear infinite; -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(26px,3.2vw,38px); letter-spacing: 4px; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));">Sonly</div>
+            <div style="background: linear-gradient(90deg, #B08D2B 0%, #F2EFE6 45%, #D4AF37 55%, #B08D2B 100%); background-size: 250% 100%; animation: shineSweep 3.5s linear infinite; -webkit-background-clip: text; background-clip: text; color: transparent; font-size: clamp(26px,3.2vw,38px); letter-spacing: 3px; filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));">Consulting</div>
+          </div>
+        </div>
+        <h1 style="font-family: Georgia, 'Times New Roman', serif; color: #FFFFFF; font-size: clamp(34px,4.6vw,52px); line-height: 1.15; margin: 0 0 22px; text-wrap: pretty;">Get Your Think On&trade;</h1>
+        <p style="color: #C9D2DC; font-size: 18px; margin: 0 0 28px; max-width: 52ch;">Get Your Think On&trade; is not a slogan. It is a disciplined interruption of reaction, the moment scattered thought is replaced with deliberate reasoning and intentional direction.</p>
+        <a href="gyto-clarity-compass.html" style="display: inline-block; background: #D4AF37; color: #0A192F; font-weight: 700; font-size: 16px; padding: 16px 32px; border-radius: 6px; white-space: nowrap;" style-hover="background:#E4C662; text-decoration:none;">Take the Clarity Compass Quiz</a>
+      </div>
+      <div style="border-radius: 8px; overflow: hidden; border: 1px solid rgba(212,175,55,0.25);">
+        <video src="https://video.wixstatic.com/video/83ba7d_a0f9fa9cd65c4c5893e30aac166b3f74/720p/mp4/file.mp4" autoplay muted loop playsinline style="width: 100%; display: block;"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- THOUGHT CYCLE INTRO -->
+  <section style="background: #F7F3EA; padding: clamp(56px,8vw,96px) clamp(20px,5vw,48px);">
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+      <p style="color: #B08D2B; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0 0 14px;">Where Are You in the Cycle?</p>
+      <h2 style="font-family: Georgia, serif; color: #0A192F; font-size: clamp(26px,3.2vw,36px); margin: 0 0 20px; text-wrap: pretty;">Every Decision Lives Somewhere in the Thought Cycle&trade;</h2>
+      <p style="color: #5A6472; font-size: 17px; margin: 0;">Knowing where you are is the first structural move. And like any practice worth building, the cycle is not something you complete once. It is something you return to, each time with more data, more discipline, and a sharper read on what the moment actually needs.</p>
+    </div>
+  </section>
+
+  <!-- SIX STAGES -->
+  <section style="background: #FFFFFF; padding: clamp(56px,8vw,96px) clamp(20px,5vw,48px);">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px;">
+        <sc-for list="{{ stages }}" as="stage" hint-placeholder-count="6">
+          <div style="background: #0A192F; border-radius: 8px; padding: 30px; display: flex; flex-direction: column; gap: 12px;">
+            <p style="color: #D4AF37; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0;">Stage {{ stage.num }}</p>
+            <h3 style="font-family: Georgia, serif; color: #FFFFFF; font-size: 21px; margin: 0;">{{ stage.title }}</h3>
+            <p style="color: #C9D2DC; font-size: 15px; margin: 0;">{{ stage.desc }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING / CTA -->
+  <section style="background: #0A192F; padding: clamp(56px,8vw,96px) clamp(20px,5vw,48px); text-align: center;">
+    <div style="max-width: 760px; margin: 0 auto;">
+      <p style="color: #C9D2DC; font-size: 18px; margin: 0 0 16px; text-wrap: pretty;">Every framework and product Sonly Consulting builds maps to one or more stages of this cycle. Every engagement begins by locating where the work actually is.</p>
+      <p style="color: #D4AF37; font-size: 19px; font-style: italic; margin: 0 0 36px; text-wrap: pretty;">If you can see yourself somewhere in this cycle right now, you are already in it. The only question worth asking from here is: what does this stage need from you?</p>
+      <a href="gyto-clarity-compass.html" style="display: inline-block; background: #D4AF37; color: #0A192F; font-weight: 700; font-size: 16px; padding: 16px 34px; border-radius: 6px; white-space: nowrap;" style-hover="background:#E4C662; text-decoration:none;">&#10024; Get Your Think On&trade; &mdash; Take the Quiz</a>
+    </div>
+  </section>
+
+  <footer style="background: #061020; padding: 28px clamp(20px,5vw,48px); text-align: center;">
+    <p style="color: #5A6472; font-size: 13px; margin: 0;">&copy; 2026 Sonly Consulting | The Critical Thinker&rsquo;s Journey&trade;<br />sonlyconsulting.com</p>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  stages = [
+    { num: '01', title: 'Pre-Game', desc: 'The idea is present. Options are open. The work is exploration, preparation, and honest assessment before commitment locks in. The work done here determines what is available when it counts.' },
+    { num: '02', title: 'Game Time', desc: 'The decision is made. Execution is live. Real constraints, real pressure, real time. The practice either shows up or it does not. This is why the preparation mattered.' },
+    { num: '03', title: 'The Time Out', desc: 'Something needs to be adjusted. The honest audit. The deliberate pivot. The next move is selected from what is actually true, not what was hoped at the start.' },
+    { num: '04', title: 'Final Buzzer', desc: 'The result is in. Win or lose, the scoreboard is data, not a verdict. Both outcomes teach. The difference is whether the lesson gets extracted.' },
+    { num: '05', title: 'Post-Game', desc: 'The protocol is updated. The next version of the thinker is already forming. This is where practice compounds, where the rep from last cycle becomes the instinct in the next one.' },
+    { num: '06', title: "What's Next", desc: 'Deliberate re-entry. Not default. Not drift. A chosen return to the starting line with everything the last cycle produced, ready to run it again with more of what the game just revealed.' }
+  ];
+
+  renderVals() {
+    return { stages: this.stages };
+  }
+}
+
+</script>
+</body>
+</html>

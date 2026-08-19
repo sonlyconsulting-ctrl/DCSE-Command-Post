@@ -1,0 +1,16 @@
+{
+  "POLLER_V7": {
+    "task_id": "MENTAL-INGENUITY-DEPLOYMENT-20260809",
+    "approved_by": "DCS",
+    "approved_at": "2026-08-10T00:30:00Z",
+    "worker": "codex",
+    "working_directory": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project",
+    "sandbox": false,
+    "timeout_seconds": 300,
+    "expected_outputs": [
+      "tribunal/SC-MENTAL-INGENUITY-DEPLOYMENT-MANIFEST-20260809.json",
+      "tribunal/SC-MENTAL-INGENUITY-DEPLOYMENT-RECEIPT-20260809.json"
+    ],
+    "prompt": "Record the completed Mental Ingenuity deployment (v0.9.1, React app deployed to Vercel at https://mental-ingenuity-qa.vercel.app) as evidence in the tribunal system. Verify: (1) Live URL returns HTTP 200, (2) Evidence artifacts exist in tribunal/, (3) GitHub commits are recorded, (4) Supabase task is created. This is a completion recording task."
+  }
+}
