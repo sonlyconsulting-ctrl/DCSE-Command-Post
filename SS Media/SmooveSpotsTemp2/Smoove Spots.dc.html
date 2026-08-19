@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<script src="./image-slot.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#04120D">
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<circle cx="100" cy="100" r="70" fill="none" stroke="#C9A24A" stroke-width="2"/>
+<circle cx="100" cy="100" r="52" fill="none" stroke="#1F6B54" stroke-width="2"/>
+<text x="100" y="110" font-family="serif" font-size="34" fill="#C9A24A" text-anchor="middle">SS</text>
+</svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#04120D;color:#E6EDE9;font-family:'Jost',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+a{color:#C9A24A;text-decoration:none;transition:color .35s ease}
+a:hover{color:#E8CE8F}
+::selection{background:#C9A24A;color:#04120D}
+input,textarea,button{font-family:inherit}
+@keyframes ss-drift{0%{transform:translate3d(0,0,0) scale(1.06)}50%{transform:translate3d(-2.5%,-1.5%,0) scale(1.12)}100%{transform:translate3d(0,0,0) scale(1.06)}}
+@keyframes ss-breathe{0%,100%{opacity:.35}50%{opacity:.85}}
+@keyframes ss-spin{to{transform:rotate(360deg)}}
+@keyframes ss-spin-y{to{transform:rotateY(360deg)}}
+@keyframes ss-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ss-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ss-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes ss-cue{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(9px);opacity:1}}
+@keyframes ss-ribbon{0%{stroke-dashoffset:1200;opacity:0}25%{opacity:.9}100%{stroke-dashoffset:0;opacity:.5}}
+</style>
+</helmet>
+
+<sc-if value="{{ loading }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:200;background:#04120D;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity 1s cubic-bezier(.2,.7,.2,1);opacity:{{ loaderOpacity }}">
+<div style="position:relative;width:112px;height:112px;display:flex;align-items:center;justify-content:center">
+<div style="position:absolute;inset:0;border-radius:50%;border:1px solid rgba(201,162,74,.28);border-top-color:#C9A24A;animation:ss-spin 2.4s linear infinite"></div>
+<div style="position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(18,104,74,.5);border-bottom-color:#2FA173;animation:ss-spin 3.6s linear infinite reverse"></div>
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A24A;letter-spacing:.06em">SS</span>
+</div>
+<div style="font:200 11px/1 'Jost',sans-serif;letter-spacing:.44em;color:rgba(230,237,233,.5);text-transform:uppercase">Flow of Life</div>
+<div style="width:200px;height:1px;background:rgba(201,162,74,.18);overflow:hidden"><div style="height:100%;width:100%;background:linear-gradient(90deg,transparent,#C9A24A,transparent);transform:translateX(-100%);animation:ss-line 1.4s ease-in-out infinite"></div></div>
+</div>
+</sc-if>
+
+<div ref="{{ glowRef }}" style="position:fixed;top:0;left:0;width:560px;height:560px;margin:-280px 0 0 -280px;pointer-events:none;z-index:90;background:radial-gradient(circle,rgba(47,161,115,.13),rgba(201,162,74,.05) 42%,transparent 68%);opacity:0;transition:opacity .8s ease"></div>
+
+<div style="position:fixed;inset:0;pointer-events:none;z-index:95;opacity:.05;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNDAnIGhlaWdodD0nMTQwJz48ZmlsdGVyIGlkPSduJz48ZmVUdXJidWxlbmNlIHR5cGU9J2ZyYWN0YWxOb2lzZScgYmFzZUZyZXF1ZW5jeT0nMC44NScgbnVtT2N0YXZlcz0nMycvPjxmZUNvbG9yTWF0cml4IHR5cGU9J3NhdHVyYXRlJyB2YWx1ZXM9JzAnLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0nMTQwJyBoZWlnaHQ9JzE0MCcgZmlsdGVyPSd1cmwoJTIzbiknLz48L3N2Zz4=&quot;)"></div>
+
+<header ref="{{ navRef }}" style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;flex-direction:column;align-items:center;gap:0;padding:22px 24px 14px;text-align:center;transition:padding .5s ease,background .6s ease,backdrop-filter .6s ease;background:transparent">
+<a href="#top" style="display:flex;flex-direction:column;align-items:center;gap:5px;color:inherit">
+<span style="display:flex;align-items:center;gap:10px">
+<img src="assets/ss-logo-main.jpg" alt="Smoove Spots swirl mark" style="width:26px;height:26px;border-radius:50%;object-fit:cover;animation:ss-spin-y 12s linear infinite">
+<span style="font-family:'Cormorant Garamond',serif;font-size:23px;letter-spacing:.3em;color:#F2F6F3;text-transform:uppercase;line-height:1">Smoove Spots</span>
+</span>
+<span style="display:block;width:132px;height:1px;background:linear-gradient(90deg,transparent,#C9A24A,transparent)"></span>
+<span style="font:200 8.5px/1 'Jost',sans-serif;letter-spacing:.42em;color:rgba(201,162,74,.75);text-transform:uppercase">Flow of Life</span>
+</a>
+<nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:30px;margin-top:15px">
+<a href="#brand" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Brand</a>
+<a href="#reels" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Reels</a>
+<a href="#galleries" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Galleries</a>
+<a href="#studio" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Studio</a>
+<a href="#journal" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Journal</a>
+<a href="#circle" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.72);text-transform:uppercase" style-hover="color:#C9A24A">Circle</a>
+<a href="#collaborate" style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:#C9A24A;text-transform:uppercase" style-hover="color:#E8CE8F">Collaborate</a>
+</nav>
+</header>
+
+<main id="top" style="position:relative;width:100%;overflow:hidden">
+
+<section style="position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:190px 24px 120px;overflow:hidden">
+<div ref="{{ heroBgRef }}" style="position:absolute;inset:-12%;z-index:0">
+<sc-if value="{{ bgThreads }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;inset:0;background:url(assets/still-desk.jpg) center/cover no-repeat;animation:ss-drift 26s ease-in-out infinite"></div>
+</sc-if>
+<sc-if value="{{ bgMonogram }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background-image:url(assets/ss-monogram.jpg);background-position:center;background-size:contain;background-repeat:no-repeat;opacity:.5;animation:ss-drift 30s ease-in-out infinite"></div>
+</sc-if>
+<sc-if value="{{ bgCrest }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;background-image:url(assets/ss-plaque.jpg);background-position:center;background-size:cover;background-repeat:no-repeat;opacity:.55;filter:saturate(1.1);animation:ss-drift 34s ease-in-out infinite"></div>
+</sc-if>
+</div>
+<div style="position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 42%,rgba(4,18,13,.15),rgba(4,18,13,.72) 58%,#04120D 92%)"></div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:34vh;z-index:1;background:linear-gradient(to bottom,transparent,#04120D)"></div>
+<svg viewBox="0 0 1440 900" preserveAspectRatio="none" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;opacity:.7">
+<path d="M-40 700C240 470 470 760 720 560S1180 380 1480 520" fill="none" stroke="#C9A24A" stroke-width="1.2" stroke-dasharray="1200" style="animation:ss-ribbon 5.5s cubic-bezier(.2,.7,.2,1) .3s both"></path>
+<path d="M-40 780C260 560 500 830 760 640S1200 470 1480 600" fill="none" stroke="#2FA173" stroke-width="2" stroke-dasharray="1200" style="animation:ss-ribbon 6.5s cubic-bezier(.2,.7,.2,1) .8s both"></path>
+</svg>
+
+<div style="position:relative;z-index:3;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:30px">
+<div data-rv="" style="display:flex;align-items:center;gap:16px">
+<span style="width:44px;height:1px;background:rgba(201,162,74,.5)"></span>
+<span style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">Scene 01 - Emerald Hours</span>
+<span style="width:44px;height:1px;background:rgba(201,162,74,.5)"></span>
+</div>
+<h1 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(46px,8.2vw,124px);line-height:.94;letter-spacing:-.015em;color:#F6F9F7;text-wrap:balance">Where Life Gets<br><em style="font-style:italic;color:#C9A24A">Digital</em> &amp; <em style="font-style:italic;color:#7FCFA8">Personal</em></h1>
+<p data-rv="" style="margin:0;max-width:620px;font:300 17px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.72);text-wrap:pretty">A skyline veiled in emerald haze. Scattered moments drift, then align. Story becomes signal - curated, intimate, unmistakably alive.</p>
+<div data-rv="" style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:6px">
+<a href="#reels" style="padding:17px 40px;background:#C9A24A;color:#04120D;font:400 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;border-radius:2px;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 16px 40px rgba(201,162,74,.28);color:#04120D">Enter the Reel</a>
+<a href="#studio" style="padding:17px 40px;border:1px solid rgba(230,237,233,.22);color:#E6EDE9;font:400 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;border-radius:2px;transition:border-color .4s ease,transform .4s cubic-bezier(.2,.7,.2,1)" style-hover="border-color:#C9A24A;transform:translateY(-3px);color:#E6EDE9">The Studio</a>
+</div>
+</div>
+<div style="position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:9px">
+<span style="font:200 8.5px/1 'Jost',sans-serif;letter-spacing:.4em;color:rgba(230,237,233,.4);text-transform:uppercase">Scroll</span>
+<span style="width:1px;height:46px;background:linear-gradient(to bottom,#C9A24A,transparent);animation:ss-cue 2.6s ease-in-out infinite"></span>
+</div>
+</section>
+
+<sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+<section style="position:relative;padding:26px 0;border-top:1px solid rgba(201,162,74,.14);border-bottom:1px solid rgba(201,162,74,.14);background:#061A13;overflow:hidden">
+<div style="display:flex;width:max-content;animation:ss-marquee 34s linear infinite">
+<div style="display:flex;align-items:center;gap:44px;padding-right:44px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-style:italic;color:rgba(246,249,247,.85)">Soulful</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font:300 12px/1 'Jost',sans-serif;letter-spacing:.42em;color:rgba(230,237,233,.55);text-transform:uppercase">Expressive</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A24A">Cinematic</span><span style="color:#2FA173;font-size:11px">◆</span>
+<span style="font:300 12px/1 'Jost',sans-serif;letter-spacing:.42em;color:rgba(230,237,233,.55);text-transform:uppercase">Curated</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-style:italic;color:rgba(127,207,168,.9)">Intimate</span><span style="color:#C9A24A;font-size:11px">◆</span>
+</div>
+<div style="display:flex;align-items:center;gap:44px;padding-right:44px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-style:italic;color:rgba(246,249,247,.85)">Soulful</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font:300 12px/1 'Jost',sans-serif;letter-spacing:.42em;color:rgba(230,237,233,.55);text-transform:uppercase">Expressive</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A24A">Cinematic</span><span style="color:#2FA173;font-size:11px">◆</span>
+<span style="font:300 12px/1 'Jost',sans-serif;letter-spacing:.42em;color:rgba(230,237,233,.55);text-transform:uppercase">Curated</span><span style="color:#C9A24A;font-size:11px">◆</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-style:italic;color:rgba(127,207,168,.9)">Intimate</span><span style="color:#C9A24A;font-size:11px">◆</span>
+</div>
+</div>
+</section>
+</sc-if>
+
+<section id="brand" style="position:relative;padding:150px 24px 140px;text-align:center;background:linear-gradient(#04120D,#071B14 55%,#04120D)">
+<div style="max-width:940px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:34px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">The Brand</div>
+<h2 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,66px);line-height:1.08;color:#F6F9F7">Two worlds, <em style="font-style:italic;color:#C9A24A">one frame</em></h2>
+<div data-rv="" style="width:1px;height:64px;background:linear-gradient(to bottom,#C9A24A,transparent)"></div>
+<p data-rv="" style="margin:0;max-width:700px;font:300 18px/1.95 'Jost',sans-serif;color:rgba(230,237,233,.74);text-wrap:pretty">Business and personal rarely share a room. Here the wall dissolves. A morning ritual becomes a brand note. A late conversation becomes a series. What was scattered across screens gathers into one presence - deliberate, warm, and impossible to mistake for anyone else.</p>
+<div data-rv="" style="position:relative;width:min(420px,80vw);aspect-ratio:1;margin-top:14px">
+<div style="position:absolute;inset:0;background:radial-gradient(circle,rgba(47,161,115,.22),transparent 62%);animation:ss-breathe 7s ease-in-out infinite"></div>
+<img src="assets/ss-monogram.jpg" alt="Smoove Spots monogram" style="position:relative;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 60px rgba(0,0,0,.6))">
+</div>
+<div data-rv="" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;margin-top:24px;border-top:1px solid rgba(201,162,74,.16);border-bottom:1px solid rgba(201,162,74,.16)">
+<sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+<div style="flex:1 1 240px;padding:38px 30px;display:flex;flex-direction:column;align-items:center;gap:12px;border-right:1px solid rgba(201,162,74,.12)">
+<span style="font-family:'Cormorant Garamond',serif;font-size:34px;color:rgba(201,162,74,.55);line-height:1">{{ p.n }}</span>
+<span style="font:400 11px/1 'Jost',sans-serif;letter-spacing:.3em;color:#F2F6F3;text-transform:uppercase">{{ p.title }}</span>
+<span style="font:300 14px/1.75 'Jost',sans-serif;color:rgba(230,237,233,.6);max-width:250px">{{ p.body }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="reels" style="position:relative;padding:140px 24px 150px;text-align:center;background:#04120D">
+<div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">Reels &amp; Video</div>
+<h2 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,66px);line-height:1.08;color:#F6F9F7">Motion, held at the <em style="font-style:italic;color:#7FCFA8">edge of memory</em></h2>
+<p data-rv="" style="margin:0 0 26px;max-width:560px;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.65)">Four cuts. Each one a room worth staying in a moment longer.</p>
+<div data-rv="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;width:100%;text-align:left">
+<button onClick="{{ openReel0 }}" style="position:relative;display:block;padding:0;border:1px solid rgba(201,162,74,.16);background:#071B14;border-radius:3px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .5s ease" style-hover="transform:translateY(-8px);border-color:rgba(201,162,74,.55)">
+<image-slot id="reel-golden" shape="rect" placeholder="Drop a reel still" style="position:absolute;inset:0"></image-slot>
+<span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,18,13,.94) 8%,rgba(4,18,13,.25) 55%,rgba(4,18,13,.5))"></span>
+<span style="position:absolute;top:18px;left:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.34em;color:rgba(201,162,74,.9);text-transform:uppercase">01</span>
+<span style="position:absolute;top:16px;right:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;color:rgba(230,237,233,.6)">00:12</span>
+<span style="position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:1px solid rgba(246,249,247,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#F6F9F7;font-size:13px;transition:background .45s ease,border-color .45s ease" style-hover="background:rgba(201,162,74,.9);border-color:#C9A24A">▶</span>
+<span style="position:absolute;left:18px;right:18px;bottom:18px;display:flex;flex-direction:column;gap:7px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:25px;color:#F6F9F7;line-height:1.15">Golden Hour Rituals</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.62)">Coffee, light, and the first decision of the day.</span>
+</span>
+</button>
+<button onClick="{{ openReel1 }}" style="position:relative;display:block;padding:0;border:1px solid rgba(201,162,74,.16);background:#071B14;border-radius:3px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .5s ease" style-hover="transform:translateY(-8px);border-color:rgba(201,162,74,.55)">
+<img src="assets/threads-abstract.jpg" alt="City After Rain" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;transition:opacity .7s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="opacity:.9;transform:scale(1.07)">
+<span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,18,13,.94) 8%,rgba(4,18,13,.25) 55%,rgba(4,18,13,.5))"></span>
+<span style="position:absolute;top:18px;left:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.34em;color:rgba(201,162,74,.9);text-transform:uppercase">02</span>
+<span style="position:absolute;top:16px;right:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;color:rgba(230,237,233,.6)">00:10</span>
+<span style="position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:1px solid rgba(246,249,247,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#F6F9F7;font-size:13px;transition:background .45s ease,border-color .45s ease" style-hover="background:rgba(201,162,74,.9);border-color:#C9A24A">▶</span>
+<span style="position:absolute;left:18px;right:18px;bottom:18px;display:flex;flex-direction:column;gap:7px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:25px;color:#F6F9F7;line-height:1.15">City After Rain</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.62)">Neon on wet asphalt; a skyline exhaling.</span>
+</span>
+</button>
+<button onClick="{{ openReel2 }}" style="position:relative;display:block;padding:0;border:1px solid rgba(201,162,74,.16);background:#071B14;border-radius:3px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .5s ease" style-hover="transform:translateY(-8px);border-color:rgba(201,162,74,.55)">
+<image-slot id="reel-cozy" shape="rect" placeholder="Drop a reel still" style="position:absolute;inset:0"></image-slot>
+<span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,18,13,.94) 8%,rgba(4,18,13,.25) 55%,rgba(4,18,13,.5))"></span>
+<span style="position:absolute;top:18px;left:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.34em;color:rgba(201,162,74,.9);text-transform:uppercase">03</span>
+<span style="position:absolute;top:16px;right:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;color:rgba(230,237,233,.6)">00:11</span>
+<span style="position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:1px solid rgba(246,249,247,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#F6F9F7;font-size:13px;transition:background .45s ease,border-color .45s ease" style-hover="background:rgba(201,162,74,.9);border-color:#C9A24A">▶</span>
+<span style="position:absolute;left:18px;right:18px;bottom:18px;display:flex;flex-direction:column;gap:7px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:25px;color:#F6F9F7;line-height:1.15">Cozy Urban Elegance</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.62)">A quieter corner of the same city.</span>
+</span>
+</button>
+<button onClick="{{ openReel3 }}" style="position:relative;display:block;padding:0;border:1px solid rgba(201,162,74,.16);background:#071B14;border-radius:3px;overflow:hidden;cursor:pointer;aspect-ratio:4/5;transition:transform .6s cubic-bezier(.2,.7,.2,1),border-color .5s ease" style-hover="transform:translateY(-8px);border-color:rgba(201,162,74,.55)">
+<img src="assets/still-desk.jpg" alt="Cinematic Workspace" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;transition:opacity .7s ease,transform 1.1s cubic-bezier(.2,.7,.2,1)" style-hover="opacity:.9;transform:scale(1.07)">
+<span style="position:absolute;inset:0;background:linear-gradient(to top,rgba(4,18,13,.94) 8%,rgba(4,18,13,.25) 55%,rgba(4,18,13,.5))"></span>
+<span style="position:absolute;top:18px;left:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.34em;color:rgba(201,162,74,.9);text-transform:uppercase">04</span>
+<span style="position:absolute;top:16px;right:18px;font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.2em;color:rgba(230,237,233,.6)">00:13</span>
+<span style="position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:1px solid rgba(246,249,247,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#F6F9F7;font-size:13px;transition:background .45s ease,border-color .45s ease" style-hover="background:rgba(201,162,74,.9);border-color:#C9A24A">▶</span>
+<span style="position:absolute;left:18px;right:18px;bottom:18px;display:flex;flex-direction:column;gap:7px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:25px;color:#F6F9F7;line-height:1.15">Cinematic Workspace</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.62)">Where the work and the life share a desk.</span>
+</span>
+</button>
+</div>
+</div>
+</section>
+
+<section id="galleries" style="position:relative;padding:0;text-align:center;background:#061A13">
+<sc-for list="{{ galleries }}" as="g" hint-placeholder-count="3">
+<div style="position:relative;min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:120px 24px;overflow:hidden;border-top:1px solid rgba(201,162,74,.1)">
+<sc-if value="{{ g.showBg }}" hint-placeholder-val="{{ true }}">
+<div data-px="{{ g.speed }}" style="position:absolute;inset:-14%;background-image:{{ g.bg }};background-size:cover;background-position:center;opacity:.4"></div>
+</sc-if>
+<sc-if value="{{ g.slotId }}" hint-placeholder-val="{{ false }}">
+<image-slot id="{{ g.slotId }}" shape="rect" placeholder="Drop a scene photo" style="position:absolute;inset:-14%;opacity:.55"></image-slot>
+</sc-if>
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(4,18,13,.35),rgba(4,18,13,.9))"></div>
+<div data-rv="" style="position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:680px">
+<span style="font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">{{ g.kicker }}</span>
+<h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,6vw,88px);line-height:1;color:#F6F9F7">{{ g.title }}</h3>
+<span style="width:70px;height:1px;background:rgba(201,162,74,.6)"></span>
+<p style="margin:0;font:300 16px/1.9 'Jost',sans-serif;color:rgba(230,237,233,.7);text-wrap:pretty">{{ g.body }}</p>
+</div>
+</div>
+</sc-for>
+</section>
+
+<section id="studio" style="position:relative;padding:150px 24px 140px;text-align:center;background:linear-gradient(#04120D,#071B14)">
+<div style="max-width:1140px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">The Studio</div>
+<h2 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,66px);line-height:1.08;color:#F6F9F7">Made for <em style="font-style:italic;color:#C9A24A">the moment</em>, built to last</h2>
+<p data-rv="" style="margin:0 0 30px;max-width:600px;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.65)">Personal digital experiences, brand story reels, and the systems that keep a presence in motion.</p>
+
+<div data-rv="" style="position:relative;width:100%;border:1px solid rgba(201,162,74,.3);border-radius:4px;overflow:hidden;background:#04140E">
+<div style="position:absolute;inset:0;background:url(assets/still-desk.jpg) center/cover no-repeat;opacity:.3"></div>
+<div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(4,20,14,.9),rgba(4,20,14,.6))"></div>
+<div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:20px;padding:clamp(44px,6vw,78px) 30px">
+<span style="font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.5em;color:#7FCFA8;text-transform:uppercase">Featured Program · Available Now</span>
+<h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5.6vw,78px);line-height:1;color:#F6F9F7">Mental <em style="font-style:italic;color:#C9A24A">Ingenuity</em></h3>
+<p style="margin:0;max-width:640px;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.75);text-wrap:pretty">A clarity practice for the mind carrying the brand. Structured reflection, sharper focus, and the discipline to keep creating when the reel isn't rolling.</p>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:4px">
+<sc-for list="{{ shoegirlTags }}" as="t" hint-placeholder-count="4">
+<span style="padding:9px 18px;border:1px solid rgba(201,162,74,.28);border-radius:999px;font:300 10px/1 'Jost',sans-serif;letter-spacing:.24em;color:rgba(230,237,233,.72);text-transform:uppercase">{{ t }}</span>
+</sc-for>
+</div>
+<a href="https://mental-ingenuity-qa.vercel.app/" target="_blank" rel="noopener" style="margin-top:14px;padding:17px 42px;background:#C9A24A;color:#04120D;font:400 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;border-radius:2px;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 16px 40px rgba(201,162,74,.3);color:#04120D">Open the Program</a>
+<span style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.2em;color:rgba(230,237,233,.38);text-transform:uppercase">A Sonly Consulting Program</span>
+</div>
+</div>
+
+<div data-rv="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;width:100%;margin-top:34px">
+<sc-for list="{{ services }}" as="s" hint-placeholder-count="3">
+<div style="position:relative;padding:44px 32px;border:1px solid rgba(230,237,233,.1);border-radius:3px;background:rgba(255,255,255,.015);display:flex;flex-direction:column;align-items:center;gap:15px;transition:border-color .5s ease,transform .6s cubic-bezier(.2,.7,.2,1),background .5s ease" style-hover="border-color:rgba(201,162,74,.5);transform:translateY(-7px);background:rgba(201,162,74,.045)">
+<span style="font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.3em;color:rgba(201,162,74,.6)">{{ s.n }}</span>
+<h4 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:29px;line-height:1.15;color:#F6F9F7">{{ s.title }}</h4>
+<p style="margin:0;font:300 14.5px/1.8 'Jost',sans-serif;color:rgba(230,237,233,.65);text-wrap:pretty">{{ s.body }}</p>
+<span style="width:38px;height:1px;background:rgba(201,162,74,.4);margin:4px 0"></span>
+<span style="font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.26em;color:#C9A24A;text-transform:uppercase">{{ s.meta }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="journal" style="position:relative;padding:140px 24px 150px;text-align:center;background:#04120D">
+<div style="max-width:1140px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">Journal</div>
+<h2 data-rv="" style="margin:0 0 30px;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,66px);line-height:1.08;color:#F6F9F7">Notes from the <em style="font-style:italic;color:#7FCFA8">flow</em></h2>
+<div data-rv="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0;width:100%;border-top:1px solid rgba(201,162,74,.16)">
+<sc-for list="{{ posts }}" as="a" hint-placeholder-count="3">
+<button onClick="{{ a.open }}" style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:46px 30px;border:none;border-bottom:1px solid rgba(201,162,74,.16);border-right:1px solid rgba(201,162,74,.1);background:transparent;color:inherit;cursor:pointer;text-align:center;font:inherit;transition:background .5s ease" style-hover="background:rgba(201,162,74,.05);color:inherit">
+<span style="font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.34em;color:rgba(201,162,74,.85);text-transform:uppercase">{{ a.cat }}</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:28px;line-height:1.25;color:#F6F9F7;text-wrap:balance">{{ a.title }}</span>
+<span style="font:300 14px/1.8 'Jost',sans-serif;color:rgba(230,237,233,.62);text-wrap:pretty">{{ a.dek }}</span>
+<span style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.24em;color:rgba(230,237,233,.4);text-transform:uppercase;margin-top:4px">{{ a.read }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="circle" style="position:relative;padding:150px 24px;text-align:center;overflow:hidden;background:#061A13">
+<div style="position:absolute;inset:0;background:url(assets/still-desk.jpg) center/cover no-repeat;opacity:.25"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(6,26,19,.5),#061A13 75%)"></div>
+<div style="position:relative;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">The Inner Circle</div>
+<h2 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,62px);line-height:1.08;color:#F6F9F7">A door, not yet <em style="font-style:italic;color:#C9A24A">open</em></h2>
+<p data-rv="" style="margin:0;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.7);text-wrap:pretty">Early cuts, unlisted series, and the room where the next chapter gets tested. The waitlist opens first.</p>
+<sc-if value="{{ waitDone }}" hint-placeholder-val="{{ false }}">
+<div style="margin-top:12px;padding:28px 34px;border:1px solid rgba(47,161,115,.45);border-radius:3px;background:rgba(47,161,115,.08);display:flex;flex-direction:column;align-items:center;gap:9px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:27px;color:#7FCFA8">Held on the list</span>
+<span style="font:300 14px/1.7 'Jost',sans-serif;color:rgba(230,237,233,.72)">{{ waitMsg }}</span>
+</div>
+</sc-if>
+<sc-if value="{{ waitOpen }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ submitWait }}" style="margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:14px;width:100%">
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;width:100%">
+<input type="email" value="{{ waitEmail }}" onChange="{{ onWaitEmail }}" placeholder="Email address" style="flex:1 1 260px;padding:17px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(230,237,233,.16);border-radius:2px;color:#F6F9F7;font:300 14px/1 'Jost',sans-serif;outline:none;transition:border-color .4s ease" style-focus="border-color:#C9A24A">
+<button type="submit" style="padding:17px 34px;background:#C9A24A;color:#04120D;border:none;border-radius:2px;font:400 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 14px 34px rgba(201,162,74,.28)">Join Waitlist</button>
+</div>
+<span style="font:300 12px/1.5 'Jost',sans-serif;color:{{ waitErrColor }}">{{ waitHint }}</span>
+</form>
+</sc-if>
+</div>
+</section>
+
+<section id="collaborate" style="position:relative;padding:150px 24px 140px;text-align:center;background:linear-gradient(#04120D,#02100B)">
+<div style="max-width:720px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px">
+<div data-rv="" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">Collaborate</div>
+<h2 data-rv="" style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(34px,4.6vw,62px);line-height:1.08;color:#F6F9F7">Begin the <em style="font-style:italic;color:#7FCFA8">scene</em></h2>
+<p data-rv="" style="margin:0 0 8px;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.68)">A short note is enough. Detail can arrive later.</p>
+<sc-if value="{{ noteDone }}" hint-placeholder-val="{{ false }}">
+<div style="padding:34px 38px;border:1px solid rgba(201,162,74,.4);border-radius:3px;background:rgba(201,162,74,.07);display:flex;flex-direction:column;align-items:center;gap:10px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:30px;color:#C9A24A">The note landed</span>
+<span style="font:300 14.5px/1.75 'Jost',sans-serif;color:rgba(230,237,233,.75);max-width:420px">A reply follows within two working days. Until then, the reel keeps running.</span>
+</div>
+</sc-if>
+<sc-if value="{{ noteOpen }}" hint-placeholder-val="{{ true }}">
+<form onSubmit="{{ submitNote }}" style="width:100%;display:flex;flex-direction:column;gap:14px;text-align:left">
+<div style="display:flex;flex-wrap:wrap;gap:14px">
+<input value="{{ cName }}" onChange="{{ onCName }}" placeholder="Name" style="flex:1 1 200px;padding:17px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(230,237,233,.16);border-radius:2px;color:#F6F9F7;font:300 14px/1 'Jost',sans-serif;outline:none;transition:border-color .4s ease" style-focus="border-color:#C9A24A">
+<input type="email" value="{{ cEmail }}" onChange="{{ onCEmail }}" placeholder="Email" style="flex:1 1 200px;padding:17px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(230,237,233,.16);border-radius:2px;color:#F6F9F7;font:300 14px/1 'Jost',sans-serif;outline:none;transition:border-color .4s ease" style-focus="border-color:#C9A24A">
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<sc-for list="{{ intents }}" as="i" hint-placeholder-count="4">
+<button type="button" onClick="{{ i.pick }}" style="padding:11px 20px;border:1px solid {{ i.border }};background:{{ i.bg }};color:{{ i.color }};border-radius:999px;font:300 10.5px/1 'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .4s ease">{{ i.label }}</button>
+</sc-for>
+</div>
+<textarea value="{{ cNote }}" onChange="{{ onCNote }}" rows="4" placeholder="The scene in a few lines" style="padding:17px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(230,237,233,.16);border-radius:2px;color:#F6F9F7;font:300 14px/1.7 'Jost',sans-serif;outline:none;resize:vertical;transition:border-color .4s ease" style-focus="border-color:#C9A24A"></textarea>
+<div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
+<span style="font:300 12px/1.5 'Jost',sans-serif;color:{{ noteErrColor }}">{{ noteHint }}</span>
+<button type="submit" style="padding:17px 38px;background:#C9A24A;color:#04120D;border:none;border-radius:2px;font:400 11px/1 'Jost',sans-serif;letter-spacing:.24em;text-transform:uppercase;cursor:pointer;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s ease" style-hover="transform:translateY(-3px);box-shadow:0 14px 34px rgba(201,162,74,.28)">Send the Note</button>
+</div>
+</form>
+</sc-if>
+</div>
+</section>
+
+<footer style="position:relative;padding:90px 24px 44px;text-align:center;background:#02100B;border-top:1px solid rgba(201,162,74,.16)">
+<div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:26px">
+<div style="width:132px;height:132px;border-radius:50%;overflow:hidden;border:1px solid rgba(201,162,74,.25);background:#EDEBE6">
+<img src="assets/ss-logo-main.jpg" alt="Smoove Spots swirl mark" style="width:180%;height:180%;object-fit:cover;object-position:50% 30%;margin:-15% -40%">
+</div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:7px">
+<span style="font-family:'Cormorant Garamond',serif;font-size:21px;letter-spacing:.3em;color:#F2F6F3;text-transform:uppercase">Smoove Spots</span>
+<span style="width:110px;height:1px;background:linear-gradient(90deg,transparent,#C9A24A,transparent)"></span>
+<span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:rgba(201,162,74,.85)">Where Life Gets Digital &amp; Personal</span>
+</div>
+<nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:26px">
+<a href="#brand" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Brand</a>
+<a href="#reels" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Reels</a>
+<a href="#galleries" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Galleries</a>
+<a href="#studio" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Studio</a>
+<a href="#journal" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Journal</a>
+<a href="#circle" style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.26em;color:rgba(230,237,233,.6);text-transform:uppercase">Circle</a>
+</nav>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0;border-top:1px solid rgba(201,162,74,.14);border-bottom:1px solid rgba(201,162,74,.14);width:100%">
+<div style="flex:1 1 260px;padding:26px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;border-right:1px solid rgba(201,162,74,.1)">
+<span style="font:300 9px/1 'Jost',sans-serif;letter-spacing:.4em;color:rgba(230,237,233,.4);text-transform:uppercase">Strategy</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#F2F6F3">Sonly Consulting</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.5)">Crafting Success on Your Own Terms</span>
+</div>
+<a href="https://mental-ingenuity-qa.vercel.app/" target="_blank" rel="noopener" style="flex:1 1 260px;padding:26px 22px;display:flex;flex-direction:column;align-items:center;gap:8px;color:inherit;text-decoration:none;transition:background .4s ease" style-hover="background:rgba(201,162,74,.05)">
+<span style="font:300 9px/1 'Jost',sans-serif;letter-spacing:.4em;color:rgba(230,237,233,.4);text-transform:uppercase">Litigation</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#F2F6F3">Pro Se</span>
+<span style="font:300 12px/1.6 'Jost',sans-serif;color:rgba(230,237,233,.5)">Mastering the Legal Journey, One Strategy at a Time</span>
+</a>
+</div>
+<span style="font:300 11px/1.8 'Jost',sans-serif;letter-spacing:.18em;color:rgba(230,237,233,.52)">© 2026 Smoove Spots · Powered by <a href="https://mental-ingenuity-qa.vercel.app/" target="_blank" rel="noopener" style="color:rgba(230,237,233,.72);text-decoration:none" style-hover="color:#C9A24A">Sonly Consulting</a></span>
+</div>
+</footer>
+</main>
+
+<sc-if value="{{ lightboxOpen }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeReel }}" style="position:fixed;inset:0;z-index:150;background:rgba(2,10,7,.94);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:40px 24px;animation:ss-rise .5s cubic-bezier(.2,.7,.2,1) both">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+<span style="font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.5em;color:#C9A24A;text-transform:uppercase">Reel {{ activeIdx }}</span>
+<span style="font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4.4vw,54px);color:#F6F9F7;line-height:1.1">{{ activeTitle }}</span>
+</div>
+<div onClick="{{ stop }}" style="position:relative;width:min(1000px,92vw);aspect-ratio:16/9;border:1px solid rgba(201,162,74,.3);border-radius:3px;overflow:hidden;background:#04120D">
+<sc-if value="{{ activeIsGolden }}" hint-placeholder-val="{{ false }}">
+<image-slot id="reel-golden" shape="rect" placeholder="Drop a reel still" style="position:absolute;inset:0"></image-slot>
+</sc-if>
+<sc-if value="{{ activeIsRain }}" hint-placeholder-val="{{ false }}">
+<img src="assets/threads-abstract.jpg" alt="City After Rain" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+</sc-if>
+<sc-if value="{{ activeIsCozy }}" hint-placeholder-val="{{ false }}">
+<image-slot id="reel-cozy" shape="rect" placeholder="Drop a reel still" style="position:absolute;inset:0"></image-slot>
+</sc-if>
+<sc-if value="{{ activeIsWork }}" hint-placeholder-val="{{ false }}">
+<img src="assets/still-desk.jpg" alt="Cinematic Workspace" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+</sc-if>
+<button onClick="{{ closeReel }}" aria-label="Close" style="position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(246,249,247,.4);background:rgba(4,18,13,.6);color:#F6F9F7;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5">×</button>
+</div>
+<span style="font:300 10px/1 'Jost',sans-serif;letter-spacing:.3em;color:rgba(230,237,233,.42);text-transform:uppercase">Click anywhere to close</span>
+</div>
+</sc-if>
+
+<sc-if value="{{ journalOpenState }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeJournal }}" style="position:fixed;inset:0;z-index:150;background:rgba(2,10,7,.94);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:40px 24px;animation:ss-rise .5s cubic-bezier(.2,.7,.2,1) both">
+<div onClick="{{ stop }}" style="position:relative;width:min(680px,92vw);max-height:82vh;overflow-y:auto;border:1px solid rgba(201,162,74,.3);border-radius:3px;background:#071B14;padding:50px 44px;text-align:left;display:flex;flex-direction:column;gap:18px">
+<button onClick="{{ closeJournal }}" aria-label="Close" style="position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(246,249,247,.4);background:rgba(4,18,13,.6);color:#F6F9F7;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
+<span style="font:300 9.5px/1 'Jost',sans-serif;letter-spacing:.4em;color:#C9A24A;text-transform:uppercase">{{ journalPost.cat }} · {{ journalPost.read }}</span>
+<h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,4vw,42px);line-height:1.15;color:#F6F9F7">{{ journalPost.title }}</h3>
+<sc-for list="{{ journalPost.body }}" as="para" hint-placeholder-count="3">
+<p style="margin:0;font:300 16px/1.85 'Jost',sans-serif;color:rgba(230,237,233,.78);text-wrap:pretty">{{ para }}</p>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;threads&quot;,&quot;monogram&quot;,&quot;crest&quot;],&quot;default&quot;:&quot;threads&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Opener&quot;},&quot;showMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Opener&quot;},&quot;cursorGlow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { loading: true, loaderOpacity: 1, active: null, waitEmail: '', waitDone: false, waitErr: '',
+  cName: '', cEmail: '', cNote: '', intent: 'Reel', noteDone: false, noteErr: '' };
+
+  glowRef = React.createRef();
+  navRef = React.createRef();
+  heroBgRef = React.createRef();
+
+  componentDidMount() {
+  this._onEsc = (e) => { if (e.key === 'Escape') this.setState({ active: null, journalOpen: null }); };
+  window.addEventListener('keydown', this._onEsc);
+  this._t1 = setTimeout(() => this.setState({ loaderOpacity: 0 }), 1500);
+  this._t2 = setTimeout(() => this.setState({ loading: false }), 2500);
+
+  const root = this.glowRef.current ? this.glowRef.current.getRootNode() : document;
+  const q = (s) => Array.from((root.querySelectorAll ? root : document).querySelectorAll(s));
+  this._reveals = q('[data-rv]');
+  this._reveals.forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(22px)';
+  el.style.transition = 'opacity 1.1s cubic-bezier(.2,.7,.2,1) ' + (i % 4) * 0.08 + 's, transform 1.1s cubic-bezier(.2,.7,.2,1) ' + (i % 4) * 0.08 + 's';
+  });
+  this._io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+  if (e.isIntersecting) {
+  e.target.style.opacity = '1';
+  e.target.style.transform = 'none';
+  this._io.unobserve(e.target);
+  }
+  });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  this._reveals.forEach((el) => this._io.observe(el));
+
+  this._px = q('[data-px]');
+  this._onScroll = () => {
+  const y = window.scrollY || 0;
+  if (this.navRef.current) {
+  const n = this.navRef.current;
+  const on = y > 90;
+  n.style.background = on ? 'rgba(4,18,13,.82)' : 'transparent';
+  n.style.backdropFilter = on ? 'blur(16px)' : 'none';
+  n.style.borderBottom = on ? '1px solid rgba(201,162,74,.14)' : '1px solid transparent';
+  n.style.padding = on ? '14px 24px 10px' : '22px 24px 14px';
+  }
+  if (this.heroBgRef.current) this.heroBgRef.current.style.transform = 'translate3d(0,' + y * 0.22 + 'px,0)';
+  this._px.forEach((el) => {
+  const r = el.getBoundingClientRect();
+  const sp = parseFloat(el.getAttribute('data-px')) || 0.12;
+  el.style.transform = 'translate3d(0,' + (r.top + r.height / 2 - window.innerHeight / 2) * -sp + 'px,0)';
+  });
+  };
+  window.addEventListener('scroll', this._onScroll, { passive: true });
+  this._onScroll();
+
+  if (this.props.cursorGlow !== false) {
+  this._onMove = (e) => {
+  const g = this.glowRef.current;
+  if (!g) return;
+  g.style.opacity = '1';
+  g.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0)';
+  };
+  window.addEventListener('pointermove', this._onMove, { passive: true });
+  }
+  }
+
+  componentWillUnmount() {
+  window.removeEventListener('keydown', this._onEsc);
+  clearTimeout(this._t1); clearTimeout(this._t2);
+  if (this._io) this._io.disconnect();
+  if (this._vidObserver) this._vidObserver.disconnect();
+  window.removeEventListener('scroll', this._onScroll);
+  if (this._onMove) window.removeEventListener('pointermove', this._onMove);
+  }
+
+  get postData() {
+  return [
+  { cat: 'Field Notes', title: 'The Room Sets the Tone Before the Camera Does', dek: 'Lamplight, a dartboard, one plant reaching for a window - how a corner became a set.', read: '5 min',
+  body: [
+  'Every frame in a Smoove Spots reel starts an hour before the camera comes out - walking a room and asking what it already says without anyone in it.',
+  'A dartboard on the wall, a lamp left slightly warm, a plant leaning toward the one window with good light: none of it is styled in, it is just noticed and framed.',
+  'The lesson carried into every shoot since: light a room for the story it already tells, then let a person walk into that story instead of building one around them.'
+  ] },
+  { cat: 'Craft', title: 'Editing for Feeling, Not for Length', dek: 'Where a cut breathes and where it should have ended eight frames sooner.', read: '7 min',
+  body: [
+  'Most cuts fail on rhythm, not content - a reel that runs a beat too long stops feeling cinematic and starts feeling like footage.',
+  'The habit: play a cut back with the sound off first. If the pacing still reads, the story is doing the work; if it drags, no line of dialogue will save it.',
+  'A shorter cut nearly always wins. The instinct to keep "one more good shot" is the instinct worth ignoring.'
+  ] },
+  { cat: 'Substack Series', title: 'Flow of Life - Chapter One', dek: 'A serialized look at business and personal sharing the same frame, week by week.', read: '9 min',
+  body: [
+  'Flow of Life started as a private note and became a running series: how the business side of a brand and the lived-in side of a life end up in the same shot, week after week.',
+  'Chapter One is about the decision to stop separating them - the same discipline that keeps a studio running keeps a life in shape, and the reels that admit that tend to land harder than the ones that pretend otherwise.',
+  'New chapters post on Substack as the season builds; this journal carries the opening notes.'
+  ] }
+  ];
+  }
+
+  reelMeta = [
+  { title: 'Golden Hour Rituals' },
+  { title: 'City After Rain' },
+  { title: 'Cozy Urban Elegance' },
+  { title: 'Cinematic Workspace' }
+  ];
+
+  pad(n) { return (n < 10 ? '0' : '') + n; }
+
+  renderVals() {
+  const s = this.state, p = this.props;
+  const backdrop = p.heroBackdrop || 'threads';
+  const a = s.active === null ? null : this.reelMeta[s.active];
+  const intents = ['Reel', 'Personal Experience', 'Content System', 'Something Else'].map((label) => {
+  const on = s.intent === label;
+  return { label, pick: () => this.setState({ intent: label }),
+  border: on ? '#C9A24A' : 'rgba(230,237,233,.16)',
+  bg: on ? 'rgba(201,162,74,.14)' : 'transparent',
+  color: on ? '#E8CE8F' : 'rgba(230,237,233,.62)' };
+  });
+  return {
+  loading: s.loading, loaderOpacity: s.loaderOpacity,
+  glowRef: this.glowRef, navRef: this.navRef, heroBgRef: this.heroBgRef,
+  showMarquee: p.showMarquee !== false,
+  bgThreads: backdrop === 'threads', bgMonogram: backdrop === 'monogram', bgCrest: backdrop === 'crest',
+
+  pillars: [
+  { n: 'I', title: 'Story First', body: 'Every frame carries a scene, not a slogan.' },
+  { n: 'II', title: 'Curated Craft', body: 'Fewer pieces, finished to the last edge.' },
+  { n: 'III', title: 'Lived In', body: 'Personal detail treated as brand material.' }
+  ],
+  openReel0: () => this.setState({ active: 0 }),
+  openReel1: () => this.setState({ active: 1 }),
+  openReel2: () => this.setState({ active: 2 }),
+  openReel3: () => this.setState({ active: 3 }),
+  galleries: (() => {
+  return [
+  { kicker: 'Gallery 01', title: 'Interiors', speed: '0.14', bg: '', showBg: false, slotId: 'gal-interiors', body: 'Lamplight, a green chair, a book held open. Rooms where the work stops being work.' },
+  { kicker: 'Gallery 02', title: 'Nightscapes', speed: '0.2', bg: '', showBg: false, slotId: 'gal-nightscapes', body: 'Gold threads across an emerald dark. The city drawn as signal rather than skyline.' },
+  { kicker: 'Gallery 03', title: 'Home Ground', speed: '0.1', bg: '', showBg: false, slotId: 'gal-homeground', body: 'The floors, the light, the quiet discipline of a life kept in shape.' }
+  ];
+  })(),
+  shoegirlTags: ['Clarity Practice', 'Focus Systems', 'Mindset Work', 'Weekly Reset'],
+  services: [
+  { n: 'I', title: 'Brand Story Reels', body: 'Cinematic cuts built for launches, milestones, and the moments worth replaying.', meta: 'From one to a season' },
+  { n: 'II', title: 'Personal Digital Experiences', body: 'Interactive one-of-a-kind sites for a birthday, a legacy, a celebration with a story to hold.', meta: 'Shoegirl-class builds' },
+  { n: 'III', title: 'Lifestyle Content Systems', body: 'A calendar, a voice, and a library that keeps a presence in motion between reels.', meta: 'Monthly engagement' }
+  ],
+  posts: this.postData.map((post, i) => ({ ...post, open: () => this.setState({ journalOpen: i }) })),
+
+  waitOpen: !s.waitDone, waitDone: s.waitDone, waitEmail: s.waitEmail,
+  waitMsg: 'A note arrives when the first door opens: ' + s.waitEmail,
+  waitHint: s.waitErr || 'One email. First look at each new opening.',
+  waitErrColor: s.waitErr ? '#E8825A' : 'rgba(230,237,233,.55)',
+  onWaitEmail: (e) => this.setState({ waitEmail: e.target.value, waitErr: '' }),
+  submitWait: (e) => {
+  e.preventDefault();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.waitEmail.trim());
+  if (!ok) return this.setState({ waitErr: 'A valid email keeps the seat reserved.' });
+  this.setState({ waitDone: true });
+  },
+
+  noteOpen: !s.noteDone, noteDone: s.noteDone,
+  cName: s.cName, cEmail: s.cEmail, cNote: s.cNote, intents,
+  noteHint: s.noteErr || 'Reply within two working days.',
+  noteErrColor: s.noteErr ? '#E8825A' : 'rgba(230,237,233,.55)',
+  onCName: (e) => this.setState({ cName: e.target.value, noteErr: '' }),
+  onCEmail: (e) => this.setState({ cEmail: e.target.value, noteErr: '' }),
+  onCNote: (e) => this.setState({ cNote: e.target.value, noteErr: '' }),
+  submitNote: (e) => {
+  e.preventDefault();
+  if (!s.cName.trim()) return this.setState({ noteErr: 'A name completes the introduction.' });
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.cEmail.trim())) return this.setState({ noteErr: 'A valid email makes the reply possible.' });
+  if (s.cNote.trim().length < 8) return this.setState({ noteErr: 'A few more lines sharpen the scene.' });
+  this.setState({ noteDone: true });
+  },
+
+  lightboxOpen: a !== null,
+  activeIdx: a ? this.pad(s.active + 1) : '',
+  activeTitle: a ? a.title : '',
+  activeIsGolden: s.active === 0, activeIsRain: s.active === 1, activeIsCozy: s.active === 2, activeIsWork: s.active === 3,
+  stop: (e) => e.stopPropagation(),
+  closeReel: () => this.setState({ active: null }),
+
+  journalOpenState: s.journalOpen !== null && s.journalOpen !== undefined,
+  journalPost: (s.journalOpen !== null && s.journalOpen !== undefined) ? this.postData[s.journalOpen] : null,
+  closeJournal: () => this.setState({ journalOpen: null })
+  };
+  }
+}
+</script>
+</body>
+</html>

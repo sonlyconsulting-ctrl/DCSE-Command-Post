@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B4Life™: Before You Turn The Key</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-surface: rgba(13, 18, 30, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      
+      /* Gradients & Accents */
+      --accent-teal: #0ea5e9;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #f43f5e;
+      
+      --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
+      --gradient-teal: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+      --gradient-panel: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+      
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 15%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 75%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* Typography & Header */
+    header {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .brand-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-teal);
+      margin-bottom: 0.75rem;
+    }
+
+    .brand-logo-txt {
+      font-weight: 900;
+      color: #fff;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 750px;
+    }
+
+    /* Dashboard Scores */
+    .dashboard-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--gradient-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      margin: 0.25rem 0 0.75rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .stat-value span {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .progress-container {
+      height: 6px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-teal);
+      border-radius: 99px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #exp-progress {
+      background: var(--accent-indigo);
+    }
+
+    #readiness-progress {
+      background: var(--accent-green);
+    }
+
+    /* Core Layout Panels */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+    }
+
+    .section-title span {
+      color: var(--accent-teal);
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.75rem;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: -0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Interactive Checklists */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .checklist-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .checklist-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-teal);
+      cursor: pointer;
+    }
+
+    .checklist-item span {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .checklist-item.checked span {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    /* GPS Branching Simulator */
+    .sim-panel {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      min-height: 100px;
+      position: relative;
+    }
+
+    .sim-prompt {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .sim-narration {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .sim-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sim-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .sim-btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--accent-blue);
+      transform: translateY(-1px);
+    }
+
+    .sim-feedback {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .feedback-good {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+    }
+
+    .feedback-warn {
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      color: #fecdd3;
+    }
+
+    /* Insurance Sandbox */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .scenario-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      text-align: center;
+    }
+
+    .scenario-card:hover, .scenario-card.active {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--accent-indigo);
+    }
+
+    .scenario-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .scenario-details {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .sandbox-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.25rem;
+    }
+
+    .sandbox-line:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .val-out {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .val-out.charge {
+      color: var(--accent-red);
+    }
+
+    .val-out.free {
+      color: var(--accent-green);
+    }
+
+    /* Ask SJL FAQ */
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.01);
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .faq-question {
+      padding: 1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.01);
+      user-select: none;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: '−';
+    }
+
+    .faq-answer {
+      padding: 0 1rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: none;
+      line-height: 1.5;
+    }
+
+    /* Doctrine Banner */
+    .doctrine-banner {
+      background: linear-gradient(90deg, rgba(14, 165, 233, 0.1) 0%, rgba(99, 102, 241, 0.1) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .doctrine-quote {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .doctrine-sub {
+      font-size: 0.8rem;
+      color: var(--accent-teal);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    /* Navigation Header */
+    nav {
+      background: rgba(13, 18, 30, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-brand span {
+      color: var(--accent-teal);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-item a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      color: var(--accent-teal);
+    }
+
+    .nav-btn {
+      background: var(--gradient-primary);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      font-family: var(--font-display);
+      transition: opacity 0.2s;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.9;
+    }
+
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 7, 13, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    
+    .modal-content {
+      background: var(--gradient-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .close-modal-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .close-modal-btn:hover {
+      color: #fff;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+  </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-brand" id="nav-brand-link"><img src="media/b4l_logo_blue.jpg" alt="B4L Logo" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-teal); margin-right: 8px;">Baller For Life<span>™</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item "><a href="B4Life_Dashboard.html">Dashboard</a></li>
+      <li class="nav-item active"><a href="SJL_Module1_Before_You_Turn_The_Key.html">1. Turn The Key</a></li>
+      <li class="nav-item "><a href="B4Life_Module2_The_Vehicle.html">2. The Vehicle</a></li>
+      <li class="nav-item "><a href="B4Life_Module3_The_Road.html">3. The Road</a></li>
+      <li class="nav-item "><a href="#" onclick="alert('Module 3A: GPS & Phones is locked.')">3A. GPS & Phones</a></li>
+      <li class="nav-item "><a href="B4Life_Admin_Profile.html">Admin Profile</a></li>
+    </ul>
+    <button class="nav-btn" onclick="alert('Premium Account Verified.')">SJL (Seals Junior Learner) Executive</button>
+  </nav>
+
+
+  <main>
+    <!-- Header -->
+    <header style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+      <div style="flex: 1;">
+        <div class="brand-eyebrow">
+          <a href="B4Life_Dashboard.html" style="text-decoration:none; color:inherit;"><span class="brand-logo-txt">B4Life</span> / Youth Independence / Series 1</a>
+        </div>
+        <h1>Before You Turn The Key</h1>
+        <div class="lead">
+          Driving is the catalyst for freedom, but responsibility is the engine that protects it. This module establishes your mindset, vehicle discipline, and risk boundaries before shifting into gear.
+        </div>
+      </div>
+      <img src="media/b4l_logo_blue.jpg" alt="B4L Blue Logo" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--accent-teal); object-fit: cover; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);">
+    </header>
+
+    <!-- Score Dashboard -->
+    <div class="dashboard-bar">
+      <div class="stat-card">
+        <div class="stat-label">Learning Score</div>
+        <div class="stat-value" id="val-learn">0<span>/100</span></div>
+        <div class="progress-container">
+          <div class="progress-bar" id="learn-progress"></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Experience Score</div>
+        <div class="stat-value" id="val-exp">0<span>/100</span></div>
+        <div class="progress-container">
+          <div class="progress-bar" id="exp-progress"></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pre-Drive Readiness</div>
+        <div class="stat-value" id="val-readiness">0%</div>
+        <div class="progress-container">
+          <div class="progress-bar" id="readiness-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Doctrine Section -->
+    <div class="doctrine-banner">
+      <div class="doctrine-quote">"Knowledge builds awareness. Experience builds judgment."</div>
+      <div class="doctrine-sub">SJL Core Doctrine</div>
+    </div>
+
+    <!-- Row 1: Pre-Drive and Simulator -->
+    <div class="layout-grid">
+      
+      <!-- Pre-Drive Checklist -->
+      <div class="card">
+        <div class="section-title"><span>01</span> Pre-Drive 5 Minute Check</div>
+        <div class="card-subtitle">Establish your physical baseline before starting the engine.</div>
+        
+        <div class="checklist" id="pre-drive-checklist">
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="15">
+            <span>Destination Entered & Route Reviewed</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="15">
+            <span>Local Weather & Traffic Alerts Confirmed</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="20">
+            <span>Fuel Level & Dashboard Warn Indicators Checked</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="15">
+            <span>Phone Mounted Safely (Not in hand or lap)</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="15">
+            <span>GPS Audio Guidance Active & Vol Verified</span>
+          </label>
+          <label class="checklist-item">
+            <input type="checkbox" data-weight="20">
+            <span>Parent/Mentor Trip Agreement Aligned</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- GPS Simulator -->
+      <div class="card" id="gps-sim-card">
+        <div class="section-title"><span>02</span> GPS Decision Simulator™</div>
+        <div class="card-subtitle">Choose how to handle real-world navigation pressure.</div>
+        
+        <div class="sim-panel">
+          <div id="sim-prompt" class="sim-prompt">Welcome to the simulator. Choose a scenario below to begin.</div>
+          <div id="sim-narration" class="sim-narration">Click a scenario button to load a branching decision branch.</div>
+        </div>
+
+        <div class="sim-btn-group" id="sim-options">
+          <button class="sim-btn" onclick="loadSimScenario('missed_turn')">Scenario A: The Missed Exit</button>
+          <button class="sim-btn" onclick="loadSimScenario('phone_alert')">Scenario B: The Incoming Alert</button>
+          <button class="sim-btn" onclick="loadSimScenario('gps_redirect')">Scenario C: The Construction Detour</button>
+        </div>
+
+        <div class="sim-feedback" id="sim-feedback"></div>
+      </div>
+
+    </div>
+
+    <!-- Row 2: Insurance and FAQ -->
+    <div class="layout-grid">
+      
+      <!-- Insurance Sandbox -->
+      <div class="card">
+        <div class="section-title"><span>03</span> Insurance Sandbox: "Who Pays?"</div>
+        <div class="card-subtitle">Select a scenario to analyze coverage, liability, and out-of-pocket costs.</div>
+        
+        <div class="scenario-grid">
+          <div class="scenario-card" data-idx="0">
+            <div class="scenario-title">1. Parking Lot Scratch</div>
+          </div>
+          <div class="scenario-card" data-idx="1">
+            <div class="scenario-title">2. Borrowed Collision</div>
+          </div>
+          <div class="scenario-card" data-idx="2">
+            <div class="scenario-title">3. Falling Tree Strike</div>
+          </div>
+          <div class="scenario-card" data-idx="3">
+            <div class="scenario-title">4. Caused Injury</div>
+          </div>
+        </div>
+
+        <div class="scenario-details" id="sandbox-details">
+          <div class="sandbox-line">
+            <span>Coverage Involved:</span>
+            <span class="val-out" id="box-coverage">-</span>
+          </div>
+          <div class="sandbox-line">
+            <span>Deductible Amount:</span>
+            <span class="val-out charge" id="box-deductible">-</span>
+          </div>
+          <div class="sandbox-line">
+            <span>Insurance Pays:</span>
+            <span class="val-out" id="box-ins-pays">-</span>
+          </div>
+          <div class="sandbox-line">
+            <span>Your Out-of-Pocket Cost:</span>
+            <span class="val-out charge" id="box-out-of-pocket">-</span>
+          </div>
+          <div class="sandbox-line" style="margin-top:0.75rem; flex-direction:column; border-bottom:none;">
+            <span class="meta-label">SJL™ (Seals Junior Learner) Core Analysis</span>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;" id="box-analysis">-</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ask SJL FAQ -->
+      <div class="card">
+        <div class="section-title"><span>04</span> Ask SJL™ (Seals Junior Learner) FAQ Console</div>
+        <div class="card-subtitle">Direct, structured answers to critical transition questions.</div>
+        
+        <div class="faq-container">
+          <div class="faq-item">
+            <div class="faq-question">Why does SJL (Seals Junior Learner) teach GPS navigation safety first?</div>
+            <div class="faq-answer">
+              Modern drivers don't just learn to operate steering wheels; they manage screens. Visual distraction is the #1 risk. SJL (Seals Junior Learner) teaches the "3-Second Navigation Check": verify the road is stable and traffic is predictable before glancing at your screen.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Does auto insurance follow the car or the driver?</div>
+            <div class="faq-answer">
+              It follows the car first. If a friend borrows your car with permission and crashes it, your policy pays primary, and your rates will likely rise. Always confirm coverage before handing over your keys.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">What is a deductible, and how does it affect me?</div>
+            <div class="faq-answer">
+              A deductible is the out-of-pocket amount you must pay before insurance pays anything. If repairs cost $1,200 and your deductible is $1,000, you pay $1,000 and insurance pays $200. Keeping a clean record helps you lower premiums.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How does driving affect my first job opportunities?</div>
+            <div class="faq-answer">
+              Employers define reliability by shifts started on time. Having a clean driving record and a reliable pre-drive checklist ensures your transportation is secured, directly preserving your professional reputation.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Row 3: 2 Minute Reset -->
+    <div class="card" style="margin-bottom: 0;">
+      <div class="section-title"><span>05</span> Post-Drive 2 Minute Reset</div>
+      <div class="card-subtitle">Close the loop on your trip. Stewardship means preparing the vehicle for tomorrow.</div>
+      
+      <div class="checklist" id="post-drive-checklist" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:0.75rem;">
+        <label class="checklist-item">
+          <input type="checkbox" data-pts="10">
+          <span>Remove Personal Trash & Possessions</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" data-pts="10">
+          <span>Confirm Fuel Level for Next Trip</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" data-pts="10">
+          <span>Verify Handbrake & Gear Shift Staged</span>
+        </label>
+        <label class="checklist-item">
+          <input type="checkbox" data-pts="10">
+          <span>Lock Windows, Sunroof, & Doors Securely</span>
+        </label>
+      </div>
+    </div>
+
+
+  <!-- Trademark Explainer Modal -->
+  <div id="tm-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal-btn">&times;</span>
+      <h2 style="font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+        <span style="color: var(--accent-teal);">™</span> DCS Trademark Explainer
+      </h2>
+      <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 1rem;">
+        <p>
+          <strong>Trademark (™)</strong> is a common-law claim of ownership for brand names, slogans, and logos identifying the source of <strong>goods</strong> (e.g., the <em>Baller For Life™</em> and <em>Baller4Life™</em> developmental framework and curriculum materials).
+        </p>
+        <p>
+          <strong>Service Mark (℠)</strong> is used for brand names and slogans identifying the source of <strong>services</strong> (e.g., <em>Sonly Consulting℠</em> services).
+        </p>
+        <p>
+          <strong>Registered Mark (®)</strong> is reserved exclusively for marks officially registered with the USPTO (e.g. <em>GET YOUR THINK ON!®</em>). Using ® before registration completes is a federal violation.
+        </p>
+        <div style="background: rgba(14, 165, 233, 0.05); border-left: 2px solid var(--accent-teal); padding: 0.75rem; border-radius: 0 8px 8px 0; color: var(--text-main); margin-top: 0.5rem;">
+          <strong>DCS Intellectual Property Rules:</strong>
+          <ul style="margin-top: 0.25rem; padding-left: 1rem; list-style-type: square;">
+            <li>Always attach the ™ or ® mark upon first use on a page or section.</li>
+            <li>Maintain a strict firewall between SC/SS branding and pro se litigation lane DART™ assets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+  <script>
+    // State Values
+    let learningScore = 20; // Starts with base content reading
+    let experienceScore = 0;
+    let preDriveReadiness = 0;
+    
+    // Elements
+    const valLearn = document.getElementById('val-learn');
+    const valExp = document.getElementById('val-exp');
+    const valReadiness = document.getElementById('val-readiness');
+    const learnProgress = document.getElementById('learn-progress');
+    const expProgress = document.getElementById('exp-progress');
+    const readinessProgress = document.getElementById('readiness-progress');
+
+    // Init display
+    updateScores();
+
+    function updateScores() {
+      valLearn.innerHTML = `${learningScore}<span>/100</span>`;
+      valExp.innerHTML = `${experienceScore}<span>/100</span>`;
+      valReadiness.textContent = `${preDriveReadiness}%`;
+
+      learnProgress.style.width = `${learningScore}%`;
+      expProgress.style.width = `${experienceScore}%`;
+      readinessProgress.style.width = `${preDriveReadiness}%`;
+    }
+
+    // 1. Pre-Drive Checklist Logic
+    const preCheckboxes = document.querySelectorAll('#pre-drive-checklist input[type="checkbox"]');
+    preCheckboxes.forEach(box => {
+      box.addEventListener('change', () => {
+        const itemCard = box.closest('.checklist-item');
+        if (box.checked) {
+          itemCard.classList.add('checked');
+        } else {
+          itemCard.classList.remove('checked');
+        }
+        calculateReadiness();
+      });
+    });
+
+    function calculateReadiness() {
+      let readiness = 0;
+      preCheckboxes.forEach(box => {
+        if (box.checked) {
+          readiness += parseInt(box.dataset.weight);
+        }
+      });
+      preDriveReadiness = readiness;
+      
+      // Award learning points for completing pre-drive check first time
+      if (preDriveReadiness === 100 && learningScore < 40) {
+        learningScore += 20;
+      }
+      updateScores();
+    }
+
+    // 2. Post-Drive Checklist Logic
+    const postCheckboxes = document.querySelectorAll('#post-drive-checklist input[type="checkbox"]');
+    let postCheckedState = 0;
+    postCheckboxes.forEach(box => {
+      box.addEventListener('change', () => {
+        const itemCard = box.closest('.checklist-item');
+        if (box.checked) {
+          itemCard.classList.add('checked');
+        } else {
+          itemCard.classList.remove('checked');
+        }
+        
+        let checkedCount = Array.from(postCheckboxes).filter(b => b.checked).length;
+        if (checkedCount === 4 && postCheckedState === 0) {
+          experienceScore += 15;
+          postCheckedState = 1;
+        } else if (checkedCount < 4 && postCheckedState === 1) {
+          experienceScore -= 15;
+          postCheckedState = 0;
+        }
+        updateScores();
+      });
+    });
+
+    // 3. GPS Branching Simulator Logic
+    const simScenarios = {
+      missed_turn: {
+        prompt: "The Missed Exit",
+        narration: "You are driving on an unfamiliar 3-lane highway. You realize your exit is in 100 feet, but a large semi-truck occupies your right blind spot. GPS says merging right now is possible but extremely tight.",
+        options: [
+          { text: "Force the lane change in front of the truck.", type: "warn", feedback: "CRITICAL RISK: Merging directly in front of a heavy truck violates blind-spot clearance. You survived the merge, but created a high-risk scenario. (Learning Score +5, Experience Score -15)" },
+          { text: "Miss the turn safely and let GPS reroute.", type: "good", feedback: "SJL DECISION: Excellent. Missing a exit costs minutes, but an unsafe correction costs much more. You continue straight, letting GPS recalculate. (Learning Score +15, Experience Score +25)" }
+        ]
+      },
+      phone_alert: {
+        prompt: "The Incoming Alert",
+        narration: "Your phone vibrates on the dashboard mount. A banner shows an urgent message from your manager about today's work schedule. You are currently driving 45 MPH on a main road.",
+        options: [
+          { text: "Glance at the text banner briefly while driving.", type: "warn", feedback: "RISK WARNING: Staring or glancing at a notification banner while moving at 45 MPH means traveling 66 feet per second blind. Wait until you are safely stopped. (Learning Score +5, Experience Score -10)" },
+          { text: "Ignore the phone and keep eyes on the road.", type: "good", feedback: "SJL DECISION: Correct. Technology supports the drive, it does not become the drive. Keep driving and check only after parking safely. (Learning Score +15, Experience Score +20)" }
+        ]
+      },
+      gps_redirect: {
+        prompt: "The Construction Detour",
+        narration: "A sudden road closure appears. Your GPS reroutes you down a narrow gravel lane marked 'Local Traffic Only'. It looks poorly maintained and has muddy patches.",
+        options: [
+          { text: "Follow GPS blindly down the lane anyway.", type: "warn", feedback: "RISK WARNING: GPS knows roads, but does not know conditions. Blindly entering mud risk vehicle entrapment or tire damage. (Learning Score +5, Experience Score -10)" },
+          { text: "Ignore redirect, continue on main paved road.", type: "good", feedback: "SJL DECISION: Excellent. You remain responsible for the vehicle, not the navigation system. You stay on the paved route until the GPS finds a safe highway detour. (Learning Score +15, Experience Score +20)" }
+        ]
+      }
+    };
+
+    function loadSimScenario(key) {
+      const data = simScenarios[key];
+      const promptEl = document.getElementById('sim-prompt');
+      const narrationEl = document.getElementById('sim-narration');
+      const optionsEl = document.getElementById('sim-options');
+      const feedbackEl = document.getElementById('sim-feedback');
+
+      promptEl.textContent = data.prompt;
+      narrationEl.textContent = data.narration;
+      feedbackEl.style.display = 'none';
+
+      optionsEl.innerHTML = '';
+      data.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'sim-btn';
+        btn.textContent = opt.text;
+        btn.onclick = () => {
+          feedbackEl.textContent = opt.feedback;
+          feedbackEl.style.display = 'block';
+          feedbackEl.className = `sim-feedback ${opt.type === 'good' ? 'feedback-good' : 'feedback-warn'}`;
+          
+          // Apply Scores
+          if (opt.type === 'good') {
+            learningScore = Math.min(100, learningScore + 10);
+            experienceScore = Math.min(100, experienceScore + 20);
+          } else {
+            learningScore = Math.min(100, learningScore + 5);
+            experienceScore = Math.max(0, experienceScore - 15);
+          }
+          updateScores();
+          
+          // Rebuild scenario list after selection
+          setTimeout(() => {
+            optionsEl.innerHTML = `
+              <button class="sim-btn" onclick="loadSimScenario('missed_turn')">Scenario A: The Missed Exit</button>
+              <button class="sim-btn" onclick="loadSimScenario('phone_alert')">Scenario B: The Incoming Alert</button>
+              <button class="sim-btn" onclick="loadSimScenario('gps_redirect')">Scenario C: The Construction Detour</button>
+            `;
+            promptEl.textContent = "GPS Decision Simulator™";
+            narrationEl.textContent = "Choose another scenario to test your driving judgment under pressure.";
+          }, 6000);
+        };
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    // 4. Insurance Sandbox Logic
+    const insuranceScenarios = [
+      {
+        coverage: "Collision Coverage (deductible applies)",
+        deductible: "$500.00",
+        insPays: "$1,300.00",
+        outOfPocket: "$500.00",
+        analysis: "You scraped a concrete pillar in a tight parking garage. Because it is a single-vehicle impact, it is filed under Collision. You pay your full $500 deductible out of pocket, and insurance covers the remaining $1,300. Your monthly premium will likely increase during your next renewal."
+      },
+      {
+        coverage: "Primary vehicle policy (Collision)",
+        deductible: "$1,000.00",
+        insPays: "$4,200.00",
+        outOfPocket: "$1,000.00",
+        analysis: "You permitted your licensed friend to drive your car. They caused an accident. Under insurance law, your policy follows your vehicle, not the driver. You pay the full $1,000 deductible, and your policy must pay the damages, raising your future premiums. Your friend's policy is secondary only."
+      },
+      {
+        coverage: "Comprehensive Coverage (deductible applies)",
+        deductible: "$250.00",
+        insPays: "$3,450.00",
+        outOfPocket: "$250.00",
+        analysis: "Your car was parked during a storm, and a heavy tree branch crashed through the windshield. Since this was an Act of Nature (not a collision), it is filed under Comprehensive. You pay your lower $250 deductible, and insurance pays the rest. This claim does not count as a point against your driving record."
+      },
+      {
+        coverage: "Liability Coverage (BI & PD - no deductible)",
+        deductible: "$0.00 (No Deductible)",
+        insPays: "$12,500.00",
+        outOfPocket: "$0.00",
+        analysis: "You rear-ended another vehicle, causing $4,500 in bumper damage and $8,000 in medical bills for the other driver. Your Liability policy covers the other driver 100% (up to your policy limits) without a deductible. However, repairing *your* car falls under Collision and requires a deductible. Your rates will increase significantly."
+      }
+    ];
+
+    const scenarioCards = document.querySelectorAll('.scenario-card');
+    const sandboxDetails = document.getElementById('sandbox-details');
+    const boxCoverage = document.getElementById('box-coverage');
+    const boxDeductible = document.getElementById('box-deductible');
+    const boxInsPays = document.getElementById('box-ins-pays');
+    const boxOutOfPocket = document.getElementById('box-out-of-pocket');
+    const boxAnalysis = document.getElementById('box-analysis');
+
+    scenarioCards.forEach(card => {
+      card.addEventListener('click', () => {
+        scenarioCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        
+        const idx = parseInt(card.dataset.idx);
+        const data = insuranceScenarios[idx];
+        
+        sandboxDetails.style.display = 'block';
+        boxCoverage.textContent = data.coverage;
+        boxDeductible.textContent = data.deductible;
+        boxInsPays.textContent = data.insPays;
+        boxOutOfPocket.textContent = data.outOfPocket;
+        boxAnalysis.textContent = data.analysis;
+
+        // Award learning score points for exploring insurance mechanics
+        learningScore = Math.min(100, learningScore + 5);
+        updateScores();
+      });
+    });
+
+    // 5. Ask SJL FAQ Toggle Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Collapse all
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-answer').style.display = 'none';
+        });
+
+        if (!isActive) {
+          item.classList.add('active');
+          answer.style.display = 'block';
+          
+          // Award points for reading FAQs
+          learningScore = Math.min(100, learningScore + 5);
+          updateScores();
+        }
+      });
+    });
+
+
+    // Trademark Modal Toggle
+    const tmModal = document.getElementById('tm-modal');
+    const navBrandLink = document.getElementById('nav-brand-link');
+    const closeModalBtn = document.querySelector('.close-modal-btn');
+
+    if (navBrandLink && tmModal) {
+      navBrandLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        tmModal.classList.remove('hidden');
+        tmModal.style.display = 'flex';
+      });
+    }
+
+    if (closeModalBtn && tmModal) {
+      closeModalBtn.addEventListener('click', () => {
+        tmModal.classList.add('hidden');
+        tmModal.style.display = 'none';
+      });
+      
+      // Close on clicking outside content
+      tmModal.addEventListener('click', (e) => {
+        if (e.target === tmModal) {
+          tmModal.classList.add('hidden');
+          tmModal.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿{
+    "generated_at":  "2026-06-06T16:42:46",
+    "root":  "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project",
+    "package":  "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life",
+    "total_files_raw_including_vendor_and_git":  5961,
+    "managed_files_excluding_git_vendor_build_cache":  330,
+    "duplicate_group_rows":  52,
+    "duplicate_hash_groups":  24,
+    "classifications":  [
+                            {
+                                "classification":  "ACTIVE",
+                                "count":  40
+                            },
+                            {
+                                "classification":  "ARCHIVE",
+                                "count":  6
+                            },
+                            {
+                                "classification":  "REVIEW",
+                                "count":  210
+                            },
+                            {
+                                "classification":  "SUPERSEDED",
+                                "count":  20
+                            },
+                            {
+                                "classification":  "SUPPORT",
+                                "count":  54
+                            }
+                        ],
+    "lanes":  [
+                  {
+                      "lane":  "DCSE-CP",
+                      "count":  232
+                  },
+                  {
+                      "lane":  "DCSE-SS/SC",
+                      "count":  92
+                  },
+                  {
+                      "lane":  "PS",
+                      "count":  6
+                  }
+              ],
+    "outputs":  [
+                    "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life\\01_INVENTORY\\managed_file_inventory.csv",
+                    "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life\\01_INVENTORY\\duplicate_groups.csv",
+                    "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life\\02_CLASSIFICATION\\classification_register.csv",
+                    "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life\\04_RENAME_MAP\\rename_map_candidate.csv",
+                    "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\SJL-B4Life\\03_COPY_PLAN\\copy_plan_candidate.csv"
+                ]
+}

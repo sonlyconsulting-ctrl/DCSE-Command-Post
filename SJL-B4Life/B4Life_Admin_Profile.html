@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B4Life™ Admin Profile & Feedback Center</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-surface: rgba(13, 18, 30, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      
+      /* Gradients & Accents */
+      --accent-teal: #0ea5e9;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #f43f5e;
+      
+      --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
+      --gradient-teal: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+      --gradient-panel: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+      
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 15%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 75%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+    }
+
+    /* Navigation Header */
+    nav {
+      background: rgba(13, 18, 30, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-brand span {
+      color: var(--accent-teal);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .nav-item a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      color: var(--accent-teal);
+    }
+
+    .nav-btn {
+      background: var(--gradient-primary);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      font-family: var(--font-display);
+      transition: opacity 0.2s;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* Header Panel */
+    header {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .header-text h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-teal);
+      margin-bottom: 0.5rem;
+    }
+
+    .access-badge {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Grid Layout */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      height: fit-content;
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-title span {
+      color: var(--accent-teal);
+    }
+
+    .panel-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Admin Info Box */
+    .info-group {
+      margin-bottom: 1rem;
+    }
+
+    .info-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .info-val {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Feedback/Exchange Center */
+    .exchange-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(14, 165, 233, 0.1);
+      border-color: var(--accent-teal);
+      color: #fff;
+    }
+
+    /* Message Log */
+    .message-log {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 420px;
+      overflow-y: auto;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .message-bubble {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .bubble-sjl {
+      background: rgba(14, 165, 233, 0.03);
+      border-left: 3px solid var(--accent-teal);
+    }
+
+    .bubble-dcs {
+      background: rgba(99, 102, 241, 0.03);
+      border-left: 3px solid var(--accent-indigo);
+    }
+
+    .bubble-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .sender-sjl {
+      color: var(--accent-teal);
+    }
+
+    .sender-dcs {
+      color: var(--accent-indigo);
+    }
+
+    .message-time {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .message-text {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      white-space: pre-wrap;
+    }
+
+    /* Message Input Form */
+    .message-input-area {
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    select, textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      font-family: inherit;
+    }
+
+    select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-teal);
+    }
+
+    .btn {
+      background: var(--gradient-primary);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: var(--font-display);
+      float: right;
+    }
+
+    .btn:hover {
+      opacity: 0.95;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-top: 5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer a {
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Dropzone & Dynamic JSON Exchange styles */
+    .dropzone {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: all 0.2s;
+    }
+    .dropzone.dragover, .dropzone:hover {
+      border-color: var(--accent-teal);
+      background: rgba(14, 165, 233, 0.05);
+    }
+    .dropzone p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 100%;
+    }
+    .file-input-wrapper input[type=file] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .status-alert {
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .status-alert-info {
+      background: rgba(14, 165, 233, 0.1);
+      border: 1px solid rgba(14, 165, 233, 0.2);
+      color: #7dd3fc;
+    }
+    .status-alert-success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+    }
+    .btn-action-small {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .btn-action-small:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .quick-actions-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-brand" id="nav-brand-link"><img src="media/b4l_logo_blue.jpg" alt="B4L Logo" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-teal); margin-right: 8px;">Baller For Life<span>™</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item "><a href="B4Life_Dashboard.html">Dashboard</a></li>
+      <li class="nav-item "><a href="SJL_Module1_Before_You_Turn_The_Key.html">1. Turn The Key</a></li>
+      <li class="nav-item "><a href="B4Life_Module2_The_Vehicle.html">2. The Vehicle</a></li>
+      <li class="nav-item "><a href="B4Life_Module3_The_Road.html">3. The Road</a></li>
+      <li class="nav-item "><a href="#" onclick="alert('Module 3A: GPS & Phones is locked.')">3A. GPS & Phones</a></li>
+      <li class="nav-item active"><a href="B4Life_Admin_Profile.html">Admin Profile</a></li>
+    </ul>
+    <button class="nav-btn" onclick="alert('Premium Account Verified.')">SJL (Seals Junior Learner) Executive</button>
+  </nav>
+
+  <main>
+    <header>
+      <div class="header-text">
+        <div class="brand-eyebrow">Executive Review Console</div>
+        <h1>B4Life™ Admin Profile</h1>
+      </div>
+      <div class="access-badge">
+        DCS-SJL (Seals Junior Learner) Communications Secured
+      </div>
+    </header>
+
+    <div class="admin-grid">
+      
+      <!-- Left Column: Profile Card -->
+      <div class="panel-card">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <img src="media/b4l_logo_blue.jpg" alt="Seals Junior Learner (SJL) Logo" style="width: 100px; height: 100px; border-radius: 50%; border: 2.5px solid var(--accent-teal); object-fit: cover; box-shadow: 0 0 15px rgba(14, 165, 233, 0.25);">
+        </div>
+        <div class="panel-title"><span>01</span> Account Status</div>
+        <div class="panel-subtitle">Access control and audit handles.</div>
+        
+        <div class="info-group">
+          <div class="info-label">Active Persona</div>
+          <div class="info-val" style="color: var(--accent-teal);">P-021 Seals Junior Learner (SJL) (Youth Driver)</div>
+        </div>
+        
+        <div class="info-group">
+          <div class="info-label">Framework Target</div>
+          <div class="info-val">B4Life™ Youth Independence</div>
+        </div>
+
+        <div class="info-group">
+          <div class="info-label">Chief DBA & Security Node</div>
+          <div class="info-val">AG (Antigravity Agent)</div>
+        </div>
+
+        <div class="info-group">
+          <div class="info-label">Supabase Schema Owner</div>
+          <div class="info-val">AG (Gemini/Qwen Lane)</div>
+        </div>
+
+        <div class="info-group">
+          <div class="info-label">Coding Node (Next.js/Wix)</div>
+          <div class="info-val">Codex (OpenAI/Claude Lane)</div>
+        </div>
+
+        <div class="info-group" style="margin-bottom:0;">
+          <div class="info-label">Classification Label</div>
+          <div class="info-val" style="font-size:0.75rem; color:var(--accent-red);">DCSE Internal -- Multi-Lane // SS-SJL (Seals Junior Learner) Active</div>
+        </div>
+      </div>
+
+      <!-- Right Column: Feedback & Info Center Exchange -->
+      <div class="panel-card">
+        <div class="exchange-header">
+          <div>
+            <div class="panel-title"><span>02</span> Feedback & Info Center</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Private exchanges between Seals Junior Learner (SJL) (CTO/Coordinator) and DCS (Sovereign Authority).</div>
+          </div>
+          <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterMessages('all')">All</button>
+            <button class="filter-btn" onclick="filterMessages('sjl')">SJL (Seals Junior Learner) Notes</button>
+            <button class="filter-btn" onclick="filterMessages('dcs')">DCS Directives</button>
+          </div>
+        </div>
+
+        <!-- JSON Load Dropzone -->
+        <div class="dropzone" id="dropzone">
+          <div class="file-input-wrapper">
+            <p><strong>Drag & Drop B4L_PRIVATE_EXCHANGE.json here</strong></p>
+            <p style="font-size: 0.7rem; opacity: 0.7; margin-top: 0.25rem;">or click to select file</p>
+            <input type="file" id="file-input" accept=".json">
+          </div>
+        </div>
+
+        <!-- Status Alert Badge -->
+        <div class="status-alert status-alert-info" id="status-alert">
+          <span>⚠️ Static Seed Mode (Changes are local). Load B4L_PRIVATE_EXCHANGE.json to synchronize.</span>
+          <button class="btn-action-small" onclick="loadDefaultSeed()">Reset to Default</button>
+        </div>
+
+        <!-- Quick Actions Bar -->
+        <div class="quick-actions-bar" id="quick-actions-bar">
+          <button class="btn-action-small" onclick="appendQuickAction('start')" style="color: var(--accent-green);">▶ Start Session</button>
+          <button class="btn-action-small" onclick="appendQuickAction('stop')" style="color: var(--accent-red);">■ Stop Session</button>
+          <button class="btn-action-small" onclick="appendQuickAction('approve_mod2')">✓ Approve Mod 2</button>
+          <button class="btn-action-small" onclick="appendQuickAction('approve_mod3')">✓ Approve Mod 3</button>
+        </div>
+
+        <!-- Scrollable Message Log -->
+        <div class="message-log" id="message-log">
+          <!-- Populated dynamically by javascript -->
+        </div>
+
+        <!-- Add Message Section -->
+        <div class="message-input-area">
+          <div class="form-group" style="display:grid; grid-template-columns: 150px 1fr; gap: 1rem;">
+            <div>
+              <label for="message-sender">Sender Node</label>
+              <select id="message-sender">
+                <option value="dcs">DCS Sovereign</option>
+                <option value="sjl">SJL (Seals Junior Learner) Coordinator</option>
+              </select>
+            </div>
+            <div>
+              <label for="message-input-text">Write Directive / Update Note</label>
+              <textarea id="message-input-text" rows="3" placeholder="Enter message text..."></textarea>
+            </div>
+          </div>
+          <button class="btn" onclick="postMessage()" style="margin-left: 0.5rem;">Post Message</button>
+          <button class="btn" id="export-json-btn" onclick="exportJson()" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: #fff; float: right;">Export Exchange JSON</button>
+          <div style="clear:both;"></div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>Powered By Sonly Consulting</p>
+    <p><a href="http://www.sonlyconsulting.com/b4l" target="_blank">Go to B4Life Wix Home Page</a></p>
+  </footer>
+
+  <script>
+    let exchangeData = null;
+    let currentFilter = 'all';
+    let loadedFilename = "";
+
+    const defaultExchange = {
+      "exchange_id": "B4L-SJL-DCS-EXCHANGE-20260606",
+      "topic": "B4Life™ Platform and Staging Infrastructure Development",
+      "last_updated": "2026-06-06 19:24:19",
+      "messages": [
+        {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": "2026-06-06 17:53:09",
+          "text": "Sovereign Directive: We need a Notepad-free dashboard that allows nav to and from the Module 1 staging file. Let's make it look, feel, and navigate like a real webpage. Links for B4L must describe the Baller4Life developmental framework."
+        },
+        {
+          "sender": "sjl",
+          "sender_label": "Seals Junior Learner (SJL) (Coordinator Node)",
+          "timestamp": "2026-06-06 18:25:44",
+          "text": "Technical Update: Staging HTML layouts prepared. Staging dashboard page named B4Life_Dashboard.html constructed. Clickable navigation links and back-and-forth menus added to SJL_Module1_Before_You_Turn_The_Key.html. Fully ready for first-pass review."
+        },
+        {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": "2026-06-06 19:22:52",
+          "text": "Sovereign Directive: Add 'Baller For Life' brand with TM in the header. Make sure we include the DCS explainer of what a TM means, its usage, and related terms. Dashboard and Module 1 approved. Unlock Mods 2 & 3."
+        },
+        {
+          "sender": "sjl",
+          "sender_label": "Seals Junior Learner (SJL) (Coordinator Node)",
+          "timestamp": "2026-06-06 19:24:19",
+          "text": "Technical Update: Nav header updated to Baller For Life™. Staging pages for Module 2 (The Vehicle) and Module 3 (The Road) unlocked. Trademark explainer modal integrated into logo link. Rebuilt LLM sync snapshots."
+        }
+      ]
+    };
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDefaultSeed();
+      setupDropzone();
+    });
+
+    function loadDefaultSeed() {
+      exchangeData = JSON.parse(JSON.stringify(defaultExchange));
+      loadedFilename = "";
+      updateStatusAlert();
+      renderMessages();
+    }
+
+    function updateStatusAlert() {
+      const alertEl = document.getElementById('status-alert');
+      if (loadedFilename) {
+        alertEl.className = "status-alert status-alert-success";
+        alertEl.innerHTML = `<span>✅ Active Session: <strong>${loadedFilename}</strong> Loaded. Ready to edit and export.</span>
+          <button class="btn-action-small" onclick="loadDefaultSeed()">Unload File</button>`;
+      } else {
+        alertEl.className = "status-alert status-alert-info";
+        alertEl.innerHTML = `<span>⚠️ Static Seed Mode (Changes are local). Load B4L_PRIVATE_EXCHANGE.json to synchronize.</span>
+          <button class="btn-action-small" onclick="loadDefaultSeed()">Reset to Default</button>`;
+      }
+    }
+
+    function setupDropzone() {
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('file-input');
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+      });
+
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('dragover');
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.name.endsWith('.json')) {
+          readFile(file);
+        } else {
+          alert("Please drop a valid .json file");
+        }
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          readFile(file);
+        }
+      });
+    }
+
+    function readFile(file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const data = JSON.parse(event.target.result);
+          if (data && Array.isArray(data.messages)) {
+            exchangeData = data;
+            loadedFilename = file.name;
+            updateStatusAlert();
+            renderMessages();
+          } else {
+            alert("JSON structure is invalid. Must contain a 'messages' array.");
+          }
+        } catch (e) {
+          alert("Failed to parse JSON: " + e.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function renderMessages() {
+      const log = document.getElementById('message-log');
+      log.innerHTML = '';
+
+      if (!exchangeData || !exchangeData.messages || exchangeData.messages.length === 0) {
+        log.innerHTML = '<div style="text-align:center; padding: 2rem; color: var(--text-muted);">No messages found.</div>';
+        return;
+      }
+
+      exchangeData.messages.forEach(msg => {
+        const sender = msg.sender;
+        if (currentFilter !== 'all' && sender !== currentFilter) return;
+
+        const bubble = document.createElement('div');
+        bubble.className = `message-bubble bubble-${sender}`;
+        bubble.dataset.sender = sender;
+
+        const displayLabel = msg.sender_label || (sender === 'dcs' ? 'DCS Level 0 Sovereign' : 'Seals Junior Learner (SJL) (Coordinator Node)');
+        const msgText = msg.text || "";
+
+        bubble.innerHTML = `
+          <div class="bubble-header">
+            <span class="sender-${sender}">${displayLabel}</span>
+            <span class="message-time">${msg.timestamp}</span>
+          </div>
+          <div class="message-text">${msgText}</div>
+        `;
+        log.appendChild(bubble);
+      });
+
+      // Auto scroll to bottom
+      log.scrollTop = log.scrollHeight;
+    }
+
+    // Message Filter Logic
+    function filterMessages(filter) {
+      currentFilter = filter;
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderMessages();
+    }
+
+    // Helper to format date-time stamp
+    function getFormattedTimestamp() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    // Post new message
+    function postMessage() {
+      const textEl = document.getElementById('message-input-text');
+      const senderEl = document.getElementById('message-sender');
+      const text = textEl.value.trim();
+      const sender = senderEl.value;
+
+      if (!text) return;
+
+      const ts = getFormattedTimestamp();
+      const senderLabel = sender === 'dcs' ? 'DCS Level 0 Sovereign' : 'Seals Junior Learner (SJL) (Coordinator Node)';
+      const directivePrefix = (sender === 'dcs' && !text.startsWith('Sovereign Directive:') && !text.startsWith('▶') && !text.startsWith('■')) ? 'Sovereign Directive: ' : '';
+
+      const newMsg = {
+        "sender": sender,
+        "sender_label": senderLabel,
+        "timestamp": ts,
+        "text": `${directivePrefix}${text}`
+      };
+
+      exchangeData.messages.push(newMsg);
+      exchangeData.last_updated = ts;
+
+      renderMessages();
+      textEl.value = '';
+    }
+
+    // Quick Actions
+    function appendQuickAction(type) {
+      const ts = getFormattedTimestamp();
+      let newMsg = null;
+
+      if (type === 'start') {
+        newMsg = {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": ts,
+          "text": "▶ Start Session"
+        };
+      } else if (type === 'stop') {
+        newMsg = {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": ts,
+          "text": "■ Stop Session"
+        };
+      } else if (type === 'approve_mod2') {
+        newMsg = {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": ts,
+          "text": "Sovereign Directive: B4Life Module 2 approved for curriculum development."
+        };
+      } else if (type === 'approve_mod3') {
+        newMsg = {
+          "sender": "dcs",
+          "sender_label": "DCS Level 0 Sovereign",
+          "timestamp": ts,
+          "text": "Sovereign Directive: B4Life Module 3 approved for curriculum development."
+        };
+      }
+
+      if (newMsg) {
+        exchangeData.messages.push(newMsg);
+        exchangeData.last_updated = ts;
+        renderMessages();
+      }
+    }
+
+    // Export Updated JSON
+    function exportJson() {
+      if (!exchangeData) return;
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exchangeData, null, 4));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", loadedFilename || "B4L_PRIVATE_EXCHANGE.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+  </script>
+</body>
+</html>

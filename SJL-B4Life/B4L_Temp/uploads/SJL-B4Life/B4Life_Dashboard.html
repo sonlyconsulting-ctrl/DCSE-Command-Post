@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B4Life™ Executive Learning Dashboard</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-surface: rgba(13, 18, 30, 0.75);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      
+      /* Gradients & Accents */
+      --accent-teal: #0ea5e9;
+      --accent-blue: #3b82f6;
+      --accent-indigo: #6366f1;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #f43f5e;
+      
+      --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
+      --gradient-teal: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+      --gradient-panel: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+      
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 15%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 75%, rgba(99, 102, 241, 0.08) 0%, transparent 45%);
+    }
+
+    /* Navigation Header */
+    nav {
+      background: rgba(13, 18, 30, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 2rem;
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .nav-brand span {
+      color: var(--accent-teal);
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 1.25rem;
+      list-style: none;
+    }
+
+    .nav-item a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      color: var(--accent-teal);
+    }
+
+    .nav-btn {
+      background: var(--gradient-primary);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      font-family: var(--font-display);
+      transition: opacity 0.2s;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* Executive Hero Grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .hero-panel h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-panel p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      max-width: 650px;
+    }
+
+    .definition-box {
+      background: rgba(14, 165, 233, 0.05);
+      border-left: 3px solid var(--accent-teal);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .definition-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-teal);
+      margin-bottom: 0.25rem;
+    }
+
+    .definition-text {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-style: italic;
+    }
+
+    /* Executive Metrics Panel */
+    .metrics-panel {
+      background: var(--gradient-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metrics-header {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .metric-row {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-val {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0.1rem 0 0.4rem;
+    }
+
+    .metric-progress {
+      height: 6px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .metric-progress-bar {
+      height: 100%;
+      background: var(--accent-teal);
+      border-radius: 99px;
+    }
+
+    /* Main Dashboard Content Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 992px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .panel-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title span {
+      color: var(--accent-teal);
+    }
+
+    .card-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Curriculum Grid */
+    .curriculum-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .module-card {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .module-card:hover {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(14, 165, 233, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .module-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .module-num {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent-teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .module-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .module-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .module-action {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .module-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .badge-unlocked {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .badge-locked {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    .chevron {
+      stroke: var(--text-muted);
+      stroke-width: 2.5;
+      fill: none;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Core Doctrine & Interactive Worksheet Section */
+    .doctrine-readme {
+      border-left: 4px solid var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.02);
+      padding: 1.5rem;
+      border-radius: 0 16px 16px 0;
+      margin-bottom: 2rem;
+    }
+
+    .doctrine-readme h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .doctrine-readme p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .worksheet-area {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .worksheet-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .worksheet-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .worksheet-section label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .worksheet-section input, .worksheet-section textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+
+    .worksheet-section input:focus, .worksheet-section textarea:focus {
+      outline: none;
+      border-color: var(--accent-indigo);
+    }
+
+    /* Print & Save styles */
+    .print-btn {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s;
+    }
+
+    .print-btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+    }
+
+    /* File Up/Download Panel */
+    .file-dropzone {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .file-dropzone:hover {
+      border-color: var(--accent-teal);
+      background: rgba(14, 165, 233, 0.02);
+    }
+
+    .file-dropzone svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--text-muted);
+      margin-bottom: 0.5rem;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .file-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+    }
+
+    .file-icon {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent-teal);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .file-download-btn {
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .file-download-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Media Grid */
+    .media-card {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 1rem;
+    }
+
+    .media-thumb {
+      height: 130px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .media-play {
+      width: 40px;
+      height: 40px;
+      background: rgba(14, 165, 233, 0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .media-play svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      margin-left: 2px;
+    }
+
+    .media-info {
+      padding: 0.75rem 1rem;
+    }
+
+    .media-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .media-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-top: 5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    footer a {
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 7, 13, 0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    
+    .modal-content {
+      background: var(--gradient-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    
+    .close-modal-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .close-modal-btn:hover {
+      color: #fff;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Print Override CSS */
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+      
+      nav, footer, .hero-grid, .curriculum-panel, .sidebar-panel, .print-btn, .modal {
+        display: none !important;
+      }
+
+      main {
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+      }
+
+      .dashboard-grid {
+        display: block;
+      }
+
+      .panel-card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        background: transparent;
+      }
+
+      .worksheet-area {
+        background: #fff;
+        border: 2px solid #000;
+        color: #000;
+        padding: 2rem;
+        border-radius: 0;
+      }
+
+      .worksheet-title {
+        color: #000;
+        border-bottom: 2px solid #000;
+        padding-bottom: 0.5rem;
+        font-size: 1.4rem;
+      }
+
+      .worksheet-section input, .worksheet-section textarea {
+        background: #fff;
+        border: 1px solid #000;
+        color: #000;
+        border-radius: 0;
+      }
+
+      .val-out, .card-title, h3 {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-brand" id="nav-brand-link"><img src="media/b4l_logo_blue.jpg" alt="B4L Logo" style="height: 30px; width: 30px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-teal); margin-right: 8px;">Baller For Life<span>™</span></a>
+    <ul class="nav-menu">
+      <li class="nav-item active"><a href="B4Life_Dashboard.html">Dashboard</a></li>
+      <li class="nav-item "><a href="SJL_Module1_Before_You_Turn_The_Key.html">1. Turn The Key</a></li>
+      <li class="nav-item "><a href="B4Life_Module2_The_Vehicle.html">2. The Vehicle</a></li>
+      <li class="nav-item "><a href="B4Life_Module3_The_Road.html">3. The Road</a></li>
+      <li class="nav-item "><a href="#" onclick="alert('Module 3A: GPS & Phones is locked.')">3A. GPS & Phones</a></li>
+      <li class="nav-item "><a href="B4Life_Admin_Profile.html">Admin Profile</a></li>
+    </ul>
+    <button class="nav-btn" onclick="alert('Premium Account Verified.')">SJL (Seals Junior Learner) Executive</button>
+  </nav>
+
+  <main>
+    <!-- Hero Header Panel -->
+    <div class="hero-grid">
+      <div class="hero-panel">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <div>
+            <div class="brand-eyebrow">Developmental DNA™ Framework</div>
+            <h1>Baller For Life™ / Youth Independence</h1>
+          </div>
+          <img src="media/b4l_logo_blue.jpg" alt="B4L Blue Logo" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid var(--accent-teal); object-fit: cover; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);">
+        </div>
+        <p>
+          Welcome to the private premium transition portal. B4Life™ bridges the gap between athletic discipline, responsible driving (SJL™: Seals Junior Learner), first-job reliability, and lifetime asset stewardship. Click the "Baller For Life™" header logo at any time for Trademark guidelines and DCS explainer details.
+        </p>
+        
+        <div class="definition-box">
+          <div class="definition-title">Baller For Life™ Core Definition</div>
+          <div class="definition-text">
+            "Baller4Life is not merely a slogan. Baller4Life is the developmental framework. Definition: A Baller is a person who consistently develops their Character, Stewardship, Responsibility, Discernment, Discipline, and Service to transition successfully to total independent adulthood."
+          </div>
+        </div>
+      </div>
+
+      <!-- Executive Overview Stats -->
+      <div class="metrics-panel">
+        <div class="metrics-header">
+          <span>Executive Metrics</span>
+          <span style="font-size: 0.7rem; color: var(--accent-teal);">Active Session</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-row">
+            <div class="metric-label">Enrolled Modules</div>
+            <div class="metric-val">3 / 6</div>
+            <div class="metric-progress">
+              <div class="metric-progress-bar" style="width: 50%;"></div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-label">Average Readiness Score</div>
+            <div class="metric-val" id="avg-readiness">65%</div>
+            <div class="metric-progress">
+              <div class="metric-progress-bar" id="avg-readiness-bar" style="width: 65%;"></div>
+            </div>
+          </div>
+          <div class="metric-row">
+            <div class="metric-label">Current Phase</div>
+            <div class="metric-val" style="font-size:1.3rem; color: var(--accent-teal);">Level 2: SJL (Seals Junior Learner) Awareness</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Left Column: Curriculum & Doctrine -->
+      <div class="curriculum-panel">
+        
+        <!-- B4Life Module Grid -->
+        <div class="panel-card">
+          <div class="card-title"><span>01</span> B4Life™ / Youth Independence / Series 1</div>
+          <div class="card-subtitle">Complete all modules sequentially to build your independent driver record.</div>
+          
+          <div class="curriculum-list">
+            <!-- Module 1 -->
+            <a href="SJL_Module1_Before_You_Turn_The_Key.html" class="module-card">
+              <div class="module-info">
+                <div class="module-num">Part 1</div>
+                <div class="module-title">1. Turn The Key</div>
+                <div class="module-desc">Mindset, risk management, and pre-drive checks.</div>
+              </div>
+              <div class="module-action">
+                <span class="module-badge badge-unlocked">Active Staging</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </a>
+
+            <!-- Module 2 -->
+            <a href="B4Life_Module2_The_Vehicle.html" class="module-card">
+              <div class="module-info">
+                <div class="module-num">Part 2</div>
+                <div class="module-title">2. The Vehicle</div>
+                <div class="module-desc">Dashboard warning icons, oil levels, and tire checks.</div>
+              </div>
+              <div class="module-action">
+                <span class="module-badge badge-unlocked">Active Staging</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </a>
+
+            <!-- Module 3 -->
+            <a href="B4Life_Module3_The_Road.html" class="module-card">
+              <div class="module-info">
+                <div class="module-num">Part 3</div>
+                <div class="module-title">3. The Road</div>
+                <div class="module-desc">Defensive driving, blind spots, and merging.</div>
+              </div>
+              <div class="module-action">
+                <span class="module-badge badge-unlocked">Active Staging</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </a>
+
+            <!-- Module 3A -->
+            <div class="module-card" style="opacity: 0.6; cursor: not-allowed;" onclick="alert('Module locked. Complete Parts 1-3 first.')">
+              <div class="module-info">
+                <div class="module-num">Part 3A</div>
+                <div class="module-title">3A. GPS & Phones</div>
+                <div class="module-desc">The 90% Rule and Glance vs. Stare thresholds.</div>
+              </div>
+              <div class="module-action">
+                <span class="module-badge badge-locked">Locked</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="module-card" style="opacity: 0.6; cursor: not-allowed;" onclick="alert('Module locked. Complete Parts 1-3 first.')">
+              <div class="module-info">
+                <div class="module-num">Part 4</div>
+                <div class="module-title">4. The Money</div>
+                <div class="module-desc">Auto insurance, deductibles, and ticket costs.</div>
+              </div>
+              <div class="module-action">
+                <span class="module-badge badge-locked">Locked</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doctrine README & Worksheet -->
+        <div class="panel-card">
+          <div class="card-title"><span>02</span> SJL™ (Seals Junior Learner) Core Doctrine & Worksheet</div>
+          <div class="card-subtitle">Knowledge builds awareness. Experience builds judgment. Read the doctrine and save your worksheet.</div>
+          
+          <div class="doctrine-readme">
+            <h3>The SJL™ (Seals Junior Learner) Foundational Doctrine</h3>
+            <p>
+              Driving is not simply operating a machine; it is managing responsibility. The transition to independent adulthood requires active checks and checks on your own pride. 
+            </p>
+            <p>
+              Your driver record is your financial footprint. Speeding tickets last 3 years on your premium; collisions cost lives and credit. 
+            </p>
+          </div>
+
+          <!-- Printable Interactive Worksheet -->
+          <div class="worksheet-area" id="print-worksheet">
+            <div class="worksheet-title">
+              <span>SJL™ (Seals Junior Learner) Independent Driver Worksheet</span>
+              <button class="print-btn" onclick="window.print()">
+                <svg style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+                Print / Save PDF
+              </button>
+            </div>
+            
+            <div class="worksheet-section">
+              <label>1. Define your primary transition goal</label>
+              <input type="text" placeholder="e.g., Secure my license, manage my first job commute safely..." value="">
+            </div>
+            
+            <div class="worksheet-section">
+              <label>2. What is the deductible on your primary vehicle insurance policy?</label>
+              <input type="text" placeholder="e.g., $500, $1,000...">
+            </div>
+
+            <div class="worksheet-section">
+              <label>3. How will you apply the 90% GPS navigation rule?</label>
+              <textarea rows="3" placeholder="e.g., I will set the audio guidance volume to high, mount the phone safely, and limit glances to under 1 second..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar (Upload/Download & Video Showcase) -->
+      <div class="sidebar-panel">
+        
+        <!-- Up/Download Center -->
+        <div class="panel-card">
+          <div class="card-title"><span>03</span> Document & Resource Vault</div>
+          <div class="card-subtitle">Executive asset sharing. Upload and download SJL (Seals Junior Learner) materials.</div>
+          
+          <div class="file-dropzone" id="file-dropzone">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round"/></svg>
+            <p style="font-size:0.85rem; font-weight:700;">Drag and Drop Files Here</p>
+            <p style="font-size:0.75rem; color: var(--text-muted);">Supports PDF, CSV, PNG, JSON, MP4</p>
+            <input type="file" id="file-upload-input" class="hidden">
+          </div>
+
+          <div class="file-list" id="file-list">
+            <div class="file-item">
+              <div class="file-info">
+                <svg class="file-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"/></svg>
+                <span>personas_master.csv</span>
+              </div>
+              <a href="#" class="file-download-btn" onclick="alert('Downloading personas_master.csv...')">Download</a>
+            </div>
+            <div class="file-item">
+              <div class="file-info">
+                <svg class="file-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"/></svg>
+                <span>sjl_construction_brief.pdf</span>
+              </div>
+              <a href="#" class="file-download-btn" onclick="alert('Downloading sjl_construction_brief.pdf...')">Download</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Media Showcase -->
+        <div class="panel-card">
+          <div class="card-title"><span>04</span> Featured Media Showcase</div>
+          <div class="card-subtitle">Explanatory media outlines for student review.</div>
+          
+          <!-- Video 1 -->
+          <div class="media-card">
+            <div class="media-thumb" style="background-image: url('media/b4l_logo_blue.jpg'); background-size: cover; background-position: center;">
+              <div class="media-play" onclick="alert('Playing placeholder video: The 90% Rule of Navigation')">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg>
+              </div>
+            </div>
+            <div class="media-info">
+              <div class="media-title">The 90% Rule of Navigation</div>
+              <div class="media-meta">Short Video • 60 Sec</div>
+            </div>
+          </div>
+
+          <!-- Video 2 -->
+          <div class="media-card">
+            <div class="media-thumb" style="background-image: url('media/b4l_logo_blue.jpg'); background-size: cover; background-position: center;">
+              <div class="media-play" onclick="alert('Playing placeholder video: Who Actually Pays in a Borrowed Crash?')">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21"/></svg>
+              </div>
+            </div>
+            <div class="media-info">
+              <div class="media-title">Who Actually Pays in a Borrowed Crash?</div>
+              <div class="media-meta">Short Video • 60 Sec</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Trademark Explainer Modal -->
+  <div id="tm-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal-btn">&times;</span>
+      <h2 style="font-family: var(--font-display); font-size: 1.4rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+        <span style="color: var(--accent-teal);">™</span> DCS Trademark Explainer
+      </h2>
+      <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 1rem;">
+        <p>
+          <strong>Trademark (™)</strong> is a common-law claim of ownership for brand names, slogans, and logos identifying the source of <strong>goods</strong> (e.g., the <em>Baller For Life™</em> and <em>Baller4Life™</em> developmental framework and curriculum materials).
+        </p>
+        <p>
+          <strong>Service Mark (℠)</strong> is used for brand names and slogans identifying the source of <strong>services</strong> (e.g., <em>Sonly Consulting℠</em> services).
+        </p>
+        <p>
+          <strong>Registered Mark (®)</strong> is reserved exclusively for marks officially registered with the USPTO (e.g. <em>GET YOUR THINK ON!®</em>). Using ® before registration completes is a federal violation.
+        </p>
+        <div style="background: rgba(14, 165, 233, 0.05); border-left: 2px solid var(--accent-teal); padding: 0.75rem; border-radius: 0 8px 8px 0; color: var(--text-main); margin-top: 0.5rem;">
+          <strong>DCS Intellectual Property Rules:</strong>
+          <ul style="margin-top: 0.25rem; padding-left: 1rem; list-style-type: square;">
+            <li>Always attach the ™ or ® mark upon first use on a page or section.</li>
+            <li>Maintain a strict firewall between SC/SS branding and pro se litigation lane DART™ assets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Powered By Sonly Consulting</p>
+    <p><a href="http://www.sonlyconsulting.com/b4l" target="_blank">Go to B4Life Wix Home Page</a></p>
+  </footer>
+
+  <script>
+    // Pull localStorage checklist state from Module 1 if available
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const storedLearn = localStorage.getItem('learningScore') || 20;
+        const storedExp = localStorage.getItem('experienceScore') || 0;
+        const storedReadiness = localStorage.getItem('preDriveReadiness') || 0;
+        
+        document.getElementById('avg-readiness').textContent = `${storedReadiness}%`;
+        document.getElementById('avg-readiness-bar').style.width = `${storedReadiness}%`;
+      } catch (e) {
+        // Local storage missing
+      }
+    });
+
+    // Trademark Modal Toggle
+    const tmModal = document.getElementById('tm-modal');
+    const navBrandLink = document.getElementById('nav-brand-link');
+    const closeModalBtn = document.querySelector('.close-modal-btn');
+
+    if (navBrandLink && tmModal) {
+      navBrandLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        tmModal.classList.remove('hidden');
+        tmModal.style.display = 'flex';
+      });
+    }
+
+    if (closeModalBtn && tmModal) {
+      closeModalBtn.addEventListener('click', () => {
+        tmModal.classList.add('hidden');
+        tmModal.style.display = 'none';
+      });
+      
+      // Close on clicking outside content
+      tmModal.addEventListener('click', (e) => {
+        if (e.target === tmModal) {
+          tmModal.classList.add('hidden');
+          tmModal.style.display = 'none';
+        }
+      });
+    }
+
+    // Simple File Upload Mock
+    const dropzone = document.getElementById('file-dropzone');
+    const fileList = document.getElementById('file-list');
+    const fileInput = document.getElementById('file-upload-input');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+      const files = e.target.files;
+      if (files.length) handleFiles(files);
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = 'var(--accent-teal)';
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.style.borderColor = 'var(--border-color)';
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = 'var(--border-color)';
+      const files = e.dataTransfer.files;
+      if (files.length) handleFiles(files);
+    });
+
+    function handleFiles(files) {
+      for (let file of files) {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.innerHTML = `
+          <div class="file-info">
+            <svg class="file-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6"/></svg>
+            <span>${file.name}</span>
+          </div>
+          <span style="font-size:0.75rem; color:var(--accent-green); font-weight:700;">Uploaded</span>
+        `;
+        fileList.appendChild(fileItem);
+      }
+    }
+  </script>
+</body>
+</html>

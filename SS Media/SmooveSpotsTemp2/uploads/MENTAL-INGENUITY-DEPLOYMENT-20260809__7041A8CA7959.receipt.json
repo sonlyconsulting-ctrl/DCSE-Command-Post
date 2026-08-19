@@ -1,0 +1,25 @@
+{
+  "schema": "tribunal-poller-v7-receipt/1.0",
+  "task_id": "MENTAL-INGENUITY-DEPLOYMENT-20260809",
+  "source_file": "C:\\DS All Things\\DCSE_Command_Center\\_Tribunal_Inbox\\TRIBUNAL_20260810_SC_MENTAL_INGENUITY_RECORD_COMPLETION.json",
+  "source_sha256": "7041A8CA795908B067DBEAAD890FA712A0ED5EAC5F5A4447B7C188F56D3F",
+  "state": "QUARANTINE_PENDING",
+  "created_at": "2026-08-10T00:53:01+00:00",
+  "updated_at": "2026-08-10T00:53:01+00:00",
+  "history": [
+    {
+      "from": null,
+      "to": "RECEIVED",
+      "at": "2026-08-10T00:53:01+00:00",
+      "detail": "Source packet observed; source was not modified."
+    },
+    {
+      "from": "RECEIVED",
+      "to": "QUARANTINE_PENDING",
+      "at": "2026-08-10T00:53:01+00:00",
+      "detail": "sandbox must be read-only or workspace-write"
+    }
+  ],
+  "worker_result": null,
+  "outcome": "QUARANTINE_PENDING_NO_MOVE_PERFORMED"
+}
