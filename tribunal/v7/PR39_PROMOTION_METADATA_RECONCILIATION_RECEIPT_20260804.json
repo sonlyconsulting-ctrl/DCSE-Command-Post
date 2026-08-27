@@ -1,0 +1,136 @@
+{
+  "document_id": "DCSE-PR39-PROMOTION-METADATA-RECONCILIATION-20260804",
+  "classification": "CONFIDENTIAL",
+  "lane": "SC",
+  "zone": "evidence",
+  "policy_authority": false,
+  "status": "COMPLETE",
+  "review_date": "2026-08-04",
+  "purpose": "Reconcile post-promotion metadata drift without changing the approved doctrinal bodies.",
+  "review_sources": {
+    "structural_audit_report": "tribunal/v7/GOVERNANCE_STRUCTURAL_AUDIT_REPORT_PR39.md",
+    "audit_script": "tribunal/v7/runtime-evidence/Invoke-GovernanceAudit.ps1",
+    "gate4_evidence": "tribunal/v7/GATE4_BEHAVIORAL_TEST_EVIDENCE_20260804.md",
+    "original_promotion_receipt": "tribunal/v7/PR39_DCS_LEVEL0_PROMOTION_RECEIPT_20260804.json"
+  },
+  "finding": {
+    "prior_completion_statement": "PREMATURE",
+    "verified_open_items": [
+      "Master Profile frontmatter still declared CANDIDATE with null promotion fields.",
+      "D21 and D22 frontmatter still declared CANDIDATE.",
+      "DCSE_MANIFEST.yaml still declared a candidate package and CANDIDATE_NOT_PROMOTED.",
+      "Governance CI still enforced candidate manifest state."
+    ],
+    "corrected_false_assertion": "DCSE-DDNA registry tables were not absent. governance_directives, governance_refs, and promotion_log existed before PR #40 and contained governance records.",
+    "classification": "STATUS_AND_METADATA_DRIFT"
+  },
+  "original_promotion": {
+    "pull_request": 39,
+    "approved_head": "10e41d0fea5dffbc5d8c54a7a67518e484b9ed6b",
+    "approval_comment_id": 5174885612,
+    "approval_timestamp": "2026-08-04T05:13:09Z",
+    "merge_commit": "2e66202b2a99521de60b55b66e57ceb0ab99a884",
+    "promotion_receipt_final_commit": "5b1a3858e547c40a7db6c18cfc6e8827ada16fa1"
+  },
+  "metadata_reconciliation": {
+    "pull_request": 40,
+    "authorization_comment_id": 5175069060,
+    "approved_correction_head": "41f823e5d1b26620242f7045387e70118435acf1",
+    "merge_commit": "6b461077f6c11d5fe3d80235c7c590553367cc98",
+    "merged_at": "2026-08-04T05:40:30Z",
+    "merge_method": "merge",
+    "history_preserved": true,
+    "changed_files": 6,
+    "doctrinal_body_changed": false
+  },
+  "canonical_metadata": {
+    "master_profile": {
+      "path": "governance/v7.1/DCSE_Master_Profile_v7.1.md",
+      "authority_level": "PROMOTED",
+      "promoted_by": "DCS_LEVEL_0",
+      "promotion_date": "2026-08-04",
+      "source_of_truth": "canonical",
+      "prior_git_blob": "87042fce2a5d1f079c6a1bd8a3fe963bdf8b996a",
+      "corrected_git_blob": "1fbb6f3f431c65b735425c420c760cadeffff45e",
+      "prior_sha256": "728d6e4866d1dcaf527597b13a0ab1971198902aa325d0e1aa01e1d4aaf4d93f",
+      "corrected_sha256": "fda7c66a2557b3ba7d29fa5564f313d4474dd5367ebb0406c568780157ccd409"
+    },
+    "d21": {
+      "path": "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md",
+      "authority_level": "PROMOTED",
+      "promoted_by": "DCS_LEVEL_0",
+      "promotion_date": "2026-08-04",
+      "prior_git_blob": "c63cec14cb97486012846d9963cff79fd4f7a6c3",
+      "corrected_git_blob": "1036da1919b13b1ac0c3be77efe1459ad6421a26",
+      "prior_sha256": "c2e48f1dc30386e6aade5c4291b96d38dbac38c522e519d9c409a6b297799597",
+      "corrected_sha256": "b35d32bd4396270b9f2146858745c6cbbf8639c2650d43c06bf4044ca7e74c04"
+    },
+    "d22": {
+      "path": "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md",
+      "authority_level": "PROMOTED",
+      "promoted_by": "DCS_LEVEL_0",
+      "promotion_date": "2026-08-04",
+      "prior_git_blob": "3b0a0558b4efd898ddd92ae5555a7aa1f3e89234",
+      "corrected_git_blob": "f99c02a2fb8b3371419e2067f67b258b9127cf62",
+      "prior_sha256": "e2e91a9befeb745d2dbe7e4354599f8fd97fa8e583cac12c61ec16cc1c290115",
+      "corrected_sha256": "6d385d10f998c57ba20dbc477eed2bf01820c79ef5012885daebd90601b0d9cf"
+    }
+  },
+  "manifest_and_validation": {
+    "manifest_path": "DCSE_MANIFEST.yaml",
+    "manifest_status": "ACTIVE_RATIFIED",
+    "canonical_branch": "governance/v7.1-owned-product-harness",
+    "governance_validation": {
+      "run_number": 140,
+      "head_sha": "41f823e5d1b26620242f7045387e70118435acf1",
+      "conclusion": "SUCCESS"
+    },
+    "sha256_report": {
+      "workflow_run_number": 1,
+      "head_sha": "41f823e5d1b26620242f7045387e70118435acf1",
+      "conclusion": "SUCCESS",
+      "artifact_id": 8881392745,
+      "artifact_digest": "sha256:bf44fcea8cad6f5610547331bf6d95a25b6c102e8e03cd33da88962197bbf644"
+    }
+  },
+  "runtime_registry": {
+    "system": "DCSE-DDNA",
+    "project_id": "uutpzaiqymyufljdgdaa",
+    "schema": "dcse_cp",
+    "tables_verified": [
+      "governance_directives",
+      "governance_refs",
+      "promotion_log"
+    ],
+    "directive_status": "ACTIVE_RATIFIED",
+    "reference_version": "v7.1-promoted",
+    "canonical_commit": "6b461077f6c11d5fe3d80235c7c590553367cc98",
+    "reference_verified_at": "2026-08-04T05:42:13.563217Z",
+    "promotion_log_keys": [
+      "V7-20260804-PR39-MP-METADATA-RECONCILIATION",
+      "V7-20260804-PR39-D21-METADATA-RECONCILIATION",
+      "V7-20260804-PR39-D22-METADATA-RECONCILIATION"
+    ],
+    "schema_migration": false,
+    "verification": "PASS"
+  },
+  "controls": {
+    "secret_scan": "PASS",
+    "ps_scan": "PASS",
+    "zone_integrity": "PASS",
+    "doctrinal_body_preservation": "PASS",
+    "runtime_reconciliation": "PASS",
+    "rollback": "Revert PR #40 merge commit and restore prior directive checksums and reference locations if metadata or hash drift is detected."
+  },
+  "exit_criteria": {
+    "frontmatter_reconciled": true,
+    "manifest_reconciled": true,
+    "ci_promotion_aware": true,
+    "corrected_sha256_recorded": true,
+    "runtime_directives_reconciled": true,
+    "runtime_refs_reconciled": true,
+    "promotion_log_reconciled": true,
+    "receipt_issued": true
+  },
+  "closeout": "V7.1 promotion metadata reconciliation complete. Structure Precedes Scale."
+}

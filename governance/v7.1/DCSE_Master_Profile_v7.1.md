@@ -1,13 +1,13 @@
 ---
 dcse_zone: authority
-dcse_authority_level: CANDIDATE
+dcse_authority_level: PROMOTED
 dcse_document_id: DCSE-MP-v7.1
 dcse_version: V7.1
-dcse_promoted_by: null
-dcse_promotion_date: null
+dcse_promoted_by: DCS_LEVEL_0
+dcse_promotion_date: 2026-08-04
 dcse_classification: CONFIDENTIAL
 dcse_lane: DCSE
-dcse_source_of_truth: proposed
+dcse_source_of_truth: canonical
 dcse_required_approval: DCS_LEVEL_0_EXACT_DIFF
 dcse_parent_authority: DCS_LEVEL_0
 ---
