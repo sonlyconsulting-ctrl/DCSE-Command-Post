@@ -1,17 +1,24 @@
 dcse:
-  governance_version: "V7.1"
-  package_status: "CANDIDATE_REMEDIATION"
+  governance_version: "V7.2"
+  package_status: "OPERATIVE"
   principle: "Structure Precedes Scale."
-  constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+  express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
+  controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
+  authority_state: "OPERATIVE"
+  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5"
+  source_lifecycle_rule: "Historical source-state labels remain provenance; compiled authority is inherited from operative R5 or a registered DCS directive."
   manifest_role: "machine-readable routing index; not independent authority"
 
 canonical:
   github:
     repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
-    candidate_branch: "agent/v7.1-zone-integrity-remediation"
-    parent_candidate_branch: "governance/v7.1-owned-product-harness"
-    pull_request: null
-    governance_path: "governance/v7.1/"
+    authority_branch: "main"
+    governance_path: "governance/v7.2/"
+    controller_path: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+    operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+    directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
     zone_index: "governance/v7.1/ZONE_INDEX.json"
   supabase:
     governance:
@@ -24,16 +31,20 @@ canonical:
       role: "operational state registry"
 
 mandatory_entry_sequence:
-  - "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+  - "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  - "governance/v7.2/dcs_express_directives.v7.2.json"
   - "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
   - "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
   - "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
-  - "task-routed doctrines selected by D21"
+  - "task-routed doctrines selected by D21 and the operative controller"
   - "applicable assignment or instruction"
 
 authority_routes:
   final_human_authority: "DCS Level 0"
-  constitutional_entrypoint: "governance/v7.1/DCSE_Master_Profile_v7.1.md"
+  constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+  express_dcs_directives: "governance/v7.2/dcs_express_directives.v7.2.json"
   source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
   runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
   baseline_and_promotion: "governance/v7.1/source/doctrines/D05_Baseline_Promotion.md"
@@ -44,13 +55,15 @@ authority_routes:
 zones:
   authority:
     path:
-      - "governance/v7.1/*.md"
+      - "governance/v7.2/*.md"
+      - "governance/v7.2/*.json"
+      - "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
       - "governance/v7.1/doctrines/*.md"
-    effect: "constitutional and standing governance candidates or promoted files"
+    effect: "operative v7.2 authority, registered directives, and routed doctrine projections"
   source:
     path:
       - "governance/v7.1/source/**"
-    effect: "lineage and adopted subject content without independent V7.1 authority"
+    effect: "lineage and adopted subject content; source lifecycle does not independently override operative v7.2 authority"
   execution:
     path:
       - "governance/v7.1/execution/**"
@@ -60,55 +73,89 @@ zones:
     path:
       - "tribunal/v7/**"
     effect: "audits, receipts, scripts, logs, snapshots, and proof of events"
-  invariant: "Execution and evidence files may not declare promoted or constitutional authority."
+  invariant: "Execution and evidence files may not declare constitutional authority; authority must resolve through the operative controller or registered DCS directive."
 
 startup_sequence:
   - verify_repository
-  - verify_candidate_branch
-  - load_master_profile
+  - verify_main_authority_branch
+  - load_r5_operative_designation
+  - load_v7_2_master_profile
+  - load_express_dcs_directive_registry
   - verify_source_authority_through_d22
-  - classify_lane_and_task
+  - classify_lane_entity_and_task
+  - establish_task_id
+  - produce_preflight_validation
   - route_doctrines_through_d21
-  - verify_github_access
+  - verify_github_access_when_required
   - verify_supabase_access_when_required
   - load_assignment
   - produce_startup_acknowledgment
   - begin_bounded_work
+  - maintain_doctrine_consideration_log
+  - validate_and_closeout
 
-authority_boundaries:
-  operational_actions_may_be_allowed_when_task_scope_is_recorded:
-    - documentation_updates
-    - artifact_registration
-    - draft_pull_request_creation
-    - issue_creation
-    - bounded_infrastructure_repair
-    - approved_comparison_jobs
-    - evidence_collection
-    - non_destructive_data_correction_with_rollback
-  standing_conditions:
-    - task_scope_is_approved
-    - acceptance_evidence_is_complete
-    - accountable_validator_is_recorded
-    - no_reserved_stop_gate_is_triggered
-  conditions_do_not_waive:
-    - attributable_validation
-    - evidence
-    - tests
-    - rollback
-    - lane_isolation
-    - security_controls
-    - exact_promotion_state
-  dcs_reserved:
-    - constitutional_change
-    - master_profile_or_doctrine_promotion
-    - production_release
-    - public_release
-    - security_exception
-    - lane_boundary_change
-    - destructive_operation_outside_procedure
-    - material_new_spending
-    - unresolved_authoritative_conflict
-  self_expansion_rule: "An agent may impose a narrower temporary safeguard but may not expand its own authority."
+runtime_task_contract:
+  applies_to: "every substantive task"
+  required_before_execution:
+    - task_id
+    - lane
+    - entity
+    - task_type
+    - destination
+    - requested_action
+    - artifact_type
+    - confidentiality
+    - authority_holder
+    - authority_source
+    - executing_model_or_agent
+    - access_level
+    - systems_involved
+    - secret_exposure
+    - ps_exposure
+    - approval_requirement
+    - rollback_or_recovery_requirement
+    - expected_deliverables
+    - exit_criteria
+  visible_preflight_required: true
+  doctrine_consideration_log_required: true
+  handoff_task_identity_rule: "Preserve the originating task ID; child tasks must record parent task ID and preserve authority and source lineage."
+  noncompliance_state: "BLOCKED_OR_PARTIAL_NOT_V7_2_COMPLIANT"
+
+model_harmony:
+  authority_chain_required: true
+  common_chain:
+    - r5_operative_designation
+    - v7_2_master_profile
+    - express_dcs_directive_registry
+    - d22_source_reconciliation
+    - d21_task_routing
+    - universal_onboarding_and_access
+    - task_routed_doctrines
+  self_assigned_authority: "PROHIBITED"
+  summary_as_authority: "PROHIBITED"
+  missing_chain_state: "UNSYNCHRONIZED_OR_DEGRADED"
+  compliance_claim_when_unsynchronized: "PROHIBITED"
+
+ps_publication_firewall:
+  status: "ACTIVE_AS_NARROWED_BY_DCS-DIR-20260905-001"
+  concluded_matter_blanket_internal_isolation: "RETIRED"
+  internal_private_use: "PERMITTED_SUBJECT_TO_CONFIDENTIALITY_PURPOSE_AND_ACCESS_CONTROLS"
+  public_spill_default: "PROHIBITED_WITHOUT_EXPRESS_DCS_AUTHORIZATION"
+  public_facing_destinations:
+    - Sonly_Consulting
+    - Smoove_Spots
+    - The_Initiative
+    - websites
+    - public_web_apps
+    - campaigns
+    - social_media
+    - marketing
+    - advertising
+    - investor_materials
+    - movement_narratives
+    - public_product_copy
+    - external_communications
+  future_legal_matter_rule: "DCS may activate a stricter matter-specific PS firewall."
 
 workflow_lifecycle:
   review_selection: "capability-based and attributable"
@@ -128,7 +175,6 @@ workflow_lifecycle:
       - credential_exposure_or_security_exception
       - destructive_action_outside_approved_procedure
       - production_or_public_release
-      - lane_conflict
       - material_architecture_replacement
       - irreconcilable_authoritative_evidence
     otherwise: "register remediation and continue within approved scope"
@@ -170,4 +216,7 @@ promotion_gate:
     - runtime_registry_reconciliation
     - attributable_independent_validation
     - promotion_receipt
-  current_package_state: "CANDIDATE_NOT_PROMOTED"
+  controller_state: "OPERATIVE_R5"
+  controller_designation_commit: "f72c3288f301d38dc8184d2bbd55c6ef17eae670"
+  controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
+  current_package_state: "OPERATIVE_R5"
