@@ -1,5 +1,5 @@
 {
-  "registry_version": "7.2.1",
+  "registry_version": "7.2.2",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
   "updated_at": "2026-09-05T18:14:00-04:00",
@@ -31,8 +31,8 @@
         "PS lane firewall",
         "public release controls"
       ],
-      "incorporation_commit": null,
-      "status": "ACTIVE",
+      "incorporation_commit": "d6a7758206356c698515dfe75525ca6d1176c5d4",
+      "status": "INCORPORATED",
       "supersedes": "conflicting blanket PS isolation and stale candidate-state runtime treatment only to the extent stated in DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md"
     }
   ]
