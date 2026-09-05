@@ -1,0 +1,39 @@
+{
+  "registry_version": "7.2.1",
+  "controller_family": "DCSE Master Profile v7.2",
+  "authority": "DCS",
+  "updated_at": "2026-09-05T18:14:00-04:00",
+  "directives": [
+    {
+      "directive_id": "DCS-DIR-20260808-001",
+      "issued_at": "2026-08-08T23:37:51Z",
+      "issuing_authority": "DCS",
+      "directive_text": "Designate the exact DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md artifact identified by SHA-256 2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae as the controlling DCSE Master Profile v7.2 R5. The embedded candidate label is build-stage provenance and does not override the later DCS authority decision.",
+      "affected_sections": [
+        "controller authority state",
+        "v7.2 R5 designation",
+        "runtime authority resolution"
+      ],
+      "incorporation_commit": "f72c3288f301d38dc8184d2bbd55c6ef17eae670",
+      "status": "INCORPORATED",
+      "supersedes": "DCS v7.2 R4 operative designation"
+    },
+    {
+      "directive_id": "DCS-DIR-20260905-001",
+      "issued_at": "2026-09-05T18:14:00-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "Enforce v7.2 R5 as operative across governed model and agent surfaces; require task ID, Preflight Validation, D21 task declaration and Doctrine Consideration Log for every substantive task; preserve task identity across handoffs; and narrow the concluded-matter PS firewall so that PS-origin material is blocked from public-facing spill unless expressly authorized, while internal/private use remains permitted subject to confidentiality and access controls.",
+      "affected_sections": [
+        "D21 task declaration",
+        "D21 Doctrine Consideration Log",
+        "model and agent onboarding",
+        "runtime synchronization",
+        "PS lane firewall",
+        "public release controls"
+      ],
+      "incorporation_commit": null,
+      "status": "ACTIVE",
+      "supersedes": "conflicting blanket PS isolation and stale candidate-state runtime treatment only to the extent stated in DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md"
+    }
+  ]
+}
