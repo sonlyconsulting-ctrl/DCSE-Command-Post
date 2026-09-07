@@ -16,6 +16,8 @@
 | Excluded default scope | PS-protected matter, secrets, credentials, and unapproved private source material. |
 | Authority posture | Current verified governance first; portable kernel when canonical access is unavailable; legacy uploads never self-promote. |
 | Output posture | Outcome-led, evidence-bounded, alternatives-tested, backward-validated, lane-specific. |
+| Verified Gemini import URL | `https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/tree/gemini/dcseg-runtime` |
+| Verified branch commit | `2fd561120a971ea1d0fc51cab08d9dd063d227fa` |
 
 ## 2. Big 3 Functional Constitution
 
@@ -110,7 +112,7 @@ Do not upload D14, protected PS content, credentials, device-specific confidenti
 
 1. Create or rename the Gem **DCSEG**.
 2. Paste the complete core instructions into the Gem instruction field.
-3. Import the authorized GitHub repository or the specifically prepared DCSEG branch.
+3. Import `https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/tree/gemini/dcseg-runtime`.
 4. Confirm the displayed repository and branch, then test whether the Gem can locate the current authority document and doctrine index.
 5. Add only supplemental project files that are not already governed in GitHub and that pass lane and privacy review.
 6. Start a new DCSEG conversation and run the validation prompts below.
@@ -209,13 +211,13 @@ DCSEG is ready for promotion when:
 
 ## 9. Current Closeout
 
-**Verified:** The supplied files were available and reviewed locally. The package includes older v6.9 doctrine marked Pending Approval, an SC knowledge base, an overlapping SC HTML knowledge artifact, prior SC and SS prompt materials, a protected PS doctrine file, and a duplicated draft e-story artifact.
+**Verified:** Authenticated GitHub access confirmed `sonlyconsulting-ctrl/DCSE-Command-Post`, administrative repository permission, default branch `main`, and current main commit `a87510a4dcb6bf80c2aef5b8aefb4f008dc0990a`. The active directive `DCS-DIR-20260905-001` establishes the R5 controller as OPERATIVE despite its embedded candidate-era header. The general `main` branch contains protected doctrine bodies, Tribunal material, historical source copies, and operational artifacts and is not approved as a DCSEG import surface. A bounded branch named `gemini/dcseg-runtime` was created at commit `2fd561120a971ea1d0fc51cab08d9dd063d227fa`. Its tree contains 11 files and no D13/D14 body, Tribunal path, litigation path, poller log, secret path, or credential path. Eight copied governance files were byte-for-byte equivalent to their selected `main` sources when verified after branch creation.
 
-**Likely:** The strongest Gemini setup is one DCSEG project Gem with compact core instructions, an imported sanitized GitHub governance branch, and curated supplemental lane knowledge rather than uploading every historical file.
+**Verified design decision:** The approved Gemini import target is the bounded `gemini/dcseg-runtime` branch, not `main`, `v69`, `v7.0`, or a historical v7.2 working branch.
 
-**Unknown:** The precise current GitHub operative baseline, the repository and branch intended for Gemini import, the import refresh behavior, the final commercial status of the SC pricing/offers, and the canonical names of the existing ChatGPT Big 3 components were not verified in this task.
+**Unknown:** Gemini's branch refresh behavior after import, the final commercial status of the SC pricing/offers, and the canonical names of the existing ChatGPT Big 3 components remain to be verified through DCSEG runtime testing.
 
-**Status:** CANDIDATE - UNSYNCHRONIZED.
+**Status:** GITHUB-SYNCHRONIZED CANDIDATE - READY FOR GEMINI IMPORT AND RUNTIME VALIDATION.
 
 **Promotion owner:** DCS.
 
