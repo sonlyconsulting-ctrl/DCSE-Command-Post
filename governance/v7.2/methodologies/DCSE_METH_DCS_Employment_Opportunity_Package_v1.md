@@ -1,8 +1,9 @@
-# DCSE Methodology: DCS Employment Opportunity & Package Methodology
+# DCSE Methodology: DCS Employment Opportunity, Engagement Tracking & Package Methodology
 
 **Document ID:** DCSE-METH-EMP-001  
-**Version:** v1.0  
+**Version:** v1.1  
 **Effective Date:** 2026-09-06  
+**Amended Date:** 2026-09-06  
 **Status:** ACTIVE BY DCS EXPRESS DIRECTIVE / RUNTIME RECONCILED  
 **Formal D05 Promotion:** PENDING ATTRIBUTABLE INDEPENDENT VALIDATION  
 **Runtime Reconciled Date:** 2026-09-06  
@@ -10,8 +11,8 @@
 **Lane:** SC / DCS Employment  
 **Parent Authority:** DCSE Master Profile v7.2 R5, OPERATIVE  
 **Authority Holder:** DCS Level 0  
-**Source Lineage:** DCS_EmploymentCommandCenter.md; DCS Employment Project Instructions baseline; 2026-09-06 DCS directive  
-**Purpose:** Govern opportunity classification, evidence alignment, package construction, baseline preservation, submission readiness, revenue-path routing, and closeout for DCS Employment.
+**Source Lineage:** DCS_EmploymentCommandCenter.md; DCS Employment Project Instructions baseline; DCSE-SKILL-DCS-EMPLOYMENT-PACKAGE-ASSEMBLY-v1; 2026-09-06 DCS directives  
+**Purpose:** Govern opportunity classification, engagement tracking, evidence alignment, package construction, baseline preservation, submission readiness, revenue-path routing, lifecycle measurement, and closeout for DCS Employment.
 
 ## 1. Scope
 
@@ -172,27 +173,139 @@ Before external delivery verify:
 
 A draft or render does not become approved merely because it exists.
 
-## 10. Tracking and Learning
+## 10. Engagement Tracking Architecture
 
-Track opportunity source, classification, package used, date, result, follow-up, feedback, revenue/outcome, and lessons. Historical callback rates, salary bands, platform volumes, and rate assumptions are not controlling. Current market values require current evidence.
+Every material revenue pursuit receives an engagement record when it becomes more than a passing lead. The tracking workflow is architectural and may be implemented in Supabase, the Command Post dashboard, a governed spreadsheet, CRM, or another approved system without changing this lifecycle.
 
-Use results inductively to improve:
+### 10.1 Engagement Identity
+
+Use a durable identifier:
+
+`DCS-ENG-[YYYYMMDD]-[###]`
+
+Preserve the same engagement ID across resumes, proposals, emails, interviews, negotiations, handoffs, delivery records, follow-ups, and closeout evidence.
+
+### 10.2 Lifecycle
+
+Normal forward path:
+
+`CAPTURED -> QUALIFIED -> PURSUIT_DECISION -> PACKAGE_PREP -> SUBMITTED_OR_PROPOSED -> ACTIVE_CONVERSATION -> INTERVIEW_OR_DISCOVERY -> NEGOTIATION -> WON_OR_ENGAGED -> ACTIVE_DELIVERY -> COMPLETED -> FOLLOW_UP`
+
+Alternate terminal or routing states:
+
+- `DECLINED`
+- `LOST`
+- `WITHDRAWN`
+- `DORMANT`
+- `ROUTED_TO_SC`
+- `ROUTED_TO_DCS_ENTERPRISE`
+- `BLOCKED`
+
+A stage change must be supported by an observable event, not optimism or model inference.
+
+### 10.3 Required Engagement Record
+
+Track, when applicable:
+
+- engagement_id;
+- opportunity classification;
+- source/channel;
+- counterparty/company/client;
+- primary contact and role;
+- DCS/SC ownership;
+- current stage;
+- opened date;
+- last activity date;
+- next action;
+- next-action owner;
+- next-action due date;
+- target role/service/opportunity;
+- package/version used;
+- compensation/rate/pricing/revenue model;
+- estimated value and confidence basis;
+- probability or confidence band, if used;
+- interviews/discovery calls/meetings;
+- proposal/submission dates;
+- negotiation position;
+- blockers and unknowns;
+- evidence links;
+- related Task IDs;
+- outcome;
+- outcome reason;
+- realized revenue/compensation when known;
+- follow-up date;
+- lessons learned.
+
+Never record a speculative value as realized revenue.
+
+### 10.4 Stage Transition Rules
+
+- **CAPTURED -> QUALIFIED:** minimum identity, source, opportunity type, and plausible fit established.
+- **QUALIFIED -> PURSUIT_DECISION:** fit, economics, risk, and ownership reviewed.
+- **PURSUIT_DECISION -> PACKAGE_PREP:** DCS elects to pursue or the task clearly authorizes pursuit.
+- **PACKAGE_PREP -> SUBMITTED_OR_PROPOSED:** external submission/proposal is actually sent.
+- **SUBMITTED_OR_PROPOSED -> ACTIVE_CONVERSATION:** counterparty responds substantively.
+- **ACTIVE_CONVERSATION -> INTERVIEW_OR_DISCOVERY:** scheduled or completed evaluative/discovery interaction.
+- **INTERVIEW_OR_DISCOVERY -> NEGOTIATION:** compensation, rate, scope, terms, or offer becomes an active decision.
+- **NEGOTIATION -> WON_OR_ENGAGED:** offer/engagement is accepted or contract/authorization is established.
+- **WON_OR_ENGAGED -> ACTIVE_DELIVERY:** performance/delivery actually begins.
+- **ACTIVE_DELIVERY -> COMPLETED:** agreed work or employment engagement phase closes and required obligations are satisfied.
+- **COMPLETED -> FOLLOW_UP:** relationship maintenance, referral, renewal, testimonial, next opportunity, or retrospective.
+
+### 10.5 Pipeline Review
+
+At weekly or task-relevant review, surface:
+
+- active engagements by stage;
+- next actions due;
+- stale engagements with no activity;
+- value/revenue by confidence state;
+- conversion by opportunity class and source;
+- package versions used;
+- unresolved blockers;
+- SC handoff candidates;
+- wins, losses, withdrawals, and outcome reasons.
+
+Historical benchmark percentages are not controlling. Use observed DCS pipeline data and current market evidence.
+
+### 10.6 Engagement Closeout
+
+Closeout must record:
+- final state;
+- decision/outcome date;
+- outcome reason;
+- actual compensation/revenue when known;
+- artifacts used;
+- material feedback;
+- reusable evidence created;
+- follow-up obligation;
+- lessons for future targeting/package/pricing.
+
+Substantive engagement closeout must satisfy the v7.2 Completion Evidence Collector when governed artifacts, system writes, deployments, or material decisions are involved.
+
+## 11. Tracking and Learning
+
+Use engagement records inductively to improve:
 - package choice;
 - positioning;
 - target selection;
 - pricing/rates;
 - platform/channel effectiveness;
 - evidence gaps;
-- reusable templates.
+- timing/follow-up;
+- reusable templates;
+- SC routing;
+- opportunity qualification.
 
-## 11. Outputs
+## 12. Outputs
 
-Authorized outputs include Opportunity Assessment, Fit Matrix, Resume Delta Plan, Resume/Letter Package, Recruiter Response, Interview Brief, Negotiation Brief, Freelance Scope, Consulting Proposal, Capability Statement, Pricing Analysis, Business/Venture Decision Memo, Skill Evidence Record, Handoff Packet, Change Register, and Closeout Report.
+Authorized outputs include Opportunity Assessment, Engagement Record, Pipeline Review, Fit Matrix, Resume Delta Plan, Resume/Letter Package, Recruiter Response, Interview Brief, Negotiation Brief, Freelance Scope, Consulting Proposal, Capability Statement, Pricing Analysis, Business/Venture Decision Memo, Skill Evidence Record, Handoff Packet, Change Register, and Closeout Report.
 
-## 12. Exit Criteria
+## 13. Exit Criteria
 
 Complete only when:
 - opportunity is correctly classified;
+- engagement is tracked when material;
 - ownership/routing is clear;
 - claims are evidence-grounded;
 - economics and risks are addressed where relevant;
@@ -200,6 +313,7 @@ Complete only when:
 - controlled baselines are preserved;
 - obvious AI slop and unsupported claims are removed;
 - release controls are satisfied;
-- next action and owner are clear.
+- next action and owner are clear;
+- final stage and outcome are recorded when the pursuit is closed.
 
 **Structure Precedes Scale.**
