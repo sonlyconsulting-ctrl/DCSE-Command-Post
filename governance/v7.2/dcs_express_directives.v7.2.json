@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.2",
+  "registry_version": "7.2.3",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-05T18:14:00-04:00",
+  "updated_at": "2026-09-06T20:03:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -34,6 +34,41 @@
       "incorporation_commit": "d6a7758206356c698515dfe75525ca6d1176c5d4",
       "status": "INCORPORATED",
       "supersedes": "conflicting blanket PS isolation and stale candidate-state runtime treatment only to the extent stated in DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md"
+    },
+    {
+      "directive_id": "DCS-DIR-20260906-001",
+      "issued_at": "2026-09-06T20:03:00-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "Adopt for immediate task routing the DCS Employment Opportunity & Package Methodology and the Thumbnail & Cover Asset Production Methodology created under DCS instruction on 2026-09-06. The exact GitHub artifacts identified below are active by this express directive. Formal D05 ACTIVE_RATIFIED promotion remains separately observable and requires completion of runtime reconciliation and attributable independent validation.",
+      "artifacts": [
+        {
+          "document_id": "DCSE-METH-EMP-001",
+          "path": "governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md",
+          "commit_sha": "eb6f6df220999cee518a9f8819542e7eb1d741d7",
+          "content_sha256": "5540234af2d2db7225e96804b33e9b62c97420e3640688adccd4d723dcec31b5"
+        },
+        {
+          "document_id": "DCSE-METH-MEDIA-THUMB-001",
+          "path": "governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md",
+          "commit_sha": "072c0b3aea3895a8b75a1feb01101326f735b6c8",
+          "content_sha256": "a0c351f7c623c3db8d8e91a34c88510e4d92beadae211e3e9cf237613fd89f88"
+        }
+      ],
+      "affected_sections": [
+        "DCS Employment opportunity classification and package construction",
+        "employment baseline preservation and evidence alignment",
+        "D18 media distribution thumbnail generation",
+        "D19 visual creation thumbnail specialization",
+        "task-routed methodology selection"
+      ],
+      "incorporation_commits": [
+        "eb6f6df220999cee518a9f8819542e7eb1d741d7",
+        "072c0b3aea3895a8b75a1feb01101326f735b6c8"
+      ],
+      "status": "INCORPORATED",
+      "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_PENDING_RUNTIME_RECONCILIATION",
+      "formal_promotion_state": "PENDING_INDEPENDENT_VALIDATION_AND_RUNTIME_RECONCILIATION",
+      "supersedes": "No prior operative methodology; modernizes legacy DCS Employment package guidance and specializes existing D18/D19 thumbnail controls without superseding D18 or D19."
     }
   ]
 }
