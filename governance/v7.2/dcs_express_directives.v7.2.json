@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.3",
+  "registry_version": "7.2.4",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-06T20:03:00-04:00",
+  "updated_at": "2026-09-06T21:08:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -39,7 +39,7 @@
       "directive_id": "DCS-DIR-20260906-001",
       "issued_at": "2026-09-06T20:03:00-04:00",
       "issuing_authority": "DCS",
-      "directive_text": "Adopt for immediate task routing the DCS Employment Opportunity & Package Methodology and the Thumbnail & Cover Asset Production Methodology created under DCS instruction on 2026-09-06. The exact GitHub artifacts identified below are active by this express directive. Formal D05 ACTIVE_RATIFIED promotion remains separately observable and requires completion of runtime reconciliation and attributable independent validation.",
+      "directive_text": "Adopt for immediate task routing the DCS Employment Opportunity & Package Methodology and the Thumbnail & Cover Asset Production Methodology created under DCS instruction on 2026-09-06. The exact GitHub artifacts identified below are active by this express directive. DCSE-DDNA runtime reconciliation is complete. Formal D05 ACTIVE_RATIFIED promotion remains separately observable and requires attributable independent validation.",
       "artifacts": [
         {
           "document_id": "DCSE-METH-EMP-001",
@@ -65,9 +65,15 @@
         "eb6f6df220999cee518a9f8819542e7eb1d741d7",
         "072c0b3aea3895a8b75a1feb01101326f735b6c8"
       ],
+      "runtime_registry": {
+        "system": "DCSE-DDNA",
+        "schema": "dcse_cp",
+        "directive_key": "DCS-DIR-20260906-001",
+        "status": "RECONCILED"
+      },
       "status": "INCORPORATED",
-      "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_PENDING_RUNTIME_RECONCILIATION",
-      "formal_promotion_state": "PENDING_INDEPENDENT_VALIDATION_AND_RUNTIME_RECONCILIATION",
+      "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
+      "formal_promotion_state": "PENDING_ATTRIBUTABLE_INDEPENDENT_VALIDATION",
       "supersedes": "No prior operative methodology; modernizes legacy DCS Employment package guidance and specializes existing D18/D19 thumbnail controls without superseding D18 or D19."
     }
   ]
