@@ -3,7 +3,9 @@
 **Document ID:** DCSE-METH-MEDIA-THUMB-001  
 **Version:** v1.0  
 **Effective Date:** 2026-09-06  
-**Status:** ACTIVE BY DCS EXPRESS DIRECTIVE PENDING RUNTIME RECONCILIATION  
+**Status:** ACTIVE BY DCS EXPRESS DIRECTIVE / RUNTIME RECONCILED  
+**Formal D05 Promotion:** PENDING ATTRIBUTABLE INDEPENDENT VALIDATION  
+**Runtime Reconciled Date:** 2026-09-06  
 **Classification:** INTERNAL  
 **Lane:** DCSE / ALL PUBLIC-CONTENT ENTITIES  
 **Parent Authority:** DCSE Master Profile v7.2 R5, OPERATIVE  
