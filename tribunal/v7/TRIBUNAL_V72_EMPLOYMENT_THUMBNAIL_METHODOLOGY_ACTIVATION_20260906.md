@@ -1,154 +1,139 @@
-# Tribunal Activation Record: Employment Package + Thumbnail/Cover Methodologies
+# Tribunal Activation Record: Employment + Thumbnail/Cover Methodologies
 
 **Task ID:** DCSE-GOV-20260906-004  
-**Amendment Task:** DCSE-GOV-20260906-006  
+**Prior Remediation Task:** DCSE-GOV-20260906-006  
+**Current Amendment Task:** DCSE-GOV-20260906-008  
 **Date:** 2026-09-06  
 **Classification:** CONFIDENTIAL / INTERNAL  
 **Lane:** SC / Governance  
 **Authority:** DCS Level 0  
 **Evidence Zone:** Tribunal  
-**Status:** ACTIVE-BY-DIRECTIVE / RUNTIME-RECONCILED / STATUS-DRIFT-REMEDIATED / FORMAL-PROMOTION-PARTIAL
+**Status:** ACTIVE-BY-DIRECTIVE / RUNTIME-RECONCILED / V1.1-AMENDED / FORMAL-PROMOTION-PARTIAL
 
-## 1. DCS Instruction
+## 1. Current Governing Artifacts
 
-DCS directed production of two documents representing: (1) the DCS Employment opportunity/package methodology and (2) the thumbnail/cover asset methodology; immediate application within the v7.2 governance set; and promotion as necessary.
-
-DCS subsequently directed correction of status drift discovered after runtime reconciliation and ordered a v7.2 completion-evidence control so human review receives immediate, orderly proof of task outputs.
-
-## 2. Canonical Artifacts
-
-### A. DCS Employment Opportunity & Package Methodology
+### A. DCS Employment Opportunity, Engagement Tracking & Package Methodology
 - Document ID: `DCSE-METH-EMP-001`
+- Current version: `v1.1`
 - Path: `governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md`
 - Creation commit: `eb6f6df220999cee518a9f8819542e7eb1d741d7`
-- Current canonical commit: `c6f1464fbb7f5730f2244dc95adb2c2651358f69`
-- Current content SHA-256: `e62405351e4aa027b80d9b314f617396831df8f304429521c511a45687edd681`
-- Authority state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`
+- Current canonical commit: `5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73`
+- Current content SHA-256: `ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977`
+- Current authority state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`
 - Formal D05 state: `PENDING_ATTRIBUTABLE_INDEPENDENT_VALIDATION`
 
-### B. Thumbnail & Cover Asset Production Methodology
+The v1.1 amendment adds durable engagement identity, observable revenue-pursuit lifecycle stages, stage-transition rules, pipeline review, DCS/SC routing, engagement closeout, outcome/revenue distinction, and Completion Evidence Collector linkage.
+
+### B. Thumbnail & Cover Asset Architectural Workflow
 - Document ID: `DCSE-METH-MEDIA-THUMB-001`
+- Current version: `v1.1`
 - Path: `governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md`
 - Creation commit: `072c0b3aea3895a8b75a1feb01101326f735b6c8`
-- Current canonical commit: `4f7ffda4aedc40ecba528e3bd47dfd546f3a29b6`
-- Current content SHA-256: `29689ed8102d179663793af973cce92104d2f63e47f434821538f85308197807`
-- Authority state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`
+- Current canonical commit: `a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43`
+- Current content SHA-256: `60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3`
+- Current authority state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`
 - Formal D05 state: `PENDING_ATTRIBUTABLE_INDEPENDENT_VALIDATION`
 
-## 3. Authority Registration
+The v1.1 amendment clarifies that this is a workflow architecture, not a mandatory standalone module. Normal execution produces 3 to 5 materially distinct candidates, a comparative review set, a human selection gate, selected-candidate refinement, final QA, and a manifest/registry record.
 
-Registered under `DCS-DIR-20260906-001` in:
+## 2. Current Authority Registration
 
-`governance/v7.2/dcs_express_directives.v7.2.json`
+Primary activation directive:
+- `DCS-DIR-20260906-001`
 
-Authority/runtime history:
+Closure integrity directive:
+- `DCS-DIR-20260906-002`
+- Path: `governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md`
 
-- Initial registry update commit: `79c7042784255ffbfe62d8f1451b4a55342699ed`
-- Runtime-reconciliation registry update commit: `687d54784c37e6bd3d8af7ca826fb8f12ad34954`
-- Current hash/status reconciliation registry commit: `3cf41e6837c8290bfd8f19d999a966c917758a29`
+Current methodology amendment directive:
+- `DCS-DIR-20260906-003`
+- Path: `governance/v7.2/DCSE_V7_2_ENGAGEMENT_TRACKING_AND_THUMBNAIL_WORKFLOW_AMENDMENT_20260906.md`
+- Creation commit: `594f472137554e4a212418726bdb18c434f849b5`
+- SHA-256: `271ba25d0c48880acddd3e93aa0ff43a05ab8bf3ba2b1d01197446d9b65f647b`
+
+Express directive registry:
+- Path: `governance/v7.2/dcs_express_directives.v7.2.json`
+- Current registry version: `7.2.6`
+- Current reconciliation commit: `8763f502fb9977ba6f8c4526b931dd3275a705b7`
+- Current registry SHA-256: `7f079b3e743baf8888998456a5b10519d4e0dc086dad1d54716617812cb0abdd`
 
 Task-routing index:
+- Path: `governance/v7.2/methodologies/INDEX.md`
+- Current amendment commit: `9a10937b3fc1f34dc9ade43a49de9b04d0b05a8e`
 
-`governance/v7.2/methodologies/INDEX.md`
+## 3. Runtime Reconciliation
 
-- Initial index creation commit: `3661eb1e65b1edcb7d536c9ed7a00b0567e5cee9`
-- Current status/closeout reconciliation commit: `cf2b921f88593a027ce07cf80443cf70d34b7acd`
+Verified in DCSE-DDNA, schema `dcse_cp`:
 
-## 4. Validation Performed
+### governance_directives
+- `DCS-DIR-20260906-001`: version `7.2.6`, active, approved by DCS Level 0, promotion status `validating`.
+- `DCS-DIR-20260906-003`: version `7.2.6`, active, approved by DCS Level 0, promotion status `registered`.
 
-- Source-lineage review: PASS
-- Conflict scan against current v7.2 R5 authority and DCS-DIR-20260905-001: PASS
-- Secret scan by authoring/execution model: PASS, no credential values intentionally included
-- PS/publication scan: PASS, no case-specific PS content included
-- Task-routing fit: PASS
-- GitHub canonical write: PASS
-- Exact SHA-256 calculation for current methodology contents: PASS
-- DCSE-DDNA availability: PASS
-- Runtime directive registration: PASS
-- Runtime governance references for both methodologies: PASS
-- Runtime promotion-log entries: PASS
-- Forward-chain execution review after amendment: PASS
-- Backward-chain claimed-state-to-evidence review after amendment: PASS
-- Dependent artifact scan: PASS after remediation
-- Status drift scan: PASS after remediation
+### governance_refs
+- Employment v1.1 SHA-256: `ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977`
+- Thumbnail workflow v1.1 SHA-256: `60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3`
+- Amendment directive SHA-256: `271ba25d0c48880acddd3e93aa0ff43a05ab8bf3ba2b1d01197446d9b65f647b`
 
-## 5. Status-Drift Finding and Remediation
+### promotion_log
+- `PROMO_DCSE_METH_EMP_001_V11_20260906`
+- `PROMO_DCSE_METH_MEDIA_THUMB_001_V11_20260906`
+- `PROMO_DCS_DIR_20260906_003`
 
-### Finding
+No credential values or protected PS case content are included in these governance records.
 
-After runtime reconciliation completed, both methodology files and the methodology routing index retained stale language stating or implying that runtime reconciliation was still pending. The earlier closeout narrative and registry had advanced, but the dependent artifacts had not been backward-checked before completion was reported.
+## 4. Issue Reconciliation
 
-### Root Cause
+Task `DCSE-GOV-20260906-008` cleaned the GitHub issue surface without falsely closing unresolved work.
 
-The execution path validated principal writes and runtime records but did not perform a complete dependent-artifact closure scan. Forward execution succeeded, but backward chaining from the claimed final state to every affected status label and index was incomplete.
+Closed as completed/superseded by current v7.2 governance:
+- Issue #2: v6.9 RC2 Repository Structure Alignment Review.
+- Issue #20: Finalize v7 doctrine reconciliation from local canonical sources.
 
-### Remediation
+Closed as superseded after unresolved acceptance criteria were consolidated into issue #56:
+- Issue #4: Agent Relay Runtime.
+- Issue #7: Runtime Health / Local Model Maintenance.
+- Issue #17: Control Plane / service-role isolation.
+- Issue #27: SC Agent OS checkpoint and desktop/operations validation.
 
-1. Updated both methodology headers to `ACTIVE BY DCS EXPRESS DIRECTIVE / RUNTIME RECONCILED`.
-2. Added explicit `Formal D05 Promotion: PENDING ATTRIBUTABLE INDEPENDENT VALIDATION` to both methodology headers.
-3. Recomputed exact SHA-256 values.
-4. Updated DCSE-DDNA `governance_refs` and `promotion_log` to the corrected current commits and hashes.
-5. Updated the methodology routing index to remove stale pending-runtime language.
-6. Updated the v7.2 express-directive registry with current commits/hashes.
-7. Added `DCS-DIR-20260906-002`, the Completion Evidence Collector and Closure Integrity Directive.
-8. Updated `DCSE_MANIFEST.yaml` so closure integrity validation and a completion evidence packet are part of the v7.2 task closeout route.
+Remaining open issues after cleanup:
+- Issue #3: TSL Product Reconstruction Backlog. This is SC product work and is not treated as a current DCSE governance blocker.
+- Issue #56: DCSE v7.2 Remaining Work Consolidation: Runtime, Control Plane, Agent OS, and Validation.
 
-## 6. Runtime Reconciliation
+## 5. Closure Integrity Validation
 
-DCSE-DDNA project `uutpzaiqymyufljdgdaa` is the constitutional runtime registry for this task.
+Forward chain:
+1. DCS clarified engagement tracking and thumbnail candidate-selection architecture.
+2. Both methodologies were amended to v1.1.
+3. Amendment directive `DCS-DIR-20260906-003` was created.
+4. Methodology index was updated.
+5. Express-directive registry advanced to v7.2.6.
+6. DCSE-DDNA runtime references and promotion-log records were reconciled.
+7. Legacy GitHub issues were reviewed, closed or normalized based on evidence.
+8. Remaining DCSE runtime/control-plane work was consolidated into issue #56.
+9. This dependent Tribunal record was updated so it no longer carries stale v1.0 commits/hashes.
 
-The following runtime state is verified under schema `dcse_cp`:
+Backward chain from claimed state:
+- Current methodology versions/hashes match runtime references: PASS.
+- Human-selection 3-to-5 thumbnail rule is present in canonical methodology: PASS.
+- Engagement tracking lifecycle is present in canonical methodology: PASS.
+- Directive registry reflects v1.1 current commits/hashes and runtime reconciliation: PASS.
+- Legacy issue duplication is reduced and unresolved work preserved: PASS.
+- Formal D05 independent validation is recorded: NOT YET. Remains explicit.
 
-- `governance_directives`: `DCS-DIR-20260906-001`, status `active`, promotion status `validating`, approved by `DCS Level 0`.
-- `governance_refs`: current canonical references for `DCSE-METH-EMP-001` and `DCSE-METH-MEDIA-THUMB-001` with the corrected SHA-256 values.
-- `promotion_log`: current canonical commits/hashes for both methodologies and explicit status-drift remediation notes.
-- `governance_directives`: `DCS-DIR-20260906-002`, status `active`, approved by `DCS Level 0`.
-- `governance_refs`: canonical Completion Evidence Collector directive reference with SHA-256 `c10a9e3990ef192ae2979551778920eeeedbc26369943e1400cac00f94b61d7a`.
-- `promotion_log`: express-directive activation record for `DCS-DIR-20260906-002`.
+## 6. Formal Promotion Finding
 
-No credentials or secret values were retrieved or stored in the governance payload.
+Formal D05 `ACTIVE_RATIFIED` is not claimed for the two v1.1 methodologies. Attributable independent validation remains required.
 
-## 7. Completion Evidence Collector Governance
+This does not block immediate routing and use under DCS express directives. It does block the stronger formal-ratification claim.
 
-New directive:
+## 7. Current Closeout State
 
-`governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md`
-
-- Directive ID: `DCS-DIR-20260906-002`
-- Canonical creation commit: `2aa4b4158aa0661a1567f335565c4448b3e0e9cb`
-- Content SHA-256: `c10a9e3990ef192ae2979551778920eeeedbc26369943e1400cac00f94b61d7a`
-- State: `ACTIVE DCS EXPRESS DIRECTIVE`
-
-Manifest routing update:
-
-- `DCSE_MANIFEST.yaml`
-- Commit: `75fb66e8e400a29843e4efe31cd78b30bbeb2a92`
-
-The directive requires every substantive-task closeout to perform Closure Integrity Validation and present a compact human-review evidence packet containing direct artifact links, commit/version/runtime identifiers, material hashes, validation results, dependent-artifact reconciliation, unresolved findings, and any required human decision.
-
-## 8. Formal D05 Promotion Gate
-
-The two methodologies remain immediately usable because DCS expressly directed immediate application, the exact current artifacts are incorporated by registered DCS express directive, and runtime reconciliation is complete.
-
-Formal D05 `ACTIVE_RATIFIED` status is not claimed. One separately observable promotion requirement remains:
-
-1. attributable independent validation, because the executor may verify completeness but may not be the sole promotion validator.
-
-Correct state:
-
-`ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`
-
-## 9. Closeout
-
-**Immediate v7.2 application:** COMPLETE  
-**GitHub canonicalization:** COMPLETE  
-**Status-drift remediation:** COMPLETE  
-**DCS express-directive registration:** COMPLETE  
-**Task-routing index reconciliation:** COMPLETE  
+**Employment engagement tracking architecture:** COMPLETE / ACTIVE  
+**Thumbnail 3-to-5 candidate architectural workflow:** COMPLETE / ACTIVE  
+**GitHub methodology/index/directive reconciliation:** COMPLETE  
 **DCSE-DDNA runtime reconciliation:** COMPLETE  
-**Completion Evidence Collector directive:** ACTIVE  
-**Manifest closeout routing update:** COMPLETE  
-**Formal D05 ACTIVE_RATIFIED promotion:** PARTIAL, pending attributable independent validation only  
-**Exit status:** COMPLETE WITH ONE FORMAL PROMOTION FINDING
+**Legacy GitHub issue cleanup:** COMPLETE  
+**Remaining DCSE runtime/control-plane work consolidation:** COMPLETE INTO ISSUE #56  
+**Formal D05 ACTIVE_RATIFIED:** PARTIAL, pending attributable independent validation  
 
 Structure Precedes Scale.
