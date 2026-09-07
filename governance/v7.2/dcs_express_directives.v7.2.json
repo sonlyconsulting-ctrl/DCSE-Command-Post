@@ -2,7 +2,7 @@
   "registry_version": "7.2.6",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-06T22:15:00-04:00",
+  "updated_at": "2026-09-06T22:22:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -78,7 +78,7 @@
         "system": "DCSE-DDNA",
         "schema": "dcse_cp",
         "directive_key": "DCS-DIR-20260906-001",
-        "status": "RECONCILIATION_REQUIRED_FOR_V1_1"
+        "status": "RECONCILED"
       },
       "status": "INCORPORATED",
       "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
@@ -130,7 +130,7 @@
         "system": "DCSE-DDNA",
         "schema": "dcse_cp",
         "directive_key": "DCS-DIR-20260906-003",
-        "status": "PENDING_RECONCILIATION"
+        "status": "RECONCILED"
       },
       "status": "INCORPORATED",
       "supersedes": "Refines DCS-DIR-20260906-001 methodology content without superseding its authority state."
