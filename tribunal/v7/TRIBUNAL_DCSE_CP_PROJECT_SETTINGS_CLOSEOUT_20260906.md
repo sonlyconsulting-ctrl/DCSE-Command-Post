@@ -35,6 +35,15 @@ Current state:
 - Anti-Gravity: Junior DBA/delegated executor for approved operations and evidence collection.
 - Credential/access authority: DCS/DCSE; custody does not create decision authority.
 
+## Runtime Registration Evidence
+
+DCSE-DDNA / `dcse_cp` now contains:
+- `governance_directives`: `DCS-DIR-20260906-004`, version `7.2.7`, status `active`, approved by `DCS Level 0`, authority level `1`, promotion status `registered`, checksum `d7c41998512caf210a9e3719fbd62567645a043b89628d5c05a65c78257e0432`.
+- `governance_refs`: canonical references to the final Project Settings baseline and the express directive.
+- `promotion_log`: `PROMO_DCS_DIR_20260906_004`, state `active_by_dcs_directive`.
+
+No secret values were written to the runtime records.
+
 ## Closure Integrity Validation
 
 Forward-chain:
@@ -42,11 +51,12 @@ Forward-chain:
 - Payload hash calculated: PASS.
 - Canonical GitHub baseline created: PASS.
 - Express directive created: PASS.
-- Supabase governance/runtime insertion required: IN EXECUTION.
+- Supabase governance/runtime insertion: PASS.
+- Runtime verification query: PASS.
 - Human-review evidence packet created: PASS.
 
 Backward-chain target:
-A complete Command Post Project Settings asset must have an exact payload, canonical path, DCS authority decision, runtime registration, and Tribunal closeout. Any runtime insertion failure leaves the task PARTIAL until reconciled.
+A complete Command Post Project Settings asset requires an exact payload, canonical path, DCS authority decision, runtime registration, and Tribunal closeout. All required states are evidenced.
 
 ## Next Strategic State
 
