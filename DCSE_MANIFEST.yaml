@@ -19,6 +19,7 @@ canonical:
     controller_path: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
     operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
     directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
+    completion_evidence_directive: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
     zone_index: "governance/v7.1/ZONE_INDEX.json"
   supabase:
     governance:
@@ -36,6 +37,7 @@ mandatory_entry_sequence:
   - "governance/v7.2/dcs_express_directives.v7.2.json"
   - "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
   - "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  - "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   - "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
   - "task-routed doctrines selected by D21 and the operative controller"
   - "applicable assignment or instruction"
@@ -47,6 +49,7 @@ authority_routes:
   express_dcs_directives: "governance/v7.2/dcs_express_directives.v7.2.json"
   source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
   runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  completion_evidence_closeout: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   baseline_and_promotion: "governance/v7.1/source/doctrines/D05_Baseline_Promotion.md"
   agent_onboarding: "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
   reserved_stop_gates: "governance/v7.1/DCS_LEVEL_0_CONDITIONAL_AUTHORIZATION_FOUNDATIONAL_TRILOGY.md"
@@ -81,6 +84,7 @@ startup_sequence:
   - load_r5_operative_designation
   - load_v7_2_master_profile
   - load_express_dcs_directive_registry
+  - load_completion_evidence_collector_directive
   - verify_source_authority_through_d22
   - classify_lane_entity_and_task
   - establish_task_id
@@ -92,6 +96,8 @@ startup_sequence:
   - produce_startup_acknowledgment
   - begin_bounded_work
   - maintain_doctrine_consideration_log
+  - run_closure_integrity_validation
+  - collect_completion_evidence
   - validate_and_closeout
 
 runtime_task_contract:
@@ -118,6 +124,20 @@ runtime_task_contract:
     - exit_criteria
   visible_preflight_required: true
   doctrine_consideration_log_required: true
+  closure_integrity_validation_required: true
+  completion_evidence_packet_required: true
+  required_before_closeout:
+    - original_requested_outcome
+    - final_task_state
+    - deliverable_inventory
+    - direct_human_review_links_when_available
+    - commit_deployment_version_or_runtime_identifiers_as_applicable
+    - material_sha256_when_required
+    - validation_results
+    - dependent_artifact_reconciliation
+    - unresolved_findings
+    - required_human_decision_if_any
+  complete_claim_rule: "A substantive task may not be reported COMPLETE until the claimed final state backward-chains to direct evidence and affected dependent artifacts are reconciled or explicitly disclosed as unresolved."
   handoff_task_identity_rule: "Preserve the originating task ID; child tasks must record parent task ID and preserve authority and source lineage."
   noncompliance_state: "BLOCKED_OR_PARTIAL_NOT_V7_2_COMPLIANT"
 
@@ -129,6 +149,7 @@ model_harmony:
     - express_dcs_directive_registry
     - d22_source_reconciliation
     - d21_task_routing
+    - completion_evidence_collector
     - universal_onboarding_and_access
     - task_routed_doctrines
   self_assigned_authority: "PROHIBITED"
@@ -179,6 +200,23 @@ workflow_lifecycle:
       - irreconcilable_authoritative_evidence
     otherwise: "register remediation and continue within approved scope"
 
+completion_evidence:
+  authority: "DCS-DIR-20260906-002"
+  directive_path: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
+  human_review_packet_required: true
+  cross_system_collection_required_when_applicable: true
+  direct_links_preferred: true
+  stale_dependent_state_blocks_complete_claim: true
+  evidence_classes:
+    - canonical_artifact
+    - commit_or_version
+    - material_checksum
+    - runtime_registry
+    - deployment_or_preview
+    - tribunal_or_evidence_record
+    - validation_result
+    - unresolved_finding
+
 credentials:
   github_pat_in_chat: "PROHIBITED"
   supabase_service_role_to_models: "PROHIBITED"
@@ -194,6 +232,7 @@ artifact_policy:
   canonical_source_required: true
   checksum_required_when_material: true
   promotion_receipt_required_for_authority: true
+  completion_evidence_packet_required_for_substantive_closeout: true
 
 negative_finding_policy:
   scoped_only: true
