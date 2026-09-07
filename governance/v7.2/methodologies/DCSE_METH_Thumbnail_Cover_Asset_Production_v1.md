@@ -1,8 +1,9 @@
-# DCSE Methodology: Thumbnail & Cover Asset Production
+# DCSE Methodology: Thumbnail & Cover Asset Architectural Workflow
 
 **Document ID:** DCSE-METH-MEDIA-THUMB-001  
-**Version:** v1.0  
+**Version:** v1.1  
 **Effective Date:** 2026-09-06  
+**Amended Date:** 2026-09-06  
 **Status:** ACTIVE BY DCS EXPRESS DIRECTIVE / RUNTIME RECONCILED  
 **Formal D05 Promotion:** PENDING ATTRIBUTABLE INDEPENDENT VALIDATION  
 **Runtime Reconciled Date:** 2026-09-06  
@@ -10,12 +11,16 @@
 **Lane:** DCSE / ALL PUBLIC-CONTENT ENTITIES  
 **Parent Authority:** DCSE Master Profile v7.2 R5, OPERATIVE  
 **Authority Holder:** DCS Level 0  
-**Source Lineage:** D18 Media Production Pipeline; D19 Visual Creation Pipeline; D09 Brand Identity; D07 Campaign Governance; 2026-09-06 DCS directive  
-**Purpose:** Govern thumbnail, cover, poster-frame, preview-card, episode-art, and related promotional visual production across DCSE destinations.
+**Source Lineage:** D18 Media Production Pipeline; D19 Visual Creation Pipeline; D09 Brand Identity; D07 Campaign Governance; 2026-09-06 DCS directives  
+**Purpose:** Define the architecture for producing, comparing, selecting, refining, and releasing thumbnail, cover, poster-frame, preview-card, episode-art, and related promotional visuals across DCSE destinations.
 
-## 1. Scope
+## 1. Architectural Status and Scope
 
-This methodology applies to:
+This document defines a **workflow architecture**, not a requirement to build a standalone software module.
+
+The workflow may be executed manually, by ChatGPT or another approved model, through image-generation tools, through a future media application, or through a Command Post workflow. A later module may automate it, but automation is not required for the methodology to operate.
+
+This workflow applies to:
 
 - YouTube thumbnails;
 - YouTube Shorts cover selections where supported;
@@ -29,7 +34,7 @@ This methodology applies to:
 - campaign preview graphics;
 - SC, SS, DCS, TI, and other authorized entity media.
 
-It extends D18 and D19. D18 remains the media-production methodology; D19 remains the visual-creation methodology. This document provides the specialized thumbnail/cover decision and QA layer.
+It extends D18 and D19. D18 remains the media-production methodology; D19 remains the visual-creation methodology. This document provides the specialized thumbnail/cover decision, candidate-selection, and QA layer.
 
 ## 2. Required Inputs
 
@@ -51,11 +56,13 @@ Before production identify:
 
 If source video exists, analyze representative frames, transcript/content summary, emotional peaks, subject visibility, and title relationship before generating new imagery.
 
-## 3. Concept Architecture
+## 3. Candidate-Set Architecture
 
-Every material thumbnail/cover task should produce at least **three meaningfully different concepts** unless the user explicitly requires a single controlled adaptation.
+The normal workflow output is a **selection set of 3 to 5 materially different candidates** for DCS/human review.
 
-Each concept must vary at the strategy level, not merely color or crop. Possible concept directions:
+A material candidate must differ at the concept level, not merely by color, crop, font, or minor composition adjustment.
+
+Possible directions include:
 
 1. **Subject-led:** dominant person/object/scene.
 2. **Outcome-led:** visual representation of the benefit, reveal, transformation, or result.
@@ -63,28 +70,59 @@ Each concept must vary at the strategy level, not merely color or crop. Possible
 4. **Environment-led:** location, atmosphere, culture, event, or cinematic world.
 5. **Evidence-led:** UI, result, chart, product, workflow, or proof artifact where appropriate.
 
-The first attractive image is not automatically final.
+Unless DCS explicitly requests a single controlled adaptation, the workflow should not present only one candidate as final.
 
-## 4. Thumbnail Anatomy
+The first attractive image is a candidate, not a selection decision.
+
+## 4. Selection Package
+
+Present candidates in an orderly review set.
+
+Each candidate should include, where applicable:
+
+- candidate ID, e.g. `THUMB-A`, `THUMB-B`, `THUMB-C`;
+- preview/render;
+- concept label;
+- one-sentence rationale;
+- dominant hook;
+- proposed thumbnail text, if any;
+- title pairing;
+- entity/brand fit note;
+- content-fidelity note;
+- mobile-legibility note;
+- risk or weakness;
+- score or comparative assessment.
+
+The human reviewer may:
+
+- select one candidate;
+- request a hybrid of two or more;
+- request modification of one;
+- reject all and request a new candidate set;
+- approve a candidate for final production.
+
+Non-selected candidates remain candidates or archive/reference assets. They do not become approved merely because they were generated.
+
+## 5. Thumbnail Anatomy
 
 Evaluate five layers:
 
-### 4.1 Focal Subject
+### 5.1 Focal Subject
 One dominant focal point should be identifiable at small/mobile size. Avoid clutter and competing centers of attention.
 
-### 4.2 Hook
+### 5.2 Hook
 The visual must create a reason to stop scrolling. Hook may derive from novelty, emotion, result, question, contrast, identity, transformation, or relevance.
 
-### 4.3 Text
+### 5.3 Text
 Text should be minimal and legible. It should complement, not repeat, the full title. Avoid paragraphs, small type, unsupported claims, and AI-generated garbled text. Where the image model cannot reliably render text, add typography during composition rather than generation.
 
-### 4.4 Brand Signal
+### 5.4 Brand Signal
 Apply entity-specific brand language without forcing every asset into one template. Brand recognition may come from palette, typography, framing, recurring motif, logo treatment, or visual rhythm.
 
-### 4.5 Story Tension / Promise
+### 5.5 Story Tension / Promise
 The thumbnail should visually express what the viewer expects to discover, feel, understand, or receive. It must not materially misrepresent the content.
 
-## 5. Entity Calibration
+## 6. Entity Calibration
 
 ### DCS / DCSE
 Structural, intelligent, evidence-oriented, systems-aware, controlled.
@@ -100,7 +138,7 @@ Instructional, credible, clear, process-oriented, sanitized from protected mater
 
 Entity voice and brand rules control over generic thumbnail trends.
 
-## 6. Source Strategy
+## 7. Source Strategy
 
 Use source assets in this order when appropriate:
 
@@ -114,7 +152,7 @@ Do not generate an unrelated sensational image when an authentic source frame be
 
 Generated assets must pass rights, brand, artifact, anatomy, text, and public-release review.
 
-## 7. Composition Standards
+## 8. Composition Standards
 
 - Use destination-native aspect ratio and dimensions.
 - For standard YouTube/video thumbnails, default to 16:9 and at least 1280x720 unless the destination requires otherwise.
@@ -128,7 +166,7 @@ Generated assets must pass rights, brand, artifact, anatomy, text, and public-re
 
 Existing D18/D19 brand-overlay rules are subordinate to the current entity-specific brand treatment where a fixed lower-third overlay would degrade the approved design.
 
-## 8. Title-Thumbnail Pairing
+## 9. Title-Thumbnail Pairing
 
 Evaluate title and thumbnail together.
 
@@ -143,9 +181,9 @@ The pair should:
 
 Generate title alternatives when needed to test pairing, but do not silently replace an approved title.
 
-## 9. Variant Evaluation
+## 10. Candidate Evaluation
 
-Score each concept against:
+Compare all 3 to 5 candidates against the same criteria:
 
 - source/content fidelity;
 - immediate comprehension;
@@ -158,25 +196,36 @@ Score each concept against:
 - accessibility/contrast;
 - rights/release safety.
 
-Document the selection rationale for material campaign assets.
+The review should identify:
+- strongest candidate;
+- strongest alternate;
+- material weakness in each option;
+- whether a hybrid would be stronger than any individual candidate.
 
-Where useful, retain A/B/C variants for later performance testing. Performance data informs future design but does not automatically override brand or accuracy controls.
+Performance data may inform later iterations but does not automatically override brand, accuracy, rights, or DCS selection.
 
-## 10. Production Workflow
+## 11. End-to-End Workflow
+
+`BRIEF -> SOURCE ANALYSIS -> 3-5 CONCEPT DIRECTIONS -> CANDIDATE CREATION -> COMPARATIVE QA -> HUMAN SELECTION GATE -> SELECTED-CANDIDATE REFINEMENT -> FINAL QA -> EXPORT -> REGISTER/MANIFEST -> PERFORMANCE FEEDBACK`
+
+Detailed steps:
 
 1. **Brief:** entity, audience, platform, source, objective, promise, constraints.
 2. **Source Analysis:** frames/content/title/rights.
-3. **Concept Generation:** minimum three distinct approaches for material assets.
-4. **Asset Creation:** frame extraction, composition, image generation, typography, graphics.
-5. **Brand/Entity QA:** D09/D08/D19 controls.
-6. **Content Fidelity QA:** compare against actual video/content.
-7. **Mobile/Accessibility QA:** reduced-size read, contrast, alt text where applicable.
-8. **Technical Export:** required dimensions, format, size optimization.
-9. **Release Review:** rights, claims, internal-data/PS/publication scan.
-10. **Registry/Manifest:** filename, source, version, destination, selected variant, alt text, status.
-11. **Performance Feedback:** CTR/engagement data where available, treated as evidence for future iteration.
+3. **Concept Architecture:** define 3 to 5 materially distinct directions.
+4. **Candidate Creation:** generate/render candidate set.
+5. **Comparative QA:** evaluate all candidates using a common matrix.
+6. **Human Selection Gate:** present the candidate set for DCS choice.
+7. **Refinement:** modify only the selected or requested hybrid direction.
+8. **Brand/Entity QA:** D09/D08/D19 controls.
+9. **Content Fidelity QA:** compare against actual video/content.
+10. **Mobile/Accessibility QA:** reduced-size read, contrast, alt text where applicable.
+11. **Technical Export:** required dimensions, format, size optimization.
+12. **Release Review:** rights, claims, internal-data/PS/publication scan.
+13. **Registry/Manifest:** filename, source, version, destination, selected candidate, alt text, status.
+14. **Performance Feedback:** CTR/engagement data where available, treated as evidence for future iteration.
 
-## 11. Technical Delivery
+## 12. Technical Delivery
 
 For web/social use:
 - WebP/JPEG/PNG as destination requires;
@@ -188,7 +237,7 @@ For web/social use:
 
 Do not state “accessible/compliant” without formal audit. Use “designed to target accessibility standards” where a claim is required.
 
-## 12. Specialized Activation
+## 13. Specialized Activation
 
 This methodology activates when a task requests or requires:
 - thumbnail;
@@ -201,13 +250,25 @@ This methodology activates when a task requests or requires:
 
 When part of a broader media build, it operates inside D18 Phase 4 and invokes D19 for visual generation/composition as needed.
 
-## 13. Exit Criteria
+## 14. Outputs
 
-A thumbnail/cover asset is complete only when:
+The normal governed output is:
+
+1. **Thumbnail/Cover Candidate Set:** 3 to 5 choices.
+2. **Comparative Selection Matrix:** common evaluation and recommendation.
+3. **Human Selection Record:** selected candidate, hybrid direction, or rejection/new-set request.
+4. **Selected-Candidate Final Asset:** only after the selection gate.
+5. **Manifest/Registry Record:** source, version, destination, selection state, alt text, release state.
+
+## 15. Exit Criteria
+
+A thumbnail/cover workflow is complete only when:
 
 - correct entity/audience/platform are established;
 - source/content fidelity is verified;
-- alternatives were considered when material;
+- 3 to 5 materially distinct candidates were presented unless DCS explicitly waived the set;
+- comparative evaluation was performed;
+- DCS/human selection or explicit selection instruction is recorded;
 - selected concept has documented rationale;
 - title-thumbnail relationship is coherent;
 - mobile legibility and technical format pass;
@@ -215,6 +276,6 @@ A thumbnail/cover asset is complete only when:
 - generated-artifact and spelling checks pass;
 - rights and release posture are clear;
 - no internal, secret, or protected material leaks;
-- final asset and source/version are registered or manifested where required.
+- final selected asset and source/version are registered or manifested where required.
 
 **Structure Precedes Scale.**
