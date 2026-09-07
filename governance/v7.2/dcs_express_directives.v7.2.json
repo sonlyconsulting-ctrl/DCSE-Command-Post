@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.5",
+  "registry_version": "7.2.6",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-06T21:24:00-04:00",
+  "updated_at": "2026-09-06T22:15:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -45,20 +45,23 @@
           "document_id": "DCSE-METH-EMP-001",
           "path": "governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md",
           "creation_commit_sha": "eb6f6df220999cee518a9f8819542e7eb1d741d7",
-          "current_commit_sha": "c6f1464fbb7f5730f2244dc95adb2c2651358f69",
-          "content_sha256": "e62405351e4aa027b80d9b314f617396831df8f304429521c511a45687edd681"
+          "current_commit_sha": "5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73",
+          "content_sha256": "ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977",
+          "current_version": "v1.1"
         },
         {
           "document_id": "DCSE-METH-MEDIA-THUMB-001",
           "path": "governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md",
           "creation_commit_sha": "072c0b3aea3895a8b75a1feb01101326f735b6c8",
-          "current_commit_sha": "4f7ffda4aedc40ecba528e3bd47dfd546f3a29b6",
-          "content_sha256": "29689ed8102d179663793af973cce92104d2f63e47f434821538f85308197807"
+          "current_commit_sha": "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43",
+          "content_sha256": "60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3",
+          "current_version": "v1.1"
         }
       ],
       "affected_sections": [
         "DCS Employment opportunity classification and package construction",
         "employment baseline preservation and evidence alignment",
+        "DCS Employment engagement tracking",
         "D18 media distribution thumbnail generation",
         "D19 visual creation thumbnail specialization",
         "task-routed methodology selection"
@@ -68,14 +71,14 @@
         "072c0b3aea3895a8b75a1feb01101326f735b6c8"
       ],
       "status_reconciliation_commits": [
-        "c6f1464fbb7f5730f2244dc95adb2c2651358f69",
-        "4f7ffda4aedc40ecba528e3bd47dfd546f3a29b6"
+        "5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73",
+        "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43"
       ],
       "runtime_registry": {
         "system": "DCSE-DDNA",
         "schema": "dcse_cp",
         "directive_key": "DCS-DIR-20260906-001",
-        "status": "RECONCILED"
+        "status": "RECONCILIATION_REQUIRED_FOR_V1_1"
       },
       "status": "INCORPORATED",
       "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
@@ -106,6 +109,31 @@
       },
       "status": "INCORPORATED",
       "supersedes": "No prior express completion-evidence collector requirement."
+    },
+    {
+      "directive_id": "DCS-DIR-20260906-003",
+      "issued_at": "2026-09-06T22:15:00-04:00",
+      "issuing_authority": "DCS",
+      "directive_text": "Amend the active DCS Employment methodology to add durable engagement tracking across all direct DCS revenue pursuits, and amend the thumbnail/cover methodology to define a workflow architecture whose normal output is a human-review selection set of three to five materially distinct candidates before refinement and finalization.",
+      "canonical_path": "governance/v7.2/DCSE_V7_2_ENGAGEMENT_TRACKING_AND_THUMBNAIL_WORKFLOW_AMENDMENT_20260906.md",
+      "canonical_commit_sha": "594f472137554e4a212418726bdb18c434f849b5",
+      "content_sha256": "271ba25d0c48880acddd3e93aa0ff43a05ab8bf3ba2b1d01197446d9b65f647b",
+      "affected_sections": [
+        "DCS Employment engagement lifecycle",
+        "opportunity pipeline tracking",
+        "SC/DCS Enterprise routing",
+        "thumbnail candidate-set architecture",
+        "human media selection gate",
+        "D18/D19 task-routed workflow"
+      ],
+      "runtime_registry": {
+        "system": "DCSE-DDNA",
+        "schema": "dcse_cp",
+        "directive_key": "DCS-DIR-20260906-003",
+        "status": "PENDING_RECONCILIATION"
+      },
+      "status": "INCORPORATED",
+      "supersedes": "Refines DCS-DIR-20260906-001 methodology content without superseding its authority state."
     }
   ]
 }
