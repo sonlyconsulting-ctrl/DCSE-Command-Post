@@ -25,7 +25,6 @@ let accessToken = null;
 let tokenExpiresAt = 0;
 let currentTaskId = null;
 let currentLane = null;
-let currentClaimId = null;
 let activeChild = null;
 const sessionId = crypto.randomUUID();
 
@@ -51,7 +50,7 @@ async function obtainToken(force = false) {
 }
 
 async function rpc(name, payload = {}) {
-  const token = await obtainToken();
+  await obtainToken();
   const call = () => jsonFetch(`${cfg.supabaseUrl}/rest/v1/rpc/${name}`, {
     method: 'POST',
     headers: {apikey: cfg.anonKey, Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json'},
@@ -98,7 +97,9 @@ function runAgy(instruction, packet = {}) {
     activeChild = child;
     let stdout = '';
     let stderr = '';
-    const timer = setTimeout(() => child.kill(), Math.min(Number(packet.process_timeout_ms || cfg.processTimeoutMs), 3600000));
+    let timedOut = false;
+    const timeoutMs = Math.min(Number(packet.process_timeout_ms || cfg.processTimeoutMs), 3600000);
+    const timer = setTimeout(() => { timedOut = true; child.kill(); }, timeoutMs);
     child.stdout.on('data', d => { stdout += d.toString(); });
     child.stderr.on('data', d => { stderr += d.toString(); });
     child.on('error', err => { clearTimeout(timer); activeChild = null; reject(err); });
@@ -107,7 +108,7 @@ function runAgy(instruction, packet = {}) {
       activeChild = null;
       let parsed = null;
       try { parsed = stdout.trim() ? JSON.parse(stdout) : null; } catch { parsed = {raw_stdout: stdout}; }
-      resolve({started_at: started, completed_at: new Date().toISOString(), exit_code: code, output: parsed, stderr: stderr.slice(0, 4000)});
+      resolve({started_at: started, completed_at: new Date().toISOString(), exit_code: code, timed_out: timedOut, output: parsed, stderr: stderr.slice(0, 4000)});
     });
   });
 }
@@ -130,8 +131,9 @@ async function executeTask(task) {
     model: packet.model || cfg.model || null,
     started_at: run.started_at,
     completed_at: run.completed_at,
-    status: run.exit_code === 0 ? 'completed' : 'failed',
+    status: (!run.timed_out && run.exit_code === 0) ? 'completed' : 'failed',
     raw_exit_code: run.exit_code,
+    timed_out: run.timed_out,
     provider_output: run.output,
     stderr: run.stderr,
   };
@@ -143,10 +145,10 @@ async function cycle() {
   if (!task || !task.claim_id) return;
   currentTaskId = task.task_id;
   currentLane = task.lane;
-  currentClaimId = task.claim_id;
   await heartbeat('running', {phase: 'claimed'});
   try {
     const output = await executeTask(task);
+    if (output.timed_out) throw new Error(`AGY_TIMEOUT: ${JSON.stringify(output).slice(0,1500)}`);
     if (output.raw_exit_code !== 0) throw new Error(`AGY_EXIT_${output.raw_exit_code}: ${JSON.stringify(output).slice(0,1500)}`);
     await rpc('v7_worker_submit_result', {
       p_claim_id: Number(task.claim_id),
@@ -162,7 +164,6 @@ async function cycle() {
   } finally {
     currentTaskId = null;
     currentLane = null;
-    currentClaimId = null;
   }
 }
 
