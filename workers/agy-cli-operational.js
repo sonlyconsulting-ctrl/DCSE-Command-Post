@@ -15,6 +15,8 @@ const cfg = {
   heartbeatMs: Number(process.env.WORKER_HEARTBEAT_MS || 15000),
   printTimeout: process.env.AGY_PRINT_TIMEOUT || '5m0s',
   processTimeoutMs: Number(process.env.AGY_PROCESS_TIMEOUT_MS || 330000),
+  once: process.env.WORKER_ONCE === '1',
+  expectedTaskId: process.env.WORKER_EXPECT_TASK_ID || '',
 };
 
 for (const [k, v] of Object.entries({SUPABASE_URL: cfg.supabaseUrl, SUPABASE_ANON_KEY: cfg.anonKey, WORKER_ENROLLMENT_SECRET: cfg.enrollmentSecret})) {
@@ -69,7 +71,7 @@ async function heartbeat(status = 'idle', metrics = {}) {
     p_current_task_id: currentTaskId,
     p_current_lane: currentLane,
     p_model_version: cfg.model || 'agy-cli',
-    p_capabilities: {noninteractive_prompt: true, structured_json: true, sandbox: true, bounded_timeout: true},
+    p_capabilities: {noninteractive_prompt: true, structured_json: true, sandbox: true, bounded_timeout: true, one_shot: cfg.once},
     p_metrics: {...metrics, session_id: sessionId, pid: process.pid},
   });
 }
@@ -142,7 +144,16 @@ async function executeTask(task) {
 async function cycle() {
   const rows = await rpc('v7_worker_claim_next_task', {p_visibility_timeout_seconds: 1800});
   const task = Array.isArray(rows) ? rows[0] : rows;
-  if (!task || !task.claim_id) return;
+  if (!task || !task.claim_id) return false;
+
+  if (cfg.expectedTaskId && task.task_id !== cfg.expectedTaskId) {
+    await rpc('v7_worker_release_claim', {
+      p_claim_id: Number(task.claim_id),
+      p_reason: `expected_task_mismatch:${cfg.expectedTaskId}`,
+    });
+    throw new Error(`EXPECTED_TASK_MISMATCH: claimed ${task.task_id}, expected ${cfg.expectedTaskId}`);
+  }
+
   currentTaskId = task.task_id;
   currentLane = task.lane;
   await heartbeat('running', {phase: 'claimed'});
@@ -157,6 +168,7 @@ async function cycle() {
       p_worker_session_id: sessionId,
     });
     await heartbeat('idle', {phase: 'submitted', last_task_id: task.task_id, exit_code: output.raw_exit_code});
+    return true;
   } catch (err) {
     await rpc('v7_worker_release_claim', {p_claim_id: Number(task.claim_id), p_reason: `worker_error:${String(err).slice(0,500)}`});
     await heartbeat('error', {phase: 'released', error: String(err).slice(0,500)});
@@ -170,8 +182,22 @@ async function cycle() {
 async function main() {
   await obtainToken(true);
   const who = await rpc('v7_worker_whoami');
-  console.log(JSON.stringify({event:'worker_started', agent_id:cfg.agentId, runtime_surface:'agy_windows_cli', session_id:sessionId, identity:who}));
-  setInterval(() => heartbeat(currentTaskId ? 'running' : 'idle').catch(err => console.error('heartbeat_error', err)), cfg.heartbeatMs);
+  console.log(JSON.stringify({event:'worker_started', agent_id:cfg.agentId, runtime_surface:'agy_windows_cli', session_id:sessionId, one_shot:cfg.once, expected_task_id:cfg.expectedTaskId || null, identity:who}));
+  const heartbeatTimer = setInterval(() => heartbeat(currentTaskId ? 'running' : 'idle').catch(err => console.error('heartbeat_error', err)), cfg.heartbeatMs);
+
+  if (cfg.once) {
+    try {
+      const claimed = await cycle();
+      console.log(JSON.stringify({event:'worker_once_complete', agent_id:cfg.agentId, session_id:sessionId, claimed}));
+      clearInterval(heartbeatTimer);
+      process.exit(claimed ? 0 : 2);
+    } catch (err) {
+      clearInterval(heartbeatTimer);
+      console.error('cycle_error', err);
+      process.exit(1);
+    }
+  }
+
   while (true) {
     try { await cycle(); } catch (err) { console.error('cycle_error', err); }
     await new Promise(r => setTimeout(r, cfg.pollMs));
