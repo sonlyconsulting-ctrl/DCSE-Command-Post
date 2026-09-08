@@ -3,25 +3,32 @@
 **Task:** DCSE-ORCH-20260908-006  
 **Purpose:** Execute the bounded local tests required before the live Command Post certification run.
 
-Run from the repository root on the authorized Windows host.
+Run from the repository root on the authorized Windows host:
 
-## Step 1. Pull current main
+`C:\DS All Things\DCSE_Command_Center\DCSE_CP_Project`
+
+## Step 1. Synchronize canonical main
 
 ```powershell
-git pull
+git checkout main
+git pull origin main
 ```
+
+Do not switch to a provider-specific branch for this certification unless DCS explicitly directs it.
 
 ## Step 2. Verify local discovery asset hash
 
+The canonical local script is nested under `dcse-command-post`:
+
 ```powershell
-Get-FileHash .\scripts\enterprise_discovery.ts -Algorithm SHA256
+Get-FileHash .\dcse-command-post\scripts\enterprise_discovery.ts -Algorithm SHA256
 ```
 
 Expected SHA256:
 
 `F7F8D758346BE3171EE851D48A052B3AAC9718DFBA172498936616EF74B21844`
 
-If the hash differs, STOP. Do not certify a different script under this packet.
+If the hash differs, STOP. Do not certify a different script under this packet. Do not create or copy a second script into the repository root merely to satisfy the path check.
 
 ## Step 3. Run bounded AGY CLI smoke tests
 
@@ -29,7 +36,9 @@ If the hash differs, STOP. Do not certify a different script under this packet.
 node .\workers\agy-cli-smoke-test.js | Tee-Object .\agy-cli-smoke-result.json
 ```
 
-This establishes observed exit behavior for version, successful noninteractive print, invalid flag and bounded timeout. Review the output before worker activation.
+Smoke suite v1.1 establishes observed exit behavior for version, successful noninteractive print, invalid flag and bounded timeout. The nominal success probe remains sandboxed and now permits a 90-second AGY print window with a 120-second outer process bound. It must return exit code 0 and response `DCSE_AGY_SMOKE_OK` to pass.
+
+Review the output before worker activation.
 
 ## Step 4. Worker prerequisites
 
@@ -44,7 +53,7 @@ The AGY worker follows the existing worker-token/RPC pattern and requires the ap
 
 Do not paste secret values into GitHub, Tribunal, chat, logs or this packet.
 
-## Step 5. Start AGY worker only after smoke-test review
+## Step 5. Start AGY worker only after successful smoke-test review
 
 ```powershell
 node .\workers\agy-cli-operational.js
