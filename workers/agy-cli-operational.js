@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+// WORKER_ONCE compatibility: this certification worker is intentionally always one-shot.
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
