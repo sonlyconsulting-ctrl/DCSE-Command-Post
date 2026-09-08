@@ -20,11 +20,24 @@ function run(args, timeoutMs = 30000) {
   });
 }
 
+function assessSuccessfulPrint(result) {
+  let parsed = null;
+  try { parsed = result.stdout ? JSON.parse(result.stdout) : null; } catch {}
+  const response = parsed && typeof parsed.response === 'string' ? parsed.response.trim() : '';
+  return {
+    passed: result.exit_code === 0 && result.timed_out === false && response === 'DCSE_AGY_SMOKE_OK',
+    observed_status: parsed && parsed.status ? parsed.status : null,
+    observed_response: response || null,
+    observed_error: parsed && parsed.error ? parsed.error : null,
+  };
+}
+
 (async () => {
   const tests = [];
   tests.push({name:'version', result:await run(['--version'])});
-  tests.push({name:'successful_print', result:await run(['--print','Return exactly: DCSE_AGY_SMOKE_OK','--output-format','json','--print-timeout','20s','--sandbox'], 30000)});
+  const successfulPrint = await run(['--print','Return exactly: DCSE_AGY_SMOKE_OK','--output-format','json','--print-timeout','90s','--sandbox'], 120000);
+  tests.push({name:'successful_print', result:successfulPrint, assertion:assessSuccessfulPrint(successfulPrint)});
   tests.push({name:'invalid_flag', result:await run(['--dcse-invalid-flag'])});
   tests.push({name:'bounded_timeout', result:await run(['--print','Wait for 60 seconds before responding.','--output-format','json','--print-timeout','1s','--sandbox'], 10000)});
-  console.log(JSON.stringify({test_suite:'dcse-agy-cli-smoke-v1', executable, observed_at:new Date().toISOString(), tests}, null, 2));
+  console.log(JSON.stringify({test_suite:'dcse-agy-cli-smoke-v1.1', executable, observed_at:new Date().toISOString(), tests}, null, 2));
 })().catch(err => { console.error(err); process.exit(1); });
