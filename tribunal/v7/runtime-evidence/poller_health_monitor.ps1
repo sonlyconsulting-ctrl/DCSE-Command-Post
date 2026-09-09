@@ -36,12 +36,22 @@ function Write-Log($msg) {
 
 # ---- 1. Scheduled task state --------------------------------------------
 $selfHealed = $false
+$taskForceStarted = $false
 try {
   $task = Get-ScheduledTask -TaskName $PollerTaskName -ErrorAction Stop
   if ($task.State -eq 'Disabled') {
     Enable-ScheduledTask -TaskName $PollerTaskName | Out-Null
     $selfHealed = $true
     Write-Log "SELF_HEAL: $PollerTaskName was Disabled, re-enabled automatically."
+  }
+  # Additional restore: if task is enabled but not currently running (Ready state)
+  # and heartbeat is stale, force-start a new cycle immediately.
+  # Covers the case where the poller finished but left a degraded heartbeat
+  # (e.g. a long claude -p run completed but no subsequent cycle fired yet).
+  if ($task.State -eq 'Ready') {
+    # We set $taskForceStarted = $true here tentatively; actual force-start
+    # happens below after the heartbeat staleness check confirms it's needed.
+    $taskReadyForForceStart = $true
   }
 } catch {
   Write-Log "ERROR: could not query/enable scheduled task $PollerTaskName -- $($_.Exception.Message)"
@@ -75,11 +85,32 @@ try {
     $stale = (Get-Date).ToUniversalTime() - $lastSeen
     if ($stale.TotalSeconds -gt $StalenessThresholdSeconds) {
       Write-Log "WARNING: heartbeat stale by $([int]$stale.TotalSeconds)s (threshold ${StalenessThresholdSeconds}s). self_healed_task=$selfHealed"
+
+      # Force-start the poller if it is in Ready state (enabled but not running).
+      # This is the primary continuous-operation restore path: the poller ran,
+      # finished (or timed out), but Task Scheduler hasn't fired the next 60-second
+      # cycle yet, leaving the heartbeat stale. Force-starting kicks off a fresh
+      # cycle immediately rather than waiting up to 60s for the scheduler.
+      if ($taskReadyForForceStart) {
+        try {
+          Start-ScheduledTask -TaskName $PollerTaskName
+          $taskForceStarted = $true
+          Write-Log "SELF_HEAL: force-started $PollerTaskName (was Ready, heartbeat stale)."
+        } catch {
+          Write-Log "ERROR: force-start of $PollerTaskName failed -- $($_.Exception.Message)"
+        }
+      }
+
       $rpcH = $Headers.Clone(); $rpcH['Content-Profile'] = 'dcse_cp'
       $eventBody = @{
         p_agent_key = 'claude_code'; p_task_key = $null; p_status = 'degraded'
-        p_capability_status = @{ poller_monitor = 'stale_heartbeat_detected'; staleness_seconds = [int]$stale.TotalSeconds; self_healed = $selfHealed }
-        p_notes = "health monitor: heartbeat stale $([int]$stale.TotalSeconds)s, self_healed=$selfHealed"
+        p_capability_status = @{
+          poller_monitor      = 'stale_heartbeat_detected'
+          staleness_seconds   = [int]$stale.TotalSeconds
+          self_healed         = $selfHealed
+          force_started       = $taskForceStarted
+        }
+        p_notes = "health monitor: heartbeat stale $([int]$stale.TotalSeconds)s, self_healed=$selfHealed, force_started=$taskForceStarted"
       } | ConvertTo-Json -Compress
       try { Invoke-RestMethod -Method Post -Uri "$SupabaseUrl/rest/v1/rpc/agent_heartbeat" -Headers $rpcH -Body $eventBody | Out-Null } catch {}
     } else {
