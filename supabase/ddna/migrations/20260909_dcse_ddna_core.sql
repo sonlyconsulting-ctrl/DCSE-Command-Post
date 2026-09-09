@@ -256,3 +256,8 @@ create index if not exists idx_extraction_items_type on dcse_ddna.extraction_ite
 create index if not exists idx_rules_entity_status on dcse_ddna.rules(entity,status);
 create index if not exists idx_conflicts_entity_status on dcse_ddna.rule_conflicts(entity,status);
 create index if not exists idx_provenance_origin on dcse_ddna.provenance_links(origin_event_id);
+create index if not exists idx_characteristics_extraction_run on dcse_ddna.characteristics(extraction_run_id);
+create index if not exists idx_characteristics_source_artifact on dcse_ddna.characteristics(source_artifact_id);
+create index if not exists idx_extraction_items_extraction_run on dcse_ddna.extraction_items(extraction_run_id);
+create index if not exists idx_extraction_items_source_artifact on dcse_ddna.extraction_items(source_artifact_id);
+create index if not exists idx_rule_tests_rule_id on dcse_ddna.rule_tests(rule_id);
