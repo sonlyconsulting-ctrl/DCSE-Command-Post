@@ -74,25 +74,31 @@ Compatibility preservation tables were created for:
 
 These tables do not themselves confer authority on historical records.
 
-## 5. Employment RCHE material inserted
+## 5. Current normalized database state
 
-Current accessible DCS Employment pilot material was inserted or registered with verified provenance/hashes.
-
-Current normalized record counts after this migration wave:
+Current records inserted or registered during this migration wave:
 
 - Authority records: 1
-- Source artifacts: 6
-- Employment extraction runs: 1
-- Employment DDNA characteristics/controls/patterns: 25
+- Source artifacts: 7
+  - 6 DCS Employment pilot source artifacts
+  - 1 legacy SC DDNA model-comparison record
+- Extraction runs: 6
+  - 1 DCS Employment RCHE technical-pilot run
+  - 5 normalized historical DDNA run records
+- DDNA characteristics/controls/patterns: 36
+  - 25 DCS Employment pilot characteristics/controls/patterns
+  - 11 normalized historical SC DDNA observations
 - Employment seed + learned candidate rules: 25
 - Employment rule conflicts: 5
   - Open: 4
   - Resolved: 1
+- Aggregate validation/test evidence records: 5
 - Batch metric records: 1
+- Provenance-link records: 6
 - RCHE artifact registry records: 4
 - Legacy import snapshot records: 3
 
-`rule_tests`, `extraction_items`, and `provenance_links` remain structurally available but are not populated from local-only RCHE files that were not accessible to this runtime.
+`extraction_items` remains structurally available but is not populated from local-only RCHE detailed extraction files that were not accessible to this runtime.
 
 ## 6. Employment pilot evidence registered
 
@@ -117,6 +123,8 @@ Pilot technical metrics recorded:
 - Secret leakage: `PASS_NONE_DETECTED`
 - Regression: `NO_MATERIAL_REGRESSION`
 
+Five aggregate `rule_tests` records preserve the reported Batch 3 forward, backward, rules-fired, regression, and firewall results. They are explicitly marked as aggregate evidence because the detailed local-only test records were not available to this runtime.
+
 Registered local RCHE evidence hashes:
 
 - Closeout SHA-256: `4B4DD8B718CCFC4CA08BE9A18592A9A93FD44ED5884613C7C1772645B58345FE`
@@ -133,7 +141,7 @@ Employment conflict `EMP-CON-004` was reconciled after direct GitHub verificatio
 
 The Employment records now carry `operative_authority_verified` for controller authority. This does not mean every application, runtime, local checkout, or deployment surface is synchronized to the controller.
 
-## 8. Legacy DDNA source inventory
+## 8. Legacy DDNA source inventory and migration state
 
 Verified legacy records in `SC-Command-Post.dcse_cp`:
 
@@ -143,17 +151,22 @@ Verified legacy records in `SC-Command-Post.dcse_cp`:
 - `ddna_extraction_runs`: 5 rows
 - `ddna_model_comparisons`: 1 row
 
-PS-lock scan of these legacy DDNA tables found zero PS-locked records in the checked queue, Ollama job, and characteristics tables.
+PS-lock scan of the checked legacy queue, Ollama job, and characteristics tables found zero PS-locked records.
 
-Three controlled legacy snapshots were copied into the dedicated DDNA database for characteristics, extraction-run state, and model-comparison state.
+Migration completed during this wave:
 
-### Physical migration limitation
+- all 11 substantive legacy DDNA characteristics were normalized into `dcse_ddna.characteristics` as `observed` historical evidence without promotion;
+- all 5 legacy extraction-run states were normalized into `dcse_ddna.extraction_runs`, preserving placeholder/history distinctions and the later documented local memory-pressure failure;
+- the legacy model-comparison state was registered as a historical source artifact;
+- three controlled legacy snapshots preserve the characteristics, extraction-run, and model-comparison source state.
 
-The connected Supabase execution surface supports project-scoped SQL but does not provide a direct cross-project `COPY`/FDW/database-to-database transfer operation or database credentials. Consequently, the 129 queue rows and 40 Ollama-job rows, and exact full-field copies of all legacy tables, were not physically duplicated into `DCSE-DDNA` during this execution.
+### Exact physical migration boundary
 
-This is recorded as a migration boundary, not hidden as completion. The legacy records remain intact in `SC-Command-Post` and must remain authoritative for their historical physical state until an authenticated transfer mechanism performs an exact copy and verifies row/hash equivalence.
+The connected Supabase execution surface is project-scoped and does not expose a direct authenticated cross-project `COPY`, FDW connection credential, or database-to-database transfer operation. The 129 legacy source-queue rows and 40 legacy Ollama-job rows therefore remain physically in `SC-Command-Post` and were not manually rewritten as lossy equivalents.
 
-Existing consumers that reference `dcse_cp.ddna_*` were intentionally not redirected without dependency migration, regression testing, rollback evidence, and human release.
+A relay test confirmed individual rows can be read, but hand-transcribing 169 operational rows would weaken rather than improve provenance. These records must remain exact-source records until an authenticated bulk-transfer mechanism can preserve row content and validate source/target equivalence.
+
+This is a migration boundary, not hidden completion. Existing source data remains intact. Existing consumers that reference `dcse_cp.ddna_*` were intentionally not redirected without dependency migration, regression testing, rollback evidence, and human release.
 
 ## 9. Security posture and advisor review
 
@@ -185,6 +198,15 @@ Created/updated artifacts:
 - `supabase/ddna/migrations/20260909_dcse_ddna_core.sql`
 - `governance/v7.2/implementations/DCSE_DDNA_DATABASE_MIGRATION_RECEIPT_20260909.md`
 
+Pull request:
+
+- `#64 Establish dedicated DCSE-DDNA persistence and RCHE controls`
+- Base: `main`
+- Head: `dcse-ddna-dedicated-store-20260909`
+- Mergeability verified: `true`
+- Changed files: exactly 3
+- Merge remains a human release gate.
+
 The migration SQL is stored under `supabase/ddna/migrations/` intentionally so existing SC-Command-Post migration automation cannot accidentally apply this dedicated-database schema to the operations project.
 
 ## 11. Release posture
@@ -194,10 +216,10 @@ Technical status:
 - Dedicated normalized DDNA schema: COMPLETE
 - Employment seed/current accessible material insertion: COMPLETE FOR ACCESSIBLE INPUTS
 - v7.2 R5 authority verification: COMPLETE
-- Legacy data discovery and preservation: COMPLETE
-- Exact legacy cross-project physical copy: PARTIAL / PENDING AUTHENTICATED TRANSFER
+- Legacy substantive DDNA observations/run-state normalization: COMPLETE
+- Exact 129 queue + 40 Ollama cross-project physical copy: PARTIAL / PENDING AUTHENTICATED BULK TRANSFER
 - Existing application consumer cutover: NOT RELEASED
-- GitHub branch implementation record: COMPLETE
+- GitHub implementation record and PR: COMPLETE
 - Merge to main: HUMAN RELEASE GATE
 
 No rule candidate was automatically promoted to governing authority.
