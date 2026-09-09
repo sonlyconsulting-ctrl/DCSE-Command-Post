@@ -64,11 +64,37 @@ No secret value may be committed, logged, embedded in browser-delivered HTML, is
 
 A comparison/test mode may be implemented if it performs safe dual reads only. Do not dual-write production records without a separately proven idempotency/provenance design.
 
+## Verified runtime-query defects and corrections
+
+The current SC Agent OS query selects `model`, but both the live legacy table and the dedicated preservation table expose `model_id`, not `model`. The existing query is therefore schema-invalid and must be corrected during cutover.
+
+The current query orders only by `created_at DESC`. Many existing jobs share the same `created_at`, so the top-10 result is non-deterministic. Direct comparison initially produced different top-10 hashes even though the preservation transfer is exact. Adding `id ASC` as a stable tie-breaker produced the same top-10 projection hash in both projects:
+
+`6ee69105e06a84277ce81fefb3d87353`
+
+Validated projection:
+- `id`
+- `model_id`
+- `status`
+- `retry_count`
+- `duration_ms`
+- `created_at`
+
+Validated ordering:
+- `created_at DESC`
+- `id ASC`
+
+This is a runtime correctness repair, not evidence of DDNA data drift.
+
 ## Initial semantic mapping decision
 
 The live SC Agent OS job queue is an operational view of the historical `ddna_ollama_jobs` shape. Because exact physical preservation has already been validated in `dcse_ddna_legacy.ddna_ollama_jobs`, the first cutover should use that preservation table rather than silently mapping the UI to normalized tables with different semantics.
 
 Normalization into governed `dcse_ddna` structures is a separate consumer evolution step.
+
+## Security posture
+
+Database privilege inspection confirms the relevant dedicated `dcse_ddna` and `dcse_ddna_legacy` tables are granted to `service_role` and not exposed to `anon` or `authenticated` through table grants. The cutover must preserve this server-side-only posture. Do not weaken RLS or add browser/client grants merely to make SC Agent OS access easier.
 
 ## Rollback
 
@@ -80,7 +106,7 @@ The legacy source tables must remain intact during this task.
 
 1. Validate dedicated project server-side credentials exist in target deployment environments without exposing values.
 2. Verify dedicated REST/database access to `dcse_ddna_legacy.ddna_ollama_jobs` using the server-side execution path.
-3. Compare the current legacy query result and dedicated query result for the same ordering, projection, and row limit.
+3. Compare the current legacy query result and dedicated query result using corrected `model_id` projection and deterministic ordering.
 4. Verify non-DDNA Agent OS calls continue to use SC-Command-Post.
 5. Test `legacy` rollback mode.
 6. Run static, unit/integration, and application build checks.
