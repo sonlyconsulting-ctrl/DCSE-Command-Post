@@ -8,7 +8,7 @@
 
 ## Objective
 
-Continue the existing assistant build as ESCD without discarding valid Aegis implementation work. Preserve the current checkpoint, reconcile existing code against the ESCD contracts, repair defects, and implement the next coherent vertical slices.
+Continue the existing assistant build as ESCD without discarding valid Aegis implementation work. Preserve the current checkpoint, reconcile existing code against the ESCD contracts, repair defects, and implement the next coherent assistant-duty slices. DCS Employment is explicitly removed from this core build and wrapped as `DCS-EMPLOYMENT-BUILD-001`.
 
 ## Controlling ESCD contracts
 
@@ -16,19 +16,27 @@ Read all before modifying implementation:
 
 1. `DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md`
 2. `DCSE-ESCD-001_AUTONOMY_CONTRACT.md`
-3. `DCSE-ESCD-001_WORKFLOW_PROCESS.md`
-4. `DCSE-ESCD-001_PHASE_ROADMAP.md`
-5. `DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md`
-6. `DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md`
-7. `DCSE-ESCD-001_STATE_DATA_MODEL.md`
-8. `DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md`
-9. `DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md`
-10. `DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md`
+3. `DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md`
+4. `DCSE-ESCD-001_WORKFLOW_PROCESS.md`
+5. `DCSE-ESCD-001_PHASE_ROADMAP.md`
+6. `DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md`
+7. `DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md`
+8. `DCSE-ESCD-001_STATE_DATA_MODEL.md`
+9. `DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md`
+10. `DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md`
 11. `DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md`
 12. `DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md`
 13. `DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md`
 14. `DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md`
 15. `DCSE-ESCD-001_OBSERVABILITY_METRICS.md`
+16. `DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md`
+17. `DCSE-ESCD-001_DECISION_RECORD_SPEC.md`
+18. `DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md`
+19. `DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md`
+20. `DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md`
+21. `DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md`
+22. `DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md`
+23. `DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md`
 
 Also read root `AGENTS.md`, current operative governance, existing Aegis build packets, `apps/sc-agent-os/`, relevant Supabase migrations/security remediation, and current DDNA consumer-cutover state before touching shared dependencies.
 
@@ -68,20 +76,44 @@ Implement or complete:
 - persisted executive briefing and acknowledgement cursor
 - source/provenance-aware intake and dedupe
 - task/project/dependency state
+- decision records
 - failure/recovery and bounded retry
 - evidence/history drill-down
 
-## Tranche D: DCS Employment vertical slice
+## Tranche D: General assistant duties
 
-Implement one end-to-end employment flow:
+Implement the core non-Employment assistant flows:
 
-`opportunity intake -> verify/fit -> action priority -> package preparation -> approval gate -> submission-ready state -> follow-up watch`
+- calendar reconciliation, conflict surfacing, and meeting preparation
+- email/message triage, commitment extraction, drafts, and approval-gated send interface
+- contact/person context with source separation
+- routines and watch conditions
+- file/document retrieval and routing interfaces
+- command grammar parsing into explicit operation contracts
+- mobile quick-action model
+- notification intent/escalation behavior
 
-Do not send externally without approval. Do not fabricate qualifications, rates, technologies, outcomes, or client facts.
+Do not claim external write, push, or device behavior without runtime evidence.
 
-## Tranche E: Routines, notifications, connector abstractions
+## Tranche E: Workflow engine
 
-Implement contracts/interfaces and test-safe behavior for routines, watch triggers, notification intents, and connector routing. Do not claim Android push or external connector writes are operational without runtime evidence.
+Implement the reusable workflow-template contract:
+
+- template registry and versioning
+- instance binding
+- MAKE/FIX/REVIEW/RELEASE/MONITOR/ROUTINE/RESEARCH/COMMUNICATE/DECIDE/DO template types
+- BASE -> ENTITY -> PRODUCT_CLASS -> PRODUCT/PROJECT inheritance
+- step autonomy/approval/evidence/recovery fields
+- stable template version on every workflow instance
+- product-specific child templates without weakening parent controls
+
+## Tranche F: DDNA candidate interface
+
+Implement only the candidate package/interface and provenance behavior. Do not perform or bundle the dedicated DDNA production consumer cutover.
+
+## DCS Employment boundary
+
+Employment-specific workflow logic is not part of this packet. Preserve existing Employment skeleton/specification as input to `03_WORK_ORDERS/DCS_EMPLOYMENT/DCS-EMPLOYMENT-BUILD-001_CHARTER.md`. ESCD may later consume the accepted module through a governed integration interface.
 
 ## DDNA boundary
 
