@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ESCD Executive Assistant</title>
+<style>
+:root{--navy:#0A192F;--gold:#D4AF37;--cream:#F5F0E8;--surface:#0E2240;--muted:#8FA3C0}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--cream);font-family:Arial,sans-serif}
+header{padding:16px 20px;border-bottom:1px solid #1A3A6A;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:18px;margin:0}main{padding:20px;max-width:1100px;margin:auto}.card{background:var(--surface);padding:16px;border-radius:10px;margin:12px 0}
+button{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 12px;border-radius:6px}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.small{color:var(--muted);font-size:12px}.job{padding:8px 0;border-bottom:1px solid #1A3A6A}
+@media(max-width:768px){main{padding:12px}header{padding:12px}}
+</style>
+</head>
+<body>
+<header><h1>ESCD</h1><span class="small">Executive assistant runtime candidate</span></header>
+<main>
+<section class="card"><h2>Highest-Value Next Action</h2><div id="nextAction" class="small">Authentication required.</div></section>
+<section class="card"><h2>Jobs</h2><div id="jobs" class="small">Authentication required.</div></section>
+<section class="card"><h2>Briefing</h2><div id="briefing" class="small">Authentication required.</div></section>
+</main>
+<script>
+"use strict";
+const API="/api/escd";
+function node(tag,text,cls){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined&&text!==null)el.textContent=String(text);return el;}
+async function api(path,token){const r=await fetch(API+path,{headers:{Authorization:"Bearer "+token}});const data=await r.json();if(!r.ok)throw new Error(data.error||"request_failed");return data;}
+function renderJobs(container,jobs){container.replaceChildren();if(!jobs.length){container.append(node("div","No jobs.","small"));return;}jobs.forEach(j=>{const row=node("div",null,"job");row.append(node("strong",j.title||"Untitled"));row.append(node("div",j.status||"unknown","small"));container.append(row);});}
+function renderNext(container,next){container.replaceChildren();if(!next){container.append(node("div","No eligible action.","small"));return;}container.append(node("strong",next.title||"Untitled"));container.append(node("div","Score: "+String(next.score),"small"));}
+function renderBriefing(container,briefing){container.replaceChildren();const groups=[["Changed",briefing.changed||[]],["Completed",briefing.completed||[]],["Approvals",briefing.approvals||[]],["Blockers",briefing.blockers||[]]];groups.forEach(([label,items])=>{container.append(node("h3",label));if(!items.length)container.append(node("div","None","small"));items.slice(0,10).forEach(item=>container.append(node("div",item.title||item.summary||item.job_key||"Item","small")));});}
+async function boot(){const token=sessionStorage.getItem("escd_access_token");if(!token)return;try{const [jobs,next,brief]=await Promise.all([api("/jobs",token),api("/next-action",token),api("/briefing",token)]);renderJobs(document.getElementById("jobs"),jobs.jobs||[]);renderNext(document.getElementById("nextAction"),next.next_action);renderBriefing(document.getElementById("briefing"),brief.briefing||{});}catch(e){[document.getElementById("jobs"),document.getElementById("nextAction"),document.getElementById("briefing")].forEach(el=>el.replaceChildren(node("div","Access unavailable: "+e.message,"small")));}}
+boot();
+</script>
+</body>
+</html>
