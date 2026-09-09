@@ -1,3 +1,5 @@
+const runtimeCutoverHandler = require('./runtime.js');
+
 async function handleChat(req, res) {
   let body = '';
   req.on('data', d => body += d);
@@ -2711,7 +2713,7 @@ module.exports = (req, res) => {
   if (req.method === 'POST' && req.url.includes('/api/tribunal/status')) return handleTribunalStatus(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/tribunal/inbox')) return handleTribunalInbox(req, res);
   if (req.method === 'POST' && req.url.includes('/api/runtime/smoke')) return handleRuntimeSmoke(req, res);
-  if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return handleRuntime(req, res);
+  if (req.method === 'GET' && req.url.startsWith('/api/runtime')) return runtimeCutoverHandler(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/dcsqueue')) return handleDCSQueue(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/receipts')) return handleReceipts(req, res);
   if (req.method === 'GET' && req.url.startsWith('/api/agentops')) return handleAgentOps(req, res);
@@ -2724,3 +2726,4 @@ module.exports = (req, res) => {
   res.statusCode = 200;
   res.end(HTML);
 };
+

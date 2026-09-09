@@ -25,6 +25,18 @@ function loadHandler(env) {
   return {handler, restore() {
     for (const key of Object.keys(process.env)) if (!(key in saved)) delete process.env[key];
     Object.assign(process.env, saved);
+  }}; 
+}
+
+function loadAppHandler(env) {
+  const saved = {...process.env};
+  Object.assign(process.env, env);
+  delete require.cache[require.resolve('../apps/sc-agent-os/api/runtime.js')];
+  delete require.cache[require.resolve('../apps/sc-agent-os/api/index.js')];
+  const handler = require('../apps/sc-agent-os/api/index.js');
+  return {handler, restore() {
+    for (const key of Object.keys(process.env)) if (!(key in saved)) delete process.env[key];
+    Object.assign(process.env, saved);
   }};
 }
 
@@ -136,4 +148,33 @@ test('route rejects unauthenticated requests before DDNA reads', async () => {
     await m.handler({method:'GET', headers:{}}, res);
     assert.equal(res.statusCode, 401);
   } finally { global.fetch = oldFetch; m.restore(); }
+});
+
+test('deployed app route delegates GET /api/runtime to DDNA cutover handler', async () => {
+  const f = installFetch({legacyRows: rows, dedicatedRows: rows});
+  const m = loadAppHandler({...baseEnv, DDNA_RUNTIME_MODE:'compare'});
+  try {
+    const res = mockRes();
+    await m.handler({...mockReq(), url: '/api/runtime'}, res);
+    assert.equal(res.statusCode, 200);
+    const body = JSON.parse(res.body);
+    assert.equal(body.ddna.mode, 'compare');
+    assert.equal(body.ddna.source, 'dedicated');
+    assert.equal(body.ddna.equivalent, true);
+    assert.equal(f.calls.filter(c => c.url.includes('ddna_ollama_jobs')).length, 2);
+  } finally { f.restore(); m.restore(); }
+});
+
+test('legacy fallback binding uses existing Vercel secret name without moving credentials', async () => {
+  const f = installFetch({legacyRows: rows});
+  const env = {...baseEnv, DDNA_RUNTIME_MODE:'legacy', SUPABASE_SERVICE_ROLE_KEY:'', PABASE_SECRET_KEY:'legacy-fallback-test'};
+  const m = loadHandler(env);
+  try {
+    const res = mockRes();
+    await m.handler(mockReq(), res);
+    assert.equal(res.statusCode, 200);
+    const read = f.calls.find(c => c.url.includes('ddna_ollama_jobs'));
+    assert.equal(read.options.headers.apikey, 'legacy-fallback-test');
+    assert.equal(read.options.headers['Accept-Profile'], 'dcse_cp');
+  } finally { f.restore(); m.restore(); }
 });
