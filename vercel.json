@@ -3,6 +3,7 @@
   "ignoreCommand": "[ \"$VERCEL_PROJECT_ID\" = \"prj_3t9SKxOUuW0peitSq97OHWDWCQy9\" ]",
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/runtime", "destination": "/api/runtime" },
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/(.*)", "destination": "/api" }
   ]
