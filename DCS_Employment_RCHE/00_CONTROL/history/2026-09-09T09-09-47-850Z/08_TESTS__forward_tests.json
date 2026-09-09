@@ -1,0 +1,288 @@
+[
+  {
+    "test_id": "FWD-001",
+    "rule_id": "EMP-RULE-001",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-001"
+    ],
+    "conditions_met": true,
+    "expected_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+    "actual_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-002",
+    "rule_id": "EMP-RULE-002",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-002"
+    ],
+    "conditions_met": true,
+    "expected_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+    "actual_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-003",
+    "rule_id": "EMP-RULE-003",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-003"
+    ],
+    "conditions_met": true,
+    "expected_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+    "actual_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-004",
+    "rule_id": "EMP-RULE-004",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-004"
+    ],
+    "conditions_met": true,
+    "expected_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+    "actual_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-005",
+    "rule_id": "EMP-RULE-005",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-005"
+    ],
+    "conditions_met": true,
+    "expected_action": "Employment writing should be direct, measured, senior, selective, substantive, human, technically credible, and free of generic AI phrasing or hype.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-006",
+    "rule_id": "EMP-RULE-006",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-006"
+    ],
+    "conditions_met": true,
+    "expected_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+    "actual_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-007",
+    "rule_id": "EMP-RULE-007",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-007"
+    ],
+    "conditions_met": true,
+    "expected_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+    "actual_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-008",
+    "rule_id": "EMP-RULE-008",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-008"
+    ],
+    "conditions_met": true,
+    "expected_action": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-009",
+    "rule_id": "EMP-RULE-010",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-010"
+    ],
+    "conditions_met": true,
+    "expected_action": "Completion status must reflect actual sources processed, skipped items, blockers, validations, and deliverables; no false completion.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-010",
+    "rule_id": "EMP-RULE-011",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-011"
+    ],
+    "conditions_met": true,
+    "expected_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+    "actual_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-011",
+    "rule_id": "EMP-RULE-012",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-012"
+    ],
+    "conditions_met": true,
+    "expected_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+    "actual_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-012",
+    "rule_id": "EMP-RULE-013",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-013"
+    ],
+    "conditions_met": true,
+    "expected_action": "Do not use em or en dashes in governed DCS Employment prose; use plain hyphens for date ranges unless a later controlling source explicitly authorizes otherwise.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-013",
+    "rule_id": "EMP-RULE-014",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-014"
+    ],
+    "conditions_met": true,
+    "expected_action": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-014",
+    "rule_id": "EMP-RULE-015",
+    "input_facts": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-015"
+    ],
+    "conditions_met": true,
+    "expected_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+    "actual_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-015",
+    "rule_id": "EMP-RULE-016",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-001"
+    ],
+    "conditions_met": true,
+    "expected_action": "Every DCS correction should be evaluated as a possible reusable rule, preference, exception, or defect rather than treated only as a one-time edit.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-016",
+    "rule_id": "EMP-RULE-017",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-002"
+    ],
+    "conditions_met": true,
+    "expected_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+    "actual_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-017",
+    "rule_id": "EMP-RULE-018",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-003"
+    ],
+    "conditions_met": true,
+    "expected_action": "Opportunity prioritization should account for tailoring effort and submission-channel risk, not fit alone.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-018",
+    "rule_id": "EMP-RULE-019",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-004"
+    ],
+    "conditions_met": true,
+    "expected_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+    "actual_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+    "pass_fail": "PASS",
+    "failure_reason": null
+  },
+  {
+    "test_id": "FWD-019",
+    "rule_id": "EMP-RULE-020",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-005"
+    ],
+    "conditions_met": true,
+    "expected_action": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-020",
+    "rule_id": "EMP-RULE-021",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-006"
+    ],
+    "conditions_met": true,
+    "expected_action": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-021",
+    "rule_id": "EMP-RULE-022",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-007"
+    ],
+    "conditions_met": true,
+    "expected_action": "Employment lifecycle should continue through offer evaluation, pre-start, personalized onboarding/training, 30/60/90 execution, and career continuity.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  },
+  {
+    "test_id": "FWD-022",
+    "rule_id": "EMP-RULE-025",
+    "input_facts": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-010"
+    ],
+    "conditions_met": true,
+    "expected_action": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+    "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+    "pass_fail": "FAIL",
+    "failure_reason": "Candidate is not sufficiently testable."
+  }
+]

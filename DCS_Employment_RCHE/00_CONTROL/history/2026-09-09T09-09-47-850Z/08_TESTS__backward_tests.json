@@ -1,0 +1,488 @@
+[
+  {
+    "test_id": "BWD-001",
+    "rule_id": "EMP-RULE-001",
+    "desired_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-001"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-001"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-002",
+    "rule_id": "EMP-RULE-002",
+    "desired_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-002"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-002"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-003",
+    "rule_id": "EMP-RULE-003",
+    "desired_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-003"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-003"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-004",
+    "rule_id": "EMP-RULE-004",
+    "desired_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-004"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-004"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-005",
+    "rule_id": "EMP-RULE-005",
+    "desired_action": "Employment writing should be direct, measured, senior, selective, substantive, human, technically credible, and free of generic AI phrasing or hype.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-005"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-005"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-006",
+    "rule_id": "EMP-RULE-006",
+    "desired_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-006"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-006"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-007",
+    "rule_id": "EMP-RULE-007",
+    "desired_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-007"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-007"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-008",
+    "rule_id": "EMP-RULE-008",
+    "desired_action": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-008"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-008"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-009",
+    "rule_id": "EMP-RULE-010",
+    "desired_action": "Completion status must reflect actual sources processed, skipped items, blockers, validations, and deliverables; no false completion.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-010"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-010"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-010",
+    "rule_id": "EMP-RULE-011",
+    "desired_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-011"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-011"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-011",
+    "rule_id": "EMP-RULE-012",
+    "desired_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-012"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-012"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-012",
+    "rule_id": "EMP-RULE-013",
+    "desired_action": "Do not use em or en dashes in governed DCS Employment prose; use plain hyphens for date ranges unless a later controlling source explicitly authorizes otherwise.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-013"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-013"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-013",
+    "rule_id": "EMP-RULE-014",
+    "desired_action": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-014"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-014"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-014",
+    "rule_id": "EMP-RULE-015",
+    "desired_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-015"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-015"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-015",
+    "rule_id": "EMP-RULE-016",
+    "desired_action": "Every DCS correction should be evaluated as a possible reusable rule, preference, exception, or defect rather than treated only as a one-time edit.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-001"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-001"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-016",
+    "rule_id": "EMP-RULE-017",
+    "desired_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-002"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-002"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-017",
+    "rule_id": "EMP-RULE-018",
+    "desired_action": "Opportunity prioritization should account for tailoring effort and submission-channel risk, not fit alone.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-003"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-003"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-018",
+    "rule_id": "EMP-RULE-019",
+    "desired_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-004"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-004"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-019",
+    "rule_id": "EMP-RULE-020",
+    "desired_action": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-005"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-005"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-020",
+    "rule_id": "EMP-RULE-021",
+    "desired_action": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-006"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-006"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-021",
+    "rule_id": "EMP-RULE-022",
+    "desired_action": "Employment lifecycle should continue through offer evaluation, pre-start, personalized onboarding/training, 30/60/90 execution, and career continuity.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-007"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-007"
+    ],
+    "missing_support": [],
+    "pass_fail": "PASS"
+  },
+  {
+    "test_id": "BWD-022",
+    "rule_id": "EMP-RULE-025",
+    "desired_action": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+    "required_conditions": [
+      "DCS Employment lane",
+      "eligible source",
+      "source provenance",
+      "candidate-only authority"
+    ],
+    "required_evidence": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-010"
+    ],
+    "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+    "available_support": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-010"
+    ],
+    "missing_support": [
+      "canonical conflict resolution before promotion"
+    ],
+    "pass_fail": "PASS"
+  }
+]

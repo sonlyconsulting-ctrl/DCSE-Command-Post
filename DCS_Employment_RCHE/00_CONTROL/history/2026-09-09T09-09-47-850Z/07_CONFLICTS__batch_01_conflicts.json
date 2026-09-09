@@ -1,0 +1,37 @@
+[
+  {
+    "conflict_id": "EMP-CON-001",
+    "topic": "Model duty assignment",
+    "source_a": "Older Employment module assigns Claude primary and ChatGPT verification.",
+    "source_b": "Current architecture requires dynamic model/agent routing from a capability registry.",
+    "disposition": "HOLD_FOR_SUPERSESSION_RECONCILIATION"
+  },
+  {
+    "conflict_id": "EMP-CON-002",
+    "topic": "Resume length",
+    "source_a": "Older Employment module says recruiter resume must be at least two pages and prior structural work often centers on shorter recruiter packages.",
+    "source_b": "Current DCS direction explicitly supports destination-driven 3-5 page or 5-page direct-application versions and rejects arbitrary two-page enforcement.",
+    "disposition": "CURRENT_DCS_DIRECTION_PREVAILS_FOR_WORKING_RULE; CANONICAL_UPDATE_PENDING"
+  },
+  {
+    "conflict_id": "EMP-CON-003",
+    "topic": "Compensation floors",
+    "source_a": "Older module lists salary minimum $90,000 and W2 contract $60-$75/hour; older workflow evaluation includes opportunity-specific higher figures.",
+    "source_b": "Current discussions require opportunity-specific economics and recent remote/travel all-inclusive distinctions; no single current rate is verified as universal.",
+    "disposition": "HISTORICAL_REFERENCE_ONLY; DO_NOT_PROMOTE_AS_CURRENT_UNIVERSAL_RULE"
+  },
+  {
+    "conflict_id": "EMP-CON-004",
+    "topic": "Governance version",
+    "source_a": "Accessible project files are primarily v6.8/v6.8.1 sources.",
+    "source_b": "DCS direction says v7.2 R5 is controlling.",
+    "disposition": "UNSYNCHRONIZED_UNTIL_CANONICAL_V7_2_R5_VERIFIED"
+  },
+  {
+    "conflict_id": "EMP-CON-005",
+    "topic": "Employment contact address",
+    "source_a": "Older Employment Command Center reportedly used DSEADO01@gmail.com.",
+    "source_b": "A later correction record identifies DSEADO1@gmail.com as active.",
+    "disposition": "SENSITIVE_CONTACT_CONFLICT; DO_NOT EXTERNALIZE IN HARVEST OUTPUT; VERIFY ONLY WHEN DESTINATION REQUIRES"
+  }
+]

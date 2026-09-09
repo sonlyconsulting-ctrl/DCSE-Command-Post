@@ -1,0 +1,578 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "outRoot": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE",
+  "generated_at": "2026-09-09T09:08:20.147Z",
+  "file_count": 95,
+  "files": [
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\correction_harvester_schema.json",
+      "relative_path": "00_CONTROL\\correction_harvester_schema.json",
+      "byte_size": 513,
+      "sha256": "F5FD2463ECF6FE9C3E5179DDE1F00A390900DD3F863D02F1DD8FD5C76F379A54"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__correction_harvester_schema.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__correction_harvester_schema.json",
+      "byte_size": 513,
+      "sha256": "F5FD2463ECF6FE9C3E5179DDE1F00A390900DD3F863D02F1DD8FD5C76F379A54"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__ingestion_receipt.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__ingestion_receipt.json",
+      "byte_size": 7596,
+      "sha256": "7E84940901F6B87E6286250DF2769A5D1746B0915E880B385772523B1EA8141E"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__outcome_learning_schema.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__outcome_learning_schema.json",
+      "byte_size": 598,
+      "sha256": "41CB1BF95EBDF80C86FE3CEC3C7137155ADE6FC92ABEF2D6D223B981DAE6C7A8"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__submission_provenance_schema.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\00_CONTROL__submission_provenance_schema.json",
+      "byte_size": 411,
+      "sha256": "42CCE1418D7596A2EC05737DC7CAF929345805737CB4E7098C84802CC8A24924"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\02_SOURCE_INVENTORY__source_inventory.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\02_SOURCE_INVENTORY__source_inventory.json",
+      "byte_size": 11469,
+      "sha256": "DA9EFFA9A6963A114A185B29445FB654EFFDAB91C66A46C21E8682BBCCC9CFB2"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_01_rag_manifest.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_01_rag_manifest.json",
+      "byte_size": 29749,
+      "sha256": "E42CFB90B6CE71C39855AFF46AEE950848A0C315BED38CCCC3F06710AA5FF808"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_01_retrieval_results.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_01_retrieval_results.jsonl",
+      "byte_size": 25076,
+      "sha256": "99F49EC54FC351DBD9DEC72895174B7F33088F8A04DDE320C3B7BACD11870095"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_02_rag_manifest.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_02_rag_manifest.json",
+      "byte_size": 29804,
+      "sha256": "4DEAD68DECC5CAE52E3330A7DC34C9CFA46D468234FEC6D7B1B30CEC4DBED01C"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_02_retrieval_results.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_02_retrieval_results.jsonl",
+      "byte_size": 25124,
+      "sha256": "EAE39F4997A5F1002CE9EE906769510F45B0630AC4BF595BD5F09D8A97204EC7"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_03_rag_manifest.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_03_rag_manifest.json",
+      "byte_size": 29859,
+      "sha256": "523D56F5FCEBFDD8067DE82DF2E869E96BCD8C479CAE4CE693B7BB1B91268A3B"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_03_retrieval_results.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\03_RAG__batch_03_retrieval_results.jsonl",
+      "byte_size": 25124,
+      "sha256": "EAE39F4997A5F1002CE9EE906769510F45B0630AC4BF595BD5F09D8A97204EC7"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_characteristics.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_facts.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_patterns.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_01_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_characteristics.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_facts.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_patterns.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_02_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_characteristics.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_facts.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_patterns.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\04_DDNA__batch_03_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_01_rule_candidates.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_01_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "A8EF21838761094FCA8FE261FE88DF01DF60A9B672861627D232FD014B58E9CF"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_02_rule_candidates.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_02_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "A8EF21838761094FCA8FE261FE88DF01DF60A9B672861627D232FD014B58E9CF"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_03_rule_candidates.jsonl",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\05_RULE_CANDIDATES__batch_03_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "A8EF21838761094FCA8FE261FE88DF01DF60A9B672861627D232FD014B58E9CF"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rule_corpus_v1_CANDIDATE.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rule_corpus_v1_CANDIDATE.json",
+      "byte_size": 44104,
+      "sha256": "85D3AD6BC4131C1C7BA1D166F2E1FECDE9496B0137B039A41CCDDE7CC0B7664B"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rule_corpus_v2_CANDIDATE.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rule_corpus_v2_CANDIDATE.json",
+      "byte_size": 44186,
+      "sha256": "D2E951F5DB3CF1D96F88726C37E695C5743B432AB57CA381A94DA54EABA7A985"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_conflict.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_conflict.json",
+      "byte_size": 18525,
+      "sha256": "6B440E4125D7FCDE373B89C9D19B648FF395EE6D40EFB3CE9B0AB80D65F15178"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_duplicate_merge_map.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_duplicate_merge_map.json",
+      "byte_size": 3,
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_hold.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_hold.json",
+      "byte_size": 3,
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_rejected.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\06_RULE_CORPUS__employment_rules_rejected.json",
+      "byte_size": 5986,
+      "sha256": "F655F11E3897AAB1050AE72D69957D7698AEDC24162413658ECEB6619ECB8128"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_01_conflicts.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_01_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_02_conflicts.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_02_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_03_conflicts.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\07_CONFLICTS__batch_03_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__backward_tests.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__backward_tests.json",
+      "byte_size": 15638,
+      "sha256": "9FB3E4C8BD62846A9344A90FEE130E1F5DE804FC70BF91BDF004280C0F5DC4C4"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_01_validation.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_01_validation.json",
+      "byte_size": 48485,
+      "sha256": "E7BF45A28F5481DF195CF52E11B66F6BF91746BDA17874DA802D329F93ECCD14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_02_validation.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_02_validation.json",
+      "byte_size": 48485,
+      "sha256": "BCD1840A7162A82829AA19AF8ACBB41468DE2D6282B52728CCC63FFC1E1ADAF6"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_03_validation.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__batch_03_validation.json",
+      "byte_size": 48485,
+      "sha256": "EF3FCF2DFD62EEECBA60E96CFDFE71018258F1C5DF2262782B756418F9C292EB"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__forward_tests.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__forward_tests.json",
+      "byte_size": 11528,
+      "sha256": "EE203B88C76D05417CCA6E98FF224696EB12D8BA3DD35E0226C45B12226464AB"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__rules_fired_scenarios.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\08_TESTS__rules_fired_scenarios.json",
+      "byte_size": 14194,
+      "sha256": "1217EC3C87E657C97E9C54EE7614D3B814E5A4736E2F226196DBCD38D08B3877"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\09_BATCH_COMPARISONS__batch_01_vs_02.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\09_BATCH_COMPARISONS__batch_01_vs_02.json",
+      "byte_size": 887,
+      "sha256": "D9C153714F31F5340AB99BB873651DB7E82826DA8ACF260A84A1E853D3F2182C"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\09_BATCH_COMPARISONS__batch_02_vs_03.json",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\09_BATCH_COMPARISONS__batch_02_vs_03.json",
+      "byte_size": 887,
+      "sha256": "1093EC04B8B78585F1654ED1A082526A0FDA0D185A992D61F91A945F4E7A5955"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_01_report.md",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_01_report.md",
+      "byte_size": 4219,
+      "sha256": "71A5A65C98A1A264308FC9F73787A55C5EED11012FA2D95DB58B25DBE022AEC4"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_02_report.md",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_02_report.md",
+      "byte_size": 4219,
+      "sha256": "EAB9FDA1E2C1B81B804A0C355CE924A28A7FCB80687D472723ECEA4B6156C5D2"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_03_report.md",
+      "relative_path": "00_CONTROL\\history\\2026-09-09T09-08-20-147Z\\11_REPORTS__batch_03_report.md",
+      "byte_size": 4219,
+      "sha256": "DAC2DD5F38B545D80414A179A2A6CE236834022414BBAF8D70973E48BE969AF5"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\ingestion_receipt.json",
+      "relative_path": "00_CONTROL\\ingestion_receipt.json",
+      "byte_size": 7546,
+      "sha256": "595160205B3A624B65A16D26FC051040CBC04B0AB6347D085396E39ECB78C438"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\outcome_learning_schema.json",
+      "relative_path": "00_CONTROL\\outcome_learning_schema.json",
+      "byte_size": 598,
+      "sha256": "41CB1BF95EBDF80C86FE3CEC3C7137155ADE6FC92ABEF2D6D223B981DAE6C7A8"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\00_CONTROL\\submission_provenance_schema.json",
+      "relative_path": "00_CONTROL\\submission_provenance_schema.json",
+      "byte_size": 411,
+      "sha256": "42CCE1418D7596A2EC05737DC7CAF929345805737CB4E7098C84802CC8A24924"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\02_SOURCE_INVENTORY\\source_inventory.json",
+      "relative_path": "02_SOURCE_INVENTORY\\source_inventory.json",
+      "byte_size": 11389,
+      "sha256": "E919A31F73CFA5FFEA9165AD38ABD59A08C74406E477B484E1F2B883226C429E"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_01_rag_manifest.json",
+      "relative_path": "03_RAG\\batch_01_rag_manifest.json",
+      "byte_size": 62181,
+      "sha256": "8367D18FDE9459AB0CB420469F10868CB76E12AF8FB8369DACFA1B2BF81675D3"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_01_retrieval_results.jsonl",
+      "relative_path": "03_RAG\\batch_01_retrieval_results.jsonl",
+      "byte_size": 26032,
+      "sha256": "37B85145D866C3A0E8B39C4A9EB61FF54D1BF34F05AADA01C5400BE3B3174549"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_02_rag_manifest.json",
+      "relative_path": "03_RAG\\batch_02_rag_manifest.json",
+      "byte_size": 62236,
+      "sha256": "8EAE6471AB65A30554587EE0E2AA74E4DA6661DEC326B2D5D554EA76B34739C4"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_02_retrieval_results.jsonl",
+      "relative_path": "03_RAG\\batch_02_retrieval_results.jsonl",
+      "byte_size": 26076,
+      "sha256": "FC08D3AFD57A69FF2AB6CC001BB3F2B0D3381AB5321304453A699B3358701B5F"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_03_rag_manifest.json",
+      "relative_path": "03_RAG\\batch_03_rag_manifest.json",
+      "byte_size": 62291,
+      "sha256": "F501268E7477989FCA2B94389D21740C608E3172838DC52546D4DCECB0E80B8B"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\03_RAG\\batch_03_retrieval_results.jsonl",
+      "relative_path": "03_RAG\\batch_03_retrieval_results.jsonl",
+      "byte_size": 26076,
+      "sha256": "FC08D3AFD57A69FF2AB6CC001BB3F2B0D3381AB5321304453A699B3358701B5F"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_01_characteristics.jsonl",
+      "relative_path": "04_DDNA\\batch_01_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_01_facts.jsonl",
+      "relative_path": "04_DDNA\\batch_01_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_01_patterns.jsonl",
+      "relative_path": "04_DDNA\\batch_01_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_02_characteristics.jsonl",
+      "relative_path": "04_DDNA\\batch_02_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_02_facts.jsonl",
+      "relative_path": "04_DDNA\\batch_02_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_02_patterns.jsonl",
+      "relative_path": "04_DDNA\\batch_02_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_03_characteristics.jsonl",
+      "relative_path": "04_DDNA\\batch_03_characteristics.jsonl",
+      "byte_size": 10001,
+      "sha256": "B3C6A56496D748C9D13A67A3890D0D5ABDDD6D116CC9234C00F7146768F473BD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_03_facts.jsonl",
+      "relative_path": "04_DDNA\\batch_03_facts.jsonl",
+      "byte_size": 6111,
+      "sha256": "49E14827E28A65E8780DB2331E0CA63B5CA93DBA26D41C2D29DFEA1870712FF9"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\04_DDNA\\batch_03_patterns.jsonl",
+      "relative_path": "04_DDNA\\batch_03_patterns.jsonl",
+      "byte_size": 4224,
+      "sha256": "86A095DAE780E1553B2A9B357CCEF18771EB0C82061ABBAB533F159DB329BB14"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\05_RULE_CANDIDATES\\batch_01_rule_candidates.jsonl",
+      "relative_path": "05_RULE_CANDIDATES\\batch_01_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "D0D580074BEC6831DC9D1B41C79FE3135A645CCF88DDFB0898E1E8C4305FEE55"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\05_RULE_CANDIDATES\\batch_02_rule_candidates.jsonl",
+      "relative_path": "05_RULE_CANDIDATES\\batch_02_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "D0D580074BEC6831DC9D1B41C79FE3135A645CCF88DDFB0898E1E8C4305FEE55"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\05_RULE_CANDIDATES\\batch_03_rule_candidates.jsonl",
+      "relative_path": "05_RULE_CANDIDATES\\batch_03_rule_candidates.jsonl",
+      "byte_size": 41626,
+      "sha256": "D0D580074BEC6831DC9D1B41C79FE3135A645CCF88DDFB0898E1E8C4305FEE55"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rule_corpus_v1_CANDIDATE.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rule_corpus_v1_CANDIDATE.json",
+      "byte_size": 44104,
+      "sha256": "4A3577CB269675995DCC1FC75F98061F20F03643DFA02F5C5D60AD1AFE053E3B"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rule_corpus_v2_CANDIDATE.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rule_corpus_v2_CANDIDATE.json",
+      "byte_size": 44186,
+      "sha256": "3E1F966C775F6BCA342C62AFBF28406F3A410F575D1022ED3B5AE15F028386FD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rules_conflict.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rules_conflict.json",
+      "byte_size": 18525,
+      "sha256": "892EE120CB900533B9BD8A01E105E13AF38261B8123A1A6F15C4F53418E35D6F"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rules_duplicate_merge_map.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rules_duplicate_merge_map.json",
+      "byte_size": 3,
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rules_hold.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rules_hold.json",
+      "byte_size": 3,
+      "sha256": "37517E5F3DC66819F61F5A7BB8ACE1921282415F10551D2DEFA5C3EB0985B570"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\06_RULE_CORPUS\\employment_rules_rejected.json",
+      "relative_path": "06_RULE_CORPUS\\employment_rules_rejected.json",
+      "byte_size": 5986,
+      "sha256": "0F0962BAC436E6F0C45BB975D4D660174033466A3481BF4961E41117096BE1C5"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\07_CONFLICTS\\batch_01_conflicts.json",
+      "relative_path": "07_CONFLICTS\\batch_01_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\07_CONFLICTS\\batch_02_conflicts.json",
+      "relative_path": "07_CONFLICTS\\batch_02_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\07_CONFLICTS\\batch_03_conflicts.json",
+      "relative_path": "07_CONFLICTS\\batch_03_conflicts.json",
+      "byte_size": 2023,
+      "sha256": "367D39B1A3465990A6030D25715B6FA9A79526F9B8A4FC63ACFF8BC46DCB8BFA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\backward_tests.json",
+      "relative_path": "08_TESTS\\backward_tests.json",
+      "byte_size": 15638,
+      "sha256": "9FB3E4C8BD62846A9344A90FEE130E1F5DE804FC70BF91BDF004280C0F5DC4C4"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\batch_01_validation.json",
+      "relative_path": "08_TESTS\\batch_01_validation.json",
+      "byte_size": 48485,
+      "sha256": "DAA4BF44D49D69F5A9F221DDCFE39B6889BB607D7B9AEB60F11C60AFE422F356"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\batch_02_validation.json",
+      "relative_path": "08_TESTS\\batch_02_validation.json",
+      "byte_size": 48485,
+      "sha256": "3F20DD3FA64B93EC3ABC07F07805F86EB96BB019CA4F0CE05075F011D2933B6A"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\batch_03_validation.json",
+      "relative_path": "08_TESTS\\batch_03_validation.json",
+      "byte_size": 48485,
+      "sha256": "350E0F63F07F364643662D75D173B16F9E178D5E603CDF63E09FAF76F457A61E"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\forward_tests.json",
+      "relative_path": "08_TESTS\\forward_tests.json",
+      "byte_size": 11528,
+      "sha256": "EE203B88C76D05417CCA6E98FF224696EB12D8BA3DD35E0226C45B12226464AB"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\08_TESTS\\rules_fired_scenarios.json",
+      "relative_path": "08_TESTS\\rules_fired_scenarios.json",
+      "byte_size": 14194,
+      "sha256": "1217EC3C87E657C97E9C54EE7614D3B814E5A4736E2F226196DBCD38D08B3877"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\09_BATCH_COMPARISONS\\batch_01_vs_02.json",
+      "relative_path": "09_BATCH_COMPARISONS\\batch_01_vs_02.json",
+      "byte_size": 887,
+      "sha256": "78A2C1B9AC6709898DDF71720EF0C9B8586D89E39D00AFD3B548D7D3EC180ADD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\09_BATCH_COMPARISONS\\batch_02_vs_03.json",
+      "relative_path": "09_BATCH_COMPARISONS\\batch_02_vs_03.json",
+      "byte_size": 887,
+      "sha256": "E33B211AB80CD2AC42BB9870987744233A101B0AA19B9577F4AB9A51B12998D1"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\10_LOGS\\conflict_log.jsonl",
+      "relative_path": "10_LOGS\\conflict_log.jsonl",
+      "byte_size": 2576,
+      "sha256": "D206970E1BD25B1133387FC35D28689C8A2D6098B4E95C6F7D6432DA4B8C9A07"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\10_LOGS\\execution_log.jsonl",
+      "relative_path": "10_LOGS\\execution_log.jsonl",
+      "byte_size": 1221,
+      "sha256": "5588DC9CB20CE7DFCB91CE26AE4C168260311C07FF846BA107E1BFC7F7AFAD2B"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\10_LOGS\\extraction_log.jsonl",
+      "relative_path": "10_LOGS\\extraction_log.jsonl",
+      "byte_size": 27016,
+      "sha256": "42AC9E903D5CD8317244387FB190A7A560DD24E07863357D682C12FF45964891"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\10_LOGS\\repair_log.jsonl",
+      "relative_path": "10_LOGS\\repair_log.jsonl",
+      "byte_size": 1594,
+      "sha256": "DA369ECFA52D31F2F1D53F490610D1CE05B0B0F16CEE3147D4F838A044FAE6FA"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\10_LOGS\\rule_test_log.jsonl",
+      "relative_path": "10_LOGS\\rule_test_log.jsonl",
+      "byte_size": 15552,
+      "sha256": "30B37A09AF61D59CE230714A7D7FFE3C3B62F4AA2E347B47DFEDCFC2F6405AB6"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\11_REPORTS\\batch_01_report.md",
+      "relative_path": "11_REPORTS\\batch_01_report.md",
+      "byte_size": 4219,
+      "sha256": "8193800D1E941F39B601C6A56DFA48CF1F46E9294F8B63F64517B843393FECF5"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\11_REPORTS\\batch_02_report.md",
+      "relative_path": "11_REPORTS\\batch_02_report.md",
+      "byte_size": 4219,
+      "sha256": "9A7C6CBE6FA716E7EBAD4A928D30F3CAA2E238CFE498C36942236E36E520F3DD"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\11_REPORTS\\batch_03_report.md",
+      "relative_path": "11_REPORTS\\batch_03_report.md",
+      "byte_size": 4219,
+      "sha256": "B2C3D94403AE6F69AE6F6F252A9EA6B3C6608B7F29088A422C0D16BC353991E3"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\12_CLOSEOUT\\EMPLOYMENT_RCHE_CLOSEOUT.md",
+      "relative_path": "12_CLOSEOUT\\EMPLOYMENT_RCHE_CLOSEOUT.md",
+      "byte_size": 2145,
+      "sha256": "7463A4A4FEE4324D9C0CABE1F995410B30763760E4BDD56AD1AA3F713D34D1EC"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\12_CLOSEOUT\\EMPLOYMENT_RCHE_FILE_MANIFEST.json",
+      "relative_path": "12_CLOSEOUT\\EMPLOYMENT_RCHE_FILE_MANIFEST.json",
+      "byte_size": 15542,
+      "sha256": "F5E4662D27E8FA235A3340729D463C31711CD8B647C4B1E8A780C5654002FFC2"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\12_CLOSEOUT\\EMPLOYMENT_RCHE_OPEN_ITEMS.json",
+      "relative_path": "12_CLOSEOUT\\EMPLOYMENT_RCHE_OPEN_ITEMS.json",
+      "byte_size": 409,
+      "sha256": "AEEE4AB33F43C26424B80E9B2FFF7C6AC9BC4E3B122FB51224F54D7CF8D07243"
+    },
+    {
+      "path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_RCHE\\12_CLOSEOUT\\EMPLOYMENT_RCHE_VALIDATION.json",
+      "relative_path": "12_CLOSEOUT\\EMPLOYMENT_RCHE_VALIDATION.json",
+      "byte_size": 7688,
+      "sha256": "C1847FB5A718F15BA0968345E30FDCFDA33F1963FA6F55A96B9CC6D7CC15ACD6"
+    }
+  ]
+}

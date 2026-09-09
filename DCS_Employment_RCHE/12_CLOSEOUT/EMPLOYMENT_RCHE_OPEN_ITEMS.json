@@ -1,0 +1,10 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "status": "PARTIAL_UNSYNCHRONIZED",
+  "open_items": [
+    "Verify canonical DCSE v7.2 R5 authority before promotion.",
+    "Reconcile full raw ChatGPT export when available.",
+    "Run independent verification before any material Employment corpus promotion.",
+    "Resolve sensitive contact-data conflict only for a destination that requires it."
+  ]
+}

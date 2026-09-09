@@ -1,0 +1,19 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "repairs": [
+    {
+      "repair_id": "REPAIR-001",
+      "issue": "Firewall scanner treated references to PS and secret-leakage controls as protected content or credentials.",
+      "cause": "Initial classifier matched control vocabulary too broadly.",
+      "change": "Separated policy-reference language from actual protected/legal-origin material and high-confidence credential patterns.",
+      "regression_check": "Final Batch 3 reports PS leakage PASS_NONE_DETECTED and secret leakage PASS_NONE_DETECTED."
+    },
+    {
+      "repair_id": "REPAIR-002",
+      "issue": "Forward-test matcher under-counted auditable controls as non-testable.",
+      "cause": "Initial testability verb set was too narrow for policy/audit-style Employment rules.",
+      "change": "Expanded testability to include deterministic and auditable controls that can be checked during Employment artifact review.",
+      "regression_check": "Final Batch 3 reports forward-test pass rate 1 and backward-test pass rate 1."
+    }
+  ]
+}

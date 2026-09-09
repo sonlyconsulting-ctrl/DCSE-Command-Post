@@ -1,0 +1,24 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "fields": [
+    "original_behavior",
+    "corrected_behavior",
+    "context",
+    "affected_domain",
+    "possible_rule",
+    "existing_rule_conflict",
+    "repeatability_score",
+    "candidate_status"
+  ],
+  "classifications": [
+    "one-time instruction",
+    "personal preference",
+    "Employment domain rule",
+    "governance rule",
+    "workflow rule",
+    "exception",
+    "model-performance issue",
+    "implementation defect"
+  ],
+  "records": []
+}

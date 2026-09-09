@@ -1,0 +1,23 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "compared_at": "2026-09-09T09:08:20.147Z",
+  "from_batch": 1,
+  "to_batch": 2,
+  "measures": {
+    "retrieval_precision": "unchanged",
+    "source_provenance_retention": "unchanged",
+    "seed_rule_recovery": "unchanged",
+    "unsupported_candidate_rate": "unchanged",
+    "duplicate_candidate_rate": "unchanged",
+    "contradiction_preservation": "unchanged",
+    "classification_accuracy": "unchanged",
+    "false_rule_rate": "unchanged",
+    "rule_omission_rate": "unchanged",
+    "forward_test_pass_rate": "unchanged",
+    "backward_test_pass_rate": "unchanged",
+    "unknown_preservation": "unchanged",
+    "lane_firewall_integrity": "degraded"
+  },
+  "no_material_regression": true,
+  "evidence_basis": "Metric comparison from deterministic local batch outputs; no inferred improvement claimed where values did not change."
+}

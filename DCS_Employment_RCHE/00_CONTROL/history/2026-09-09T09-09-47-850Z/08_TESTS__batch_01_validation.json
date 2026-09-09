@@ -1,0 +1,1478 @@
+{
+  "batch": 1,
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "created_at": "2026-09-09T09:08:20.147Z",
+  "metrics": {
+    "source_count": 12,
+    "processed_source_count": 9,
+    "rag_chunk_count": 37,
+    "fact_count": 9,
+    "characteristic_count": 18,
+    "pattern_count": 7,
+    "candidate_count": 25,
+    "tested_count": 21,
+    "hold_count": 0,
+    "conflict_count": 9,
+    "rejected_count": 3,
+    "duplicate_count": 0,
+    "seed_rule_recovery": "15/15",
+    "unsupported_candidate_rate": 0.12,
+    "duplicate_candidate_rate": 0,
+    "provenance_retention": 1,
+    "contradiction_preservation": "5/5",
+    "forward_test_pass_rate": 0.5,
+    "backward_test_pass_rate": 1,
+    "rules_fired_pass_rate": 1,
+    "ps_leakage": "EXCLUDED_REVIEW_REQUIRED",
+    "secret_leakage": "PASS_NONE_DETECTED",
+    "authority_sync": "UNSYNCHRONIZED_CANONICAL_V7_2_R5_PENDING"
+  },
+  "validation": {
+    "source_provenance_preserved": true,
+    "no_ps_leakage": false,
+    "no_secret_leakage": true,
+    "contradictions_visible": true,
+    "no_rule_promoted_without_authority": true,
+    "seed_rules_materially_recoverable": true,
+    "duplicate_handling_works": true,
+    "classifications_consistent": true,
+    "forward_backward_validation_functions": false,
+    "regression_result": "NO_MATERIAL_REGRESSION",
+    "regressions": []
+  },
+  "tests": {
+    "forward": [
+      {
+        "test_id": "FWD-001",
+        "rule_id": "EMP-RULE-001",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-001"
+        ],
+        "conditions_met": true,
+        "expected_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+        "actual_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-002",
+        "rule_id": "EMP-RULE-002",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-002"
+        ],
+        "conditions_met": true,
+        "expected_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+        "actual_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-003",
+        "rule_id": "EMP-RULE-003",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-003"
+        ],
+        "conditions_met": true,
+        "expected_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+        "actual_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-004",
+        "rule_id": "EMP-RULE-004",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-004"
+        ],
+        "conditions_met": true,
+        "expected_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+        "actual_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-005",
+        "rule_id": "EMP-RULE-005",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-005"
+        ],
+        "conditions_met": true,
+        "expected_action": "Employment writing should be direct, measured, senior, selective, substantive, human, technically credible, and free of generic AI phrasing or hype.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-006",
+        "rule_id": "EMP-RULE-006",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-006"
+        ],
+        "conditions_met": true,
+        "expected_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+        "actual_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-007",
+        "rule_id": "EMP-RULE-007",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-007"
+        ],
+        "conditions_met": true,
+        "expected_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+        "actual_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-008",
+        "rule_id": "EMP-RULE-008",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-008"
+        ],
+        "conditions_met": true,
+        "expected_action": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-009",
+        "rule_id": "EMP-RULE-010",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-010"
+        ],
+        "conditions_met": true,
+        "expected_action": "Completion status must reflect actual sources processed, skipped items, blockers, validations, and deliverables; no false completion.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-010",
+        "rule_id": "EMP-RULE-011",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-011"
+        ],
+        "conditions_met": true,
+        "expected_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+        "actual_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-011",
+        "rule_id": "EMP-RULE-012",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-012"
+        ],
+        "conditions_met": true,
+        "expected_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+        "actual_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-012",
+        "rule_id": "EMP-RULE-013",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-013"
+        ],
+        "conditions_met": true,
+        "expected_action": "Do not use em or en dashes in governed DCS Employment prose; use plain hyphens for date ranges unless a later controlling source explicitly authorizes otherwise.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-013",
+        "rule_id": "EMP-RULE-014",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-014"
+        ],
+        "conditions_met": true,
+        "expected_action": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-014",
+        "rule_id": "EMP-RULE-015",
+        "input_facts": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-015"
+        ],
+        "conditions_met": true,
+        "expected_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+        "actual_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-015",
+        "rule_id": "EMP-RULE-016",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-001"
+        ],
+        "conditions_met": true,
+        "expected_action": "Every DCS correction should be evaluated as a possible reusable rule, preference, exception, or defect rather than treated only as a one-time edit.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-016",
+        "rule_id": "EMP-RULE-017",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-002"
+        ],
+        "conditions_met": true,
+        "expected_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+        "actual_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-017",
+        "rule_id": "EMP-RULE-018",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-003"
+        ],
+        "conditions_met": true,
+        "expected_action": "Opportunity prioritization should account for tailoring effort and submission-channel risk, not fit alone.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-018",
+        "rule_id": "EMP-RULE-019",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-004"
+        ],
+        "conditions_met": true,
+        "expected_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+        "actual_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+        "pass_fail": "PASS",
+        "failure_reason": null
+      },
+      {
+        "test_id": "FWD-019",
+        "rule_id": "EMP-RULE-020",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-005"
+        ],
+        "conditions_met": true,
+        "expected_action": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-020",
+        "rule_id": "EMP-RULE-021",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-006"
+        ],
+        "conditions_met": true,
+        "expected_action": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-021",
+        "rule_id": "EMP-RULE-022",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-007"
+        ],
+        "conditions_met": true,
+        "expected_action": "Employment lifecycle should continue through offer evaluation, pre-start, personalized onboarding/training, 30/60/90 execution, and career continuity.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      },
+      {
+        "test_id": "FWD-022",
+        "rule_id": "EMP-RULE-025",
+        "input_facts": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-010"
+        ],
+        "conditions_met": true,
+        "expected_action": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+        "actual_action": "HOLD_FOR_NONDETERMINISTIC_ACTION",
+        "pass_fail": "FAIL",
+        "failure_reason": "Candidate is not sufficiently testable."
+      }
+    ],
+    "backward": [
+      {
+        "test_id": "BWD-001",
+        "rule_id": "EMP-RULE-001",
+        "desired_action": "Inventory and classify employment sources before artifact creation; exclude PS-locked and secret-risk material and report missing sources.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-001"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-001"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-002",
+        "rule_id": "EMP-RULE-002",
+        "desired_action": "Map target requirements to verified DCS ingredients, identify gaps, remove unsupported claims, and validate destination fit.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-002"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-002"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-003",
+        "rule_id": "EMP-RULE-003",
+        "desired_action": "Classify substantive claims as Verified, Likely, Unknown, or Remove; restrain Likely claims and remove Unknown claims unless confirmed.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-003"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-003"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-004",
+        "rule_id": "EMP-RULE-004",
+        "desired_action": "Use verified exact keywords and safe synonyms naturally; avoid keyword stuffing and audit false-alignment risk.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-004"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-004"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-005",
+        "rule_id": "EMP-RULE-005",
+        "desired_action": "Employment writing should be direct, measured, senior, selective, substantive, human, technically credible, and free of generic AI phrasing or hype.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-005"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-005"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-006",
+        "rule_id": "EMP-RULE-006",
+        "desired_action": "Recruiter and employment communications must identify audience and objective, extract the ask, avoid oversharing, and pass PS/secret leakage checks.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-006"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-006"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-007",
+        "rule_id": "EMP-RULE-007",
+        "desired_action": "Adapt format, tone, structure, and density to the destination without changing verified substance.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-007"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-007"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-008",
+        "rule_id": "EMP-RULE-008",
+        "desired_action": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-008"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-008"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-009",
+        "rule_id": "EMP-RULE-010",
+        "desired_action": "Completion status must reflect actual sources processed, skipped items, blockers, validations, and deliverables; no false completion.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-010"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-010"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-010",
+        "rule_id": "EMP-RULE-011",
+        "desired_action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-011"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-011"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-011",
+        "rule_id": "EMP-RULE-012",
+        "desired_action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-012"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-012"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-012",
+        "rule_id": "EMP-RULE-013",
+        "desired_action": "Do not use em or en dashes in governed DCS Employment prose; use plain hyphens for date ranges unless a later controlling source explicitly authorizes otherwise.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-013"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-013"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-013",
+        "rule_id": "EMP-RULE-014",
+        "desired_action": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-014"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-014"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-014",
+        "rule_id": "EMP-RULE-015",
+        "desired_action": "Preserve submission provenance across source, recruiter/vendor, end client when known, package, submission evidence, response, interview, disposition, and lessons learned.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-015"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-002-seed_rules_json",
+          "EMP-SEED-015"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-015",
+        "rule_id": "EMP-RULE-016",
+        "desired_action": "Every DCS correction should be evaluated as a possible reusable rule, preference, exception, or defect rather than treated only as a one-time edit.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-001"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-001"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-016",
+        "rule_id": "EMP-RULE-017",
+        "desired_action": "Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-002"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-002"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-017",
+        "rule_id": "EMP-RULE-018",
+        "desired_action": "Opportunity prioritization should account for tailoring effort and submission-channel risk, not fit alone.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-003"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-003"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-018",
+        "rule_id": "EMP-RULE-019",
+        "desired_action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-004"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-004"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-019",
+        "rule_id": "EMP-RULE-020",
+        "desired_action": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-005"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-005"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-020",
+        "rule_id": "EMP-RULE-021",
+        "desired_action": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-006"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-006"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-021",
+        "rule_id": "EMP-RULE-022",
+        "desired_action": "Employment lifecycle should continue through offer evaluation, pre-start, personalized onboarding/training, 30/60/90 execution, and career continuity.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-007"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-007"
+        ],
+        "missing_support": [],
+        "pass_fail": "PASS"
+      },
+      {
+        "test_id": "BWD-022",
+        "rule_id": "EMP-RULE-025",
+        "desired_action": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+        "required_conditions": [
+          "DCS Employment lane",
+          "eligible source",
+          "source provenance",
+          "candidate-only authority"
+        ],
+        "required_evidence": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-010"
+        ],
+        "required_authority": "DCS or canonical governance promotion required for Approved/Active",
+        "available_support": [
+          "SRC-003-rule_candidates_json",
+          "EMP-RC-010"
+        ],
+        "missing_support": [
+          "canonical conflict resolution before promotion"
+        ],
+        "pass_fail": "PASS"
+      }
+    ],
+    "rulesFired": [
+      {
+        "test_id": "RFT-001",
+        "scenario": "opportunity_intake",
+        "input_facts": [
+          "Representative Employment decision: opportunity_intake"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-011",
+          "EMP-RULE-018"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-011"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-001",
+          "EMP-CON-003"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-002",
+        "scenario": "resume_targeting",
+        "input_facts": [
+          "Representative Employment decision: resume_targeting"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-007",
+          "EMP-RULE-012",
+          "EMP-RULE-020"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-012",
+          "EMP-RULE-020"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-002",
+          "EMP-CON-002"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-003",
+        "scenario": "unsupported_technology_claim",
+        "input_facts": [
+          "Representative Employment decision: unsupported_technology_claim"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-002",
+          "EMP-RULE-003"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [],
+        "conflicting_rules": [],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-004",
+        "scenario": "recruiter_communication",
+        "input_facts": [
+          "Representative Employment decision: recruiter_communication"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-006",
+          "EMP-RULE-015",
+          "EMP-RULE-017",
+          "EMP-RULE-018"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-016",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [],
+        "conflicting_rules": [],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-005",
+        "scenario": "rate_travel_question",
+        "input_facts": [
+          "Representative Employment decision: rate_travel_question"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-011",
+          "EMP-RULE-014",
+          "EMP-RULE-019",
+          "EMP-RULE-025"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-011",
+          "EMP-RULE-014",
+          "EMP-RULE-019",
+          "EMP-RULE-025"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-001",
+          "EMP-CON-003",
+          "EMP-CON-003",
+          "EMP-CON-003",
+          "EMP-CON-001",
+          "EMP-CON-003"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-006",
+        "scenario": "direct_application_resume_length",
+        "input_facts": [
+          "Representative Employment decision: direct_application_resume_length"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-020"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-020"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-002"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-007",
+        "scenario": "ps_leakage_attempt",
+        "input_facts": [
+          "Representative Employment decision: ps_leakage_attempt"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-006",
+          "EMP-RULE-008"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-007",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-008"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-004"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-008",
+        "scenario": "incomplete_source_package",
+        "input_facts": [
+          "Representative Employment decision: incomplete_source_package"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-010"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [],
+        "conflicting_rules": [],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-009",
+        "scenario": "conflicting_source_evidence",
+        "input_facts": [
+          "Representative Employment decision: conflicting_source_evidence"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-012"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [
+          "EMP-RULE-012"
+        ],
+        "conflicting_rules": [
+          "EMP-CON-002"
+        ],
+        "result": "PASS"
+      },
+      {
+        "test_id": "RFT-010",
+        "scenario": "submission_provenance_uncertainty",
+        "input_facts": [
+          "Representative Employment decision: submission_provenance_uncertainty"
+        ],
+        "eligible_rule_set": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-003",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-015",
+          "EMP-RULE-016",
+          "EMP-RULE-017",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022"
+        ],
+        "rules_fired": [
+          "EMP-RULE-003",
+          "EMP-RULE-015",
+          "EMP-RULE-017"
+        ],
+        "rules_not_fired": [
+          "EMP-RULE-001",
+          "EMP-RULE-002",
+          "EMP-RULE-004",
+          "EMP-RULE-005",
+          "EMP-RULE-006",
+          "EMP-RULE-007",
+          "EMP-RULE-008",
+          "EMP-RULE-009",
+          "EMP-RULE-010",
+          "EMP-RULE-011",
+          "EMP-RULE-012",
+          "EMP-RULE-013",
+          "EMP-RULE-014",
+          "EMP-RULE-016",
+          "EMP-RULE-018",
+          "EMP-RULE-019",
+          "EMP-RULE-020",
+          "EMP-RULE-021",
+          "EMP-RULE-022",
+          "EMP-RULE-023",
+          "EMP-RULE-024",
+          "EMP-RULE-025"
+        ],
+        "rules_blocked_by_unknown": [],
+        "conflicting_rules": [],
+        "result": "PASS"
+      }
+    ]
+  }
+}

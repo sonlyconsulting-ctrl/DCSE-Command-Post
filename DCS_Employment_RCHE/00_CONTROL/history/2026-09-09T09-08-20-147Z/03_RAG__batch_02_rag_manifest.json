@@ -1,0 +1,206 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "batch": 2,
+  "corpus_aid": "employment_rule_corpus_v1_CANDIDATE",
+  "chunks": [
+    {
+      "chunk_id": "SRC-003-rule_candidates_json-CH-001",
+      "source_id": "SRC-003-rule_candidates_json",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_Harvest_Pilot_20260909\\rule_candidates.json",
+      "source_locator": "char:0-1200",
+      "hash_sha256": "12D877794F2FA324A36CF357D2E0AFABCB02441684F2DF90127C25E5EADE3340",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "SEED_CORPUS_V0_VERIFIED_INPUT_UNSYNCHRONIZED",
+      "text": "[\n  {\n    \"candidate_id\": \"EMP-RC-001\",\n    \"type\": \"PROCESS\",\n    \"statement\": \"Every DCS correction should be evaluated as a possible reusable rule, preference, exception, or defect rather than treated only as a one-time edit.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-002\",\n    \"type\": \"RECRUITER_RISK\",\n    \"statement\": \"Recruiter-channel opportunities should track whether client submission was actually confirmed when confirmation is obtainable.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-003\",\n    \"type\": \"APPLICATION_EFFORT\",\n    \"statement\": \"Opportunity prioritization should account for tailoring effort and submission-channel risk, not fit alone.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-004\",\n    \"type\": \"RATE\",\n    \"statement\": \"Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-005\",\n    \"type\": \"RESUME_LENGTH\",\n    \"statement\": \"Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced in"
+    },
+    {
+      "chunk_id": "SRC-003-rule_candidates_json-CH-002",
+      "source_id": "SRC-003-rule_candidates_json",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_Harvest_Pilot_20260909\\rule_candidates.json",
+      "source_locator": "char:1200-2400",
+      "hash_sha256": "236ED18F44CC1E85737E9E7AEE0A4BDB88639C3144B2A87836C12608DCCAB504",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "SEED_CORPUS_V0_VERIFIED_INPUT_UNSYNCHRONIZED",
+      "text": "to a generic two-page ceiling.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-006\",\n    \"type\": \"AI_POSITIONING\",\n    \"statement\": \"AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-007\",\n    \"type\": \"POST_HIRE\",\n    \"statement\": \"Employment lifecycle should continue through offer evaluation, pre-start, personalized onboarding/training, 30/60/90 execution, and career continuity.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-008\",\n    \"type\": \"COMMERCIAL_ROUTING\",\n    \"statement\": \"Direct DCS employment pursuit remains DCS Employment; repeatable customer-facing employment platform, training, membership, and delivery systems route to SC.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-009\",\n    \"type\": \"OUTCOME_LEARNING\",\n    \"statement\": \"Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, compensation, and workflow intelligence.\",\n    \"status\": \"CANDIDATE\"\n  },\n  {\n    \"candidate_id\": \"EMP-RC-010\",\n    \""
+    },
+    {
+      "chunk_id": "SRC-003-rule_candidates_json-CH-003",
+      "source_id": "SRC-003-rule_candidates_json",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_Harvest_Pilot_20260909\\rule_candidates.json",
+      "source_locator": "char:2400-2634",
+      "hash_sha256": "4B3F681EE36057D4C012A09AB269A483894BB8D8AB4B147EE9081AC8A80BB8AB",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "SEED_CORPUS_V0_VERIFIED_INPUT_UNSYNCHRONIZED",
+      "text": "type\": \"AGENT_ROUTING\",\n    \"statement\": \"Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.\",\n    \"status\": \"CANDIDATE\"\n  }\n]"
+    },
+    {
+      "chunk_id": "SRC-004-contradictions_json-CH-001",
+      "source_id": "SRC-004-contradictions_json",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_Harvest_Pilot_20260909\\contradictions.json",
+      "source_locator": "char:0-1200",
+      "hash_sha256": "286AFF89B73B1EFC9700436F7D5990DD2A853C77CFE68D8DDB09AE433FD23F80",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "SEED_CORPUS_V0_VERIFIED_INPUT_UNSYNCHRONIZED",
+      "text": "[\n  {\n    \"conflict_id\": \"EMP-CON-001\",\n    \"topic\": \"Model duty assignment\",\n    \"source_a\": \"Older Employment module assigns Claude primary and ChatGPT verification.\",\n    \"source_b\": \"Current architecture requires dynamic model/agent routing from a capability registry.\",\n    \"disposition\": \"HOLD_FOR_SUPERSESSION_RECONCILIATION\"\n  },\n  {\n    \"conflict_id\": \"EMP-CON-002\",\n    \"topic\": \"Resume length\",\n    \"source_a\": \"Older Employment module says recruiter resume must be at least two pages and prior structural work often centers on shorter recruiter packages.\",\n    \"source_b\": \"Current DCS direction explicitly supports destination-driven 3-5 page or 5-page direct-application versions and rejects arbitrary two-page enforcement.\",\n    \"disposition\": \"CURRENT_DCS_DIRECTION_PREVAILS_FOR_WORKING_RULE; CANONICAL_UPDATE_PENDING\"\n  },\n  {\n    \"conflict_id\": \"EMP-CON-003\",\n    \"topic\": \"Compensation floors\",\n    \"source_a\": \"Older module lists salary minimum $90,000 and W2 contract $60-$75/hour; older workflow evaluation includes opportunity-specific higher figures.\",\n    \"source_b\": \"Current discussions require opportunity-specific economics and recent remote/travel all-inclusive distinct"
+    },
+    {
+      "chunk_id": "SRC-004-contradictions_json-CH-002",
+      "source_id": "SRC-004-contradictions_json",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\DCS_Employment_Harvest_Pilot_20260909\\contradictions.json",
+      "source_locator": "char:1200-2022",
+      "hash_sha256": "EE3CF7982B914DF2323F660EF4806193691196D11C3A102308969B32A28A9EDF",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "SEED_CORPUS_V0_VERIFIED_INPUT_UNSYNCHRONIZED",
+      "text": "ions; no single current rate is verified as universal.\",\n    \"disposition\": \"HISTORICAL_REFERENCE_ONLY; DO_NOT_PROMOTE_AS_CURRENT_UNIVERSAL_RULE\"\n  },\n  {\n    \"conflict_id\": \"EMP-CON-004\",\n    \"topic\": \"Governance version\",\n    \"source_a\": \"Accessible project files are primarily v6.8/v6.8.1 sources.\",\n    \"source_b\": \"DCS direction says v7.2 R5 is controlling.\",\n    \"disposition\": \"UNSYNCHRONIZED_UNTIL_CANONICAL_V7_2_R5_VERIFIED\"\n  },\n  {\n    \"conflict_id\": \"EMP-CON-005\",\n    \"topic\": \"Employment contact address\",\n    \"source_a\": \"Older Employment Command Center reportedly used DSEADO01@gmail.com.\",\n    \"source_b\": \"A later correction record identifies DSEADO1@gmail.com as active.\",\n    \"disposition\": \"SENSITIVE_CONTACT_CONFLICT; DO_NOT EXTERNALIZE IN HARVEST OUTPUT; VERIFY ONLY WHEN DESTINATION REQUIRES\"\n  }\n]"
+    },
+    {
+      "chunk_id": "SRC-009-SKILL_md-CH-001",
+      "source_id": "SRC-009-SKILL_md",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\.claude\\skills\\dcse-resume-align\\SKILL.md",
+      "source_locator": "char:0-1200",
+      "hash_sha256": "3EF7F132897208DAC1D5519D5F68BB45713899D1639A7DD82CC36D9F09DE1F2F",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_INSTRUCTION",
+      "text": "---\nname: dcse-resume-align\ndescription: Build or adjust a targeted resume against a specific posting — requirement mapping, claim audit, DCS voice, and ATS/human balance. Use after dcse-role-intake has cleared a role for action, or any time an existing resume needs retargeting.\n---\n\n# DCSE Resume Alignment\n\nBuilds a targeted resume architecture from verified DCS ingredients only. Consolidates DCSE-SKILL-DCS-RESUME-TARGETING-v1, DCSE-SKILL-DCS-WRITTEN-DNA-v1, DCSE-SKILL-ATS-HUMAN-ALIGNMENT-v1, and DCSE-SKILL-EMPLOYMENT-CLAIM-AUDIT-v1 (source of record: `DCS_Employment_Workflow/01_SKILLS_SOURCE/`).\n\nCanonical resume ingredients and prior versions live in `DCS_Employment_Workflow/03_DCS_RESUMES/CURRENT/`. Use those as the base — do not invent capability that isn't already present in a prior approved resume or the Master Profile at `DCS_Employment_Workflow/00_DOCTRINE_AND_GOVERNANCE/DCSE_Master_Profile_CURRENT.md`.\n\n## Step 1 — Targeting\n\n1. Extract required and preferred qualifications from the posting.\n2. Map DCS ingredients (from CURRENT resumes / Master Profile) to target requirements.\n3. Identify gaps — do not paper over them.\n4. Select resume format appropriate to the role/track"
+    },
+    {
+      "chunk_id": "SRC-009-SKILL_md-CH-002",
+      "source_id": "SRC-009-SKILL_md",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\.claude\\skills\\dcse-resume-align\\SKILL.md",
+      "source_locator": "char:1200-2400",
+      "hash_sha256": "10FCF1E7B40F07F3E2061E8737A83D39632E5102CBBA0028E2AC4B7E94EA9E44",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_INSTRUCTION",
+      "text": " (see track classification from dcse-role-intake).\n5. Draft targeted sections.\n6. Remove any claim not supported by a verified source.\n7. Validate destination fit (see dcse-recruiter-response skill's Destination Control step if the deliverable is going to a specific channel).\n\n## Step 2 — Voice (DCS Written DNA)\n\nVoice controls: articulate, well-spoken, directed, pointed, strategic, technically credible, substantive, human, soulful, controlled.\n\n1. Remove generic AI phrasing.\n2. Replace filler with specific capability statements.\n3. Preserve verified DCS language where it already exists.\n4. Adjust tone for the audience (executive reader vs. technical screener).\n5. Remove hype.\n6. Scan for em dashes and en dashes — remove them.\n\n## Step 3 — ATS / human balance\n\n1. Extract role keywords from the posting.\n2. Identify verified exact matches in DCS ingredients.\n3. Identify safe synonyms (only where substance genuinely matches).\n4. Place keywords naturally — no stuffing.\n5. Audit for false-alignment risk (keyword present but not actually true of DCS's background).\n\n## Step 4 — Claim audit (mandatory before delivery)\n\n1. Extract every substantive claim in the draft.\n2. Classify each: Veri"
+    },
+    {
+      "chunk_id": "SRC-009-SKILL_md-CH-003",
+      "source_id": "SRC-009-SKILL_md",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\.claude\\skills\\dcse-resume-align\\SKILL.md",
+      "source_locator": "char:2400-3137",
+      "hash_sha256": "9DCEC2E19FB10258BCAAC2E430B1794140338CD669D370B94AAFE173706B4383",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_INSTRUCTION",
+      "text": "fied, Likely, Unknown, or Remove.\n3. Match Verified claims to their source ingredient.\n4. Rewrite Likely claims with restraint (hedge language, no overstatement).\n5. Remove Unknown claims unless a source can be found to confirm them.\n6. Flag any statement that creates interview risk (can't be defended if asked about directly).\n\n## Output\n\nUse the target-neutral section label \"Professional Role Alignment\" for the alignment material. No job board, recruiter, company, or client names in the resume body unless DCS has explicitly authorized destination-specific wording for this deliverable.\n\n## Deliverable\n\nTargeted resume + requirement map + claim support table + voice audit + keyword bank/placement map + unsupported-keyword list.\n"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-001",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:0-1200",
+      "hash_sha256": "8B1CC1F56A008641349FE8243B2D6E1F54476A26A80A0BFFADBCE9235CFAA62C",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "﻿DONALD C. SEALS, JR.\r\nSenior Enterprise Consultant | AI-Functional Systems Strategist | Business Rules and Integration\r\nsonlyconsulting@gmail.com  |  (260) 452-9097  |   Fort Wayne, IN  |  Onsite, Remote, or Hybrid\r\nPROFESSIONAL SUMMARY\r\nEnterprise IT practitioner with a career spanning business rules, decision systems, AI-enabled workflow architecture, and regulated delivery across financial services, healthcare, insurance, and public sector environments. Current work centers on governed AI workflow orchestration: model-role separation, evaluation and review gates, prompt and instruction architecture, source-of-truth control, and controlled documentation pipelines applied to enterprise-scale systems. Background includes translating complex business operations into functional requirements, process models, data mappings, and architecture documentation. Strong fit for roles seeking AI platform governance, AI product/technical guidance, enterprise solution architecture, business systems analysis, and regulated enterprise delivery.\r\nPROFESSIONAL ROLE ALIGNMENT\r\nTarget Roles: Distinguished/Principal AI Engineer; AI Platform Governance Architect; Enterprise AI Workflow Architect; Senior"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-002",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:1200-2400",
+      "hash_sha256": "EF46E9F9B71D72955CBB4E0B8C6591AEDFF1E58170CEEB9799B64FA718AFB00B",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": " Business Analyst; Business Systems Analyst; AI Business Transformation Analyst; Enterprise Solutions Architect; Business Rules Analyst.\r\nEngagement Model: Remote, hybrid, Fort Wayne on-site, W2 contract, contract-to-hire, direct hire, and selective consulting-aligned engagements.\r\nCORE SKILLS\r\nAI Governance & Platform Standards: evaluation frameworks, review gates, model-role separation, prompt/instruction architecture, Responsible AI, safety and deployment controls, source-of-truth governance\r\nBusiness Analysis: requirements elicitation, stakeholder interviews, JAD sessions, business cases, functional specifications, use cases, process models\r\nArchitecture and Delivery: solution architecture support, enterprise modernization, SDLC, Agile support, workflow roadmaps, implementation planning\r\nData and Reporting: SQL Server, DB2 context, ETL migration, data mapping, source-system analysis, reporting requirements, enterprise reporting context\r\nDecision Systems: CleverPath Aion BRE, business rules environments, eligibility logic, underwriting logic, case-management logic, rules-driven system behavior\r\nDelivery Communication: business-technical translation, knowledge transfer, training "
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-003",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:2400-3600",
+      "hash_sha256": "ACC0E71DEB8066F5E4D0422083DED8423F7B43FBC86E4210D2809DB9624C4712",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "documentation, defect triage, test-support coordination, executive-ready documentation\r\nSELECTED IMPACT EVIDENCE\r\n* Built a governed digital systems architecture converting source materials, business requirements, AI workflow controls, and review gates into reusable delivery assets.\r\n* Applied evaluation and review-gate discipline to AI-assisted drafting, analysis, code support, content systems, and workflow design across multiple concurrent workstreams.\r\n* Delivered and supported more than 750 business rules and operations in a mission-critical mortgage underwriting environment.\r\n* Produced a 13 percent performance gain and a 7 percent increase in decision factors during underwriting system conversion.\r\n* Reduced rule-set migration turnaround from three days to an overnight process through structure, testing discipline, and improved conversion handling.\r\n* Led requirements management, stakeholder sessions, business-rule analysis, and architecture documentation for an enterprise ETL migration from a proprietary .NET and SQL Server environment to Informatica-centered tooling.\r\nPROFESSIONAL EXPERIENCE\r\nFounder and Principal, Enterprise Systems Architecture and AI Workflow  |  Sonly C"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-004",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:3600-4800",
+      "hash_sha256": "50295D7AC44905E7D66EB7F4F689E6649B27DE23FECEC207A4042D00471DE371",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "onsulting\r\n2021 – Present\r\n* Built governed operating frameworks for enterprise systems architecture, AI workflow orchestration, evaluation and review gates, documentation control, source-of-truth management, and review-gated artifact production.\r\n* Constructed a multi-lane enterprise ecosystem covering strategy and systems consulting, digital product development, and applied AI operations, each with defined governance rules, model-role separation, and lane-isolated execution to prevent cross-stream drift.\r\n* Designed structured digital systems that convert scattered ideas, files, strategies, workflows, and decisions into usable business assets, dashboards, templates, intake models, and operating packets.\r\n* Applied governance-based execution to AI-assisted drafting, analysis, code support, content systems, workflow design, quality review, version control, and controlled handoff across multiple workstreams.\r\n* Developed command-architecture methods for classifying source materials, mapping business requirements, defining review gates, packaging deliverables, and turning complex operating problems into reusable execution systems.\r\nSenior Programmer Analyst / Business Rules Expert  |"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-005",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:4800-6000",
+      "hash_sha256": "6FA9AA1787AD1B89474F529CDE4709121ABA7610C4C009B440F80ADCFFD0163D",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "  Contract Staffing Specialist, State of Nebraska\r\n2020 – 2021\r\n* Supported a statewide benefits and case-management platform in a regulated public-sector environment using Aion 11.0, DB2, SQL Server context, CICS, COBOL, batch, online, dashboard, and client-server components.\r\n* Performed module upgrades, new module integration, testing, migration activities, defect resolution, reporting, and production support while translating policy and rule updates into stable system behavior.\r\nSenior Business Analyst  |  Broadridge Financial Solutions / Investigo\r\n2016 – 2019\r\n* Led requirements management for an enterprise ETL migration involving a proprietary .NET framework-based SQL Server environment and technologies including Informatica, Couchbase, and Microsoft Orleans.\r\n* Facilitated JAD sessions, user interviews, source-code review, process discovery, gap analysis, rule authoring inputs, application design inputs, test script development, and knowledge transfer.\r\n* Developed business requirements specifications and a solutions architecture manual supporting phased implementation, migration planning, project justification, scheduling, and resource coordination.\r\nSenior Business Analys"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-006",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:6000-7200",
+      "hash_sha256": "46FD6CC897DD0DDD53EA2D7F18D97467C68C95CD5EB318F74E823C1BB19E3ADB",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "t  |  RCR Technology, Inc.\r\n2014 – 2015\r\n* Supported a state healthcare enrollment system covering online, paper, and telephone-driven qualification workflows.\r\n* Produced detailed form specifications, UI specifications, business requirements documents, use cases, test scripts, defect reports, release-support documentation, and partner coordination materials.\r\nSenior Business Analyst  |  HRU Technical Resources\r\n2013 – 2014\r\n* Collected and documented requirements for automated eligibility, investigation, assessment, and action-plan workflows in human health services environments.\r\n* Served as lead analyst for business use cases, business requirement specifications, logical technical architecture, data mapping diagrams, swim-lane workflows, and JAD facilitation across multiple agencies.\r\nBusiness System Analyst  |  Advanced System Computer Consultants\r\n2011 – 2012\r\n* Delivered client-facing analysis, migration discovery, reporting enhancement, product evaluation, and modernization planning across PowerBuilder, ASP.NET, VB.NET, SQL Server, Oracle context, stored procedures, enterprise reporting, and Historian reporting contexts.\r\n* Documented as-is and to-be workflows, supported rep"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-007",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:7200-8400",
+      "hash_sha256": "4E7ABFD02190E9B21BF11787F4B68A958541BE82CAFB194FC1C796FC35CDAC81",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "orting tied to batch-process completion points, and evaluated technology options based on cost, productivity, training, and support considerations.\r\nBusiness Rules Technical Lead  |  Independent Consultant, Computer Associates / Blue Ridge Software, Client: ING Bank\r\n2008 – 2009\r\n* Implemented a mission-critical mortgage underwriting migration using Computer Associates CleverPath Aion Business Rules Expert (BRE) in real-time and batch environments.\r\n* Converted legacy logic into an object-oriented business rules engine supporting decisioning, rates, premiums, payment scheduling, exception handling, performance benchmarks, documentation, help screens, and user guides.\r\nSenior Business Rules Consultant  |  Computer Associates Inc.\r\n1999 – 2006\r\n* Supported product initiatives, consulting services, technical pre-sales, post-sales delivery, benchmarking, performance monitoring, tuning, data analysis, transformation, migration, testing, reporting, and workflow documentation.\r\n* Provided client-facing delivery and product guidance across eligibility, enrollment, claims review, auditing, student-loan processing, customer satisfaction, fraud detection, policy change, and object-oriented mo"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-008",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:8400-9600",
+      "hash_sha256": "5C104F65729AC7E9325D3B8562432EB0D3932CB58DF84E54C0C2C84A3C9FC41E",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "dernization work.\r\nBusiness Rules Engineer / Consultant / Analyst / Developer  |  Earlier Enterprise Systems Foundation\r\n1985 – 1999\r\n* Built and supported business rules, object-oriented conversion, pricing, eligibility, claims, adjudication, manufacturing, airline rebooking, rail freight, order-processing, insurance, and office-automation systems across Aion Corporation, Trinzic, Platinum Technologies, Computer Task Group, AGS Consulting, and Lincoln National.\r\n* Performed installs, performance troubleshooting, business and system analysis, customized training, migration scripts, implementation procedures, version control, data modeling, DBA support, SQL queries, stored procedures, testing phases, user-entry screens, and production support.\r\nCAPABILITIES AND METHODS\r\nStakeholder and SME Engagement: Begins with structured discovery across business owners, SMEs, operations users, technical staff, vendors, and project leadership; translates interviews, JAD sessions, source review, policy language, operational constraints, and system behavior into build-ready requirements.\r\nBusiness Rules Management and Decision Strategy: Applies business rules management across decisioning, eligibil"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-009",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:9600-10800",
+      "hash_sha256": "F5F57BA3D0BFBA9255909F7469D0599AC16A6B6CF57A9D2CDE0E1A94B367BFEE",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "ity, underwriting, claims, case management, pricing, policy workflows, and exception handling; experienced with CleverPath Aion Business Rules Expert (BRE), business rules architecture, proprietary engines, in-house systems, and traceable rule strategies. The discipline that governed BRE environments — structured logic, rule classification, decision tracing, exception handling, and outcome accountability — is the same discipline now embedded in modern AI model design, prompt governance, and guardrail architecture. The terminology evolved across decades; the underlying engineering principle did not.\r\nData, Integration, and Information Flow: Works across relational, cloud-hosted, and vector-database contexts, including PostgreSQL, Supabase, SQL Server, DB2, ETL migration, source analysis, data mapping, stored procedures, enterprise reporting, and business-facing information delivery.\r\nArchitecture, Process, and Workflow Modeling: Produces enterprise requirements, functional specifications, use cases, process models, BPMN-oriented workflow diagrams, domain models, data-flow views, logical architecture support, physical architecture support, and phased implementation plans.\r\nAI Functio"
+    },
+    {
+      "chunk_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt-CH-010",
+      "source_id": "SRC-010-DCS_Resume_AI_Governance_2026_txt",
+      "source_path": "C:\\DS All Things\\DCSE_Command_Center\\DCSE_CP_Project\\Inbox_From_Downloads\\DCS-Resume-AI-Governance-2026.txt",
+      "source_locator": "char:10800-11378",
+      "hash_sha256": "37A77DBC728250657DE81388DE383BFA8554B6D68F4FD638351C66476FF4B825",
+      "entity": "DCS Employment",
+      "lane": "DCS Employment",
+      "authority_class": "LOCAL_EMPLOYMENT_SUPPORTING_ARTIFACT",
+      "text": "nal Consulting and Governance: Frames AI work around use-case selection, tool evaluation, workflow fit, customization, prompt and instruction design, review gates, testing, benchmarking, monitoring, promotion control, version release, and responsible business adoption.\r\nDelivery Discipline Across Enterprise Environments: Supports SDLC adherence, Agile participation, project scheduling, testing coordination, defect review, migration support, documentation control, knowledge transfer, user support, and release readiness across regulated and consulting delivery environments."
+    }
+  ],
+  "source_count": 12
+}

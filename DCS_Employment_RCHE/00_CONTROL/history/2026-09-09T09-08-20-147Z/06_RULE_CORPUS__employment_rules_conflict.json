@@ -1,0 +1,492 @@
+[
+  {
+    "rule_id": "EMP-RULE-008",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0037",
+    "rule_family": "FIREWALL",
+    "entity": "DCS Employment",
+    "domain": "firewall",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance ",
+    "statement": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "PS-locked content may not enter Employment artifacts; material PS content triggers a governance stop-gate.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-008"
+    ],
+    "evidence_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-008"
+    ],
+    "confidence": 0.9,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-004"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-004"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": true
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-011",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0040",
+    "rule_family": "OPPORTUNITY",
+    "entity": "DCS Employment",
+    "domain": "opportunity",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Classify an opportunity before producing application artifacts and evaluate compensation, work m",
+    "statement": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Classify an opportunity before producing application artifacts and evaluate compensation, work model, travel, fit, evidence, and next action.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-011"
+    ],
+    "evidence_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-011"
+    ],
+    "confidence": 0.9,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-001",
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-001",
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "DETERMINISTIC_OR_TESTABLE_CONTROL",
+      "testable": true,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-012",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0041",
+    "rule_family": "IDENTITY",
+    "entity": "DCS Employment",
+    "domain": "identity",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Do not create disjointed resume variants with conflicting professional identities; preserve the ",
+    "statement": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Do not create disjointed resume variants with conflicting professional identities; preserve the approved baseline and make only justified target deltas.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-012"
+    ],
+    "evidence_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-012"
+    ],
+    "confidence": 0.9,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-002"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-002"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "DETERMINISTIC_OR_TESTABLE_CONTROL",
+      "testable": true,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-014",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0043",
+    "rule_family": "EVIDENCE",
+    "entity": "DCS Employment",
+    "domain": "evidence",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibil",
+    "statement": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Named technologies, cloud services, AI capabilities, certifications, metrics, rates, responsibilities, and outcomes must not be added without source-backed, explainable evidence.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-014"
+    ],
+    "evidence_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-014"
+    ],
+    "confidence": 0.9,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-019",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0048",
+    "rule_family": "RATE",
+    "entity": "DCS Employment",
+    "domain": "rate",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and",
+    "statement": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Rate recommendations must distinguish remote-only from travel/onsite all-inclusive economics and should not silently reuse historical floors.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-004"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-004"
+    ],
+    "confidence": 0.84,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "DETERMINISTIC_OR_TESTABLE_CONTROL",
+      "testable": true,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-020",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0049",
+    "rule_family": "RESUME_LENGTH",
+    "entity": "DCS Employment",
+    "domain": "resume_length",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Resume length is destination-driven; direct applications may justify longer evidence-rich versio",
+    "statement": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Resume length is destination-driven; direct applications may justify longer evidence-rich versions and should not be forced into a generic two-page ceiling.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-005"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-005"
+    ],
+    "confidence": 0.84,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-002"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-002"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-021",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0050",
+    "rule_family": "AI_POSITIONING",
+    "entity": "DCS Employment",
+    "domain": "ai_positioning",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence rev",
+    "statement": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "AI should be positioned as a component of rule authoring, governance, gap analysis, evidence review, workflow, and controlled orchestration only where tied to real work.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-006"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-006"
+    ],
+    "confidence": 0.84,
+    "status": "TESTED",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-004"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 1,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-004"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": true
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-024",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0053",
+    "rule_family": "OUTCOME_LEARNING",
+    "entity": "DCS Employment",
+    "domain": "outcome_learning",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, ",
+    "statement": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, compensation, and workflow intelligence.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, compensation, and workflow intelligence.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-009"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-009"
+    ],
+    "confidence": 0.84,
+    "status": "REJECT",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 0,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": false,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-025",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0054",
+    "rule_family": "AGENT_ROUTING",
+    "entity": "DCS Employment",
+    "domain": "agent_routing",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Builder and independent verifier should be separated for material Employment artifacts; model as",
+    "statement": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Builder and independent verifier should be separated for material Employment artifacts; model assignment should be dynamic rather than permanently hard-coded.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-010"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-010"
+    ],
+    "confidence": 0.84,
+    "status": "CONFLICT",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-001",
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:07:44.950Z",
+    "last_reviewed": "2026-09-09T09:07:44.950Z",
+    "last_tested": "2026-09-09T09:07:44.950Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 0,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": true,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-001",
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  }
+]

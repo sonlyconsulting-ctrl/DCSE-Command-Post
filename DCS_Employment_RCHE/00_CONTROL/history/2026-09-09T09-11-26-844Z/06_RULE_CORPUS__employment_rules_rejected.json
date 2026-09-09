@@ -1,0 +1,156 @@
+[
+  {
+    "rule_id": "EMP-RULE-009",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0038",
+    "rule_family": "PACKAGE",
+    "entity": "DCS Employment",
+    "domain": "package",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Employment packages are named, versioned, destination-specific, indexed, and include exclusions,",
+    "statement": "Employment packages are named, versioned, destination-specific, indexed, and include exclusions, submission notes, and completion audit.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Employment packages are named, versioned, destination-specific, indexed, and include exclusions, submission notes, and completion audit.",
+    "exception": "No automatic promotion to governing authority.",
+    "priority": "NORMAL",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-009"
+    ],
+    "evidence_refs": [
+      "SRC-002-seed_rules_json",
+      "EMP-SEED-009"
+    ],
+    "confidence": 0.9,
+    "status": "REJECT",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:09:47.850Z",
+    "last_reviewed": "2026-09-09T09:09:47.850Z",
+    "last_tested": "2026-09-09T09:09:47.850Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 0,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": false,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": false,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-023",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0052",
+    "rule_family": "COMMERCIAL_ROUTING",
+    "entity": "DCS Employment",
+    "domain": "commercial_routing",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Direct DCS employment pursuit remains DCS Employment; repeatable customer-facing employment plat",
+    "statement": "Direct DCS employment pursuit remains DCS Employment; repeatable customer-facing employment platform, training, membership, and delivery systems route to SC.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Direct DCS employment pursuit remains DCS Employment; repeatable customer-facing employment platform, training, membership, and delivery systems route to SC.",
+    "exception": "No automatic promotion to governing authority.",
+    "priority": "NORMAL",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-008"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-008"
+    ],
+    "confidence": 0.84,
+    "status": "REJECT",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:09:47.850Z",
+    "last_reviewed": "2026-09-09T09:09:47.850Z",
+    "last_tested": "2026-09-09T09:09:47.850Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 0,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": false,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": false,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  },
+  {
+    "rule_id": "EMP-RULE-024",
+    "source_extraction_id": "EXT-RULE_CANDIDATE-0053",
+    "rule_family": "OUTCOME_LEARNING",
+    "entity": "DCS Employment",
+    "domain": "outcome_learning",
+    "scope": "DCS Employment pilot candidate corpus",
+    "title": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, ",
+    "statement": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, compensation, and workflow intelligence.",
+    "condition": "When producing, evaluating, or governing DCS Employment material within this pilot.",
+    "action": "Closed, rejected, and unsuccessful opportunities remain harvestable for market, recruiter, fit, compensation, and workflow intelligence.",
+    "exception": "Preserved conflict requires review before promotion.",
+    "priority": "HIGH_REVIEW",
+    "authority_level": "CANDIDATE_UNSYNCHRONIZED",
+    "source_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-009"
+    ],
+    "evidence_refs": [
+      "SRC-003-rule_candidates_json",
+      "EMP-RC-009"
+    ],
+    "confidence": 0.84,
+    "status": "REJECT",
+    "version": "v1_candidate",
+    "supersedes": [],
+    "conflicts_with": [
+      "EMP-CON-003"
+    ],
+    "duplicate_of": null,
+    "created_at": "2026-09-09T09:09:47.850Z",
+    "last_reviewed": "2026-09-09T09:09:47.850Z",
+    "last_tested": "2026-09-09T09:09:47.850Z",
+    "last_fired": null,
+    "fire_count": 0,
+    "outcome_score": 0,
+    "promotion_authority": "DCS_OR_CANONICAL_GOVERNANCE_REQUIRED",
+    "admission_test": {
+      "is_rule": false,
+      "already_covered": false,
+      "redundant": false,
+      "conflicts": [
+        "EMP-CON-003"
+      ],
+      "authority_sufficient_for_candidate": true,
+      "evidence_sufficient": true,
+      "entity_specific": true,
+      "deterministic_or_advisory": "ADVISORY",
+      "testable": false,
+      "requires_exception": true,
+      "requires_dcs_promotion": true,
+      "depends_on_stale_doctrine": false
+    }
+  }
+]

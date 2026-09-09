@@ -1,0 +1,30 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "fields": [
+    "opportunity_id",
+    "source",
+    "vendor",
+    "recruiter",
+    "end_client",
+    "classification",
+    "fit_score",
+    "evidence_strength",
+    "compensation",
+    "work_model",
+    "travel",
+    "submission_channel",
+    "package_version",
+    "submission_confirmed",
+    "client_confirmation",
+    "response",
+    "interview",
+    "offer",
+    "disposition",
+    "reason",
+    "time_in_stage",
+    "lessons",
+    "rules_fired",
+    "outcome_effect"
+  ],
+  "note": "Schema prepared only; no missing values fabricated."
+}

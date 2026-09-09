@@ -1,0 +1,18 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "chain": [
+    "Opportunity",
+    "Source",
+    "Recruiter/Vendor",
+    "End Client",
+    "Package",
+    "Submission",
+    "Submission Evidence",
+    "Client Confirmation if known",
+    "Response",
+    "Interview",
+    "Disposition",
+    "Lessons"
+  ],
+  "unknown_policy": "Record UNKNOWN rather than convert lack of evidence into a negative assertion."
+}
