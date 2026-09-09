@@ -1,0 +1,1684 @@
+{
+  "task_id": "DCSE-RCHE-20260909-EMP-HARVEST-001",
+  "subtask_id": "DCSE-DDNA-PHYSICAL-TRANSFER-20260909-001",
+  "source_project_id": "nevgdyfpxdaloacuutal",
+  "destination_project_id": "uutpzaiqymyufljdgdaa",
+  "generated_at": "2026-09-09T14:54:37.695Z",
+  "source_execution": {
+    "database_name": "postgres",
+    "execution_role": "postgres"
+  },
+  "destination_execution": {
+    "database_name": "postgres",
+    "execution_role": "postgres"
+  },
+  "tables": {
+    "ddna_source_queue": {
+      "source_table": "dcse_cp.ddna_source_queue",
+      "destination_table": "dcse_ddna_legacy.ddna_source_queue",
+      "source_row_count": 129,
+      "destination_pre_transfer_count": 129,
+      "destination_post_transfer_count": 129,
+      "inserted_count": 0,
+      "ordered_source_columns": [
+        "id",
+        "source_type",
+        "source_ref_id",
+        "source_title",
+        "entity",
+        "lane",
+        "priority",
+        "status",
+        "assigned_model",
+        "assigned_agent_key",
+        "extraction_run_id",
+        "ps_lock",
+        "public_safe",
+        "queued_by",
+        "queued_at",
+        "extracted_at",
+        "notes",
+        "metadata",
+        "retry_count",
+        "max_retries",
+        "last_error",
+        "batch_id",
+        "content_snapshot"
+      ],
+      "ordered_destination_columns": [
+        "id",
+        "source_type",
+        "source_ref_id",
+        "source_title",
+        "entity",
+        "lane",
+        "priority",
+        "status",
+        "assigned_model",
+        "assigned_agent_key",
+        "extraction_run_id",
+        "ps_lock",
+        "public_safe",
+        "queued_by",
+        "queued_at",
+        "extracted_at",
+        "notes",
+        "metadata",
+        "retry_count",
+        "max_retries",
+        "last_error",
+        "batch_id",
+        "content_snapshot"
+      ],
+      "source_columns": [
+        {
+          "column_default": "gen_random_uuid()",
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO",
+          "ordinal_position": 1,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_type",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 2,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_ref_id",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 3,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_title",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 4,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "entity",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 5,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'DDNA'::dcse_cp.lane_code",
+          "column_name": "lane",
+          "data_type": "USER-DEFINED",
+          "is_nullable": "NO",
+          "ordinal_position": 6,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "3",
+          "column_name": "priority",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 7,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'queued'::text",
+          "column_name": "status",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 8,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "assigned_model",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 9,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "assigned_agent_key",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 10,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "extraction_run_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 11,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "false",
+          "column_name": "ps_lock",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 12,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "false",
+          "column_name": "public_safe",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 13,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'system'::text",
+          "column_name": "queued_by",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 14,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "now()",
+          "column_name": "queued_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO",
+          "ordinal_position": 15,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "extracted_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 16,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "notes",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 17,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "is_nullable": "NO",
+          "ordinal_position": 18,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "0",
+          "column_name": "retry_count",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 19,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "3",
+          "column_name": "max_retries",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 20,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "last_error",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 21,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "batch_id",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 22,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "content_snapshot",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 23,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        }
+      ],
+      "destination_columns": [
+        {
+          "column_default": null,
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO",
+          "ordinal_position": 1,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_type",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 2,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_ref_id",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 3,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_title",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 4,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "entity",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 5,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "lane",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 6,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "3",
+          "column_name": "priority",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 7,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "'queued'::text",
+          "column_name": "status",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 8,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "assigned_model",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 9,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "assigned_agent_key",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 10,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "extraction_run_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 11,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "false",
+          "column_name": "ps_lock",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 12,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "false",
+          "column_name": "public_safe",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 13,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "'system'::text",
+          "column_name": "queued_by",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 14,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "queued_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO",
+          "ordinal_position": 15,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "extracted_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 16,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "notes",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 17,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "'{}'::jsonb",
+          "column_name": "metadata",
+          "data_type": "jsonb",
+          "is_nullable": "NO",
+          "ordinal_position": 18,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "0",
+          "column_name": "retry_count",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 19,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "3",
+          "column_name": "max_retries",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 20,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "last_error",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 21,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "batch_id",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 22,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "content_snapshot",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 23,
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        }
+      ],
+      "source_constraints": [
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_12_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_13_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_14_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_15_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_18_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_19_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_1_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_20_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_2_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_3_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_4_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_5_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_6_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_7_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_37968_8_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "ddna_source_queue_priority_check",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "ddna_source_queue_source_type_check",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "ddna_source_queue_status_check",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{extraction_run_id}",
+          "constraint_name": "ddna_source_queue_extraction_run_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{id}",
+          "constraint_name": "ddna_source_queue_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_cp"
+        }
+      ],
+      "destination_constraints": [
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_12_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_13_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_14_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_15_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_18_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_19_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_1_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_20_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_2_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_3_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_4_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_5_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_6_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_7_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50128_8_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{id}",
+          "constraint_name": "ddna_source_queue_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "table_name": "ddna_source_queue",
+          "table_schema": "dcse_ddna_legacy"
+        }
+      ],
+      "mapping": [
+        {
+          "source": "dcse_cp.ddna_source_queue.id",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.source_type",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.source_type",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.source_ref_id",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.source_ref_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.source_title",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.source_title",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.entity",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.entity",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.lane",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.lane",
+          "transform": "enum label preserved as text"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.priority",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.priority",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.status",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.status",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.assigned_model",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.assigned_model",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.assigned_agent_key",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.assigned_agent_key",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.extraction_run_id",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.extraction_run_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.ps_lock",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.ps_lock",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.public_safe",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.public_safe",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.queued_by",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.queued_by",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.queued_at",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.queued_at",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.extracted_at",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.extracted_at",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.notes",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.notes",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.metadata",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.metadata",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.retry_count",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.retry_count",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.max_retries",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.max_retries",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.last_error",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.last_error",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.batch_id",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.batch_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_source_queue.content_snapshot",
+          "destination": "dcse_ddna_legacy.ddna_source_queue.content_snapshot",
+          "transform": "identity"
+        }
+      ]
+    },
+    "ddna_ollama_jobs": {
+      "source_table": "dcse_cp.ddna_ollama_jobs",
+      "destination_table": "dcse_ddna_legacy.ddna_ollama_jobs",
+      "source_row_count": 40,
+      "destination_pre_transfer_count": 40,
+      "destination_post_transfer_count": 40,
+      "inserted_count": 0,
+      "ordered_source_columns": [
+        "id",
+        "job_key",
+        "source_queue_id",
+        "model_id",
+        "provider",
+        "endpoint",
+        "prompt_template",
+        "raw_output",
+        "parsed_output",
+        "characteristics_extracted",
+        "status",
+        "error_message",
+        "tokens_used",
+        "duration_ms",
+        "ps_lock",
+        "output_provenance_logged",
+        "artifact_ref_id",
+        "started_at",
+        "completed_at",
+        "created_at",
+        "batch_id",
+        "retry_count",
+        "model_version",
+        "prompt_tokens_est"
+      ],
+      "ordered_destination_columns": [
+        "id",
+        "job_key",
+        "source_queue_id",
+        "model_id",
+        "provider",
+        "endpoint",
+        "prompt_template",
+        "raw_output",
+        "parsed_output",
+        "characteristics_extracted",
+        "status",
+        "error_message",
+        "tokens_used",
+        "duration_ms",
+        "ps_lock",
+        "output_provenance_logged",
+        "artifact_ref_id",
+        "started_at",
+        "completed_at",
+        "created_at",
+        "batch_id",
+        "retry_count",
+        "model_version",
+        "prompt_tokens_est"
+      ],
+      "source_columns": [
+        {
+          "column_default": "gen_random_uuid()",
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO",
+          "ordinal_position": 1,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "job_key",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 2,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_queue_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 3,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "model_id",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 4,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'ollama'::text",
+          "column_name": "provider",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 5,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'http://localhost:11434'::text",
+          "column_name": "endpoint",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 6,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "prompt_template",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 7,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "raw_output",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 8,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "parsed_output",
+          "data_type": "jsonb",
+          "is_nullable": "YES",
+          "ordinal_position": 9,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "0",
+          "column_name": "characteristics_extracted",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 10,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "'queued'::text",
+          "column_name": "status",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 11,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "error_message",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 12,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "tokens_used",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 13,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "duration_ms",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 14,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "false",
+          "column_name": "ps_lock",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 15,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "false",
+          "column_name": "output_provenance_logged",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 16,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "artifact_ref_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 17,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "started_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 18,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 19,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "now()",
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO",
+          "ordinal_position": 20,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "batch_id",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 21,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": "0",
+          "column_name": "retry_count",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 22,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "model_version",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 23,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "column_default": null,
+          "column_name": "prompt_tokens_est",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 24,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        }
+      ],
+      "destination_columns": [
+        {
+          "column_default": null,
+          "column_name": "id",
+          "data_type": "uuid",
+          "is_nullable": "NO",
+          "ordinal_position": 1,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "job_key",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 2,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "source_queue_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 3,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "model_id",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 4,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "provider",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 5,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "endpoint",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 6,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "prompt_template",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 7,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "raw_output",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 8,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "parsed_output",
+          "data_type": "jsonb",
+          "is_nullable": "YES",
+          "ordinal_position": 9,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "characteristics_extracted",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 10,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "status",
+          "data_type": "text",
+          "is_nullable": "NO",
+          "ordinal_position": 11,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "error_message",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 12,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "tokens_used",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 13,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "duration_ms",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 14,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "false",
+          "column_name": "ps_lock",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 15,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "false",
+          "column_name": "output_provenance_logged",
+          "data_type": "boolean",
+          "is_nullable": "NO",
+          "ordinal_position": 16,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "artifact_ref_id",
+          "data_type": "uuid",
+          "is_nullable": "YES",
+          "ordinal_position": 17,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "started_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 18,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "completed_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "YES",
+          "ordinal_position": 19,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "created_at",
+          "data_type": "timestamp with time zone",
+          "is_nullable": "NO",
+          "ordinal_position": 20,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "batch_id",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 21,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": "0",
+          "column_name": "retry_count",
+          "data_type": "integer",
+          "is_nullable": "NO",
+          "ordinal_position": 22,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "model_version",
+          "data_type": "text",
+          "is_nullable": "YES",
+          "ordinal_position": 23,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "column_default": null,
+          "column_name": "prompt_tokens_est",
+          "data_type": "integer",
+          "is_nullable": "YES",
+          "ordinal_position": 24,
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        }
+      ],
+      "source_constraints": [
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_11_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_15_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_16_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_1_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_20_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_22_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_2_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_4_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_5_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_6_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "37048_38036_7_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "ddna_ollama_jobs_status_check",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{artifact_ref_id}",
+          "constraint_name": "ddna_ollama_jobs_artifact_ref_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{source_queue_id}",
+          "constraint_name": "ddna_ollama_jobs_source_queue_id_fkey",
+          "constraint_type": "FOREIGN KEY",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{id}",
+          "constraint_name": "ddna_ollama_jobs_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        },
+        {
+          "columns": "{job_key}",
+          "constraint_name": "ddna_ollama_jobs_job_key_key",
+          "constraint_type": "UNIQUE",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_cp"
+        }
+      ],
+      "destination_constraints": [
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_11_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_15_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_16_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_1_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_20_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_22_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_2_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_4_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_5_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_6_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{}",
+          "constraint_name": "49952_50179_7_not_null",
+          "constraint_type": "CHECK",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        },
+        {
+          "columns": "{id}",
+          "constraint_name": "ddna_ollama_jobs_pkey",
+          "constraint_type": "PRIMARY KEY",
+          "table_name": "ddna_ollama_jobs",
+          "table_schema": "dcse_ddna_legacy"
+        }
+      ],
+      "mapping": [
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.id",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.job_key",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.job_key",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.source_queue_id",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.source_queue_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.model_id",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.model_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.provider",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.provider",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.endpoint",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.endpoint",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.prompt_template",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.prompt_template",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.raw_output",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.raw_output",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.parsed_output",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.parsed_output",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.characteristics_extracted",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.characteristics_extracted",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.status",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.status",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.error_message",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.error_message",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.tokens_used",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.tokens_used",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.duration_ms",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.duration_ms",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.ps_lock",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.ps_lock",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.output_provenance_logged",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.output_provenance_logged",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.artifact_ref_id",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.artifact_ref_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.started_at",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.started_at",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.completed_at",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.completed_at",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.created_at",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.created_at",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.batch_id",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.batch_id",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.retry_count",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.retry_count",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.model_version",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.model_version",
+          "transform": "identity"
+        },
+        {
+          "source": "dcse_cp.ddna_ollama_jobs.prompt_tokens_est",
+          "destination": "dcse_ddna_legacy.ddna_ollama_jobs.prompt_tokens_est",
+          "transform": "identity"
+        }
+      ]
+    }
+  }
+}
