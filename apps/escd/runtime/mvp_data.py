@@ -74,6 +74,20 @@ def provider_status() -> dict:
     }
 
 
+def _openai_output_text(data: dict) -> str:
+    direct = data.get("output_text")
+    if isinstance(direct, str) and direct.strip():
+        return direct.strip()
+    chunks: list[str] = []
+    for output in data.get("output") or []:
+        if output.get("type") != "message":
+            continue
+        for part in output.get("content") or []:
+            if part.get("type") == "output_text" and part.get("text"):
+                chunks.append(str(part["text"]))
+    return "\n".join(chunks).strip()
+
+
 def chat(provider: str, messages: list[dict]) -> dict:
     provider = provider.lower().strip()
     clean = []
@@ -90,15 +104,14 @@ def chat(provider: str, messages: list[dict]) -> dict:
         if not key:
             raise MVPServiceError("openai_not_configured")
         model = os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6"
-        payload = {"model": model, "messages": clean}
         _, data = _http_json(
-            "https://api.openai.com/v1/chat/completions",
+            "https://api.openai.com/v1/responses",
             method="POST",
             headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-            payload=payload,
+            payload={"model": model, "input": clean},
             timeout=60,
         )
-        text = (((data or {}).get("choices") or [{}])[0].get("message") or {}).get("content")
+        text = _openai_output_text(data or {})
         if not text:
             raise MVPServiceError("openai_empty_response")
         return {"provider": "openai", "model": (data or {}).get("model") or model, "content": text}
