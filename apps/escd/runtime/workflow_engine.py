@@ -86,8 +86,13 @@ def validate_template_payload(payload: Dict[str, Any], parent: Dict[str, Any] | 
             errors.append(f"duplicate_step_id:{step_id}")
         else:
             seen_step_ids.add(step_id)
-        if raw_step.get("autonomy_class") not in AUTONOMY:
+        autonomy = raw_step.get("autonomy_class")
+        if autonomy not in AUTONOMY:
             errors.append(f"invalid_autonomy:{step_id or 'unknown'}")
+        if autonomy == "A3_APPROVAL_REQUIRED" and not bool(raw_step.get("approval_required")):
+            errors.append(f"approval_required_for_a3:{step_id or 'unknown'}")
+        if autonomy == "A4_PROHIBITED" and raw_step.get("next_step_on_success"):
+            errors.append(f"prohibited_step_cannot_advance:{step_id or 'unknown'}")
         if contains_secret(raw_step):
             errors.append(f"secret_prohibited:{step_id or 'unknown'}")
 
@@ -143,6 +148,7 @@ def instantiate_workflow(template: Dict[str, Any], binding: Dict[str, Any]) -> D
     context_type = str(binding.get("context_type") or "").lower()
     context_ref = str(binding.get("context_ref") or "").strip()
     source_refs = _clean_refs(binding.get("source_refs", []))
+    job_id = str(binding.get("job_id") or "").strip() or None
     if context_type not in CONTEXT_TYPES:
         raise ValueError("invalid_context_type")
     if context_type not in [str(x).lower() for x in template.get("supported_context_types", [])]:
@@ -168,20 +174,21 @@ def instantiate_workflow(template: Dict[str, Any], binding: Dict[str, Any]) -> D
             "context_ref": context_ref,
             "bindings": bindings,
             "source_refs": source_refs,
+            "job_id": job_id,
         })
 
-    status = "planned"
-    executable = template.get("status") == "approved"
+    executable = template.get("status") == "approved" and bool(job_id)
     return {
         "instance_key": instance_key,
         "template_id": template["template_id"],
         "template_version": template["version"],
         "template_fingerprint": template["definition_fingerprint"],
         "template_type": template["template_type"],
+        "job_id": job_id,
         "context_type": context_type,
         "context_ref": context_ref,
         "bindings": bindings,
-        "status": status,
+        "status": "planned",
         "current_step_id": None,
         "source_refs": source_refs,
         "evidence_refs": _clean_refs(binding.get("evidence_refs", [])),
@@ -224,11 +231,10 @@ def instantiate_steps(template: Dict[str, Any], instance_id: str) -> List[Dict[s
     return out
 
 
-def step_readiness(steps: Iterable[Dict[str, Any]], approvals: Iterable[Dict[str, Any]] = (), evidence_refs: Iterable[str] = ()) -> List[Dict[str, Any]]:
+def step_readiness(steps: Iterable[Dict[str, Any]], approvals: Iterable[Dict[str, Any]] = ()) -> List[Dict[str, Any]]:
     rows = [dict(x) for x in steps]
     by_id = {str(x.get("step_id")): x for x in rows}
     approved_keys = {str(a.get("action_key")) for a in approvals if a.get("status") == "approved"}
-    evidence = set(_clean_refs(evidence_refs))
     terminal = {"completed", "failed", "skipped", "cancelled"}
 
     for row in rows:
@@ -240,13 +246,13 @@ def step_readiness(steps: Iterable[Dict[str, Any]], approvals: Iterable[Dict[str
             row["status"] = "pending"
             row["blocked_reason"] = "dependency_incomplete"
             continue
+        if row.get("autonomy_class") == "A4_PROHIBITED":
+            row["status"] = "waiting"
+            row["blocked_reason"] = "prohibited_action"
+            continue
         if row.get("approval_required") and f"workflow_step:{row.get('step_id')}" not in approved_keys:
             row["status"] = "waiting_approval"
             row["blocked_reason"] = "approval_required"
-            continue
-        if row.get("evidence_required") and status == "completed" and not evidence:
-            row["status"] = "waiting"
-            row["blocked_reason"] = "evidence_required"
             continue
         row["status"] = "ready"
         row["blocked_reason"] = None
@@ -273,6 +279,23 @@ def transition_instance(current: str, target: str) -> Tuple[bool, str]:
     if current not in graph:
         return False, "unknown_workflow_state"
     return (True, "allowed") if target in graph[current] else (False, "invalid_workflow_transition")
+
+
+def transition_step(current: str, target: str) -> Tuple[bool, str]:
+    graph = {
+        "pending": {"ready", "waiting_approval", "waiting", "cancelled"},
+        "ready": {"running", "waiting_approval", "cancelled"},
+        "running": {"waiting_approval", "waiting", "completed", "failed", "cancelled"},
+        "waiting_approval": {"ready", "running", "waiting", "cancelled"},
+        "waiting": {"ready", "running", "failed", "cancelled"},
+        "failed": {"ready", "cancelled"},
+        "completed": set(),
+        "skipped": set(),
+        "cancelled": set(),
+    }
+    if current not in graph:
+        return False, "unknown_workflow_step_state"
+    return (True, "allowed") if target in graph[current] else (False, "invalid_workflow_step_transition")
 
 
 def workflow_view(instance: Dict[str, Any], template: Dict[str, Any], steps: Iterable[Dict[str, Any]], events: Iterable[Dict[str, Any]] = ()) -> Dict[str, Any]:
