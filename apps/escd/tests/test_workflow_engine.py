@@ -11,6 +11,7 @@ from apps.escd.runtime.workflow_engine import (
     stable_fingerprint,
     step_readiness,
     transition_instance,
+    transition_step,
     validate_template_payload,
     workflow_view,
 )
@@ -95,8 +96,7 @@ class WorkflowTemplateTests(unittest.TestCase):
         self.assertEqual(normalized["version"], "1.0.0")
         self.assertEqual(normalized["template_type"], "REVIEW")
         self.assertEqual(len(normalized["definition_fingerprint"]), 64)
-        again = normalize_template(base_template())
-        self.assertEqual(normalized["definition_fingerprint"], again["definition_fingerprint"])
+        self.assertEqual(normalized["definition_fingerprint"], normalize_template(base_template())["definition_fingerprint"])
 
     def test_all_planned_template_types_are_valid(self):
         for template_type in ["MAKE", "FIX", "REVIEW", "RELEASE", "MONITOR", "ROUTINE", "RESEARCH", "COMMUNICATE", "DECIDE", "DO"]:
@@ -105,88 +105,80 @@ class WorkflowTemplateTests(unittest.TestCase):
 
     def test_child_cannot_weaken_parent_controls(self):
         parent = normalize_template(base_template())
-        child = base_template(
-            template_id="CHILD-REVIEW",
-            version="1.0.0",
-            parent_controls={
-                "approval_required": False,
-                "evidence_required": True,
-                "security_required": True,
-                "rollback_required": True,
-            },
-        )
-        errors = validate_template_payload(child, parent)
-        self.assertIn("weakened:approval_required", errors)
+        child = base_template(template_id="CHILD-REVIEW", parent_controls={
+            "approval_required": False,
+            "evidence_required": True,
+            "security_required": True,
+            "rollback_required": True,
+        })
+        self.assertIn("weakened:approval_required", validate_template_payload(child, parent))
         with self.assertRaisesRegex(ValueError, "weakened:approval_required"):
             effective_controls(parent["effective_controls"], child["parent_controls"])
 
-    def test_secret_like_template_content_is_rejected(self):
-        payload = base_template(scope="api_key=do-not-store")
-        self.assertIn("secret_prohibited", validate_template_payload(payload))
-
-    def test_duplicate_step_id_is_rejected(self):
+    def test_secret_and_duplicate_step_rejected(self):
+        self.assertIn("secret_prohibited", validate_template_payload(base_template(scope="api_key=do-not-store")))
         payload = base_template()
         payload["steps"] = [payload["steps"][0], dict(payload["steps"][0])]
         self.assertIn("duplicate_step_id:inspect", validate_template_payload(payload))
+
+    def test_a3_requires_explicit_approval_flag(self):
+        payload = base_template()
+        payload["steps"][0] = {**payload["steps"][0], "autonomy_class": "A3_APPROVAL_REQUIRED", "approval_required": False}
+        self.assertIn("approval_required_for_a3:inspect", validate_template_payload(payload))
+
+    def test_a4_cannot_advance_success_path(self):
+        payload = base_template()
+        payload["steps"][0] = {**payload["steps"][0], "autonomy_class": "A4_PROHIBITED", "next_step_on_success": "decide"}
+        self.assertIn("prohibited_step_cannot_advance:inspect", validate_template_payload(payload))
 
 
 class WorkflowInstanceTests(unittest.TestCase):
     def setUp(self):
         self.template = normalize_template(base_template())
 
-    def test_instance_binds_exact_template_version_and_context(self):
-        instance = instantiate_workflow(self.template, {
-            "context_type": "project",
-            "context_ref": "project:escd",
-            "bindings": {"target": "ESCD"},
-            "source_refs": ["github:issue-70"],
-        })
-        self.assertEqual(instance["template_id"], "BASE-REVIEW")
-        self.assertEqual(instance["template_version"], "1.0.0")
-        self.assertEqual(instance["template_fingerprint"], self.template["definition_fingerprint"])
-        self.assertTrue(instance["execution_authorized"])
-        self.assertEqual(instance["status"], "planned")
-
-    def test_candidate_template_does_not_claim_execution_authority(self):
-        template = normalize_template(base_template(status="candidate"))
-        instance = instantiate_workflow(template, {
-            "context_type": "general",
-            "context_ref": "candidate:test",
-            "bindings": {"target": "test"},
-            "source_refs": ["test:source"],
-        })
-        self.assertFalse(instance["execution_authorized"])
-
-    def test_missing_required_binding_blocks_instantiation(self):
-        with self.assertRaisesRegex(ValueError, "workflow_binding_missing:target"):
-            instantiate_workflow(self.template, {
-                "context_type": "project",
-                "context_ref": "project:escd",
-                "bindings": {},
-                "source_refs": ["github:issue-70"],
-            })
-
-    def test_unsupported_context_blocks_instantiation(self):
-        with self.assertRaisesRegex(ValueError, "unsupported_context_type"):
-            instantiate_workflow(self.template, {
-                "context_type": "person",
-                "context_ref": "person:1",
-                "bindings": {"target": "person:1"},
-                "source_refs": ["contacts:1"],
-            })
-
-    def test_instance_key_is_deterministic(self):
+    def _binding(self, **overrides):
         binding = {
             "context_type": "project",
             "context_ref": "project:escd",
             "bindings": {"target": "ESCD"},
             "source_refs": ["github:issue-70"],
+            "job_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
         }
-        first = instantiate_workflow(self.template, binding)
-        second = instantiate_workflow(self.template, binding)
+        binding.update(overrides)
+        return binding
+
+    def test_instance_binds_exact_template_version_context_and_job(self):
+        instance = instantiate_workflow(self.template, self._binding())
+        self.assertEqual(instance["template_id"], "BASE-REVIEW")
+        self.assertEqual(instance["template_version"], "1.0.0")
+        self.assertEqual(instance["template_fingerprint"], self.template["definition_fingerprint"])
+        self.assertEqual(instance["job_id"], "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+        self.assertTrue(instance["execution_authorized"])
+        self.assertEqual(instance["status"], "planned")
+
+    def test_approved_template_without_job_is_plan_only(self):
+        instance = instantiate_workflow(self.template, self._binding(job_id=None))
+        self.assertFalse(instance["execution_authorized"])
+
+    def test_candidate_template_does_not_claim_execution_authority(self):
+        template = normalize_template(base_template(status="candidate"))
+        instance = instantiate_workflow(template, self._binding(context_type="general", context_ref="candidate:test"))
+        self.assertFalse(instance["execution_authorized"])
+
+    def test_missing_required_binding_blocks_instantiation(self):
+        with self.assertRaisesRegex(ValueError, "workflow_binding_missing:target"):
+            instantiate_workflow(self.template, self._binding(bindings={}))
+
+    def test_unsupported_context_blocks_instantiation(self):
+        with self.assertRaisesRegex(ValueError, "unsupported_context_type"):
+            instantiate_workflow(self.template, self._binding(context_type="person", context_ref="person:1"))
+
+    def test_instance_key_is_deterministic(self):
+        first = instantiate_workflow(self.template, self._binding())
+        second = instantiate_workflow(self.template, self._binding())
         self.assertEqual(first["instance_key"], second["instance_key"])
 
-    def test_step_readiness_respects_dependencies_and_approval(self):
+    def test_step_readiness_respects_dependencies_approval_and_prohibited(self):
         steps = instantiate_steps(self.template, "wf-1")
         prepared = step_readiness(steps)
         self.assertEqual(prepared[0]["status"], "ready")
@@ -201,28 +193,24 @@ class WorkflowInstanceTests(unittest.TestCase):
         decide = [x for x in approved if x["step_id"] == "decide"][0]
         self.assertEqual(decide["status"], "ready")
 
+        prohibited = [{**steps[0], "autonomy_class": "A4_PROHIBITED", "status": "pending"}]
+        self.assertEqual(step_readiness(prohibited)[0]["blocked_reason"], "prohibited_action")
+
     def test_next_step_is_deterministic(self):
-        steps = [
-            {"step_id": "b", "sequence_no": 2, "status": "ready"},
-            {"step_id": "a", "sequence_no": 1, "status": "ready"},
-        ]
+        steps = [{"step_id": "b", "sequence_no": 2, "status": "ready"}, {"step_id": "a", "sequence_no": 1, "status": "ready"}]
         self.assertEqual(next_step(steps)["step_id"], "a")
 
-    def test_transition_contract_blocks_invalid_shortcut(self):
+    def test_transition_contracts_block_shortcuts(self):
         self.assertEqual(transition_instance("planned", "running"), (True, "allowed"))
         self.assertEqual(transition_instance("planned", "completed"), (False, "invalid_workflow_transition"))
         self.assertEqual(transition_instance("completed", "running"), (False, "invalid_workflow_transition"))
+        self.assertEqual(transition_step("ready", "running"), (True, "allowed"))
+        self.assertEqual(transition_step("pending", "completed"), (False, "invalid_workflow_step_transition"))
 
     def test_operator_view_exposes_template_step_and_control_state(self):
-        instance = instantiate_workflow(self.template, {
-            "context_type": "project",
-            "context_ref": "project:escd",
-            "bindings": {"target": "ESCD"},
-            "source_refs": ["github:issue-70"],
-        })
+        instance = instantiate_workflow(self.template, self._binding())
         instance["id"] = "wf-1"
-        steps = step_readiness(instantiate_steps(self.template, "wf-1"))
-        view = workflow_view(instance, self.template, steps)
+        view = workflow_view(instance, self.template, step_readiness(instantiate_steps(self.template, "wf-1")))
         self.assertTrue(view["operator_can_inspect"])
         self.assertFalse(view["external_execution_performed"])
         self.assertEqual(view["template"]["version"], "1.0.0")
