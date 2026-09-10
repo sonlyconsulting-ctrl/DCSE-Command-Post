@@ -6,8 +6,9 @@ import unittest
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 
-from apps.escd.api.index import _parse_ack_timestamp
+from apps.escd.api.index import _parse_ack_timestamp, _verification_key
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
+from apps.escd.runtime.repository import SupabaseRLSClient
 from apps.escd.runtime.service import RuntimeRuleError, require_job_transition, require_approval_decision, next_best_action, briefing_snapshot
 from apps.escd.runtime.render import render_job_row
 
@@ -89,6 +90,48 @@ class RuleTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeRuleError, "invalid_acknowledged_through"):
             _parse_ack_timestamp("2026-09-09T20:00:00")
 
+    def test_verification_key_is_deterministic_and_scope_sensitive(self):
+        first = _verification_key("job-1", "evidence-1", "verified", "test_result")
+        self.assertEqual(first, _verification_key("job-1", "evidence-1", "verified", "test_result"))
+        self.assertNotEqual(first, _verification_key("job-1", "evidence-2", "verified", "test_result"))
+        self.assertNotEqual(first, _verification_key("job-1", "evidence-1", "failed", "test_result"))
+        self.assertTrue(first.startswith("escd-v1-"))
+
+
+class RepositoryTests(unittest.TestCase):
+    def test_verification_create_is_idempotent_by_key(self):
+        class FakeRepo(SupabaseRLSClient):
+            def __init__(self):
+                self.calls = []
+                self.stored = None
+
+            def _call(self, method, path, payload=None):
+                self.calls.append((method, path, payload))
+                if method == "GET" and path.startswith("escd_job_verifications?"):
+                    return [self.stored] if self.stored else []
+                if method == "POST" and path == "escd_job_verifications":
+                    self.stored = dict(payload)
+                    self.stored["id"] = "v1"
+                    return [self.stored]
+                raise AssertionError((method, path, payload))
+
+        repo = FakeRepo()
+        kwargs = dict(
+            verification_key="escd-v1-key",
+            job_id="j1",
+            evidence_id="e1",
+            outcome="verified",
+            verification_method="test_result",
+            notes="passed",
+        )
+        first = repo.create_job_verification(**kwargs)
+        second = repo.create_job_verification(**kwargs)
+        self.assertEqual(first, second)
+        posts = [call for call in repo.calls if call[0] == "POST"]
+        self.assertEqual(len(posts), 1)
+        self.assertEqual(posts[0][2]["job_id"], "j1")
+        self.assertEqual(posts[0][2]["evidence_id"], "e1")
+
 
 class RenderingTests(unittest.TestCase):
     def test_rendering_escapes_untrusted_text(self):
@@ -104,6 +147,7 @@ class StaticContractTests(unittest.TestCase):
         self.repo = (ROOT / "apps/escd/runtime/repository.py").read_text()
         self.web = (ROOT / "apps/escd/web/index.html").read_text()
         self.mig = (ROOT / "supabase/migrations/20260909_escd_runtime_state.sql").read_text()
+        self.verify_mig = (ROOT / "supabase/migrations/20260910_escd_exit_verification.sql").read_text()
 
     def test_no_service_role_runtime(self):
         self.assertNotIn("SUPABASE_SERVICE_ROLE_KEY", self.api)
@@ -127,6 +171,15 @@ class StaticContractTests(unittest.TestCase):
     def test_completion_does_not_trust_request_exit_assertion(self):
         self.assertNotIn('exit_criteria_met=bool(payload.get("exit_criteria_met"))', self.api)
         self.assertIn('exit_criteria_met=bool(job.get("exit_criteria_met"))', self.api)
+
+    def test_verification_endpoint_is_persisted_evidence_bound(self):
+        self.assertIn('/api/escd/jobs/verify', self.api)
+        self.assertIn('repo.get_evidence(evidence_id)', self.api)
+        self.assertIn('verification_evidence_job_mismatch', self.api)
+        self.assertIn('repo.create_job_verification(', self.api)
+        self.assertIn('job.get("status") != "running"', self.api)
+        self.assertIn('create_job_verification', self.repo)
+        self.assertIn('get_job_verification', self.repo)
 
     def test_approval_lookup_is_action_scoped_and_deterministic(self):
         self.assertIn('action_key = f"job_transition:{target}"', self.api)
@@ -164,8 +217,22 @@ class StaticContractTests(unittest.TestCase):
         self.assertIn("requested_by_user_id = auth.uid()", self.mig)
         self.assertIn("decided_by_user_id IS NULL OR decided_by_user_id = auth.uid()", self.mig)
 
+    def test_exit_verification_migration_is_rls_append_only_and_derived(self):
+        self.assertIn("CREATE TABLE IF NOT EXISTS dcse_cp.escd_job_verifications", self.verify_mig)
+        self.assertIn("ENABLE ROW LEVEL SECURITY", self.verify_mig)
+        self.assertIn("FORCE ROW LEVEL SECURITY", self.verify_mig)
+        self.assertIn("verifier_user_id = auth.uid()", self.verify_mig)
+        self.assertIn("GRANT SELECT, INSERT ON dcse_cp.escd_job_verifications TO authenticated", self.verify_mig)
+        self.assertNotIn("GRANT UPDATE", self.verify_mig)
+        self.assertNotIn("GRANT DELETE", self.verify_mig)
+        self.assertIn("verification_evidence_job_mismatch", self.verify_mig)
+        self.assertIn("verification_job_not_running", self.verify_mig)
+        self.assertIn("SET exit_criteria_met = (NEW.outcome = 'verified')", self.verify_mig)
+        self.assertIn("'exit_criteria_verification'", self.verify_mig)
+
     def test_no_employment_seed_or_aegis_runtime_identity(self):
-        self.assertNotIn("dcs_employment", self.mig.lower())
+        combined = (self.mig + self.verify_mig).lower()
+        self.assertNotIn("dcs_employment", combined)
         self.assertNotIn("AEGIS", self.web)
 
 
