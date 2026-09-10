@@ -13,6 +13,7 @@ on:
       - 'supabase/migrations/20260910_escd_exit_verification.sql'
       - 'supabase/migrations/20260910_escd_exec_pa_state.sql'
       - 'supabase/migrations/20260910_escd_exec_pa_transition_alignment.sql'
+      - 'supabase/migrations/20260910_escd_exec_pa_source_links.sql'
       - '.github/workflows/escd-review.yml'
   workflow_dispatch:
 
@@ -94,8 +95,10 @@ jobs:
           psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/migrations/20260910_escd_exit_verification.sql
           psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/migrations/20260910_escd_exec_pa_state.sql
           psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/migrations/20260910_escd_exec_pa_transition_alignment.sql
+          psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f supabase/migrations/20260910_escd_exec_pa_source_links.sql
 
       - name: Run ESCD SQL behavior checks
         run: |
           psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f apps/escd/tests/sql/test_runtime_migrations.sql
           psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f apps/escd/tests/sql/test_exec_pa_migration.sql
+          psql -h 127.0.0.1 -U postgres -d postgres -v ON_ERROR_STOP=1 -f apps/escd/tests/sql/test_exec_pa_source_links.sql
