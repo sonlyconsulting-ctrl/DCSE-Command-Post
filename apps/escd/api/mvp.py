@@ -13,7 +13,7 @@ from apps.escd.runtime.mvp_data import MVPServiceError, chat, list_assets, list_
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.2"
+    server_version = "ESCD-MVP/0.3"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -70,17 +70,40 @@ class handler(BaseHTTPRequestHandler):
         if not token:
             raise AuthError("sign_in_failed")
         auth, _ = self._repo_for_token(token)
-        return {
-            "access_token": token,
-            "expires_in": int(session.get("expires_in") or 3600),
-            "user": {"email": auth.email},
-        }
+        return {"access_token": token, "expires_in": int(session.get("expires_in") or 3600), "user": {"email": auth.email}}
+
+    def _patch_item_governed(self, repo: SupabaseRLSClient, item_id: str, update: dict):
+        current = repo.get_item(item_id)
+        if not current:
+            raise RepositoryError("item_not_found")
+        target = update.get("status")
+        if not target or target == current.get("status"):
+            return repo.patch_item(item_id, update)
+
+        current_status = str(current.get("status") or "")
+        if target == "active" and current_status == "captured":
+            first = dict(update)
+            first["status"] = "triaged"
+            repo.patch_item(item_id, first)
+            return repo.patch_item(item_id, {"status": "active"})
+        if target == "completed" and current_status == "captured":
+            repo.patch_item(item_id, {"status": "triaged"})
+            repo.patch_item(item_id, {"status": "active"})
+            rest = dict(update)
+            rest["status"] = "completed"
+            return repo.patch_item(item_id, rest)
+        if target == "archived" and current_status not in {"completed", "cancelled"}:
+            first = dict(update)
+            first["status"] = "cancelled"
+            repo.patch_item(item_id, first)
+            return repo.patch_item(item_id, {"status": "archived"})
+        return repo.patch_item(item_id, update)
 
     def do_GET(self):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.2", "providers": provider_status()})
+            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.3", "providers": provider_status()})
             return
         try:
             repo = self._auth()
@@ -129,7 +152,7 @@ class handler(BaseHTTPRequestHandler):
                     "item_key": key,
                     "title": title,
                     "summary": payload.get("notes"),
-                    "status": "captured",
+                    "status": "captured" if kind == "idea" else "active",
                     "task_class": "CAPTURE" if kind == "idea" else "DO",
                     "context": kind,
                     "actionable": kind == "task",
@@ -143,9 +166,7 @@ class handler(BaseHTTPRequestHandler):
                 })
                 self._json(201, {"ok": True, "item": item})
             elif path == "/api/mvp/chat":
-                provider = str(payload.get("provider") or "openai")
-                messages = payload.get("messages") or []
-                self._json(200, {"ok": True, "response": chat(provider, messages)})
+                self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -156,8 +177,7 @@ class handler(BaseHTTPRequestHandler):
             self._json(500, {"error": "internal_error"})
 
     def do_PATCH(self):
-        path = urlparse(self.path).path
-        if path != "/api/mvp/items":
+        if urlparse(self.path).path != "/api/mvp/items":
             self._json(404, {"error": "not_found"}); return
         try:
             repo = self._auth()
@@ -167,7 +187,7 @@ class handler(BaseHTTPRequestHandler):
                 self._json(400, {"error": "id_required"}); return
             allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class"}
             update = {k: v for k, v in payload.items() if k in allowed}
-            self._json(200, {"ok": True, "item": repo.patch_item(item_id, update)})
+            self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError) as exc:
