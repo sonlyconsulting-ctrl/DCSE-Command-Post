@@ -1,56 +1,77 @@
 # ESCD IMPLEMENTATION REPORT
 
-**Task ID:** DCSE-ESCD-001-EXEC-PA-003  
+**Task ID:** DCSE-ESCD-001-WORKFLOW-004  
 **Parent:** DCSE-ESCD-001  
-**Tranche:** Integrated Executive Stream + Personal Assistant  
+**Tranche:** Reusable Workflow Orchestration + Operator UI  
 **Status:** CANDIDATE IMPLEMENTATION COMPLETE
 
 ## Scope completed
 
-This tranche implements only the authorized combined Tranche C and Tranche D scope from `DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md`.
+This tranche implements only authorized Tranche E from `DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md`, with the operator UI explicitly included because backend-only workflow validation is insufficient for product release validation.
 
 Implemented:
 
-- persisted Executive Stream projection for `NOW / APPROVAL / WAITING / WATCH / BACKLOG`
-- deterministic Next Best Action using the existing ESCD policy engine
-- terminal-item exclusion and blocked/waiting/watch/approval routing
-- persisted briefing integration using item/job events and acknowledgement cursor
-- source-aware intake with deterministic dedupe and append-only structured source links
-- project and dependency fields for ESCD-native item state
-- decision records with facts, unknowns, alternatives, tradeoffs, evidence and source refs
-- bounded retry/failure evaluation using existing policy controls
-- append-oriented item history
-- calendar C1/C2 conflict evaluation and source-bound meeting-preparation contract
-- communication triage and candidate drafting contract with no external send
-- source-separated contact/person context with sensitive-inference rejection
-- versioned routines with immutable configuration and pause/cancel runtime state
-- notification evaluation and persisted intent only, with no delivery claim
-- natural-language command parsing into an explicit non-executing operation contract
-- file/document routing proposal contract preserving source-native authority
-- mobile quick-action interpretation without bypassing governed endpoints
-- responsive ESCD user surface for five queues, capture, command interpretation, briefing and delegated jobs
+- reusable workflow-template contract for `MAKE / FIX / REVIEW / RELEASE / MONITOR / ROUTINE / RESEARCH / COMMUNICATE / DECIDE / DO`
+- template registry model with immutable template identity/version and deterministic definition fingerprint
+- exact workflow instance binding to template ID, version, fingerprint, context, source refs and optional governed ESCD job
+- template inheritance controls that prevent child templates from weakening parent approval, evidence, security or rollback requirements
+- step contracts with dependency, executor, autonomy, approval, verification, evidence, failure and next-route fields
+- deterministic step readiness and next-step selection
+- bounded workflow and step lifecycle transitions
+- plan-only behavior for candidate templates and approved templates without governed-job binding
+- executable workflow authority only when the template is approved and a governed ESCD job is bound
+- exact approval binding for approval-required workflow steps using `workflow_step:<step_id>` on the same governed job
+- rejection of prohibited `A4` step execution
+- evidence-gated step and workflow completion
+- append-oriented workflow event history
+- RLS and least-privilege candidate persistence for workflow templates, instances, steps and events
+- workflow repository adapter using the existing caller-JWT RLS client
+- authenticated workflow API layered on the existing ESCD authorization boundary
+- candidate ESCD API entrypoint and specific route mapping before generic API fallback
+- workflow list/detail and instantiation UI in the main ESCD Executive Assistant surface
+- dedicated workflow operator UI for Start, Resume, Retry, Complete, step Ready/Run/Fail/Complete, approval-ID binding, evidence capture and history inspection
+- responsive desktop/mobile workflow layouts, keyboard focus visibility, reduced-motion support and explicit loading/empty/error states
 
 ## Boundary preserved
 
 Not included:
 
-- DCS Employment-specific logic
-- dedicated DDNA production cutover
+- dedicated DDNA candidate interface or production DDNA cutover, held for Codex by DCS direction
+- DCS Employment-specific workflow logic
 - production Supabase DDL
 - production deployment
-- external Gmail send or Calendar mutation
+- PR merge
+- authentication architecture redesign
+- autonomous Gmail send, Calendar mutation, public publish, spending, destructive operation or credential change
 - Android push delivery claim
-- authentication architecture changes
-- unrelated repository or migration repair
-- workflow-template engine Tranche E
-- DDNA candidate interface Tranche F
+- unrelated repository/migration repair
 
-## Reuse discipline
+## Authority and safety repairs made during implementation
 
-The tranche reuses the existing ESCD policy functions for queue routing, deterministic ranking, calendar conflict detection, communications triage, contact validation, routine idempotency, notification evaluation, retry policy and item state transitions. Database transition enforcement is aligned to the existing policy graph rather than widening it.
+Two authority gaps were identified and closed before tranche acceptance:
 
-## Current evidence
+1. An approved workflow template alone does not grant execution authority. A workflow must also be bound to an existing governed ESCD job before the instance may run.
+2. Approval-required steps cannot run merely because an approval ID is supplied. The database verifies that the approval is approved, not expired, belongs to the same governed job and has the exact `workflow_step:<step_id>` action key.
 
-Exact-head GitHub Actions run `34426600439` completed successfully on branch head `e27ec6306563320dc39b7cf0c35b38967806264c` before evidence-only closeout commits. The run compiled the ESCD Python surface, executed 157 Python tests, bootstrapped isolated PostgreSQL 17, applied all ESCD candidate migrations through the structured source-link migration, and passed all runtime, Executive/PA and source-link SQL behavior scripts.
+These repairs preserve the existing ESCD autonomy and approval model instead of introducing a parallel authority mechanism.
 
-Evidence-only documentation commits after that run do not change runtime code, migrations, tests, or UI. A final exact-head review gate is required after this evidence set is committed.
+## Exact-head evidence
+
+Exact-head GitHub Actions run `34428703272` completed successfully on branch head `403bc9ecc1c01a44acf5e373a60f6b68b7b4926f` before this evidence-only closeout update.
+
+The run:
+
+- compiled `apps/escd` and the ESCD candidate API entrypoint
+- executed **181 Python tests plus 10 subtests**, all passing
+- bootstrapped isolated PostgreSQL 17
+- applied the full ESCD candidate migration chain including workflow engine and workflow authority patch
+- passed runtime SQL behavior checks
+- passed Executive/PA SQL behavior checks
+- passed structured source-provenance checks
+- passed workflow orchestration SQL behavior checks
+
+## Release posture
+
+`WORKFLOW-004` is complete at candidate level. This does not establish production release readiness. A valid final release decision still requires a deployed authenticated browser journey against the actual ESCD UI and relevant live connectors, plus resolution of the held DDNA dependency where required by the final integrated build.
+
+Current exit: `READY_FOR_NEXT_TRANCHE / DDNA_HELD_FOR_CODEX`.
