@@ -175,4 +175,141 @@ BEGIN
   END;
 END $$;
 
+-- Persisted exit verification must be evidence-bound, append-only, and derive completion eligibility.
+INSERT INTO dcse_cp.escd_job_verifications (
+  id, verification_key, job_id, evidence_id, outcome, verification_method, notes
+) VALUES (
+  'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee',
+  'ci-verification-1',
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  'cccccccc-cccc-cccc-cccc-cccccccccccc',
+  'verified',
+  'test_result',
+  'CI verification passed'
+);
+
+DO $$
+DECLARE v_exit boolean;
+BEGIN
+  SELECT exit_criteria_met INTO v_exit
+  FROM dcse_cp.escd_jobs
+  WHERE id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  IF v_exit IS DISTINCT FROM true THEN
+    RAISE EXCEPTION 'verified_outcome_did_not_derive_exit_criteria';
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM dcse_cp.escd_job_events
+    WHERE job_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+      AND event_type = 'exit_criteria_verification'
+      AND metadata->>'verification_id' = 'eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee'
+      AND metadata->>'evidence_id' = 'cccccccc-cccc-cccc-cccc-cccccccccccc'
+      AND metadata->>'outcome' = 'verified'
+  ) THEN
+    RAISE EXCEPTION 'verification_event_missing';
+  END IF;
+
+  BEGIN
+    EXECUTE 'UPDATE dcse_cp.escd_job_verifications SET notes = ''tampered'' WHERE id = ''eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee''';
+    RAISE EXCEPTION 'verification_update_privilege_was_not_blocked';
+  EXCEPTION
+    WHEN insufficient_privilege THEN NULL;
+  END;
+
+  BEGIN
+    EXECUTE 'DELETE FROM dcse_cp.escd_job_verifications WHERE id = ''eeeeeeee-eeee-eeee-eeee-eeeeeeeeeeee''';
+    RAISE EXCEPTION 'verification_delete_privilege_was_not_blocked';
+  EXCEPTION
+    WHEN insufficient_privilege THEN NULL;
+  END;
+END $$;
+
+-- Evidence from a different job cannot verify this job, and a non-running job cannot be verified.
+INSERT INTO dcse_cp.escd_jobs (
+  id, job_key, title, status, requires_approval
+) VALUES (
+  'ffffffff-ffff-ffff-ffff-ffffffffffff',
+  'ci-job-2',
+  'CI queued job',
+  'queued',
+  false
+);
+
+INSERT INTO dcse_cp.escd_evidence (
+  id, evidence_key, job_id, evidence_type, title, content
+) VALUES (
+  'cccccccc-cccc-cccc-cccc-cccccccccccd',
+  'ci-evidence-2',
+  'ffffffff-ffff-ffff-ffff-ffffffffffff',
+  'test_evidence',
+  'Second CI evidence',
+  'different job evidence'
+);
+
+DO $$
+BEGIN
+  BEGIN
+    INSERT INTO dcse_cp.escd_job_verifications (
+      verification_key, job_id, evidence_id, outcome, verification_method
+    ) VALUES (
+      'ci-verification-wrong-evidence',
+      'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+      'cccccccc-cccc-cccc-cccc-cccccccccccd',
+      'verified',
+      'test_result'
+    );
+    RAISE EXCEPTION 'cross_job_evidence_verification_was_not_blocked';
+  EXCEPTION
+    WHEN check_violation THEN NULL;
+  END;
+
+  BEGIN
+    INSERT INTO dcse_cp.escd_job_verifications (
+      verification_key, job_id, evidence_id, outcome, verification_method
+    ) VALUES (
+      'ci-verification-queued-job',
+      'ffffffff-ffff-ffff-ffff-ffffffffffff',
+      'cccccccc-cccc-cccc-cccc-cccccccccccd',
+      'verified',
+      'test_result'
+    );
+    RAISE EXCEPTION 'queued_job_verification_was_not_blocked';
+  EXCEPTION
+    WHEN check_violation THEN NULL;
+  END;
+END $$;
+
+-- Verified running job can now complete using persisted derived exit criteria and existing evidence.
+UPDATE dcse_cp.escd_jobs
+SET status = 'completed'
+WHERE id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM dcse_cp.escd_jobs
+    WHERE id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+      AND status = 'completed'
+      AND completed_at IS NOT NULL
+      AND exit_criteria_met = true
+  ) THEN
+    RAISE EXCEPTION 'verified_job_completion_failed';
+  END IF;
+
+  BEGIN
+    INSERT INTO dcse_cp.escd_job_verifications (
+      verification_key, job_id, evidence_id, outcome, verification_method
+    ) VALUES (
+      'ci-verification-after-complete',
+      'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+      'cccccccc-cccc-cccc-cccc-cccccccccccc',
+      'verified',
+      'test_result'
+    );
+    RAISE EXCEPTION 'terminal_job_verification_was_not_blocked';
+  EXCEPTION
+    WHEN check_violation THEN NULL;
+  END;
+END $$;
+
 RESET ROLE;
