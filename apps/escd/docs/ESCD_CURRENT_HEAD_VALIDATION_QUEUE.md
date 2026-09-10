@@ -3,12 +3,12 @@
 **Task ID:** DCSE-ESCD-001  
 **PR:** #72  
 **Branch:** `feature/escd-runtime-repair-001`  
-**Verified head:** `d8d74d83d22dcc319049df594091d7e435cd0368`  
+**Implementation baseline verified before this queue artifact:** `d8d74d83d22dcc319049df594091d7e435cd0368`  
 **Status:** REVIEW GATE
 
 ## Scope lock
 
-Validate the current assistant-core repair. Do not restart discovery, restore superseded Aegis behavior, add DCS Employment logic, bundle DDNA production cutover, repair unrelated historical migrations, or perform production release.
+Validate the current remote PR head at execution time. Do not restart discovery, restore superseded Aegis behavior, add DCS Employment logic, bundle DDNA production cutover, repair unrelated historical migrations, or perform production release.
 
 ## Pass 1
 
