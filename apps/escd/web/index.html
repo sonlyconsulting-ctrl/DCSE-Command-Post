@@ -5,33 +5,56 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ESCD Executive Assistant</title>
 <style>
-:root{--navy:#0A192F;--gold:#D4AF37;--cream:#F5F0E8;--surface:#0E2240;--muted:#8FA3C0}
+:root{--navy:#0A192F;--gold:#D4AF37;--cream:#F5F0E8;--surface:#0E2240;--muted:#8FA3C0;--line:#1A3A6A}
 *{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--cream);font-family:Arial,sans-serif}
-header{padding:16px 20px;border-bottom:1px solid #1A3A6A;display:flex;justify-content:space-between;align-items:center}
-h1{font-size:18px;margin:0}main{padding:20px;max-width:1100px;margin:auto}.card{background:var(--surface);padding:16px;border-radius:10px;margin:12px 0}
-button{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:8px 12px;border-radius:6px}
-button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.small{color:var(--muted);font-size:12px}.job{padding:8px 0;border-bottom:1px solid #1A3A6A}
-@media(max-width:768px){main{padding:12px}header{padding:12px}}
+header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:18px;margin:0}main{padding:20px;max-width:1180px;margin:auto}.card{background:var(--surface);padding:16px;border-radius:10px;margin:12px 0}
+button{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:9px 12px;border-radius:6px;cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+input,select,textarea{width:100%;background:var(--navy);border:1px solid var(--line);color:var(--cream);padding:9px;border-radius:6px}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}.small{color:var(--muted);font-size:12px}.row{padding:8px 0;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.queue{background:var(--navy);padding:10px;border-radius:8px;min-height:110px}.queue h3{margin:0 0 8px;font-size:13px}.queue .count{color:var(--gold)}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}.actions{display:flex;gap:8px;align-items:end;flex-wrap:wrap}.status{min-height:20px;margin-top:8px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){main{padding:10px}header{padding:12px}.grid,.form-grid{grid-template-columns:1fr}.card{padding:12px}.actions button{width:100%}}
 </style>
 </head>
 <body>
-<header><h1>ESCD</h1><span class="small">Executive assistant runtime candidate</span></header>
+<header><h1>ESCD</h1><span class="small">Executive and personal assistant candidate</span></header>
 <main>
 <section class="card"><h2>Highest-Value Next Action</h2><div id="nextAction" class="small">Authentication required.</div></section>
-<section class="card"><h2>Jobs</h2><div id="jobs" class="small">Authentication required.</div></section>
+<section class="card"><h2>Executive Stream</h2><div id="stream" class="grid"></div></section>
+<section class="card">
+<h2>Capture</h2>
+<div class="form-grid">
+<div><label for="captureTitle">Item</label><input id="captureTitle" autocomplete="off" placeholder="Capture a commitment, idea, request, or task"></div>
+<div><label for="captureSource">Source system</label><select id="captureSource"><option value="escd_state">ESCD</option><option value="gmail">Gmail</option><option value="google_calendar">Calendar</option><option value="google_drive">Drive</option><option value="github">GitHub</option><option value="web">Web</option></select></div>
+<div><label for="captureClass">Task class</label><select id="captureClass"><option>CAPTURE</option><option>PLAN</option><option>DO</option><option>DECIDE</option><option>COMMUNICATE</option><option>RESEARCH</option><option>ROUTINE</option><option>MONITOR</option><option>REVIEW</option></select></div>
+</div>
+<div class="actions"><button id="captureButton" type="button">Capture</button><span id="captureStatus" class="small status"></span></div>
+</section>
+<section class="card">
+<h2>Command Interpreter</h2>
+<div class="form-grid"><div><label for="commandText">Command</label><input id="commandText" autocomplete="off" placeholder="Example: review project status"></div><div class="actions"><button id="parseButton" type="button">Interpret</button></div></div>
+<div id="commandStatus" class="small status"></div>
+</section>
 <section class="card"><h2>Briefing</h2><div id="briefing" class="small">Authentication required.</div></section>
+<section class="card"><h2>Delegated Jobs</h2><div id="jobs" class="small">Authentication required.</div></section>
 </main>
 <script>
 "use strict";
 const API="/api/escd";
 function node(tag,text,cls){const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined&&text!==null)el.textContent=String(text);return el;}
-async function api(path,token){const r=await fetch(API+path,{headers:{Authorization:"Bearer "+token}});const data=await r.json();if(!r.ok)throw new Error(data.error||"request_failed");return data;}
-function renderJobs(container,jobs){container.replaceChildren();if(!jobs.length){container.append(node("div","No jobs.","small"));return;}jobs.forEach(j=>{const row=node("div",null,"job");row.append(node("strong",j.title||"Untitled"));row.append(node("div",j.status||"unknown","small"));container.append(row);});}
-function renderNext(container,next){container.replaceChildren();if(!next){container.append(node("div","No eligible action.","small"));return;}container.append(node("strong",next.title||"Untitled"));container.append(node("div","Score: "+String(next.score),"small"));}
-function renderBriefing(container,briefing){container.replaceChildren();const groups=[["Changed",briefing.changed||[]],["Completed",briefing.completed||[]],["Approvals",briefing.approvals||[]],["Blockers",briefing.blockers||[]]];groups.forEach(([label,items])=>{container.append(node("h3",label));if(!items.length)container.append(node("div","None","small"));items.slice(0,10).forEach(item=>container.append(node("div",item.title||item.summary||item.job_key||"Item","small")));});}
-async function boot(){const token=sessionStorage.getItem("escd_access_token");if(!token)return;try{const [jobs,next,brief]=await Promise.all([api("/jobs",token),api("/next-action",token),api("/briefing",token)]);renderJobs(document.getElementById("jobs"),jobs.jobs||[]);renderNext(document.getElementById("nextAction"),next.next_action);renderBriefing(document.getElementById("briefing"),brief.briefing||{});}catch(e){[document.getElementById("jobs"),document.getElementById("nextAction"),document.getElementById("briefing")].forEach(el=>el.replaceChildren(node("div","Access unavailable: "+e.message,"small")));}}
-boot();
+function token(){return sessionStorage.getItem("escd_access_token");}
+async function api(path,accessToken,options){const init=Object.assign({},options||{});init.headers=Object.assign({},init.headers||{},{Authorization:"Bearer "+accessToken});if(init.body)init.headers["Content-Type"]="application/json";const r=await fetch(API+path,init);const data=await r.json();if(!r.ok)throw new Error(data.error||"request_failed");return data;}
+function renderJobs(container,jobs){container.replaceChildren();if(!jobs.length){container.append(node("div","No delegated jobs.","small"));return;}jobs.slice(0,20).forEach(j=>{const row=node("div",null,"row");row.append(node("strong",j.title||"Untitled"));row.append(node("div",j.status||"unknown","small"));container.append(row);});}
+function renderNext(container,next){container.replaceChildren();if(!next){container.append(node("div","No eligible NOW action.","small"));return;}container.append(node("strong",next.title||"Untitled"));container.append(node("div","Score: "+String(next.score),"small"));if(next.top_factors&&next.top_factors.length)container.append(node("div","Top factors: "+next.top_factors.map(x=>x[0]).join(", "),"small"));}
+function renderStream(container,stream){container.replaceChildren();const queues=["NOW","APPROVAL","WAITING","WATCH","BACKLOG"];queues.forEach(name=>{const box=node("section",null,"queue");const heading=node("h3");heading.append(node("span",name+" "));heading.append(node("span",String((stream.counts||{})[name]||0),"count"));box.append(heading);const items=((stream.queues||{})[name]||[]).slice(0,8);if(!items.length)box.append(node("div","None","small"));items.forEach(item=>{const row=node("div",null,"row");row.append(node("div",item.title||"Untitled"));row.append(node("div",item.task_class||item.status||"item","small"));box.append(row);});container.append(box);});}
+function renderBriefing(container,briefing){container.replaceChildren();const groups=[["Changed",briefing.changed||[]],["Completed",briefing.completed||[]],["Approvals",briefing.approvals||[]],["Blockers",briefing.blockers||[]],["Watches",briefing.watches||[]]];groups.forEach(([label,items])=>{container.append(node("h3",label));if(!items.length)container.append(node("div","None","small"));items.slice(0,10).forEach(item=>container.append(node("div",item.title||item.summary||item.item_key||item.job_key||"Item","small")));});}
+async function refresh(){const accessToken=token();if(!accessToken)return;try{const [jobs,next,brief,stream]=await Promise.all([api("/jobs",accessToken),api("/next-action",accessToken),api("/briefing",accessToken),api("/executive-stream",accessToken)]);renderJobs(document.getElementById("jobs"),jobs.jobs||[]);renderNext(document.getElementById("nextAction"),next.next_action);renderBriefing(document.getElementById("briefing"),brief.briefing||{});renderStream(document.getElementById("stream"),stream.executive_stream||{});}catch(e){["jobs","nextAction","briefing","stream"].forEach(id=>document.getElementById(id).replaceChildren(node("div","Access unavailable: "+e.message,"small")));}}
+async function capture(){const accessToken=token();const status=document.getElementById("captureStatus");if(!accessToken){status.textContent="Authentication required.";return;}const title=document.getElementById("captureTitle").value.trim();if(!title){status.textContent="Enter an item to capture.";return;}const sourceSystem=document.getElementById("captureSource").value;const sourceId="ui:"+Date.now().toString();const sourceRef=sourceSystem+":"+sourceId;try{const data=await api("/intake",accessToken,{method:"POST",body:JSON.stringify({title:title,normalized_intent:title,context:"general",task_class:document.getElementById("captureClass").value,source_system:sourceSystem,source_id:sourceId,source_ref:sourceRef})});status.textContent=data.deduped?"Linked to existing item with provenance preserved.":"Captured.";document.getElementById("captureTitle").value="";await refresh();}catch(e){status.textContent="Capture unavailable: "+e.message;}}
+async function parseCommand(){const accessToken=token();const status=document.getElementById("commandStatus");if(!accessToken){status.textContent="Authentication required.";return;}const text=document.getElementById("commandText").value.trim();if(!text){status.textContent="Enter a command.";return;}try{const data=await api("/commands/parse",accessToken,{method:"POST",body:JSON.stringify({text:text})});const c=data.command||{};status.textContent="Interpreted as "+String(c.operation||"unknown")+" targeting "+String(c.target||"unspecified")+". No execution performed.";}catch(e){status.textContent="Interpretation unavailable: "+e.message;}}
+document.getElementById("captureButton").addEventListener("click",capture);document.getElementById("parseButton").addEventListener("click",parseCommand);refresh();
 </script>
 </body>
 </html>
