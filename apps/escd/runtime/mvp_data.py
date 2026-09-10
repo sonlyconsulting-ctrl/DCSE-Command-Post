@@ -2,12 +2,53 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import socket
 from urllib import request, error, parse
 
 
 class MVPServiceError(RuntimeError):
     pass
+
+
+class ProviderHTTPError(MVPServiceError):
+    def __init__(self, status: int, detail: str):
+        super().__init__(detail)
+        self.status = status
+        self.detail = detail
+
+
+def _safe_provider_detail(value: str) -> str:
+    text = str(value or "").strip()
+    if not text:
+        return "Provider request failed"
+    patterns = [
+        (r"sk-proj-[A-Za-z0-9_\-]{8,}", "sk-proj-***"),
+        (r"sk-or-v1-[A-Za-z0-9_\-]{8,}", "sk-or-v1-***"),
+        (r"sk-[A-Za-z0-9_\-]{8,}", "sk-***"),
+        (r"AIza[A-Za-z0-9_\-]{12,}", "AIza***"),
+        (r"(?i)Bearer\s+[A-Za-z0-9._\-]{10,}", "Bearer ***"),
+    ]
+    for pattern, replacement in patterns:
+        text = re.sub(pattern, replacement, text)
+    return text[:900]
+
+
+def _extract_error_detail(raw: str, status: int) -> str:
+    try:
+        data = json.loads(raw or "{}")
+    except Exception:
+        data = {}
+    detail = ""
+    if isinstance(data, dict):
+        err = data.get("error")
+        if isinstance(err, dict):
+            detail = str(err.get("message") or err.get("detail") or err.get("code") or "")
+        elif err:
+            detail = str(err)
+        if not detail:
+            detail = str(data.get("message") or data.get("detail") or "")
+    return _safe_provider_detail(detail or f"Provider returned HTTP {status}")
 
 
 def _http_json(url: str, *, method: str = "GET", headers: dict | None = None, payload: dict | None = None, timeout: int = 30):
@@ -18,30 +59,20 @@ def _http_json(url: str, *, method: str = "GET", headers: dict | None = None, pa
             raw = response.read().decode("utf-8")
             return response.status, json.loads(raw or "null")
     except error.HTTPError as exc:
-        exc.read()
-        raise MVPServiceError(f"upstream_{exc.code}") from None
+        raw = exc.read().decode("utf-8", errors="replace")
+        raise ProviderHTTPError(exc.code, _extract_error_detail(raw, exc.code)) from None
     except (TimeoutError, socket.timeout):
-        raise MVPServiceError("upstream_timeout") from None
-    except error.URLError:
-        raise MVPServiceError("upstream_network_error") from None
+        raise MVPServiceError("provider_timeout") from None
+    except error.URLError as exc:
+        raise MVPServiceError(_safe_provider_detail(f"Provider connection failed: {exc.reason}")) from None
 
 
-def _provider_error(provider: str, exc: MVPServiceError) -> MVPServiceError:
-    code = str(exc)
-    mapping = {
-        "upstream_400": f"{provider}_request_rejected",
-        "upstream_401": f"{provider}_auth_failed",
-        "upstream_403": f"{provider}_access_denied",
-        "upstream_404": f"{provider}_model_or_endpoint_not_found",
-        "upstream_429": f"{provider}_rate_or_quota_limited",
-        "upstream_timeout": f"{provider}_timeout",
-        "upstream_network_error": f"{provider}_network_error",
-    }
-    if code in mapping:
-        return MVPServiceError(mapping[code])
-    if code.startswith("upstream_5"):
-        return MVPServiceError(f"{provider}_service_unavailable")
-    return MVPServiceError(f"{provider}_upstream_failed")
+def _service_config() -> tuple[str, str]:
+    url = (os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or "").rstrip("/")
+    key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("PABASE_SECRET_KEY") or ""
+    if not url or not key:
+        raise MVPServiceError("runtime_registry_not_configured")
+    return url, key
 
 
 def _postgrest_headers(key: str, schema: str) -> dict[str, str]:
@@ -49,15 +80,126 @@ def _postgrest_headers(key: str, schema: str) -> dict[str, str]:
         "apikey": key,
         "Authorization": f"Bearer {key}",
         "Accept-Profile": schema,
+        "Content-Profile": schema,
         "Content-Type": "application/json",
     }
 
 
+def _rpc(name: str, payload: dict):
+    url, key = _service_config()
+    _, data = _http_json(
+        f"{url}/rest/v1/rpc/{name}",
+        method="POST",
+        headers=_postgrest_headers(key, "dcse_cp"),
+        payload=payload,
+        timeout=12,
+    )
+    return data
+
+
+def _env_secret(provider: str) -> str:
+    if provider == "openai":
+        return os.getenv("OPENAI_API_KEY") or ""
+    if provider == "gemini":
+        return os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
+    if provider == "openrouter":
+        return os.getenv("OPENROUTER_API_KEY") or ""
+    return ""
+
+
+def _fallback_config(provider: str) -> dict:
+    defaults = {
+        "openai": {"provider": "openai", "enabled": True, "model": "gpt-5.6-sol", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+        "gemini": {"provider": "gemini", "enabled": True, "model": "gemini-3.8-flash", "timeout_seconds": 25, "max_output_tokens": 768, "thinking_level": "low"},
+        "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+    }
+    cfg = dict(defaults.get(provider) or {})
+    cfg["api_key"] = _env_secret(provider)
+    cfg["credential_source"] = "environment" if cfg["api_key"] else "none"
+    return cfg
+
+
+def provider_runtime(provider: str) -> dict:
+    provider = str(provider or "").lower().strip()
+    if provider not in {"openai", "gemini", "openrouter"}:
+        raise MVPServiceError("unsupported_provider")
+    try:
+        rows = _rpc("get_escd_provider_runtime", {"p_provider": provider})
+        row = rows[0] if isinstance(rows, list) and rows else (rows if isinstance(rows, dict) else None)
+    except Exception:
+        row = None
+    if not row:
+        return _fallback_config(provider)
+    cfg = dict(row)
+    vault_key = str(cfg.get("api_key") or "")
+    env_key = _env_secret(provider)
+    if vault_key:
+        cfg["api_key"] = vault_key
+        cfg["credential_source"] = "vault"
+    elif env_key:
+        cfg["api_key"] = env_key
+        cfg["credential_source"] = "environment"
+    else:
+        cfg["api_key"] = ""
+        cfg["credential_source"] = "none"
+    return cfg
+
+
+def provider_status() -> dict:
+    result = {}
+    for provider in ("openai", "gemini", "openrouter"):
+        cfg = provider_runtime(provider)
+        result[provider] = {
+            "enabled": bool(cfg.get("enabled")),
+            "configured": bool(cfg.get("api_key")),
+            "model": cfg.get("model"),
+            "timeout_seconds": cfg.get("timeout_seconds"),
+            "max_output_tokens": cfg.get("max_output_tokens"),
+            "thinking_level": cfg.get("thinking_level"),
+            "credential_source": cfg.get("credential_source"),
+        }
+    return result
+
+
+def set_provider_secret(provider: str, secret: str) -> dict:
+    provider = str(provider or "").lower().strip()
+    if provider not in {"openai", "gemini", "openrouter"}:
+        raise MVPServiceError("unsupported_provider")
+    if len(str(secret or "").strip()) < 10:
+        raise MVPServiceError("provider_secret_required")
+    _rpc("set_escd_provider_secret", {"p_provider": provider, "p_secret": str(secret).strip()})
+    return {"provider": provider, "configured": True, "credential_source": "vault"}
+
+
+def update_provider_config(provider: str, changes: dict) -> dict:
+    provider = str(provider or "").lower().strip()
+    if provider not in {"openai", "gemini", "openrouter"}:
+        raise MVPServiceError("unsupported_provider")
+    payload = {
+        "p_provider": provider,
+        "p_enabled": changes.get("enabled") if "enabled" in changes else None,
+        "p_model": changes.get("model"),
+        "p_timeout_seconds": changes.get("timeout_seconds"),
+        "p_max_output_tokens": changes.get("max_output_tokens"),
+        "p_thinking_level": changes.get("thinking_level"),
+    }
+    data = _rpc("update_escd_provider_config", payload)
+    return data[0] if isinstance(data, list) and data else data
+
+
+def _provider_failure(provider: str, exc: Exception) -> MVPServiceError:
+    if isinstance(exc, ProviderHTTPError):
+        labels = {400: "request rejected", 401: "authentication failed", 403: "access denied", 404: "model or endpoint not found", 429: "rate or quota limited"}
+        label = labels.get(exc.status, f"HTTP {exc.status}")
+        return MVPServiceError(f"{provider.title()} {label}: {exc.detail}")
+    text = str(exc)
+    if text == "provider_timeout":
+        return MVPServiceError(f"{provider.title()} timed out before responding")
+    return MVPServiceError(f"{provider.title()} request failed: {_safe_provider_detail(text)}")
+
+
 def list_assets(limit: int = 200) -> list[dict]:
-    url = (os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or "").rstrip("/")
-    key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("PABASE_SECRET_KEY") or ""
-    if not url or not key:
-        raise MVPServiceError("asset_source_not_configured")
+    url, key = _service_config()
     query = "dcse_asset_registry?select=*&order=last_modified_at.desc.nullslast,created_at.desc.nullslast,id.asc&limit=" + str(max(1, min(limit, 500)))
     _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "public"))
     if not isinstance(rows, list):
@@ -90,25 +232,11 @@ def list_ddna_jobs(source_queue_id: str) -> list[dict]:
     return rows if isinstance(rows, list) else []
 
 
-def provider_status() -> dict:
-    return {
-        "openai": {
-            "configured": bool(os.getenv("OPENAI_API_KEY")),
-            "model": os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6-sol",
-        },
-        "gemini": {
-            "configured": bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")),
-            "model": os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash",
-            "thinking_level": os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low",
-        },
-    }
-
-
 def _openai_output_text(data: dict) -> str:
     direct = data.get("output_text")
     if isinstance(direct, str) and direct.strip():
         return direct.strip()
-    chunks: list[str] = []
+    chunks = []
     for output in data.get("output") or []:
         if output.get("type") != "message":
             continue
@@ -119,7 +247,17 @@ def _openai_output_text(data: dict) -> str:
 
 
 def chat(provider: str, messages: list[dict]) -> dict:
-    provider = provider.lower().strip()
+    provider = str(provider or "").lower().strip()
+    cfg = provider_runtime(provider)
+    if not cfg.get("enabled"):
+        raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
+    key = str(cfg.get("api_key") or "")
+    if not key:
+        raise MVPServiceError(f"{provider.title()} credential is not configured. Add it in ESCD Provider Settings")
+    model = str(cfg.get("model") or "").strip()
+    timeout = int(cfg.get("timeout_seconds") or 30)
+    max_tokens = int(cfg.get("max_output_tokens") or 1024)
+
     clean = []
     for message in messages[-30:]:
         role = str(message.get("role") or "user")
@@ -129,63 +267,56 @@ def chat(provider: str, messages: list[dict]) -> dict:
     if not clean:
         raise MVPServiceError("chat_message_required")
 
-    if provider == "openai":
-        key = os.getenv("OPENAI_API_KEY") or ""
-        if not key:
-            raise MVPServiceError("openai_not_configured")
-        model = os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6-sol"
-        try:
+    try:
+        if provider == "openai":
             _, data = _http_json(
                 "https://api.openai.com/v1/responses",
                 method="POST",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                payload={"model": model, "input": clean},
-                timeout=45,
+                payload={"model": model, "input": clean, "max_output_tokens": max_tokens},
+                timeout=timeout,
             )
-        except MVPServiceError as exc:
-            raise _provider_error("openai", exc) from None
-        text = _openai_output_text(data or {})
-        if not text:
-            raise MVPServiceError("openai_empty_response")
-        return {"provider": "openai", "model": (data or {}).get("model") or model, "content": text}
+            text = _openai_output_text(data or {})
+            if not text:
+                raise MVPServiceError("OpenAI returned an empty response")
+            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
 
-    if provider == "gemini":
-        key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
-        if not key:
-            raise MVPServiceError("gemini_not_configured")
-        model = os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash"
-        thinking_level = os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low"
-        contents = []
-        system_parts = []
-        for message in clean:
-            if message["role"] == "system":
-                system_parts.append({"text": message["content"]})
-            else:
-                contents.append({"role": "model" if message["role"] == "assistant" else "user", "parts": [{"text": message["content"]}]})
-        payload = {
-            "contents": contents,
-            "generationConfig": {
-                "thinkingConfig": {"thinkingLevel": thinking_level},
-                "maxOutputTokens": 768,
-            },
-        }
-        if system_parts:
-            payload["systemInstruction"] = {"parts": system_parts}
-        try:
+        if provider == "gemini":
+            contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in clean if m["role"] != "system"]
+            payload = {"contents": contents, "generationConfig": {"maxOutputTokens": max_tokens}}
+            system_text = "\n".join(m["content"] for m in clean if m["role"] == "system").strip()
+            if system_text:
+                payload["systemInstruction"] = {"parts": [{"text": system_text}]}
             _, data = _http_json(
-                f"https://generativelanguage.googleapis.com/v1beta/models/{parse.quote(model, safe='')}:generateContent",
+                f"https://generativelanguage.googleapis.com/v1beta/models/{parse.quote(model, safe='')}:generateContent?key={parse.quote(key, safe='')}",
                 method="POST",
-                headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+                headers={"Content-Type": "application/json"},
                 payload=payload,
-                timeout=25,
+                timeout=timeout,
             )
-        except MVPServiceError as exc:
-            raise _provider_error("gemini", exc) from None
-        candidates = (data or {}).get("candidates") or []
-        parts = (((candidates[0] if candidates else {}).get("content") or {}).get("parts") or [])
-        text = "\n".join(str(x.get("text") or "") for x in parts if x.get("text")).strip()
-        if not text:
-            raise MVPServiceError("gemini_empty_response")
-        return {"provider": "gemini", "model": model, "content": text}
+            candidates = (data or {}).get("candidates") or []
+            parts = (((candidates[0] if candidates else {}).get("content") or {}).get("parts") or [])
+            text = "\n".join(str(x.get("text") or "") for x in parts if x.get("text")).strip()
+            if not text:
+                raise MVPServiceError("Gemini returned an empty response")
+            return {"provider": provider, "model": model, "content": text}
 
-    raise MVPServiceError("unsupported_provider")
+        if provider == "openrouter":
+            _, data = _http_json(
+                "https://openrouter.ai/api/v1/chat/completions",
+                method="POST",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", "HTTP-Referer": "https://os.sonlyconsulting.com", "X-Title": "ESCD"},
+                payload={"model": model, "messages": clean, "max_tokens": max_tokens},
+                timeout=timeout,
+            )
+            choices = (data or {}).get("choices") or []
+            text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
+            if not text:
+                raise MVPServiceError("OpenRouter returned an empty response")
+            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
+
+        raise MVPServiceError("unsupported_provider")
+    except Exception as exc:
+        if isinstance(exc, MVPServiceError) and not isinstance(exc, ProviderHTTPError) and str(exc).startswith(("OpenAI returned", "Gemini returned", "OpenRouter returned")):
+            raise
+        raise _provider_failure(provider, exc) from None
