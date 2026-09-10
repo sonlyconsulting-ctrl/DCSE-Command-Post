@@ -1,0 +1,38 @@
+name: ESCD Review Gate
+
+on:
+  push:
+    branches:
+      - feature/escd-runtime-repair-001
+  pull_request:
+    paths:
+      - 'apps/escd/**'
+      - '03_WORK_ORDERS/ESCD/**'
+      - 'supabase/migrations/20260909_escd_runtime_state.sql'
+      - '.github/workflows/escd-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Compile ESCD Python
+        run: python -m compileall -q apps/escd
+
+      - name: Run ESCD policy and runtime tests
+        run: python -m pytest -q apps/escd/tests
