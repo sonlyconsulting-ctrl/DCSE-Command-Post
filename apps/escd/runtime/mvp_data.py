@@ -21,6 +21,22 @@ def _http_json(url: str, *, method: str = "GET", headers: dict | None = None, pa
         raise MVPServiceError(f"upstream_{exc.code}") from None
 
 
+def _provider_error(provider: str, exc: MVPServiceError) -> MVPServiceError:
+    code = str(exc)
+    mapping = {
+        "upstream_400": f"{provider}_request_rejected",
+        "upstream_401": f"{provider}_auth_failed",
+        "upstream_403": f"{provider}_access_denied",
+        "upstream_404": f"{provider}_model_or_endpoint_not_found",
+        "upstream_429": f"{provider}_rate_or_quota_limited",
+    }
+    if code in mapping:
+        return MVPServiceError(mapping[code])
+    if code.startswith("upstream_5"):
+        return MVPServiceError(f"{provider}_service_unavailable")
+    return MVPServiceError(f"{provider}_upstream_failed")
+
+
 def _postgrest_headers(key: str, schema: str) -> dict[str, str]:
     return {
         "apikey": key,
@@ -69,8 +85,14 @@ def list_ddna_jobs(source_queue_id: str) -> list[dict]:
 
 def provider_status() -> dict:
     return {
-        "openai": {"configured": bool(os.getenv("OPENAI_API_KEY"))},
-        "gemini": {"configured": bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY"))},
+        "openai": {
+            "configured": bool(os.getenv("OPENAI_API_KEY")),
+            "model": os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6-sol",
+        },
+        "gemini": {
+            "configured": bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")),
+            "model": os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash",
+        },
     }
 
 
@@ -103,14 +125,17 @@ def chat(provider: str, messages: list[dict]) -> dict:
         key = os.getenv("OPENAI_API_KEY") or ""
         if not key:
             raise MVPServiceError("openai_not_configured")
-        model = os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6"
-        _, data = _http_json(
-            "https://api.openai.com/v1/responses",
-            method="POST",
-            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-            payload={"model": model, "input": clean},
-            timeout=60,
-        )
+        model = os.getenv("ESCD_OPENAI_MODEL") or "gpt-5.6-sol"
+        try:
+            _, data = _http_json(
+                "https://api.openai.com/v1/responses",
+                method="POST",
+                headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+                payload={"model": model, "input": clean},
+                timeout=60,
+            )
+        except MVPServiceError as exc:
+            raise _provider_error("openai", exc) from None
         text = _openai_output_text(data or {})
         if not text:
             raise MVPServiceError("openai_empty_response")
@@ -120,7 +145,7 @@ def chat(provider: str, messages: list[dict]) -> dict:
         key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
         if not key:
             raise MVPServiceError("gemini_not_configured")
-        model = os.getenv("ESCD_GEMINI_MODEL") or "gemini-2.5-flash"
+        model = os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash"
         contents = []
         system_parts = []
         for message in clean:
@@ -131,13 +156,16 @@ def chat(provider: str, messages: list[dict]) -> dict:
         payload = {"contents": contents}
         if system_parts:
             payload["systemInstruction"] = {"parts": system_parts}
-        _, data = _http_json(
-            f"https://generativelanguage.googleapis.com/v1beta/models/{parse.quote(model, safe='')}:generateContent?key={parse.quote(key, safe='')}",
-            method="POST",
-            headers={"Content-Type": "application/json"},
-            payload=payload,
-            timeout=60,
-        )
+        try:
+            _, data = _http_json(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{parse.quote(model, safe='')}:generateContent",
+                method="POST",
+                headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+                payload=payload,
+                timeout=60,
+            )
+        except MVPServiceError as exc:
+            raise _provider_error("gemini", exc) from None
         candidates = (data or {}).get("candidates") or []
         parts = (((candidates[0] if candidates else {}).get("content") or {}).get("parts") or [])
         text = "\n".join(str(x.get("text") or "") for x in parts if x.get("text")).strip()
