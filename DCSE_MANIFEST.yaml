@@ -4,11 +4,13 @@ dcse:
   principle: "Structure Precedes Scale."
   constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+  governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  doctrine_index: "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   authority_state: "OPERATIVE"
-  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5"
-  source_lifecycle_rule: "Historical source-state labels remain provenance; compiled authority is inherited from operative R5 or a registered DCS directive."
+  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES"
+  source_lifecycle_rule: "Historical source-state labels remain provenance; compiled authority is inherited from operative R5 or a registered/promoted DCS directive."
   manifest_role: "machine-readable routing index; not independent authority"
 
 canonical:
@@ -17,6 +19,12 @@ canonical:
     authority_branch: "main"
     governance_path: "governance/v7.2/"
     controller_path: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+    operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+    governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+    doctrine_index: "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md"
+    source_authority: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
+    ddna_governance: "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md"
+    product_assembly: "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
     operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
     directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
     completion_evidence_directive: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
@@ -34,8 +42,10 @@ canonical:
 mandatory_entry_sequence:
   - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   - "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  - "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  - "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md"
   - "governance/v7.2/dcs_express_directives.v7.2.json"
-  - "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
+  - "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
   - "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
   - "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   - "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
@@ -46,8 +56,12 @@ authority_routes:
   final_human_authority: "DCS Level 0"
   constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
+  governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  doctrine_index: "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md"
   express_dcs_directives: "governance/v7.2/dcs_express_directives.v7.2.json"
-  source_authority_and_reconciliation: "governance/v7.1/doctrines/D22_Source_Authority_Runtime_Distribution.md"
+  source_authority_and_reconciliation: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
+  ddna_governance: "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md"
+  product_assembly_and_reuse: "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
   runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
   completion_evidence_closeout: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   baseline_and_promotion: "governance/v7.1/source/doctrines/D05_Baseline_Promotion.md"
@@ -60,13 +74,14 @@ zones:
     path:
       - "governance/v7.2/*.md"
       - "governance/v7.2/*.json"
+      - "governance/v7.2/source/**"
       - "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
       - "governance/v7.1/doctrines/*.md"
-    effect: "operative v7.2 authority, registered directives, and routed doctrine projections"
+    effect: "operative v7.2 authority, promoted v7.2 doctrine, registered directives, and routed doctrine projections"
   source:
     path:
       - "governance/v7.1/source/**"
-    effect: "lineage and adopted subject content; source lifecycle does not independently override operative v7.2 authority"
+    effect: "historical lineage and adopted subject content; source lifecycle does not independently override operative v7.2 authority"
   execution:
     path:
       - "governance/v7.1/execution/**"
@@ -76,16 +91,18 @@ zones:
     path:
       - "tribunal/v7/**"
     effect: "audits, receipts, scripts, logs, snapshots, and proof of events"
-  invariant: "Execution and evidence files may not declare constitutional authority; authority must resolve through the operative controller or registered DCS directive."
+  invariant: "Execution and evidence files may not declare constitutional authority; authority must resolve through the operative controller or registered/promoted DCS directive."
 
 startup_sequence:
   - verify_repository
   - verify_main_authority_branch
   - load_r5_operative_designation
   - load_v7_2_master_profile
+  - load_v7_2_governance_sync
+  - load_v7_2_doctrine_index
   - load_express_dcs_directive_registry
   - load_completion_evidence_collector_directive
-  - verify_source_authority_through_d22
+  - verify_source_authority_through_d22_v7_2
   - classify_lane_entity_and_task
   - establish_task_id
   - produce_preflight_validation
@@ -146,8 +163,10 @@ model_harmony:
   common_chain:
     - r5_operative_designation
     - v7_2_master_profile
+    - v7_2_governance_sync
+    - v7_2_doctrine_index
     - express_dcs_directive_registry
-    - d22_source_reconciliation
+    - d22_v7_2_source_reconciliation
     - d21_task_routing
     - completion_evidence_collector
     - universal_onboarding_and_access
@@ -233,6 +252,8 @@ artifact_policy:
   checksum_required_when_material: true
   promotion_receipt_required_for_authority: true
   completion_evidence_packet_required_for_substantive_closeout: true
+  reuse_before_redesign_required: true
+  persistence_routing_authority: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
 
 negative_finding_policy:
   scoped_only: true
@@ -258,4 +279,4 @@ promotion_gate:
   controller_state: "OPERATIVE_R5"
   controller_designation_commit: "f72c3288f301d38dc8184d2bbd55c6ef17eae670"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
-  current_package_state: "OPERATIVE_R5"
+  current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC"
