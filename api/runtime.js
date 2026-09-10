@@ -32,7 +32,7 @@ function runtimeConfig() {
 
   const legacy = {
     mode: 'legacy',
-    url: process.env.SUPABASE_URL || 'https://nevgdyfpxdaloacuutal.supabase.co',
+    url: process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL,
     key: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.PABASE_SECRET_KEY,
     schema: 'dcse_cp'
   };
@@ -62,8 +62,7 @@ async function readJobs(source) {
     }
   });
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`DDNA read failed (${source.mode}/${source.schema}): ${response.status} ${text.slice(0, 160)}`);
+    throw new Error(`DDNA read failed (${source.mode}/${source.schema}): HTTP ${response.status}`);
   }
   const rows = await response.json();
   if (!Array.isArray(rows)) throw new Error('DDNA read returned a non-array payload');
