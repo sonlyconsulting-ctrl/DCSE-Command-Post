@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from http.server import BaseHTTPRequestHandler
+import hashlib
 import json
 import os
+from urllib import request, error
 from urllib.parse import urlparse, parse_qs
 
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
@@ -11,13 +13,14 @@ from apps.escd.runtime.mvp_data import MVPServiceError, chat, list_assets, list_
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.1"
+    server_version = "ESCD-MVP/0.2"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Content-Length", str(len(raw)))
         self.end_headers()
         self.wfile.write(raw)
@@ -28,20 +31,56 @@ class handler(BaseHTTPRequestHandler):
             return {}
         return json.loads(self.rfile.read(size).decode("utf-8"))
 
-    def _auth(self):
-        token = extract_bearer(self.headers)
+    def _supabase_config(self):
         url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or ""
         anon = os.getenv("SUPABASE_ANON_KEY") or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY") or ""
+        if not url or not anon:
+            raise AuthError("auth_configuration_missing")
+        return url.rstrip("/"), anon
+
+    def _repo_for_token(self, token: str):
+        url, anon = self._supabase_config()
         auth = verify_supabase_user(token, url, anon)
         repo = SupabaseRLSClient(url, anon, token, schema="dcse_cp")
         authorize_operator(auth, repo.operator_self())
-        return repo
+        return auth, repo
+
+    def _auth(self):
+        return self._repo_for_token(extract_bearer(self.headers))[1]
+
+    def _login(self, payload: dict):
+        email_value = str(payload.get("email") or "").strip().lower()
+        password = str(payload.get("password") or "")
+        if not email_value or not password:
+            raise AuthError("email_and_password_required")
+        url, anon = self._supabase_config()
+        body = json.dumps({"email": email_value, "password": password}).encode("utf-8")
+        req = request.Request(
+            url + "/auth/v1/token?grant_type=password",
+            data=body,
+            headers={"apikey": anon, "Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with request.urlopen(req, timeout=15) as response:
+                session = json.loads(response.read().decode("utf-8") or "{}")
+        except error.HTTPError:
+            raise AuthError("sign_in_failed") from None
+        token = str(session.get("access_token") or "")
+        if not token:
+            raise AuthError("sign_in_failed")
+        auth, _ = self._repo_for_token(token)
+        return {
+            "access_token": token,
+            "expires_in": int(session.get("expires_in") or 3600),
+            "user": {"email": auth.email},
+        }
 
     def do_GET(self):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "providers": provider_status()})
+            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.2", "providers": provider_status()})
             return
         try:
             repo = self._auth()
@@ -67,9 +106,17 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
+        payload = self._read_json()
+        if path == "/api/mvp/login":
+            try:
+                self._json(200, {"ok": True, "session": self._login(payload)})
+            except AuthError as exc:
+                self._json(401, {"error": str(exc)})
+            except Exception:
+                self._json(500, {"error": "internal_error"})
+            return
         try:
             repo = self._auth()
-            payload = self._read_json()
             if path == "/api/mvp/items":
                 kind = str(payload.get("kind") or "task").lower()
                 if kind not in {"task", "idea"}:
@@ -77,7 +124,6 @@ class handler(BaseHTTPRequestHandler):
                 title = str(payload.get("title") or "").strip()
                 if not title:
                     self._json(400, {"error": "title_required"}); return
-                import hashlib
                 key = "mvp-" + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()
                 item = repo.create_item({
                     "item_key": key,
