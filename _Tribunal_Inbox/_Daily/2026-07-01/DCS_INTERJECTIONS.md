@@ -1,0 +1,18 @@
+# DCS Interjections - 2026-07-01
+
+## Auto-Extracted from JSONs
+
+### From `TRIBUNAL_20260701_DCSE_EMPLOYMENT_FREELANCE_PRODUCT_BUILD_DEFERRED.json`:
+
+```
+PENDING_REVIEW
+```
+
+### From `TRIBUNAL_20260701_PS_CONTENT_PASTED_INTO_EMPLOYMENT_SC_THREAD.json`:
+
+```
+PENDING_REVIEW
+```
+
+## Manual Entries
+

@@ -1,0 +1,144 @@
+CANDIDATE MATERIAL - PHASE 2 PATCH INPUT
+
+## Part 1: Authority, Scope, Precedence, Doctrine Hierarchy
+- UNCHANGED block count: 28
+- ADDED blocks: 
+  - Executive Penthouse Forward Direction Rule
+  - DCSE favors forward-directed language in internal and public-facing outputs. Where practical, instructions state the required action, approved path, or operating standard instead of relying on negative phrasing. This rule supports the Executive Penthouse philosophy of persistent forward thinking and disciplined clarity. Precision controls where a stop-gate, confidentiality boundary, PS firewall, legal risk, credential rule, or compliance instruction requires direct restriction language.
+  - Artifact Delivery Default Rule
+  - When DCS approves a document, doctrine, profile, instruction set, report, checklist, package index, or distribution asset for construction, DCSE must produce a downloadable artifact by default unless DCS expressly requests discussion only. The artifact may be DOCX, PDF, Markdown, CSV, XLSX, PPTX, ZIP, or another appropriate format for the task. If a document is still candidate-only, the artifact must carry the correct status rather than being withheld. Repeated verbal summaries without the expected artifact are a QA defect.
+  - Trademark and Controlled Brand Language Rule
+  - DCSE treats trademarks, slogans, product names, entity names, and branded frameworks as controlled language assets. Controlled brand language must remain consistent across doctrine, public copy, product materials, websites, resumes, pitch decks, SEO, GEO, AEO assets, social media, media scripts, and client-facing materials.
+  - Known controlled brand terms include DCS, DCSE, Sonly Consulting, Smoove Spots, The Initiative, Critical Thinkers Journey, CTJ, DART, GYTO, and GET YOUR THINK ON!(TM). GYTO is internal shorthand unless DCS approves public use for a specific artifact. Public-facing materials should use GET YOUR THINK ON!(TM) where the brand concept is intended for external exposure. The symbol TM may signal a claimed mark or brand phrase. The symbol R may be used only when formal registration is verified and approved for that mark.
+  - A model or workflow may not invent, alter, pluralize, rename, abbreviate, or rebrand controlled terms for style, clarity, SEO, or convenience. If a controlled term is inconsistent, the artifact stays at review status until DCS confirms the approved wording.
+- CHANGED blocks: None
+- REMOVED blocks: None
+
+## Part 3: Entity Governance Matrix For DCSE, DCS, SC, SS, PS, TI
+- UNCHANGED block count: 18
+- ADDED blocks: 
+  - Entity
+  - Role
+  - Public/Internal Posture
+  - Key Exclusions
+  - Inheritance Posture
+  - Firewall Statement
+  - DCSE
+  - Constitutional doctrine, architecture, system governance, command planning
+  - Primarily internal or controlled review
+  - Does not become public brand copy by default
+  - Parent governance layer for all entities
+  - May govern all lanes but must preserve lane boundaries
+  - DCS
+  - Enterprise/business lane for employment, recruiter, interview, opportunity, proof-of-fit, operating model, and related business architecture
+  - Controlled business use; public only after review
+  - Cannot override DCSE authority or import PS strategy
+  - Inherits DCSE structure and QA gates
+  - Business proof and opportunity materials must not expose protected or unrelated entity doctrine
+  - SC
+  - Consulting, client systems, B2B assets, websites, implementation frameworks
+  - Public possible after QA and firewall review
+  - No PS facts, no internal GYTO leakage, no unsupported client claims
+  - Inherits DCSE and product/HTML governance
+  - Public-facing SC must remain clean of protected PS and internal doctrine
+  - SS
+  - Story, media, lifestyle, narrative, culture-facing experience
+  - Public possible after content and rights review
+  - No litigation facts, no SC client promises, no protected PS strategy
+  - Inherits DCSE and media governance
+  - Narrative freedom does not permit entity bleed
+  - PS
+  - Protected litigation specialization, civil-rights posture, filings, evidence, deadlines, forum awareness
+  - Protected and human-gated
+  - Not a style, brand, marketing lane, or public content source
+  - Inherits DCSE, DART, evidence discipline, and human legal review boundary
+  - Strict isolation; heightened review before any external use
+  - TI
+  - Training, education, legal-process products, structured learning
+  - Controlled educational; public only after review
+  - TI is not PS and must not expose protected matter facts
+  - Inherits DCSE, generalized legal education boundaries, and QA
+  - May teach process only after stripping protected PS content
+  - 3.1 DCS, DCSE, And SC Credibility Asset Rule
+  - DCSE may generate and maintain credibility assets that support DCS personal positioning, DCS employment pursuits, SC business development, DCSE architecture demonstration, and product credibility. These assets may include websites, subdomains, case studies, portfolios, resumes, capability briefs, architecture reports, public-safe product demonstrations, and SEO, GEO, or AEO assets. Each asset must be classified by entity, audience, confidentiality, claim support, public-readiness, and PS exposure risk before publication.
+  - DCS is the final human authority and persona source. DCSE is the governing command structure. SC is the consulting and market-facing business lane. These entities are related but not interchangeable.
+  - Mode
+  - Trigger Examples
+  - Default Entity
+  - Default Posture
+  - Special Guardrail
+  - SC-Blueprint
+  - business strategy, consulting systems, AI integration, web/client assets
+  - SC
+  - Review before public or client release
+  - Keep PS facts and internal GYTO language out of public-facing assets
+  - SS-Story
+  - narrative, lifestyle, culture-facing, restorative content
+  - SS
+  - Content review before publication
+  - Do not dramatize protected PS matter or import SC client claims
+  - PS-Rule:XX
+  - legal motion drafting, filing support, procedural compliance, rule-based court work
+  - PS
+  - Protected human-gated review
+  - Preserve no-UPL boundary, deadlines, forum posture, and rule specificity
+  - PS-Depo
+  - deposition prep, contradiction analysis, evidence synthesis, witness strategy
+  - PS
+  - Protected human-gated review
+  - Treat testimony strategy, names, evidence posture, and contradictions as protected
+  - DCSE-Report
+  - dashboards, scorecards, enterprise analysis, command reporting
+  - DCSE
+  - Internal or controlled review
+  - Preserve source lineage, status labels, and decision-grade clarity
+  - DCSE-Inventory
+  - asset queries, product status, doctrine availability, resource tracking
+  - DCSE
+  - Internal/control review
+  - Do not treat availability as promotion or source-of-truth status
+  - DCS-Opportunity
+  - recruiter, interview, employment, proof-of-fit, opportunity analysis, business positioning
+  - DCS
+  - Controlled business review
+  - Keep business proof separate from PS strategy and unrelated entity doctrine
+- CHANGED blocks: None
+- REMOVED blocks:
+  - [Entity matrix table formatting removed]
+  - [Operational modes table formatting removed]
+
+## Part 4: Output Rules, Metadata, QA Gates, Release Controls
+- UNCHANGED block count: 35
+- ADDED blocks: 
+  - Controlled Brand Language Check
+  - Before publication or distribution, each public-facing artifact must pass a controlled brand language check. The check confirms correct entity name, correct product name, correct trademark wording, correct trademark symbol if any, no unapproved abbreviation, no accidental dictation variant, no PS leakage, and no unsupported ownership, registration, licensing, or compliance claim.
+  - Distribution Artifact Check
+  - Before a document, doctrine file, report, instruction layer, or control package is marked ready for DCS review or distribution, the output must include a downloadable artifact in the appropriate format unless DCS requested advisory analysis only. The artifact must carry status, authority, source basis, lane, and promotion posture.
+- CHANGED blocks: None
+- REMOVED blocks: None
+
+## Part 5: DART Framework And PS Litigation Specialization
+- UNCHANGED block count: 28
+- ADDED blocks: 
+  - 5.2 DART Layer Separation
+  - DART is maintained in three controlled layers:
+  - DART-Core: internal governance, contradiction, audit, traceability, rebuttal, QA, and source-reconciliation logic across DCSE.
+  - DART-PS: protected litigation version. It is confidential, PS-only, human-gated, and may contain case-specific rules, evidence handling, litigation posture, deadlines, and court-facing preparation logic.
+  - DART-Product: public-safe product, training, education, and structured reasoning version. It may teach process, audit logic, and contradiction discipline without exposing PS facts, strategy, evidence, deadlines, names, or case-specific posture.
+  - The master defines DART architecture. Detailed DART rulebooks may be linked as controlled companion documents. PS-specific DART rulebooks remain PS-controlled and are referenced only by controlled marker unless DCS authorizes access.
+  - Additional v6.7.1 rule groups include:
+  - Source status logic: distinguish promoted authority, candidate authority, support record, render, archive, registry entry, and PS-controlled source.
+  - Confidence logic: assign confidence based on source authority, completeness, freshness, consistency, lane safety, and retrieval quality.
+  - Terminology normalization logic: catch controlled-term errors before publication or promotion.
+  - Product-safe translation logic: convert DART-Core into public-safe or product-safe teaching without PS facts.
+  - Release-gate logic: hold artifacts at review status when contradictions, missing sources, claim gaps, PS risk, or approval gaps remain.
+  - Detailed rules should be maintained in linked rulebooks:
+  - DART_Rulebook_Core_Internal.md
+  - DART_Rulebook_PS_CONFIDENTIAL.md
+  - DART_Rulebook_Product_PublicSafe.md
+  - DART_Audit_Format_Standard.md
+- CHANGED blocks: None
+- REMOVED blocks: None
+
+## STOPGATE LOG ADDENDUM
+- No CASE-FACT FLAGGED blocks found.

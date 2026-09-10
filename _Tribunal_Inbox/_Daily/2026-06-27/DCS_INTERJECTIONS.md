@@ -1,0 +1,18 @@
+# DCS Interjections - 2026-06-27
+
+## Auto-Extracted from JSONs
+
+### From `TRIBUNAL_SESSION_REPORT_20260627_AG_PHASE1_SWEEP.json`:
+
+```
+PENDING_REVIEW
+```
+
+### From `TRIBUNAL_20260627_PS_CTJ_PHASE2_ATTACHMENT_ACTIVITY.json`:
+
+```
+PENDING_GATE1_REVIEW
+```
+
+## Manual Entries
+
