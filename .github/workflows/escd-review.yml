@@ -7,6 +7,8 @@ on:
   pull_request:
     paths:
       - 'apps/escd/**'
+      - 'api/escd.py'
+      - 'vercel.json'
       - '03_WORK_ORDERS/ESCD/**'
       - 'supabase/migrations/20260909_escd_runtime_state.sql'
       - 'supabase/migrations/20260910_escd_runtime_integrity_patch.sql'
@@ -53,8 +55,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq postgresql-client
       - name: Compile ESCD Python
-        run: python -m compileall -q apps/escd
-      - name: Run ESCD policy and runtime tests
+        run: python -m compileall -q apps/escd api/escd.py
+      - name: Run ESCD policy, runtime, workflow and surface tests
         run: python -m pytest -q apps/escd/tests
       - name: Bootstrap isolated Supabase-compatible SQL foundation
         run: |
