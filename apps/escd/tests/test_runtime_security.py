@@ -58,6 +58,14 @@ class RuleTests(unittest.TestCase):
         with self.assertRaises(RuntimeRuleError):
             require_approval_decision(approval, "approved", "")
 
+    def test_expired_approval_cannot_be_decided(self):
+        approval = {
+            "status": "pending",
+            "expires_at": (datetime.now(timezone.utc) - timedelta(minutes=1)).isoformat(),
+        }
+        with self.assertRaisesRegex(RuntimeRuleError, "approval_expired"):
+            require_approval_decision(approval, "approved", "u-auth")
+
     def test_next_best_action_uses_governed_policy(self):
         jobs = [
             {"id": "b", "title": "B", "status": "queued", "explicit_priority": 50, "urgency": 20, "actionable": True},
@@ -93,6 +101,7 @@ class RenderingTests(unittest.TestCase):
 class StaticContractTests(unittest.TestCase):
     def setUp(self):
         self.api = (ROOT / "apps/escd/api/index.py").read_text()
+        self.repo = (ROOT / "apps/escd/runtime/repository.py").read_text()
         self.web = (ROOT / "apps/escd/web/index.html").read_text()
         self.mig = (ROOT / "supabase/migrations/20260909_escd_runtime_state.sql").read_text()
 
@@ -115,6 +124,16 @@ class StaticContractTests(unittest.TestCase):
         self.assertIn("briefing_ack_in_future", self.api)
         self.assertIn("briefing_ack_regression", self.api)
 
+    def test_completion_does_not_trust_request_exit_assertion(self):
+        self.assertNotIn('exit_criteria_met=bool(payload.get("exit_criteria_met"))', self.api)
+        self.assertIn('exit_criteria_met=bool(job.get("exit_criteria_met"))', self.api)
+
+    def test_approval_lookup_is_action_scoped_and_deterministic(self):
+        self.assertIn('action_key = f"job_transition:{target}"', self.api)
+        self.assertIn("latest_approval(job_id, action_key)", self.api)
+        self.assertIn("action_key=eq.{safe_action}", self.repo)
+        self.assertIn("order=requested_at.desc,id.desc", self.repo)
+
     def test_migration_rls_and_completion_trigger(self):
         for table in ["escd_jobs", "escd_job_events", "escd_approvals", "escd_evidence", "escd_briefing_acks"]:
             self.assertIn(f"ALTER TABLE dcse_cp.{table} ENABLE ROW LEVEL SECURITY", self.mig)
@@ -125,17 +144,25 @@ class StaticContractTests(unittest.TestCase):
         self.assertIn("evidence_required", self.mig)
         self.assertIn("exit_criteria_not_met", self.mig)
         self.assertIn("WHEN 'waiting_approval' THEN NEW.status IN ('running','failed','cancelled')", self.mig)
+        self.assertIn("a.action_key = required_action_key", self.mig)
         self.assertIn("ORDER BY a.requested_at DESC, a.id DESC", self.mig)
         self.assertIn("latest_approval_status IS DISTINCT FROM 'approved'", self.mig)
 
     def test_migration_preserves_transition_history_and_ack_cursor_integrity(self):
         self.assertIn("escd_record_job_transition", self.mig)
         self.assertIn("'status_transition'", self.mig)
-        self.assertIn("from_status", self.mig)
-        self.assertIn("to_status", self.mig)
+        self.assertIn("escd_record_approval_transition", self.mig)
+        self.assertIn("'approval_transition'", self.mig)
+        self.assertIn("payload_fingerprint", self.mig)
         self.assertIn("escd_validate_briefing_ack", self.mig)
         self.assertIn("briefing_ack_in_future", self.mig)
         self.assertIn("briefing_ack_regression", self.mig)
+
+    def test_migration_provenance_fields_bind_to_authenticated_principal(self):
+        self.assertIn("created_by_user_id = auth.uid()", self.mig)
+        self.assertIn("actor_user_id = auth.uid()", self.mig)
+        self.assertIn("requested_by_user_id = auth.uid()", self.mig)
+        self.assertIn("decided_by_user_id IS NULL OR decided_by_user_id = auth.uid()", self.mig)
 
     def test_no_employment_seed_or_aegis_runtime_identity(self):
         self.assertNotIn("dcs_employment", self.mig.lower())
