@@ -12,7 +12,7 @@
 
 ## Purpose
 
-Correct runtime drift across model and agent surfaces by enforcing the operative DCSE Master Profile v7.2 R5 authority, requiring mandatory task traceability at intake, requiring evidence-backed navigable closeout at completion, and preserving DCS control over subsequent work prioritization.
+Correct runtime drift across model and agent surfaces by enforcing the operative DCSE Master Profile v7.2 R5 authority, requiring mandatory task traceability at intake, requiring evidence-backed navigable closeout at completion, preserving the existing publication boundary, and preserving DCS control over subsequent work prioritization.
 
 This directive establishes a mirrored lifecycle contract:
 
@@ -126,7 +126,26 @@ No model or agent may self-assign constitutional authority, invent a permanent r
 
 A surface that cannot load or verify this chain SHALL report `UNSYNCHRONIZED` or `DEGRADED` and SHALL NOT claim full v7.2 compliance for authority-sensitive work.
 
-## 6. Persistence and Evidence Routing
+## 6. Publication Boundary
+
+The existing publication boundary established by DCS-DIR-20260905-001 is preserved without weakening.
+
+Protected-origin material remains confidential and protected from unauthorized public spill. Unless DCS expressly authorizes otherwise, protected-origin facts, evidence, strategy, analysis, party-specific allegations, or other protected matter SHALL NOT be used in public-facing:
+
+- Sonly Consulting content;
+- Smoove Spots content;
+- The Initiative content;
+- websites or public web applications;
+- campaigns, social media, marketing, advertising, investor materials, or movement narratives;
+- public product copy or external communications.
+
+Internal, private, governance, archival, systems, operational, or analytical use is not blocked merely because material originated in a protected lane, provided confidentiality, purpose limitation, and access controls are maintained.
+
+The applicable publication Stop-Gate remains active when protected-origin material is about to enter public-facing content without express DCS authorization. It is not a standing bar against internal/private use.
+
+If DCS activates a new matter-specific protected boundary, the stricter matter-specific firewall controls for that matter.
+
+## 7. Persistence and Evidence Routing
 
 The final report SHALL use the operative v7.2 D22 persistence model rather than allowing each model or agent to invent a destination.
 
@@ -139,7 +158,7 @@ The final report SHALL use the operative v7.2 D22 persistence model rather than 
 
 A closeout report MAY link to several surfaces, but each governed object SHALL retain one canonical home as determined by D22.
 
-## 7. Completion State and Evidence Navigation Contract
+## 8. Completion State and Evidence Navigation Contract
 
 The default human-facing closeout pattern is:
 
@@ -156,7 +175,7 @@ COMPLETED / CURRENT STATE
 
 This is a semantic contract, not a mandatory visual layout. Command Post, ESCD, mobile, tablet, desktop, API, and future application surfaces may render it differently while preserving the same fields and authority boundaries.
 
-## 8. Supersession and Exceptions
+## 9. Supersession and Exceptions
 
 This consolidated v7.2 file preserves and supersedes the operative content of `DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md` as the current canonical file for this directive family.
 
@@ -170,13 +189,13 @@ It additionally supersedes any current runtime practice that:
 
 This directive does not waive confidentiality, secret handling, access governance, public-release review, evidence integrity, DCS reserved authority, lane boundaries, or task-specific Stop-Gates.
 
-## 9. Enforcement
+## 10. Enforcement
 
 Runtime manifests, project instructions, agent onboarding, model wrappers, task packets, Tribunal receipts, Completion Evidence packets, Command Post views, ESCD work items, and other control surfaces SHALL reconcile to this directive.
 
 A stale surface remains an observable synchronization defect and SHALL be reported rather than silently treated as compliant.
 
-## 10. Promotion Record
+## 11. Promotion Record
 
 The navigable final-reporting, goal-status, evidence-linking, and ESCD next-work prioritization amendment was explicitly **APPROVED, PROMOTED, ACTIVE, and AUTHORIZED immediately by DCS Level 0 on 2026-09-10**.
 
