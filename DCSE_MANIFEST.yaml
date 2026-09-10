@@ -25,7 +25,6 @@ canonical:
     source_authority: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
     ddna_governance: "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md"
     product_assembly: "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
-    operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
     directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
     completion_evidence_directive: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
     zone_index: "governance/v7.1/ZONE_INDEX.json"
