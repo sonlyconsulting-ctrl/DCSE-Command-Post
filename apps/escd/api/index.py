@@ -10,6 +10,7 @@ from urllib.parse import urlparse
 from apps.escd.policy.extensions import transition_allowed
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
+from apps.escd.runtime.source_links import ensure_item_source
 from apps.escd.runtime.service import (
     RuntimeRuleError,
     require_job_transition,
@@ -329,7 +330,15 @@ class handler(BaseHTTPRequestHandler):
                     merged = merge_source_refs(existing.get("source_refs") or [], [source_ref])
                     if merged != list(existing.get("source_refs") or []):
                         existing = repo.patch_item(str(existing["id"]), {"source_refs": merged})
-                    self._json(200, {"ok": True, "deduped": True, "item": existing}, origin)
+                    source_link = ensure_item_source(
+                        repo,
+                        source_link_key=_stable_key("escd-source-v1-", existing["id"], source_system, source_id),
+                        item_id=str(existing["id"]),
+                        source_system=source_system,
+                        source_id=source_id,
+                        source_ref=source_ref,
+                    )
+                    self._json(200, {"ok": True, "deduped": True, "item": existing, "source_link": source_link}, origin)
                     return
 
                 item_payload = {
@@ -364,7 +373,15 @@ class handler(BaseHTTPRequestHandler):
                     "evidence_refs": list(payload.get("evidence_refs") or []),
                 }
                 item = repo.create_item(item_payload)
-                self._json(201, {"ok": True, "deduped": False, "item": item}, origin)
+                source_link = ensure_item_source(
+                    repo,
+                    source_link_key=_stable_key("escd-source-v1-", item["id"], source_system, source_id),
+                    item_id=str(item["id"]),
+                    source_system=source_system,
+                    source_id=source_id,
+                    source_ref=source_ref,
+                )
+                self._json(201, {"ok": True, "deduped": False, "item": item, "source_link": source_link}, origin)
                 return
 
             if path == "/api/escd/items/transition":
