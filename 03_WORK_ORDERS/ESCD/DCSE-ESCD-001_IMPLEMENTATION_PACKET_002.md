@@ -95,9 +95,9 @@ Implement the core non-Employment assistant flows:
 
 Do not claim external write, push, or device behavior without runtime evidence.
 
-## Tranche E: Workflow engine
+## Tranche E: Workflow engine and operator UI
 
-Implement the reusable workflow-template contract:
+Implement the reusable workflow-template contract together with the operator-facing workflow UI required to validate it as a usable assistant capability:
 
 - template registry and versioning
 - instance binding
@@ -106,10 +106,18 @@ Implement the reusable workflow-template contract:
 - step autonomy/approval/evidence/recovery fields
 - stable template version on every workflow instance
 - product-specific child templates without weakening parent controls
+- workflow list/detail views
+- template/version visibility
+- step state and dependency visibility
+- approval/evidence/recovery visibility
+- create/instantiate controls limited to governed non-consequential actions
+- responsive desktop/mobile workflow navigation and readable failure/empty/loading states
+
+Workflow release validation is not valid if the engine can only be exercised through backend tests. The UI must demonstrate that DCS can inspect the selected template/version, current workflow state, step status, required approvals, evidence, failures/retries, and permitted next actions without exposing secrets or bypassing authority controls.
 
 ## Tranche F: DDNA candidate interface
 
-Implement only the candidate package/interface and provenance behavior. Do not perform or bundle the dedicated DDNA production consumer cutover.
+HOLD. Resume only after Codex is available to complete the controlled DDNA dependency work. Do not substitute another path, perform production DDNA cutover, or represent DDNA integration as validated while this hold remains active.
 
 ## DCS Employment boundary
 
@@ -117,11 +125,11 @@ Employment-specific workflow logic is not part of this packet. Preserve existing
 
 ## DDNA boundary
 
-Dedicated DDNA consumer cutover is a parallel controlled stream. ESCD may define interfaces and candidate contribution behavior, but must not independently switch production DDNA runtime, weaken service-role boundaries, or bundle DDNA cutover into ESCD work.
+Dedicated DDNA consumer cutover is a parallel controlled stream. ESCD may define interfaces and candidate contribution behavior only after the DDNA hold is released. It must not independently switch production DDNA runtime, weaken service-role boundaries, or bundle DDNA cutover into ESCD work.
 
 ## Testing
 
-Use the acceptance matrix and existing 100-point release rubric. Run functional/integration repair first, then adversarial/E2E/regression. Hard-gate failure overrides numeric score.
+Use the acceptance matrix and existing 100-point release rubric. Run functional/integration repair first, then adversarial/E2E/regression. Hard-gate failure overrides numeric score. Workflow-engine acceptance must include UI-level operator journeys in addition to backend and persistence tests.
 
 ## Required evidence
 
