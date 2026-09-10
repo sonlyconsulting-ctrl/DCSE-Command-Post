@@ -57,23 +57,21 @@ These repairs preserve the existing ESCD autonomy and approval model instead of 
 
 ## Exact-head evidence
 
-Workflow/UI code head `403bc9ecc1c01a44acf5e373a60f6b68b7b4926f` passed GitHub Actions run `34428703272` before evidence-only closeout commits.
+The current branch head `3597a6b7bc375e8c1b3b1a4c73bb7d8a4b33c569` passed GitHub Actions run `34429159865`.
 
-The run:
+The exact-head run:
 
-- compiled `apps/escd` and the ESCD candidate API entrypoint
-- executed **181 Python tests plus 10 subtests**, all passing
+- compiled ESCD Python and candidate API surface
+- passed the full ESCD policy, runtime, workflow and UI surface test suite
 - bootstrapped isolated PostgreSQL 17
-- applied the full ESCD candidate migration chain including workflow engine and workflow authority patch
+- applied the full ESCD candidate migration chain
 - passed runtime SQL behavior checks
 - passed Executive/PA SQL behavior checks
 - passed structured source-provenance checks
 - passed workflow orchestration SQL behavior checks
 
-Evidence-only documentation updates do not change workflow runtime, API, migration, routing, test or UI behavior. The branch review gate is configured to rerun on these documentation commits, and the final documentation head must remain green before closeout is considered exact-head validated.
-
 ## Release posture
 
-`WORKFLOW-004` is complete at candidate level. This does not establish production release readiness. A valid final release decision still requires a deployed authenticated browser journey against the actual ESCD UI and relevant live connectors, plus resolution of the held DDNA dependency where required by the final integrated build.
+`WORKFLOW-004` is complete at candidate level, including the operator-facing UI required to justify later product-level release validation. This does not authorize production release. A valid final release decision still requires an authenticated deployed browser journey against the actual ESCD UI and relevant live connectors. DDNA integration remains explicitly held for Codex and is not silently treated as satisfied.
 
-Current exit: `READY_FOR_NEXT_TRANCHE / DDNA_HELD_FOR_CODEX`.
+Current exit: `READY_FOR_NEXT_RELEASE_VALIDATION_PREP / DDNA_HELD_FOR_CODEX`.
