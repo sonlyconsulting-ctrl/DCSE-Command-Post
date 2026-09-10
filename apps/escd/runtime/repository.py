@@ -79,6 +79,11 @@ class SupabaseRLSClient:
         )
         return rows[0] if rows else None
 
+    def get_approval(self, approval_id: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(approval_id), safe="")
+        rows = self._call("GET", f"escd_approvals?id=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
     def list_pending_approvals(self) -> list[dict[str, Any]]:
         return self._call("GET", "escd_approvals?status=eq.pending&select=*&order=requested_at.desc,id.desc")
 
