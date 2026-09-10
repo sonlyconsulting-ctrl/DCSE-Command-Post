@@ -1,0 +1,151 @@
+name: V7.2 governance validation
+
+on:
+  pull_request:
+    paths:
+      - 'governance/v7.2/**'
+      - 'governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
+      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'tribunal/v7/**'
+      - 'DCSE_MANIFEST.yaml'
+      - '.github/workflows/v7-2-governance-validation.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'governance/v7.2/**'
+      - 'governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
+      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'tribunal/v7/**'
+      - 'DCSE_MANIFEST.yaml'
+      - '.github/workflows/v7-2-governance-validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate V7.2 authority, routing, and safety
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          errors = []
+
+          required = [
+              Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md'),
+              Path('governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'),
+              Path('governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md'),
+              Path('governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md'),
+              Path('governance/v7.2/dcs_express_directives.v7.2.json'),
+              Path('governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md'),
+              Path('governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md'),
+              Path('governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md'),
+              Path('governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md'),
+              Path('governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'),
+              Path('DCSE_MANIFEST.yaml'),
+          ]
+
+          missing = [str(path) for path in required if not path.is_file()]
+          if missing:
+              errors.append('Missing required V7.2 authority/routing files: ' + ', '.join(missing))
+
+          def read(path):
+              return path.read_text(encoding='utf-8', errors='replace')
+
+          designation = required[0]
+          master = required[1]
+          directive_registry = required[4]
+          d20 = required[6]
+          d22 = required[7]
+          traceability = required[8]
+          manifest = required[10]
+
+          if designation.is_file():
+              text = read(designation)
+              for token in ['Status: OPERATIVE AUTHORITY DESIGNATION', 'Authority: DCS', 'DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md']:
+                  if token not in text:
+                      errors.append(f'Operative designation missing required token: {token}')
+
+          if master.is_file():
+              text = read(master)
+              if 'DCSE MASTER PROFILE v7.2' not in text:
+                  errors.append('Master Profile is not identified as v7.2.')
+
+          if d20.is_file():
+              text = read(d20)
+              for token in ['**Version:** v7.2', '**Status:** ACTIVE / OPERATIVE', '**Promotion Status:** PROMOTED', 'Reuse Before Redesign']:
+                  if token not in text:
+                      errors.append(f'D20 v7.2 missing required token: {token}')
+
+          if d22.is_file():
+              text = read(d22)
+              for token in ['GitHub', 'Supabase', 'Tribunal', 'Vault']:
+                  if token not in text:
+                      errors.append(f'D22 v7.2 missing persistence-routing token: {token}')
+
+          if traceability.is_file():
+              text = read(traceability)
+              for token in [
+                  'Mandatory Task Traceability and Intake Declaration',
+                  'Mandatory Navigable Final Reporting and Closeout',
+                  'ESCD Next-Work Prioritization and DCS Interruption Control',
+                  'CONTINUE | SKIP | DEFER | REORDER | INTERRUPT',
+              ]:
+                  if token not in text:
+                      errors.append(f'Traceability/closeout directive missing required token: {token}')
+
+          if directive_registry.is_file():
+              try:
+                  registry = json.loads(read(directive_registry))
+              except Exception as exc:
+                  errors.append(f'dcs_express_directives.v7.2.json invalid JSON: {exc}')
+                  registry = {}
+              ids = {d.get('directive_id') for d in registry.get('directives', []) if isinstance(d, dict)}
+              if 'DCS-DIR-20260910-001' not in ids:
+                  errors.append('Express directive registry missing DCS-DIR-20260910-001.')
+
+          old_traceability = Path('governance/v7.2/DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md')
+          if old_traceability.exists():
+              errors.append('Superseded runtime-harmony canonical file still exists alongside v7-2 replacement.')
+
+          if manifest.is_file():
+              manifest_text = read(manifest)
+              required_manifest_values = [
+                  'constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
+                  'source_authority_and_reconciliation: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"',
+                  'task_traceability_and_navigable_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"',
+                  'current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"',
+              ]
+              for value in required_manifest_values:
+                  if value not in manifest_text:
+                      errors.append(f'DCSE_MANIFEST.yaml missing required v7.2 routing value: {value}')
+
+          prohibited_credentials = [
+              'SUPABASE_SERVICE_ROLE_KEY=',
+              'GITHUB_TOKEN=',
+              'GH_TOKEN=',
+              'DATABASE_PASSWORD=',
+              'JWT_SECRET=',
+          ]
+          for root in [Path('governance/v7.2'), Path('tribunal/v7')]:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.md', '.json', '.yaml', '.yml', '.txt', '.py', '.ps1'}:
+                      continue
+                  text = read(path)
+                  for token in prohibited_credentials:
+                      if token in text:
+                          errors.append(f'{path}: contains prohibited credential assignment {token}')
+
+          if errors:
+              raise SystemExit('\n'.join(f'ERROR: {error}' for error in errors))
+
+          print('V7.2 authority, routing, traceability, and safety validation passed.')
