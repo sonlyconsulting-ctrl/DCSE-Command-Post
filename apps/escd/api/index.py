@@ -24,6 +24,19 @@ def _allowed_origin(origin: str | None) -> str | None:
     return origin
 
 
+def _parse_ack_timestamp(value: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise RuntimeRuleError("invalid_acknowledged_through") from exc
+    if parsed.tzinfo is None:
+        raise RuntimeRuleError("invalid_acknowledged_through")
+    parsed = parsed.astimezone(timezone.utc)
+    if parsed > datetime.now(timezone.utc):
+        raise RuntimeRuleError("briefing_ack_in_future")
+    return parsed
+
+
 class handler(BaseHTTPRequestHandler):
     server_version = "ESCD/0.2"
 
@@ -176,7 +189,13 @@ class handler(BaseHTTPRequestHandler):
                 if not acknowledged_through:
                     self._json(400, {"error": "acknowledged_through_required"}, origin)
                     return
-                ack = repo.acknowledge_briefing(acknowledged_through)
+                acknowledged_dt = _parse_ack_timestamp(acknowledged_through)
+                prior = repo.last_briefing_ack()
+                if prior:
+                    prior_dt = _parse_ack_timestamp(str(prior.get("acknowledged_through") or ""))
+                    if acknowledged_dt < prior_dt:
+                        raise RuntimeRuleError("briefing_ack_regression")
+                ack = repo.acknowledge_briefing(acknowledged_dt.isoformat())
                 self._json(201, {"ok": True, "ack": ack}, origin)
                 return
 
