@@ -2,6 +2,9 @@
 
 const {execFileSync} = require('node:child_process');
 
+const SC_AGENT_OS_PROJECT_ID = 'prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM';
+const MENTAL_INGENUITY_QA_PROJECT_ID = 'prj_3t9SKxOUuW0peitSq97OHWDWCQy9';
+const projectId = process.env.VERCEL_PROJECT_ID || '';
 const currentSha = process.env.VERCEL_GIT_COMMIT_SHA || '';
 const previousSha = process.env.VERCEL_GIT_PREVIOUS_SHA || '';
 
@@ -38,6 +41,21 @@ function hasRelevantChange(files) {
 }
 
 try {
+  if (projectId === MENTAL_INGENUITY_QA_PROJECT_ID) {
+    console.log('Vercel ignore check: preserving existing Mental Ingenuity QA ignore behavior.');
+    process.exit(0);
+  }
+
+  if (projectId && projectId !== SC_AGENT_OS_PROJECT_ID) {
+    console.log('Vercel ignore check: non-SC Agent OS project; preserving normal build behavior.');
+    process.exit(1);
+  }
+
+  if (!projectId) {
+    console.log('Vercel ignore check: project identity unavailable; building for validation safety.');
+    process.exit(1);
+  }
+
   const files = changedFiles();
   if (!files) {
     console.log('Vercel ignore check: no commit metadata available; building for validation safety.');
