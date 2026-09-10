@@ -57,7 +57,7 @@ These repairs preserve the existing ESCD autonomy and approval model instead of 
 
 ## Exact-head evidence
 
-Exact-head GitHub Actions run `34428703272` completed successfully on branch head `403bc9ecc1c01a44acf5e373a60f6b68b7b4926f` before this evidence-only closeout update.
+Workflow/UI code head `403bc9ecc1c01a44acf5e373a60f6b68b7b4926f` passed GitHub Actions run `34428703272` before evidence-only closeout commits.
 
 The run:
 
@@ -69,6 +69,8 @@ The run:
 - passed Executive/PA SQL behavior checks
 - passed structured source-provenance checks
 - passed workflow orchestration SQL behavior checks
+
+Evidence-only documentation updates do not change workflow runtime, API, migration, routing, test or UI behavior. The branch review gate is configured to rerun on these documentation commits, and the final documentation head must remain green before closeout is considered exact-head validated.
 
 ## Release posture
 
