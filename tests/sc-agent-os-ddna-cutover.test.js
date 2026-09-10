@@ -25,7 +25,7 @@ function loadHandler(env) {
   return {handler, restore() {
     for (const key of Object.keys(process.env)) if (!(key in saved)) delete process.env[key];
     Object.assign(process.env, saved);
-  }}; 
+  }};
 }
 
 function loadAppHandler(env) {
@@ -113,6 +113,18 @@ test('dedicated mode fails closed when dedicated credentials are missing', async
   } finally { f.restore(); m.restore(); }
 });
 
+test('legacy mode fails closed when project URL binding is missing', async () => {
+  const f = installFetch({legacyRows: rows});
+  const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'legacy', SUPABASE_URL:'', NEXT_PUBLIC_SUPABASE_URL:''});
+  try {
+    const res = mockRes();
+    await m.handler(mockReq(), res);
+    assert.equal(res.statusCode, 500);
+    assert.match(JSON.parse(res.body).error, /Legacy Supabase server environment is not configured/);
+    assert.equal(f.calls.filter(c => c.url.includes('ddna_ollama_jobs')).length, 0);
+  } finally { f.restore(); m.restore(); }
+});
+
 test('compare mode returns dedicated data only when projections match', async () => {
   const f = installFetch({legacyRows: rows, dedicatedRows: rows});
   const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'compare'});
@@ -148,6 +160,38 @@ test('route rejects unauthenticated requests before DDNA reads', async () => {
     await m.handler({method:'GET', headers:{}}, res);
     assert.equal(res.statusCode, 401);
   } finally { global.fetch = oldFetch; m.restore(); }
+});
+
+test('upstream DDNA error body is not reflected to the operator response', async () => {
+  const oldFetch = global.fetch;
+  global.fetch = async url => {
+    const u = String(url);
+    if (u.includes('/auth/v1/user')) return {ok:true, json:async()=>({email:'operator@example.com'})};
+    if (u.includes('/api/version') || u.includes('/api/tags')) throw new Error('ollama unavailable');
+    if (u.includes('legacy.example')) return {ok:false, status:403, text:async()=> 'sensitive-upstream-detail'};
+    throw new Error(`unexpected fetch ${u}`);
+  };
+  const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'legacy'});
+  try {
+    const res = mockRes();
+    await m.handler(mockReq(), res);
+    assert.equal(res.statusCode, 500);
+    const error = JSON.parse(res.body).error;
+    assert.match(error, /DDNA read failed \(legacy\/dcse_cp\): HTTP 403/);
+    assert.doesNotMatch(error, /sensitive-upstream-detail/);
+  } finally { global.fetch = oldFetch; m.restore(); }
+});
+
+test('invalid runtime mode fails closed before DDNA reads', async () => {
+  const f = installFetch({legacyRows: rows});
+  const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'unexpected'});
+  try {
+    const res = mockRes();
+    await m.handler(mockReq(), res);
+    assert.equal(res.statusCode, 500);
+    assert.match(JSON.parse(res.body).error, /Unsupported DDNA_RUNTIME_MODE/);
+    assert.equal(f.calls.filter(c => c.url.includes('ddna_ollama_jobs')).length, 0);
+  } finally { f.restore(); m.restore(); }
 });
 
 test('deployed app route delegates GET /api/runtime to DDNA cutover handler', async () => {
