@@ -9,11 +9,20 @@ from urllib.parse import urlparse, parse_qs
 
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
-from apps.escd.runtime.mvp_data import MVPServiceError, chat, list_assets, list_ddna_jobs, list_ddna_sources, provider_status
+from apps.escd.runtime.mvp_data import (
+    MVPServiceError,
+    chat,
+    list_assets,
+    list_ddna_jobs,
+    list_ddna_sources,
+    provider_status,
+    set_provider_secret,
+    update_provider_config,
+)
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.3"
+    server_version = "ESCD-MVP/0.4"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -79,7 +88,6 @@ class handler(BaseHTTPRequestHandler):
         target = update.get("status")
         if not target or target == current.get("status"):
             return repo.patch_item(item_id, update)
-
         current_status = str(current.get("status") or "")
         if target == "active" and current_status == "captured":
             first = dict(update)
@@ -103,7 +111,7 @@ class handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.3", "providers": provider_status()})
+            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.4", "providers": provider_status()})
             return
         try:
             repo = self._auth()
@@ -167,6 +175,11 @@ class handler(BaseHTTPRequestHandler):
                 self._json(201, {"ok": True, "item": item})
             elif path == "/api/mvp/chat":
                 self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
+            elif path == "/api/mvp/provider-secret":
+                provider = str(payload.get("provider") or "").strip().lower()
+                secret = str(payload.get("secret") or "")
+                result = set_provider_secret(provider, secret)
+                self._json(200, {"ok": True, "provider": result})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -177,11 +190,18 @@ class handler(BaseHTTPRequestHandler):
             self._json(500, {"error": "internal_error"})
 
     def do_PATCH(self):
-        if urlparse(self.path).path != "/api/mvp/items":
-            self._json(404, {"error": "not_found"}); return
+        path = urlparse(self.path).path
         try:
             repo = self._auth()
             payload = self._read_json()
+            if path == "/api/mvp/provider-config":
+                provider = str(payload.get("provider") or "").strip().lower()
+                allowed = {"enabled", "model", "timeout_seconds", "max_output_tokens", "thinking_level"}
+                changes = {k: v for k, v in payload.items() if k in allowed}
+                self._json(200, {"ok": True, "provider": update_provider_config(provider, changes)})
+                return
+            if path != "/api/mvp/items":
+                self._json(404, {"error": "not_found"}); return
             item_id = str(payload.get("id") or "")
             if not item_id:
                 self._json(400, {"error": "id_required"}); return
@@ -190,7 +210,7 @@ class handler(BaseHTTPRequestHandler):
             self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
-        except (RepositoryError, MVPServiceError) as exc:
+        except (RepositoryError, MVPServiceError, ValueError) as exc:
             self._json(502, {"error": str(exc)})
         except Exception:
             self._json(500, {"error": "internal_error"})
