@@ -203,6 +203,27 @@ model_harmony:
   missing_chain_state: "UNSYNCHRONIZED_OR_DEGRADED"
   compliance_claim_when_unsynchronized: "PROHIBITED"
 
+ps_publication_firewall:
+  status: "ACTIVE_AS_PRESERVED_BY_DCS-DIR-20260910-001"
+  concluded_matter_blanket_internal_isolation: "RETIRED"
+  internal_private_use: "PERMITTED_SUBJECT_TO_CONFIDENTIALITY_PURPOSE_AND_ACCESS_CONTROLS"
+  public_spill_default: "PROHIBITED_WITHOUT_EXPRESS_DCS_AUTHORIZATION"
+  public_facing_destinations:
+    - Sonly_Consulting
+    - Smoove_Spots
+    - The_Initiative
+    - websites
+    - public_web_apps
+    - campaigns
+    - social_media
+    - marketing
+    - advertising
+    - investor_materials
+    - movement_narratives
+    - public_product_copy
+    - external_communications
+  future_legal_matter_rule: "DCS may activate a stricter matter-specific protected firewall."
+
 workflow_lifecycle:
   review_selection: "capability-based and attributable"
   validation_accountability:
