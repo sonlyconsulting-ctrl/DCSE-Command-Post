@@ -1,9 +1,22 @@
 {
   "version": 2,
-  "ignoreCommand": "[ \"$VERCEL_PROJECT_ID\" = \"prj_3t9SKxOUuW0peitSq97OHWDWCQy9\" ]",
+  "ignoreCommand": "node scripts/vercel/should-ignore-sc-agent-os-build.js",
   "rewrites": [
-    { "source": "/api/chat", "destination": "/api/chat" },
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/(.*)", "destination": "/api" }
+    {
+      "source": "/api/chat",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/api/runtime",
+      "destination": "/api/runtime"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
   ]
 }
