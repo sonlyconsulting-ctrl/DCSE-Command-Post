@@ -1,70 +1,33 @@
 # ESCD LIMITATIONS AND NEXT TRANCHE
 
 **Task ID:** DCSE-ESCD-001-WORKFLOW-004  
-**Status:** WORKFLOW ORCHESTRATION CANDIDATE CLOSEOUT
+**Status:** WORKFLOW ORCHESTRATION CANDIDATE COMPLETE / DDNA HELD
 
-## Completed in this tranche
+## Completed in WORKFLOW-004
 
-`DCSE-ESCD-001-WORKFLOW-004` is complete at candidate level with both the reusable workflow engine and operator-facing workflow UI.
+The reusable workflow engine and its operator-facing UI are implemented at candidate level. The UI is part of the tranche acceptance surface, not an optional later embellishment, because product release validation must exercise the same user path that DCS will actually operate.
 
-The candidate includes:
+Completed scope includes template registry/versioning, controlled inheritance, instance binding, step dependency/readiness, approvals, evidence, retries/recovery, history, workflow list/detail, instantiation, operator controls, responsive/mobile behavior, loading/empty/error states and governed execution boundaries.
 
-- workflow template registry/versioning
-- workflow instance binding to exact template identity and fingerprint
-- all ten planned workflow types
-- controlled inheritance without weakening parent controls
-- step autonomy, approval, evidence, dependency, failure and recovery fields
-- governed-job binding before workflow execution authority
-- action-scoped approval binding for approval-required steps
-- evidence-gated completion
-- append-oriented workflow history
-- authenticated workflow API and candidate routing
-- workflow list/detail/instantiate UI in the Executive Assistant surface
-- dedicated operational workflow UI for bounded workflow and step lifecycle actions
-- responsive and accessibility-oriented states
+## Held by DCS direction
 
-## Current deliberate limitations
+DDNA work is held pending Codex. No DDNA candidate interface, consumer cutover, self-promotion, runtime-mode switch or production integration is authorized in this tranche.
 
-These are release dependencies or deliberately held capabilities, not silently completed work:
+## Remaining before a justified release decision
 
-- no production Supabase migration has been applied
-- no production deployment has occurred
-- no PR merge has occurred
-- no live authenticated browser E2E journey has yet been executed against a deployed ESCD candidate
-- no live database persistence test has been performed against the intended authorized ESCD deployment target
-- Gmail and Calendar consequential writes remain approval-gated and are not claimed operational from repository tests
-- Android/mobile delivery is not claimed without device/runtime evidence
-- broader connector availability/staleness/recovery behavior requires provider-backed release validation where applicable
+1. Exact-head workflow/UI gate remains green after closeout documentation.
+2. Deploy a non-production ESCD candidate when deployment capacity/access permits.
+3. Run authenticated browser validation through the actual ESCD interface, including Today/Executive Stream and Workflows.
+4. Exercise representative workflow journeys through UI -> API -> persisted state -> approval/evidence/recovery paths.
+5. Validate responsive/mobile interaction, keyboard/focus, loading, empty and error states in the deployed surface.
+6. Exercise live connector reads and proposal/draft paths where authorized. Do not claim connector writes without runtime evidence.
+7. Resume the separately held DDNA candidate-interface work only after Codex disposition.
+8. Run final adversarial/regression/security/RLS review against the integrated release candidate.
+9. Perform rollback proof and final release scoring.
+10. Obtain explicit DCS production release authorization before merge, production DDL or deploy.
 
-## DDNA hold
+## Release-validation rule
 
-The next planned DDNA candidate-interface tranche is **HELD FOR CODEX** by DCS direction.
+Backend unit and SQL tests establish implementation integrity, but they are not sufficient alone for product release. Final release validation must include the operator-facing UI and authenticated end-to-end browser evidence. Any unavailable live dependency remains explicitly unresolved rather than being inferred as passing.
 
-Do not:
-
-- substitute another implementation path for the held DDNA work
-- perform the dedicated DDNA production consumer cutover
-- represent DDNA integration as release-validated
-- bundle DDNA changes into workflow or release-validation work while the hold remains active
-
-When Codex is available, resume from the preserved DDNA checkpoint under its controlling task/issues rather than reconstructing the work.
-
-## Release-validation requirement
-
-Final ESCD release validation is not justified by backend and static UI tests alone.
-
-Before `READY_FOR_DCS_RELEASE`, validation must include an actual deployed, authenticated browser journey that exercises the ESCD Executive Assistant and Workflows surfaces against the authorized persistence target. Where final claims depend on Gmail, Calendar, notifications, files or device/mobile behavior, the relevant source-native/provider journey must also be evidenced.
-
-The final release gate must therefore distinguish:
-
-1. repository candidate validation: currently PASS
-2. deployed authenticated UI/database validation: NOT YET PERFORMED
-3. provider/device integration validation: NOT YET COMPLETE
-4. DDNA integrated validation: HELD FOR CODEX
-5. explicit DCS production release authorization: NOT YET REQUESTED
-
-## Current exit
-
-`READY_FOR_NEXT_TRANCHE / DDNA_HELD_FOR_CODEX`
-
-Until the hold is released, ESCD can continue only with already-planned non-DDNA verification/preparation that does not falsely claim live release readiness or cross a production gate.
+Current exit: `READY_FOR_RELEASE_VALIDATION_PREP / DDNA_HELD_FOR_CODEX`.
