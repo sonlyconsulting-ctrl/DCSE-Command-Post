@@ -3,9 +3,11 @@
   "ignoreCommand": "[ \"$VERCEL_PROJECT_ID\" = \"prj_3t9SKxOUuW0peitSq97OHWDWCQy9\" ]",
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
     { "source": "/api/escd/(.*)", "destination": "/api/escd?escd_path=$1" },
+    { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
     { "source": "/escd/workflows", "destination": "/apps/escd/web/workflows.html" },
-    { "source": "/escd", "destination": "/apps/escd/web/index.html" },
+    { "source": "/escd", "destination": "/apps/escd/web/login.html" },
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/(.*)", "destination": "/api" }
   ]
