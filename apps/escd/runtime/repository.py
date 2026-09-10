@@ -153,3 +153,143 @@ class SupabaseRLSClient:
         if not rows:
             raise RepositoryError("briefing_ack_failed")
         return rows[0]
+
+    # Integrated Executive Stream + Personal Assistant state.
+    def list_items(self) -> list[dict[str, Any]]:
+        return self._call("GET", "escd_items?select=*&order=updated_at.desc,id.asc&limit=500")
+
+    def get_item(self, item_id: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(item_id), safe="")
+        rows = self._call("GET", f"escd_items?id=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def get_item_by_key(self, item_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(item_key), safe="")
+        rows = self._call("GET", f"escd_items?item_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_item(self, payload: dict[str, Any]) -> dict[str, Any]:
+        item_key = str(payload.get("item_key") or "")
+        if not item_key:
+            raise RepositoryError("item_key_required")
+        existing = self.get_item_by_key(item_key)
+        if existing:
+            return existing
+        try:
+            rows = self._call("POST", "escd_items", payload)
+        except RepositoryError as exc:
+            if str(exc) == "postgrest_409":
+                existing = self.get_item_by_key(item_key)
+                if existing:
+                    return existing
+            raise
+        if not rows:
+            raise RepositoryError("item_create_failed")
+        return rows[0]
+
+    def patch_item(self, item_id: str, update: dict[str, Any]) -> dict[str, Any]:
+        safe = parse.quote(str(item_id), safe="")
+        rows = self._call("PATCH", f"escd_items?id=eq.{safe}", update)
+        if not rows:
+            raise RepositoryError("item_update_failed")
+        return rows[0]
+
+    def list_item_events_since(self, timestamp: str | None) -> list[dict[str, Any]]:
+        if not timestamp:
+            return self._call("GET", "escd_item_events?select=*&order=created_at.desc,id.asc&limit=300")
+        safe = parse.quote(timestamp, safe=":-+.TZ")
+        return self._call("GET", f"escd_item_events?created_at=gt.{safe}&select=*&order=created_at.desc,id.asc&limit=300")
+
+    def get_project_by_key(self, project_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(project_key), safe="")
+        rows = self._call("GET", f"escd_projects?project_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_project(self, payload: dict[str, Any]) -> dict[str, Any]:
+        project_key = str(payload.get("project_key") or "")
+        if not project_key:
+            raise RepositoryError("project_key_required")
+        existing = self.get_project_by_key(project_key)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_projects", payload)
+        if not rows:
+            raise RepositoryError("project_create_failed")
+        return rows[0]
+
+    def get_decision_by_key(self, decision_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(decision_key), safe="")
+        rows = self._call("GET", f"escd_decisions?decision_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_decision(self, payload: dict[str, Any]) -> dict[str, Any]:
+        decision_key = str(payload.get("decision_key") or "")
+        if not decision_key:
+            raise RepositoryError("decision_key_required")
+        existing = self.get_decision_by_key(decision_key)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_decisions", payload)
+        if not rows:
+            raise RepositoryError("decision_create_failed")
+        return rows[0]
+
+    def get_contact_context_by_key(self, context_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(context_key), safe="")
+        rows = self._call("GET", f"escd_contact_contexts?context_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_contact_context(self, payload: dict[str, Any]) -> dict[str, Any]:
+        context_key = str(payload.get("context_key") or "")
+        if not context_key:
+            raise RepositoryError("context_key_required")
+        existing = self.get_contact_context_by_key(context_key)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_contact_contexts", payload)
+        if not rows:
+            raise RepositoryError("contact_context_create_failed")
+        return rows[0]
+
+    def get_routine(self, routine_key: str, version: int) -> dict[str, Any] | None:
+        safe_key = parse.quote(str(routine_key), safe="")
+        safe_version = parse.quote(str(int(version)), safe="")
+        rows = self._call("GET", f"escd_routines?routine_key=eq.{safe_key}&version=eq.{safe_version}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_routine(self, payload: dict[str, Any]) -> dict[str, Any]:
+        routine_key = str(payload.get("routine_key") or "")
+        version = int(payload.get("version") or 1)
+        if not routine_key:
+            raise RepositoryError("routine_key_required")
+        existing = self.get_routine(routine_key, version)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_routines", payload)
+        if not rows:
+            raise RepositoryError("routine_create_failed")
+        return rows[0]
+
+    def patch_routine(self, routine_id: str, update: dict[str, Any]) -> dict[str, Any]:
+        safe = parse.quote(str(routine_id), safe="")
+        rows = self._call("PATCH", f"escd_routines?id=eq.{safe}", update)
+        if not rows:
+            raise RepositoryError("routine_update_failed")
+        return rows[0]
+
+    def get_notification_intent(self, notification_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(notification_key), safe="")
+        rows = self._call("GET", f"escd_notification_intents?notification_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_notification_intent(self, payload: dict[str, Any]) -> dict[str, Any]:
+        key = str(payload.get("notification_key") or "")
+        if not key:
+            raise RepositoryError("notification_key_required")
+        existing = self.get_notification_intent(key)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_notification_intents", payload)
+        if not rows:
+            raise RepositoryError("notification_intent_create_failed")
+        return rows[0]
