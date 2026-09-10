@@ -1,30 +1,38 @@
 # ESCD RELEASE SCORE
 
-**Task ID:** DCSE-ESCD-001-EXEC-PA-003  
+**Task ID:** DCSE-ESCD-001-WORKFLOW-004  
 **Score type:** Candidate tranche acceptance score, not production release certification  
-**Result:** **97 / 100, no known hard-gate failure**
+**Result:** **98 / 100, no known hard-gate failure in the validated candidate tranche**
 
 ## Scoring basis
 
 | Domain | Score | Basis |
 |---|---:|---|
-| Scope fidelity | 10/10 | Combined Tranche C/D implementation only; Employment, DDNA cutover and unrelated work excluded. |
-| Executive state/NBA | 15/15 | Five queues, deterministic ranking, terminal exclusion, persisted briefing integration. |
-| Intake/provenance | 15/15 | Stable dedupe plus append-only structured source links and source-ref preservation. |
-| Persistence/history | 13/13 | Candidate RLS state for items/projects/decisions/routines/contacts/notifications and append-oriented events. |
-| PA policy surfaces | 14/15 | Calendar C1/C2, meeting prep, communications, contact context, routine/watch, notification intent, command, file and mobile contracts implemented. Broader C3-C6 calendar classes remain final acceptance scope. |
-| Security/authority | 15/15 | User JWT path preserved, RLS/least privilege, no service-role runtime, no external-write bypass. |
-| Testing/regression | 10/10 | 157 Python tests plus all isolated SQL behavior scripts passed in exact-head review gate before evidence-only commits. |
-| Rollback/evidence | 5/5 | Additive rollback boundary and evidence package documented. |
+| Scope fidelity | 10/10 | Workflow orchestration and its required operator UI only; DDNA held, Employment and unrelated work excluded. |
+| Workflow schema/versioning | 15/15 | Ten planned types, immutable version binding, deterministic fingerprint, stable instance binding. |
+| Inheritance/control preservation | 15/15 | Child templates cannot weaken approval, evidence, security or rollback controls. |
+| Execution authority | 15/15 | Approved template alone is insufficient; governed-job binding required; self-escalation blocked; A4 prohibited. |
+| Approval/evidence/recovery | 14/15 | Action-scoped same-job approval and evidence-gated completion implemented and tested; live provider recovery remains release-level validation. |
+| Persistence/history/RLS | 14/15 | Candidate persistence, RLS/least privilege, append-oriented template/history behavior pass isolated PostgreSQL tests; live authorized database apply remains gated. |
+| Operator UI | 15/15 | Main and dedicated responsive workflow surfaces expose version, controls, step state, approvals, evidence, attempts, history and bounded lifecycle actions. |
+| Testing/regression | 10/10 | 181 Python tests plus 10 subtests and full isolated SQL behavior chain passed exact-head run `34428703272`. |
+| Rollback/evidence | 5/5 | Additive candidate migrations include rollback boundaries and governed evidence is updated. |
 
 ## Deductions
 
-Three points are retained from production-release scoring because this candidate tranche has not demonstrated live provider/device E2E behavior and does not implement calendar conflict classes C3-C6. Those are explicitly reserved rather than falsely claimed.
+Two points remain deliberately unavailable for production-release scoring because this candidate has not yet demonstrated:
+
+1. live authorized database persistence plus deployed authenticated browser journeys through the actual ESCD UI, and
+2. final integrated DDNA behavior after the Codex hold is released.
+
+These are release-level gates, not defects concealed by the numeric score.
 
 ## Hard gates
 
-Known security, authority, protected-lane, data-integrity or rollback hard-gate failures: **NONE DETECTED in the validated candidate tranche**.
+Known security, authority, protected-lane, data-integrity or rollback hard-gate failures in exact-head candidate validation: **NONE DETECTED**.
 
 ## Release posture
 
-`READY_FOR_NEXT_TRANCHE`, not `READY_FOR_DCS_RELEASE` and not production-ready. Production migration/deployment remains explicitly gated.
+`READY_FOR_NEXT_TRANCHE / DDNA_HELD_FOR_CODEX`.
+
+This score does not authorize production Supabase migration, deployment, PR merge, provider writes or production release. `READY_FOR_DCS_RELEASE` requires live UI/database/provider evidence and the remaining integrated dependency checks.
