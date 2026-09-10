@@ -7,6 +7,7 @@ dcse:
   governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
   doctrine_index: "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
+  task_traceability_and_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   authority_state: "OPERATIVE"
   compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES"
@@ -25,6 +26,7 @@ canonical:
     source_authority: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
     ddna_governance: "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md"
     product_assembly: "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
+    task_traceability_and_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
     directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
     completion_evidence_directive: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
     zone_index: "governance/v7.1/ZONE_INDEX.json"
@@ -46,6 +48,7 @@ mandatory_entry_sequence:
   - "governance/v7.2/dcs_express_directives.v7.2.json"
   - "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
   - "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  - "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   - "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   - "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
   - "task-routed doctrines selected by D21 and the operative controller"
@@ -62,6 +65,7 @@ authority_routes:
   ddna_governance: "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md"
   product_assembly_and_reuse: "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
   runtime_doctrine_selection: "governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md"
+  task_traceability_and_navigable_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   completion_evidence_closeout: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
   baseline_and_promotion: "governance/v7.1/source/doctrines/D05_Baseline_Promotion.md"
   agent_onboarding: "governance/v7.1/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md"
@@ -100,6 +104,7 @@ startup_sequence:
   - load_v7_2_governance_sync
   - load_v7_2_doctrine_index
   - load_express_dcs_directive_registry
+  - load_task_traceability_and_navigable_closeout_directive
   - load_completion_evidence_collector_directive
   - verify_source_authority_through_d22_v7_2
   - classify_lane_entity_and_task
@@ -114,6 +119,8 @@ startup_sequence:
   - maintain_doctrine_consideration_log
   - run_closure_integrity_validation
   - collect_completion_evidence
+  - produce_navigable_closeout
+  - evaluate_goal_status_and_next_work
   - validate_and_closeout
 
 runtime_task_contract:
@@ -142,19 +149,39 @@ runtime_task_contract:
   doctrine_consideration_log_required: true
   closure_integrity_validation_required: true
   completion_evidence_packet_required: true
+  navigable_closeout_required: true
   required_before_closeout:
     - original_requested_outcome
+    - actual_completed_outcome
+    - what_changed
+    - goal_status
+    - goal_shift_reasoning_when_material
     - final_task_state
     - deliverable_inventory
     - direct_human_review_links_when_available
+    - github_artifact_commit_pr_issue_refs_when_available
+    - supabase_registry_or_runtime_refs_when_available
+    - tribunal_receipt_or_evidence_refs_when_available
+    - command_post_or_escd_refs_when_available
+    - deployment_or_preview_refs_when_available
+    - related_doctrine_refs_when_available
+    - rollback_or_history_refs_when_available
     - commit_deployment_version_or_runtime_identifiers_as_applicable
-    - material_sha256_when_required
+    - material_sha256_when_required_and_verified
     - validation_results
     - dependent_artifact_reconciliation
     - unresolved_findings
+    - recommended_next_body_of_work_when_meaningful
     - required_human_decision_if_any
+  next_work_controls:
+    - CONTINUE
+    - SKIP
+    - DEFER
+    - REORDER
+    - INTERRUPT
   complete_claim_rule: "A substantive task may not be reported COMPLETE until the claimed final state backward-chains to direct evidence and affected dependent artifacts are reconciled or explicitly disclosed as unresolved."
   handoff_task_identity_rule: "Preserve the originating task ID; child tasks must record parent task ID and preserve authority and source lineage."
+  goal_shift_rule: "A governing goal may not be silently reinterpreted; material goal shifts must be explicit, attributable, and carried into subsequent intake."
   noncompliance_state: "BLOCKED_OR_PARTIAL_NOT_V7_2_COMPLIANT"
 
 model_harmony:
@@ -167,6 +194,7 @@ model_harmony:
     - express_dcs_directive_registry
     - d22_v7_2_source_reconciliation
     - d21_task_routing
+    - task_traceability_and_navigable_closeout
     - completion_evidence_collector
     - universal_onboarding_and_access
     - task_routed_doctrines
@@ -174,27 +202,6 @@ model_harmony:
   summary_as_authority: "PROHIBITED"
   missing_chain_state: "UNSYNCHRONIZED_OR_DEGRADED"
   compliance_claim_when_unsynchronized: "PROHIBITED"
-
-ps_publication_firewall:
-  status: "ACTIVE_AS_NARROWED_BY_DCS-DIR-20260905-001"
-  concluded_matter_blanket_internal_isolation: "RETIRED"
-  internal_private_use: "PERMITTED_SUBJECT_TO_CONFIDENTIALITY_PURPOSE_AND_ACCESS_CONTROLS"
-  public_spill_default: "PROHIBITED_WITHOUT_EXPRESS_DCS_AUTHORIZATION"
-  public_facing_destinations:
-    - Sonly_Consulting
-    - Smoove_Spots
-    - The_Initiative
-    - websites
-    - public_web_apps
-    - campaigns
-    - social_media
-    - marketing
-    - advertising
-    - investor_materials
-    - movement_narratives
-    - public_product_copy
-    - external_communications
-  future_legal_matter_rule: "DCS may activate a stricter matter-specific PS firewall."
 
 workflow_lifecycle:
   review_selection: "capability-based and attributable"
@@ -234,6 +241,23 @@ completion_evidence:
     - tribunal_or_evidence_record
     - validation_result
     - unresolved_finding
+
+navigable_closeout:
+  authority: "DCS-DIR-20260910-001"
+  directive_path: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
+  goal_status_required: true
+  next_work_recommendation_required_when_meaningful: true
+  dcs_interrupt_control: true
+  direct_navigation_preferred: true
+  target_surfaces:
+    - github
+    - supabase
+    - tribunal
+    - command_post
+    - escd
+    - deployment
+    - doctrine
+    - rollback_history
 
 credentials:
   github_pat_in_chat: "PROHIBITED"
@@ -278,4 +302,4 @@ promotion_gate:
   controller_state: "OPERATIVE_R5"
   controller_designation_commit: "f72c3288f301d38dc8184d2bbd55c6ef17eae670"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
-  current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC"
+  current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"
