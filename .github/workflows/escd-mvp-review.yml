@@ -6,6 +6,7 @@ on:
       - feature/escd-runtime-repair-001
     paths:
       - 'apps/escd/**'
+      - 'supabase/migrations/20260910_escd_mvp_items.sql'
       - '.github/workflows/escd-mvp-review.yml'
 
 jobs:
@@ -22,8 +23,13 @@ jobs:
         run: python -m py_compile apps/escd/api/mvp.py apps/escd/runtime/mvp_data.py
       - name: Run MVP contract tests
         run: python -m pytest -q apps/escd/tests/test_mvp_contract.py
+      - name: Verify persistence candidate is bounded
+        run: |
+          grep -F 'CREATE TABLE IF NOT EXISTS dcse_cp.escd_items' supabase/migrations/20260910_escd_mvp_items.sql
+          grep -F 'CREATE POLICY escd_items_dcs_owner' supabase/migrations/20260910_escd_mvp_items.sql
+          grep -F 'CANDIDATE ONLY' supabase/migrations/20260910_escd_mvp_items.sql
       - name: Verify no provider secrets in browser surface
         run: |
-          ! grep -E 'OPENAI_API_KEY|GEMINI_API_KEY|GOOGLE_API_KEY|ANTHROPIC_API_KEY|DDNA_SUPABASE_SERVICE_ROLE_KEY' apps/escd/web/mvp.html
+          ! grep -E 'OPENAI_API_KEY|GEMINI_API_KEY|GOOGLE_API_KEY|ANTHROPIC_API_KEY|DDNA_SUPABASE_SERVICE_ROLE_KEY' apps/escd/web/app.html apps/escd/web/login.html
       - name: Verify no static DDNA 73 count
-        run: '! grep -F "73 Queued" apps/escd/web/mvp.html'
+        run: '! grep -F "73 Queued" apps/escd/web/app.html'
