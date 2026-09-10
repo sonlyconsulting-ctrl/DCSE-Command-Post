@@ -1,0 +1,27 @@
+name: ESCD MVP Review Gate
+
+on:
+  pull_request:
+    branches:
+      - feature/escd-runtime-repair-001
+    paths:
+      - 'apps/escd/**'
+      - '.github/workflows/escd-mvp-review.yml'
+
+jobs:
+  mvp-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile MVP Python
+        run: python -m py_compile apps/escd/api/mvp.py apps/escd/runtime/mvp_data.py
+      - name: Run MVP contract tests
+        run: python -m pytest -q apps/escd/tests/test_mvp_contract.py
+      - name: Verify no provider secrets in browser surface
+        run: |
+          ! grep -E 'OPENAI_API_KEY|GEMINI_API_KEY|GOOGLE_API_KEY|ANTHROPIC_API_KEY|DDNA_SUPABASE_SERVICE_ROLE_KEY' apps/escd/web/mvp.html
+      - name: Verify no static DDNA 73 count
+        run: '! grep -F "73 Queued" apps/escd/web/mvp.html'
