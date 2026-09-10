@@ -52,7 +52,7 @@ class SupabaseRLSClient:
         return self._call("GET", "operator_accounts?select=user_id,email,active,access_scope")
 
     def list_jobs(self) -> list[dict[str, Any]]:
-        return self._call("GET", "escd_jobs?select=*&order=updated_at.desc&limit=200")
+        return self._call("GET", "escd_jobs?select=*&order=updated_at.desc,id.asc&limit=200")
 
     def get_job(self, job_id: str) -> dict[str, Any] | None:
         safe = parse.quote(str(job_id), safe="")
@@ -68,24 +68,24 @@ class SupabaseRLSClient:
 
     def list_job_evidence(self, job_id: str) -> list[dict[str, Any]]:
         safe = parse.quote(str(job_id), safe="")
-        return self._call("GET", f"escd_evidence?job_id=eq.{safe}&select=id,evidence_type,reference_sha,created_at")
+        return self._call("GET", f"escd_evidence?job_id=eq.{safe}&select=id,evidence_type,reference_sha,created_at&order=created_at.desc,id.asc")
 
     def latest_approval(self, job_id: str) -> dict[str, Any] | None:
         safe = parse.quote(str(job_id), safe="")
-        rows = self._call("GET", f"escd_approvals?job_id=eq.{safe}&select=*&order=requested_at.desc&limit=1")
+        rows = self._call("GET", f"escd_approvals?job_id=eq.{safe}&select=*&order=requested_at.desc,id.desc&limit=1")
         return rows[0] if rows else None
 
     def list_pending_approvals(self) -> list[dict[str, Any]]:
-        return self._call("GET", "escd_approvals?status=eq.pending&select=*&order=requested_at.desc")
+        return self._call("GET", "escd_approvals?status=eq.pending&select=*&order=requested_at.desc,id.desc")
 
     def list_events_since(self, timestamp: str | None) -> list[dict[str, Any]]:
         if not timestamp:
-            return self._call("GET", "escd_job_events?select=*&order=created_at.desc&limit=200")
+            return self._call("GET", "escd_job_events?select=*&order=created_at.desc,id.asc&limit=200")
         safe = parse.quote(timestamp, safe=":-+.TZ")
-        return self._call("GET", f"escd_job_events?created_at=gt.{safe}&select=*&order=created_at.desc&limit=200")
+        return self._call("GET", f"escd_job_events?created_at=gt.{safe}&select=*&order=created_at.desc,id.asc&limit=200")
 
     def last_briefing_ack(self) -> dict[str, Any] | None:
-        rows = self._call("GET", "escd_briefing_acks?select=*&order=acknowledged_at.desc&limit=1")
+        rows = self._call("GET", "escd_briefing_acks?select=*&order=acknowledged_at.desc,id.desc&limit=1")
         return rows[0] if rows else None
 
     def patch_approval(self, approval_id: str, update: dict[str, Any]) -> dict[str, Any]:
