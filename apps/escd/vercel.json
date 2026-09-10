@@ -1,0 +1,1 @@
+{"version":2,"routes":[{"src":"/api/mvp/(.*)","dest":"/api/mvp.py"},{"src":"/api/escd/workflows/(.*)","dest":"/api/workflow_index.py"},{"src":"/api/escd/(.*)","dest":"/api/index.py"},{"src":"/workflows","dest":"/web/workflows.html"},{"src":"/(.*)","dest":"/web/mvp.html"}]}
