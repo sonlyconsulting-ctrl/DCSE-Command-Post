@@ -1,50 +1,33 @@
-# ESCD ROLLBACK
+# ESCD ROLLBACK PLAN
 
 **Task ID:** DCSE-ESCD-001-WORKFLOW-004  
-**Status:** DOCUMENTED / NOT EXECUTED AGAINST PRODUCTION
+**Scope:** Workflow orchestration + operator UI candidate
 
-## Current safety fact
+## Current posture
 
-No production ESCD migration, deployment or PR merge was performed in this tranche. The workflow implementation remains a candidate branch change. Rollback therefore means repository-level reversion of the workflow tranche only, not destructive database rollback.
+No production migration, deployment or merge is authorized. The current rollback boundary is therefore branch-level and candidate-database only.
 
-## Repository rollback boundary
+## Branch rollback
 
-`WORKFLOW-004` is additive to the previously validated ESCD runtime and Executive/PA candidate. If this tranche is rejected before release, revert only the workflow-specific changes introduced after the completed Executive/PA checkpoint. Do not reset or discard the previously validated authentication, approval, evidence, briefing, job-verification, Executive Stream or PA work.
+If WORKFLOW-004 must be withdrawn before release:
 
-Workflow-specific additions include:
+1. Preserve the current validated branch SHA and evidence.
+2. Revert only the workflow orchestration/UI commits or restore the last validated Executive/PA checkpoint.
+3. Do not rewrite or delete prior runtime evidence/history.
+4. Re-run the ESCD Review Gate after the revert.
 
-- `apps/escd/runtime/workflow_engine.py`
-- `apps/escd/runtime/workflow_repository.py`
-- `apps/escd/runtime/workflow_api.py`
-- `apps/escd/api/workflow_index.py`
-- `api/escd.py`
-- workflow UI changes in `apps/escd/web/index.html`
-- `apps/escd/web/workflows.html`
-- workflow tests and UI-surface regression tests
-- `supabase/migrations/20260910_escd_workflow_engine.sql`
-- `supabase/migrations/20260910_escd_workflow_authority_patch.sql`
-- specific candidate ESCD routing additions in `vercel.json`
-- workflow additions to `.github/workflows/escd-review.yml`
+## Candidate database rollback
 
-## Candidate database rollback boundary
+The workflow candidate migrations must not be applied to production without explicit DCS release authorization. In a disposable validation database, rollback may drop workflow-specific tables/triggers/functions only after confirming no unrelated state depends on them.
 
-The workflow migrations are not authorized for production application. If they are later applied to an authorized non-production or production target, rollback must first inventory dependent workflow records and preserve evidence.
+The workflow persistence boundary includes the workflow template, instance, step and event objects introduced for WORKFLOW-004. The exact rollback SQL must be reviewed against the applied migration set at release time rather than assuming a stale object list.
 
-Candidate workflow objects include:
+## UI rollback
 
-- `escd_workflow_templates`
-- `escd_workflow_instances`
-- `escd_workflow_steps`
-- `escd_workflow_events`
-- workflow indexes, RLS policies and lifecycle/authority triggers associated with those objects
-- governed-job binding column/index added by the authority patch
+The operator workflow surface is additive to the existing ESCD interface. If a release candidate fails browser validation, revert the workflow UI changes together with their API/runtime dependencies rather than leaving a visible control surface pointed at missing workflow endpoints.
 
-Do not drop workflow objects after data exists without explicit destructive-action authorization and an evidence-preservation plan.
+## Production release condition
 
-## Runtime/UI rollback
+A production rollback plan is not considered proven until a non-production deployed candidate has completed an authenticated browser journey, migration apply, representative workflow execution/proposal path, and rollback rehearsal. DDNA remains outside this rollback scope while held for Codex.
 
-The previously validated ESCD Executive/PA endpoints and UI remain the known-good predecessor surface. A later deployment rollback should restore the previously accepted ESCD route/UI revision and remove workflow-specific routes without changing authentication, DDNA state, Employment boundaries or unrelated deployment configuration.
-
-## Verification after any future rollback
-
-Re-run the ESCD review gate, confirm the expected branch/commit, verify workflow routes and objects match the selected rollback checkpoint, confirm no unrelated ESCD or DDNA changes were altered, and preserve a rollback receipt.
+Current disposition: `ROLLBACK PLAN DEFINED / PRODUCTION REHEARSAL PENDING`.
