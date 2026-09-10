@@ -41,6 +41,7 @@ SET search_path = pg_catalog, dcse_cp
 AS $$
 DECLARE
     evidence_job_id uuid;
+    current_job_status text;
 BEGIN
     IF NEW.verifier_user_id IS DISTINCT FROM auth.uid() THEN
         RAISE EXCEPTION 'verification_principal_mismatch' USING ERRCODE = 'check_violation';
@@ -52,6 +53,18 @@ BEGIN
 
     IF evidence_job_id IS NULL OR evidence_job_id IS DISTINCT FROM NEW.job_id THEN
         RAISE EXCEPTION 'verification_evidence_job_mismatch' USING ERRCODE = 'check_violation';
+    END IF;
+
+    SELECT j.status INTO current_job_status
+    FROM dcse_cp.escd_jobs j
+    WHERE j.id = NEW.job_id;
+
+    IF current_job_status IS NULL THEN
+        RAISE EXCEPTION 'verification_job_not_found' USING ERRCODE = 'check_violation';
+    END IF;
+
+    IF current_job_status IN ('completed','cancelled','archived') THEN
+        RAISE EXCEPTION 'verification_job_terminal' USING ERRCODE = 'check_violation';
     END IF;
 
     RETURN NEW;
