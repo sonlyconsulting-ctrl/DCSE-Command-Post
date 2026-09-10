@@ -67,6 +67,16 @@ def test_mvp_provider_defaults_are_current_and_errors_are_provider_specific():
     assert 'f"{provider}_model_or_endpoint_not_found"' in service
 
 
+def test_mvp_gemini_is_bounded_for_preview_latency():
+    service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
+    assert '"thinkingLevel": thinking_level' in service
+    assert '"maxOutputTokens": 768' in service
+    assert 'os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low"' in service
+    assert 'timeout=25' in service
+    assert 'f"{provider}_timeout"' in service
+    assert 'f"{provider}_network_error"' in service
+
+
 def test_mvp_routes_to_operable_surface():
     routes = (ROOT / "vercel.json").read_text(encoding="utf-8")
     assert '"src":"/app","dest":"/web/app.html"' in routes
