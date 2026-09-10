@@ -7,6 +7,7 @@ on:
       - 'api/index.js'
       - 'apps/sc-agent-os/**'
       - 'tests/sc-agent-os-ddna-cutover.test.js'
+      - 'tests/sc-agent-os-auth-gateway.test.js'
       - 'scripts/vercel/should-ignore-sc-agent-os-build.js'
       - 'vercel.json'
       - 'governance/v7.2/implementations/DCSE_DDNA_CONSUMER_CUTOVER*'
@@ -38,13 +39,24 @@ jobs:
           node --check api/index.js
           node --check apps/sc-agent-os/api/runtime.js
           node --check apps/sc-agent-os/api/index.js
+          node --check apps/sc-agent-os/api/secure.js
           node --check scripts/vercel/should-ignore-sc-agent-os-build.js
 
       - name: Run DDNA cutover tests
-        run: node --test tests/sc-agent-os-ddna-cutover.test.js
+        run: |
+          node --test tests/sc-agent-os-ddna-cutover.test.js
+          node --test tests/sc-agent-os-auth-gateway.test.js
 
       - name: Verify runtime copies remain identical
         run: cmp -s api/runtime.js apps/sc-agent-os/api/runtime.js
+
+      - name: Verify deployed SC Agent OS routes through auth gateway
+        run: |
+          grep -q '"dest":"/api/secure.js"' apps/sc-agent-os/vercel.json
+          ! grep -q '"dest":"/api/runtime.js"' apps/sc-agent-os/vercel.json
+          grep -q "Authentication required" apps/sc-agent-os/api/secure.js
+          grep -q "dcse_at" apps/sc-agent-os/api/secure.js
+          grep -q "dcse_rt" apps/sc-agent-os/api/secure.js
 
       - name: Verify server-only DDNA configuration boundary
         run: |
@@ -67,7 +79,7 @@ jobs:
           base="${{ github.event.pull_request.base.sha }}"
           if [ -z "$base" ]; then base="$(git merge-base HEAD origin/main)"; fi
           files=$(git diff --name-only "$base"...HEAD -- \
-            api/runtime.js api/index.js apps/sc-agent-os tests/sc-agent-os-ddna-cutover.test.js \
+            api/runtime.js api/index.js apps/sc-agent-os tests/sc-agent-os-ddna-cutover.test.js tests/sc-agent-os-auth-gateway.test.js \
             scripts/vercel/should-ignore-sc-agent-os-build.js vercel.json \
             'governance/v7.2/implementations/DCSE_DDNA_CONSUMER_CUTOVER*')
           if [ -n "$files" ]; then
@@ -80,5 +92,6 @@ jobs:
       - name: Verify protected-lane terms are absent from cutover implementation
         run: |
           ! grep -Ein '(pro[ -]?se|litigation strategy|court filing)' \
-            api/runtime.js apps/sc-agent-os/api/runtime.js tests/sc-agent-os-ddna-cutover.test.js \
+            api/runtime.js apps/sc-agent-os/api/runtime.js apps/sc-agent-os/api/secure.js \
+            tests/sc-agent-os-ddna-cutover.test.js tests/sc-agent-os-auth-gateway.test.js \
             scripts/vercel/should-ignore-sc-agent-os-build.js
