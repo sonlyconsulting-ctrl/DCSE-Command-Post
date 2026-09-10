@@ -8,7 +8,7 @@ on:
       - 'apps/escd/**'
       - 'api/mvp.py'
       - 'tests/escd-provider-settings.test.js'
-      - 'supabase/migrations/20260910_escd_mvp_items.sql'
+      - 'supabase/candidates/20260910_escd_mvp_items.sql'
       - 'vercel.json'
       - '.github/workflows/escd-mvp-review.yml'
 
@@ -34,11 +34,13 @@ jobs:
         run: python -m pytest -q apps/escd/tests
       - name: Run provider settings browser-script tests
         run: node --test tests/escd-provider-settings.test.js
-      - name: Verify persistence candidate is bounded
+      - name: Verify persistence candidate is bounded and non-deploying
         run: |
-          grep -F 'CREATE TABLE IF NOT EXISTS dcse_cp.escd_items' supabase/migrations/20260910_escd_mvp_items.sql
-          grep -F 'CREATE POLICY escd_items_dcs_owner' supabase/migrations/20260910_escd_mvp_items.sql
-          grep -F 'CANDIDATE ONLY' supabase/migrations/20260910_escd_mvp_items.sql
+          test ! -e supabase/migrations/20260910_escd_mvp_items.sql
+          grep -F 'CREATE TABLE IF NOT EXISTS dcse_cp.escd_items' supabase/candidates/20260910_escd_mvp_items.sql
+          grep -F 'CREATE POLICY escd_items_dcs_owner' supabase/candidates/20260910_escd_mvp_items.sql
+          grep -F 'CANDIDATE ONLY' supabase/candidates/20260910_escd_mvp_items.sql
+          grep -F 'Do not apply to production without explicit DCS authorization.' supabase/candidates/20260910_escd_mvp_items.sql
       - name: Verify no provider secrets in browser surface
         run: |
           ! grep -R -E 'OPENAI_API_KEY|GEMINI_API_KEY|GOOGLE_API_KEY|ANTHROPIC_API_KEY|DDNA_SUPABASE_SERVICE_ROLE_KEY|SUPABASE_SERVICE_ROLE_KEY' apps/escd/web
