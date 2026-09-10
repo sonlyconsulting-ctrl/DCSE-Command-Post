@@ -1,53 +1,24 @@
-# ESCD Current-Head Validation Queue
+# ESCD CURRENT HEAD VALIDATION QUEUE
 
-**Task ID:** DCSE-ESCD-001  
-**PR:** #72  
-**Branch:** `feature/escd-runtime-repair-001`  
-**Implementation baseline verified before this queue artifact:** `d8d74d83d22dcc319049df594091d7e435cd0368`  
-**Status:** REVIEW GATE
+**Task ID:** DCSE-ESCD-001-WORKFLOW-004
 
-## Scope lock
+## Current validation purpose
 
-Validate the current remote PR head at execution time. Do not restart discovery, restore superseded Aegis behavior, add DCS Employment logic, bundle DDNA production cutover, repair unrelated historical migrations, or perform production release.
+Validate the reusable workflow orchestration candidate and its operator-facing UI on the exact current branch head before release-validation preparation.
 
-## Pass 1
+Required gate coverage:
 
-- run complete ESCD pure-policy tests
-- run current runtime/security tests
-- compile/syntax-check modified Python
-- inspect candidate SQL syntax and dependencies
-- verify authenticated/unauthenticated RLS behavior on an approved non-production target if available
-- verify deterministic NBA and runtime ordering
-- verify persisted briefing acknowledgement semantics
-- verify job and approval event history
+- Python policy/runtime/workflow/UI-surface suite
+- isolated PostgreSQL candidate migration chain
+- runtime SQL behavior checks
+- Executive/PA SQL behavior checks
+- structured source-provenance checks
+- workflow orchestration and authority checks
 
-## Pass 2
+## Release boundary
 
-Adversarially prove rejection of:
+A green repository gate proves candidate implementation integrity, not production release readiness. Final release validation must exercise the deployed authenticated ESCD UI through browser-visible workflow journeys and required live integrations.
 
-- unauthorized principal access
-- service-role dependency in normal request path
-- client-asserted exit-criteria completion
-- completion without evidence
-- wrong-action approval reuse
-- expired/stale approval reuse
-- forged provenance actor/requester IDs
-- future or regressive briefing acknowledgement
-- invalid state transitions
-- unsafe persisted-content rendering
+DDNA is held pending Codex and is excluded from this gate. No DDNA completion may be inferred from WORKFLOW-004 evidence.
 
-## Required disposition before next tranche
-
-The persisted `exit_criteria_met` field now fails closed. A governed verification write path must be implemented and tested before the full completion journey can pass. Do not weaken this gate to satisfy a happy-path test.
-
-## External blockers to isolate, not absorb
-
-- Vercel daily deployment quota exhaustion
-- Supabase Git Preview historical migration failure on missing `family_vow_go` schema
-- no branch GitHub Actions workflow currently provides current-head CI evidence
-
-## Exit
-
-`REVIEW_PASS_READY_FOR_NEXT_TRANCHE`, `REVIEW_FINDINGS_REPAIR_REQUIRED`, or `BLOCKED`.
-
-Structure Precedes Scale.
+Current target: `EXACT_HEAD_GREEN -> READY_FOR_RELEASE_VALIDATION_PREP`.
