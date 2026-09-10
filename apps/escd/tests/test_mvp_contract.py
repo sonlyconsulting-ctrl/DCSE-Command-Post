@@ -57,24 +57,25 @@ def test_mvp_chat_excludes_claude():
     assert "claude" not in app.lower()
 
 
-def test_mvp_provider_defaults_are_current_and_errors_are_provider_specific():
+def test_mvp_provider_defaults_are_current_and_errors_are_actionable():
     service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
     assert '"gpt-5.6-sol"' in service
     assert '"gemini-3.8-flash"' in service
-    assert '"x-goog-api-key"' in service
     assert '"https://api.openai.com/v1/responses"' in service
-    assert 'f"{provider}_auth_failed"' in service
-    assert 'f"{provider}_model_or_endpoint_not_found"' in service
+    assert '"https://openrouter.ai/api/v1/chat/completions"' in service
+    assert "_extract_error_detail" in service
+    assert "_safe_provider_detail" in service
+    assert "authentication failed" in service
 
 
-def test_mvp_gemini_is_bounded_for_preview_latency():
+def test_mvp_provider_runtime_is_registry_driven():
     service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
-    assert '"thinkingLevel": thinking_level' in service
-    assert '"maxOutputTokens": 768' in service
-    assert 'os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low"' in service
-    assert 'timeout=25' in service
-    assert 'f"{provider}_timeout"' in service
-    assert 'f"{provider}_network_error"' in service
+    assert "get_escd_provider_runtime" in service
+    assert "set_escd_provider_secret" in service
+    assert "update_escd_provider_config" in service
+    assert "timeout_seconds" in service
+    assert "max_output_tokens" in service
+    assert "credential_source" in service
 
 
 def test_mvp_routes_to_operable_surface():
