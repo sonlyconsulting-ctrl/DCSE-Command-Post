@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from http.server import BaseHTTPRequestHandler
+import hashlib
 import json
 import os
 from datetime import datetime, timezone
@@ -15,6 +16,16 @@ from apps.escd.runtime.service import (
     next_best_action,
     briefing_snapshot,
 )
+
+
+_VERIFICATION_OUTCOMES = {"verified", "failed"}
+_VERIFICATION_METHODS = {
+    "dcs_confirmed",
+    "tool_result",
+    "test_result",
+    "runtime_observation",
+    "source_reconciliation",
+}
 
 
 def _allowed_origin(origin: str | None) -> str | None:
@@ -52,8 +63,13 @@ def _approval_is_effective(approval: dict | None) -> bool:
     return expires.astimezone(timezone.utc) > datetime.now(timezone.utc)
 
 
+def _verification_key(job_id: str, evidence_id: str, outcome: str, verification_method: str) -> str:
+    canonical = "\n".join((job_id, evidence_id, outcome, verification_method)).encode("utf-8")
+    return "escd-v1-" + hashlib.sha256(canonical).hexdigest()
+
+
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD/0.2"
+    server_version = "ESCD/0.3"
 
     def _json(self, status: int, payload: dict, origin: str | None = None) -> None:
         data = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -103,7 +119,7 @@ class handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
 
         if path == "/api/escd/health":
-            self._json(200, {"ok": True, "service": "escd", "version": "0.2"}, origin)
+            self._json(200, {"ok": True, "service": "escd", "version": "0.3"}, origin)
             return
 
         try:
@@ -183,6 +199,51 @@ class handler(BaseHTTPRequestHandler):
                 )
                 updated = repo.patch_job(job_id, update)
                 self._json(200, {"ok": True, "job": updated}, origin)
+                return
+
+            if path == "/api/escd/jobs/verify":
+                job_id = str(payload.get("job_id") or "").strip()
+                evidence_id = str(payload.get("evidence_id") or "").strip()
+                outcome = str(payload.get("outcome") or "").strip()
+                verification_method = str(payload.get("verification_method") or "").strip()
+                notes = str(payload.get("notes") or "").strip()
+                if not job_id or not evidence_id or not outcome or not verification_method:
+                    self._json(400, {"error": "job_id_evidence_id_outcome_and_method_required"}, origin)
+                    return
+                if outcome not in _VERIFICATION_OUTCOMES:
+                    self._json(400, {"error": "invalid_verification_outcome"}, origin)
+                    return
+                if verification_method not in _VERIFICATION_METHODS:
+                    self._json(400, {"error": "invalid_verification_method"}, origin)
+                    return
+                if len(notes) > 4000:
+                    self._json(400, {"error": "verification_notes_too_long"}, origin)
+                    return
+                job = repo.get_job(job_id)
+                if not job:
+                    self._json(404, {"error": "job_not_found"}, origin)
+                    return
+                if job.get("status") != "running":
+                    self._json(409, {"error": "verification_job_not_running"}, origin)
+                    return
+                evidence = repo.get_evidence(evidence_id)
+                if not evidence:
+                    self._json(404, {"error": "evidence_not_found"}, origin)
+                    return
+                if str(evidence.get("job_id") or "") != job_id:
+                    self._json(409, {"error": "verification_evidence_job_mismatch"}, origin)
+                    return
+                verification_key = _verification_key(job_id, evidence_id, outcome, verification_method)
+                verification = repo.create_job_verification(
+                    verification_key=verification_key,
+                    job_id=job_id,
+                    evidence_id=evidence_id,
+                    outcome=outcome,
+                    verification_method=verification_method,
+                    notes=notes or None,
+                )
+                updated_job = repo.get_job(job_id)
+                self._json(201, {"ok": True, "verification": verification, "job": updated_job}, origin)
                 return
 
             if path == "/api/escd/approvals/decide":
