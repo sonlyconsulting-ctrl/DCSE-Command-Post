@@ -41,6 +41,19 @@ def require_job_transition(
     return update
 
 
+def _approval_expired(approval: dict[str, Any]) -> bool:
+    expires_at = approval.get("expires_at")
+    if not expires_at:
+        return False
+    try:
+        expires = datetime.fromisoformat(str(expires_at).replace("Z", "+00:00"))
+    except ValueError:
+        return True
+    if expires.tzinfo is None:
+        return True
+    return expires.astimezone(timezone.utc) <= datetime.now(timezone.utc)
+
+
 def require_approval_decision(
     approval: dict[str, Any],
     decision: str,
@@ -48,6 +61,8 @@ def require_approval_decision(
 ) -> dict[str, Any]:
     if approval.get("status") != "pending":
         raise RuntimeRuleError("approval_not_pending")
+    if _approval_expired(approval):
+        raise RuntimeRuleError("approval_expired")
     if decision not in {"approved", "rejected"}:
         raise RuntimeRuleError("invalid_approval_decision")
     if not authenticated_user_id:
