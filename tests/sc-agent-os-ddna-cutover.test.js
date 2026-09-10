@@ -113,9 +113,9 @@ test('dedicated mode fails closed when dedicated credentials are missing', async
   } finally { f.restore(); m.restore(); }
 });
 
-test('legacy mode fails closed when project URL binding is missing', async () => {
+test('legacy mode fails closed when server-side legacy key is missing', async () => {
   const f = installFetch({legacyRows: rows});
-  const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'legacy', SUPABASE_URL:'', NEXT_PUBLIC_SUPABASE_URL:''});
+  const m = loadHandler({...baseEnv, DDNA_RUNTIME_MODE:'legacy', SUPABASE_SERVICE_ROLE_KEY:'', PABASE_SECRET_KEY:''});
   try {
     const res = mockRes();
     await m.handler(mockReq(), res);
