@@ -1,29 +1,28 @@
-# ESCD AEGIS RECONCILIATION
+# ESCD / AEGIS RECONCILIATION
 
 **Task ID:** DCSE-ESCD-001  
-**Status:** RECONCILED FOR CURRENT CANDIDATE BRANCH
+**Current product:** ESCD  
+**Historical lineage:** Aegis Executive Kernel
 
-## Historical checkpoint
+## Reconciliation status
 
-The Aegis Executive Kernel remains historical implementation lineage. Its preserved checkpoint is `e287fd7ed41d555e9e5c9b0e00ed25fa9788f744`. It is not promoted as an independent current product authority.
+Valid Aegis-origin runtime work has been preserved where compatible with the ESCD contracts. Current ESCD implementation extends that preserved foundation through the Executive/PA and reusable workflow orchestration tranches without treating Aegis historical identifiers as current product authority.
 
-## Reuse
+## Current candidate structure
 
-Valid implementation concepts retained under ESCD include persisted job/task state, executive briefing, deterministic next-action presentation, approval/evidence concepts, responsive assistant UI, and bounded internal workflow execution patterns.
+- ESCD runtime authentication, approval, evidence and completion integrity
+- Executive Stream and Personal Assistant operating surface
+- reusable workflow orchestration engine
+- operator-facing workflow UI integrated into the ESCD interface
 
-## Repaired before current tranche
+## Preserved boundaries
 
-The current ESCD branch repaired the previously identified Aegis hard gates rather than carrying them forward. Repairs include authenticated user-scoped API access, DCS operator authorization, removal of normal service-role dependency, approval/action binding, evidence-gated completion, persisted exit verification, append-oriented history, safe browser rendering, explicit briefing acknowledgement, deterministic NBA behavior, RLS candidate controls and adversarial tests.
+- DCS Employment domain logic remains outside ESCD core
+- DDNA integration/cutover remains a separately governed stream and is currently held pending Codex
+- production DDL, deployment and merge remain explicit release gates
 
-## Current identity boundary
+## Reconciliation rule
 
-User-facing runtime identity is ESCD. Historical Aegis branch/commit references remain only where needed for provenance. DCS Employment is not part of ESCD core and dedicated DDNA production cutover remains a separate controlled stream.
+Historical Aegis artifacts remain provenance. ESCD contracts and the operative DCSE authority govern current behavior. No historical implementation behavior is revived merely because it existed in Aegis.
 
-## Combined Executive/PA tranche relationship
-
-`DCSE-ESCD-001-EXEC-PA-003` builds only on the repaired ESCD runtime. It does not restore superseded Aegis shortcuts. New Executive/PA state uses the same user-scoped authorization, provenance, approval, evidence, deterministic policy and fail-closed patterns established by the repaired ESCD branch.
-
-## Disposition
-
-Historical Aegis implementation: **PRESERVED AS LINEAGE / RECONCILED**.  
-Current implementation authority: **ESCD controlling contracts and current reviewed branch artifacts**.
+Current disposition: `RECONCILED / ESCD CONTROLS CURRENT IMPLEMENTATION`.
