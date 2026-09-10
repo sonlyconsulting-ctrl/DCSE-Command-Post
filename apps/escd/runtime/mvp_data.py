@@ -35,7 +35,7 @@ def list_assets(limit: int = 200) -> list[dict]:
     key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("PABASE_SECRET_KEY") or ""
     if not url or not key:
         raise MVPServiceError("asset_source_not_configured")
-    query = "dcse_asset_registry?select=*&order=updated_at.desc.nullslast,created_at.desc.nullslast&limit=" + str(max(1, min(limit, 500)))
+    query = "dcse_asset_registry?select=*&order=last_modified_at.desc.nullslast,created_at.desc.nullslast,id.asc&limit=" + str(max(1, min(limit, 500)))
     _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "public"))
     if not isinstance(rows, list):
         raise MVPServiceError("asset_source_invalid")
