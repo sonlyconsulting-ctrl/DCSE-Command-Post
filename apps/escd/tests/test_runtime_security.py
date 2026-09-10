@@ -1,10 +1,12 @@
 import sys
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
 
+from apps.escd.api.index import _parse_ack_timestamp
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.service import RuntimeRuleError, require_job_transition, require_approval_decision, next_best_action, briefing_snapshot
 from apps.escd.runtime.render import render_job_row
@@ -72,6 +74,13 @@ class RuleTests(unittest.TestCase):
         self.assertEqual(snap["source"], "persisted_reconciled_state")
         self.assertIsNone(snap["next_best_action"])
 
+    def test_briefing_ack_rejects_future_and_naive_timestamps(self):
+        future = (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat()
+        with self.assertRaisesRegex(RuntimeRuleError, "briefing_ack_in_future"):
+            _parse_ack_timestamp(future)
+        with self.assertRaisesRegex(RuntimeRuleError, "invalid_acknowledged_through"):
+            _parse_ack_timestamp("2026-09-09T20:00:00")
+
 
 class RenderingTests(unittest.TestCase):
     def test_rendering_escapes_untrusted_text(self):
@@ -103,6 +112,8 @@ class StaticContractTests(unittest.TestCase):
         get_block = self.api.split("def do_GET", 1)[1].split("def do_POST", 1)[0]
         self.assertNotIn("acknowledge_briefing(", get_block)
         self.assertIn("/api/escd/briefing/ack", self.api)
+        self.assertIn("briefing_ack_in_future", self.api)
+        self.assertIn("briefing_ack_regression", self.api)
 
     def test_migration_rls_and_completion_trigger(self):
         for table in ["escd_jobs", "escd_job_events", "escd_approvals", "escd_evidence", "escd_briefing_acks"]:
@@ -114,6 +125,17 @@ class StaticContractTests(unittest.TestCase):
         self.assertIn("evidence_required", self.mig)
         self.assertIn("exit_criteria_not_met", self.mig)
         self.assertIn("WHEN 'waiting_approval' THEN NEW.status IN ('running','failed','cancelled')", self.mig)
+        self.assertIn("ORDER BY a.requested_at DESC, a.id DESC", self.mig)
+        self.assertIn("latest_approval_status IS DISTINCT FROM 'approved'", self.mig)
+
+    def test_migration_preserves_transition_history_and_ack_cursor_integrity(self):
+        self.assertIn("escd_record_job_transition", self.mig)
+        self.assertIn("'status_transition'", self.mig)
+        self.assertIn("from_status", self.mig)
+        self.assertIn("to_status", self.mig)
+        self.assertIn("escd_validate_briefing_ack", self.mig)
+        self.assertIn("briefing_ack_in_future", self.mig)
+        self.assertIn("briefing_ack_regression", self.mig)
 
     def test_no_employment_seed_or_aegis_runtime_identity(self):
         self.assertNotIn("dcs_employment", self.mig.lower())
