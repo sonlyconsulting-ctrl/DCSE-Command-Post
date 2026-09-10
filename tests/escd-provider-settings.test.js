@@ -48,3 +48,15 @@ test('a plain settings save does not replace the stored key',async()=>{
   await context.saveProviderConfig();
   assert.deepEqual(calls.map(x=>x.path),['/provider-config']);
 });
+test('OpenRouter is included in the chat provider dropdown',async()=>{
+  const elements = {};
+  for (const id of ['provider','settingsProvider','providerSecret','providerModel','providerTimeout','providerTokens','providerEnabled','providerThinking','providerAdminStatus','saveProviderConfig','saveProviderSecret']) elements[id] = {value:'',textContent:'',disabled:false,options:[],replaceChildren:function(){this.options=[]},append:function(opt){this.options.push(opt)}};
+  Object.assign(elements.settingsProvider,{value:'openrouter'});
+  const context=vm.createContext({$:id=>elements[id], el:(tag,text)=>{return {tag,text,value:''}}, providerData:{openrouter:{model:'openrouter/auto',enabled:false,configured:false}}, api:async()=>({providers:{openrouter:{enabled:false}}})});
+  vm.runInContext(script.slice(script.indexOf('function providerLabel'),script.indexOf('async function send()')),context);
+  context.populateProviderDropdown();
+  const optionValues = elements.provider.options.map(o=>o.value);
+  assert.ok(optionValues.includes('openrouter'));
+  assert.ok(optionValues.includes('openai'));
+  assert.ok(optionValues.includes('gemini'));
+});

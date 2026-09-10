@@ -277,11 +277,15 @@ def _openai_output_text(data: dict) -> str:
 def chat(provider: str, messages: list[dict]) -> dict:
     provider = str(provider or "").lower().strip()
     cfg = provider_runtime(provider)
-    if not cfg.get("enabled"):
-        raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
     key = str(cfg.get("api_key") or "")
     if not key:
         raise MVPServiceError(f"{provider.title()} credential is not configured. Add it in ESCD Provider Settings")
+    if not cfg.get("enabled"):
+        try:
+            update_provider_config(provider, {"enabled": True})
+            cfg["enabled"] = True
+        except Exception:
+            raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
     model = str(cfg.get("model") or "").strip()
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
