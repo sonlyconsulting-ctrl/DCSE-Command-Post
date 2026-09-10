@@ -70,9 +70,13 @@ class SupabaseRLSClient:
         safe = parse.quote(str(job_id), safe="")
         return self._call("GET", f"escd_evidence?job_id=eq.{safe}&select=id,evidence_type,reference_sha,created_at&order=created_at.desc,id.asc")
 
-    def latest_approval(self, job_id: str) -> dict[str, Any] | None:
-        safe = parse.quote(str(job_id), safe="")
-        rows = self._call("GET", f"escd_approvals?job_id=eq.{safe}&select=*&order=requested_at.desc,id.desc&limit=1")
+    def latest_approval(self, job_id: str, action_key: str) -> dict[str, Any] | None:
+        safe_job = parse.quote(str(job_id), safe="")
+        safe_action = parse.quote(str(action_key), safe="")
+        rows = self._call(
+            "GET",
+            f"escd_approvals?job_id=eq.{safe_job}&action_key=eq.{safe_action}&select=*&order=requested_at.desc,id.desc&limit=1",
+        )
         return rows[0] if rows else None
 
     def list_pending_approvals(self) -> list[dict[str, Any]]:
