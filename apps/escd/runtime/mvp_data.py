@@ -4,6 +4,8 @@ import json
 import os
 import re
 import socket
+import base64
+import hmac
 from urllib import request, error, parse
 
 
@@ -72,6 +74,16 @@ def _service_config() -> tuple[str, str]:
     key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("PABASE_SECRET_KEY") or ""
     if not url or not key:
         raise MVPServiceError("runtime_registry_not_configured")
+    if parse.urlparse(url).hostname != "nevgdyfpxdaloacuutal.supabase.co":
+        raise MVPServiceError("ESCD requires the SC-Command-Post Supabase project")
+    if key.count(".") == 2:
+        try:
+            claims = json.loads(base64.urlsafe_b64decode(key.split(".")[1] + "==="))
+            matches = claims.get("ref") == "nevgdyfpxdaloacuutal" and claims.get("role") == "service_role"
+        except Exception:
+            matches = False
+        if not matches:
+            raise MVPServiceError("ESCD service credential does not match SC-Command-Post")
     return url, key
 
 
@@ -127,10 +139,12 @@ def provider_runtime(provider: str) -> dict:
         rows = _rpc("get_escd_provider_runtime", {"p_provider": provider})
         row = rows[0] if isinstance(rows, list) and rows else (rows if isinstance(rows, dict) else None)
     except Exception:
-        row = None
+        raise MVPServiceError("Provider registry unavailable. Verify the Preview Supabase server bindings and Vault RPC access.") from None
     if not row:
-        return _fallback_config(provider)
+        raise MVPServiceError("Provider registry entry is missing")
     cfg = dict(row)
+    cfg["registry_available"] = True
+    cfg["project_ref"] = "nevgdyfpxdaloacuutal"
     vault_key = str(cfg.get("api_key") or "")
     env_key = _env_secret(provider)
     if vault_key:
@@ -148,7 +162,11 @@ def provider_runtime(provider: str) -> dict:
 def provider_status() -> dict:
     result = {}
     for provider in ("openai", "gemini", "openrouter"):
-        cfg = provider_runtime(provider)
+        try:
+            cfg = provider_runtime(provider)
+        except MVPServiceError as exc:
+            result[provider] = {"enabled": False, "configured": False, "registry_available": False, "registry_error": str(exc), "credential_source": "none"}
+            continue
         result[provider] = {
             "enabled": bool(cfg.get("enabled")),
             "configured": bool(cfg.get("api_key")),
@@ -157,6 +175,8 @@ def provider_status() -> dict:
             "max_output_tokens": cfg.get("max_output_tokens"),
             "thinking_level": cfg.get("thinking_level"),
             "credential_source": cfg.get("credential_source"),
+            "registry_available": True,
+            "project_ref": cfg.get("project_ref"),
         }
     return result
 
@@ -167,7 +187,15 @@ def set_provider_secret(provider: str, secret: str) -> dict:
         raise MVPServiceError("unsupported_provider")
     if len(str(secret or "").strip()) < 10:
         raise MVPServiceError("provider_secret_required")
-    _rpc("set_escd_provider_secret", {"p_provider": provider, "p_secret": str(secret).strip()})
+    value = str(secret).strip()
+    try:
+        saved = _rpc("set_escd_provider_secret", {"p_provider": provider, "p_secret": value})
+        cfg = provider_runtime(provider)
+        verified = saved is True and cfg.get("credential_source") == "vault" and hmac.compare_digest(str(cfg.get("api_key") or "").encode(), value.encode())
+    except Exception:
+        raise MVPServiceError("Vault save could not be verified. Check the Preview server connection and retry.") from None
+    if not verified:
+        raise MVPServiceError("Vault save could not be verified. Check the Preview server connection and retry.")
     return {"provider": provider, "configured": True, "credential_source": "vault"}
 
 
