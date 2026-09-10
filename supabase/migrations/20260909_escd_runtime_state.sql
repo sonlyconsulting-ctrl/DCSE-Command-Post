@@ -126,7 +126,7 @@ SET search_path = pg_catalog, dcse_cp
 AS $$
 DECLARE
     allowed boolean := false;
-    has_approval boolean := false;
+    latest_approval_status text;
     evidence_count integer := 0;
 BEGIN
     IF NEW.status = OLD.status THEN
@@ -148,9 +148,14 @@ BEGIN
         RAISE EXCEPTION 'invalid_job_transition:%->%', OLD.status, NEW.status USING ERRCODE = 'check_violation';
     END IF;
 
-    SELECT EXISTS (SELECT 1 FROM dcse_cp.escd_approvals a WHERE a.job_id = OLD.id AND a.status = 'approved') INTO has_approval;
+    SELECT a.status
+      INTO latest_approval_status
+      FROM dcse_cp.escd_approvals a
+     WHERE a.job_id = OLD.id
+     ORDER BY a.requested_at DESC, a.id DESC
+     LIMIT 1;
 
-    IF OLD.status = 'waiting_approval' AND NEW.status = 'running' AND OLD.requires_approval AND NOT has_approval THEN
+    IF OLD.status = 'waiting_approval' AND NEW.status = 'running' AND OLD.requires_approval AND latest_approval_status IS DISTINCT FROM 'approved' THEN
         RAISE EXCEPTION 'approved_decision_required' USING ERRCODE = 'check_violation';
     END IF;
 
@@ -158,7 +163,7 @@ BEGIN
         SELECT count(*) INTO evidence_count FROM dcse_cp.escd_evidence e WHERE e.job_id = OLD.id;
         IF NOT NEW.exit_criteria_met THEN RAISE EXCEPTION 'exit_criteria_not_met' USING ERRCODE = 'check_violation'; END IF;
         IF evidence_count = 0 THEN RAISE EXCEPTION 'evidence_required' USING ERRCODE = 'check_violation'; END IF;
-        IF OLD.requires_approval AND NOT has_approval THEN RAISE EXCEPTION 'approved_decision_required' USING ERRCODE = 'check_violation'; END IF;
+        IF OLD.requires_approval AND latest_approval_status IS DISTINCT FROM 'approved' THEN RAISE EXCEPTION 'approved_decision_required' USING ERRCODE = 'check_violation'; END IF;
         NEW.completed_at := COALESCE(NEW.completed_at, now());
     END IF;
 
@@ -172,7 +177,71 @@ CREATE TRIGGER escd_job_transition_guard BEFORE UPDATE OF status ON dcse_cp.escd
 REVOKE ALL ON FUNCTION dcse_cp.escd_validate_job_transition() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION dcse_cp.escd_validate_job_transition() TO authenticated;
 
+CREATE OR REPLACE FUNCTION dcse_cp.escd_record_job_transition()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = pg_catalog, dcse_cp
+AS $$
+BEGIN
+    IF NEW.status IS DISTINCT FROM OLD.status THEN
+        INSERT INTO dcse_cp.escd_job_events (job_id, event_type, summary, metadata, actor_user_id)
+        VALUES (
+            NEW.id,
+            'status_transition',
+            format('Job status changed from %s to %s', OLD.status, NEW.status),
+            jsonb_build_object('from_status', OLD.status, 'to_status', NEW.status),
+            auth.uid()
+        );
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS escd_job_transition_event ON dcse_cp.escd_jobs;
+CREATE TRIGGER escd_job_transition_event AFTER UPDATE OF status ON dcse_cp.escd_jobs FOR EACH ROW EXECUTE FUNCTION dcse_cp.escd_record_job_transition();
+REVOKE ALL ON FUNCTION dcse_cp.escd_record_job_transition() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION dcse_cp.escd_record_job_transition() TO authenticated;
+
+CREATE OR REPLACE FUNCTION dcse_cp.escd_validate_briefing_ack()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = pg_catalog, dcse_cp
+AS $$
+DECLARE
+    prior_ack timestamptz;
+BEGIN
+    IF NEW.principal_user_id IS DISTINCT FROM auth.uid() THEN
+        RAISE EXCEPTION 'briefing_ack_principal_mismatch' USING ERRCODE = 'check_violation';
+    END IF;
+    IF NEW.acknowledged_through > now() THEN
+        RAISE EXCEPTION 'briefing_ack_in_future' USING ERRCODE = 'check_violation';
+    END IF;
+
+    SELECT max(a.acknowledged_through)
+      INTO prior_ack
+      FROM dcse_cp.escd_briefing_acks a
+     WHERE a.principal_user_id = NEW.principal_user_id
+       AND a.id IS DISTINCT FROM NEW.id;
+
+    IF prior_ack IS NOT NULL AND NEW.acknowledged_through < prior_ack THEN
+        RAISE EXCEPTION 'briefing_ack_regression' USING ERRCODE = 'check_violation';
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS escd_briefing_ack_guard ON dcse_cp.escd_briefing_acks;
+CREATE TRIGGER escd_briefing_ack_guard BEFORE INSERT OR UPDATE ON dcse_cp.escd_briefing_acks FOR EACH ROW EXECUTE FUNCTION dcse_cp.escd_validate_briefing_ack();
+REVOKE ALL ON FUNCTION dcse_cp.escd_validate_briefing_ack() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION dcse_cp.escd_validate_briefing_ack() TO authenticated;
+
 /* ROLLBACK, only after explicit DCS authorization:
+DROP TRIGGER IF EXISTS escd_briefing_ack_guard ON dcse_cp.escd_briefing_acks;
+DROP FUNCTION IF EXISTS dcse_cp.escd_validate_briefing_ack();
+DROP TRIGGER IF EXISTS escd_job_transition_event ON dcse_cp.escd_jobs;
+DROP FUNCTION IF EXISTS dcse_cp.escd_record_job_transition();
 DROP TRIGGER IF EXISTS escd_job_transition_guard ON dcse_cp.escd_jobs;
 DROP FUNCTION IF EXISTS dcse_cp.escd_validate_job_transition();
 DROP TABLE IF EXISTS dcse_cp.escd_briefing_acks;
