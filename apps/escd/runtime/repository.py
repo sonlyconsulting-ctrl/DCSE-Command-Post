@@ -70,6 +70,11 @@ class SupabaseRLSClient:
         safe = parse.quote(str(job_id), safe="")
         return self._call("GET", f"escd_evidence?job_id=eq.{safe}&select=id,evidence_type,reference_sha,created_at&order=created_at.desc,id.asc")
 
+    def get_evidence(self, evidence_id: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(evidence_id), safe="")
+        rows = self._call("GET", f"escd_evidence?id=eq.{safe}&select=id,job_id,evidence_type,reference_sha,created_at&limit=1")
+        return rows[0] if rows else None
+
     def latest_approval(self, job_id: str, action_key: str) -> dict[str, Any] | None:
         safe_job = parse.quote(str(job_id), safe="")
         safe_action = parse.quote(str(action_key), safe="")
@@ -102,6 +107,45 @@ class SupabaseRLSClient:
         rows = self._call("PATCH", f"escd_approvals?id=eq.{safe}", update)
         if not rows:
             raise RepositoryError("approval_update_failed")
+        return rows[0]
+
+    def get_job_verification(self, verification_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(verification_key), safe="")
+        rows = self._call("GET", f"escd_job_verifications?verification_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_job_verification(
+        self,
+        *,
+        verification_key: str,
+        job_id: str,
+        evidence_id: str,
+        outcome: str,
+        verification_method: str,
+        notes: str | None = None,
+    ) -> dict[str, Any]:
+        existing = self.get_job_verification(verification_key)
+        if existing:
+            return existing
+        payload: dict[str, Any] = {
+            "verification_key": verification_key,
+            "job_id": job_id,
+            "evidence_id": evidence_id,
+            "outcome": outcome,
+            "verification_method": verification_method,
+        }
+        if notes:
+            payload["notes"] = notes
+        try:
+            rows = self._call("POST", "escd_job_verifications", payload)
+        except RepositoryError as exc:
+            if str(exc) == "postgrest_409":
+                existing = self.get_job_verification(verification_key)
+                if existing:
+                    return existing
+            raise
+        if not rows:
+            raise RepositoryError("job_verification_create_failed")
         return rows[0]
 
     def acknowledge_briefing(self, acknowledged_through: str) -> dict[str, Any]:
