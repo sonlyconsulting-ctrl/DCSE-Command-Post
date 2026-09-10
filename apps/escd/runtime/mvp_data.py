@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 from urllib import request, error, parse
 
 
@@ -19,6 +20,10 @@ def _http_json(url: str, *, method: str = "GET", headers: dict | None = None, pa
     except error.HTTPError as exc:
         exc.read()
         raise MVPServiceError(f"upstream_{exc.code}") from None
+    except (TimeoutError, socket.timeout):
+        raise MVPServiceError("upstream_timeout") from None
+    except error.URLError:
+        raise MVPServiceError("upstream_network_error") from None
 
 
 def _provider_error(provider: str, exc: MVPServiceError) -> MVPServiceError:
@@ -29,6 +34,8 @@ def _provider_error(provider: str, exc: MVPServiceError) -> MVPServiceError:
         "upstream_403": f"{provider}_access_denied",
         "upstream_404": f"{provider}_model_or_endpoint_not_found",
         "upstream_429": f"{provider}_rate_or_quota_limited",
+        "upstream_timeout": f"{provider}_timeout",
+        "upstream_network_error": f"{provider}_network_error",
     }
     if code in mapping:
         return MVPServiceError(mapping[code])
@@ -92,6 +99,7 @@ def provider_status() -> dict:
         "gemini": {
             "configured": bool(os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")),
             "model": os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash",
+            "thinking_level": os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low",
         },
     }
 
@@ -132,7 +140,7 @@ def chat(provider: str, messages: list[dict]) -> dict:
                 method="POST",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
                 payload={"model": model, "input": clean},
-                timeout=60,
+                timeout=45,
             )
         except MVPServiceError as exc:
             raise _provider_error("openai", exc) from None
@@ -146,6 +154,7 @@ def chat(provider: str, messages: list[dict]) -> dict:
         if not key:
             raise MVPServiceError("gemini_not_configured")
         model = os.getenv("ESCD_GEMINI_MODEL") or "gemini-3.8-flash"
+        thinking_level = os.getenv("ESCD_GEMINI_THINKING_LEVEL") or "low"
         contents = []
         system_parts = []
         for message in clean:
@@ -153,7 +162,13 @@ def chat(provider: str, messages: list[dict]) -> dict:
                 system_parts.append({"text": message["content"]})
             else:
                 contents.append({"role": "model" if message["role"] == "assistant" else "user", "parts": [{"text": message["content"]}]})
-        payload = {"contents": contents}
+        payload = {
+            "contents": contents,
+            "generationConfig": {
+                "thinkingConfig": {"thinkingLevel": thinking_level},
+                "maxOutputTokens": 768,
+            },
+        }
         if system_parts:
             payload["systemInstruction"] = {"parts": system_parts}
         try:
@@ -162,7 +177,7 @@ def chat(provider: str, messages: list[dict]) -> dict:
                 method="POST",
                 headers={"x-goog-api-key": key, "Content-Type": "application/json"},
                 payload=payload,
-                timeout=60,
+                timeout=25,
             )
         except MVPServiceError as exc:
             raise _provider_error("gemini", exc) from None
