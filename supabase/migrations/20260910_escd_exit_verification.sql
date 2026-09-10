@@ -63,8 +63,8 @@ BEGIN
         RAISE EXCEPTION 'verification_job_not_found' USING ERRCODE = 'check_violation';
     END IF;
 
-    IF current_job_status IN ('completed','cancelled','archived') THEN
-        RAISE EXCEPTION 'verification_job_terminal' USING ERRCODE = 'check_violation';
+    IF current_job_status IS DISTINCT FROM 'running' THEN
+        RAISE EXCEPTION 'verification_job_not_running' USING ERRCODE = 'check_violation';
     END IF;
 
     RETURN NEW;
