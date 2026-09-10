@@ -162,7 +162,7 @@ class handler(BaseHTTPRequestHandler):
                     job,
                     target,
                     evidence_refs=[str(e.get("id")) for e in evidence],
-                    exit_criteria_met=bool(payload.get("exit_criteria_met")),
+                    exit_criteria_met=bool(job.get("exit_criteria_met")),
                     approved=approved,
                 )
                 updated = repo.patch_job(job_id, update)
