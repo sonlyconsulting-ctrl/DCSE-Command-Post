@@ -37,6 +37,21 @@ def _parse_ack_timestamp(value: str) -> datetime:
     return parsed
 
 
+def _approval_is_effective(approval: dict | None) -> bool:
+    if not approval or approval.get("status") != "approved":
+        return False
+    expires_at = approval.get("expires_at")
+    if not expires_at:
+        return True
+    try:
+        expires = datetime.fromisoformat(str(expires_at).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if expires.tzinfo is None:
+        return False
+    return expires.astimezone(timezone.utc) > datetime.now(timezone.utc)
+
+
 class handler(BaseHTTPRequestHandler):
     server_version = "ESCD/0.2"
 
@@ -156,8 +171,9 @@ class handler(BaseHTTPRequestHandler):
                     self._json(404, {"error": "job_not_found"}, origin)
                     return
                 evidence = repo.list_job_evidence(job_id)
-                approval = repo.latest_approval(job_id)
-                approved = bool(approval and approval.get("status") == "approved")
+                action_key = f"job_transition:{target}"
+                approval = repo.latest_approval(job_id, action_key)
+                approved = _approval_is_effective(approval)
                 update = require_job_transition(
                     job,
                     target,
