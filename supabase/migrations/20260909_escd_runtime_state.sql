@@ -58,16 +58,21 @@ CREATE TABLE IF NOT EXISTS dcse_cp.escd_approvals (
     id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     job_id uuid NOT NULL REFERENCES dcse_cp.escd_jobs(id) ON DELETE RESTRICT,
     approval_type text NOT NULL,
+    action_key text NOT NULL,
+    payload_fingerprint text,
     title text NOT NULL,
     description text,
     status text NOT NULL DEFAULT 'pending' CHECK (status IN ('proposed','pending','approved','rejected','expired','withdrawn','revoked')),
-    requested_by_user_id uuid DEFAULT auth.uid(),
+    requested_by_user_id uuid NOT NULL DEFAULT auth.uid(),
     requested_at timestamptz NOT NULL DEFAULT now(),
     decided_by_user_id uuid,
     decided_at timestamptz,
+    expires_at timestamptz,
+    conditions jsonb NOT NULL DEFAULT '{}'::jsonb,
     decision_notes text
 );
 CREATE INDEX IF NOT EXISTS escd_approvals_job_idx ON dcse_cp.escd_approvals(job_id, requested_at DESC);
+CREATE INDEX IF NOT EXISTS escd_approvals_action_idx ON dcse_cp.escd_approvals(job_id, action_key, requested_at DESC, id DESC);
 CREATE INDEX IF NOT EXISTS escd_approvals_pending_idx ON dcse_cp.escd_approvals(status) WHERE status = 'pending';
 
 CREATE TABLE IF NOT EXISTS dcse_cp.escd_evidence (
@@ -106,13 +111,13 @@ ALTER TABLE dcse_cp.escd_briefing_acks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE dcse_cp.escd_briefing_acks FORCE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS escd_jobs_dcs_owner ON dcse_cp.escd_jobs;
-CREATE POLICY escd_jobs_dcs_owner ON dcse_cp.escd_jobs FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner());
+CREATE POLICY escd_jobs_dcs_owner ON dcse_cp.escd_jobs FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner() AND created_by_user_id = auth.uid());
 DROP POLICY IF EXISTS escd_job_events_dcs_owner ON dcse_cp.escd_job_events;
-CREATE POLICY escd_job_events_dcs_owner ON dcse_cp.escd_job_events FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner());
+CREATE POLICY escd_job_events_dcs_owner ON dcse_cp.escd_job_events FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner() AND actor_user_id = auth.uid());
 DROP POLICY IF EXISTS escd_approvals_dcs_owner ON dcse_cp.escd_approvals;
-CREATE POLICY escd_approvals_dcs_owner ON dcse_cp.escd_approvals FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner());
+CREATE POLICY escd_approvals_dcs_owner ON dcse_cp.escd_approvals FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner() AND requested_by_user_id = auth.uid() AND (decided_by_user_id IS NULL OR decided_by_user_id = auth.uid()));
 DROP POLICY IF EXISTS escd_evidence_dcs_owner ON dcse_cp.escd_evidence;
-CREATE POLICY escd_evidence_dcs_owner ON dcse_cp.escd_evidence FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner());
+CREATE POLICY escd_evidence_dcs_owner ON dcse_cp.escd_evidence FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner() AND actor_user_id = auth.uid());
 DROP POLICY IF EXISTS escd_briefing_acks_dcs_owner ON dcse_cp.escd_briefing_acks;
 CREATE POLICY escd_briefing_acks_dcs_owner ON dcse_cp.escd_briefing_acks FOR ALL TO authenticated USING (dcse_cp.is_dcs_owner()) WITH CHECK (dcse_cp.is_dcs_owner() AND principal_user_id = auth.uid());
 
@@ -127,6 +132,8 @@ AS $$
 DECLARE
     allowed boolean := false;
     latest_approval_status text;
+    latest_approval_expires_at timestamptz;
+    required_action_key text;
     evidence_count integer := 0;
 BEGIN
     IF NEW.status = OLD.status THEN
@@ -148,12 +155,18 @@ BEGIN
         RAISE EXCEPTION 'invalid_job_transition:%->%', OLD.status, NEW.status USING ERRCODE = 'check_violation';
     END IF;
 
-    SELECT a.status
-      INTO latest_approval_status
+    required_action_key := format('job_transition:%s', NEW.status);
+    SELECT a.status, a.expires_at
+      INTO latest_approval_status, latest_approval_expires_at
       FROM dcse_cp.escd_approvals a
      WHERE a.job_id = OLD.id
+       AND a.action_key = required_action_key
      ORDER BY a.requested_at DESC, a.id DESC
      LIMIT 1;
+
+    IF latest_approval_status = 'approved' AND latest_approval_expires_at IS NOT NULL AND latest_approval_expires_at <= now() THEN
+        latest_approval_status := 'expired';
+    END IF;
 
     IF OLD.status = 'waiting_approval' AND NEW.status = 'running' AND OLD.requires_approval AND latest_approval_status IS DISTINCT FROM 'approved' THEN
         RAISE EXCEPTION 'approved_decision_required' USING ERRCODE = 'check_violation';
@@ -203,6 +216,38 @@ CREATE TRIGGER escd_job_transition_event AFTER UPDATE OF status ON dcse_cp.escd_
 REVOKE ALL ON FUNCTION dcse_cp.escd_record_job_transition() FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION dcse_cp.escd_record_job_transition() TO authenticated;
 
+CREATE OR REPLACE FUNCTION dcse_cp.escd_record_approval_transition()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = pg_catalog, dcse_cp
+AS $$
+BEGIN
+    IF NEW.status IS DISTINCT FROM OLD.status THEN
+        INSERT INTO dcse_cp.escd_job_events (job_id, event_type, summary, metadata, actor_user_id)
+        VALUES (
+            NEW.job_id,
+            'approval_transition',
+            format('Approval %s changed from %s to %s', NEW.action_key, OLD.status, NEW.status),
+            jsonb_build_object(
+                'approval_id', NEW.id,
+                'action_key', NEW.action_key,
+                'from_status', OLD.status,
+                'to_status', NEW.status,
+                'payload_fingerprint', NEW.payload_fingerprint
+            ),
+            auth.uid()
+        );
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS escd_approval_transition_event ON dcse_cp.escd_approvals;
+CREATE TRIGGER escd_approval_transition_event AFTER UPDATE OF status ON dcse_cp.escd_approvals FOR EACH ROW EXECUTE FUNCTION dcse_cp.escd_record_approval_transition();
+REVOKE ALL ON FUNCTION dcse_cp.escd_record_approval_transition() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION dcse_cp.escd_record_approval_transition() TO authenticated;
+
 CREATE OR REPLACE FUNCTION dcse_cp.escd_validate_briefing_ack()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -240,6 +285,8 @@ GRANT EXECUTE ON FUNCTION dcse_cp.escd_validate_briefing_ack() TO authenticated;
 /* ROLLBACK, only after explicit DCS authorization:
 DROP TRIGGER IF EXISTS escd_briefing_ack_guard ON dcse_cp.escd_briefing_acks;
 DROP FUNCTION IF EXISTS dcse_cp.escd_validate_briefing_ack();
+DROP TRIGGER IF EXISTS escd_approval_transition_event ON dcse_cp.escd_approvals;
+DROP FUNCTION IF EXISTS dcse_cp.escd_record_approval_transition();
 DROP TRIGGER IF EXISTS escd_job_transition_event ON dcse_cp.escd_jobs;
 DROP FUNCTION IF EXISTS dcse_cp.escd_record_job_transition();
 DROP TRIGGER IF EXISTS escd_job_transition_guard ON dcse_cp.escd_jobs;
