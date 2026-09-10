@@ -191,11 +191,11 @@ class handler(BaseHTTPRequestHandler):
                 if not approval_id or not decision:
                     self._json(400, {"error": "approval_id_and_decision_required"}, origin)
                     return
-                rows = repo._call("GET", f"escd_approvals?id=eq.{approval_id}&select=*&limit=1")
-                if not rows:
+                approval = repo.get_approval(approval_id)
+                if not approval:
                     self._json(404, {"error": "approval_not_found"}, origin)
                     return
-                update = require_approval_decision(rows[0], decision, auth.user_id)
+                update = require_approval_decision(approval, decision, auth.user_id)
                 updated = repo.patch_approval(approval_id, update)
                 self._json(200, {"ok": True, "approval": updated}, origin)
                 return
