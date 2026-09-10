@@ -1,0 +1,84 @@
+name: DDNA Cutover Review Gate
+
+on:
+  pull_request:
+    paths:
+      - 'api/runtime.js'
+      - 'api/index.js'
+      - 'apps/sc-agent-os/**'
+      - 'tests/sc-agent-os-ddna-cutover.test.js'
+      - 'scripts/vercel/should-ignore-sc-agent-os-build.js'
+      - 'vercel.json'
+      - 'governance/v7.2/implementations/DCSE_DDNA_CONSUMER_CUTOVER*'
+      - '.github/workflows/ddna-cutover-review.yml'
+  push:
+    branches:
+      - ddna-consumer-cutover-20260909
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Syntax check touched runtime files
+        run: |
+          node --check api/runtime.js
+          node --check api/index.js
+          node --check apps/sc-agent-os/api/runtime.js
+          node --check apps/sc-agent-os/api/index.js
+          node --check scripts/vercel/should-ignore-sc-agent-os-build.js
+
+      - name: Run DDNA cutover tests
+        run: node --test tests/sc-agent-os-ddna-cutover.test.js
+
+      - name: Verify runtime copies remain identical
+        run: cmp -s api/runtime.js apps/sc-agent-os/api/runtime.js
+
+      - name: Verify server-only DDNA configuration boundary
+        run: |
+          grep -q 'DDNA_SUPABASE_URL' api/runtime.js
+          grep -q 'DDNA_SUPABASE_SERVICE_ROLE_KEY' api/runtime.js
+          grep -q "schema: 'dcse_ddna_legacy'" api/runtime.js
+          ! grep -q 'DDNA_SUPABASE_SERVICE_ROLE_KEY' apps/sc-agent-os/public/index.html 2>/dev/null || exit 1
+
+      - name: Verify fail-closed runtime protections
+        run: |
+          ! grep -q 'nevgdyfpxdaloacuutal.supabase.co' api/runtime.js
+          ! grep -q 'response.text()' api/runtime.js
+          grep -q "order=created_at.desc,id.asc" api/runtime.js
+          grep -q "\['legacy', 'dedicated', 'compare'\]" api/runtime.js
+
+      - name: Scan changed cutover files for credential-shaped values
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ]; then base="$(git merge-base HEAD origin/main)"; fi
+          files=$(git diff --name-only "$base"...HEAD -- \
+            api/runtime.js api/index.js apps/sc-agent-os tests/sc-agent-os-ddna-cutover.test.js \
+            scripts/vercel/should-ignore-sc-agent-os-build.js vercel.json \
+            'governance/v7.2/implementations/DCSE_DDNA_CONSUMER_CUTOVER*')
+          if [ -n "$files" ]; then
+            if grep -EnI '(sb_secret_[A-Za-z0-9_-]{12,}|eyJ[A-Za-z0-9_-]{24,}\.[A-Za-z0-9_-]{12,}\.[A-Za-z0-9_-]{12,}|postgres(ql)?://[^[:space:]]+:[^[:space:]]+@)' $files; then
+              echo 'Credential-shaped value detected in DDNA cutover diff.' >&2
+              exit 1
+            fi
+          fi
+
+      - name: Verify protected-lane terms are absent from cutover implementation
+        run: |
+          ! grep -Ein '(pro[ -]?se|litigation strategy|court filing)' \
+            api/runtime.js apps/sc-agent-os/api/runtime.js tests/sc-agent-os-ddna-cutover.test.js \
+            scripts/vercel/should-ignore-sc-agent-os-build.js
