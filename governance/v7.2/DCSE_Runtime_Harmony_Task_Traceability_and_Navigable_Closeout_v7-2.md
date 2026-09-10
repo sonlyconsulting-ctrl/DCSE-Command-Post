@@ -126,11 +126,11 @@ No model or agent may self-assign constitutional authority, invent a permanent r
 
 A surface that cannot load or verify this chain SHALL report `UNSYNCHRONIZED` or `DEGRADED` and SHALL NOT claim full v7.2 compliance for authority-sensitive work.
 
-## 6. Publication Boundary
+## 6. PS Publication Boundary After Case Conclusion
 
-The existing publication boundary established by DCS-DIR-20260905-001 is preserved without weakening.
+The former standing rule requiring strict PS isolation from all non-PS internal work is narrowed by this directive.
 
-Protected-origin material remains confidential and protected from unauthorized public spill. Unless DCS expressly authorizes otherwise, protected-origin facts, evidence, strategy, analysis, party-specific allegations, or other protected matter SHALL NOT be used in public-facing:
+PS-origin material remains confidential and protected from public spill. Unless DCS expressly authorizes otherwise, PS-origin facts, evidence, litigation strategy, case analysis, party-specific allegations, or protected case material SHALL NOT be used in public-facing:
 
 - Sonly Consulting content;
 - Smoove Spots content;
@@ -139,11 +139,11 @@ Protected-origin material remains confidential and protected from unauthorized p
 - campaigns, social media, marketing, advertising, investor materials, or movement narratives;
 - public product copy or external communications.
 
-Internal, private, governance, archival, systems, operational, or analytical use is not blocked merely because material originated in a protected lane, provided confidentiality, purpose limitation, and access controls are maintained.
+Internal, private, governance, archival, systems, operational, or analytical use is not blocked merely because material originated in PS, provided confidentiality, purpose limitation, and access controls are maintained.
 
-The applicable publication Stop-Gate remains active when protected-origin material is about to enter public-facing content without express DCS authorization. It is not a standing bar against internal/private use.
+The prior PS Stop-Gate remains applicable when PS-origin material is about to enter public-facing content without express DCS authorization. It is not a standing bar against internal/private use after case conclusion.
 
-If DCS activates a new matter-specific protected boundary, the stricter matter-specific firewall controls for that matter.
+If DCS activates a new legal matter or expressly reactivates case-specific PS isolation, the stricter matter-specific firewall controls for that matter.
 
 ## 7. Persistence and Evidence Routing
 
@@ -179,7 +179,7 @@ This is a semantic contract, not a mandatory visual layout. Command Post, ESCD, 
 
 This consolidated v7.2 file preserves and supersedes the operative content of `DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md` as the current canonical file for this directive family.
 
-It additionally supersedes any current runtime practice that:
+It supersedes conflicting standing language only to the extents already authorized by DCS-DIR-20260905-001 and additionally supersedes any current runtime practice that:
 
 1. omits mandatory task intake metadata or Preflight Validation for substantive work;
 2. reports substantive completion without evidence-backed final reporting;
