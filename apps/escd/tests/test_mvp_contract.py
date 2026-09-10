@@ -57,6 +57,16 @@ def test_mvp_chat_excludes_claude():
     assert "claude" not in app.lower()
 
 
+def test_mvp_provider_defaults_are_current_and_errors_are_provider_specific():
+    service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
+    assert '"gpt-5.6-sol"' in service
+    assert '"gemini-3.8-flash"' in service
+    assert '"x-goog-api-key"' in service
+    assert '"https://api.openai.com/v1/responses"' in service
+    assert 'f"{provider}_auth_failed"' in service
+    assert 'f"{provider}_model_or_endpoint_not_found"' in service
+
+
 def test_mvp_routes_to_operable_surface():
     routes = (ROOT / "vercel.json").read_text(encoding="utf-8")
     assert '"src":"/app","dest":"/web/app.html"' in routes
