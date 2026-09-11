@@ -12,9 +12,11 @@ from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
 from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     chat,
+    get_canonical_convergence_items,
     list_assets,
     list_ddna_jobs,
     list_ddna_sources,
+    list_knowledge,
     provider_status,
     set_provider_secret,
     update_provider_config,
@@ -116,9 +118,22 @@ class handler(BaseHTTPRequestHandler):
         try:
             repo = self._auth()
             if path == "/api/mvp/items":
-                self._json(200, {"ok": True, "items": repo.list_items()})
+                live_items = []
+                try:
+                    live_items = repo.list_items()
+                except Exception:
+                    pass
+                canonical = get_canonical_convergence_items()
+                merged = list(live_items)
+                existing_keys = {str(x.get("id") or x.get("item_key") or "") for x in live_items}
+                for it in canonical.get("tasks", []) + canonical.get("ideas", []):
+                    if str(it.get("id") or it.get("item_key")) not in existing_keys:
+                        merged.append(it)
+                self._json(200, {"ok": True, "items": merged})
             elif path == "/api/mvp/assets":
                 self._json(200, {"ok": True, "assets": list_assets()})
+            elif path == "/api/mvp/knowledge":
+                self._json(200, {"ok": True, "knowledge": list_knowledge()})
             elif path == "/api/mvp/ddna":
                 self._json(200, {"ok": True, "records": list_ddna_sources()})
             elif path == "/api/mvp/ddna/jobs":

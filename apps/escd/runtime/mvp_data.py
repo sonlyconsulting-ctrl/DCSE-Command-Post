@@ -6,6 +6,7 @@ import re
 import socket
 import base64
 import hmac
+from pathlib import Path
 from urllib import request, error, parse
 
 
@@ -226,38 +227,167 @@ def _provider_failure(provider: str, exc: Exception) -> MVPServiceError:
     return MVPServiceError(f"{provider.title()} request failed: {_safe_provider_detail(text)}")
 
 
+def get_canonical_convergence_items() -> dict[str, list[dict]]:
+    candidates = [
+        Path(__file__).resolve().parent / "escd_canonical_convergence_registry.json",
+        Path(__file__).resolve().parents[2] / "DCSE_CP_Project" / "SC-ESCD" / "escd_canonical_convergence_registry.json",
+    ]
+    data = None
+    for p in candidates:
+        if p.is_file():
+            try:
+                data = json.loads(p.read_text(encoding="utf-8"))
+                break
+            except Exception:
+                continue
+    if not data:
+        return {"tasks": [], "ideas": [], "knowledge": [], "ddna": [], "assets": []}
+    tasks, ideas, knowledge, ddna, assets = [], [], [], [], []
+    for it in data.get("canonical_items", []):
+        disp = it.get("disposition")
+        cid = it.get("canonical_id") or ""
+        raw = it.get("content") or ""
+        first_line = raw.strip().split("\n")[0].replace("**", "").replace("Task ID:", "").strip()
+        title = first_line[:90] if first_line else cid
+        if disp == "TASK":
+            tasks.append({
+                "id": cid,
+                "item_key": cid,
+                "title": title,
+                "summary": raw,
+                "status": it.get("status", "inactive"),
+                "context": "task",
+                "task_class": "DO",
+                "actionable": False,
+                "explicit_priority": 0,
+                "source_system": it.get("source", "canonical_convergence")
+            })
+        elif disp == "IDEA":
+            ideas.append({
+                "id": cid,
+                "item_key": cid,
+                "title": title,
+                "summary": raw,
+                "status": it.get("status", "noncommittal"),
+                "context": "idea",
+                "task_class": "CAPTURE",
+                "actionable": False,
+                "explicit_priority": 0,
+                "source_system": it.get("source", "canonical_convergence")
+            })
+        elif disp == "KNOWLEDGE":
+            knowledge.append({
+                "id": cid,
+                "title": title,
+                "content": raw,
+                "source": it.get("source", "canonical_convergence"),
+                "status": it.get("status", "staged"),
+                "confidence": it.get("confidence", 0.95),
+                "authority_classification": it.get("authority_classification", "HISTORICAL_RECOVERED")
+            })
+        elif disp == "DDNA":
+            ddna.append({
+                "id": cid,
+                "source_type": "DDNA",
+                "source_ref_id": cid,
+                "source_title": title,
+                "entity": "DCSE",
+                "lane": "DDNA",
+                "status": it.get("status", "staged"),
+                "public_safe": True,
+                "content_snapshot": raw
+            })
+        elif disp == "ASSET":
+            assets.append({
+                "id": cid,
+                "asset_id": cid,
+                "file_name": title,
+                "entity_lane": "DCSE",
+                "asset_type": "Canonical Asset",
+                "topic": raw[:120],
+                "semantic_version": "1.0.0",
+                "lifecycle_status": it.get("status", "staged")
+            })
+    return {"tasks": tasks, "ideas": ideas, "knowledge": knowledge, "ddna": ddna, "assets": assets}
+
+
+def list_knowledge(limit: int = 200) -> list[dict]:
+    items = get_canonical_convergence_items().get("knowledge", [])
+    return items[:limit]
+
+
 def list_assets(limit: int = 200) -> list[dict]:
     url, key = _service_config()
     query = "dcse_asset_registry?select=*&order=last_modified_at.desc.nullslast,created_at.desc.nullslast,id.asc&limit=" + str(max(1, min(limit, 500)))
-    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "public"))
+    rows = []
+    try:
+        _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "public"))
+    except Exception:
+        pass
     if not isinstance(rows, list):
-        raise MVPServiceError("asset_source_invalid")
-    return rows
+        rows = []
+    canonical = get_canonical_convergence_items().get("assets", [])
+    existing_ids = {str(r.get("asset_id") or r.get("id")) for r in rows}
+    for item in canonical:
+        if str(item.get("asset_id")) not in existing_ids:
+            rows.append(item)
+    return rows[:limit]
 
 
 def list_ddna_sources(limit: int = 200) -> list[dict]:
+    rows = []
     url = (os.getenv("DDNA_SUPABASE_URL") or "").rstrip("/")
     key = os.getenv("DDNA_SUPABASE_SERVICE_ROLE_KEY") or ""
+    schema = "dcse_ddna_legacy"
     if not url or not key:
-        raise MVPServiceError("ddna_source_not_configured")
-    fields = "id,source_type,source_ref_id,source_title,entity,lane,priority,status,assigned_model,assigned_agent_key,ps_lock,public_safe,queued_by,queued_at,extracted_at,notes,retry_count,max_retries,last_error,batch_id,content_snapshot"
-    query = f"ddna_source_queue?select={fields}&order=queued_at.desc.nullslast,id.asc&limit={max(1, min(limit, 500))}"
-    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_ddna_legacy"))
-    if not isinstance(rows, list):
-        raise MVPServiceError("ddna_source_invalid")
-    return rows
+        try:
+            url, key = _service_config()
+            schema = "dcse_cp"
+        except Exception:
+            pass
+    if url and key:
+        fields = "id,source_type,source_ref_id,source_title,entity,lane,priority,status,assigned_model,assigned_agent_key,ps_lock,public_safe,queued_by,queued_at,extracted_at,notes,retry_count,max_retries,last_error,batch_id,content_snapshot"
+        query = f"ddna_source_queue?select={fields}&order=queued_at.desc.nullslast,id.asc&limit={max(1, min(limit, 500))}"
+        try:
+            _, fetched = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, schema))
+            if isinstance(fetched, list):
+                rows.extend(fetched)
+        except Exception:
+            try:
+                url, key = _service_config()
+                _, fetched = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_cp"))
+                if isinstance(fetched, list):
+                    rows.extend(fetched)
+            except Exception:
+                pass
+    canonical = get_canonical_convergence_items().get("ddna", [])
+    existing_refs = {str(r.get("source_ref_id") or r.get("id")) for r in rows}
+    for item in canonical:
+        if item.get("source_ref_id") not in existing_refs:
+            rows.append(item)
+    return rows[:limit]
 
 
 def list_ddna_jobs(source_queue_id: str) -> list[dict]:
     url = (os.getenv("DDNA_SUPABASE_URL") or "").rstrip("/")
     key = os.getenv("DDNA_SUPABASE_SERVICE_ROLE_KEY") or ""
+    schema = "dcse_ddna_legacy"
     if not url or not key:
-        raise MVPServiceError("ddna_source_not_configured")
+        try:
+            url, key = _service_config()
+            schema = "dcse_cp"
+        except Exception:
+            pass
+    if not url or not key:
+        return []
     safe = parse.quote(source_queue_id, safe="")
     fields = "id,job_key,source_queue_id,model_id,provider,status,error_message,retry_count,duration_ms,characteristics_extracted,started_at,completed_at,created_at"
     query = f"ddna_ollama_jobs?source_queue_id=eq.{safe}&select={fields}&order=created_at.desc,id.asc"
-    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_ddna_legacy"))
-    return rows if isinstance(rows, list) else []
+    try:
+        _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, schema))
+        return rows if isinstance(rows, list) else []
+    except Exception:
+        return []
 
 
 def _openai_output_text(data: dict) -> str:

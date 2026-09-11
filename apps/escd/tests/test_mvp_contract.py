@@ -82,3 +82,25 @@ def test_mvp_routes_to_operable_surface():
     routes = (ROOT / "vercel.json").read_text(encoding="utf-8")
     assert '"src":"/app","dest":"/web/app.html"' in routes
     assert '"src":"/","dest":"/web/login.html"' in routes
+
+
+def test_canonical_convergence_registry_loaded():
+    from apps.escd.runtime.mvp_data import get_canonical_convergence_items, list_knowledge
+    items = get_canonical_convergence_items()
+    assert len(items["tasks"]) > 0
+    assert len(items["ideas"]) > 0
+    assert len(items["knowledge"]) > 0
+    assert len(items["ddna"]) > 0
+    assert len(items["assets"]) > 0
+    k_list = list_knowledge()
+    assert len(k_list) == len(items["knowledge"])
+
+
+def test_mvp_html_has_knowledge_and_detail_modal():
+    mvp_html = (ROOT / "web" / "mvp.html").read_text(encoding="utf-8")
+    assert 'id="knowledge"' in mvp_html
+    assert 'id="detailModal"' in mvp_html
+    assert "openModal" in mvp_html
+    assert "loadKnowledge" in mvp_html
+    assert "alert(JSON.stringify" not in mvp_html
+
