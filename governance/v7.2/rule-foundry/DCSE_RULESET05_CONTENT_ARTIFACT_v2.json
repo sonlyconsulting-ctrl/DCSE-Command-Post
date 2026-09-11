@@ -2,7 +2,7 @@
   "ruleset_id": "DCSE-RULESET-05-CONTENT-ARTIFACT-v2",
   "version": "2.0-candidate",
   "family": "artifact_content_generation",
-  "status": "candidate",
+  "status": "validating",
   "authority_ref": "DCS-DIR-20260911-001 + DCS Level 0 instruction 2026-09-11",
   "parent_standard": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
   "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
@@ -745,7 +745,7 @@
       "version": "2.0",
       "family": "artifact_content_generation",
       "class": "validation",
-      "status": "candidate",
+      "status": "validating",
       "scope": {
         "lanes": [
           "ALL"
@@ -1255,5 +1255,14 @@
     "B4L",
     "X50",
     "Beauty"
-  ]
+  ],
+  "validation_summary": {
+    "structural_contract": "PASS",
+    "deterministic_and_adversarial_tests": "38/38 PASS",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "unresolved": [
+      "CA-SLOP-001 scoring implementation and threshold require calibration from real artifact reviews.",
+      "Cross-cutting security/privacy, lane/firewall, source/evidence, cost, reuse, and drift rules remain intentionally deferred to Rule Sets 2, 3, 4, 16, 17, 18, and 19."
+    ]
+  }
 }
