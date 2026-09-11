@@ -104,7 +104,14 @@ Authorized development sequence begins with:
 
 Current state: `VALIDATING`. Structural and deterministic/adversarial tests pass, but active-baseline promotion is held for anti-slop scoring calibration.
 
-Required later passes: Rule Sets 2, 3, 4, 16, 17, 18, and 19.
+Wave 2 candidate sets now present: 7, 8, 6, 11, 2, 3, 4, 16, 17, 18, and 19.
+
+Validation evidence:
+- `validation/DCSE_RULESET05_CALIBRATION_PLAN_v1.json`
+- `validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json`
+- `validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md`
+
+Current corpus state: `VALIDATING`. Wave 2 structural/deterministic/adversarial tests pass. Family-specific calibration remains required before active-baseline promotion.
 
 ## Compatibility Mirror
 
