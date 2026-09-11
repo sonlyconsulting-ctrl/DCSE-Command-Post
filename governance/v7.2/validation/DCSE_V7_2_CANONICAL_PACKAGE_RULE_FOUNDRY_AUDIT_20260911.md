@@ -64,7 +64,7 @@ Existing promoted v7.2 doctrine retains its recorded lifecycle state. Carried-fo
 - DCSE-METH-EMP-001 v1.1 and DCSE-METH-MEDIA-THUMB-001 v1.1 received validation-integrity RATIFY dispositions.
 - Both methodologies are ACTIVE_RATIFIED; post-change checks proved only lifecycle metadata changed after frozen-candidate validation.
 - R5 branch copy SHA-256 recomputed as `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`, exact match to the operative designation.
-- Project Settings payload is 7,978 characters and its recorded SHA-256 `291a91262454a61d87ac5d41a080989973e4ea286d48c4de32a53696d194d422` matches recomputation.
+- Project Settings payload is 7,939 characters and its recorded SHA-256 `591799cf8ac46fab899ddf316eeee36071a699f3e083ae9d2c3b70d98d74bf28` matches recomputation.
 - CI now enforces D01-D22 completeness, Rule Foundry JSON syntax, the September 11 directive, Project Settings character count, and Project Settings SHA-256 metadata.
 
 ## Remaining Closure Gates
