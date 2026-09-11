@@ -30,7 +30,7 @@ All substantive-task closeout is also subject to `DCS-DIR-20260906-002`, the Com
 
 ## Promotion State
 
-The two exact artifacts above are ACTIVE BY DCS EXPRESS DIRECTIVE and RUNTIME RECONCILED for immediate task routing. Formal D05 `ACTIVE_RATIFIED` status remains separately observable and is pending attributable independent validation only.
+The two exact artifacts above are ACTIVE BY DCS EXPRESS DIRECTIVE and RUNTIME RECONCILED for immediate task routing. Formal D05 `ACTIVE_RATIFIED` status remains separately observable and is pending an attributable validation-integrity receipt. Under the 2026-09-11 Level 0 direction, functional independence is sufficient unless a controlling source expressly requires actor separation.
 
 ## Closeout Integrity
 
