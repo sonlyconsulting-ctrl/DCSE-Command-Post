@@ -50,11 +50,36 @@ The following current routing/support controls are now resolved inside the v7.2 
 
 These projections preserve lineage while removing active v7.1 path dependencies. Historical v7.1 artifacts remain evidence/provenance and are not deleted.
 
-## 4. Remaining Doctrine Set
+## 4. Complete v7.2 Doctrine Package
 
-D01 through D22 remain part of the enterprise doctrine corpus. Doctrines not materially changed by this transaction continue under the operative v7.2 controller and their last valid non-conflicting source content. This transaction does not create unnecessary duplicate rewrites merely to change filenames.
+The active v7.2 package is self-contained at `governance/v7.2/source/doctrines/`. Normal v7.2 startup SHALL NOT require discovery of doctrine bodies in v7.1 or v6.9 folders. Historical copies remain lineage only.
 
-Where an older D04, D06, D15, D16, D20, or D22 file conflicts with the promoted v7.2 file listed above, the v7.2 file controls within the changed scope.
+| Doctrine | v7.2 package file | Package posture |
+|---|---|---|
+| D01 | `D01_Forward_Thinking_v7-2.md` | carried-forward subject content under R5 |
+| D02 | `D02_Forward_Backward_Chaining_v7-2.md` | carried-forward subject content under R5 |
+| D03 | `D03_AI_Orchestration_v7-2.md` | v7.2 orchestration candidate in final-promotion package |
+| D04 | `D04_Command_Post_Communications_v7-2.md` | promoted v7.2 |
+| D05 | `D05_Baseline_Promotion_v7-2.md` | v7.2 controller-support projection |
+| D06 | `D06_File_System_v7-2.md` | promoted v7.2 |
+| D07 | `D07_Campaign_Governance_v7-2.md` | carried-forward subject content under R5 |
+| D08 | `D08_Voice_Tone_v7-2.md` | carried-forward subject content under R5 |
+| D09 | `D09_Brand_Identity_v7-2.md` | carried-forward subject content under R5 |
+| D10 | `D10_Persona_Assets_v7-2.md` | carried-forward subject content under R5 |
+| D11 | `D11_HTML_Wix_App_v7-2.md` | carried-forward subject content under R5 |
+| D12 | `D12_Video_Media_v7-2.md` | carried-forward subject content under R5 |
+| D13 | `D13_DART_Core_v7-2.md` | cataloged, PS route only |
+| D14 | `D14_DART_PS_Protected_v7-2.md` | cataloged, PS route only |
+| D15 | `D15_Database_Administration_v7-2.md` | promoted v7.2 |
+| D16 | `D16_DDNA_Governance_v7-2.md` | promoted v7.2 |
+| D17 | `D17_DART_Universal_Methodology_v7-2.md` | carried-forward subject content under R5 |
+| D18 | `D18_Media_Production_Pipeline_v7-2.md` | carried-forward subject content under R5 |
+| D19 | `D19_Visual_Creation_Pipeline_v7-2.md` | carried-forward subject content under R5 |
+| D20 | `D20_Product_Assembly_Methodology_v7-2.md` | promoted v7.2 |
+| D21 | `D21_Doctrine_Runtime_Engine_v7-2.md` | v7.2 controller-support projection |
+| D22 | `D22_Source_Authority_Runtime_Distribution_v7-2.md` | promoted v7.2 |
+
+Package presence does not independently create promotion authority. Exact lifecycle state remains governed by R5, D05, D22, registered DCS directives, and promotion evidence. D13 and D14 SHALL NOT load outside an authorized PS route.
 
 ## 5. Cross-System Governance Map
 
