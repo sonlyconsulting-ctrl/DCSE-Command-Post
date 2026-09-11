@@ -14,14 +14,25 @@ Correct the v7.2 governance package so normal operations do not require hunting 
 
 1. Added `governance/v7.2/00_START_HERE.md` as a single human navigation front door.
 2. Added `governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json` as the machine package manifest.
-3. Established a complete D01-D22 set under `governance/v7.2/source/doctrines/`.
-4. Preserved the operative R5 controller under the same doctrine root.
+3. Established the canonical operational D01-D22 set under `governance/v7.2/doctrines/`, with temporary byte-checked compatibility mirrors under `source/doctrines/`.
+4. Placed the exact operative R5 controller at `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`, with the prior v7.2 source path retained temporarily as a compatibility mirror.
 5. Preserved historical source lineage without deleting v7.1/v6.9 evidence.
 6. Marked D13/D14 as cataloged but PS-route restricted.
 7. Replaced stale D03 vendor-role logic with a v7.2 capability-routing and bounded independent-authority candidate.
 8. Updated D21 to route through the v7.2 front door and to resolve authorized governance gates rather than passively stop when a resolution path exists.
-9. Updated the Doctrine Index and root manifest to point to the self-contained v7.2 package.
-10. Updated GitHub CI to require D01-D22, R5, package navigation files, and Rule Foundry candidate assets.
+9. Moved the active Doctrine Index view to `governance/v7.2/registry/` and updated the root manifest, package manifest, D21, and front door to the simplified paths.
+10. Updated GitHub CI to require the simplified D01-D22 paths, root R5 controller, Rule Foundry assets, and byte equality between canonical files and temporary compatibility mirrors.
+
+## Simplified Canonical Navigation
+
+Normal v7.2 operation now resolves through:
+
+- `governance/v7.2/00_START_HERE.md`
+- `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`
+- `governance/v7.2/doctrines/`
+- `governance/v7.2/registry/`
+
+`governance/v7.2/source/` is transitional compatibility/lineage only and is not the normal startup route. CI detects byte drift while those mirrors remain.
 
 ## Rule Foundry Assets Added
 
@@ -65,4 +76,4 @@ Existing promoted v7.2 doctrine retains its recorded lifecycle state. Carried-fo
 
 ## Outcome
 
-The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door and complete doctrine root. Governance package is PROMOTION-READY. Canonical completion remains bounded to final CI, PR #83 merge, and post-merge runtime/distribution reconciliation.
+The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door, root-level R5 controller, first-level doctrine/registry paths, and a complete doctrine root. Governance package is PROMOTION-READY. Canonical completion remains bounded to final CI, PR #83 merge, and post-merge runtime/distribution reconciliation.
