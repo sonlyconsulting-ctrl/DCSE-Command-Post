@@ -173,7 +173,7 @@
         "v7.2 canonical GitHub package"
       ],
       "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
-      "status": "INCORPORATED_PENDING_CANONICAL_MERGE",
+      "status": "APPROVED_ACTIVE_AUTHORIZED_CANONICAL_PERSISTENCE_ON_PR83_MERGE",
       "supersedes": "Prospectively supersedes universal separate-actor validation language while preserving historical receipts and any explicit actor-separation requirement."
     }
   ]
