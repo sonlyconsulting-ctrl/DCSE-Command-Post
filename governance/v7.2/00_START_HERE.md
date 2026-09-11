@@ -57,6 +57,7 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 - `ZONE_INDEX.v7.2.json`
 - `project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md`
 - `dcs_express_directives.v7.2.json`
+- `DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md`
 - `DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md`
 
 ## Working Capability Modules
