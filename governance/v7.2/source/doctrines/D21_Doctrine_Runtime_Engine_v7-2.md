@@ -10,7 +10,7 @@ dcse_classification: CONFIDENTIAL
 dcse_lane: DCSE
 dcse_required_approval: DCS_LEVEL_0
 dcse_source_lineage: governance/v7.1/source/doctrines/D21_Doctrine_Runtime_Engine.md
-dcse_canonical_projection: governance/v7.2/source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md
+dcse_canonical_projection: governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md
 ---
 
 # DCSE Doctrine D21: Doctrine Runtime Engine
@@ -100,7 +100,7 @@ The router must include only the doctrines needed for the task, plus required co
 | PS litigation | Isolated PS route only, including D13 and D14 |
 | PPR | Isolated PPR route only |
 
-The complete D01-D22 package is resolved under `governance/v7.2/source/doctrines/`. Historical v7.1/v6.9 copies are lineage only and are not required for ordinary v7.2 startup. Package presence does not independently promote a doctrine.
+The complete D01-D22 package is resolved under `governance/v7.2/doctrines/`. Historical v7.1/v6.9 copies are lineage only and are not required for ordinary v7.2 startup. Package presence does not independently promote a doctrine.
 
 ## 6. Lane Firewall
 
