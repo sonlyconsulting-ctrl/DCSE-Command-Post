@@ -24,7 +24,7 @@
     {
       "id": "D03",
       "path": "governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md",
-      "package_state": "approved_active_on_pr83_merge",
+      "package_state": "promoted",
       "load_scope": "ROUTED"
     },
     {
@@ -36,7 +36,7 @@
     {
       "id": "D05",
       "path": "governance/v7.2/doctrines/D05_Baseline_Promotion_v7-2.md",
-      "package_state": "approved_active_on_pr83_merge",
+      "package_state": "promoted",
       "load_scope": "ROUTED"
     },
     {
@@ -132,7 +132,7 @@
     {
       "id": "D21",
       "path": "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md",
-      "package_state": "v7.2_projection",
+      "package_state": "active_projection",
       "load_scope": "ROUTED"
     },
     {
@@ -162,26 +162,27 @@
     "actor_separation_only_when_expressly_required": true,
     "no_passive_gate": true
   },
-  "candidate_capability_modules": [
-    "governance/v7.2/rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md",
-    "governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json",
-    "governance/v7.2/rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md",
-    "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
-    "governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json",
-    "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md"
-  ],
   "implementation_profiles": [
     "governance/v7.2/implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md"
   ],
   "capability_module_activation": {
     "authority": "DCS-DIR-20260911-001",
-    "canonical_activation": "PR #83 merge to main",
-    "creative_router_runtime_state": "UNSYNCHRONIZED"
+    "canonical_activation": "PR #83 merged to main at b4303bdf9f703b468808711a9dedf746e9c17649",
+    "creative_router_runtime_state": "UNSYNCHRONIZED",
+    "rule_foundry_state": "ACTIVE_CANONICAL"
   },
   "compatibility_mirror": {
     "status": "TEMPORARY_LINEAGE_COMPATIBILITY",
     "doctrine_root": "governance/v7.2/source/doctrines/",
     "registry_root": "governance/v7.2/source/registry/",
     "rule": "Canonical operational paths control. CI must detect any byte drift while compatibility mirrors remain."
-  }
+  },
+  "active_capability_modules": [
+    "governance/v7.2/rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md",
+    "governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json",
+    "governance/v7.2/rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md",
+    "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
+    "governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json",
+    "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md"
+  ]
 }
