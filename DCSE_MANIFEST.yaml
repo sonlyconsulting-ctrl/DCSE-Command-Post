@@ -1,6 +1,7 @@
 dcse:
   governance_version: "V7.2"
   package_status: "OPERATIVE"
+  activation_merge_commit: "b4303bdf9f703b468808711a9dedf746e9c17649"
   principle: "Structure Precedes Scale."
   front_door: "governance/v7.2/00_START_HERE.md"
   doctrine_root: "governance/v7.2/doctrines/"
@@ -15,7 +16,7 @@ dcse:
   task_traceability_and_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   authority_state: "OPERATIVE"
-  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES"
+  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES_INCLUDING_DCS-DIR-20260911-001"
   source_lifecycle_rule: "Historical source-state labels remain provenance; compiled authority is inherited from operative R5 or a registered/promoted DCS directive."
   manifest_role: "machine-readable routing index; not independent authority"
 

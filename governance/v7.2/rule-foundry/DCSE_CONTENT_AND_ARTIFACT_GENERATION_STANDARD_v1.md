@@ -2,7 +2,7 @@
 
 **Document ID:** DCSE-CONTENT-ARTIFACT-GEN-001  
 **Version:** 1.0  
-**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
+**Status:** ACTIVE / CANONICAL / DCS-DIR-20260911-001 / PR #83 MERGED  
 **Parent:** DCSE v7.2 Rule Foundry  
 **Applies To:** content, webpages, product pages, campaigns, images, video concepts, audio, documents, metadata, reusable creative assets.
 

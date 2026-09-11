@@ -2,11 +2,11 @@
 
 **Document ID:** DCSE-D05  
 **Version:** v7.2  
-**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
+**Status:** ACTIVE / PROMOTED UNDER DCS-DIR-20260911-001 / CANONICAL VIA PR #83 MERGE  
 **Classification:** INTERNAL  
 **Lane:** DCSE  
 **Parent Controller:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`  
-**Canonical Path:** `governance/v7.2/source/doctrines/D05_Baseline_Promotion_v7-2.md`  
+**Canonical Path:** `governance/v7.2/doctrines/D05_Baseline_Promotion_v7-2.md`  
 **Source Lineage:** prior D05 plus DCS Level 0 direction dated 2026-09-11
 
 ## 1. Purpose

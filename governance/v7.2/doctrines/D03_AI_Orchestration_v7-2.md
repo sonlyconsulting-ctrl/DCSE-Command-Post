@@ -2,11 +2,11 @@
 
 **Document ID:** DCSE-D03  
 **Version:** v7.2  
-**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
+**Status:** ACTIVE / PROMOTED UNDER DCS-DIR-20260911-001 / CANONICAL VIA PR #83 MERGE  
 **Classification:** INTERNAL  
 **Lane:** ALL, subject to lane firewalls  
 **Parent Controller:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`  
-**Canonical Path:** `governance/v7.2/source/doctrines/D03_AI_Orchestration_v7-2.md`  
+**Canonical Path:** `governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md`  
 **Source Lineage:** `governance/v7.1/source/doctrines/D03_AI_Orchestration.md`
 
 ## 1. Purpose
