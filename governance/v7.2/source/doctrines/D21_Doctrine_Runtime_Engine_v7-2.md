@@ -27,13 +27,14 @@ D21 routes doctrine. D21 does not create constitutional authority, promote doctr
 
 Every substantive task follows this order:
 
-1. Load the promoted Master Profile.
-2. Use D22 to verify source identity, authority state, canonical path, and drift status.
-3. Use D21 to classify the task and select the minimum effective doctrine set.
-4. Load the applicable onboarding, lane, subject, access, and destination controls.
-5. Execute only within the authorized scope.
-6. Validate evidence, security, lane isolation, and completion.
-7. Produce a Doctrine Consideration Log and required receipts.
+1. Resolve the package through `governance/v7.2/00_START_HERE.md` and its machine manifest.
+2. Load the promoted Master Profile.
+3. Use D22 to verify source identity, authority state, canonical path, and drift status.
+4. Use D21 to classify the task and select the minimum effective doctrine set.
+5. Load the applicable onboarding, lane, subject, access, and destination controls.
+6. Execute within the authorized task envelope.
+7. Validate evidence, security, lane isolation, and completion.
+8. Produce a Doctrine Consideration Log and required receipts.
 
 A missing Master Profile or unresolved D22 authority conflict blocks D21 routing.
 
@@ -84,7 +85,7 @@ The router must include only the doctrines needed for the task, plus required co
 | Trigger | Required route |
 | --- | --- |
 | Any substantive task | Master Profile, D22, D21 |
-| Agent startup or access | `UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD.md` |
+| Agent startup or access | `governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md` |
 | Candidate promotion or baseline | D05 |
 | GitHub, Tribunal, or communications | D04 |
 | File placement, retention, device, or repository boundary | D06 |
@@ -99,7 +100,7 @@ The router must include only the doctrines needed for the task, plus required co
 | PS litigation | Isolated PS route only, including D13 and D14 |
 | PPR | Isolated PPR route only |
 
-Source files under `source/doctrines/` are adopted subject material. Their active use is bounded by the Master Profile and any V7.1-normalized doctrine.
+The complete D01-D22 package is resolved under `governance/v7.2/source/doctrines/`. Historical v7.1/v6.9 copies are lineage only and are not required for ordinary v7.2 startup. Package presence does not independently promote a doctrine.
 
 ## 6. Lane Firewall
 
@@ -123,6 +124,18 @@ Before tool-backed work, D21 must verify:
 - approval and rollback requirements are satisfied.
 
 A model may propose work beyond its access. It may not claim execution without tool-backed evidence.
+
+## 7.1 Authority Resolution and No Passive Gate
+
+D21 SHALL treat governance gates as routing conditions rather than passive stopping points when an authorized resolution path exists.
+
+For an unmet gate, the executing participant must identify the gate, resolve the governing authority, execute or orchestrate all non-reserved prerequisites, re-test, reconcile evidence, and escalate only an irreducible reserved decision.
+
+Task-scoped authority inherited under D03 continues across ordinary research, construction, validation, remediation, reconciliation, and delegation functions within the authorized task envelope. A role transition does not itself require reauthorization.
+
+Functional independence is sufficient unless the controlling rule expressly requires a separate actor. When actor separation is expressly required, D21 routes a distinct authorized validator rather than treating the originating participant's lack of actor independence as a reason to abandon the task.
+
+`BLOCKED` is appropriate only when required authority, access, evidence, protected separation, or an execution surface is genuinely unavailable.
 
 ## 8. Doctrine Consideration Log
 
@@ -231,11 +244,11 @@ This rule is standing doctrine only after this exact D21 version is promoted. It
 
 ## 14. Source Lineage
 
-This V7.1-normalized doctrine derives from:
+This v7.2 projection derives from historical source lineage at:
 
 `governance/v7.1/source/doctrines/D21_Doctrine_Runtime_Engine.md`
 
-The source copy remains preserved as lineage. Its V6.9 status and parent references do not control V7.1 after this normalized doctrine is promoted.
+The source copy remains preserved as lineage. Historical embedded status and parent references do not control v7.2 runtime routing.
 
 ## 15. Exit Criteria for Promotion
 
