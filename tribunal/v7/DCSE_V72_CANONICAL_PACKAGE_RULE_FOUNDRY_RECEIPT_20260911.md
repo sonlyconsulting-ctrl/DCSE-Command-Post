@@ -10,10 +10,10 @@
 
 ## Evidence Recorded
 
-- complete D01-D22 package created beneath v7.2;
-- R5 controller retained as constitutional entrypoint;
-- front-door and machine package manifests created;
-- root manifest, Doctrine Index, D21, and CI reconciled;
+- complete D01-D22 package created beneath v7.2 and exposed through canonical `governance/v7.2/doctrines/`;
+- exact R5 controller exposed at `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`;
+- front-door and machine package manifests created; canonical Doctrine Index exposed under `governance/v7.2/registry/`;
+- root manifest, Doctrine Index, D21, and CI reconciled to simplified operational paths; temporary `source/` compatibility mirrors are byte-checked by CI;
 - Rule Foundry items 1, 2, and 3 created;
 - content/artifact generation standard and candidate ruleset created;
 - Creative Intelligence and Commerce Router candidate created;
