@@ -2,11 +2,11 @@
 
 **Packet ID:** DCSE-VAL-PKT-20260908-001  
 **Authority:** DCS Level 0  
-**Status:** READY FOR INDEPENDENT VALIDATOR  
+**Status:** READY FOR VALIDATION-INTEGRITY EXECUTION  
 **Scope:** `DCSE-METH-EMP-001` v1.1 and `DCSE-METH-MEDIA-THUMB-001` v1.1
 
 ## Independence Requirement
-The validator must be a separate authorized model, agent, or human reviewer that did not author or control the methodologies being ratified. The validator must be attributable by name/agent ID/model/runtime and must record the evidence it re-performed.
+The validation function must be separated from the construction conclusion through frozen/versioned inputs, explicit criteria, evidence re-performance, contradiction testing, attributable findings, and a durable receipt. A separate model, agent, or human may be used for diversity and is required only when a controlling source expressly mandates actor separation.
 
 ## Source Artifacts
 1. `governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md`
@@ -52,4 +52,4 @@ Return a receipt containing:
 - final disposition: RATIFY, RATIFY_WITH_MINOR_CORRECTIONS, or DO_NOT_RATIFY.
 
 ## Promotion Rule
-Only an attributable independent receipt with `RATIFY` or `RATIFY_WITH_MINOR_CORRECTIONS` after those corrections are completed may support formal D05 `ACTIVE_RATIFIED` promotion.
+Only an attributable validation-integrity receipt with `RATIFY` or `RATIFY_WITH_MINOR_CORRECTIONS` after those corrections are completed may support formal D05 `ACTIVE_RATIFIED` promotion.
