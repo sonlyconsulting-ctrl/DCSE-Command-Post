@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.12",
+  "registry_version": "7.2.13",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-11T15:10:00-04:00",
+  "updated_at": "2026-09-11T15:35:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -226,6 +226,25 @@
       "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
       "status": "APPROVED_ACTIVE_AUTHORIZED_FOR_RULE_DEVELOPMENT",
       "supersedes": "No prior rule-corpus sequencing directive. Extends D01, D02, Rule Foundry, and DCS-DIR-20260911-001/002."
+    },
+    {
+      "directive_id": "DCS-DIR-20260911-004",
+      "issued_at": "2026-09-11T15:35:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "Continue the approved DCSE rule-corpus plan without pausing for descriptive review. Produce and validate Rule Sets 7, 8, 6, 11, then required governance/cross-cutting Rule Sets 2, 3, 4, 16, 17, 18, and 19. Preserve Rule Set 5 calibration as source-driven and do not fabricate product-specific facts.",
+      "canonical_assets": [
+        "governance/v7.2/validation/DCSE_RULESET05_CALIBRATION_PLAN_v1.json",
+        "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+        "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+      ],
+      "affected_sections": [
+        "rule corpus wave 2",
+        "Rule Sets 2,3,4,6,7,8,11,16,17,18,19",
+        "Rule Set 5 calibration"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "APPROVED_ACTIVE_AUTHORIZED_FOR_RULE_DEVELOPMENT",
+      "supersedes": "Extends DCS-DIR-20260911-003."
     }
   ]
 }
