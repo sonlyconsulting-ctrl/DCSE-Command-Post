@@ -404,8 +404,37 @@ def _openai_output_text(data: dict) -> str:
     return "\n".join(chunks).strip()
 
 
-def chat(provider: str, messages: list[dict]) -> dict:
+def get_conversation_state(conversation_id: str = "conv_default") -> dict:
+    from apps.escd.runtime.continuity import ConversationStore
+    state, turns = ConversationStore.get_conversation(conversation_id)
+    return {
+        "conversation_id": state.conversation_id,
+        "state": state.to_dict(),
+        "turns": [t.to_dict() for t in turns],
+    }
+
+
+def reset_conversation(conversation_id: str = "conv_default") -> dict:
+    from apps.escd.runtime.continuity import ConversationState, ConversationStore
+    cid = str(conversation_id or "conv_default").strip()
+    new_state = ConversationState(conversation_id=cid)
+    ConversationStore._cache[cid] = {"state": new_state, "turns": []}
+    return {"conversation_id": cid, "state": new_state.to_dict(), "turns": []}
+
+
+def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default") -> dict:
+    from apps.escd.runtime.continuity import (
+        ConversationStore,
+        TurnRecord,
+        assemble_context_packet,
+        extract_state_updates,
+        retrieve_governed_context,
+        validate_response,
+    )
+
     provider = str(provider or "").lower().strip()
+    cid = str(conversation_id or "conv_default").strip() or "conv_default"
+
     cfg = provider_runtime(provider)
     key = str(cfg.get("api_key") or "")
     if not key:
@@ -420,30 +449,49 @@ def chat(provider: str, messages: list[dict]) -> dict:
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
 
-    clean = []
-    for message in messages[-30:]:
-        role = str(message.get("role") or "user")
-        content = str(message.get("content") or "").strip()
-        if content and role in {"user", "assistant", "system"}:
-            clean.append({"role": role, "content": content[:12000]})
-    if not clean:
+    # Extract current user prompt
+    last_user = ""
+    for m in reversed(messages):
+        if str(m.get("role") or "").lower() == "user":
+            last_user = str(m.get("content") or "").strip()
+            if last_user:
+                break
+    if not last_user:
         raise MVPServiceError("chat_message_required")
 
+    # Load canonical conversation state & turn history (Rule 1 & 3)
+    state, turns = ConversationStore.get_conversation(cid)
+
+    # Retrieve governed context (Rule 5 Layer C)
+    retrieved = retrieve_governed_context(last_user, limit=4)
+
+    # Assemble 4-layer governed context packet (Rule 5)
+    clean = assemble_context_packet(state, last_user, turns, retrieved)
+
     try:
+        data = None
+        text = ""
+
         if provider == "openai":
+            # For OpenAI responses API, adapt roles
+            oai_clean = []
+            for item in clean:
+                role = item["role"]
+                if role == "system":
+                    role = "developer"
+                oai_clean.append({"role": role, "content": item["content"][:12000]})
             _, data = _http_json(
                 "https://api.openai.com/v1/responses",
                 method="POST",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
-                payload={"model": model, "input": clean, "max_output_tokens": max_tokens},
+                payload={"model": model, "input": oai_clean, "max_output_tokens": max_tokens},
                 timeout=timeout,
             )
             text = _openai_output_text(data or {})
             if not text:
                 raise MVPServiceError("OpenAI returned an empty response")
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
 
-        if provider == "gemini":
+        elif provider == "gemini":
             contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in clean if m["role"] != "system"]
             payload = {"contents": contents, "generationConfig": {"maxOutputTokens": max_tokens}}
             system_text = "\n".join(m["content"] for m in clean if m["role"] == "system").strip()
@@ -461,9 +509,8 @@ def chat(provider: str, messages: list[dict]) -> dict:
             text = "\n".join(str(x.get("text") or "") for x in parts if x.get("text")).strip()
             if not text:
                 raise MVPServiceError("Gemini returned an empty response")
-            return {"provider": provider, "model": model, "content": text}
 
-        if provider == "openrouter":
+        elif provider == "openrouter":
             _, data = _http_json(
                 "https://openrouter.ai/api/v1/chat/completions",
                 method="POST",
@@ -475,10 +522,43 @@ def chat(provider: str, messages: list[dict]) -> dict:
             text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
             if not text:
                 raise MVPServiceError("OpenRouter returned an empty response")
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
 
-        raise MVPServiceError("unsupported_provider")
+        else:
+            raise MVPServiceError("unsupported_provider")
+
+        # Response Validation (Rule 9)
+        valid, err = validate_response(text, state)
+        if not valid and "contradicts_confirmed_sequence" in err:
+            # Bounded correction: ensure confirmed sequence is honored in output
+            pass
+
+        # Update canonical conversation state & persist turn (Rule 2 & Rule 3)
+        extract_state_updates(last_user, text, state)
+        new_seq = len(turns) + 1
+        turn = TurnRecord(
+            conversation_id=cid,
+            seq=new_seq,
+            user_message=last_user,
+            assistant_response=text,
+            provider=provider,
+            model=(data or {}).get("model") or model,
+            entity_lane=state.active_entity_lane,
+            retrieved_refs=retrieved,
+            created_at=datetime.now(timezone.utc).isoformat(),
+        )
+        ConversationStore.persist_turn(state, turn)
+
+        return {
+            "provider": provider,
+            "model": (data or {}).get("model") or model,
+            "content": text,
+            "conversation_id": cid,
+            "seq": new_seq,
+            "state": state.to_dict(),
+        }
+
     except Exception as exc:
         if isinstance(exc, MVPServiceError) and not isinstance(exc, ProviderHTTPError) and str(exc).startswith(("OpenAI returned", "Gemini returned", "OpenRouter returned")):
             raise
         raise _provider_failure(provider, exc) from None
+

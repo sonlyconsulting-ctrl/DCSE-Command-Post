@@ -13,14 +13,17 @@ from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     chat,
     get_canonical_convergence_items,
+    get_conversation_state,
     list_assets,
     list_ddna_jobs,
     list_ddna_sources,
     list_knowledge,
     provider_status,
+    reset_conversation,
     set_provider_secret,
     update_provider_config,
 )
+
 
 
 class handler(BaseHTTPRequestHandler):
@@ -141,6 +144,9 @@ class handler(BaseHTTPRequestHandler):
                 self._json(200, {"ok": True, "jobs": list_ddna_jobs(source_id) if source_id else []})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
+            elif path == "/api/mvp/conversation":
+                cid = str((query.get("conversation_id") or ["conv_default"])[0]).strip()
+                self._json(200, {"ok": True, "conversation": get_conversation_state(cid)})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -189,7 +195,13 @@ class handler(BaseHTTPRequestHandler):
                 })
                 self._json(201, {"ok": True, "item": item})
             elif path == "/api/mvp/chat":
-                self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
+                cid = str(payload.get("conversation_id") or "conv_default").strip()
+                prov = str(payload.get("provider") or "openai").strip()
+                msgs = payload.get("messages") or []
+                self._json(200, {"ok": True, "response": chat(prov, msgs, conversation_id=cid)})
+            elif path == "/api/mvp/conversation/reset":
+                cid = str(payload.get("conversation_id") or "conv_default").strip()
+                self._json(200, {"ok": True, "conversation": reset_conversation(cid)})
             elif path == "/api/mvp/provider-secret":
                 provider = str(payload.get("provider") or "").strip().lower()
                 secret = str(payload.get("secret") or "")
