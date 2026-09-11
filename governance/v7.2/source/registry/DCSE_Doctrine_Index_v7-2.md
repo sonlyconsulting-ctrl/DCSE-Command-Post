@@ -35,15 +35,15 @@ This index records the operative v7.2 governance set and the September 10, 2026 
 | D20 | `D20_Product_Assembly_Methodology_v7-2.md` | Product Assembly plus Reuse Before Redesign and reusable-pattern capture |
 | D22 | `D22_Source_Authority_Runtime_Distribution_v7-2.md` | controlling source authority, persistence routing, synchronization, and drift doctrine |
 
-All files above are under `governance/v7.2/source/doctrines/` and are APPROVED, PROMOTED, ACTIVE, and AUTHORIZED by DCS Level 0 effective 2026-09-10.
+All files above are under `governance/v7.2/doctrines/` and are APPROVED, PROMOTED, ACTIVE, and AUTHORIZED by DCS Level 0 effective 2026-09-10.
 
 ## 3.1 v7.2 Controller-Support Projections
 
 The following current routing/support controls are now resolved inside the v7.2 package so active startup and promotion logic no longer depend on v7.1 paths:
 
-- `source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md` - exact-byte relocated copy of the DCS-designated R5 controller; designated SHA-256 remains `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`.
-- `source/doctrines/D05_Baseline_Promotion_v7-2.md` - v7.2 authority-path projection of compiled baseline/promotion controls.
-- `source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md` - v7.2 authority-path projection of runtime doctrine routing controls.
+- `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md` - exact-byte relocated copy of the DCS-designated R5 controller; designated SHA-256 remains `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`.
+- `doctrines/D05_Baseline_Promotion_v7-2.md` - v7.2 authority-path projection of compiled baseline/promotion controls.
+- `doctrines/D21_Doctrine_Runtime_Engine_v7-2.md` - v7.2 authority-path projection of runtime doctrine routing controls.
 - `UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md` - current model/agent onboarding and access route.
 - `DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md` - current reserved Level 0 stop-gate route.
 - `ZONE_INDEX.v7.2.json` - current zone routing index.
@@ -52,7 +52,7 @@ These projections preserve lineage while removing active v7.1 path dependencies.
 
 ## 4. Complete v7.2 Doctrine Package
 
-The active v7.2 package is self-contained at `governance/v7.2/source/doctrines/`. Normal v7.2 startup SHALL NOT require discovery of doctrine bodies in v7.1 or v6.9 folders. Historical copies remain lineage only.
+The active v7.2 package is self-contained at `governance/v7.2/doctrines/`. Normal v7.2 startup SHALL NOT require discovery of doctrine bodies in v7.1 or v6.9 folders. Historical copies remain lineage only.
 
 | Doctrine | v7.2 package file | Package posture |
 |---|---|---|
@@ -80,6 +80,10 @@ The active v7.2 package is self-contained at `governance/v7.2/source/doctrines/`
 | D22 | `D22_Source_Authority_Runtime_Distribution_v7-2.md` | promoted v7.2 |
 
 Package presence does not independently create promotion authority. Exact lifecycle state remains governed by R5, D05, D22, registered DCS directives, and promotion evidence. D13 and D14 SHALL NOT load outside an authorized PS route.
+
+## 4.1 Compatibility Mirror
+
+`governance/v7.2/source/doctrines/` and `governance/v7.2/source/registry/` are temporary compatibility/lineage mirrors. The canonical operational paths are `governance/v7.2/doctrines/`, `governance/v7.2/registry/`, and the root R5 controller. CI must report any byte drift while the mirrors remain.
 
 ## 5. Cross-System Governance Map
 
