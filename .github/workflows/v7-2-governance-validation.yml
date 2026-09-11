@@ -79,6 +79,7 @@ jobs:
               Path('governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md'),
               Path('governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json'),
               Path('governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md'),
+              Path('governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md'),
               Path('DCSE_MANIFEST.yaml'),
           ]
 
@@ -111,6 +112,20 @@ jobs:
                       json.loads(read(json_path))
                   except Exception as exc:
                       errors.append(f'Rule Foundry JSON invalid: {json_path}: {exc}')
+
+          project_instructions = Path('governance/v7.2/project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md')
+          if project_instructions.is_file():
+              project_text = read(project_instructions)
+              marker = 'DCSE COMMAND POST PROJECT INSTRUCTIONS\n'
+              if marker not in project_text:
+                  errors.append('Project Settings payload marker missing.')
+              else:
+                  payload = project_text.split(marker, 1)[1].rstrip('\n')
+                  if len(payload) > 8000:
+                      errors.append(f'Project Settings payload exceeds 8000 characters: {len(payload)}')
+                  declared = '**Project Settings Payload Character Count:** ' + str(len(payload))
+                  if declared not in project_text:
+                      errors.append('Project Settings payload character-count metadata does not match actual payload.')
 
           designation = Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md')
           master = Path('governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md')
@@ -163,6 +178,8 @@ jobs:
               ids = {d.get('directive_id') for d in registry.get('directives', []) if isinstance(d, dict)}
               if 'DCS-DIR-20260910-001' not in ids:
                   errors.append('Express directive registry missing DCS-DIR-20260910-001.')
+              if 'DCS-DIR-20260911-001' not in ids:
+                  errors.append('Express directive registry missing DCS-DIR-20260911-001.')
 
           old_traceability = Path('governance/v7.2/DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md')
           if old_traceability.exists():
