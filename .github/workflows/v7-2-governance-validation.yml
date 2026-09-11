@@ -34,6 +34,7 @@ jobs:
         shell: python
         run: |
           import json
+          import hashlib
           from pathlib import Path
 
           errors = []
@@ -126,6 +127,10 @@ jobs:
                   declared = '**Project Settings Payload Character Count:** ' + str(len(payload))
                   if declared not in project_text:
                       errors.append('Project Settings payload character-count metadata does not match actual payload.')
+                  payload_sha = hashlib.sha256(payload.encode('utf-8')).hexdigest()
+                  declared_sha = '**Project Settings Payload SHA-256:** ' + payload_sha
+                  if declared_sha not in project_text:
+                      errors.append('Project Settings payload SHA-256 metadata does not match actual payload.')
 
           designation = Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md')
           master = Path('governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md')
