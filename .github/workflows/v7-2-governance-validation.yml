@@ -73,6 +73,12 @@ jobs:
               Path('governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md'),
               Path('governance/v7.2/ZONE_INDEX.v7.2.json'),
               Path('governance/v7.2/project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json'),
+              Path('governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md'),
               Path('DCSE_MANIFEST.yaml'),
           ]
 
@@ -95,6 +101,16 @@ jobs:
 
           def read(path):
               return path.read_text(encoding='utf-8', errors='replace')
+
+          for json_path in [
+              Path('governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json'),
+          ]:
+              if json_path.is_file():
+                  try:
+                      json.loads(read(json_path))
+                  except Exception as exc:
+                      errors.append(f'Rule Foundry JSON invalid: {json_path}: {exc}')
 
           designation = Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md')
           master = Path('governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md')
