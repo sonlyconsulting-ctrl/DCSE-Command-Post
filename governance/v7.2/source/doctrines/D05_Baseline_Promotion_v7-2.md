@@ -1,82 +1,217 @@
-> **v7.2 alignment note (2026-09-11):** This file is the v7.2 authority-path projection of the baseline and promotion rules already compiled into the operative R5 controller. It does not fabricate a separate historical ratification event. Exact new promotions still require the evidence gates stated below.
-
-# DCSE Doctrine D05: Baseline & Promotion
+# DCSE Doctrine D05: Baseline and Promotion
 
 **Document ID:** DCSE-D05  
 **Version:** v7.2  
-**Created Date/Time:** 2026-06-20T23:26:34-04:00  
-**Last Doc Modified Date/Time:** 2026-07-29T18:07:30-04:00
-**Last Version/Release Date/Time:** 2026-07-29T18:07:30-04:00  
-**Status:** ACTIVE / OPERATIVE VIA DCSE MASTER PROFILE v7.2 R5  
+**Status:** CANDIDATE UPDATE FOR v7.2 FINAL PROMOTION  
 **Classification:** INTERNAL  
 **Lane:** DCSE  
-**Canonical file:** D05_Baseline_Promotion.md  
-**Doctrine Description:** The Baseline and Promotion Doctrine (D05) establishes the lifecycle management and quality gates for committing system assets. It replaces traditional releases with signed "Baselines" containing cryptographic checksum mappings of the entire workspace. D05 defines the promotion gateway, which requires human Level 0 authorization to shift any candidate file into an active ratified status, preventing accidental or unverified promotion of volatile content.  
 **Parent Controller:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`  
+**Canonical Path:** `governance/v7.2/source/doctrines/D05_Baseline_Promotion_v7-2.md`  
+**Source Lineage:** prior D05 plus DCS Level 0 direction dated 2026-09-11
 
----
+## 1. Purpose
 
-## 1. Baseline System (Replaces "Releases")
+D05 governs frozen baselines, validation integrity, promotion eligibility, ratification, supersession, drift, rollback, and promotion evidence.
 
-The concept of a "Release" is replaced by a "Baseline".
-- A Baseline represents a verified state of the entire repository at a specific timestamp.
-- Baselines are committed to `06_Baselines/`.
-- Every baseline contains a `baseline_receipt.json` mapping all file paths to their current SHA-256 hash values.
-- Every baseline also identifies package or system name, version, lane, authority, repository and commit when applicable, exclusions, validation performed, unresolved risks, rollback or recovery path, and exit-criteria status.
+A baseline is a frozen reference state. Promotion is an authority-state change. A GitHub commit, database row, deployment, Tribunal receipt, model conclusion, or passing test does not create promotion authority by existence.
 
----
+## 2. Baseline Contract
 
-## 2. Promotion Protocol
+A governed baseline records, as applicable:
 
-Promotion shifts a validated document from `CANDIDATE` to `ACTIVE_RATIFIED` through a recorded manual Level 0 decision.
-- Only DCS Level 0 may ratify a promotion.
-- No doctrine candidate promotes automatically. Passing checks makes a candidate eligible for Level 0 review; it does not create authority.
-- Verification receipts are generated upon promotion, logging:
-  - Document ID and hash.
-  - Date and time of ratification.
-  - Sign-off block of the final approver.
-- If a document is modified after promotion, its status reverts to `CANDIDATE` until a new ratification event occurs.
+- object/package identity and version;
+- lane and classification;
+- canonical repository/path or approved storage location;
+- content SHA-256 or equivalent governed identity;
+- repository commit/tag when applicable;
+- included and excluded scope;
+- validation performed;
+- unresolved findings;
+- dependent runtime/registry references;
+- rollback or recovery reference;
+- lifecycle state;
+- authority/promotion receipt.
 
-### 2.1 Controlled Lifecycle States
+A baseline may cover a single artifact, package, repository state, runtime configuration, product, or governance set.
+
+## 3. Lifecycle
 
 ```text
-DRAFT -> CANDIDATE -> VALIDATING -> ACTIVE_RATIFIED
+DRAFT -> CANDIDATE -> VALIDATING -> ELIGIBLE -> ACTIVE_RATIFIED
                     -> BLOCKED
 ACTIVE_RATIFIED -> SUPERSEDED -> ARCHIVED
-Any governed copy -> DRIFT when source identity or integrity no longer matches
+Any governed copy -> DRIFT when identity or required distribution no longer reconciles
 ```
 
-`ACTIVE_RATIFIED` means the exact content hash was promoted. A status label without a matching Level 0 receipt is not sufficient proof.
+ACTIVE_RATIFIED applies only to the exact promoted identity.
 
-### 2.2 Promotion Receipt Requirements
+## 4. Promotion Authority
 
-Every receipt must record document ID, version, lane, manual promotion type, promoted by, timestamp, canonical repository and path, repository commit when known, content SHA-256, mandatory-check results, STOPGATE scan, superseded version, rollback path, and final status.
+DCS Level 0 remains the sovereign source of constitutional and doctrine promotion authority.
 
-### 2.3 Modification After Promotion
+Promotion may occur through either:
 
-A material content change creates a new candidate. The prior promoted version remains controlling until the changed version receives a new Level 0 decision. A non-substantive correction may preserve promotion only when an expressly governed exception records the corrected hash; there is no implied clerical exception.
+1. an exact DCS Level 0 decision for the artifact/version; or
+2. an explicit standing or task-scoped DCS delegation that authorizes promotion when predetermined objective gates are satisfied.
 
-### 2.4 Drift Control
+A delegated executor does not create new promotion authority. It consumes the authority already granted by the controlling DCS decision.
 
-A mismatch among the promoted GitHub artifact, Supabase runtime record, local audit copy, or published deployment is `DRIFT`. During DRIFT, the last verified promoted version remains controlling, the mismatched copy is not relied upon, source records and hashes are compared, and reconciliation is logged before distribution resumes.
+Passing validation makes a candidate eligible under the applicable authority envelope. It does not independently create authority.
 
-### 2.5 Rollback and Recovery
+## 5. Task-Scoped Advancement
 
-Rollback must identify the prior promoted version, commit or baseline identifier, affected systems, restoration steps, data recovery requirements, and validation checks. A rollback is incomplete until the restored state is verified.
+When DCS authorizes an outcome that inherently includes validation, remediation, reconciliation, and promotion processing, the authorized DCSE participant SHALL perform or orchestrate all non-reserved work necessary to reach the governed decision boundary.
 
----
+The participant shall not repeatedly seek approval for steps already included in the authorized task.
 
-## Related Doctrine
+Escalation is required only when:
 
-- D02 Forward and Backward Chaining - Backward chaining validates documents before promotion
-- D06 File System - Baselines committed to 06_Baselines directory
-- D22 Source Authority and Runtime Distribution - Promotion linkage to canonical GitHub artifacts and runtime records
+- the governing objective must change;
+- a reserved DCS decision is reached;
+- an exception/waiver is required;
+- actor separation is expressly required and no eligible separate actor is available;
+- verified access or evidence is unavailable;
+- a protected lane, secret, destructive action, public release, or materially new risk falls outside the existing authority envelope.
 
----
+## 6. Validation Integrity and Independence
 
-## Error-Catch Protocol
+Independence and authority are distinct but coordinated controls.
 
-If this doctrine file is missing, unreadable, or not found by an executing agent, follow the canonical error-catch protocol defined in [D03_AI_Orchestration.md](file:///C:/DS%20All%20Things/DCSE_Command_Center/v6.9/01_Doctrine/D03_AI_Orchestration.md) Section 5.3:
-1. **HALT** execution immediately. Do not guess or infer rules from pre-training.
-2. **LOG** `ERR_MISSING_DOCTRINE` to `05_Tribunal_Inbox`.
-3. **TRIGGER** STOPGATE and alert the user.
+### 6.1 Functional Independence
+
+Unless a controlling source expressly requires actor separation, validation independence is satisfied by a functionally independent validation act using:
+
+- frozen or version-identified candidate inputs;
+- predefined or separately derived acceptance criteria;
+- evidence re-performance or direct inspection;
+- counterexample and contradiction testing;
+- explicit findings;
+- no silent candidate mutation during validation;
+- attributable validator identity/function;
+- durable validation receipt.
+
+The same authorized participant may perform construction and a later functionally independent validation role when these controls are preserved.
+
+### 6.2 Actor Separation
+
+A different model, agent, or human validator is required only when expressly mandated by:
+
+- DCS Level 0;
+- law or regulation;
+- contract;
+- security policy;
+- the controlling artifact;
+- another higher-precedence promoted rule.
+
+When actor separation is required, D21 routes the separate validator. The gate is not a passive stop if an authorized validator can be assigned.
+
+### 6.3 Validation Diversity
+
+Even when not mandatory, another model/agent/human may be used to improve assurance, adversarial diversity, or specialist coverage. Diversity is a quality technique, not an artificial authority barrier.
+
+## 7. Promotion Eligibility
+
+A candidate is eligible for promotion when, as applicable:
+
+1. exact candidate identity is frozen;
+2. source lineage and authority are resolved;
+3. required validation is complete;
+4. material contradictions are resolved or dispositioned;
+5. security and lane checks pass;
+6. tests/acceptance criteria pass;
+7. canonical source/path and content identity are recorded;
+8. runtime/registry reconciliation is complete or explicitly sequenced as post-promotion distribution;
+9. rollback/recovery is defined;
+10. the applicable DCS authority for advancement is identified.
+
+No unresolved critical stop-gate may be concealed to force eligibility.
+
+## 8. Promotion Receipt
+
+A promotion receipt records:
+
+- document/object ID;
+- version;
+- lane/classification;
+- canonical path;
+- exact content identity;
+- repository commit/tag when applicable;
+- validation receipt(s);
+- promotion authority source;
+- promoted by / executed by;
+- effective timestamp;
+- superseded identity when applicable;
+- runtime/distribution reconciliation state;
+- rollback path;
+- final lifecycle state.
+
+Where promotion executes under standing delegated authority, the receipt must identify that delegation.
+
+## 9. Modification After Promotion
+
+A material content change creates a new candidate unless a controlling rule defines an allowed non-material correction process.
+
+The prior ACTIVE_RATIFIED identity remains controlling until the changed identity is promoted or expressly superseded.
+
+No implied clerical exception exists.
+
+## 10. Drift and Reconciliation
+
+A mismatch among canonical GitHub, runtime registry, object storage, local audit copy, distribution mirror, or deployed artifact is DRIFT when those surfaces are required to match.
+
+During DRIFT:
+
+1. identify the last verified promoted identity;
+2. preserve conflicting evidence;
+3. compare source/version/hash;
+4. correct the mismatched surface through D22;
+5. validate the repaired state;
+6. record reconciliation.
+
+DRIFT does not allow a lower-authority copy to replace the canonical source.
+
+## 11. Rollback and Recovery
+
+Rollback identifies:
+
+- prior promoted identity;
+- affected systems;
+- restoration steps;
+- data recovery requirements;
+- access/secret considerations;
+- post-restore validation;
+- evidence/receipt path.
+
+Rollback is complete only when the restored state is verified.
+
+## 12. No Passive Promotion Gate
+
+An unmet promotion prerequisite is a routing condition when an authorized resolution path exists.
+
+The executor SHALL identify the unmet prerequisite, resolve or route it, re-test, and continue until reaching either the authorized goal state or an irreducible reserved boundary.
+
+PARTIAL or BLOCKED is appropriate only when required authority, access, evidence, protected separation, or execution capability is genuinely unavailable.
+
+## 13. Related Doctrine
+
+- D02: forward/backward chaining and contradiction review.
+- D03: delegated independent authority and model routing.
+- D21: runtime routing, DCL, evidence, and no-passive-gate execution.
+- D22: canonical source, runtime distribution, and drift reconciliation.
+- 2026-09-11 Bounded Independent Authority and Rule Foundry Direction.
+
+## 14. Missing-Source Handling
+
+If the operative D05 source is missing, unreadable, or conflicts with registered authority:
+
+1. preserve available evidence;
+2. classify source state through D22;
+3. use the last verified controlling D05/R5 rule where determinable;
+4. block only the affected promotion action if source authority cannot be resolved;
+5. record the conflict in DCL/Tribunal evidence.
+
+Do not infer a promotion decision from model memory or artifact presence.
+
+## 15. Promotion Condition
+
+This exact D05 revision is a candidate in the v7.2 final-promotion package. Its substantive authority derives from the operative R5 controller and the DCS Level 0 direction dated 2026-09-11. Canonical ACTIVE_RATIFIED identity must be evidenced through the final v7.2 promotion record.
