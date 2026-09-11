@@ -1,5 +1,5 @@
 {
-  "registry_version": "7.2.8",
+  "registry_version": "7.2.9",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
   "updated_at": "2026-09-11T13:36:00-04:00",
@@ -45,16 +45,16 @@
           "document_id": "DCSE-METH-EMP-001",
           "path": "governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md",
           "creation_commit_sha": "eb6f6df220999cee518a9f8819542e7eb1d741d7",
-          "current_commit_sha": "5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73",
-          "content_sha256": "ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977",
+          "current_commit_sha": "5cfa85375d792e1b174269bf309661ec9162e319",
+          "content_sha256": "e9bf7338daf702cc622ceae0b40d275588c5f87f3753a1a80df0d3b1ac6e5081",
           "current_version": "v1.1"
         },
         {
           "document_id": "DCSE-METH-MEDIA-THUMB-001",
           "path": "governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md",
           "creation_commit_sha": "072c0b3aea3895a8b75a1feb01101326f735b6c8",
-          "current_commit_sha": "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43",
-          "content_sha256": "60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3",
+          "current_commit_sha": "247130352d9e344f97c83742a79728fb174e0eec",
+          "content_sha256": "b6ca91aa056c59e9760ded628c2f0e29ab2e839793068790ec3dc446856fe091",
           "current_version": "v1.1"
         }
       ],
@@ -81,10 +81,11 @@
         "status": "RECONCILED"
       },
       "status": "INCORPORATED",
-      "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
-      "formal_promotion_state": "PENDING_VALIDATION_INTEGRITY_RECEIPT",
+      "artifact_authority_state": "ACTIVE_RATIFIED_ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
+      "formal_promotion_state": "ACTIVE_RATIFIED",
       "supersedes": "No prior operative methodology; modernizes legacy DCS Employment package guidance and specializes existing D18/D19 thumbnail controls without superseding D18 or D19.",
-      "current_validation_rule": "Functional independence under DCS-DIR-20260911-001 unless actor separation is expressly required."
+      "current_validation_rule": "Functional independence under DCS-DIR-20260911-001 unless actor separation is expressly required.",
+      "validation_receipt": "governance/v7.2/validation/DCSE_VALIDATION_INTEGRITY_RECEIPT_EMP_THUMB_20260911.md"
     },
     {
       "directive_id": "DCS-DIR-20260906-002",
