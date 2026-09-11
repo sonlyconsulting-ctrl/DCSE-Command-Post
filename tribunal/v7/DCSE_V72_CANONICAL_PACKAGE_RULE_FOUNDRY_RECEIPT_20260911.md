@@ -4,7 +4,7 @@
 **Task ID:** DCSE-V72-CANONICAL-GOVERNANCE-PACKAGE-20260911-005  
 **Parent:** DCSE-V72-FINAL-PROMOTION-20260911-001  
 **Date:** 2026-09-11  
-**Status:** PROMOTION-READY / PENDING FINAL CI + PR #83 MERGE  
+**Status:** PROMOTION-READY / PENDING PR #83 MERGE  
 **Canonical Candidate Branch:** `governance/v7.2-final-promotion-consistency-20260911`  
 **Pull Request:** #83
 
@@ -32,6 +32,12 @@ None by this receipt alone. Tribunal preserves evidence. It does not manufacture
 - Employment and Thumbnail methodologies: ACTIVE_RATIFIED.
 - Historical actor-separation receipts preserved as historical evidence; prospective controls updated.
 
+## Final CI Evidence
+
+- V7.2 governance validation: SUCCESS
+- Run `34632740087`
+- Validated head `41b284a110f07b6bbc8addb5401b40329106c2d5`
+
 ## Exit State
 
-PROMOTION-READY pending final CI and canonical PR #83 merge. Runtime/distribution reconciliation follows canonical merge.
+PROMOTION-READY pending canonical PR #83 merge. Runtime/distribution reconciliation follows canonical merge.
