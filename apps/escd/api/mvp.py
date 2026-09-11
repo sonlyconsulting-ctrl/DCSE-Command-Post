@@ -18,8 +18,10 @@ from apps.escd.runtime.mvp_data import (
     list_ddna_jobs,
     list_ddna_sources,
     list_knowledge,
+    list_saved_chats,
     provider_status,
     reset_conversation,
+    save_chat,
     set_provider_secret,
     update_provider_config,
 )
@@ -147,6 +149,9 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/conversation":
                 cid = str((query.get("conversation_id") or ["conv_default"])[0]).strip()
                 self._json(200, {"ok": True, "conversation": get_conversation_state(cid)})
+            elif path == "/api/mvp/saved-chats":
+                limit_val = int((query.get("limit") or [50])[0])
+                self._json(200, {"ok": True, "saved_chats": list_saved_chats(limit_val)})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -199,6 +204,10 @@ class handler(BaseHTTPRequestHandler):
                 prov = str(payload.get("provider") or "openai").strip()
                 msgs = payload.get("messages") or []
                 self._json(200, {"ok": True, "response": chat(prov, msgs, conversation_id=cid)})
+            elif path == "/api/mvp/chat/save":
+                cid = str(payload.get("conversation_id") or "conv_default").strip()
+                title = str(payload.get("title") or "").strip()
+                self._json(200, {"ok": True, "saved": save_chat(cid, title)})
             elif path == "/api/mvp/conversation/reset":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 self._json(200, {"ok": True, "conversation": reset_conversation(cid)})

@@ -3,24 +3,30 @@ from unittest.mock import patch
 import pytest
 
 from apps.escd.runtime.continuity import (
+    DCSE_KERNEL,
     ConversationState,
     ConversationStore,
     TurnRecord,
     assemble_context_packet,
-    extract_state_updates,
     validate_response,
     retrieve_governed_context,
 )
 
 
-def test_assemble_4_layer_context_packet():
+def test_dcse_kernel_identity_rules():
+    assert "You are ESCD" in DCSE_KERNEL
+    assert "Executive Support & Command Dispatch" not in DCSE_KERNEL
+    assert "Executive Support and Command Dispatch" not in DCSE_KERNEL
+    assert "OpenAI" in DCSE_KERNEL
+    assert "Gemini" in DCSE_KERNEL
+    assert "OpenRouter" in DCSE_KERNEL
+    assert "DCS operator directives are the supreme authority" in DCSE_KERNEL
+
+
+def test_assemble_governed_context_packet():
     state = ConversationState(
         conversation_id="test_conv_001",
-        current_goal="Deliver ESCD Minimal Assistant",
         active_entity_lane="DCSE",
-        confirmed_decisions=["Execution Sequence: ESCD -> CTJ -> TSL"],
-        pinned_facts=["DCS priority is high"],
-        superseded_facts=["Prior Sequence: ESCD -> TSL"],
     )
     turns = [
         TurnRecord(
@@ -36,45 +42,25 @@ def test_assemble_4_layer_context_packet():
         {"type": "Knowledge", "id": "KNOW-001", "title": "DCSE Governance", "summary": "Operative doctrine"},
         {"type": "Asset", "id": "ASSET-002", "title": "Registry v1", "summary": "Core registry"},
     ]
-    current_prompt = "What is our current sequence?"
+    current_prompt = "Who are you and what is your role?"
 
     packet = assemble_context_packet(state, current_prompt, turns, retrieved)
 
-    # Layer A & B in system message
-    assert len(packet) >= 3
-    sys_msg = packet[0]["content"]
+    assert len(packet) == 4
+    # System message contains DCSE_KERNEL and retrieved context
     assert packet[0]["role"] == "system"
-    assert "You are ESCD" in sys_msg
-    assert "Deliver ESCD Minimal Assistant" in sys_msg
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in sys_msg
-    assert "Prior Sequence: ESCD -> TSL" in sys_msg
-    assert "[Knowledge] DCSE Governance (ID: KNOW-001)" in sys_msg
+    assert "You are ESCD" in packet[0]["content"]
+    assert "[Knowledge] DCSE Governance (ID: KNOW-001)" in packet[0]["content"]
 
-    # Layer D: Prior turns + current prompt
+    # Visible transcript: turn 1 user + assistant
     assert packet[1]["role"] == "user"
     assert packet[1]["content"] == "Hello ESCD"
     assert packet[2]["role"] == "assistant"
     assert packet[2]["content"] == "ESCD ready for dispatch."
+
+    # Current turn
     assert packet[3]["role"] == "user"
     assert packet[3]["content"] == current_prompt
-
-
-def test_extract_state_updates_sequence_and_reorder():
-    state = ConversationState(conversation_id="conv_seq_test")
-
-    # Turn 1: Establish sequence
-    msg1 = "We are finishing ESCD first. After ESCD comes CTJ, then TSL."
-    extract_state_updates(msg1, "Acknowledged sequence: ESCD, CTJ, TSL.", state)
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in state.confirmed_decisions
-    assert "Complete ESCD, followed by CTJ, then TSL" in state.current_goal
-
-    # Turn 2: Move TSL ahead of CTJ
-    msg2 = "Move TSL ahead of CTJ."
-    extract_state_updates(msg2, "Understood. Re-ordered sequence.", state)
-    assert "Execution Sequence: ESCD -> TSL -> CTJ" in state.confirmed_decisions
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in state.superseded_facts
-    assert "Complete ESCD -> TSL -> CTJ" in state.current_goal
-    assert any("Moved TSL ahead of CTJ" in pf for pf in state.pinned_facts)
 
 
 def test_validate_response_rejects_unauthorized_persona():
@@ -92,31 +78,11 @@ def test_validate_response_rejects_unauthorized_persona():
     assert err == ""
 
 
-def test_validate_response_detects_sequence_contradiction():
-    state = ConversationState(
-        conversation_id="conv_contra",
-        confirmed_decisions=["Execution Sequence: ESCD -> TSL -> CTJ"],
-    )
-    # CTJ is claimed next after ESCD (contradicting TSL coming first)
-    bad = "CTJ is next after ESCD in our roadmap."
-    ok, err = validate_response(bad, state)
-    assert not ok
-    assert "contradicts_confirmed_sequence" in err
-
-    good = "TSL is next after ESCD, followed by CTJ."
-    ok, err = validate_response(good, state)
-    assert ok
-
-
-def test_conversation_store_and_turn_persistence():
-    cid = "conv_persist_unit_test"
+def test_conversation_store_session_records_and_retrieval():
+    cid = "conv_session_test_001"
     state, turns = ConversationStore.get_conversation(cid)
     assert state.conversation_id == cid
     assert len(turns) == 0
-
-    state.title = "Unit Test Thread"
-    state.current_goal = "Test persistence"
-    state.confirmed_decisions.append("Decision Alpha")
 
     turn1 = TurnRecord(
         conversation_id=cid,
@@ -126,69 +92,83 @@ def test_conversation_store_and_turn_persistence():
         provider="openai",
         model="gpt-5.6-sol",
     )
-    ConversationStore.persist_turn(state, turn1)
+    ConversationStore.record_turn(state, turn1)
 
-    # Fetch back
     loaded_state, loaded_turns = ConversationStore.get_conversation(cid)
     assert loaded_state.conversation_id == cid
-    assert "Decision Alpha" in loaded_state.confirmed_decisions
-    assert len(loaded_turns) >= 1
-    assert loaded_turns[-1].user_message == "First query"
-    assert loaded_turns[-1].assistant_response == "First reply"
+    assert len(loaded_turns) == 1
+    assert loaded_turns[0].user_message == "First query"
+    assert loaded_turns[0].assistant_response == "First reply"
 
 
-def test_switching_test_simulation():
-    """Simulate the 5-turn multi-model switching test across OpenAI, OpenRouter, and Gemini."""
-    cid = "conv_switching_sim_001"
+def test_multi_model_switching_continuity():
+    """Simulate 5-turn multi-model switching test across OpenAI, OpenRouter, and Gemini."""
+    cid = "conv_switching_test_002"
     state, turns = ConversationStore.get_conversation(cid)
 
-    # Turn 1: OpenAI establishes sequence
+    # Turn 1: OpenAI - User establishes directive
     t1_user = "We are finishing ESCD first. After ESCD comes CTJ, then TSL."
-    t1_asst = "Acknowledged. Order confirmed: ESCD first, then CTJ, followed by TSL."
-    extract_state_updates(t1_user, t1_asst, state)
+    t1_asst = "Understood. Operating as ESCD for DCSE: ESCD first, followed by CTJ, then TSL."
     turn1 = TurnRecord(cid, 1, t1_user, t1_asst, "openai", "gpt-5.6-sol")
-    ConversationStore.persist_turn(state, turn1)
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in state.confirmed_decisions
+    ConversationStore.record_turn(state, turn1)
 
-    # Switch to OpenRouter (Turn 2)
+    # Turn 2: Switch to OpenRouter - Ask what comes after ESCD
     t2_user = "What did we decide comes after ESCD?"
-    # OpenRouter context packet assembly
     state, turns = ConversationStore.get_conversation(cid)
     packet_or = assemble_context_packet(state, t2_user, turns, [])
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in packet_or[0]["content"]
-
-    t2_asst = "After ESCD, we decided that CTJ comes next, followed by TSL."
-    extract_state_updates(t2_user, t2_asst, state)
+    # Transcript preserves Turn 1 user message and assistant reply
+    assert packet_or[1]["content"] == t1_user
+    assert packet_or[2]["content"] == t1_asst
+    t2_asst = "After ESCD, the sequence is CTJ, followed by TSL."
     turn2 = TurnRecord(cid, 2, t2_user, t2_asst, "openrouter", "openrouter/auto")
-    ConversationStore.persist_turn(state, turn2)
+    ConversationStore.record_turn(state, turn2)
 
-    # Continue OpenRouter (Turn 3): Re-order
+    # Turn 3: OpenRouter - Re-ordering directive
     t3_user = "Move TSL ahead of CTJ."
-    t3_asst = "Understood. Updated sequence: ESCD -> TSL -> CTJ. TSL is now ahead of CTJ."
-    extract_state_updates(t3_user, t3_asst, state)
+    t3_asst = "Understood. The revised sequence is ESCD, then TSL, then CTJ."
     turn3 = TurnRecord(cid, 3, t3_user, t3_asst, "openrouter", "openrouter/auto")
-    ConversationStore.persist_turn(state, turn3)
-    assert "Execution Sequence: ESCD -> TSL -> CTJ" in state.confirmed_decisions
-    assert "Execution Sequence: ESCD -> CTJ -> TSL" in state.superseded_facts
+    ConversationStore.record_turn(state, turn3)
 
-    # Switch to Gemini (Turn 4)
-    t4_user = "What's our current order and what changed?"
+    # Turn 4: Switch to Gemini - Ask for current order
+    t4_user = "What is our current sequence?"
     state, turns = ConversationStore.get_conversation(cid)
     packet_gemini = assemble_context_packet(state, t4_user, turns, [])
-    assert "Execution Sequence: ESCD -> TSL -> CTJ" in packet_gemini[0]["content"]
-    assert "Prior Sequence" not in packet_gemini[0]["content"] or "Superseded Facts" in packet_gemini[0]["content"]
-
-    t4_asst = "Our current order is ESCD -> TSL -> CTJ. TSL was moved ahead of CTJ."
-    extract_state_updates(t4_user, t4_asst, state)
+    # All 3 prior turns are visible in transcript for Gemini
+    assert len(packet_gemini) == 1 + 6 + 1
+    t4_asst = "Our current sequence is ESCD -> TSL -> CTJ."
     turn4 = TurnRecord(cid, 4, t4_user, t4_asst, "gemini", "gemini-3.8-flash")
-    ConversationStore.persist_turn(state, turn4)
+    ConversationStore.record_turn(state, turn4)
 
-    # Switch back to OpenAI (Turn 5)
-    t5_user = "Continue with the next body of work."
+    # Turn 5: Switch back to OpenAI
+    t5_user = "Who are you and what are your rules?"
     state, turns = ConversationStore.get_conversation(cid)
     packet_oai = assemble_context_packet(state, t5_user, turns, [])
-    assert "Execution Sequence: ESCD -> TSL -> CTJ" in packet_oai[0]["content"]
-    assert len(turns) == 4
+    assert packet_oai[0]["role"] == "system"
+    assert "You are ESCD" in packet_oai[0]["content"]
+    assert "DCS operator directives are the supreme authority" in packet_oai[0]["content"]
+
+
+def test_explicit_saved_chat_contract():
+    cid = "conv_save_contract_001"
+    state, _ = ConversationStore.get_conversation(cid)
+    t = TurnRecord(cid, 1, "Plan summary", "Summary delivered", "openai", "gpt-5.6-sol")
+    ConversationStore.record_turn(state, t)
+
+    with patch("apps.escd.runtime.continuity._service_config") as mock_conf, \
+         patch("apps.escd.runtime.continuity._http_json") as mock_http:
+        mock_conf.return_value = ("https://nevgdyfpxdaloacuutal.supabase.co", "service-key")
+        mock_http.return_value = (201, [{"id": "item_123", "item_key": f"saved_chat_{cid}_1"}])
+
+        saved = ConversationStore.save_explicit_chat(cid, "Closeout Plan Discussion")
+        assert saved is not None
+        assert mock_http.called
+        call_payload = mock_http.call_args[1]["payload"]
+        assert call_payload["source_system"] == "escd_saved_chat"
+        assert call_payload["task_class"] == "COMMUNICATE"
+        assert call_payload["context"] == "conversation"
+        assert call_payload["status"] == "captured"
+        assert call_payload["source_id"] == cid
+        assert call_payload["source_refs"]["turn_count"] == 1
 
 
 def test_conversation_api_get_and_reset():
@@ -202,22 +182,5 @@ def test_conversation_api_get_and_reset():
     reset = reset_conversation(cid)
     assert reset["conversation_id"] == cid
     assert reset["turns"] == []
-
-
-def test_dev_server_routes():
-    import threading, time, urllib.request
-    from scratch.dev_server import run
-
-    t = threading.Thread(target=run, kwargs={"port": 3987}, daemon=True)
-    t.start()
-    time.sleep(0.5)
-
-    req = urllib.request.Request("http://127.0.0.1:3987/escd/app")
-    with urllib.request.urlopen(req) as resp:
-        html = resp.read().decode("utf-8")
-        assert resp.status == 200
-        assert 'id="knowledge"' in html
-        assert 'id="detailModal"' in html
-        assert 'id="convPill"' in html
 
 

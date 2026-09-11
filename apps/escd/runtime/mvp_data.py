@@ -422,12 +422,21 @@ def reset_conversation(conversation_id: str = "conv_default") -> dict:
     return {"conversation_id": cid, "state": new_state.to_dict(), "turns": []}
 
 
+def save_chat(conversation_id: str = "conv_default", title: str = "") -> dict:
+    from apps.escd.runtime.continuity import ConversationStore
+    return ConversationStore.save_explicit_chat(conversation_id, title)
+
+
+def list_saved_chats(limit: int = 50) -> list[dict]:
+    from apps.escd.runtime.continuity import ConversationStore
+    return ConversationStore.list_saved_chats(limit)
+
+
 def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default") -> dict:
     from apps.escd.runtime.continuity import (
         ConversationStore,
         TurnRecord,
         assemble_context_packet,
-        extract_state_updates,
         retrieve_governed_context,
         validate_response,
     )
@@ -465,7 +474,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
     # Retrieve governed context (Rule 5 Layer C)
     retrieved = retrieve_governed_context(last_user, limit=4)
 
-    # Assemble 4-layer governed context packet (Rule 5)
+    # Assemble governed context packet
     clean = assemble_context_packet(state, last_user, turns, retrieved)
 
     try:
@@ -526,14 +535,12 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
         else:
             raise MVPServiceError("unsupported_provider")
 
-        # Response Validation (Rule 9)
+        # Response Validation
         valid, err = validate_response(text, state)
-        if not valid and "contradicts_confirmed_sequence" in err:
-            # Bounded correction: ensure confirmed sequence is honored in output
-            pass
+        if not valid:
+            raise MVPServiceError(f"Response validation failed: {err}")
 
-        # Update canonical conversation state & persist turn (Rule 2 & Rule 3)
-        extract_state_updates(last_user, text, state)
+        # Update active session turn history (no automatic DB conversion)
         new_seq = len(turns) + 1
         turn = TurnRecord(
             conversation_id=cid,
@@ -546,7 +553,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             retrieved_refs=retrieved,
             created_at=datetime.now(timezone.utc).isoformat(),
         )
-        ConversationStore.persist_turn(state, turn)
+        ConversationStore.record_turn(state, turn)
 
         return {
             "provider": provider,
@@ -561,4 +568,5 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
         if isinstance(exc, MVPServiceError) and not isinstance(exc, ProviderHTTPError) and str(exc).startswith(("OpenAI returned", "Gemini returned", "OpenRouter returned")):
             raise
         raise _provider_failure(provider, exc) from None
+
 
