@@ -4,8 +4,8 @@ on:
   pull_request:
     paths:
       - 'governance/v7.2/**'
-      - 'governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
-      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
+      - 'governance/v7.2/source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md'
       - 'tribunal/v7/**'
       - 'DCSE_MANIFEST.yaml'
       - '.github/workflows/v7-2-governance-validation.yml'
@@ -14,8 +14,8 @@ on:
       - main
     paths:
       - 'governance/v7.2/**'
-      - 'governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
-      - 'governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'
+      - 'governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
+      - 'governance/v7.2/source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md'
       - 'tribunal/v7/**'
       - 'DCSE_MANIFEST.yaml'
       - '.github/workflows/v7-2-governance-validation.yml'
@@ -40,7 +40,7 @@ jobs:
 
           required = [
               Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md'),
-              Path('governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'),
+              Path('governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'),
               Path('governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md'),
               Path('governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md'),
               Path('governance/v7.2/dcs_express_directives.v7.2.json'),
@@ -48,7 +48,11 @@ jobs:
               Path('governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md'),
               Path('governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md'),
               Path('governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md'),
-              Path('governance/v7.1/doctrines/D21_Doctrine_Runtime_Engine.md'),
+              Path('governance/v7.2/source/doctrines/D05_Baseline_Promotion_v7-2.md'),
+              Path('governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md'),
+              Path('governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md'),
+              Path('governance/v7.2/ZONE_INDEX.v7.2.json'),
+              Path('governance/v7.2/source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md'),
               Path('DCSE_MANIFEST.yaml'),
           ]
 
@@ -118,7 +122,7 @@ jobs:
           if manifest.is_file():
               manifest_text = read(manifest)
               required_manifest_values = [
-                  'constitutional_entrypoint: "governance/v7.1/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
+                  'constitutional_entrypoint: "governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
                   'source_authority_and_reconciliation: "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"',
                   'task_traceability_and_navigable_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"',
                   'current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"',
