@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.11",
+  "registry_version": "7.2.12",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-11T14:46:00-04:00",
+  "updated_at": "2026-09-11T15:10:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -203,6 +203,29 @@
       "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
       "status": "APPROVED_ACTIVE_AUTHORIZED_PENDING_CANONICAL_MERGE",
       "supersedes": "No prior single execution-envelope standard. Extends D04, D15, D21, D22, DCS-DIR-20260906-002, DCS-DIR-20260910-001, and DCS-DIR-20260911-001 without reducing their controls."
+    },
+    {
+      "directive_id": "DCS-DIR-20260911-003",
+      "issued_at": "2026-09-11T15:10:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "Begin the DCSE rule corpus with Rule Set 5 Artifact and Content Generation. Develop rule sets using forward and backward chaining, deductive and inductive reasoning, contradiction review, and explicit test cases. Defer DCS Employment expansion for now. Preserve required later passes over Rule Sets 2, 3, 4 and cross-cutting Rule Sets 16 through 19.",
+      "canonical_assets": [
+        "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+        "governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json",
+        "governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json",
+        "governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md"
+      ],
+      "affected_sections": [
+        "Rule Foundry development method",
+        "Rule Set 5 Artifact and Content Generation",
+        "test case generation",
+        "forward/backward chaining",
+        "inductive/deductive reasoning",
+        "rule-corpus sequencing"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "APPROVED_ACTIVE_AUTHORIZED_FOR_RULE_DEVELOPMENT",
+      "supersedes": "No prior rule-corpus sequencing directive. Extends D01, D02, Rule Foundry, and DCS-DIR-20260911-001/002."
     }
   ]
 }
