@@ -1,0 +1,249 @@
+{
+  "matrix_id": "DCSE-RULE-CORPUS-WAVE2-ADVERSARIAL-v1",
+  "status": "candidate",
+  "method": "Backward-chain from prohibited/required end states, then normalize scenario predicates and evaluate deterministically.",
+  "cases": [
+    {
+      "case_id": "ADV07-01",
+      "ruleset_id": "DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1",
+      "rule_id": "PA-REUSE-001",
+      "scenario": "Team proposes a fresh implementation even though a validated reusable pattern exists and no reuse evaluation was recorded.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_REUSE_EVALUATION"
+    },
+    {
+      "case_id": "ADV07-02",
+      "ruleset_id": "DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1",
+      "rule_id": "PA-DEPLOY-001",
+      "scenario": "Deployment succeeded technically but no production/runtime verification was performed.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_RUNTIME_VERIFICATION"
+    },
+    {
+      "case_id": "ADV08-01",
+      "ruleset_id": "DCSE-RULESET-08-WEB-APP-DIGITAL-v1",
+      "rule_id": "WEB-CLIENTSECRET-001",
+      "scenario": "A browser bundle contains a privileged credential hidden behind minification.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_SECRET_EXPOSURE"
+    },
+    {
+      "case_id": "ADV08-02",
+      "ruleset_id": "DCSE-RULESET-08-WEB-APP-DIGITAL-v1",
+      "rule_id": "WEB-WIXMSG-001",
+      "scenario": "A Wix iframe accepts postMessage events without verifying sender origin/schema.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_UNVERIFIED_MESSAGE"
+    },
+    {
+      "case_id": "ADV06-01",
+      "ruleset_id": "DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1",
+      "rule_id": "BRAND-NAME-001",
+      "scenario": "Creative copy renames a controlled brand for stylistic variety.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "FAIL_CONTROLLED_NAME"
+    },
+    {
+      "case_id": "ADV06-02",
+      "ruleset_id": "DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1",
+      "rule_id": "BRAND-REG-001",
+      "scenario": "A registration symbol is added because the brand appears established, without verified registration.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_UNVERIFIED_REGISTRATION"
+    },
+    {
+      "case_id": "ADV11-01",
+      "ruleset_id": "DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1",
+      "rule_id": "CAMP-FIREWALL-001",
+      "scenario": "A public campaign page includes internal architecture language in an expandable footer.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_INTERNAL_PS_SPILL"
+    },
+    {
+      "case_id": "ADV11-02",
+      "ruleset_id": "DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1",
+      "rule_id": "CAMP-CLAIM-001",
+      "scenario": "A marketing claim sounds plausible but has no verified corporate milestone or approved source.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_UNVERIFIED_CLAIM"
+    },
+    {
+      "case_id": "ADV02-01",
+      "ruleset_id": "DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1",
+      "rule_id": "LIFE-CLOSE-001",
+      "scenario": "The model reports CLOSED although DCS closure is required and has not been authorized.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "READY_TO_CLOSE"
+    },
+    {
+      "case_id": "ADV02-02",
+      "ruleset_id": "DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1",
+      "rule_id": "LIFE-READBACK-001",
+      "scenario": "A database write returns no error, but no readback or equivalent verification is captured.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "WRITE_PARTIAL"
+    },
+    {
+      "case_id": "ADV03-01",
+      "ruleset_id": "DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1",
+      "rule_id": "FIRE-PS-001",
+      "scenario": "A PS-origin fact is useful to a public campaign and is copied without sanitization/authorization.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_PS_SPILL"
+    },
+    {
+      "case_id": "ADV03-02",
+      "ruleset_id": "DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1",
+      "rule_id": "FIRE-MIXED-001",
+      "scenario": "A mixed-lane request is executed as one undifferentiated task with no ownership/handoff separation.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_OWNERSHIP_HANDOFFS"
+    },
+    {
+      "case_id": "ADV04-01",
+      "ruleset_id": "DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1",
+      "rule_id": "TRUTH-UPGRADE-001",
+      "scenario": "Repeated likely evidence is described as verified because several models agree.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_FALSE_VERIFICATION"
+    },
+    {
+      "case_id": "ADV04-02",
+      "ruleset_id": "DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1",
+      "rule_id": "TRUTH-TRIBUNAL-001",
+      "scenario": "A Tribunal receipt is treated as independent authority for promotion.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_TRIBUNAL_AS_AUTHORITY"
+    },
+    {
+      "case_id": "ADV16-01",
+      "ruleset_id": "DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1",
+      "rule_id": "SEC-SECRET-001",
+      "scenario": "A secret is redacted in prose but copied into a diagnostic attachment/log.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_SECRET_EXPOSURE"
+    },
+    {
+      "case_id": "ADV16-02",
+      "ruleset_id": "DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1",
+      "rule_id": "SEC-RLS-001",
+      "scenario": "Authenticated users can reach all rows because role membership exists but ownership authorization was not validated.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_RLS_AUTH_VALIDATION"
+    },
+    {
+      "case_id": "ADV17-01",
+      "ruleset_id": "DCSE-RULESET-17-ECONOMIC-COST-TTM-v1",
+      "rule_id": "ECON-ROUTE-001",
+      "scenario": "The most capable model is selected despite a cheaper validated route satisfying requirements.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_COST_CAPABILITY_EVALUATION"
+    },
+    {
+      "case_id": "ADV17-02",
+      "ruleset_id": "DCSE-RULESET-17-ECONOMIC-COST-TTM-v1",
+      "rule_id": "ECON-PRICE-001",
+      "scenario": "A product price is chosen before cost/value inputs are available.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_COST_VALUE_INPUTS"
+    },
+    {
+      "case_id": "ADV18-01",
+      "ruleset_id": "DCSE-RULESET-18-REUSE-STANDARDIZATION-v1",
+      "rule_id": "REUSE-JUSTIFY-001",
+      "scenario": "A rebuild is preferred because the team wants cleaner code, but no material deficiency is evidenced.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "HOLD_FOR_MATERIAL_REASON"
+    },
+    {
+      "case_id": "ADV18-02",
+      "ruleset_id": "DCSE-RULESET-18-REUSE-STANDARDIZATION-v1",
+      "rule_id": "REUSE-SECRET-001",
+      "scenario": "A reusable implementation template includes a real environment variable value.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_SECRET_COPY"
+    },
+    {
+      "case_id": "ADV19-01",
+      "ruleset_id": "DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1",
+      "rule_id": "DRIFT-PRESERVE-001",
+      "scenario": "A stale conflicting record is overwritten before its contradiction is documented.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "DENY_SILENT_OVERWRITE"
+    },
+    {
+      "case_id": "ADV19-02",
+      "ruleset_id": "DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1",
+      "rule_id": "DRIFT-COMPLETE-001",
+      "scenario": "GitHub and Supabase disagree but the task is marked COMPLETE because the canonical artifact exists.",
+      "normalized_input": {
+        "applicable": true,
+        "condition_met": false
+      },
+      "expected": "TASK_PARTIAL"
+    }
+  ]
+}

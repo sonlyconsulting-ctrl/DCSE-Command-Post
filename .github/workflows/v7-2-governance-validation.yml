@@ -90,6 +90,20 @@ jobs:
               Path('governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json'),
               Path('governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json'),
               Path('governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md'),
+              Path('governance/v7.2/validation/DCSE_RULESET05_CALIBRATION_PLAN_v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-08-WEB-APP-DIGITAL-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-17-ECONOMIC-COST-TTM-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-18-REUSE-STANDARDIZATION-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1.json'),
+              Path('governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json'),
+              Path('governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md'),
               Path('DCSE_MANIFEST.yaml'),
           ]
 
@@ -155,6 +169,39 @@ jobs:
                           errors.append(f'Rule Set 5 missing normalized rule: {required_id}')
               except Exception as exc:
                   errors.append(f'Rule Set 5 invalid JSON: {exc}')
+
+          wave2_rule_paths = [
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-08-WEB-APP-DIGITAL-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-17-ECONOMIC-COST-TTM-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-18-REUSE-STANDARDIZATION-v1.json'),
+              Path('governance/v7.2/rule-foundry/DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1.json'),
+          ]
+          wave2_rule_total = 0
+          for p in wave2_rule_paths:
+              if p.is_file():
+                  try:
+                      data = json.loads(read(p))
+                      if data.get('status') != 'validating':
+                          errors.append(f'{p}: wave2 ruleset must remain validating.')
+                      rules = data.get('rules', [])
+                      if not rules:
+                          errors.append(f'{p}: contains no rules.')
+                      wave2_rule_total += len(rules)
+                      for rule in rules:
+                          for test_group in ['positive','negative','boundary']:
+                              if not rule.get('tests', {}).get(test_group):
+                                  errors.append(f"{p}: {rule.get('rule_id')} missing {test_group} tests.")
+                  except Exception as exc:
+                      errors.append(f'{p}: invalid wave2 ruleset JSON: {exc}')
+          if wave2_rule_total != 70:
+              errors.append(f'Wave2 rule corpus must contain exactly 70 candidate rules; found {wave2_rule_total}.')
 
           project_instructions = Path('governance/v7.2/project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md')
           if project_instructions.is_file():
@@ -231,6 +278,8 @@ jobs:
                   errors.append('Express directive registry missing DCS-DIR-20260911-002.')
               if 'DCS-DIR-20260911-003' not in ids:
                   errors.append('Express directive registry missing DCS-DIR-20260911-003.')
+              if 'DCS-DIR-20260911-004' not in ids:
+                  errors.append('Express directive registry missing DCS-DIR-20260911-004.')
 
           execution_standard = Path('governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md')
           if execution_standard.is_file():

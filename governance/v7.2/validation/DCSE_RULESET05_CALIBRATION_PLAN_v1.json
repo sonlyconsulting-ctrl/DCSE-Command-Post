@@ -1,0 +1,132 @@
+{
+  "calibration_id": "DCSE-RULESET05-CALIBRATION-v1",
+  "ruleset_id": "DCSE-RULESET-05-CONTENT-ARTIFACT-v2",
+  "status": "candidate",
+  "purpose": "Calibrate CA-SLOP-001 and artifact-specific generation requirements from actual accepted/rejected product artifacts without inventing product facts.",
+  "products": [
+    {
+      "product": "CTJ",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    },
+    {
+      "product": "Vow N Go",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    },
+    {
+      "product": "TSL",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    },
+    {
+      "product": "B4L",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    },
+    {
+      "product": "X50",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    },
+    {
+      "product": "Beauty",
+      "source_packet_status": "REQUIRED",
+      "required_samples": {
+        "accepted_artifacts": [],
+        "rejected_artifacts": [],
+        "user_corrections": [],
+        "product_truth_refs": [],
+        "audience_refs": [],
+        "offer_refs": [],
+        "cta_refs": []
+      },
+      "calibration_state": "NOT_STARTED_NO_SOURCE_PACKET"
+    }
+  ],
+  "candidate_dimensions": [
+    {
+      "dimension": "product_truth_density",
+      "description": "How much of the copy depends on verified facts unique to the product.",
+      "threshold": null
+    },
+    {
+      "dimension": "swapability",
+      "description": "Whether the same copy can be moved to another product with minimal meaningful change.",
+      "threshold": null
+    },
+    {
+      "dimension": "specificity",
+      "description": "Presence of concrete product/audience/offer details instead of generic filler.",
+      "threshold": null
+    },
+    {
+      "dimension": "claim_grounding",
+      "description": "Share of factual/capability claims supported by source evidence.",
+      "threshold": null
+    },
+    {
+      "dimension": "voice_entity_fit",
+      "description": "Conformance with entity/product voice rather than generic AI register.",
+      "threshold": null
+    },
+    {
+      "dimension": "structural_originality",
+      "description": "Whether structure follows product need rather than interchangeable template sequence.",
+      "threshold": null
+    }
+  ],
+  "calibration_rule": "No enterprise scoring threshold is promoted until real artifact evidence supports the dimension, direction, and boundary.",
+  "output_states": [
+    "SOURCE_PACKET_REQUIRED",
+    "CALIBRATING",
+    "THRESHOLD_CANDIDATE",
+    "VALIDATED",
+    "REJECTED"
+  ]
+}
