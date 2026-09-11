@@ -92,6 +92,20 @@ Active execution controls:
 
 These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
 
+## Rule Corpus Development
+
+Authorized development sequence begins with:
+
+- **Rule Set 5: Artifact and Content Generation**
+  - `rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md`
+  - `rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json`
+  - `validation/DCSE_RULESET05_TEST_MATRIX_v1.json`
+  - `validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md`
+
+Current state: `VALIDATING`. Structural and deterministic/adversarial tests pass, but active-baseline promotion is held for anti-slop scoring calibration.
+
+Required later passes: Rule Sets 2, 3, 4, 16, 17, 18, and 19.
+
 ## Compatibility Mirror
 
 `source/doctrines/` and `source/registry/` are temporary compatibility/lineage mirrors for older references. They are not the normal v7.2 startup route. CI verifies mirror equality while they remain present.

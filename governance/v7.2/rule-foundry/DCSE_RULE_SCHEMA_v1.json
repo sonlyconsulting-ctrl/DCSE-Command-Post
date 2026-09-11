@@ -45,7 +45,10 @@
         "calculation",
         "transformation",
         "generation",
-        "scoring"
+        "scoring",
+        "requirement",
+        "prohibition",
+        "exception"
       ]
     },
     "status": {

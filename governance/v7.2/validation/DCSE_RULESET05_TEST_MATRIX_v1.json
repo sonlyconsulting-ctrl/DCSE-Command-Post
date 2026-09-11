@@ -1,0 +1,83 @@
+{
+  "matrix_id": "DCSE-RULESET05-TEST-MATRIX-v1",
+  "ruleset_id": "DCSE-RULESET-05-CONTENT-ARTIFACT-v2",
+  "method": "forward + backward chaining; deductive + inductive challenge",
+  "adversarial_cases": [
+    {
+      "case_id": "ADV-05-001",
+      "rule_id": "CA-CLAIM-001",
+      "scenario": "Copy uses vague superlative 'industry-leading' with no metric or source.",
+      "normalized_input": {
+        "claim_present": true,
+        "claim_support_status": "Unknown"
+      },
+      "expected": "REMOVE_QUALIFY_OR_HOLD",
+      "reasoning": "Backward chain from releasable public claim requires support evidence."
+    },
+    {
+      "case_id": "ADV-05-002",
+      "rule_id": "CA-PUBLIC-001",
+      "scenario": "Public landing page uses internal acronym DCSE only in footer fine print.",
+      "normalized_input": {
+        "release_posture": "public",
+        "internal_governance_term_detected": true,
+        "explicit_public_authorization": false
+      },
+      "expected": "SANITIZE_OR_DENY_RELEASE",
+      "reasoning": "Placement does not change internal/public boundary."
+    },
+    {
+      "case_id": "ADV-05-003",
+      "rule_id": "CA-DIVERGE-001",
+      "scenario": "Three candidates differ only by headline punctuation.",
+      "normalized_input": {
+        "candidate_direction_count": 1,
+        "explicit_single_direction_request": false
+      },
+      "expected": "GENERATE_MORE_DISTINCT_DIRECTIONS",
+      "reasoning": "Material distinctness controls count, not file count."
+    },
+    {
+      "case_id": "ADV-05-004",
+      "rule_id": "CA-SLOP-001",
+      "scenario": "Copy is grammatically polished but could be swapped among all six products unchanged.",
+      "normalized_input": {
+        "generic_interchangeable_copy_score": 0.9,
+        "allowed_threshold": 0.35
+      },
+      "expected": "REJECT_OR_REWRITE",
+      "reasoning": "Surface polish does not defeat specificity rule."
+    },
+    {
+      "case_id": "ADV-05-005",
+      "rule_id": "CA-PRODUCT-001",
+      "scenario": "A polished sales page is requested before promise, audience, CTA and offer are resolved.",
+      "normalized_input": {
+        "product_artifact": true,
+        "minimum_product_genome_complete": false
+      },
+      "expected": "HOLD_FOR_PRODUCT_GENOME",
+      "reasoning": "Backward chain from valid product page requires minimum genome."
+    },
+    {
+      "case_id": "ADV-05-006",
+      "rule_id": "CA-CTA-001",
+      "scenario": "CTA text is correct but link points to the wrong product page.",
+      "normalized_input": {
+        "artifact_requires_cta": true,
+        "cta_verified": true,
+        "destination_verified": false
+      },
+      "expected": "FAIL_RELEASE_GATE",
+      "reasoning": "CTA semantic correctness and destination correctness are separate predicates."
+    }
+  ],
+  "inductive_candidates_to_observe": [
+    "Recurring product-specific anti-slop patterns across CTJ, Vow N Go, TSL, B4L, X50 and Beauty.",
+    "Stable thresholds for interchangeable-copy scoring.",
+    "Artifact-type-specific minimum generation packets.",
+    "Reusable CTA verification patterns by destination/channel.",
+    "Typography role defaults that repeatedly succeed for a specific entity or product family."
+  ],
+  "promotion_note": "Adversarial cases are regression evidence. Any failed case blocks active-baseline promotion for the affected rule until reconciled."
+}
