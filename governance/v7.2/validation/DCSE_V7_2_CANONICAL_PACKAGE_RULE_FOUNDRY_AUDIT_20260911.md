@@ -4,7 +4,7 @@
 **Parent Task:** DCSE-V72-FINAL-PROMOTION-20260911-001  
 **Date:** 2026-09-11  
 **Lane:** DCSE  
-**Status:** PARTIAL - BRANCH VALIDATION / LEVEL 0 REVIEW PATH
+**Status:** PROMOTION-READY PENDING FINAL CI AND CANONICAL PR #83 MERGE
 
 ## Scope
 
@@ -46,14 +46,23 @@ File presence and GitHub commits do not independently promote candidate governan
 
 Existing promoted v7.2 doctrine retains its recorded lifecycle state. Carried-forward doctrine projections are packaged for self-contained discovery under R5. D03 and Rule Foundry additions remain candidates in this branch pending final v7.2 promotion/reconciliation.
 
+## Resolved Since Initial Audit
+
+- DCS-DIR-20260911-001 records the bounded independent-authority and Rule Foundry direction.
+- D05, D03, D21, project settings, scope-freeze validation rule, validator packets, manifest, and directive registry are reconciled to functional independence unless actor separation is expressly required.
+- DCSE-METH-EMP-001 v1.1 and DCSE-METH-MEDIA-THUMB-001 v1.1 received validation-integrity RATIFY dispositions.
+- Both methodologies are ACTIVE_RATIFIED; post-change checks proved only lifecycle metadata changed after frozen-candidate validation.
+- R5 branch copy SHA-256 recomputed as `2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae`, exact match to the operative designation.
+- Project Settings payload is 7,978 characters and its recorded SHA-256 `291a91262454a61d87ac5d41a080989973e4ea286d48c4de32a53696d194d422` matches recomputation.
+- CI now enforces D01-D22 completeness, Rule Foundry JSON syntax, the September 11 directive, Project Settings character count, and Project Settings SHA-256 metadata.
+
 ## Remaining Closure Gates
 
-- final branch CI on the evidence-bearing head;
-- Level 0 review/promotion effect for exact new governance content;
-- merge to `main` if approved;
-- Supabase/runtime registry reconciliation after canonical GitHub state is established;
+- final GitHub Actions success on the evidence-bearing PR #83 head;
+- canonical PR #83 merge to `main`;
+- post-merge Supabase/runtime registry reconciliation;
 - distribution mirror reconciliation as applicable.
 
 ## Outcome
 
-The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door and complete doctrine root. Overall task remains PARTIAL until canonical merge/promotion and runtime reconciliation are evidenced.
+The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door and complete doctrine root. Governance package is PROMOTION-READY. Canonical completion remains bounded to final CI, PR #83 merge, and post-merge runtime/distribution reconciliation.
