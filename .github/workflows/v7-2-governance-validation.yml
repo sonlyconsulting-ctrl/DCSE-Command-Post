@@ -86,6 +86,10 @@ jobs:
               Path('governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md'),
               Path('governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md'),
               Path('governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md'),
+              Path('governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json'),
+              Path('governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json'),
+              Path('governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md'),
               Path('DCSE_MANIFEST.yaml'),
           ]
 
@@ -126,6 +130,8 @@ jobs:
                   errors.append(f'Compatibility mirror drift: {canonical_path} != {mirror_path}')
 
           for json_path in [
+              Path('governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json'),
+              Path('governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json'),
               Path('governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json'),
               Path('governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json'),
           ]:
@@ -134,6 +140,21 @@ jobs:
                       json.loads(read(json_path))
                   except Exception as exc:
                       errors.append(f'Rule Foundry JSON invalid: {json_path}: {exc}')
+
+          ruleset05 = Path('governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json')
+          if ruleset05.is_file():
+              try:
+                  rs = json.loads(read(ruleset05))
+                  if len(rs.get('rules', [])) < 10:
+                      errors.append('Rule Set 5 normalized first wave must contain at least 10 rules.')
+                  if rs.get('status') != 'validating':
+                      errors.append('Rule Set 5 must remain validating until its disclosed calibration gate is closed.')
+                  ids05 = {r.get('rule_id') for r in rs.get('rules', []) if isinstance(r, dict)}
+                  for required_id in ['CA-GENPACK-001','CA-LANE-001','CA-PRODUCT-001','CA-CLAIM-001','CA-NAME-001','CA-PUBLIC-001','CA-SLOP-001','CA-DIVERGE-001','CA-TYPE-001','CA-CTA-001']:
+                      if required_id not in ids05:
+                          errors.append(f'Rule Set 5 missing normalized rule: {required_id}')
+              except Exception as exc:
+                  errors.append(f'Rule Set 5 invalid JSON: {exc}')
 
           project_instructions = Path('governance/v7.2/project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md')
           if project_instructions.is_file():
@@ -208,6 +229,8 @@ jobs:
                   errors.append('Express directive registry missing DCS-DIR-20260911-001.')
               if 'DCS-DIR-20260911-002' not in ids:
                   errors.append('Express directive registry missing DCS-DIR-20260911-002.')
+              if 'DCS-DIR-20260911-003' not in ids:
+                  errors.append('Express directive registry missing DCS-DIR-20260911-003.')
 
           execution_standard = Path('governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md')
           if execution_standard.is_file():
