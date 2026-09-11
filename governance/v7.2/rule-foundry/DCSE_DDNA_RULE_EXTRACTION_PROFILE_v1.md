@@ -2,7 +2,7 @@
 
 **Document ID:** DCSE-DDNA-RULE-EXTRACT-001  
 **Version:** 1.0  
-**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
+**Status:** ACTIVE / CANONICAL / DCS-DIR-20260911-001 / PR #83 MERGED  
 **Parent:** DCSE v7.2 Rule Generation and Executable Baseline Standard  
 **Purpose:** Convert DDNA learning into rule candidates without allowing DDNA to become an authority or self-modifying rules engine.
 
