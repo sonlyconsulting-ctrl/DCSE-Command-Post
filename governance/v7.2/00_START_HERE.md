@@ -25,9 +25,9 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 |---|---|---|
 | D01 | `doctrines/D01_Forward_Thinking_v7-2.md` | carried_forward |
 | D02 | `doctrines/D02_Forward_Backward_Chaining_v7-2.md` | carried_forward |
-| D03 | `doctrines/D03_AI_Orchestration_v7-2.md` | v7.2_candidate |
+| D03 | `doctrines/D03_AI_Orchestration_v7-2.md` | promoted |
 | D04 | `doctrines/D04_Command_Post_Communications_v7-2.md` | promoted |
-| D05 | `doctrines/D05_Baseline_Promotion_v7-2.md` | v7.2_projection |
+| D05 | `doctrines/D05_Baseline_Promotion_v7-2.md` | promoted |
 | D06 | `doctrines/D06_File_System_v7-2.md` | promoted |
 | D07 | `doctrines/D07_Campaign_Governance_v7-2.md` | carried_forward |
 | D08 | `doctrines/D08_Voice_Tone_v7-2.md` | carried_forward |
@@ -43,7 +43,7 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 | D18 | `doctrines/D18_Media_Production_Pipeline_v7-2.md` | carried_forward |
 | D19 | `doctrines/D19_Visual_Creation_Pipeline_v7-2.md` | carried_forward |
 | D20 | `doctrines/D20_Product_Assembly_Methodology_v7-2.md` | promoted |
-| D21 | `doctrines/D21_Doctrine_Runtime_Engine_v7-2.md` | v7.2_projection |
+| D21 | `doctrines/D21_Doctrine_Runtime_Engine_v7-2.md` | active_projection |
 | D22 | `doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md` | promoted |
 
 **PS routing:** D13 and D14 are present for completeness but SHALL load only on an authorized PS route. Their presence in this package does not authorize protected content access.
@@ -62,7 +62,7 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 
 ## Working Capability Modules
 
-Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. The following September 11 modules are approved under DCS-DIR-20260911-001 for canonical activation on PR #83 merge:
+Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. The following September 11 modules are active canonical capability modules under DCS-DIR-20260911-001 following PR #83 merge:
 
 - `rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md`
 - `rule-foundry/DCSE_RULE_SCHEMA_v1.json`
