@@ -207,5 +207,17 @@
       "Supabase"
     ],
     "cross_system_reconciliation_required_for_material_multi_system_work": true
-  }
+  },
+  "candidate_rule_sets": [
+    {
+      "id": "RULESET-05",
+      "title": "Artifact and Content Generation",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "test_matrix": "governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md",
+      "promotion_gate": "CA-SLOP-001 scoring calibration plus future corpus reconciliation"
+    }
+  ]
 }
