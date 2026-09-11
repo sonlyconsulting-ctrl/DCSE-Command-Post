@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dcse://schemas/rule/v1",
+  "title": "DCSE Rule Contract v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rule_id",
+    "version",
+    "family",
+    "class",
+    "status",
+    "scope",
+    "trigger",
+    "inputs",
+    "condition",
+    "action",
+    "authority",
+    "provenance",
+    "confidence",
+    "tests",
+    "deterministic_evaluation"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9][A-Z0-9._-]{2,127}$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "class": {
+      "enum": [
+        "invariant",
+        "decision",
+        "constraint",
+        "preference",
+        "routing",
+        "validation",
+        "calculation",
+        "transformation",
+        "generation",
+        "scoring"
+      ]
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "candidate",
+        "validating",
+        "eligible",
+        "active_baseline",
+        "blocked",
+        "drift",
+        "superseded",
+        "archived"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lanes",
+        "entities",
+        "artifact_types",
+        "release_postures"
+      ],
+      "properties": {
+        "lanes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "products_or_processes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "artifact_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "release_postures": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "internal",
+              "review",
+              "client",
+              "public",
+              "production",
+              "any"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "event": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "required"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "condition": {
+      "type": "object",
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "type": "string"
+        },
+        "language": {
+          "enum": [
+            "dcse-expression-v1",
+            "jsonlogic",
+            "sql",
+            "python",
+            "human-reproducible"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "type",
+        "result"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "allow",
+            "deny",
+            "require",
+            "route",
+            "set",
+            "calculate",
+            "transform",
+            "generate",
+            "score",
+            "hold",
+            "escalate"
+          ]
+        },
+        "result": {},
+        "required_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "prohibitions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "condition",
+          "effect"
+        ],
+        "properties": {
+          "condition": {
+            "type": "string"
+          },
+          "effect": {
+            "type": "string"
+          },
+          "authority_required": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "source_type",
+        "source_ref"
+      ],
+      "properties": {
+        "source_type": {
+          "enum": [
+            "dcs_directive",
+            "master_profile",
+            "doctrine",
+            "promoted_rule",
+            "adopted_standard",
+            "validated_workflow"
+          ]
+        },
+        "source_ref": {
+          "type": "string"
+        },
+        "delegated_scope": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "source_kind"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string"
+          },
+          "source_kind": {
+            "type": "string"
+          },
+          "hash_or_version": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "confidence": {
+      "enum": [
+        "Verified",
+        "Likely",
+        "Unknown"
+      ]
+    },
+    "contradictions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "severity": {
+      "enum": [
+        "informational",
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ]
+    },
+    "tests": {
+      "type": "object",
+      "required": [
+        "positive",
+        "negative",
+        "boundary"
+      ],
+      "properties": {
+        "positive": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testCase"
+          },
+          "minItems": 1
+        },
+        "negative": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testCase"
+          },
+          "minItems": 1
+        },
+        "boundary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testCase"
+          },
+          "minItems": 1
+        },
+        "exception": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/testCase"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "deterministic_evaluation": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "binary",
+            "finite_state",
+            "bounded_score",
+            "calculation",
+            "transformation"
+          ]
+        },
+        "allowed_results": {
+          "type": "array"
+        },
+        "implementation_ref": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "override_policy": {
+      "type": "object",
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "authority_required": {
+          "type": "string"
+        },
+        "receipt_required": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "effective_on": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "$defs": {
+    "testCase": {
+      "type": "object",
+      "required": [
+        "name",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "input": {},
+        "expected": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}

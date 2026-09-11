@@ -74,8 +74,8 @@ Examples of prohibited shortcuts without explicit DCS authority:
 ## Rule 8: Tool and Access Boundaries
 If required evidence exists only on a host or system not reachable by the controlling runtime, the task must be marked PARTIAL or BLOCKED at that boundary. The controller must not repeatedly ask DCS to act as a message bus when an executable packet, worker, broker, connector, or future automation can carry the work instead.
 
-## Rule 9: Independent Validation
-Where governance explicitly requires independent validation, the controlling author/reviewer cannot self-ratify the artifact. The validation must be attributable to a separate authorized validator. Preparation, evidence packaging, and routing may be automated, but validator independence must remain observable.
+## Rule 9: Validation Independence
+Validation independence is primarily functional unless a controlling source expressly requires actor separation. The validating function must use frozen/versioned inputs, explicit criteria, evidence re-performance or direct inspection, contradiction testing, attributable findings, and a durable receipt. The same authorized participant may perform a later functionally independent validation role when those controls are preserved. A separate model, agent, or human is required only when DCS, law, contract, security policy, or the controlling artifact expressly requires actor separation. When separation is required, route an eligible validator rather than treating the gate as a passive stop.
 
 ## Rule 10: Closeout Test
 Before declaring a parent task complete, answer:

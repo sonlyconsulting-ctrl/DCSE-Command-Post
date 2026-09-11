@@ -11,14 +11,14 @@ Manifest role: routing aid only; does not independently create authority
    - Current version: `v1.1`.
    - Trigger: DCS Employment, engagement tracking, employment package, recruiter package, contract, freelance, consulting, advisory, direct DCS business opportunity, revenue-path classification, resume/package baseline preservation, pipeline review, engagement closeout.
    - Relationship: modernizes legacy DCS Employment Command Center package methodology and adds the durable engagement-tracking architecture defined by `DCS-DIR-20260906-003`.
-   - Current state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`.
+   - Current state: `ACTIVE_RATIFIED / ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`.
 
 2. `DCSE-METH-MEDIA-THUMB-001`
    - Path: `governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md`
    - Current version: `v1.1`.
    - Trigger: thumbnail, video cover, poster frame, preview card, episode art, YouTube thumbnail, campaign video cover, website video card.
    - Relationship: specialized D18/D19 architectural workflow. Normal output is a human-review set of 3 to 5 materially distinct candidates, comparative selection matrix, human selection record, selected-candidate final asset, and manifest.
-   - Current state: `ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`.
+   - Current state: `ACTIVE_RATIFIED / ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED`.
 
 ## Runtime Rule
 
@@ -30,7 +30,7 @@ All substantive-task closeout is also subject to `DCS-DIR-20260906-002`, the Com
 
 ## Promotion State
 
-The two exact artifacts above are ACTIVE BY DCS EXPRESS DIRECTIVE and RUNTIME RECONCILED for immediate task routing. Formal D05 `ACTIVE_RATIFIED` status remains separately observable and is pending attributable independent validation only.
+The two exact artifacts above are ACTIVE BY DCS EXPRESS DIRECTIVE and RUNTIME RECONCILED for immediate task routing. Both exact v1.1 artifacts are ACTIVE_RATIFIED under D05 following validation-integrity receipt `DCSE-VAL-EMP-THUMB-20260911-001`. Functional independence was applied under DCS-DIR-20260911-001; post-ratification integrity confirmed that only lifecycle metadata changed after the frozen-candidate validation.
 
 ## Closeout Integrity
 

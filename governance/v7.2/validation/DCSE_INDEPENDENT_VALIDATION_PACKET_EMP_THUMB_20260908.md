@@ -7,7 +7,7 @@
 **Credential exposure:** prohibited
 
 ## Purpose
-Obtain attributable independent validation for two already-active/runtime-reconciled methodologies without allowing the controlling/originating ChatGPT CTO to self-ratify them.
+Obtain attributable validation-integrity evidence for two already-active/runtime-reconciled methodologies under the v7.2 bounded independent-authority model.
 
 ## Artifacts under validation
 1. `DCSE-METH-EMP-001` v1.1  
@@ -15,8 +15,8 @@ Obtain attributable independent validation for two already-active/runtime-reconc
 2. `DCSE-METH-MEDIA-THUMB-001` v1.1  
    Path: `governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md`
 
-## Validator independence requirement
-The validator must be a separately attributable model, agent, or human reviewer that did not originate or control the methodology being validated in this validation act. The validator must identify itself and the execution surface used.
+## Validation independence requirement
+The validation act must be functionally independent from construction: freeze the exact candidate, use explicit criteria, re-perform or directly inspect evidence, challenge contradictions, preserve findings, identify the validating participant/function and execution surface, and issue a durable receipt. A separate actor is optional unless expressly required by a controlling source.
 
 ## Validation method
 For each artifact, independently verify:
@@ -38,7 +38,7 @@ validator_receipt:
   validator_identity: <name/model/system>
   validator_surface: <runtime/application>
   validated_at: <ISO-8601>
-  independent_from_originating_controller: true|false
+  functional_independence_controls_satisfied: true|false
   artifacts:
     - document_id: DCSE-METH-EMP-001
       version: v1.1
@@ -58,9 +58,9 @@ validator_receipt:
 
 ## Promotion rule
 `ACTIVE_RATIFIED` may be recommended only when:
-- validator independence is true;
+- functional independence controls are satisfied;
 - exact canonical artifacts were reviewed;
 - both receive PASS or any conditions are explicitly satisfied and evidenced;
 - no unresolved material contradiction remains.
 
-The originating/controller agent may record the receipt and promotion result but may not fabricate or substitute the independent validation itself.
+The validating participant may also have performed earlier construction work only when the validation act is separated by the functional-independence controls above. Validation findings may not be fabricated, waived, or silently rewritten.
