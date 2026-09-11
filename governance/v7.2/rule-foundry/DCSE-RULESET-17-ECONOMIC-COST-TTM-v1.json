@@ -1,0 +1,736 @@
+{
+  "ruleset_id": "DCSE-RULESET-17-ECONOMIC-COST-TTM-v1",
+  "version": "1.0-candidate",
+  "title": "Rule Set 17 Economic, Cost and Time-to-Market",
+  "family": "economic_cost_time_to_market",
+  "status": "validating",
+  "authority_ref": "DCS Level 0 authorized rule-corpus program under DCS-DIR-20260911-003",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "source_refs": [
+    "governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md",
+    "governance/v7.2/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
+  ],
+  "rules": [
+    {
+      "rule_id": "ECON-ROUTE-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "routing",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Model/tool routing decision is made",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "COST_CAPABILITY_ROUTE_VALID",
+        "required_actions": [
+          "If false, return HOLD_FOR_COST_CAPABILITY_EVALUATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "COST_CAPABILITY_ROUTE_VALID",
+        "HOLD_FOR_COST_CAPABILITY_EVALUATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D03#6"
+      },
+      "provenance": [
+        {
+          "source_ref": "D03#6",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "COST_CAPABILITY_ROUTE_VALID"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_COST_CAPABILITY_EVALUATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "COST_CAPABILITY_ROUTE_VALID",
+          "HOLD_FOR_COST_CAPABILITY_EVALUATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "ECON-REUSE-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "New build is considered",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "REUSE_ECONOMICS_EVALUATED",
+        "required_actions": [
+          "If false, return HOLD_FOR_REUSE_CHECK."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "REUSE_ECONOMICS_EVALUATED",
+        "HOLD_FOR_REUSE_CHECK",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D20#2"
+      },
+      "provenance": [
+        {
+          "source_ref": "D20#2",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "REUSE_ECONOMICS_EVALUATED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_REUSE_CHECK"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "REUSE_ECONOMICS_EVALUATED",
+          "HOLD_FOR_REUSE_CHECK",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "ECON-REDESIGN-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "constraint",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Redesign increases cost/time materially",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "REDESIGN_ECONOMICALLY_JUSTIFIED",
+        "required_actions": [
+          "If false, return HOLD_FOR_REDIRECT."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "REDESIGN_ECONOMICALLY_JUSTIFIED",
+        "HOLD_FOR_REDIRECT",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D20#2.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D20#2.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "REDESIGN_ECONOMICALLY_JUSTIFIED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_REDIRECT"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "REDESIGN_ECONOMICALLY_JUSTIFIED",
+          "HOLD_FOR_REDIRECT",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "ECON-TTM-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "decision",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Time-to-market tradeoff is made",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "TTM_DECISION_DOCUMENTED",
+        "required_actions": [
+          "If false, return HOLD_FOR_TRADEOFF."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "TTM_DECISION_DOCUMENTED",
+        "HOLD_FOR_TRADEOFF",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D20 lifecycle"
+      },
+      "provenance": [
+        {
+          "source_ref": "D20 lifecycle",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "TTM_DECISION_DOCUMENTED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_TRADEOFF"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "TTM_DECISION_DOCUMENTED",
+          "HOLD_FOR_TRADEOFF",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "ECON-RUNTIME-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Cloud/local provider is selected",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "RUNTIME_COST_BOUNDARY_KNOWN",
+        "required_actions": [
+          "If false, return HOLD_FOR_RUNTIME_COST_INPUT."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "RUNTIME_COST_BOUNDARY_KNOWN",
+        "HOLD_FOR_RUNTIME_COST_INPUT",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D03#6"
+      },
+      "provenance": [
+        {
+          "source_ref": "D03#6",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "RUNTIME_COST_BOUNDARY_KNOWN"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_RUNTIME_COST_INPUT"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "RUNTIME_COST_BOUNDARY_KNOWN",
+          "HOLD_FOR_RUNTIME_COST_INPUT",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "ECON-PRICE-001",
+      "version": "1.0",
+      "family": "economic_cost_time_to_market",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Sell price or tier is proposed",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "PRICE_INPUTS_SUFFICIENT",
+        "required_actions": [
+          "If false, return HOLD_FOR_COST_VALUE_INPUTS."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PRICE_INPUTS_SUFFICIENT",
+        "HOLD_FOR_COST_VALUE_INPUTS",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "DCS commercial planning"
+      },
+      "provenance": [
+        {
+          "source_ref": "DCS commercial planning",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PRICE_INPUTS_SUFFICIENT"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_COST_VALUE_INPUTS"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PRICE_INPUTS_SUFFICIENT",
+          "HOLD_FOR_COST_VALUE_INPUTS",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    }
+  ],
+  "validation_summary": {
+    "structural_contract": "PENDING_REPOSITORY_VALIDATION",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "notes": [
+      "Commercial formulas remain validating until product-specific cost and value inputs are supplied."
+    ]
+  }
+}
