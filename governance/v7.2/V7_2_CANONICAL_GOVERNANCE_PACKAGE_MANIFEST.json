@@ -24,7 +24,7 @@
     {
       "id": "D03",
       "path": "governance/v7.2/source/doctrines/D03_AI_Orchestration_v7-2.md",
-      "package_state": "v7.2_candidate",
+      "package_state": "approved_active_on_pr83_merge",
       "load_scope": "ROUTED"
     },
     {
@@ -36,7 +36,7 @@
     {
       "id": "D05",
       "path": "governance/v7.2/source/doctrines/D05_Baseline_Promotion_v7-2.md",
-      "package_state": "v7.2_projection",
+      "package_state": "approved_active_on_pr83_merge",
       "load_scope": "ROUTED"
     },
     {
@@ -172,5 +172,10 @@
   ],
   "implementation_profiles": [
     "governance/v7.2/implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md"
-  ]
+  ],
+  "capability_module_activation": {
+    "authority": "DCS-DIR-20260911-001",
+    "canonical_activation": "PR #83 merge to main",
+    "creative_router_runtime_state": "UNSYNCHRONIZED"
+  }
 }
