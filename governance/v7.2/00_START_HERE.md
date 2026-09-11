@@ -62,7 +62,7 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 
 ## Working Capability Modules
 
-Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. Current candidate modules:
+Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. The following September 11 modules are approved under DCS-DIR-20260911-001 for canonical activation on PR #83 merge:
 
 - `rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md`
 - `rule-foundry/DCSE_RULE_SCHEMA_v1.json`
@@ -75,7 +75,7 @@ Current implementation profile:
 
 - `implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md`
 
-These remain subordinate to promoted governance until their exact lifecycle state is recorded.
+These remain subordinate to the Master Profile and routed doctrine. The Creative Router architecture is approved but remains runtime UNSYNCHRONIZED until implementation/security/runtime evidence exists.
 
 ## Navigation Rule
 
