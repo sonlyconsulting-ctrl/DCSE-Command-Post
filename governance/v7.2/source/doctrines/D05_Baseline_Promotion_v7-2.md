@@ -2,7 +2,7 @@
 
 **Document ID:** DCSE-D05  
 **Version:** v7.2  
-**Status:** CANDIDATE UPDATE FOR v7.2 FINAL PROMOTION  
+**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
 **Classification:** INTERNAL  
 **Lane:** DCSE  
 **Parent Controller:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`  
