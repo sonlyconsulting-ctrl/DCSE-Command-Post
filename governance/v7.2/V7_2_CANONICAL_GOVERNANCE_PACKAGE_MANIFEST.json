@@ -218,6 +218,112 @@
       "test_matrix": "governance/v7.2/validation/DCSE_RULESET05_TEST_MATRIX_v1.json",
       "validation_report": "governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md",
       "promotion_gate": "CA-SLOP-001 scoring calibration plus future corpus reconciliation"
+    },
+    {
+      "id": "RULESET-07",
+      "title": "Product and Service Assembly",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-08",
+      "title": "Website, App and Digital Experience",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-08-WEB-APP-DIGITAL-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-06",
+      "title": "Brand, Voice, Visual and Media",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-11",
+      "title": "Campaign, Audience and Commerce",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-02",
+      "title": "Task, Conversation and Execution Lifecycle",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-03",
+      "title": "Lane, Entity and Information Firewall",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-04",
+      "title": "Source, Evidence and Truth-State",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-16",
+      "title": "Security, Privacy and Secret Handling",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-17",
+      "title": "Economic, Cost and Time-to-Market",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-17-ECONOMIC-COST-TTM-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-18",
+      "title": "Reuse, Standardization and Components",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-18-REUSE-STANDARDIZATION-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
+    },
+    {
+      "id": "RULESET-19",
+      "title": "Exception, Conflict and Drift",
+      "status": "VALIDATING",
+      "ruleset": "governance/v7.2/rule-foundry/DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1.json",
+      "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+      "adversarial_matrix": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json",
+      "validation_report": "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md"
     }
-  ]
+  ],
+  "rule_corpus_wave2": {
+    "authority": "DCS-DIR-20260911-004",
+    "rule_count": 70,
+    "deterministic_tests": "210/210 PASS",
+    "adversarial_tests": "22/22 PASS",
+    "promotion_state": "VALIDATING"
+  }
 }
