@@ -96,6 +96,8 @@ Material writes SHALL produce attributable evidence appropriate to the system, s
 
 Tool-backed execution claims require tool-backed evidence.
 
+**Readback invariant:** `WRITE WITHOUT READBACK = PARTIAL` for material system writes unless an equivalent independently verified confirmation is documented.
+
 ## 9. Drift
 
 A mismatch among task declaration, GitHub, Vercel, Supabase, Tribunal, deployment state, or other governed surfaces is DRIFT until reconciled.
