@@ -1,0 +1,735 @@
+{
+  "ruleset_id": "DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1",
+  "version": "1.0-candidate",
+  "title": "Rule Set 11 Campaign, Audience and Commerce",
+  "family": "campaign_audience_commerce",
+  "status": "validating",
+  "authority_ref": "DCS Level 0 authorized rule-corpus program under DCS-DIR-20260911-003",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "source_refs": [
+    "governance/v7.2/doctrines/D07_Campaign_Governance_v7-2.md",
+    "governance/v7.2/doctrines/D08_Voice_Tone_v7-2.md",
+    "governance/v7.2/doctrines/D09_Brand_Identity_v7-2.md"
+  ],
+  "rules": [
+    {
+      "rule_id": "CAMP-FIREWALL-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "invariant",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Market-facing campaign asset is created",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "ALLOW_CAMPAIGN",
+        "required_actions": [
+          "If false, return DENY_INTERNAL_PS_SPILL."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CAMPAIGN",
+        "DENY_INTERNAL_PS_SPILL",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07#1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07#1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_CAMPAIGN"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_INTERNAL_PS_SPILL"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_CAMPAIGN",
+          "DENY_INTERNAL_PS_SPILL",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "CAMP-CLAIM-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Public capability claim is used",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_CLAIM",
+        "required_actions": [
+          "If false, return HOLD_UNVERIFIED_CLAIM."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CLAIM",
+        "HOLD_UNVERIFIED_CLAIM",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07#2"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07#2",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_CLAIM"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_UNVERIFIED_CLAIM"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_CLAIM",
+          "HOLD_UNVERIFIED_CLAIM",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "CAMP-META-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "SEO/GEO/AEO metadata is generated",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "PASS_METADATA_GATE",
+        "required_actions": [
+          "If false, return REJECT_METADATA_FORMAT."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PASS_METADATA_GATE",
+        "REJECT_METADATA_FORMAT",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07#2"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07#2",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PASS_METADATA_GATE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "REJECT_METADATA_FORMAT"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PASS_METADATA_GATE",
+          "REJECT_METADATA_FORMAT",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "CAMP-TONE-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Campaign copy reaches review",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "PASS_CAMPAIGN_TONE",
+        "required_actions": [
+          "If false, return HOLD_FOR_TONE_REWRITE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PASS_CAMPAIGN_TONE",
+        "HOLD_FOR_TONE_REWRITE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07#2 + D08"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07#2 + D08",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PASS_CAMPAIGN_TONE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_TONE_REWRITE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PASS_CAMPAIGN_TONE",
+          "HOLD_FOR_TONE_REWRITE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "CAMP-BRAND-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Campaign creative reaches review",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "PASS_CAMPAIGN_BRAND",
+        "required_actions": [
+          "If false, return HOLD_FOR_BRAND_RECONCILIATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PASS_CAMPAIGN_BRAND",
+        "HOLD_FOR_BRAND_RECONCILIATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07 + D09"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07 + D09",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PASS_CAMPAIGN_BRAND"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_BRAND_RECONCILIATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PASS_CAMPAIGN_BRAND",
+          "HOLD_FOR_BRAND_RECONCILIATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "CAMP-CHANNEL-001",
+      "version": "1.0",
+      "family": "campaign_audience_commerce",
+      "class": "routing",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Campaign asset has a destination channel",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_CHANNEL_OUTPUT",
+        "required_actions": [
+          "If false, return HOLD_FOR_CHANNEL_REQUIREMENTS."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CHANNEL_OUTPUT",
+        "HOLD_FOR_CHANNEL_REQUIREMENTS",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D07#1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D07#1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_CHANNEL_OUTPUT"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_CHANNEL_REQUIREMENTS"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_CHANNEL_OUTPUT",
+          "HOLD_FOR_CHANNEL_REQUIREMENTS",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    }
+  ],
+  "validation_summary": {
+    "structural_contract": "PENDING_REPOSITORY_VALIDATION",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "notes": []
+  }
+}
