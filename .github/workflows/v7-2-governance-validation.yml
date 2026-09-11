@@ -240,6 +240,16 @@ jobs:
                           errors.append(f'{path}: contains prohibited credential assignment {token}')
 
           if errors:
-              raise SystemExit('\n'.join(f'ERROR: {error}' for error in errors))
+              error_text = '\n'.join(f'ERROR: {error}' for error in errors)
+              Path('v72-validation-errors.txt').write_text(error_text + '\n', encoding='utf-8')
+              raise SystemExit(error_text)
 
           print('V7.2 authority, routing, traceability, and safety validation passed.')
+
+      - name: Upload governance validation errors
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v72-governance-validation-errors
+          path: v72-validation-errors.txt
+          if-no-files-found: ignore
