@@ -1,7 +1,7 @@
 {
   "ruleset_id": "DCSE-CONTENT-ARTIFACT-RULESET-v1",
   "version": "1.0",
-  "status": "candidate",
+  "status": "approved_for_canonical_merge",
   "rules": [
     {
       "rule_id": "CONTENT-LANE-001",
