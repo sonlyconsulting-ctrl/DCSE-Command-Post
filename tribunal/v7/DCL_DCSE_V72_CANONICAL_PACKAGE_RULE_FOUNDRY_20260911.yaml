@@ -37,7 +37,7 @@ dcl:
     access_check: PASS_GITHUB_AUTHENTICATED
   validation:
     - "R5 SHA-256 exact match verified"
-    - "Project Settings payload 7978 chars and SHA-256 metadata verified"
+    - "Project Settings payload 7939 chars and SHA-256 metadata verified"
     - "Employment and Thumbnail validation-integrity RATIFY"
     - "Methodology post-promotion substantive equality verified"
     - "Rule Foundry JSON syntax and package completeness enforced by CI"
