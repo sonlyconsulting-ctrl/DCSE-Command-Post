@@ -1,5 +1,5 @@
 {
-  "registry_version": "7.2.9",
+  "registry_version": "7.2.10",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
   "updated_at": "2026-09-11T13:36:00-04:00",
@@ -173,8 +173,10 @@
         "v7.2 canonical GitHub package"
       ],
       "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
-      "status": "APPROVED_ACTIVE_AUTHORIZED_CANONICAL_PERSISTENCE_ON_PR83_MERGE",
-      "supersedes": "Prospectively supersedes universal separate-actor validation language while preserving historical receipts and any explicit actor-separation requirement."
+      "status": "INCORPORATED",
+      "supersedes": "Prospectively supersedes universal separate-actor validation language while preserving historical receipts and any explicit actor-separation requirement.",
+      "incorporation_commit": "b4303bdf9f703b468808711a9dedf746e9c17649",
+      "canonical_persistence": "PR #83 merged to main"
     }
   ]
 }
