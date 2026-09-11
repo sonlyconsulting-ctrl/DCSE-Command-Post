@@ -4,7 +4,7 @@
 **Parent Task:** DCSE-V72-FINAL-PROMOTION-20260911-001  
 **Date:** 2026-09-11  
 **Lane:** DCSE  
-**Status:** PROMOTION-READY PENDING FINAL CI AND CANONICAL PR #83 MERGE
+**Status:** PROMOTION-READY PENDING CANONICAL PR #83 MERGE
 
 ## Scope
 
@@ -67,13 +67,21 @@ Existing promoted v7.2 doctrine retains its recorded lifecycle state. Carried-fo
 - Project Settings payload is 7,939 characters and its recorded SHA-256 `591799cf8ac46fab899ddf316eeee36071a699f3e083ae9d2c3b70d98d74bf28` matches recomputation.
 - CI now enforces D01-D22 completeness, Rule Foundry JSON syntax, the September 11 directive, Project Settings character count, and Project Settings SHA-256 metadata.
 
+## Final CI Evidence
+
+- GitHub Actions workflow: V7.2 governance validation
+- Run: `34632740087`
+- Result: SUCCESS
+- Validated head: `41b284a110f07b6bbc8addb5401b40329106c2d5`
+- Simplified canonical doctrine/registry paths and compatibility-mirror equality: PASS
+- Project Settings payload count/hash reconciliation: PASS
+
 ## Remaining Closure Gates
 
-- final GitHub Actions success on the evidence-bearing PR #83 head;
 - canonical PR #83 merge to `main`;
 - post-merge Supabase/runtime registry reconciliation;
 - distribution mirror reconciliation as applicable.
 
 ## Outcome
 
-The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door, root-level R5 controller, first-level doctrine/registry paths, and a complete doctrine root. Governance package is PROMOTION-READY. Canonical completion remains bounded to final CI, PR #83 merge, and post-merge runtime/distribution reconciliation.
+The prior structural defect is corrected on the working branch: the v7.2 package now has a deterministic front door, root-level R5 controller, first-level doctrine/registry paths, and a complete doctrine root. Governance package is PROMOTION-READY. Canonical completion remains bounded to PR #83 merge and post-merge runtime/distribution reconciliation.
