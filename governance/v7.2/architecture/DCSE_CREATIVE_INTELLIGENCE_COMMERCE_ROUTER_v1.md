@@ -2,7 +2,7 @@
 
 **Document ID:** DCSE-CICR-001  
 **Version:** 1.0  
-**Status:** DESIGN READY / CANDIDATE / RUNTIME UNSYNCHRONIZED  
+**Status:** APPROVED ARCHITECTURE / CANONICAL ON PR #83 MERGE / RUNTIME UNSYNCHRONIZED  
 **Lane:** SC primary, SS creative support, DCSE governance  
 **Purpose:** Convert governed product, audience, campaign, RAG, and DDNA context into commercially effective creative assets through capability-based multi-model routing.
 
