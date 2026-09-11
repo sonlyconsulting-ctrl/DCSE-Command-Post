@@ -1,0 +1,161 @@
+{
+  "manifest_id": "DCSE-V7.2-CANONICAL-GOVERNANCE-PACKAGE",
+  "version": "7.2",
+  "generated_on": "2026-09-11",
+  "controller": {
+    "path": "governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md",
+    "designated_sha256": "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
+  },
+  "front_door": "governance/v7.2/00_START_HERE.md",
+  "doctrine_root": "governance/v7.2/source/doctrines/",
+  "doctrine_set": [
+    {
+      "id": "D01",
+      "path": "governance/v7.2/source/doctrines/D01_Forward_Thinking_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D02",
+      "path": "governance/v7.2/source/doctrines/D02_Forward_Backward_Chaining_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D03",
+      "path": "governance/v7.2/source/doctrines/D03_AI_Orchestration_v7-2.md",
+      "package_state": "v7.2_candidate",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D04",
+      "path": "governance/v7.2/source/doctrines/D04_Command_Post_Communications_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D05",
+      "path": "governance/v7.2/source/doctrines/D05_Baseline_Promotion_v7-2.md",
+      "package_state": "v7.2_projection",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D06",
+      "path": "governance/v7.2/source/doctrines/D06_File_System_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D07",
+      "path": "governance/v7.2/source/doctrines/D07_Campaign_Governance_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D08",
+      "path": "governance/v7.2/source/doctrines/D08_Voice_Tone_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D09",
+      "path": "governance/v7.2/source/doctrines/D09_Brand_Identity_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D10",
+      "path": "governance/v7.2/source/doctrines/D10_Persona_Assets_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D11",
+      "path": "governance/v7.2/source/doctrines/D11_HTML_Wix_App_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D12",
+      "path": "governance/v7.2/source/doctrines/D12_Video_Media_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D13",
+      "path": "governance/v7.2/source/doctrines/D13_DART_Core_v7-2.md",
+      "package_state": "ps_route_only",
+      "load_scope": "PS_ONLY"
+    },
+    {
+      "id": "D14",
+      "path": "governance/v7.2/source/doctrines/D14_DART_PS_Protected_v7-2.md",
+      "package_state": "ps_route_only",
+      "load_scope": "PS_ONLY"
+    },
+    {
+      "id": "D15",
+      "path": "governance/v7.2/source/doctrines/D15_Database_Administration_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D16",
+      "path": "governance/v7.2/source/doctrines/D16_DDNA_Governance_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D17",
+      "path": "governance/v7.2/source/doctrines/D17_DART_Universal_Methodology_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D18",
+      "path": "governance/v7.2/source/doctrines/D18_Media_Production_Pipeline_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D19",
+      "path": "governance/v7.2/source/doctrines/D19_Visual_Creation_Pipeline_v7-2.md",
+      "package_state": "carried_forward",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D20",
+      "path": "governance/v7.2/source/doctrines/D20_Product_Assembly_Methodology_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D21",
+      "path": "governance/v7.2/source/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md",
+      "package_state": "v7.2_projection",
+      "load_scope": "ROUTED"
+    },
+    {
+      "id": "D22",
+      "path": "governance/v7.2/source/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md",
+      "package_state": "promoted",
+      "load_scope": "ROUTED"
+    }
+  ],
+  "associated_controls": [
+    "DCSE_MANIFEST.yaml",
+    "governance/v7.2/source/registry/DCSE_Doctrine_Index_v7-2.md",
+    "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md",
+    "governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md",
+    "governance/v7.2/ZONE_INDEX.v7.2.json",
+    "governance/v7.2/project-instructions/DCSE_COMMAND_POST_PROJECT_INSTRUCTIONS_v7_2_FINAL.md",
+    "governance/v7.2/dcs_express_directives.v7.2.json",
+    "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
+  ],
+  "rules": {
+    "historical_versions_are_lineage_only": true,
+    "ordinary_startup_requires_no_v7_1_path": true,
+    "package_presence_does_not_create_authority": true,
+    "ps_doctrines_route_restricted": true
+  }
+}
