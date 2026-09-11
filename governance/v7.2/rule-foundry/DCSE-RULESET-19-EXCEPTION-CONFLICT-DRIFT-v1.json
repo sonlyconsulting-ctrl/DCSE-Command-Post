@@ -1,0 +1,735 @@
+{
+  "ruleset_id": "DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1",
+  "version": "1.0-candidate",
+  "title": "Rule Set 19 Exception, Conflict and Drift",
+  "family": "exception_conflict_drift",
+  "status": "validating",
+  "authority_ref": "DCS Level 0 authorized rule-corpus program under DCS-DIR-20260911-003",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "source_refs": [
+    "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md",
+    "governance/v7.2/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md",
+    "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md"
+  ],
+  "rules": [
+    {
+      "rule_id": "DRIFT-DETECT-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Governed surfaces disagree",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "DRIFT_CLASSIFIED",
+        "required_actions": [
+          "If false, return HOLD_FOR_DRIFT_CLASSIFICATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "DRIFT_CLASSIFIED",
+        "HOLD_FOR_DRIFT_CLASSIFICATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "CSRC#5"
+      },
+      "provenance": [
+        {
+          "source_ref": "CSRC#5",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "DRIFT_CLASSIFIED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_DRIFT_CLASSIFICATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "DRIFT_CLASSIFIED",
+          "HOLD_FOR_DRIFT_CLASSIFICATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "DRIFT-PRESERVE-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "invariant",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Conflicting evidence is discovered",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "CONFLICT_PRESERVED",
+        "required_actions": [
+          "If false, return DENY_SILENT_OVERWRITE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "CONFLICT_PRESERVED",
+        "DENY_SILENT_OVERWRITE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "CSRC#9"
+      },
+      "provenance": [
+        {
+          "source_ref": "CSRC#9",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "CONFLICT_PRESERVED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_SILENT_OVERWRITE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "CONFLICT_PRESERVED",
+          "DENY_SILENT_OVERWRITE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "DRIFT-PRECEDENCE-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "decision",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Rules/sources conflict",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "PRECEDENCE_RESOLVED",
+        "required_actions": [
+          "If false, return HOLD_FOR_AUTHORITY_SCOPE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PRECEDENCE_RESOLVED",
+        "HOLD_FOR_AUTHORITY_SCOPE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D22 + Rule Test Protocol#11"
+      },
+      "provenance": [
+        {
+          "source_ref": "D22 + Rule Test Protocol#11",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PRECEDENCE_RESOLVED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_AUTHORITY_SCOPE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PRECEDENCE_RESOLVED",
+          "HOLD_FOR_AUTHORITY_SCOPE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "DRIFT-EXCEPTION-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Rule exception is invoked",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "EXCEPTION_AUTHORIZED",
+        "required_actions": [
+          "If false, return DENY_UNAUTHORIZED_EXCEPTION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "EXCEPTION_AUTHORIZED",
+        "DENY_UNAUTHORIZED_EXCEPTION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "Rule Test Protocol#8-11"
+      },
+      "provenance": [
+        {
+          "source_ref": "Rule Test Protocol#8-11",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "EXCEPTION_AUTHORIZED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_UNAUTHORIZED_EXCEPTION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "EXCEPTION_AUTHORIZED",
+          "DENY_UNAUTHORIZED_EXCEPTION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "DRIFT-REVALIDATE-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Drift correction is made",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "DRIFT_REVALIDATED",
+        "required_actions": [
+          "If false, return HOLD_FOR_REVALIDATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "DRIFT_REVALIDATED",
+        "HOLD_FOR_REVALIDATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "CSRC#9"
+      },
+      "provenance": [
+        {
+          "source_ref": "CSRC#9",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "DRIFT_REVALIDATED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_REVALIDATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "DRIFT_REVALIDATED",
+          "HOLD_FOR_REVALIDATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "DRIFT-COMPLETE-001",
+      "version": "1.0",
+      "family": "exception_conflict_drift",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Cross-system task claims complete",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "COMPLETION_RECONCILED",
+        "required_actions": [
+          "If false, return TASK_PARTIAL."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "COMPLETION_RECONCILED",
+        "TASK_PARTIAL",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "CSRC#4"
+      },
+      "provenance": [
+        {
+          "source_ref": "CSRC#4",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "COMPLETION_RECONCILED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "TASK_PARTIAL"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "COMPLETION_RECONCILED",
+          "TASK_PARTIAL",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    }
+  ],
+  "validation_summary": {
+    "structural_contract": "PENDING_REPOSITORY_VALIDATION",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "notes": []
+  }
+}
