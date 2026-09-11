@@ -5,7 +5,8 @@
 **Issued:** 2026-09-11  
 **Classification:** INTERNAL / CONFIDENTIAL  
 **Lane:** DCSE  
-**Status:** APPROVED / ACTIVE BY DCS EXPRESS DIRECTION; CANONICAL PERSISTENCE VIA PR #83
+**Status:** APPROVED / ACTIVE / CANONICALLY PERSISTED VIA PR #83 MERGE  
+**Canonical Merge Commit:** `b4303bdf9f703b468808711a9dedf746e9c17649`
 
 ## 1. Decision
 
