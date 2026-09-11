@@ -1,0 +1,853 @@
+{
+  "ruleset_id": "DCSE-RULESET-08-WEB-APP-DIGITAL-v1",
+  "version": "1.0-candidate",
+  "title": "Rule Set 8 Website, App and Digital Experience",
+  "family": "web_app_digital_experience",
+  "status": "validating",
+  "authority_ref": "DCS Level 0 authorized rule-corpus program under DCS-DIR-20260911-003",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "source_refs": [
+    "governance/v7.2/doctrines/D11_HTML_Wix_App_v7-2.md",
+    "governance/v7.2/doctrines/D20_Product_Assembly_Methodology_v7-2.md"
+  ],
+  "rules": [
+    {
+      "rule_id": "WEB-STATE-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Interactive module is built",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_INTERACTIVE_BUILD",
+        "required_actions": [
+          "If false, return HOLD_FOR_EXPLICIT_STATE_SCHEMA."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_INTERACTIVE_BUILD",
+        "HOLD_FOR_EXPLICIT_STATE_SCHEMA",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#1.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#1.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_INTERACTIVE_BUILD"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_EXPLICIT_STATE_SCHEMA"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_INTERACTIVE_BUILD",
+          "HOLD_FOR_EXPLICIT_STATE_SCHEMA",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-ERROR-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Validation/write/connection failure occurs",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "ALLOW_USER_VISIBLE_STATE",
+        "required_actions": [
+          "If false, return FAIL_SILENT_ERROR."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_USER_VISIBLE_STATE",
+        "FAIL_SILENT_ERROR",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#1.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#1.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_USER_VISIBLE_STATE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "FAIL_SILENT_ERROR"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_USER_VISIBLE_STATE",
+          "FAIL_SILENT_ERROR",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-CLIENTSECRET-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "prohibition",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Browser-facing code is produced",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "ALLOW_CLIENT_CODE",
+        "required_actions": [
+          "If false, return DENY_SECRET_EXPOSURE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CLIENT_CODE",
+        "DENY_SECRET_EXPOSURE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#1.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#1.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_CLIENT_CODE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_SECRET_EXPOSURE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_CLIENT_CODE",
+          "DENY_SECRET_EXPOSURE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-RLS-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Browser-backed database write is used",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_DATA_WRITE",
+        "required_actions": [
+          "If false, return HOLD_FOR_RLS_ACCESS_CONTROL."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_DATA_WRITE",
+        "HOLD_FOR_RLS_ACCESS_CONTROL",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#1.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#1.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_DATA_WRITE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_RLS_ACCESS_CONTROL"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_DATA_WRITE",
+          "HOLD_FOR_RLS_ACCESS_CONTROL",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-RESPONSIVE-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Public/interactive web artifact reaches completion",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_VISUAL_COMPLETE",
+        "required_actions": [
+          "If false, return HOLD_FOR_RESPONSIVE_VALIDATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_VISUAL_COMPLETE",
+        "HOLD_FOR_RESPONSIVE_VALIDATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#3"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#3",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_VISUAL_COMPLETE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_RESPONSIVE_VALIDATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_VISUAL_COMPLETE",
+          "HOLD_FOR_RESPONSIVE_VALIDATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-WIXMSG-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Wix iframe messaging is used",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "ALLOW_POSTMESSAGE",
+        "required_actions": [
+          "If false, return DENY_UNVERIFIED_MESSAGE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_POSTMESSAGE",
+        "DENY_UNVERIFIED_MESSAGE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D11#2.1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D11#2.1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_POSTMESSAGE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_UNVERIFIED_MESSAGE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_POSTMESSAGE",
+          "DENY_UNVERIFIED_MESSAGE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "WEB-PREVIEW-001",
+      "version": "1.0",
+      "family": "web_app_digital_experience",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Browser-renderable product reaches completion review",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_COMPLETION_REVIEW",
+        "required_actions": [
+          "If false, return HOLD_FOR_LIVE_PREVIEW."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_COMPLETION_REVIEW",
+        "HOLD_FOR_LIVE_PREVIEW",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D20#3.4"
+      },
+      "provenance": [
+        {
+          "source_ref": "D20#3.4",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ALLOW_COMPLETION_REVIEW"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_LIVE_PREVIEW"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_COMPLETION_REVIEW",
+          "HOLD_FOR_LIVE_PREVIEW",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    }
+  ],
+  "validation_summary": {
+    "structural_contract": "PENDING_REPOSITORY_VALIDATION",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "notes": []
+  }
+}
