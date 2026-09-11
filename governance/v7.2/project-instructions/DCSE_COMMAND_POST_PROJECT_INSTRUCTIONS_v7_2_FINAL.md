@@ -6,8 +6,8 @@
 **Lane:** SC / DCSE Command Post
 **Authority:** DCS Level 0
 **Effective Date:** 2026-09-11
-**Project Settings Payload Character Count:** 7978
-**Project Settings Payload SHA-256:** 291a91262454a61d87ac5d41a080989973e4ea286d48c4de32a53696d194d422
+**Project Settings Payload Character Count:** 7939
+**Project Settings Payload SHA-256:** 591799cf8ac46fab899ddf316eeee36071a699f3e083ae9d2c3b70d98d74bf28
 **Source Lineage:** Prior DCSE Command Post Project Instructions v6+; DCS Employment rolling reconciliation; DCS Enterprise/DCSE rolling reconciliation; operative v7.2 R5 governance; DCS express directives; 2026-09-06 CTO/Senior DBA and AG Junior DBA authority decision.
 **Purpose:** Preserve the exact copy-ready candidate Project Settings instructions for the DCSE Command Post project.
 
