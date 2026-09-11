@@ -4,7 +4,7 @@
 **Task ID:** DCSE-V72-CANONICAL-GOVERNANCE-PACKAGE-20260911-005  
 **Parent:** DCSE-V72-FINAL-PROMOTION-20260911-001  
 **Date:** 2026-09-11  
-**Status:** PARTIAL  
+**Status:** PROMOTION-READY / PENDING FINAL CI + PR #83 MERGE  
 **Canonical Candidate Branch:** `governance/v7.2-final-promotion-consistency-20260911`  
 **Pull Request:** #83
 
@@ -23,6 +23,15 @@
 
 None by this receipt alone. Tribunal preserves evidence. It does not manufacture authority.
 
+## Additional Evidence
+
+- DCS-DIR-20260911-001 recorded.
+- R5 SHA-256 exact-match verified.
+- Project Settings payload count/hash verified.
+- Employment and Thumbnail methodologies validation-integrity receipt: RATIFY.
+- Employment and Thumbnail methodologies: ACTIVE_RATIFIED.
+- Historical actor-separation receipts preserved as historical evidence; prospective controls updated.
+
 ## Exit State
 
-PARTIAL pending final branch validation, exact Level 0 promotion/review state, canonical merge, and runtime/distribution reconciliation.
+PROMOTION-READY pending final CI and canonical PR #83 merge. Runtime/distribution reconciliation follows canonical merge.
