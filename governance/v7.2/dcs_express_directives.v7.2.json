@@ -1,15 +1,19 @@
 {
-  "registry_version": "7.2.7",
+  "registry_version": "7.2.8",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-10T16:37:00-04:00",
+  "updated_at": "2026-09-11T13:36:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
       "issued_at": "2026-08-08T23:37:51Z",
       "issuing_authority": "DCS",
       "directive_text": "Designate the exact DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md artifact identified by SHA-256 2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae as the controlling DCSE Master Profile v7.2 R5. The embedded candidate label is build-stage provenance and does not override the later DCS authority decision.",
-      "affected_sections": ["controller authority state", "v7.2 R5 designation", "runtime authority resolution"],
+      "affected_sections": [
+        "controller authority state",
+        "v7.2 R5 designation",
+        "runtime authority resolution"
+      ],
       "incorporation_commit": "f72c3288f301d38dc8184d2bbd55c6ef17eae670",
       "status": "INCORPORATED",
       "supersedes": "DCS v7.2 R4 operative designation"
@@ -19,7 +23,14 @@
       "issued_at": "2026-09-05T18:14:00-04:00",
       "issuing_authority": "DCS",
       "directive_text": "Enforce v7.2 R5 as operative across governed model and agent surfaces; require task ID, Preflight Validation, D21 task declaration and Doctrine Consideration Log for every substantive task; preserve task identity across handoffs; and narrow the concluded-matter PS firewall so that protected-origin material is blocked from public-facing spill unless expressly authorized, while internal/private use remains permitted subject to confidentiality and access controls.",
-      "affected_sections": ["D21 task declaration", "D21 Doctrine Consideration Log", "model and agent onboarding", "runtime synchronization", "publication firewall", "public release controls"],
+      "affected_sections": [
+        "D21 task declaration",
+        "D21 Doctrine Consideration Log",
+        "model and agent onboarding",
+        "runtime synchronization",
+        "publication firewall",
+        "public release controls"
+      ],
       "incorporation_commit": "d6a7758206356c698515dfe75525ca6d1176c5d4",
       "status": "SUPERSEDED_BY_DCS-DIR-20260910-001",
       "superseded_canonical_path": "governance/v7.2/DCSE_V7_2_RUNTIME_HARMONY_AND_PS_PUBLICATION_DIRECTIVE_20260905.md"
@@ -30,17 +41,50 @@
       "issuing_authority": "DCS",
       "directive_text": "Adopt for immediate task routing the DCS Employment Opportunity & Package Methodology and the Thumbnail & Cover Asset Production Methodology created under DCS instruction on 2026-09-06. The exact current GitHub artifacts identified below are active by this express directive and DCSE-DDNA runtime reconciled. Formal D05 ACTIVE_RATIFIED promotion remains separately observable and requires attributable independent validation.",
       "artifacts": [
-        {"document_id":"DCSE-METH-EMP-001","path":"governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md","creation_commit_sha":"eb6f6df220999cee518a9f8819542e7eb1d741d7","current_commit_sha":"5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73","content_sha256":"ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977","current_version":"v1.1"},
-        {"document_id":"DCSE-METH-MEDIA-THUMB-001","path":"governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md","creation_commit_sha":"072c0b3aea3895a8b75a1feb01101326f735b6c8","current_commit_sha":"a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43","content_sha256":"60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3","current_version":"v1.1"}
+        {
+          "document_id": "DCSE-METH-EMP-001",
+          "path": "governance/v7.2/methodologies/DCSE_METH_DCS_Employment_Opportunity_Package_v1.md",
+          "creation_commit_sha": "eb6f6df220999cee518a9f8819542e7eb1d741d7",
+          "current_commit_sha": "5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73",
+          "content_sha256": "ffbd56f38bbad96dfd14188f0a6f9e707f3eeee18dc0de3e3ce4f33df4e9d977",
+          "current_version": "v1.1"
+        },
+        {
+          "document_id": "DCSE-METH-MEDIA-THUMB-001",
+          "path": "governance/v7.2/methodologies/DCSE_METH_Thumbnail_Cover_Asset_Production_v1.md",
+          "creation_commit_sha": "072c0b3aea3895a8b75a1feb01101326f735b6c8",
+          "current_commit_sha": "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43",
+          "content_sha256": "60ce132f5758f4cc79b21b4cf2065ea85497b4e5a28067329c1ef25725098dd3",
+          "current_version": "v1.1"
+        }
       ],
-      "affected_sections": ["DCS Employment opportunity classification and package construction", "employment baseline preservation and evidence alignment", "DCS Employment engagement tracking", "D18 media distribution thumbnail generation", "D19 visual creation thumbnail specialization", "task-routed methodology selection"],
-      "incorporation_commits": ["eb6f6df220999cee518a9f8819542e7eb1d741d7", "072c0b3aea3895a8b75a1feb01101326f735b6c8"],
-      "status_reconciliation_commits": ["5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73", "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43"],
-      "runtime_registry": {"system":"DCSE-DDNA","schema":"dcse_cp","directive_key":"DCS-DIR-20260906-001","status":"RECONCILED"},
+      "affected_sections": [
+        "DCS Employment opportunity classification and package construction",
+        "employment baseline preservation and evidence alignment",
+        "DCS Employment engagement tracking",
+        "D18 media distribution thumbnail generation",
+        "D19 visual creation thumbnail specialization",
+        "task-routed methodology selection"
+      ],
+      "incorporation_commits": [
+        "eb6f6df220999cee518a9f8819542e7eb1d741d7",
+        "072c0b3aea3895a8b75a1feb01101326f735b6c8"
+      ],
+      "status_reconciliation_commits": [
+        "5a7ce1987f6928d8cc0c4f07314bdfd11bb71e73",
+        "a2e7d8a4cb762f0a09dbc589cf97e03d17ae3d43"
+      ],
+      "runtime_registry": {
+        "system": "DCSE-DDNA",
+        "schema": "dcse_cp",
+        "directive_key": "DCS-DIR-20260906-001",
+        "status": "RECONCILED"
+      },
       "status": "INCORPORATED",
       "artifact_authority_state": "ACTIVE_BY_DCS_DIRECTIVE_RUNTIME_RECONCILED",
-      "formal_promotion_state": "PENDING_ATTRIBUTABLE_INDEPENDENT_VALIDATION",
-      "supersedes": "No prior operative methodology; modernizes legacy DCS Employment package guidance and specializes existing D18/D19 thumbnail controls without superseding D18 or D19."
+      "formal_promotion_state": "PENDING_VALIDATION_INTEGRITY_RECEIPT",
+      "supersedes": "No prior operative methodology; modernizes legacy DCS Employment package guidance and specializes existing D18/D19 thumbnail controls without superseding D18 or D19.",
+      "current_validation_rule": "Functional independence under DCS-DIR-20260911-001 unless actor separation is expressly required."
     },
     {
       "directive_id": "DCS-DIR-20260906-002",
@@ -50,8 +94,20 @@
       "canonical_path": "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md",
       "canonical_commit_sha": "2aa4b4158aa0661a1567f335565c4448b3e0e9cb",
       "content_sha256": "c10a9e3990ef192ae2979551778920eeeedbc26369943e1400cac00f94b61d7a",
-      "affected_sections": ["D21 task closeout", "D21 Doctrine Consideration Log", "human review evidence", "closure integrity validation", "cross-system evidence collection", "status-drift prevention"],
-      "runtime_registry": {"system":"DCSE-DDNA","schema":"dcse_cp","directive_key":"DCS-DIR-20260906-002","status":"RECONCILED"},
+      "affected_sections": [
+        "D21 task closeout",
+        "D21 Doctrine Consideration Log",
+        "human review evidence",
+        "closure integrity validation",
+        "cross-system evidence collection",
+        "status-drift prevention"
+      ],
+      "runtime_registry": {
+        "system": "DCSE-DDNA",
+        "schema": "dcse_cp",
+        "directive_key": "DCS-DIR-20260906-002",
+        "status": "RECONCILED"
+      },
       "status": "INCORPORATED",
       "supersedes": "No prior express completion-evidence collector requirement."
     },
@@ -63,8 +119,20 @@
       "canonical_path": "governance/v7.2/DCSE_V7_2_ENGAGEMENT_TRACKING_AND_THUMBNAIL_WORKFLOW_AMENDMENT_20260906.md",
       "canonical_commit_sha": "594f472137554e4a212418726bdb18c434f849b5",
       "content_sha256": "271ba25d0c48880acddd3e93aa0ff43a05ab8bf3ba2b1d01197446d9b65f647b",
-      "affected_sections": ["DCS Employment engagement lifecycle", "opportunity pipeline tracking", "SC/DCS Enterprise routing", "thumbnail candidate-set architecture", "human media selection gate", "D18/D19 task-routed workflow"],
-      "runtime_registry": {"system":"DCSE-DDNA","schema":"dcse_cp","directive_key":"DCS-DIR-20260906-003","status":"RECONCILED"},
+      "affected_sections": [
+        "DCS Employment engagement lifecycle",
+        "opportunity pipeline tracking",
+        "SC/DCS Enterprise routing",
+        "thumbnail candidate-set architecture",
+        "human media selection gate",
+        "D18/D19 task-routed workflow"
+      ],
+      "runtime_registry": {
+        "system": "DCSE-DDNA",
+        "schema": "dcse_cp",
+        "directive_key": "DCS-DIR-20260906-003",
+        "status": "RECONCILED"
+      },
       "status": "INCORPORATED",
       "supersedes": "Refines DCS-DIR-20260906-001 methodology content without superseding its authority state."
     },
@@ -74,10 +142,38 @@
       "issuing_authority": "DCS Level 0",
       "directive_text": "Amend and consolidate the v7.2 Runtime Harmony and Task Traceability directive so mandatory task intake metadata is paired with mandatory evidence-backed navigable final reporting, explicit goal-status and goal-shift reasoning, direct jump references to available GitHub, Supabase, Tribunal, Command Post, ESCD, deployment, doctrine, and rollback/history evidence, and default ESCD next-work prioritization with DCS controls to continue, skip, defer, reorder, or interrupt at any time.",
       "canonical_path": "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md",
-      "affected_sections": ["mandatory task traceability", "Preflight Validation", "navigable final reporting", "Completion Evidence", "goal-state reconciliation", "ESCD next-work prioritization", "DCS interruption control", "cross-system evidence navigation"],
+      "affected_sections": [
+        "mandatory task traceability",
+        "Preflight Validation",
+        "navigable final reporting",
+        "Completion Evidence",
+        "goal-state reconciliation",
+        "ESCD next-work prioritization",
+        "DCS interruption control",
+        "cross-system evidence navigation"
+      ],
       "authority_state": "APPROVED_PROMOTED_ACTIVE_AUTHORIZED",
       "status": "INCORPORATED",
       "supersedes": "DCS-DIR-20260905-001 canonical file while preserving its operative substance and historical provenance."
+    },
+    {
+      "directive_id": "DCS-DIR-20260911-001",
+      "issued_at": "2026-09-11T13:36:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "For v7.2 governance creation, issue resolution, validation, and authorized execution, pair independence with delegated task/process authority. Functional independence is sufficient unless a controlling source expressly requires actor separation. Authorized models/agents shall resolve all non-reserved work inside the task envelope and escalate only irreducible reserved decisions. Establish the Rule Foundry and maintain a self-contained v7.2 GitHub governance package.",
+      "canonical_path": "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md",
+      "affected_sections": [
+        "D03 delegated independent authority",
+        "D05 validation and promotion",
+        "D21 no-passive-gate routing",
+        "project instructions",
+        "methodology validation",
+        "Rule Foundry",
+        "v7.2 canonical GitHub package"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "INCORPORATED_PENDING_CANONICAL_MERGE",
+      "supersedes": "Prospectively supersedes universal separate-actor validation language while preserving historical receipts and any explicit actor-separation requirement."
     }
   ]
 }
