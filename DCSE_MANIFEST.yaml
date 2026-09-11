@@ -2,6 +2,9 @@ dcse:
   governance_version: "V7.2"
   package_status: "OPERATIVE"
   principle: "Structure Precedes Scale."
+  front_door: "governance/v7.2/00_START_HERE.md"
+  doctrine_root: "governance/v7.2/source/doctrines/"
+  complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
   constitutional_entrypoint: "governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
@@ -19,6 +22,9 @@ canonical:
     repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
     authority_branch: "main"
     governance_path: "governance/v7.2/"
+    front_door: "governance/v7.2/00_START_HERE.md"
+    doctrine_root: "governance/v7.2/source/doctrines/"
+    complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
     controller_path: "governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
     operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
     governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
@@ -41,6 +47,7 @@ canonical:
       role: "operational state registry"
 
 mandatory_entry_sequence:
+  - "governance/v7.2/00_START_HERE.md"
   - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   - "governance/v7.2/source/doctrines/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   - "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
