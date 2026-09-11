@@ -183,6 +183,29 @@
     "governance/v7.2/rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md",
     "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
     "governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json",
-    "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md"
-  ]
+    "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md",
+    "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md",
+    "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md",
+    "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md",
+    "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+  ],
+  "baseline_checkpoints": [
+    {
+      "id": "DCSE-V7.2-BASELINE-A-20260911",
+      "path": "governance/v7.2/baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md",
+      "base_commit": "68a3bc164e75dbbab710590c57c04bf9a142c850",
+      "role": "rollback_and_comparison_anchor"
+    }
+  ],
+  "execution_layer": {
+    "authority": "DCS-DIR-20260911-002",
+    "baseline": "DCSE-V7.2-BASELINE-A-20260911",
+    "conversation_open_close_symmetry": true,
+    "platform_profiles": [
+      "GitHub",
+      "Vercel",
+      "Supabase"
+    ],
+    "cross_system_reconciliation_required_for_material_multi_system_work": true
+  }
 }

@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.10",
+  "registry_version": "7.2.11",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-11T13:36:00-04:00",
+  "updated_at": "2026-09-11T14:46:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -177,6 +177,32 @@
       "supersedes": "Prospectively supersedes universal separate-actor validation language while preserving historical receipts and any explicit actor-separation requirement.",
       "incorporation_commit": "b4303bdf9f703b468808711a9dedf746e9c17649",
       "canonical_persistence": "PR #83 merged to main"
+    },
+    {
+      "directive_id": "DCS-DIR-20260911-002",
+      "issued_at": "2026-09-11T14:46:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "Establish the current validated v7.2 state as a frozen baseline checkpoint and continue with four governed-execution assets covering universal execution/interaction, conversation intake and explicit closeout, GitHub/Vercel/Supabase execution profiles, and cross-system reconciliation/completion evidence. Preserve privacy, secret handling, rollback, evidence, and anti-drift controls across model and agent interactions.",
+      "canonical_assets": [
+        "governance/v7.2/baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md",
+        "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md",
+        "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md",
+        "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md",
+        "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+      ],
+      "affected_sections": [
+        "conversation/session intake and closeout",
+        "effort risk authority sensitivity classification",
+        "GitHub governed execution",
+        "Vercel governed execution",
+        "Supabase governed execution",
+        "cross-system reconciliation",
+        "Completion Evidence",
+        "DDNA operational learning inputs"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "APPROVED_ACTIVE_AUTHORIZED_PENDING_CANONICAL_MERGE",
+      "supersedes": "No prior single execution-envelope standard. Extends D04, D15, D21, D22, DCS-DIR-20260906-002, DCS-DIR-20260910-001, and DCS-DIR-20260911-001 without reducing their controls."
     }
   ]
 }

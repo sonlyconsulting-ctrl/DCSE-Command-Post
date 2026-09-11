@@ -77,6 +77,21 @@ Current implementation profile:
 
 These remain subordinate to the Master Profile and routed doctrine. The Creative Router architecture is approved but remains runtime UNSYNCHRONIZED until implementation/security/runtime evidence exists.
 
+## Governed Execution Layer
+
+Baseline checkpoint:
+
+- `baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md`
+
+Active execution controls:
+
+- `execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md`
+- `execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md`
+- `execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md`
+- `execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md`
+
+These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
+
 ## Compatibility Mirror
 
 `source/doctrines/` and `source/registry/` are temporary compatibility/lineage mirrors for older references. They are not the normal v7.2 startup route. CI verifies mirror equality while they remain present.

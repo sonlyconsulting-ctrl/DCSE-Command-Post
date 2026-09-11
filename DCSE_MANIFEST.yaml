@@ -14,6 +14,11 @@ dcse:
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   bounded_independent_authority: "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
   task_traceability_and_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
+  governed_execution_standard: "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
+  conversation_intake_closeout: "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md"
+  platform_execution_profiles: "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md"
+  cross_system_reconciliation: "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+  baseline_checkpoint: "governance/v7.2/baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   authority_state: "OPERATIVE"
   compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES_INCLUDING_DCS-DIR-20260911-001"
@@ -39,6 +44,7 @@ canonical:
     directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
     completion_evidence_directive: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
     zone_index: "governance/v7.2/ZONE_INDEX.v7.2.json"
+    governed_execution_standard: "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
   supabase:
     governance:
       name: "DCSE-DDNA"
@@ -61,6 +67,8 @@ mandatory_entry_sequence:
   - "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md"
   - "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   - "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
+  - "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
+  - "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md"
   - "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md"
   - "task-routed doctrines selected by D21 and the operative controller"
   - "applicable assignment or instruction"
@@ -79,6 +87,10 @@ authority_routes:
   runtime_doctrine_selection: "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md"
   task_traceability_and_navigable_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
   completion_evidence_closeout: "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
+  governed_execution: "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
+  conversation_lifecycle: "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md"
+  platform_execution: "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md"
+  cross_system_reconciliation: "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
   baseline_and_promotion: "governance/v7.2/doctrines/D05_Baseline_Promotion_v7-2.md"
   agent_onboarding: "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md"
   reserved_stop_gates: "governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md"
@@ -99,6 +111,8 @@ zones:
     effect: "historical lineage and adopted subject content; source lifecycle does not independently override operative v7.2 authority"
   execution:
     path:
+      - "governance/v7.2/execution/**"
+      - "governance/v7.2/baselines/**"
       - "governance/v7.2/implementations/**"
       - "governance/v7.2/project-instructions/**"
     effect: "bounded instructions, contracts, plans, ledgers, corrections, and activity records"
