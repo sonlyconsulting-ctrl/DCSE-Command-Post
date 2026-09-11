@@ -36,11 +36,15 @@ dcl:
     ps_scan: PASS_DOCTRINE_ONLY_PS_FILES_ROUTE_RESTRICTED
     access_check: PASS_GITHUB_AUTHENTICATED
   validation:
-    - "GitHub Actions required to verify final branch head"
-    - "Rule Foundry JSON syntax enforced by CI"
+    - "R5 SHA-256 exact match verified"
+    - "Project Settings payload 7978 chars and SHA-256 metadata verified"
+    - "Employment and Thumbnail validation-integrity RATIFY"
+    - "Methodology post-promotion substantive equality verified"
+    - "Rule Foundry JSON syntax and package completeness enforced by CI"
+    - "Final GitHub Actions success still required on evidence-bearing head"
   evidence:
     - "governance/v7.2/00_START_HERE.md"
     - "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
     - "governance/v7.2/rule-foundry/"
     - "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md"
-  exit_status: PARTIAL
+  exit_status: PROMOTION_READY_PENDING_FINAL_CI_AND_MERGE
