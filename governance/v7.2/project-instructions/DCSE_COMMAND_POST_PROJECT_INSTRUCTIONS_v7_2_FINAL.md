@@ -1,7 +1,7 @@
 # DCSE Command Post Project Instructions v7.2 Final Reconciled Baseline
 
 **Document ID:** DCSE-CP-PROJECT-INSTRUCTIONS-v7.2
-**Status:** CANDIDATE UPDATE FOR v7.2 FINAL PROMOTION
+**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE
 **Classification:** CONFIDENTIAL / INTERNAL
 **Lane:** SC / DCSE Command Post
 **Authority:** DCS Level 0
