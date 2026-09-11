@@ -203,3 +203,21 @@ def test_conversation_api_get_and_reset():
     assert reset["conversation_id"] == cid
     assert reset["turns"] == []
 
+
+def test_dev_server_routes():
+    import threading, time, urllib.request
+    from scratch.dev_server import run
+
+    t = threading.Thread(target=run, kwargs={"port": 3987}, daemon=True)
+    t.start()
+    time.sleep(0.5)
+
+    req = urllib.request.Request("http://127.0.0.1:3987/escd/app")
+    with urllib.request.urlopen(req) as resp:
+        html = resp.read().decode("utf-8")
+        assert resp.status == 200
+        assert 'id="knowledge"' in html
+        assert 'id="detailModal"' in html
+        assert 'id="convPill"' in html
+
+
