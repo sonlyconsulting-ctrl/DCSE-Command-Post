@@ -1,0 +1,1259 @@
+{
+  "ruleset_id": "DCSE-RULESET-05-CONTENT-ARTIFACT-v2",
+  "version": "2.0-candidate",
+  "family": "artifact_content_generation",
+  "status": "candidate",
+  "authority_ref": "DCS-DIR-20260911-001 + DCS Level 0 instruction 2026-09-11",
+  "parent_standard": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "determinism_boundary": "AI may interpret source context and normalize inputs. Rule evaluation after normalized inputs is deterministic.",
+  "rules": [
+    {
+      "rule_id": "CA-GENPACK-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "material_content_or_artifact"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Material artifact or content generation is requested",
+        "event": "generation_start",
+        "when": "material_generation == true"
+      },
+      "inputs": [
+        {
+          "name": "generation_packet_complete",
+          "required": true,
+          "type": "boolean",
+          "source": "task preflight"
+        },
+        {
+          "name": "artifact_type",
+          "required": true,
+          "type": "string",
+          "source": "task"
+        },
+        {
+          "name": "destination",
+          "required": true,
+          "type": "string",
+          "source": "task"
+        }
+      ],
+      "condition": {
+        "expression": "generation_packet_complete == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "ALLOW_GENERATION",
+        "required_actions": [
+          "Hold downstream generation until required generation packet fields are resolved."
+        ]
+      },
+      "prohibitions": [
+        "Do not begin material generation with unresolved required packet fields."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_GENERATION",
+        "HOLD_FOR_REQUIRED_INPUT"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001",
+        "delegated_scope": "material content and artifact generation"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#2",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "complete packet passes",
+            "input": {
+              "generation_packet_complete": true
+            },
+            "expected": "ALLOW_GENERATION"
+          }
+        ],
+        "negative": [
+          {
+            "name": "missing packet holds",
+            "input": {
+              "generation_packet_complete": false
+            },
+            "expected": "HOLD_FOR_REQUIRED_INPUT"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "small but material public asset",
+            "input": {
+              "generation_packet_complete": false,
+              "material_generation": true
+            },
+            "expected": "HOLD_FOR_REQUIRED_INPUT"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_GENERATION",
+          "HOLD_FOR_REQUIRED_INPUT"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT generation packet requirement in v1 operational list",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-LANE-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "invariant",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Any artifact generation begins",
+        "event": "generation_start",
+        "when": "true"
+      },
+      "inputs": [
+        {
+          "name": "lane_resolved",
+          "required": true,
+          "type": "boolean",
+          "source": "preflight"
+        },
+        {
+          "name": "entity_resolved",
+          "required": true,
+          "type": "boolean",
+          "source": "preflight"
+        }
+      ],
+      "condition": {
+        "expression": "lane_resolved == true AND entity_resolved == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "ALLOW_CONTINUE",
+        "required_actions": [
+          "Resolve lane and entity before generation."
+        ]
+      },
+      "prohibitions": [
+        "Do not generate into an unresolved lane/entity context."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CONTINUE",
+        "HOLD_FOR_ROUTING"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D21 + DCSE-CONTENT-ARTIFACT-GEN-001",
+        "delegated_scope": "generation routing"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#8",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "lane and entity set",
+            "input": {
+              "lane_resolved": true,
+              "entity_resolved": true
+            },
+            "expected": "ALLOW_CONTINUE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "entity missing",
+            "input": {
+              "lane_resolved": true,
+              "entity_resolved": false
+            },
+            "expected": "HOLD_FOR_ROUTING"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "mixed lane unresolved",
+            "input": {
+              "lane_resolved": false,
+              "entity_resolved": true
+            },
+            "expected": "HOLD_FOR_ROUTING"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "binary",
+        "allowed_results": [
+          "ALLOW_CONTINUE",
+          "HOLD_FOR_ROUTING"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-LANE-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-PRODUCT-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "constraint",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "SC",
+          "DCSE"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "products_or_processes": [
+          "product_generation"
+        ],
+        "artifact_types": [
+          "product_artifact"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "A downstream product artifact is requested",
+        "event": "product_artifact_start",
+        "when": "product_artifact == true"
+      },
+      "inputs": [
+        {
+          "name": "minimum_product_genome_complete",
+          "required": true,
+          "type": "boolean",
+          "source": "product packet"
+        }
+      ],
+      "condition": {
+        "expression": "minimum_product_genome_complete == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_DOWNSTREAM_PRODUCT_ARTIFACT",
+        "required_actions": [
+          "Complete the minimum product genome if false."
+        ]
+      },
+      "prohibitions": [
+        "Do not let a downstream product artifact outrun the minimum product genome."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_DOWNSTREAM_PRODUCT_ARTIFACT",
+        "HOLD_FOR_PRODUCT_GENOME"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#3-4"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#3",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "genome complete",
+            "input": {
+              "minimum_product_genome_complete": true
+            },
+            "expected": "ALLOW_DOWNSTREAM_PRODUCT_ARTIFACT"
+          }
+        ],
+        "negative": [
+          {
+            "name": "genome incomplete",
+            "input": {
+              "minimum_product_genome_complete": false
+            },
+            "expected": "HOLD_FOR_PRODUCT_GENOME"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "artifact is only exploratory note",
+            "input": {
+              "minimum_product_genome_complete": false,
+              "product_artifact": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_DOWNSTREAM_PRODUCT_ARTIFACT",
+          "HOLD_FOR_PRODUCT_GENOME",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "DCS task-specific explicit override",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-PRODUCT-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-CLAIM-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "public_or_client_content"
+        ],
+        "release_postures": [
+          "client",
+          "public"
+        ]
+      },
+      "trigger": {
+        "description": "A factual capability, performance, client, outcome, metric, award, or similar claim is included",
+        "event": "release_validation",
+        "when": "claim_present == true"
+      },
+      "inputs": [
+        {
+          "name": "claim_support_status",
+          "required": true,
+          "type": "string",
+          "source": "evidence packet"
+        }
+      ],
+      "condition": {
+        "expression": "claim_support_status IN ['Verified','ApprovedSource']",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "ALLOW_CLAIM",
+        "required_actions": [
+          "Remove, qualify, or hold unsupported claims."
+        ]
+      },
+      "prohibitions": [
+        "Do not publish invented or unsupported claims."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "ALLOW_CLAIM",
+        "REMOVE_QUALIFY_OR_HOLD"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#8-9"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#8",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "verified claim",
+            "input": {
+              "claim_support_status": "Verified"
+            },
+            "expected": "ALLOW_CLAIM"
+          }
+        ],
+        "negative": [
+          {
+            "name": "unsupported claim",
+            "input": {
+              "claim_support_status": "Unknown"
+            },
+            "expected": "REMOVE_QUALIFY_OR_HOLD"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "likely claim",
+            "input": {
+              "claim_support_status": "Likely"
+            },
+            "expected": "REMOVE_QUALIFY_OR_HOLD"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_CLAIM",
+          "REMOVE_QUALIFY_OR_HOLD"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-CLAIM-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-NAME-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "invariant",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "A controlled entity, product, program, or brand name is used",
+        "event": "generation_or_validation",
+        "when": "controlled_name_used == true"
+      },
+      "inputs": [
+        {
+          "name": "used_name",
+          "required": true,
+          "type": "string",
+          "source": "artifact"
+        },
+        {
+          "name": "canonical_name",
+          "required": true,
+          "type": "string",
+          "source": "canonical registry"
+        }
+      ],
+      "condition": {
+        "expression": "used_name == canonical_name",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "NAME_VALID",
+        "required_actions": [
+          "Correct mismatched controlled name before completion."
+        ]
+      },
+      "prohibitions": [
+        "Do not silently alter controlled names."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "NAME_VALID",
+        "FAIL_NAME_CONTROL"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#8"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#8",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "exact controlled name",
+            "input": {
+              "used_name": "CTJ",
+              "canonical_name": "CTJ"
+            },
+            "expected": "NAME_VALID"
+          }
+        ],
+        "negative": [
+          {
+            "name": "altered product name",
+            "input": {
+              "used_name": "C.T.J.",
+              "canonical_name": "CTJ"
+            },
+            "expected": "FAIL_NAME_CONTROL"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "case variant where canonical is case-sensitive",
+            "input": {
+              "used_name": "ctj",
+              "canonical_name": "CTJ"
+            },
+            "expected": "FAIL_NAME_CONTROL"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "binary",
+        "allowed_results": [
+          "NAME_VALID",
+          "FAIL_NAME_CONTROL"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "DCS explicit rename authority",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-NAME-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-PUBLIC-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "constraint",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "public_content"
+        ],
+        "release_postures": [
+          "public"
+        ]
+      },
+      "trigger": {
+        "description": "Artifact is intended for public release",
+        "event": "public_release_validation",
+        "when": "release_posture == 'public'"
+      },
+      "inputs": [
+        {
+          "name": "internal_governance_term_detected",
+          "required": true,
+          "type": "boolean",
+          "source": "artifact scan"
+        },
+        {
+          "name": "explicit_public_authorization",
+          "required": true,
+          "type": "boolean",
+          "source": "authority record"
+        }
+      ],
+      "condition": {
+        "expression": "internal_governance_term_detected == false OR explicit_public_authorization == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ALLOW_PUBLIC_CONTINUE",
+        "required_actions": [
+          "Sanitize or obtain explicit public authorization."
+        ]
+      },
+      "prohibitions": [
+        "Do not expose internal-only governance terminology publicly without explicit authorization."
+      ],
+      "exceptions": [
+        {
+          "condition": "explicit_public_authorization == true",
+          "effect": "permit the specifically authorized terminology",
+          "authority_required": "DCS Level 0"
+        }
+      ],
+      "outputs": [
+        "ALLOW_PUBLIC_CONTINUE",
+        "SANITIZE_OR_DENY_RELEASE"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#8,13"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#13",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "no internal term",
+            "input": {
+              "internal_governance_term_detected": false,
+              "explicit_public_authorization": false
+            },
+            "expected": "ALLOW_PUBLIC_CONTINUE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "internal term no authorization",
+            "input": {
+              "internal_governance_term_detected": true,
+              "explicit_public_authorization": false
+            },
+            "expected": "SANITIZE_OR_DENY_RELEASE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "internal term in nonpublic review",
+            "input": {
+              "release_posture": "review",
+              "internal_governance_term_detected": true,
+              "explicit_public_authorization": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": [
+          {
+            "name": "explicitly authorized public term",
+            "input": {
+              "internal_governance_term_detected": true,
+              "explicit_public_authorization": true
+            },
+            "expected": "ALLOW_PUBLIC_CONTINUE"
+          }
+        ]
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ALLOW_PUBLIC_CONTINUE",
+          "SANITIZE_OR_DENY_RELEASE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-PUBLIC-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-SLOP-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "creative_content"
+        ],
+        "release_postures": [
+          "review",
+          "client",
+          "public"
+        ]
+      },
+      "trigger": {
+        "description": "A creative candidate is reviewed for distinctiveness and specificity",
+        "event": "creative_quality_review",
+        "when": "creative_candidate == true"
+      },
+      "inputs": [
+        {
+          "name": "generic_interchangeable_copy_score",
+          "required": true,
+          "type": "number",
+          "source": "quality evaluator"
+        },
+        {
+          "name": "allowed_threshold",
+          "required": true,
+          "type": "number",
+          "source": "ruleset"
+        }
+      ],
+      "condition": {
+        "expression": "generic_interchangeable_copy_score <= allowed_threshold",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "PASS_DISTINCTIVENESS",
+        "required_actions": [
+          "Reject or rewrite when threshold is exceeded."
+        ]
+      },
+      "prohibitions": [
+        "Do not accept materially interchangeable boilerplate as finished creative."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "PASS_DISTINCTIVENESS",
+        "REJECT_OR_REWRITE"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#9"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#9",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [
+        "Numeric scoring implementation remains to be calibrated from real artifact reviews."
+      ],
+      "severity": "moderate",
+      "tests": {
+        "positive": [
+          {
+            "name": "below threshold",
+            "input": {
+              "generic_interchangeable_copy_score": 0.2,
+              "allowed_threshold": 0.35
+            },
+            "expected": "PASS_DISTINCTIVENESS"
+          }
+        ],
+        "negative": [
+          {
+            "name": "above threshold",
+            "input": {
+              "generic_interchangeable_copy_score": 0.7,
+              "allowed_threshold": 0.35
+            },
+            "expected": "REJECT_OR_REWRITE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "exact threshold",
+            "input": {
+              "generic_interchangeable_copy_score": 0.35,
+              "allowed_threshold": 0.35
+            },
+            "expected": "PASS_DISTINCTIVENESS"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "bounded_score",
+        "allowed_results": [
+          "PASS_DISTINCTIVENESS",
+          "REJECT_OR_REWRITE"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "artifact approver with stated rationale",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-SLOP-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-DIVERGE-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "generation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "high_value_creative_direction"
+        ],
+        "release_postures": [
+          "internal",
+          "review"
+        ]
+      },
+      "trigger": {
+        "description": "High-value creative direction is requested",
+        "event": "creative_divergence",
+        "when": "high_value_creative_direction == true"
+      },
+      "inputs": [
+        {
+          "name": "candidate_direction_count",
+          "required": true,
+          "type": "integer",
+          "source": "generation output"
+        },
+        {
+          "name": "explicit_single_direction_request",
+          "required": true,
+          "type": "boolean",
+          "source": "user instruction"
+        }
+      ],
+      "condition": {
+        "expression": "candidate_direction_count >= 3 OR explicit_single_direction_request == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "generate",
+        "result": "DIVERGENCE_SUFFICIENT",
+        "required_actions": [
+          "Generate at least three materially distinct directions unless one direction was explicitly requested."
+        ]
+      },
+      "prohibitions": [
+        "Do not represent minor rewrites as materially distinct directions."
+      ],
+      "exceptions": [
+        {
+          "condition": "explicit_single_direction_request == true",
+          "effect": "one direction satisfies the quantity rule",
+          "authority_required": "task requester"
+        }
+      ],
+      "outputs": [
+        "DIVERGENCE_SUFFICIENT",
+        "GENERATE_MORE_DISTINCT_DIRECTIONS"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#6"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#6",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "moderate",
+      "tests": {
+        "positive": [
+          {
+            "name": "three directions",
+            "input": {
+              "candidate_direction_count": 3,
+              "explicit_single_direction_request": false
+            },
+            "expected": "DIVERGENCE_SUFFICIENT"
+          }
+        ],
+        "negative": [
+          {
+            "name": "only two directions",
+            "input": {
+              "candidate_direction_count": 2,
+              "explicit_single_direction_request": false
+            },
+            "expected": "GENERATE_MORE_DISTINCT_DIRECTIONS"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "exactly three",
+            "input": {
+              "candidate_direction_count": 3,
+              "explicit_single_direction_request": false
+            },
+            "expected": "DIVERGENCE_SUFFICIENT"
+          }
+        ],
+        "exception": [
+          {
+            "name": "explicit one direction",
+            "input": {
+              "candidate_direction_count": 1,
+              "explicit_single_direction_request": true
+            },
+            "expected": "DIVERGENCE_SUFFICIENT"
+          }
+        ]
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "DIVERGENCE_SUFFICIENT",
+          "GENERATE_MORE_DISTINCT_DIRECTIONS"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "task requester",
+        "receipt_required": false
+      },
+      "supersedes": "CONTENT-DIVERGE-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-TYPE-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "web_or_visual_artifact_with_text"
+        ],
+        "release_postures": [
+          "review",
+          "client",
+          "public"
+        ]
+      },
+      "trigger": {
+        "description": "Text-bearing visual/web artifact reaches completion review",
+        "event": "visual_completion_review",
+        "when": "text_bearing_visual == true"
+      },
+      "inputs": [
+        {
+          "name": "typography_roles_defined",
+          "required": true,
+          "type": "boolean",
+          "source": "design packet"
+        }
+      ],
+      "condition": {
+        "expression": "typography_roles_defined == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "PASS_TYPOGRAPHY_GATE",
+        "required_actions": [
+          "Define display/body/UI roles, hierarchy, weight, spacing, contrast, device, readability, and personality as applicable."
+        ]
+      },
+      "prohibitions": [
+        "Do not mark a substantial text-bearing visual/web artifact complete without a defined type system."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "PASS_TYPOGRAPHY_GATE",
+        "HOLD_VISUAL_COMPLETION"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#10"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#10",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "moderate",
+      "tests": {
+        "positive": [
+          {
+            "name": "roles defined",
+            "input": {
+              "typography_roles_defined": true
+            },
+            "expected": "PASS_TYPOGRAPHY_GATE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "roles missing",
+            "input": {
+              "typography_roles_defined": false
+            },
+            "expected": "HOLD_VISUAL_COMPLETION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "image only no text",
+            "input": {
+              "text_bearing_visual": false,
+              "typography_roles_defined": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PASS_TYPOGRAPHY_GATE",
+          "HOLD_VISUAL_COMPLETION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": true,
+        "authority_required": "artifact approver for non-substantial text use",
+        "receipt_required": false
+      },
+      "supersedes": "CONTENT-TYPE-001",
+      "effective_on": null
+    },
+    {
+      "rule_id": "CA-CTA-001",
+      "version": "2.0",
+      "family": "artifact_content_generation",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "cta_bearing_artifact"
+        ],
+        "release_postures": [
+          "client",
+          "public"
+        ]
+      },
+      "trigger": {
+        "description": "CTA-bearing artifact reaches release review",
+        "event": "release_validation",
+        "when": "artifact_requires_cta == true"
+      },
+      "inputs": [
+        {
+          "name": "cta_verified",
+          "required": true,
+          "type": "boolean",
+          "source": "artifact validation"
+        },
+        {
+          "name": "destination_verified",
+          "required": true,
+          "type": "boolean",
+          "source": "artifact validation"
+        }
+      ],
+      "condition": {
+        "expression": "cta_verified == true AND destination_verified == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "require",
+        "result": "PASS_CTA_GATE",
+        "required_actions": [
+          "Correct CTA text or destination before release."
+        ]
+      },
+      "prohibitions": [
+        "Do not release a CTA-bearing artifact with an unverified CTA or destination."
+      ],
+      "exceptions": [],
+      "outputs": [
+        "PASS_CTA_GATE",
+        "FAIL_RELEASE_GATE"
+      ],
+      "authority": {
+        "source_type": "adopted_standard",
+        "source_ref": "DCSE-CONTENT-ARTIFACT-GEN-001#13"
+      },
+      "provenance": [
+        {
+          "source_ref": "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md#13",
+          "source_kind": "canonical_standard",
+          "hash_or_version": "1.0"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "cta and destination valid",
+            "input": {
+              "cta_verified": true,
+              "destination_verified": true
+            },
+            "expected": "PASS_CTA_GATE"
+          }
+        ],
+        "negative": [
+          {
+            "name": "bad destination",
+            "input": {
+              "cta_verified": true,
+              "destination_verified": false
+            },
+            "expected": "FAIL_RELEASE_GATE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "artifact has no CTA requirement",
+            "input": {
+              "artifact_requires_cta": false,
+              "cta_verified": false,
+              "destination_verified": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PASS_CTA_GATE",
+          "FAIL_RELEASE_GATE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": "CONTENT-CTA-001",
+      "effective_on": null
+    }
+  ],
+  "deferred_dependencies": [
+    "Rule Set 2 Task/Conversation Lifecycle",
+    "Rule Set 3 Lane/Entity/Information Firewall",
+    "Rule Set 4 Source/Evidence/Truth-State",
+    "Rule Set 16 Security/Privacy/Secret Handling",
+    "Rule Set 17 Economic/Cost/Time-to-Market",
+    "Rule Set 18 Reuse/Standardization/Components",
+    "Rule Set 19 Exception/Conflict/Drift"
+  ],
+  "initial_products": [
+    "CTJ",
+    "Vow N Go",
+    "TSL",
+    "B4L",
+    "X50",
+    "Beauty"
+  ]
+}
