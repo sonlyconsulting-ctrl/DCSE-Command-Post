@@ -1,0 +1,130 @@
+{
+  "corpus_id": "DCSE-RULE-CORPUS-v1",
+  "authority": "DCS-DIR-20260911-003 + DCS-DIR-20260911-004",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "state": "VALIDATING",
+  "rule_sets": [
+    {
+      "id": "05",
+      "title": "Artifact and Content Generation",
+      "path": "governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json",
+      "rules": 10,
+      "status": "VALIDATING",
+      "tests": "38/38 PASS",
+      "gate": "CA-SLOP-001 calibration"
+    },
+    {
+      "id": "07",
+      "title": "Product and Service Assembly",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-07-PRODUCT-ASSEMBLY-v1.json",
+      "rules": 7,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "08",
+      "title": "Website App and Digital Experience",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-08-WEB-APP-DIGITAL-v1.json",
+      "rules": 7,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "06",
+      "title": "Brand Voice Visual and Media",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-06-BRAND-VISUAL-VOICE-v1.json",
+      "rules": 7,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "11",
+      "title": "Campaign Audience and Commerce",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-11-CAMPAIGN-COMMERCE-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "02",
+      "title": "Task Conversation and Execution Lifecycle",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-02-TASK-CONVERSATION-LIFECYCLE-v1.json",
+      "rules": 7,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "03",
+      "title": "Lane Entity and Information Firewall",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "04",
+      "title": "Source Evidence and Truth State",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-04-SOURCE-EVIDENCE-TRUTH-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "16",
+      "title": "Security Privacy and Secret Handling",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-16-SECURITY-PRIVACY-SECRETS-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "17",
+      "title": "Economic Cost and Time-to-Market",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-17-ECONOMIC-COST-TTM-v1.json",
+      "rules": 6,
+      "status": "VALIDATING",
+      "gate": "product-specific cost/value inputs"
+    },
+    {
+      "id": "18",
+      "title": "Reuse Standardization and Components",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-18-REUSE-STANDARDIZATION-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    },
+    {
+      "id": "19",
+      "title": "Exception Conflict and Drift",
+      "path": "governance/v7.2/rule-foundry/DCSE-RULESET-19-EXCEPTION-CONFLICT-DRIFT-v1.json",
+      "rules": 6,
+      "status": "VALIDATING"
+    }
+  ],
+  "totals": {
+    "rule_sets": 12,
+    "rules": 80,
+    "first_wave_tests": 38,
+    "wave2_deterministic_tests": 210,
+    "wave2_adversarial_tests": 22,
+    "known_failed_tests": 0
+  },
+  "calibration": {
+    "ruleset05": "governance/v7.2/validation/DCSE_RULESET05_CALIBRATION_PLAN_v1.json",
+    "initial_products": [
+      "CTJ",
+      "Vow N Go",
+      "TSL",
+      "B4L",
+      "X50",
+      "Beauty"
+    ],
+    "product_fact_rule": "Do not infer missing product facts; attach source packets before calibration."
+  },
+  "validation": [
+    "governance/v7.2/validation/DCSE_RULESET05_VALIDATION_REPORT_v1.md",
+    "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_VALIDATION_REPORT_v1.md",
+    "governance/v7.2/validation/DCSE_RULE_CORPUS_WAVE2_ADVERSARIAL_MATRIX_v1.json"
+  ],
+  "deferred_rule_sets": [
+    "01 Authority Governance Decision Rights",
+    "10 Enterprise Portfolio Venture",
+    "12 DDNA Knowledge Learning",
+    "13 Model Agent AI Orchestration",
+    "14 Platform Runtime Data",
+    "15 Validation Quality Promotion Closeout",
+    "09 DCS Employment expansion"
+  ],
+  "note": "Deferred does not mean absent governance. Existing v7.2 doctrine/standards continue to control until corresponding corpus families are normalized and promoted."
+}
