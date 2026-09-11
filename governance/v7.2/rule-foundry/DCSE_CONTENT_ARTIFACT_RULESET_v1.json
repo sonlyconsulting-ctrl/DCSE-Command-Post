@@ -1,0 +1,128 @@
+{
+  "ruleset_id": "DCSE-CONTENT-ARTIFACT-RULESET-v1",
+  "version": "1.0",
+  "status": "candidate",
+  "rules": [
+    {
+      "rule_id": "CONTENT-LANE-001",
+      "class": "invariant",
+      "when": "any_artifact_generation",
+      "condition": "artifact.lane and artifact.entity are declared",
+      "result": "REQUIRED",
+      "severity": "critical"
+    },
+    {
+      "rule_id": "CONTENT-PS-001",
+      "class": "invariant",
+      "when": "release_posture != PS_INTERNAL",
+      "condition": "ps_origin_material_detected == true",
+      "result": "DENY_RELEASE_AND_ROUTE_PS",
+      "severity": "critical"
+    },
+    {
+      "rule_id": "CONTENT-SECRET-001",
+      "class": "invariant",
+      "when": "any_artifact_generation",
+      "condition": "secret_or_credential_detected == true",
+      "result": "DENY_DELIVERY_AND_REMEDIATE",
+      "severity": "critical"
+    },
+    {
+      "rule_id": "CONTENT-PUBLIC-001",
+      "class": "constraint",
+      "when": "release_posture == public",
+      "condition": "internal_governance_term_detected == true and explicit_public_authorization != true",
+      "result": "SANITIZE_OR_DENY_RELEASE",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-CLAIM-001",
+      "class": "validation",
+      "when": "public_or_client_claim",
+      "condition": "claim_support_status not in ['Verified','ApprovedSource']",
+      "result": "REMOVE_QUALIFY_OR_HOLD",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-NAME-001",
+      "class": "invariant",
+      "when": "controlled_entity_or_product_name_used",
+      "condition": "name != canonical_name",
+      "result": "FAIL",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-SLOP-001",
+      "class": "validation",
+      "when": "creative_candidate_review",
+      "condition": "generic_interchangeable_copy_score > allowed_threshold",
+      "result": "REJECT_OR_REWRITE",
+      "severity": "moderate"
+    },
+    {
+      "rule_id": "CONTENT-PRODUCT-001",
+      "class": "constraint",
+      "when": "product_artifact_generation",
+      "condition": "minimum_product_genome_complete != true",
+      "result": "HOLD_DOWNSTREAM_GENERATION",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-DIVERGE-001",
+      "class": "generation",
+      "when": "high_value_creative_direction",
+      "condition": "candidate_direction_count < 3 and explicit_single_direction_request != true",
+      "result": "GENERATE_DISTINCT_ALTERNATIVES",
+      "severity": "moderate"
+    },
+    {
+      "rule_id": "CONTENT-TYPE-001",
+      "class": "validation",
+      "when": "web_or_visual_artifact_with_text",
+      "condition": "typography_roles_defined != true",
+      "result": "HOLD_VISUAL_COMPLETION",
+      "severity": "moderate"
+    },
+    {
+      "rule_id": "CONTENT-ACCESS-001",
+      "class": "validation",
+      "when": "public_web_or_visual_artifact",
+      "condition": "applicable_accessibility_checks_pass != true",
+      "result": "FAIL_RELEASE_GATE",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-CTA-001",
+      "class": "validation",
+      "when": "artifact_requires_cta",
+      "condition": "cta_verified != true",
+      "result": "FAIL_RELEASE_GATE",
+      "severity": "high"
+    },
+    {
+      "rule_id": "CONTENT-ROUTE-001",
+      "class": "routing",
+      "when": "specialized_generation_needed",
+      "condition": "eligible_capability_pool_available == true",
+      "result": "SELECT_BY_TASK_CAPABILITY_NOT_VENDOR_NAME",
+      "severity": "moderate"
+    },
+    {
+      "rule_id": "CONTENT-LEARN-001",
+      "class": "generation",
+      "when": "artifact_selected_or_published",
+      "condition": "learning_capture_complete != true",
+      "result": "CAPTURE_DDNA_AND_RULE_CANDIDATES",
+      "severity": "low"
+    }
+  ],
+  "initial_products": [
+    "CTJ",
+    "Vow N Go",
+    "TSL",
+    "B4L",
+    "X50",
+    "Beauty"
+  ],
+  "note": "This candidate ruleset is human-readable operational data. Promotion and executable implementation remain governed by the Rule Foundry standard and D05/D22."
+}
