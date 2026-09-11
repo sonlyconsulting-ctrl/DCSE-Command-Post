@@ -2,7 +2,7 @@
 
 **Document ID:** DCSE-V72-RULE-FOUNDRY-STD-001  
 **Version:** 1.0  
-**Status:** CANDIDATE FOR v7.2 FINAL PROMOTION  
+**Status:** APPROVED BY DCS-DIR-20260911-001 / ACTIVE UPON CANONICAL PR #83 MERGE  
 **Lane:** DCSE  
 **Classification:** INTERNAL  
 **Authority:** Operative R5 controller plus DCS direction dated 2026-09-11  
