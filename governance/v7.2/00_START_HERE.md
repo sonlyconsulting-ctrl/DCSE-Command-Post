@@ -61,7 +61,20 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 
 ## Working Capability Modules
 
-Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. The Rule Foundry and Creative Intelligence/Commerce Router are such modules until their exact promotion state is recorded.
+Governed capability modules may live beneath v7.2 without becoming doctrine merely by existence. Current candidate modules:
+
+- `rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md`
+- `rule-foundry/DCSE_RULE_SCHEMA_v1.json`
+- `rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md`
+- `rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md`
+- `rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json`
+- `architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md`
+
+Current implementation profile:
+
+- `implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md`
+
+These remain subordinate to promoted governance until their exact lifecycle state is recorded.
 
 ## Navigation Rule
 
