@@ -157,5 +157,16 @@
     "ordinary_startup_requires_no_v7_1_path": true,
     "package_presence_does_not_create_authority": true,
     "ps_doctrines_route_restricted": true
-  }
+  },
+  "candidate_capability_modules": [
+    "governance/v7.2/rule-foundry/DCSE_V7_2_RULE_GENERATION_AND_EXECUTABLE_BASELINE_STANDARD.md",
+    "governance/v7.2/rule-foundry/DCSE_RULE_SCHEMA_v1.json",
+    "governance/v7.2/rule-foundry/DCSE_DDNA_RULE_EXTRACTION_PROFILE_v1.md",
+    "governance/v7.2/rule-foundry/DCSE_CONTENT_AND_ARTIFACT_GENERATION_STANDARD_v1.md",
+    "governance/v7.2/rule-foundry/DCSE_CONTENT_ARTIFACT_RULESET_v1.json",
+    "governance/v7.2/architecture/DCSE_CREATIVE_INTELLIGENCE_COMMERCE_ROUTER_v1.md"
+  ],
+  "implementation_profiles": [
+    "governance/v7.2/implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md"
+  ]
 }
