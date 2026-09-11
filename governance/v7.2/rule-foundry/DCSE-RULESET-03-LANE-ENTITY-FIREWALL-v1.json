@@ -1,0 +1,735 @@
+{
+  "ruleset_id": "DCSE-RULESET-03-LANE-ENTITY-FIREWALL-v1",
+  "version": "1.0-candidate",
+  "title": "Rule Set 3 Lane, Entity and Information Firewall",
+  "family": "lane_entity_information_firewall",
+  "status": "validating",
+  "authority_ref": "DCS Level 0 authorized rule-corpus program under DCS-DIR-20260911-003",
+  "reasoning_protocol": "governance/v7.2/rule-foundry/DCSE_RULE_DEVELOPMENT_REASONING_AND_TEST_PROTOCOL_v1.md",
+  "source_refs": [
+    "DCSE Master Profile v7.2 R5",
+    "governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md",
+    "governance/v7.2/doctrines/D08_Voice_Tone_v7-2.md"
+  ],
+  "rules": [
+    {
+      "rule_id": "FIRE-LANE-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Any substantive work begins",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "LANE_RESOLVED",
+        "required_actions": [
+          "If false, return HOLD_FOR_LANE_CLASSIFICATION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "LANE_RESOLVED",
+        "HOLD_FOR_LANE_CLASSIFICATION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "R5 lane firewall"
+      },
+      "provenance": [
+        {
+          "source_ref": "R5 lane firewall",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "LANE_RESOLVED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_LANE_CLASSIFICATION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "LANE_RESOLVED",
+          "HOLD_FOR_LANE_CLASSIFICATION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "FIRE-ENTITY-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Artifact or action targets an entity",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "ENTITY_RESOLVED",
+        "required_actions": [
+          "If false, return HOLD_FOR_ENTITY_RESOLUTION."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "ENTITY_RESOLVED",
+        "HOLD_FOR_ENTITY_RESOLUTION",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "R5 enterprise position"
+      },
+      "provenance": [
+        {
+          "source_ref": "R5 enterprise position",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "ENTITY_RESOLVED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_ENTITY_RESOLUTION"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "ENTITY_RESOLVED",
+          "HOLD_FOR_ENTITY_RESOLUTION",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "FIRE-PS-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "prohibition",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "PS-origin material would cross outside PS",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "deny",
+        "result": "PS_BOUNDARY_PRESERVED",
+        "required_actions": [
+          "If false, return DENY_PS_SPILL."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "PS_BOUNDARY_PRESERVED",
+        "DENY_PS_SPILL",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "R5 PS firewall"
+      },
+      "provenance": [
+        {
+          "source_ref": "R5 PS firewall",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "critical",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "PS_BOUNDARY_PRESERVED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "DENY_PS_SPILL"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "PS_BOUNDARY_PRESERVED",
+          "DENY_PS_SPILL",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "FIRE-MIXED-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "requirement",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Task spans lanes",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "MIXED_LANE_SEPARATED",
+        "required_actions": [
+          "If false, return HOLD_FOR_OWNERSHIP_HANDOFFS."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "MIXED_LANE_SEPARATED",
+        "HOLD_FOR_OWNERSHIP_HANDOFFS",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "R5 mixed-lane rule"
+      },
+      "provenance": [
+        {
+          "source_ref": "R5 mixed-lane rule",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "MIXED_LANE_SEPARATED"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_OWNERSHIP_HANDOFFS"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "MIXED_LANE_SEPARATED",
+          "HOLD_FOR_OWNERSHIP_HANDOFFS",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "FIRE-VOICE-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "validation",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Entity-facing content is produced",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "VOICE_FIREWALL_PASS",
+        "required_actions": [
+          "If false, return HOLD_FOR_LANE_VOICE."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "VOICE_FIREWALL_PASS",
+        "HOLD_FOR_LANE_VOICE",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D08#1"
+      },
+      "provenance": [
+        {
+          "source_ref": "D08#1",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "VOICE_FIREWALL_PASS"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_LANE_VOICE"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "VOICE_FIREWALL_PASS",
+          "HOLD_FOR_LANE_VOICE",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    },
+    {
+      "rule_id": "FIRE-MEC-001",
+      "version": "1.0",
+      "family": "lane_entity_information_firewall",
+      "class": "constraint",
+      "status": "candidate",
+      "scope": {
+        "lanes": [
+          "ALL"
+        ],
+        "entities": [
+          "ALL"
+        ],
+        "artifact_types": [
+          "any"
+        ],
+        "release_postures": [
+          "any"
+        ]
+      },
+      "trigger": {
+        "description": "Model context is assembled",
+        "event": "rule_evaluation",
+        "when": "applicable == true"
+      },
+      "inputs": [
+        {
+          "name": "applicable",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized task context"
+        },
+        {
+          "name": "condition_met",
+          "required": true,
+          "type": "boolean",
+          "source": "normalized evidence"
+        }
+      ],
+      "condition": {
+        "expression": "condition_met == true",
+        "language": "dcse-expression-v1"
+      },
+      "action": {
+        "type": "hold",
+        "result": "MIN_CONTEXT_PASS",
+        "required_actions": [
+          "If false, return HOLD_FOR_MINIMUM_EFFECTIVE_CONTEXT."
+        ]
+      },
+      "prohibitions": [],
+      "exceptions": [],
+      "outputs": [
+        "MIN_CONTEXT_PASS",
+        "HOLD_FOR_MINIMUM_EFFECTIVE_CONTEXT",
+        "OUT_OF_SCOPE"
+      ],
+      "authority": {
+        "source_type": "doctrine",
+        "source_ref": "D03#7"
+      },
+      "provenance": [
+        {
+          "source_ref": "D03#7",
+          "source_kind": "canonical_v7.2_source"
+        }
+      ],
+      "confidence": "Verified",
+      "contradictions": [],
+      "severity": "high",
+      "tests": {
+        "positive": [
+          {
+            "name": "condition satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": true
+            },
+            "expected": "MIN_CONTEXT_PASS"
+          }
+        ],
+        "negative": [
+          {
+            "name": "condition not satisfied",
+            "input": {
+              "applicable": true,
+              "condition_met": false
+            },
+            "expected": "HOLD_FOR_MINIMUM_EFFECTIVE_CONTEXT"
+          }
+        ],
+        "boundary": [
+          {
+            "name": "rule not applicable",
+            "input": {
+              "applicable": false,
+              "condition_met": false
+            },
+            "expected": "OUT_OF_SCOPE"
+          }
+        ],
+        "exception": []
+      },
+      "deterministic_evaluation": {
+        "mode": "finite_state",
+        "allowed_results": [
+          "MIN_CONTEXT_PASS",
+          "HOLD_FOR_MINIMUM_EFFECTIVE_CONTEXT",
+          "OUT_OF_SCOPE"
+        ]
+      },
+      "override_policy": {
+        "allowed": false,
+        "authority_required": "DCS Level 0",
+        "receipt_required": true
+      },
+      "supersedes": null,
+      "effective_on": null
+    }
+  ],
+  "validation_summary": {
+    "structural_contract": "PENDING_REPOSITORY_VALIDATION",
+    "promotion_state": "NOT_YET_ACTIVE_BASELINE",
+    "notes": []
+  }
+}
