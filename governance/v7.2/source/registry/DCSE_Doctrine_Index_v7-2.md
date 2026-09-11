@@ -58,9 +58,9 @@ The active v7.2 package is self-contained at `governance/v7.2/source/doctrines/`
 |---|---|---|
 | D01 | `D01_Forward_Thinking_v7-2.md` | carried-forward subject content under R5 |
 | D02 | `D02_Forward_Backward_Chaining_v7-2.md` | carried-forward subject content under R5 |
-| D03 | `D03_AI_Orchestration_v7-2.md` | v7.2 orchestration candidate in final-promotion package |
+| D03 | `D03_AI_Orchestration_v7-2.md` | approved by DCS-DIR-20260911-001; active on canonical PR #83 merge |
 | D04 | `D04_Command_Post_Communications_v7-2.md` | promoted v7.2 |
-| D05 | `D05_Baseline_Promotion_v7-2.md` | v7.2 controller-support projection |
+| D05 | `D05_Baseline_Promotion_v7-2.md` | approved v7.2 update by DCS-DIR-20260911-001; active on canonical PR #83 merge |
 | D06 | `D06_File_System_v7-2.md` | promoted v7.2 |
 | D07 | `D07_Campaign_Governance_v7-2.md` | carried-forward subject content under R5 |
 | D08 | `D08_Voice_Tone_v7-2.md` | carried-forward subject content under R5 |
