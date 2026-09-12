@@ -24,8 +24,9 @@ Membership is a parallel access/value path. It does not replace a la carte Keepe
 | Product | Role | Recommended a la carte price | Commercial note |
 | --- | --- | ---: | --- |
 | Strategic Clarity Assessment | Discover | $0 | acquisition / useful standalone result |
-| Focus & Flow | Practice | $30 | standalone daily-practice companion |
-| Mental Ingenuity | Prove | $29 | substantial interactive experience below full curriculum-module price |
+| Focus & Flow | Practice | $20 | standalone daily-practice companion |
+| Mental Ingenuity | Prove | $20 | standalone interactive proving-ground product |
+| Focus & Flow + Mental Ingenuity | Practice + Prove | $30 | paired a la carte bundle; saves $10 vs separate purchase |
 | Part 1 | Learn: clarity | $39 | Keeper purchase |
 | Part 2 | Learn: action | $39 | Keeper purchase |
 | Part 3 | Learn: meaning | $39 | Keeper purchase |
@@ -45,10 +46,18 @@ Recommended:
 - SCA remains free and is available regardless of purchase
 
 Individual sum at candidate prices:
-$30 + $29 + $39 + $39 + $39 + $119 = $295
+$20 + $20 + $39 + $39 + $39 + $119 = $276
 
 Complete Collection at $199:
-$96 lower than individual purchase total.
+$77 lower than six separate individual purchases.
+
+Cheapest equivalent path using available bundles:
+- Focus & Flow + Mental Ingenuity bundle: $30
+- Parts 1-3 Collection: $99
+- Unified: $119
+- Total: $248
+
+Complete Collection at $199 is therefore $49 below the cheapest equivalent multi-purchase path, approximately a 19.8% suite discount.
 
 This bundle discount is intentionally material because it rewards commitment to the complete suite and creates a clear value anchor without reducing the perceived value of Unified.
 
@@ -100,8 +109,9 @@ These are catalog reconciliation items. No Wix write was performed in this task.
 
 Recommended approval set:
 SCA $0
-Focus & Flow $30
-Mental Ingenuity $29
+Focus & Flow $20
+Mental Ingenuity $20
+Focus & Flow + Mental Ingenuity $30
 Part 1 $39
 Part 2 $39
 Part 3 $39
@@ -111,3 +121,41 @@ Complete Keeper Collection $199
 
 Existing membership plans:
 NO CHANGE.
+
+
+## Frontier-model consumer subscription benchmark
+
+Current external benchmark verified 2026-09-12:
+- ChatGPT Plus: $20/month
+- Claude Pro: $20/month
+- Google AI Pro: $19.99/month
+- Perplexity Pro: $20/month
+
+Higher-power tiers can be much more expensive, including ChatGPT Pro at $200/month and Claude Max tiers at $100/$200 per month.
+
+Pricing implication:
+The mainstream premium-AI consumer anchor is approximately $20/month.
+
+Recommended CTJ use of that anchor:
+- Focus & Flow: $20 one-time
+- Mental Ingenuity: $20 one-time
+- paired Practice + Prove bundle: $30 one-time
+
+This keeps each smaller a la carte product at a familiar premium-AI monthly reference point while making the paired bundle an obvious value step.
+
+The comparison is an anchor, not an equivalence claim. CTJ products are structured owned experiences, not subscriptions to frontier-model usage.
+
+## Cost discipline
+
+Current product-core builds are local-first and do not require paid model API calls for their core function, so marginal compute cost is low.
+
+Do not infer that total cost is zero. Commercial cost still includes:
+- hosting/domain/platform costs
+- payment-provider fees where applicable
+- support and manual payment verification
+- maintenance and updates
+- future authentication/cloud storage
+- future AI/model usage if introduced
+- refunds/chargebacks and customer service
+
+Final margin analysis should use actual operating costs once the production stack is selected.
