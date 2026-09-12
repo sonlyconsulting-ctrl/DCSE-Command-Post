@@ -3,7 +3,7 @@
 Task ID: SC-CTJ-COMMERCIAL-PACKAGING-PAYMENTS-20260912-16
 Lane: SC / CTJ
 Date: 2026-09-12
-Status: FINAL RECOMMENDATION FOR DCS LEVEL 0 LOCK
+Status: LOCKED BY DCS LEVEL 0
 Gate owner: DCS Level 0
 
 ## Final recommended launch ladder
@@ -108,9 +108,9 @@ Reopen pricing only if one of the following becomes material:
 5. mainstream premium-AI reference pricing shifts enough to change customer expectations
 6. DCS intentionally changes membership/Keeper economics
 
-## Final recommendation
+## Locked disposition
 
-Lock this ladder for the initial CTJ commercial build.
+This ladder is locked for the initial CTJ commercial build.
 
 No further broad pricing review is recommended before:
 - product-card implementation
@@ -118,7 +118,7 @@ No further broad pricing review is recommended before:
 - catalog reconciliation
 - production cost reconciliation
 
-This record is a recommendation and does not self-create DCS Level 0 approval.
+DCS Level 0 approval was explicitly provided in the current conversation. The approval applies to the packaging/pricing baseline only and does not authorize public release or payment-provider activation.
 
 
 ## Promotional-entry decision
