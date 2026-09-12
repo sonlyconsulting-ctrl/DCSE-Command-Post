@@ -3,7 +3,7 @@
 Task ID: SC-CTJ-COMMERCIAL-PACKAGING-PAYMENTS-20260912-16
 Lane: SC / CTJ
 Date: 2026-09-12
-Status: CANDIDATE COMMERCIAL ARCHITECTURE
+Status: LOCKED COMMERCIAL PACKAGING BASELINE
 Gate owner: DCS Level 0
 
 ## Preflight
@@ -49,6 +49,7 @@ Exit criteria:
 6. 06_FRONTIER_MODEL_PRICING_BENCHMARK.md
 7. 07_FINAL_PRICING_DISPOSITION.md
 8. 08_CTJ_INTRO_TRIO_CAMPAIGN_BRIEF.md
+9. 09_DCS_LEVEL0_PACKAGING_LOCK.md
 
 ## Achieved state
 
@@ -62,3 +63,13 @@ The free-compatible architecture can proceed using static external payment metho
 
 Exit state:
 CANDIDATE COMMERCIAL ARCHITECTURE COMPLETE.
+
+
+## Packaging lock
+
+Packaging lock: DCS Level 0 approved by explicit user direction on 2026-09-12.
+
+Authoritative lock record:
+09_DCS_LEVEL0_PACKAGING_LOCK.md
+
+This lock governs the working commercial packaging baseline but does not authorize public release, Wix payment activation, catalog mutation, or production deployment.
