@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Candidate CTJ product-card and purchase-intent experience for Sonly Consulting.">
+  <meta name="ctj-parent-origin" content="">
+  <title>The Critical Thinker's Journey - Product Experience Candidate</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">SONLY CONSULTING</p>
+      <h1>The Critical Thinker's Journey<span aria-hidden="true">™</span></h1>
+      <p class="lede">Discover. Learn. Practice. Prove. Integrate.</p>
+    </div>
+    <button id="resumeButton" class="button button-quiet" type="button" hidden>Resume purchase</button>
+  </header>
+
+  <main id="main">
+    <section class="intro" aria-labelledby="intro-title">
+      <p class="eyebrow">PRODUCT FAMILY</p>
+      <h2 id="intro-title">Choose the experience that fits where you are.</h2>
+      <p>Each card is both a product offer and the beginning of the transaction experience. Payment is currently verified manually before access is released.</p>
+    </section>
+
+    <section class="catalog-section" aria-labelledby="catalog-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LOCKED COMMERCIAL BASELINE</p>
+          <h2 id="catalog-title">CTJ Product Cards</h2>
+        </div>
+        <p class="section-note">Existing SC membership plans are unchanged.</p>
+      </div>
+      <div id="catalog" class="product-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="checkout" class="checkout-shell" aria-labelledby="checkout-title" hidden>
+      <div class="checkout-heading">
+        <div>
+          <p class="eyebrow">PURCHASE INTENT</p>
+          <h2 id="checkout-title">Order summary</h2>
+        </div>
+        <button id="closeCheckout" class="button button-quiet" type="button">Close</button>
+      </div>
+
+      <div id="statusBanner" class="status-banner" role="status" aria-live="polite"></div>
+
+      <section id="stepProduct" class="checkout-step" aria-labelledby="step-product-title">
+        <h3 id="step-product-title">1. Confirm your product</h3>
+        <div id="orderProduct"></div>
+        <form id="identityForm" novalidate>
+          <label for="customerEmail">Email for confirmation and access</label>
+          <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" required>
+          <p class="field-help">No payment credentials are collected here.</p>
+          <div class="actions">
+            <button class="button button-primary" type="submit">Continue to payment</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="stepPayment" class="checkout-step" aria-labelledby="step-payment-title" hidden>
+        <h3 id="step-payment-title">2. Choose how you want to pay</h3>
+        <p>Use the exact order amount. Include the order ID in the payment note when the provider permits it.</p>
+        <div id="paymentChoices" class="payment-choices"></div>
+        <div id="paymentInstructions" class="payment-instructions" hidden></div>
+      </section>
+
+      <section id="stepSubmission" class="checkout-step" aria-labelledby="step-submission-title" hidden>
+        <h3 id="step-submission-title">3. Tell us what to verify</h3>
+        <form id="paymentForm" novalidate>
+          <div class="field-grid">
+            <div>
+              <label for="payerIdentity">Payer name or payment handle</label>
+              <input id="payerIdentity" name="payerIdentity" type="text" autocomplete="name" minlength="2" maxlength="100" required>
+            </div>
+            <div>
+              <label for="transactionReference">Transaction/reference ID</label>
+              <input id="transactionReference" name="transactionReference" type="text" minlength="4" maxlength="120" required>
+            </div>
+          </div>
+          <p class="field-help">A screenshot is not required. Merchant-side confirmation completes payment verification.</p>
+          <div class="actions">
+            <button class="button button-primary" type="submit">I've paid - verify my purchase</button>
+            <button id="backToMethods" class="button button-quiet" type="button">Change payment method</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="stepPending" class="checkout-step" aria-labelledby="step-pending-title" hidden>
+        <p class="eyebrow">PAYMENT SUBMITTED</p>
+        <h3 id="step-pending-title">Your purchase is waiting for merchant verification.</h3>
+        <p>Access is released only after the payment is matched and confirmed in the authorized merchant account.</p>
+        <dl id="pendingSummary" class="summary-list"></dl>
+        <div class="actions">
+          <button id="downloadSummary" class="button button-secondary" type="button">Download order summary</button>
+          <button id="startOver" class="button button-quiet" type="button">Start another order</button>
+        </div>
+      </section>
+    </section>
+
+    <section class="process" aria-labelledby="process-title">
+      <p class="eyebrow">HOW PURCHASES WORK</p>
+      <h2 id="process-title">From product card to verified access.</h2>
+      <ol>
+        <li>Choose a CTJ product.</li>
+        <li>Create an order intent with your email.</li>
+        <li>Select Cash App or PayPal.</li>
+        <li>Pay externally using the exact order amount.</li>
+        <li>Return with the transaction/reference ID.</li>
+        <li>Sonly Consulting verifies the payment merchant-side.</li>
+        <li>A verification email and access instructions follow after confirmation.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Candidate build 1.0 - Sonly Consulting - CTJ commercial experience</p>
+    <p>Payment processing, merchant verification, email sending, and production entitlements are not automated in this candidate.</p>
+  </footer>
+
+  <script src="./product-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
