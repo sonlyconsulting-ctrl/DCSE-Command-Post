@@ -24,7 +24,7 @@ Membership is a parallel access/value path. It does not replace a la carte Keepe
 | Product | Role | Recommended a la carte price | Commercial note |
 | --- | --- | ---: | --- |
 | Strategic Clarity Assessment | Discover | $0 | acquisition / useful standalone result |
-| Focus & Flow | Practice | $12 | low-friction standalone companion |
+| Focus & Flow | Practice | $30 | standalone daily-practice companion |
 | Mental Ingenuity | Prove | $29 | substantial interactive experience below full curriculum-module price |
 | Part 1 | Learn: clarity | $39 | Keeper purchase |
 | Part 2 | Learn: action | $39 | Keeper purchase |
@@ -45,10 +45,10 @@ Recommended:
 - SCA remains free and is available regardless of purchase
 
 Individual sum at candidate prices:
-$12 + $29 + $39 + $39 + $39 + $119 = $277
+$30 + $29 + $39 + $39 + $39 + $119 = $295
 
 Complete Collection at $199:
-$78 lower than individual purchase total.
+$96 lower than individual purchase total.
 
 This bundle discount is intentionally material because it rewards commitment to the complete suite and creates a clear value anchor without reducing the perceived value of Unified.
 
@@ -100,7 +100,7 @@ These are catalog reconciliation items. No Wix write was performed in this task.
 
 Recommended approval set:
 SCA $0
-Focus & Flow $12
+Focus & Flow $30
 Mental Ingenuity $29
 Part 1 $39
 Part 2 $39
