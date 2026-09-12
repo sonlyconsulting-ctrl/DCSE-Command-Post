@@ -1,0 +1,44 @@
+{
+  "task_id": "SC-CTJ-COMMERCIAL-EXPERIENCE-BUILD-20260912-17",
+  "version": "1.0-candidate",
+  "purpose": "Production-asset slots for reusable CTJ Product Card Packages.",
+  "rules": {
+    "public_release_requires_approved_assets": true,
+    "internal_or_unverified_assets_must_not_be_published": true,
+    "payment_or_customer_records_must_not_be_used_as_marketing_assets": true,
+    "asset_rights_and_lineage_required": true
+  },
+  "products": {
+    "sca": {
+      "hero": [],
+      "screenshots": [],
+      "broll": ["assessment-question-interaction", "profile-result", "immediate-blueprint"],
+      "artifacts": ["strategic-clarity-profile", "immediate-blueprint"]
+    },
+    "focus-flow": {
+      "hero": [],
+      "screenshots": [],
+      "broll": ["state-calibration", "bias-blitz", "breathing-reset", "focused-journal", "thinking-partner"],
+      "artifacts": ["session-record"]
+    },
+    "mental-ingenuity": {
+      "hero": ["existing-original-hero-asset-in-product-repository"],
+      "screenshots": [],
+      "broll": ["opening-cinematic", "chamber-map", "challenge-play", "reasoning-record", "reasoning-signature"],
+      "audio": ["existing-original-music-ambience-and-sfx-in-product-repository"],
+      "artifacts": ["reasoning-record", "reasoning-signature"]
+    },
+    "parts-1-3": {
+      "hero": [],
+      "screenshots": [],
+      "broll": ["daily-prompt", "checkpoint", "thinking-partner", "final-reflection", "export"],
+      "artifacts": ["module-completion-record"]
+    },
+    "unified": {
+      "hero": [],
+      "screenshots": [],
+      "broll": ["scenario-work", "ctj-interlude", "complete-logic-map", "final-decision-statement"],
+      "artifacts": ["complete-logic-map", "final-decision-statement"]
+    }
+  }
+}

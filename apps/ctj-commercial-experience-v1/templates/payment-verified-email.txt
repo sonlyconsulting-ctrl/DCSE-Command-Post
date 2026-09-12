@@ -1,0 +1,25 @@
+Subject: Your Sonly Consulting CTJ purchase is verified - {{order_id}}
+
+Sonly Consulting
+The Critical Thinker's Journey
+
+Payment verified.
+
+Product:
+{{product_name}}
+
+Amount:
+{{amount}}
+
+Order ID:
+{{order_id}}
+
+Your access:
+{{access_instructions}}
+
+Keep this email and your order ID for your records.
+
+Support:
+sonlyconsulting@gmail.com
+
+Refund, privacy, and terms links must be inserted from the approved public policy set before production release.
