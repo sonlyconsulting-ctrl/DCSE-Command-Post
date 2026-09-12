@@ -1,0 +1,63 @@
+{
+  "task_id": "SC-CTJ-COMMERCIAL-PACKAGING-PAYMENTS-20260912-16",
+  "version": "1.0-candidate",
+  "order_states": [
+    "ORDER_INTENT",
+    "PAYMENT_PENDING",
+    "PAYMENT_SUBMITTED",
+    "PAYMENT_REVIEW",
+    "PAYMENT_VERIFIED",
+    "PAYMENT_FAILED",
+    "PAYMENT_REVERSED",
+    "FULFILLED",
+    "CANCELLED",
+    "REFUNDED"
+  ],
+  "entitlement_states": [
+    "LOCKED",
+    "PURCHASE_PENDING",
+    "PURCHASED_KEEPER",
+    "MEMBER_ACCESS",
+    "IN_PROGRESS",
+    "COMPLETED",
+    "KEEPER_PENDING",
+    "KEEPER"
+  ],
+  "required_order_fields": [
+    "order_id",
+    "product_id",
+    "product_name",
+    "price_usd",
+    "customer_email",
+    "payment_method",
+    "created_at",
+    "order_status"
+  ],
+  "payment_submission_fields": [
+    "payer_name_or_handle",
+    "transaction_reference",
+    "submitted_at"
+  ],
+  "verification_fields": [
+    "verified_at",
+    "verification_status",
+    "verification_receipt_reference"
+  ],
+  "prohibited_fields": [
+    "payment_password",
+    "bank_account_number",
+    "card_number",
+    "cvv",
+    "mfa_code",
+    "recovery_code",
+    "provider_api_key",
+    "provider_access_token",
+    "private_key"
+  ],
+  "rules": {
+    "customer_submission_does_not_equal_payment_verification": true,
+    "entitlement_requires_payment_verified": true,
+    "direct_purchase_keeper_is_separate_from_membership_access": true,
+    "secrets_must_not_be_stored_in_order_records": true
+  }
+}
