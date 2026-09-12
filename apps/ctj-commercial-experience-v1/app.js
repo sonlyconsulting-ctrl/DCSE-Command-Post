@@ -2,16 +2,31 @@
   "use strict";
 
   const STORAGE_KEY = "ctj.commercial.order.v1";
+  const CART_KEY = "ctj.commercial.cart.v1";
   const catalog = window.CTJ_CATALOG;
   const productIndex = new Map(catalog.products.map((product) => [product.id, product]));
 
   const state = loadState();
+  let cart = loadCart();
+  let activeFilter = "ALL";
 
   const els = {
     catalog: document.getElementById("catalog"),
+    cartDrawer: document.getElementById("cartDrawer"),
+    cartScrim: document.getElementById("cartScrim"),
+    cartItems: document.getElementById("cartItems"),
+    cartAdvice: document.getElementById("cartAdvice"),
+    cartTotal: document.getElementById("cartTotal"),
+    cartCountTop: document.getElementById("cartCountTop"),
+    cartCountSection: document.getElementById("cartCountSection"),
+    openCartTop: document.getElementById("openCartTop"),
+    openCartSection: document.getElementById("openCartSection"),
+    heroCart: document.getElementById("heroCart"),
+    closeCart: document.getElementById("closeCart"),
+    clearCart: document.getElementById("clearCart"),
+    checkoutFromCart: document.getElementById("checkoutFromCart"),
     checkout: document.getElementById("checkout"),
     closeCheckout: document.getElementById("closeCheckout"),
-    resumeButton: document.getElementById("resumeButton"),
     statusBanner: document.getElementById("statusBanner"),
     orderProduct: document.getElementById("orderProduct"),
     identityForm: document.getElementById("identityForm"),
@@ -32,15 +47,15 @@
   };
 
   renderCatalog();
-  renderResumeState();
+  renderCart();
   attachEvents();
   configureResizeReporting();
 
   function freshState() {
     return {
-      version: 1,
+      version: 2,
       orderId: null,
-      productId: null,
+      cartIds: [],
       customerEmail: "",
       paymentMethodId: null,
       payerIdentity: "",
@@ -56,10 +71,22 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return freshState();
       const parsed = JSON.parse(raw);
-      if (!parsed || parsed.version !== 1 || typeof parsed !== "object") return freshState();
+      if (!parsed || typeof parsed !== "object") return freshState();
+      if (parsed.version === 1 && parsed.productId) {
+        return { ...freshState(), cartIds: [parsed.productId], customerEmail: parsed.customerEmail || "" };
+      }
       return { ...freshState(), ...parsed };
     } catch {
       return freshState();
+    }
+  }
+
+  function loadCart() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.filter((id) => productIndex.has(id)) : [];
+    } catch {
+      return [];
     }
   }
 
@@ -71,32 +98,35 @@
     }
   }
 
+  function saveCart() {
+    try {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    } catch {
+      // Cart still works in memory for this session.
+    }
+  }
+
   function clearState() {
     Object.assign(state, freshState());
     try {
       localStorage.removeItem(STORAGE_KEY);
     } catch {
-      // The in-memory reset still succeeds.
+      // In-memory reset still succeeds.
     }
   }
 
   function renderCatalog() {
     els.catalog.textContent = "";
-    for (const product of catalog.products) {
+    const visible = catalog.products.filter((product) => activeFilter === "ALL" || product.filterRole === activeFilter);
+
+    for (const product of visible) {
       const card = document.createElement("article");
       card.className = "product-card" + (product.id === "intro-trio" || product.id === "complete" ? " featured" : "");
       card.setAttribute("data-product-id", product.id);
 
-      if (product.badge) {
-        const badge = document.createElement("span");
-        badge.className = "badge";
-        badge.textContent = product.badge;
-        card.appendChild(badge);
-      }
-
+      if (product.badge) appendText(card, "span", "badge", product.badge);
       appendText(card, "p", "eyebrow", product.role);
       appendText(card, "h3", "", product.title);
-
       if (product.subtitle) appendText(card, "p", "product-subtitle", product.subtitle);
       appendText(card, "p", "product-tagline", product.tagline);
       appendText(card, "p", "product-meta", product.effort);
@@ -114,26 +144,139 @@
       card.appendChild(list);
 
       const actions = document.createElement("div");
-      actions.className = "actions";
-      const buy = document.createElement("button");
-      buy.type = "button";
-      buy.className = "button button-primary";
-      buy.textContent = "Buy once";
-      buy.setAttribute("data-buy-product", product.id);
-      buy.setAttribute("aria-label", "Buy " + product.title + " for " + formatMoney(product.price));
-      actions.appendChild(buy);
-      card.appendChild(actions);
+      actions.className = "card-action-row actions";
 
+      const add = document.createElement("button");
+      add.type = "button";
+      add.className = "button button-primary" + (cart.includes(product.id) ? " in-cart" : "");
+      add.textContent = cart.includes(product.id) ? "In cart" : "Add to cart";
+      add.setAttribute("data-add-product", product.id);
+      add.setAttribute("aria-label", (cart.includes(product.id) ? "Remove " : "Add ") + product.title + (cart.includes(product.id) ? " from cart" : " to cart"));
+      actions.appendChild(add);
+
+      const buyNow = document.createElement("button");
+      buyNow.type = "button";
+      buyNow.className = "button button-quiet";
+      buyNow.textContent = "Buy now";
+      buyNow.setAttribute("data-buy-now", product.id);
+      actions.appendChild(buyNow);
+
+      card.appendChild(actions);
       els.catalog.appendChild(card);
     }
   }
 
+  function renderCart() {
+    els.cartItems.textContent = "";
+    const items = cart.map((id) => productIndex.get(id)).filter(Boolean);
+
+    if (!items.length) {
+      appendText(els.cartItems, "p", "field-help", "Your cart is empty. Select one or more CTJ products to build your path.");
+    } else {
+      for (const product of items) {
+        const line = document.createElement("article");
+        line.className = "cart-line";
+
+        const copy = document.createElement("div");
+        appendText(copy, "h3", "", product.title);
+        appendText(copy, "p", "", product.role);
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "remove-item";
+        remove.textContent = "Remove";
+        remove.setAttribute("data-remove-product", product.id);
+        copy.appendChild(remove);
+
+        line.appendChild(copy);
+        appendText(line, "strong", "", formatMoney(product.price));
+        els.cartItems.appendChild(line);
+      }
+    }
+
+    els.cartTotal.textContent = formatMoney(cartTotal());
+    els.cartCountTop.textContent = String(cart.length);
+    els.cartCountSection.textContent = String(cart.length);
+    els.checkoutFromCart.disabled = !cart.length;
+    els.clearCart.disabled = !cart.length;
+    renderCartAdvice();
+  }
+
+  function renderCartAdvice() {
+    els.cartAdvice.textContent = "";
+
+    const has = (id) => cart.includes(id);
+    if (has("complete")) {
+      els.cartAdvice.textContent = "The Complete Keeper Collection already contains the current CTJ product family. Review duplicate items before checkout.";
+      return;
+    }
+
+    if (has("sca") && has("focus-flow") && has("mental-ingenuity")) {
+      els.cartAdvice.textContent = "First-time customers may prefer the $45 CTJ Intro Trio instead of these three $20 products. Eligibility remains a separate verification rule.";
+      return;
+    }
+
+    if (has("focus-flow") && has("mental-ingenuity")) {
+      els.cartAdvice.textContent = "The $30 Focus & Flow + Mental Ingenuity pair saves $10 versus these two individual products.";
+      return;
+    }
+
+    if (has("part-1") && has("part-2") && has("part-3")) {
+      els.cartAdvice.textContent = "The $99 Parts 1-3 Collection saves $18 versus the three individual modules.";
+      return;
+    }
+
+    els.cartAdvice.textContent = "Mix standalone products and bundles as needed. Cart pricing does not silently substitute one product for another.";
+  }
+
   function attachEvents() {
-    els.catalog.addEventListener("click", (event) => {
-      const target = event.target.closest("[data-buy-product]");
-      if (!target) return;
-      beginOrder(target.getAttribute("data-buy-product"));
+    document.addEventListener("click", (event) => {
+      const addTarget = event.target.closest("[data-add-product]");
+      if (addTarget) {
+        toggleCart(addTarget.getAttribute("data-add-product"));
+        return;
+      }
+
+      const buyNow = event.target.closest("[data-buy-now]");
+      if (buyNow) {
+        cart = [buyNow.getAttribute("data-buy-now")];
+        saveCart();
+        renderCart();
+        beginOrderFromCart();
+        return;
+      }
+
+      const remove = event.target.closest("[data-remove-product]");
+      if (remove) {
+        cart = cart.filter((id) => id !== remove.getAttribute("data-remove-product"));
+        saveCart();
+        renderCart();
+        renderCatalog();
+        return;
+      }
+
+      const filter = event.target.closest("[data-filter]");
+      if (filter) {
+        activeFilter = filter.getAttribute("data-filter");
+        document.querySelectorAll("[data-filter]").forEach((button) => button.classList.toggle("active", button === filter));
+        renderCatalog();
+      }
     });
+
+    [els.openCartTop, els.openCartSection, els.heroCart].forEach((button) => {
+      if (button) button.addEventListener("click", openCart);
+    });
+
+    els.closeCart.addEventListener("click", closeCart);
+    els.cartScrim.addEventListener("click", closeCart);
+
+    els.clearCart.addEventListener("click", () => {
+      cart = [];
+      saveCart();
+      renderCart();
+      renderCatalog();
+    });
+
+    els.checkoutFromCart.addEventListener("click", beginOrderFromCart);
 
     els.identityForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -177,68 +320,60 @@
 
     els.closeCheckout.addEventListener("click", () => {
       els.checkout.hidden = true;
-      renderResumeState();
-    });
-
-    els.resumeButton.addEventListener("click", () => {
-      resumeOrder();
     });
 
     els.downloadSummary.addEventListener("click", downloadOrderSummary);
 
     els.startOver.addEventListener("click", () => {
       clearState();
-      resetCheckoutView();
-      renderResumeState();
+      cart = [];
+      saveCart();
+      els.checkout.hidden = true;
+      renderCart();
+      renderCatalog();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  function beginOrder(productId) {
-    const product = productIndex.get(productId);
-    if (!product) {
-      showStatus("That product could not be loaded.", "error");
-      return;
-    }
+  function toggleCart(productId) {
+    if (!productIndex.has(productId)) return;
+    cart = cart.includes(productId) ? cart.filter((id) => id !== productId) : [...cart, productId];
+    saveCart();
+    renderCart();
+    renderCatalog();
+  }
+
+  function openCart() {
+    els.cartDrawer.classList.add("open");
+    els.cartDrawer.setAttribute("aria-hidden", "false");
+    els.cartScrim.hidden = false;
+    els.closeCart.focus();
+  }
+
+  function closeCart() {
+    els.cartDrawer.classList.remove("open");
+    els.cartDrawer.setAttribute("aria-hidden", "true");
+    els.cartScrim.hidden = true;
+  }
+
+  function beginOrderFromCart() {
+    const items = cart.map((id) => productIndex.get(id)).filter(Boolean);
+    if (!items.length) return;
 
     clearState();
     state.orderId = createOrderId();
-    state.productId = productId;
+    state.cartIds = [...cart];
     state.orderStatus = "ORDER_INTENT";
     state.createdAt = new Date().toISOString();
     saveState();
 
     resetCheckoutView();
-    renderOrderProduct(product);
+    renderOrderProducts(items);
     els.customerEmail.value = "";
+    closeCart();
     els.checkout.hidden = false;
     showStatus("Order intent created. No payment has been recorded yet.", "info");
-    els.checkout.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function resumeOrder() {
-    const product = productIndex.get(state.productId);
-    if (!product || !state.orderId) return;
-
-    resetCheckoutView();
-    renderOrderProduct(product);
-    els.customerEmail.value = state.customerEmail || "";
-    els.payerIdentity.value = state.payerIdentity || "";
-    els.transactionReference.value = state.transactionReference || "";
-    els.checkout.hidden = false;
-
-    if (state.orderStatus === "PAYMENT_SUBMITTED") {
-      showPendingStep();
-    } else if (state.paymentMethodId) {
-      showPaymentStep();
-      selectPaymentMethod(state.paymentMethodId);
-    } else if (state.customerEmail) {
-      showPaymentStep();
-    } else {
-      showStatus("Resume your saved order intent.", "info");
-    }
-
-    els.checkout.scrollIntoView({ behavior: "smooth", block: "start" });
+    els.customerEmail.focus();
   }
 
   function resetCheckoutView() {
@@ -251,23 +386,31 @@
     delete els.statusBanner.dataset.kind;
   }
 
-  function renderOrderProduct(product) {
+  function renderOrderProducts(items) {
     els.orderProduct.textContent = "";
-    const wrap = document.createElement("div");
-    wrap.className = "order-product";
-    const text = document.createElement("div");
-    appendText(text, "h4", "", product.title);
-    appendText(text, "p", "", product.role);
-    appendText(text, "p", "", "Order ID: " + state.orderId);
-    wrap.appendChild(text);
-    appendText(wrap, "strong", "price", formatMoney(product.price));
-    els.orderProduct.appendChild(wrap);
+    const list = document.createElement("div");
+    list.className = "order-list";
+
+    for (const product of items) {
+      const line = document.createElement("div");
+      line.className = "order-line";
+      const text = document.createElement("div");
+      appendText(text, "strong", "", product.title);
+      appendText(text, "p", "field-help", product.role);
+      line.appendChild(text);
+      appendText(line, "strong", "", formatMoney(product.price));
+      list.appendChild(line);
+    }
+
+    els.orderProduct.appendChild(list);
+    const total = document.createElement("div");
+    total.className = "order-total";
+    appendText(total, "span", "", "Order " + state.orderId + " total");
+    appendText(total, "strong", "", formatMoney(orderTotal()));
+    els.orderProduct.appendChild(total);
   }
 
   function showPaymentStep() {
-    const product = productIndex.get(state.productId);
-    if (!product) return;
-
     els.stepProduct.hidden = true;
     els.stepPayment.hidden = false;
     els.stepSubmission.hidden = true;
@@ -284,13 +427,12 @@
       els.paymentChoices.appendChild(button);
     }
 
-    showStatus("Amount due: " + formatMoney(product.price) + ". Payment is completed outside this page.", "info");
+    showStatus("Amount due: " + formatMoney(orderTotal()) + ". Payment is completed outside this page.", "info");
   }
 
   function selectPaymentMethod(methodId) {
-    const product = productIndex.get(state.productId);
     const method = catalog.paymentMethods.find((item) => item.id === methodId);
-    if (!product || !method) return;
+    if (!method) return;
 
     state.paymentMethodId = methodId;
     state.orderStatus = "PAYMENT_PENDING";
@@ -299,7 +441,7 @@
     els.paymentInstructions.textContent = "";
     appendText(els.paymentInstructions, "p", "eyebrow", method.label.toUpperCase());
     appendCopyLine(els.paymentInstructions, "Pay to", method.merchant);
-    appendCopyLine(els.paymentInstructions, "Amount", formatMoney(product.price));
+    appendCopyLine(els.paymentInstructions, "Amount", formatMoney(orderTotal()));
     appendCopyLine(els.paymentInstructions, "Order ID", state.orderId);
     appendText(els.paymentInstructions, "p", "field-help", "Use the order ID in the payment note when the provider permits it. No provider destination link is shown until it is verified.");
     els.paymentInstructions.hidden = false;
@@ -309,9 +451,8 @@
   }
 
   function showPendingStep() {
-    const product = productIndex.get(state.productId);
     const method = catalog.paymentMethods.find((item) => item.id === state.paymentMethodId);
-    if (!product || !method) return;
+    if (!method) return;
 
     els.stepProduct.hidden = true;
     els.stepPayment.hidden = true;
@@ -320,8 +461,8 @@
     els.pendingSummary.textContent = "";
 
     addSummary("Order ID", state.orderId);
-    addSummary("Product", product.title);
-    addSummary("Amount", formatMoney(product.price));
+    addSummary("Products", orderItems().map((product) => product.title).join("; "));
+    addSummary("Amount", formatMoney(orderTotal()));
     addSummary("Payment method", method.label);
     addSummary("Merchant", method.merchant);
     addSummary("Email", state.customerEmail);
@@ -329,11 +470,18 @@
     addSummary("Status", "PAYMENT_SUBMITTED - merchant verification required");
 
     showStatus("Payment details submitted. This is not yet a verified paid order.", "success");
-    renderResumeState();
   }
 
-  function renderResumeState() {
-    els.resumeButton.hidden = !state.orderId || state.orderStatus === "EMPTY";
+  function orderItems() {
+    return state.cartIds.map((id) => productIndex.get(id)).filter(Boolean);
+  }
+
+  function cartTotal() {
+    return cart.reduce((sum, id) => sum + (productIndex.get(id)?.price || 0), 0);
+  }
+
+  function orderTotal() {
+    return orderItems().reduce((sum, product) => sum + product.price, 0);
   }
 
   function addSummary(term, description) {
@@ -391,18 +539,17 @@
   }
 
   function downloadOrderSummary() {
-    const product = productIndex.get(state.productId);
     const method = catalog.paymentMethods.find((item) => item.id === state.paymentMethodId);
-    if (!product || !method) return;
+    if (!method) return;
 
-    const text = [
+    const lines = [
       "SONLY CONSULTING",
       "THE CRITICAL THINKER'S JOURNEY",
       "ORDER SUMMARY",
       "",
       "Order ID: " + state.orderId,
-      "Product: " + product.title,
-      "Amount: " + formatMoney(product.price),
+      ...orderItems().map((product) => product.title + ": " + formatMoney(product.price)),
+      "Total: " + formatMoney(orderTotal()),
       "Payment method: " + method.label,
       "Merchant: " + method.merchant,
       "Customer email: " + state.customerEmail,
@@ -411,9 +558,9 @@
       "",
       "Customer-submitted payment details do not equal verified payment.",
       "Access follows merchant-side verification."
-    ].join("\n");
+    ];
 
-    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const blob = new Blob([lines.join("\n")], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
