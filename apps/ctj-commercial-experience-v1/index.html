@@ -3,113 +3,162 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Candidate CTJ product-card and purchase-intent experience for Sonly Consulting.">
+  <meta name="description" content="The Critical Thinker's Journey product family storefront candidate for Sonly Consulting.">
   <meta name="ctj-parent-origin" content="">
-  <title>The Critical Thinker's Journey - Product Experience Candidate</title>
+  <title>The Critical Thinker's Journey - Storefront Candidate</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <header class="site-header">
-    <div>
-      <p class="eyebrow">SONLY CONSULTING</p>
-      <h1>The Critical Thinker's Journey<span aria-hidden="true">™</span></h1>
-      <p class="lede">Discover. Learn. Practice. Prove. Integrate.</p>
-    </div>
-    <button id="resumeButton" class="button button-quiet" type="button" hidden>Resume purchase</button>
+    <a class="brand" href="#main" aria-label="CTJ storefront home">
+      <span class="brand-mark" aria-hidden="true">✦</span>
+      <span>
+        <small>SONLY CONSULTING</small>
+        <strong>THE CRITICAL THINKER'S JOURNEY™</strong>
+      </span>
+    </a>
+
+    <nav class="top-nav" aria-label="Storefront navigation">
+      <a href="#collection">Collection</a>
+      <a href="#journey">Journey</a>
+      <a href="#how-it-works">How It Works</a>
+      <button id="openCartTop" class="cart-button" type="button">
+        Cart <span id="cartCountTop" class="cart-count">0</span>
+      </button>
+    </nav>
   </header>
 
   <main id="main">
-    <section class="intro" aria-labelledby="intro-title">
-      <p class="eyebrow">PRODUCT FAMILY</p>
-      <h2 id="intro-title">Choose the experience that fits where you are.</h2>
-      <p>Each card is both a product offer and the beginning of the transaction experience. Payment is currently verified manually before access is released.</p>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">THE CTJ PRODUCT FAMILY</p>
+        <h1>Better questions.<br>Deeper thinking.<br><span>A stronger next move.</span></h1>
+        <p class="hero-lede">A connected family of interactive thinking experiences designed to help you discover where you are, practice deliberately, prove your reasoning, and integrate it when the stakes are real.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#collection">Explore the collection</a>
+          <button class="button button-quiet" id="heroCart" type="button">Build your cart</button>
+        </div>
+        <div class="hero-proof" aria-label="CTJ journey stages">
+          <span>DISCOVER</span><span>LEARN</span><span>PRACTICE</span><span>PROVE</span><span>INTEGRATE</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="compass">✦</div>
+        <div class="maze-path"></div>
+        <div class="horizon-glow"></div>
+      </div>
     </section>
 
-    <section class="catalog-section" aria-labelledby="catalog-title">
+    <section class="offer-strip" aria-label="Featured CTJ offers">
+      <article>
+        <p class="eyebrow">FIRST-TIME OFFER</p>
+        <h2>CTJ Intro Trio</h2>
+        <p>Discover + Practice + Prove</p>
+        <strong>$45 <span>$60 standalone value</span></strong>
+        <button class="text-action" type="button" data-add-product="intro-trio">Add Intro Trio</button>
+      </article>
+      <article>
+        <p class="eyebrow">EVERGREEN PAIR</p>
+        <h2>Focus + Mental Ingenuity</h2>
+        <p>Practice + Prove</p>
+        <strong>$30 <span>$40 standalone value</span></strong>
+        <button class="text-action" type="button" data-add-product="focus-mental-pair">Add Pair</button>
+      </article>
+      <article>
+        <p class="eyebrow">BEST SUITE VALUE</p>
+        <h2>Complete Keeper Collection</h2>
+        <p>The current CTJ family in one owned suite</p>
+        <strong>$199 <span>$268 evergreen path</span></strong>
+        <button class="text-action" type="button" data-add-product="complete">Add Complete Collection</button>
+      </article>
+    </section>
+
+    <section id="journey" class="journey-section" aria-labelledby="journey-title">
+      <div class="section-kicker">
+        <p class="eyebrow">ONE JOURNEY. DIFFERENT ENTRY POINTS.</p>
+        <h2 id="journey-title">Start where the work is.</h2>
+        <p>CTJ is not a one-size-fits-all course. Each product has a distinct job, and the family is designed to work together without forcing one fixed route.</p>
+      </div>
+
+      <div class="journey-track">
+        <article><span>01</span><strong>Discover</strong><p>See where your thinking is now.</p></article>
+        <article><span>02</span><strong>Learn</strong><p>Build clarity, action, and meaning.</p></article>
+        <article><span>03</span><strong>Practice</strong><p>Create a repeatable thinking rhythm.</p></article>
+        <article><span>04</span><strong>Prove</strong><p>See how your reasoning performs.</p></article>
+        <article><span>05</span><strong>Integrate</strong><p>Bring the full method to real decisions.</p></article>
+      </div>
+    </section>
+
+    <section id="collection" class="catalog-section" aria-labelledby="catalog-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">LOCKED COMMERCIAL BASELINE</p>
-          <h2 id="catalog-title">CTJ Product Cards</h2>
+          <p class="eyebrow">SHOP THE COLLECTION</p>
+          <h2 id="catalog-title">Build your own CTJ path.</h2>
+          <p>Select one product, several products, or a packaged offer. Your cart follows you through the page.</p>
         </div>
-        <p class="section-note">Existing SC membership plans are unchanged.</p>
+        <button id="openCartSection" class="button button-secondary" type="button">
+          View cart <span id="cartCountSection">0</span>
+        </button>
       </div>
+
+      <div class="filter-row" aria-label="Filter products by CTJ role">
+        <button type="button" class="filter-chip active" data-filter="ALL">All</button>
+        <button type="button" class="filter-chip" data-filter="DISCOVER">Discover</button>
+        <button type="button" class="filter-chip" data-filter="LEARN">Learn</button>
+        <button type="button" class="filter-chip" data-filter="PRACTICE">Practice</button>
+        <button type="button" class="filter-chip" data-filter="PROVE">Prove</button>
+        <button type="button" class="filter-chip" data-filter="INTEGRATE">Integrate</button>
+        <button type="button" class="filter-chip" data-filter="BUNDLE">Bundles</button>
+      </div>
+
       <div id="catalog" class="product-grid" aria-live="polite"></div>
     </section>
 
-    <section id="checkout" class="checkout-shell" aria-labelledby="checkout-title" hidden>
-      <div class="checkout-heading">
-        <div>
-          <p class="eyebrow">PURCHASE INTENT</p>
-          <h2 id="checkout-title">Order summary</h2>
-        </div>
-        <button id="closeCheckout" class="button button-quiet" type="button">Close</button>
+    <section class="content-showcase" aria-labelledby="showcase-title">
+      <div class="section-kicker">
+        <p class="eyebrow">MORE THAN A PRODUCT TILE</p>
+        <h2 id="showcase-title">Each Product Card becomes a production package.</h2>
+        <p>The same governed source can drive the website, product page, social media cuts, video B-roll, email, checkout, confirmation, and customer artifacts.</p>
       </div>
 
-      <div id="statusBanner" class="status-banner" role="status" aria-live="polite"></div>
-
-      <section id="stepProduct" class="checkout-step" aria-labelledby="step-product-title">
-        <h3 id="step-product-title">1. Confirm your product</h3>
-        <div id="orderProduct"></div>
-        <form id="identityForm" novalidate>
-          <label for="customerEmail">Email for confirmation and access</label>
-          <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" required>
-          <p class="field-help">No payment credentials are collected here.</p>
-          <div class="actions">
-            <button class="button button-primary" type="submit">Continue to payment</button>
-          </div>
-        </form>
-      </section>
-
-      <section id="stepPayment" class="checkout-step" aria-labelledby="step-payment-title" hidden>
-        <h3 id="step-payment-title">2. Choose how you want to pay</h3>
-        <p>Use the exact order amount. Include the order ID in the payment note when the provider permits it.</p>
-        <div id="paymentChoices" class="payment-choices"></div>
-        <div id="paymentInstructions" class="payment-instructions" hidden></div>
-      </section>
-
-      <section id="stepSubmission" class="checkout-step" aria-labelledby="step-submission-title" hidden>
-        <h3 id="step-submission-title">3. Tell us what to verify</h3>
-        <form id="paymentForm" novalidate>
-          <div class="field-grid">
-            <div>
-              <label for="payerIdentity">Payer name or payment handle</label>
-              <input id="payerIdentity" name="payerIdentity" type="text" autocomplete="name" minlength="2" maxlength="100" required>
-            </div>
-            <div>
-              <label for="transactionReference">Transaction/reference ID</label>
-              <input id="transactionReference" name="transactionReference" type="text" minlength="4" maxlength="120" required>
-            </div>
-          </div>
-          <p class="field-help">A screenshot is not required. Merchant-side confirmation completes payment verification.</p>
-          <div class="actions">
-            <button class="button button-primary" type="submit">I've paid - verify my purchase</button>
-            <button id="backToMethods" class="button button-quiet" type="button">Change payment method</button>
-          </div>
-        </form>
-      </section>
-
-      <section id="stepPending" class="checkout-step" aria-labelledby="step-pending-title" hidden>
-        <p class="eyebrow">PAYMENT SUBMITTED</p>
-        <h3 id="step-pending-title">Your purchase is waiting for merchant verification.</h3>
-        <p>Access is released only after the payment is matched and confirmed in the authorized merchant account.</p>
-        <dl id="pendingSummary" class="summary-list"></dl>
-        <div class="actions">
-          <button id="downloadSummary" class="button button-secondary" type="button">Download order summary</button>
-          <button id="startOver" class="button button-quiet" type="button">Start another order</button>
-        </div>
-      </section>
+      <div class="showcase-grid">
+        <article>
+          <span>01</span>
+          <h3>Product Story</h3>
+          <p>Positioning, audience, effort, result, sample interaction, price, bundle relationships, and CTA.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Interactive Experience</h3>
+          <p>Forms, assessments, prompts, game mechanics, results, exports, and portable customer artifacts.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Media Kit</h3>
+          <p>Hero imagery, screenshots, B-roll, audio, video, product mockups, social crops, and campaign variants.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Commerce</h3>
+          <p>Cart, order intent, payment route, merchant verification, confirmation email, and access handoff.</p>
+        </article>
+      </div>
     </section>
 
-    <section class="process" aria-labelledby="process-title">
+    <section id="how-it-works" class="process" aria-labelledby="process-title">
       <p class="eyebrow">HOW PURCHASES WORK</p>
-      <h2 id="process-title">From product card to verified access.</h2>
+      <h2 id="process-title">Choose. Cart. Pay. Verify. Access.</h2>
       <ol>
-        <li>Choose a CTJ product.</li>
-        <li>Create an order intent with your email.</li>
-        <li>Select Cash App or PayPal.</li>
-        <li>Pay externally using the exact order amount.</li>
+        <li>Select one or more CTJ products.</li>
+        <li>Review your cart and total.</li>
+        <li>Create an order intent using your email.</li>
+        <li>Choose Cash App or PayPal.</li>
+        <li>Pay externally using the exact order amount and order ID.</li>
         <li>Return with the transaction/reference ID.</li>
         <li>Sonly Consulting verifies the payment merchant-side.</li>
         <li>A verification email and access instructions follow after confirmation.</li>
@@ -117,9 +166,104 @@
     </section>
   </main>
 
+  <div id="cartScrim" class="cart-scrim" hidden></div>
+  <aside id="cartDrawer" class="cart-drawer" aria-labelledby="cart-title" aria-hidden="true">
+    <div class="cart-header">
+      <div>
+        <p class="eyebrow">YOUR CTJ CART</p>
+        <h2 id="cart-title">Build your path.</h2>
+      </div>
+      <button id="closeCart" class="icon-button" type="button" aria-label="Close cart">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+    <div id="cartAdvice" class="cart-advice" aria-live="polite"></div>
+
+    <div class="cart-total">
+      <span>Total</span>
+      <strong id="cartTotal">$0</strong>
+    </div>
+
+    <div class="cart-actions">
+      <button id="checkoutFromCart" class="button button-primary" type="button">Continue to checkout</button>
+      <button id="clearCart" class="button button-quiet" type="button">Clear cart</button>
+    </div>
+  </aside>
+
+  <section id="checkout" class="checkout-shell modal-shell" aria-labelledby="checkout-title" hidden>
+    <div class="checkout-heading">
+      <div>
+        <p class="eyebrow">PURCHASE INTENT</p>
+        <h2 id="checkout-title">Order summary</h2>
+      </div>
+      <button id="closeCheckout" class="icon-button" type="button" aria-label="Close checkout">×</button>
+    </div>
+
+    <div id="statusBanner" class="status-banner" role="status" aria-live="polite"></div>
+
+    <section id="stepProduct" class="checkout-step" aria-labelledby="step-product-title">
+      <h3 id="step-product-title">1. Confirm your cart</h3>
+      <div id="orderProduct"></div>
+
+      <form id="identityForm" novalidate>
+        <label for="customerEmail">Email for confirmation and access</label>
+        <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" required>
+        <p class="field-help">No payment credentials are collected here.</p>
+        <div class="actions">
+          <button class="button button-primary" type="submit">Continue to payment</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="stepPayment" class="checkout-step" aria-labelledby="step-payment-title" hidden>
+      <h3 id="step-payment-title">2. Choose how you want to pay</h3>
+      <p>Use the exact order amount. Include the order ID in the payment note when the provider permits it.</p>
+      <div id="paymentChoices" class="payment-choices"></div>
+      <div id="paymentInstructions" class="payment-instructions" hidden></div>
+    </section>
+
+    <section id="stepSubmission" class="checkout-step" aria-labelledby="step-submission-title" hidden>
+      <h3 id="step-submission-title">3. Tell us what to verify</h3>
+      <form id="paymentForm" novalidate>
+        <div class="field-grid">
+          <div>
+            <label for="payerIdentity">Payer name or payment handle</label>
+            <input id="payerIdentity" name="payerIdentity" type="text" autocomplete="name" minlength="2" maxlength="100" required>
+          </div>
+          <div>
+            <label for="transactionReference">Transaction/reference ID</label>
+            <input id="transactionReference" name="transactionReference" type="text" minlength="4" maxlength="120" required>
+          </div>
+        </div>
+        <p class="field-help">Customer proof starts verification. Merchant-side confirmation completes it.</p>
+        <div class="actions">
+          <button class="button button-primary" type="submit">I've paid - verify my purchase</button>
+          <button id="backToMethods" class="button button-quiet" type="button">Change payment method</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="stepPending" class="checkout-step" aria-labelledby="step-pending-title" hidden>
+      <p class="eyebrow">PAYMENT SUBMITTED</p>
+      <h3 id="step-pending-title">Your purchase is waiting for merchant verification.</h3>
+      <p>Access is released only after the payment is matched and confirmed in the authorized merchant account.</p>
+      <dl id="pendingSummary" class="summary-list"></dl>
+      <div class="actions">
+        <button id="downloadSummary" class="button button-secondary" type="button">Download order summary</button>
+        <button id="startOver" class="button button-quiet" type="button">Start another order</button>
+      </div>
+    </section>
+  </section>
+
   <footer class="site-footer">
-    <p>Candidate build 1.0 - Sonly Consulting - CTJ commercial experience</p>
-    <p>Payment processing, merchant verification, email sending, and production entitlements are not automated in this candidate.</p>
+    <div>
+      <p class="eyebrow">THE CRITICAL THINKER'S JOURNEY™</p>
+      <p>Insights today and along the way.</p>
+    </div>
+    <div class="footer-note">
+      <p>Candidate storefront build 1.1 - Sonly Consulting</p>
+      <p>Payment processing, merchant verification, production email, and entitlements are not automated in this candidate.</p>
+    </div>
   </footer>
 
   <script src="./product-data.js"></script>
