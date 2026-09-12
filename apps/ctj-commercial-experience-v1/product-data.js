@@ -8,6 +8,7 @@ window.CTJ_CATALOG = {
     {
       id: "sca",
       role: "DISCOVER",
+      filterRole: "DISCOVER",
       title: "Strategic Clarity Assessment",
       price: 20,
       tagline: "See where your thinking is clear, developing, and ready for movement.",
@@ -19,9 +20,10 @@ window.CTJ_CATALOG = {
     {
       id: "focus-flow",
       role: "PRACTICE",
+      filterRole: "PRACTICE",
       title: "CTJ: Focus & Flow",
       price: 20,
-      tagline: "A short deliberate reset when your thinking needs traction.",
+      tagline: "A deliberate reset when your thinking needs traction.",
       effort: "Repeatable focused session",
       result: "Focused session record + next move",
       includes: ["State calibration", "Bias Blitz", "Breathing reset", "Focused journal", "Thinking Partner", "Portable session record"],
@@ -30,6 +32,7 @@ window.CTJ_CATALOG = {
     {
       id: "mental-ingenuity",
       role: "PROVE",
+      filterRole: "PROVE",
       title: "Mental Ingenuity",
       price: 20,
       tagline: "Put your reasoning under pressure and see how it moves.",
@@ -41,9 +44,11 @@ window.CTJ_CATALOG = {
     {
       id: "focus-mental-pair",
       role: "PRACTICE + PROVE",
+      filterRole: "BUNDLE",
       title: "Focus & Flow + Mental Ingenuity",
       price: 30,
       compareAt: 40,
+      badge: "EVERGREEN BUNDLE",
       tagline: "Practice deliberately. Then put that thinking under pressure.",
       effort: "Two standalone CTJ experiences",
       result: "Session records + Reasoning Signature",
@@ -53,6 +58,7 @@ window.CTJ_CATALOG = {
     {
       id: "intro-trio",
       role: "DISCOVER + PRACTICE + PROVE",
+      filterRole: "BUNDLE",
       title: "CTJ Intro Trio",
       price: 45,
       compareAt: 60,
@@ -66,6 +72,7 @@ window.CTJ_CATALOG = {
     {
       id: "part-1",
       role: "LEARN: CLARITY",
+      filterRole: "LEARN",
       title: "Part 1: Building Clarity and Confidence",
       price: 39,
       tagline: "Strengthen the fundamentals of clear reasoning.",
@@ -77,6 +84,7 @@ window.CTJ_CATALOG = {
     {
       id: "part-2",
       role: "LEARN: ACTION",
+      filterRole: "LEARN",
       title: "Part 2: Exploring Ideas and Making Moves",
       price: 39,
       tagline: "Turn evidence and uncertainty into thoughtful movement.",
@@ -88,6 +96,7 @@ window.CTJ_CATALOG = {
     {
       id: "part-3",
       role: "LEARN: MEANING",
+      filterRole: "LEARN",
       title: "Part 3: Finding Meaning and Balance",
       price: 39,
       tagline: "Bring reasoning, emotion, values, and intention into alignment.",
@@ -99,9 +108,11 @@ window.CTJ_CATALOG = {
     {
       id: "parts-1-3",
       role: "LEARN COLLECTION",
+      filterRole: "BUNDLE",
       title: "The Critical Thinker's Journey Parts 1-3",
       price: 99,
       compareAt: 117,
+      badge: "LEARNING COLLECTION",
       tagline: "The complete three-part learning path.",
       effort: "Three 10-day guided modules",
       result: "Parts 1-3 completion records",
@@ -111,6 +122,7 @@ window.CTJ_CATALOG = {
     {
       id: "unified",
       role: "INTEGRATE",
+      filterRole: "INTEGRATE",
       title: "Unified Edition",
       subtitle: "The Complete Logic Map",
       price: 119,
@@ -123,6 +135,7 @@ window.CTJ_CATALOG = {
     {
       id: "complete",
       role: "COMPLETE KEEPER COLLECTION",
+      filterRole: "BUNDLE",
       title: "Complete CTJ Keeper Collection",
       price: 199,
       compareAt: 268,
