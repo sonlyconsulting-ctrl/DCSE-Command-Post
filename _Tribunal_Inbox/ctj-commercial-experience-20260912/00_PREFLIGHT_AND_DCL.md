@@ -98,3 +98,35 @@ Known limitations:
 
 Current exit state:
 CANDIDATE BUILD IN PROGRESS.
+
+
+## Scope expansion after visual/cart review
+
+DCS Level 0 review found the initial storefront candidate materially too minimal for the CTJ visual/product intent.
+
+Required correction now applied in the candidate branch:
+- treat this as the website/product storefront layer, not a social-media platform page
+- preserve social-media campaign cuts as downstream derivatives of the same Product Card Package
+- apply CTJ luxe visual language: charcoal/black, platinum/silver, gold, deep blue, compass/path/labyrinth motif
+- support multi-product selection
+- provide a persistent shopping cart
+- show bundle/overlap guidance without silently changing customer selections
+- preserve Buy Now for single-product checkout
+- preserve multi-product order totals through the payment-verification flow
+- retain the free-compatible Cash App / PayPal manual verification boundary
+
+User-supplied visual references reviewed in current session:
+- CTJ silver compass/labyrinth parent image
+- CTJ Strategic Clarity Assessment split gold/deep-blue image
+
+These visual files are treated as production references/assets. The current GitHub connector can govern their manifest/reference but the binary image ingestion path remains separate from the text-code commit path.
+
+Current storefront candidate head:
+66ac50ac8c422bd03259aa84c6ae21ade6f93795
+
+CI:
+GitHub Actions run 34717949854 = SUCCESS.
+
+Exit state:
+CANDIDATE STOREFRONT + MULTI-PRODUCT CART STATICALLY VALIDATED.
+Live hosted preview remains pending external deployment transport.
