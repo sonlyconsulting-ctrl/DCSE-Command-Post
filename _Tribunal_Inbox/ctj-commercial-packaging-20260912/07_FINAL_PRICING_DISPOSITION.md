@@ -10,10 +10,11 @@ Gate owner: DCS Level 0
 
 | Product | Price |
 | --- | ---: |
-| Strategic Clarity Assessment | $0 |
+| Strategic Clarity Assessment | $20 |
 | Focus & Flow | $20 |
 | Mental Ingenuity | $20 |
 | Focus & Flow + Mental Ingenuity | $30 |
+| SCA + Focus & Flow + Mental Ingenuity | $45 first-time promo |
 | Part 1 | $39 |
 | Part 2 | $39 |
 | Part 3 | $39 |
@@ -38,11 +39,11 @@ The comparison is a reference point only. CTJ products are not model-access subs
 
 ## Value ladder
 
-$0:
-low-friction discovery
-
 $20:
-small standalone owned CTJ experience
+paid entry products: Discover, Practice, or Prove
+
+$45:
+first-time Discover + Practice + Prove promotional trio
 
 $30:
 Practice + Prove pair; $10 / 25% savings versus two $20 purchases
@@ -59,15 +60,24 @@ premium synthesis capstone
 $199:
 complete owned CTJ suite
 
-Cheapest equivalent bundle path outside Complete Collection:
+Cheapest evergreen equivalent bundle path outside Complete Collection:
+- SCA: $20
 - Focus & Flow + Mental Ingenuity: $30
 - Parts 1-3 Collection: $99
 - Unified: $119
-- total: $248
+- total: $268
 
 Complete Collection at $199:
-- $49 lower
-- approximately 19.8% suite discount
+- $69 lower
+- approximately 25.7% suite discount
+
+First-time promotional path:
+- SCA + Focus & Flow + Mental Ingenuity: $45
+- Parts 1-3 Collection: $99
+- Unified: $119
+- total: $263
+
+Complete Collection remains $64 lower than that promotional path.
 
 ## Future open-source AI principle
 
@@ -109,3 +119,22 @@ No further broad pricing review is recommended before:
 - production cost reconciliation
 
 This record is a recommendation and does not self-create DCS Level 0 approval.
+
+
+## Promotional-entry decision
+
+The full SCA is not free.
+
+A free mini clarity ad/lead asset may be created separately, but it does not yet exist as a verified product.
+
+Approved candidate promotional architecture:
+- SCA: $20
+- Focus & Flow: $20
+- Mental Ingenuity: $20
+- Focus & Flow + Mental Ingenuity: $30 evergreen pair
+- SCA + Focus & Flow + Mental Ingenuity: $45 first-time introductory promotion
+
+The Intro Trio presents three different CTJ modes at once:
+Discover + Practice + Prove.
+
+Do not market the offer as a clearance sale.
