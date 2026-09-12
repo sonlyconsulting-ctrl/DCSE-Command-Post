@@ -23,10 +23,11 @@ Membership is a parallel access/value path. It does not replace a la carte Keepe
 
 | Product | Role | Recommended a la carte price | Commercial note |
 | --- | --- | ---: | --- |
-| Strategic Clarity Assessment | Discover | $0 | acquisition / useful standalone result |
+| Strategic Clarity Assessment | Discover | $20 | paid directional assessment with profile and blueprint |
 | Focus & Flow | Practice | $20 | standalone daily-practice companion |
 | Mental Ingenuity | Prove | $20 | standalone interactive proving-ground product |
 | Focus & Flow + Mental Ingenuity | Practice + Prove | $30 | paired a la carte bundle; saves $10 vs separate purchase |
+| SCA + Focus & Flow + Mental Ingenuity | Intro Trio | $45 promo | first-time introductory offer; regular standalone value $60 |
 | Part 1 | Learn: clarity | $39 | Keeper purchase |
 | Part 2 | Learn: action | $39 | Keeper purchase |
 | Part 3 | Learn: meaning | $39 | Keeper purchase |
@@ -46,18 +47,27 @@ Recommended:
 - SCA remains free and is available regardless of purchase
 
 Individual sum at candidate prices:
-$20 + $20 + $39 + $39 + $39 + $119 = $276
+$20 + $20 + $20 + $39 + $39 + $39 + $119 = $296
 
 Complete Collection at $199:
 $77 lower than six separate individual purchases.
 
-Cheapest equivalent path using available bundles:
+Cheapest evergreen equivalent path using available bundles:
+- SCA: $20
 - Focus & Flow + Mental Ingenuity bundle: $30
 - Parts 1-3 Collection: $99
 - Unified: $119
-- Total: $248
+- Total: $268
 
-Complete Collection at $199 is therefore $49 below the cheapest equivalent multi-purchase path, approximately a 19.8% suite discount.
+Complete Collection at $199 is therefore $69 below the cheapest evergreen equivalent multi-purchase path, approximately a 25.7% suite discount.
+
+First-time Intro Trio promotional path:
+- SCA + Focus & Flow + Mental Ingenuity: $45
+- Parts 1-3 Collection: $99
+- Unified: $119
+- Total: $263
+
+Even against the introductory path, the Complete Collection remains $64 lower, approximately a 24.3% suite discount.
 
 This bundle discount is intentionally material because it rewards commitment to the complete suite and creates a clear value anchor without reducing the perceived value of Unified.
 
@@ -108,10 +118,11 @@ These are catalog reconciliation items. No Wix write was performed in this task.
 ## DCS disposition requested
 
 Recommended approval set:
-SCA $0
+SCA $20
 Focus & Flow $20
 Mental Ingenuity $20
 Focus & Flow + Mental Ingenuity $30
+SCA + Focus & Flow + Mental Ingenuity $45 intro promo
 Part 1 $39
 Part 2 $39
 Part 3 $39
@@ -159,3 +170,37 @@ Do not infer that total cost is zero. Commercial cost still includes:
 - refunds/chargebacks and customer service
 
 Final margin analysis should use actual operating costs once the production stack is selected.
+
+
+## SCA free-entry clarification
+
+The verified 31-question Strategic Clarity Assessment is a paid product at $20.
+
+There is currently no verified separate "SCA Preview" product in the audited CTJ family.
+
+A future free acquisition asset may be created as a campaign/ad experience, for example:
+- a short 5-7 question clarity pulse
+- a single-dimension reflection
+- a sample Strategic Clarity result
+
+That free asset must be treated as a new promotional artifact, not as the existing SCA and not as a substitute for the full paid assessment.
+
+## Intro Trio promotional offer
+
+Candidate first-time offer:
+SCA + Focus & Flow + Mental Ingenuity = $45
+
+Regular standalone value:
+$60
+
+Customer savings:
+$15 / 25%
+
+Recommended framing:
+- CTJ Intro Trio
+- First-Time CTJ Offer
+- Discover + Practice + Prove
+
+Avoid "clearance" language in customer-facing copy because the products are current and strategic, not obsolete inventory.
+
+The promotion may be campaign-limited, first-purchase-limited, or time-limited. The exact eligibility rule should be implemented in the order/entitlement layer before public release.
