@@ -4,7 +4,7 @@
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
-    { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
+    { "source": "/escd/attachments-v2.js", "destination": "/apps/escd/web/attachments-v2.js" },\n    { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
     { "source": "/escd", "destination": "/apps/escd/web/login.html" },
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/(.*)", "destination": "/api" }
