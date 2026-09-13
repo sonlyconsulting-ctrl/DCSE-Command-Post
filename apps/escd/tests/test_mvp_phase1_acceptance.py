@@ -159,6 +159,7 @@ def test_signed_upload_authorization_contract():
     ):
         result = create_signed_attachment_upload("file.txt", "text/plain", 10, "item", "item-1")
     assert result["storage_path"].startswith("items/item-1/")
+    assert "/storage/v1/object/upload/sign/" in result["signed_upload_url"]
     assert "token=test-token" in result["signed_upload_url"]
 
 
