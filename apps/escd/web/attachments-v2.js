@@ -40,4 +40,19 @@
     return out.filter(a=>a.storage_path&&!seen.has(a.storage_path)&&(seen.add(a.storage_path),true));
   }
 
+  async function signedDownload(a){
+    const d=await api('/attachments/download-url',{method:'POST',body:JSON.stringify({
+      storage_path:a.storage_path,file_name:a.name||'attachment',expires_in:300
+    })});
+    const url=d.download&&d.download.signed_url;
+    if(!url)throw new Error('Signed download URL missing');
+    location.href=url;
+  }
+
+  async function removeAttachment(a,recType,recId){
+    return await api('/attachments',{method:'DELETE',body:JSON.stringify({
+      storage_path:a.storage_path,record_type:recType,record_id:recId
+    })});
+  }
+
 })();
