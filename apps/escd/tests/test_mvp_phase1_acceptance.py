@@ -11,7 +11,9 @@ from apps.escd.runtime.mvp_data import (
     search_knowledge,
     create_asset,
     create_ddna_source,
-    save_file_attachment,
+    create_signed_attachment_upload,
+    finalize_file_attachment,
+    delete_record_attachment,
 )
 from apps.escd.runtime.repository import SupabaseRLSClient
 from apps.escd.api.mvp import handler
@@ -136,17 +138,60 @@ def test_repository_delete_item_signature():
 
 
 def test_attachment_size_limit():
-    import base64
-    huge_data = base64.b64encode(b"A" * (11 * 1024 * 1024)).decode("utf-8")  # 11MB
     with pytest.raises(MVPServiceError) as exc_info:
-        save_file_attachment("huge.txt", huge_data)
+        create_signed_attachment_upload(
+            "huge.txt",
+            "text/plain",
+            11 * 1024 * 1024,
+            "item",
+            "item-1",
+        )
     assert "file_exceeds_size_limit" in str(exc_info.value)
 
 
-def test_save_file_attachment_hard_fails_on_storage_error():
-    # Verify strict failure semantics: storage error raises MVPServiceError without silent fallback
-    with patch("apps.escd.runtime.mvp_data.request.urlopen", side_effect=Exception("Connection refused")):
-        with patch("apps.escd.runtime.mvp_data._service_config", return_value=("https://nevgdyfpxdaloacuutal.supabase.co", "mock-key")):
-            with pytest.raises(MVPServiceError) as exc_info:
-                save_file_attachment("test.txt", "SGVsbG8=")  # "Hello"
-            assert "storage_upload_failed" in str(exc_info.value)
+def test_signed_upload_authorization_contract():
+    with patch(
+        "apps.escd.runtime.mvp_data._storage_service_request",
+        return_value=(
+            "https://nevgdyfpxdaloacuutal.supabase.co",
+            {"url": "/storage/v1/object/upload/sign/escd-files/items/item-1/file.txt?token=test-token"},
+        ),
+    ):
+        result = create_signed_attachment_upload("file.txt", "text/plain", 10, "item", "item-1")
+    assert result["storage_path"].startswith("items/item-1/")
+    assert "token=test-token" in result["signed_upload_url"]
+
+
+def test_ddna_attachment_append_preserves_existing_notes():
+    with patch(
+        "apps.escd.runtime.mvp_data._ddna_by_id",
+        return_value={"notes": "Keep this existing DDNA note."},
+    ), patch("apps.escd.runtime.mvp_data.patch_ddna_source") as patch_ddna:
+        attachment = finalize_file_attachment(
+            storage_path="ddnas/ddna-1/abc_file.txt",
+            file_name="file.txt",
+            mime_type="text/plain",
+            size=10,
+            sha256="a" * 64,
+            record_type="ddna",
+            record_id="ddna-1",
+        )
+    update = patch_ddna.call_args.args[1]
+    assert update["notes"].startswith("Keep this existing DDNA note.")
+    assert "[ESCD_ATTACHMENT]" in update["notes"]
+    assert attachment["storage_path"] in update["notes"]
+
+
+def test_ddna_attachment_delete_preserves_non_attachment_notes():
+    marker = '[ESCD_ATTACHMENT]{"storage_path":"ddnas/ddna-1/abc_file.txt","name":"file.txt"}'
+    with patch("apps.escd.runtime.mvp_data.delete_file_attachment", return_value=True), patch(
+        "apps.escd.runtime.mvp_data._ddna_by_id",
+        return_value={"notes": "Business note\n" + marker + "\nAnother note"},
+    ), patch("apps.escd.runtime.mvp_data.patch_ddna_source") as patch_ddna:
+        assert delete_record_attachment(
+            storage_path="ddnas/ddna-1/abc_file.txt",
+            record_type="ddna",
+            record_id="ddna-1",
+        )
+    update = patch_ddna.call_args.args[1]
+    assert update["notes"] == "Business note\nAnother note"
