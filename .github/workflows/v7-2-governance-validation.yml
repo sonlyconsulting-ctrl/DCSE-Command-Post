@@ -285,6 +285,7 @@ jobs:
               if 'DCS-DIR-20260911-004' not in ids:
                   errors.append('Express directive registry missing DCS-DIR-20260911-004.')
 
+          # Validate stable invariant IDs so editorial prose changes do not create false CI failures.
           execution_standard = Path('governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md')
           if execution_standard.is_file():
               text = read(execution_standard)
