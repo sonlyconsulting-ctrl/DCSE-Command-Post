@@ -23,8 +23,10 @@ from apps.escd.runtime.mvp_data import (
     delete_ddna_source,
     list_knowledge,
     search_knowledge,
-    save_file_attachment,
-    delete_file_attachment,
+    create_signed_attachment_upload,
+    finalize_file_attachment,
+    create_signed_attachment_download,
+    delete_record_attachment,
     provider_status,
     set_provider_secret,
     update_provider_config,
@@ -213,16 +215,35 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/ddna":
                 self._json(201, {"ok": True, "record": create_ddna_source(payload)})
             elif path == "/api/mvp/upload":
-                file_name = str(payload.get("file_name") or payload.get("name") or "attachment")
-                content_b64 = str(payload.get("content") or payload.get("data") or "")
-                mime_type = str(payload.get("mime_type") or payload.get("type") or "application/octet-stream")
-                rec_type = str(payload.get("record_type") or "item")
-                rec_id = str(payload.get("record_id") or "")
-                if not content_b64:
-                    self._json(400, {"error": "file_content_required"})
-                    return
-                res = save_file_attachment(file_name, content_b64, mime_type, rec_type, rec_id)
+                self._json(410, {"error": "direct_upload_required"})
+            elif path == "/api/mvp/attachments/upload-url":
+                res = create_signed_attachment_upload(
+                    str(payload.get("file_name") or payload.get("name") or "attachment"),
+                    str(payload.get("mime_type") or payload.get("type") or "application/octet-stream"),
+                    int(payload.get("size") or 0),
+                    str(payload.get("record_type") or "item"),
+                    str(payload.get("record_id") or ""),
+                )
+                self._json(201, {"ok": True, "upload": res})
+            elif path == "/api/mvp/attachments/finalize":
+                res = finalize_file_attachment(
+                    storage_path=str(payload.get("storage_path") or ""),
+                    file_name=str(payload.get("file_name") or payload.get("name") or "attachment"),
+                    mime_type=str(payload.get("mime_type") or payload.get("type") or "application/octet-stream"),
+                    size=int(payload.get("size") or 0),
+                    sha256=str(payload.get("sha256") or ""),
+                    record_type=str(payload.get("record_type") or "item"),
+                    record_id=str(payload.get("record_id") or ""),
+                    repo=repo,
+                )
                 self._json(201, {"ok": True, "attachment": res})
+            elif path == "/api/mvp/attachments/download-url":
+                res = create_signed_attachment_download(
+                    str(payload.get("storage_path") or ""),
+                    str(payload.get("file_name") or ""),
+                    int(payload.get("expires_in") or 300),
+                )
+                self._json(200, {"ok": True, "download": res})
             elif path == "/api/mvp/chat":
                 self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
             elif path == "/api/mvp/provider-secret":
@@ -299,7 +320,20 @@ class handler(BaseHTTPRequestHandler):
 
         try:
             repo = self._auth()
-            if path == "/api/mvp/items":
+            if path == "/api/mvp/attachments":
+                storage_path = str(payload.get("storage_path") or (query.get("storage_path") or [""])[0])
+                record_type = str(payload.get("record_type") or (query.get("record_type") or ["item"])[0])
+                record_id = str(payload.get("record_id") or (query.get("record_id") or [""])[0])
+                if not storage_path or not record_id:
+                    self._json(400, {"error": "storage_path_and_record_id_required"}); return
+                delete_record_attachment(
+                    storage_path=storage_path,
+                    record_type=record_type,
+                    record_id=record_id,
+                    repo=repo,
+                )
+                self._json(200, {"ok": True, "deleted": storage_path})
+            elif path == "/api/mvp/items":
                 item_id = str(payload.get("id") or (query.get("id") or [""])[0])
                 if not item_id:
                     self._json(400, {"error": "id_required"}); return
