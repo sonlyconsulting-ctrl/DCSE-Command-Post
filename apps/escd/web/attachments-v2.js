@@ -27,4 +27,17 @@
       size:file.size,sha256,record_type:recType,record_id:recId
     })});
   };
+  function attachmentsFromRecord(record){
+    const out=[];
+    for(const a of (Array.isArray(record&&record.evidence_refs)?record.evidence_refs:[]))if(a&&typeof a==='object')out.push(a);
+    for(const a of (Array.isArray(record&&record.metadata&&record.metadata.attachments)?record.metadata.attachments:[]))if(a&&typeof a==='object')out.push(a);
+    for(const line of String((record&&record.notes)||'').split('\n')){
+      if(line.startsWith('[ESCD_ATTACHMENT]')){
+        try{const a=JSON.parse(line.slice('[ESCD_ATTACHMENT]'.length));if(a&&typeof a==='object')out.push(a)}catch(_){}
+      }
+    }
+    const seen=new Set();
+    return out.filter(a=>a.storage_path&&!seen.has(a.storage_path)&&(seen.add(a.storage_path),true));
+  }
+
 })();
