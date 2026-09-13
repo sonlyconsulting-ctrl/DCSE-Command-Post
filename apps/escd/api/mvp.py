@@ -13,8 +13,15 @@ from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     chat,
     list_assets,
+    create_asset,
+    patch_asset,
+    delete_asset,
     list_ddna_jobs,
     list_ddna_sources,
+    create_ddna_source,
+    patch_ddna_source,
+    delete_ddna_source,
+    save_file_attachment,
     provider_status,
     set_provider_secret,
     update_provider_config,
@@ -173,6 +180,25 @@ class handler(BaseHTTPRequestHandler):
                     "evidence_refs": [],
                 })
                 self._json(201, {"ok": True, "item": item})
+            elif path == "/api/mvp/assets":
+                self._json(201, {"ok": True, "asset": create_asset(payload)})
+            elif path == "/api/mvp/ddna":
+                self._json(201, {"ok": True, "record": create_ddna_source(payload)})
+            elif path == "/api/mvp/upload":
+                record_type = str(payload.get("record_type") or "task").lower()
+                record_id = str(payload.get("record_id") or "")
+                file_name = str(payload.get("file_name") or "attachment.bin")
+                file_data = str(payload.get("file_data") or "")
+                file_type = str(payload.get("file_type") or "application/octet-stream")
+                attachment = save_file_attachment(
+                    record_type=record_type,
+                    record_id=record_id,
+                    file_name=file_name,
+                    file_data=file_data,
+                    file_type=file_type,
+                    repo=repo,
+                )
+                self._json(201, {"ok": True, "attachment": attachment})
             elif path == "/api/mvp/chat":
                 self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
             elif path == "/api/mvp/provider-secret":
@@ -200,17 +226,71 @@ class handler(BaseHTTPRequestHandler):
                 changes = {k: v for k, v in payload.items() if k in allowed}
                 self._json(200, {"ok": True, "provider": update_provider_config(provider, changes)})
                 return
-            if path != "/api/mvp/items":
-                self._json(404, {"error": "not_found"}); return
-            item_id = str(payload.get("id") or "")
-            if not item_id:
-                self._json(400, {"error": "id_required"}); return
-            allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class"}
-            update = {k: v for k, v in payload.items() if k in allowed}
-            self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
+            if path == "/api/mvp/items":
+                item_id = str(payload.get("id") or "")
+                if not item_id:
+                    self._json(400, {"error": "id_required"}); return
+                allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class", "notes", "evidence_refs", "source_refs"}
+                update = {}
+                for k, v in payload.items():
+                    if k == "notes" and "summary" not in payload:
+                        update["summary"] = v
+                    elif k == "priority" and "explicit_priority" not in payload:
+                        try:
+                            update["explicit_priority"] = float(v)
+                        except (TypeError, ValueError):
+                            pass
+                    elif k in allowed and k not in ("notes", "priority"):
+                        update[k] = v
+                self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
+            elif path == "/api/mvp/assets":
+                asset_id = str(payload.get("id") or payload.get("asset_id") or "")
+                if not asset_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "asset": patch_asset(asset_id, payload)})
+            elif path == "/api/mvp/ddna":
+                source_id = str(payload.get("id") or "")
+                if not source_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "record": patch_ddna_source(source_id, payload)})
+            else:
+                self._json(404, {"error": "not_found"})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError, ValueError) as exc:
             self._json(502, {"error": str(exc)})
         except Exception:
             self._json(500, {"error": "internal_error"})
+
+    def do_PUT(self):
+        return self.do_PATCH()
+
+    def do_DELETE(self):
+        path = urlparse(self.path).path
+        query = parse_qs(urlparse(self.path).query)
+        payload = self._read_json()
+        target_id = str((query.get("id") or [payload.get("id") or ""])[0])
+        try:
+            repo = self._auth()
+            if path == "/api/mvp/items":
+                if not target_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "item": self._patch_item_governed(repo, target_id, {"status": "archived"})})
+            elif path == "/api/mvp/assets":
+                asset_id = target_id or str(payload.get("asset_id") or "")
+                if not asset_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "deleted": delete_asset(asset_id)})
+            elif path == "/api/mvp/ddna":
+                if not target_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "deleted": delete_ddna_source(target_id)})
+            else:
+                self._json(404, {"error": "not_found"})
+        except AuthError as exc:
+            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+        except (RepositoryError, MVPServiceError, ValueError) as exc:
+            self._json(502, {"error": str(exc)})
+        except Exception:
+            self._json(500, {"error": "internal_error"})
+

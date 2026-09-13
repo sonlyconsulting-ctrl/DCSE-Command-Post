@@ -36,3 +36,11 @@ class handler(MVPHandler):
     def do_PATCH(self):
         self._restore_mvp_path()
         return super().do_PATCH()
+
+    def do_PUT(self):
+        self._restore_mvp_path()
+        return super().do_PUT()
+
+    def do_DELETE(self):
+        self._restore_mvp_path()
+        return super().do_DELETE()

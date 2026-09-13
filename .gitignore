@@ -1,8 +1,8 @@
-```
 # Environment
 .env
 .env.local
 *.env.*
+.temp/
 
 # Logs and temporary files
 *.log
@@ -68,6 +68,5 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
-```
 .vercel
 .env*
