@@ -55,4 +55,9 @@
     })});
   }
 
+  window.escdAttachments={
+    list:attachmentsFromRecord,
+    download:signedDownload,
+    remove:removeAttachment
+  };
 })();
