@@ -194,6 +194,11 @@ class SupabaseRLSClient:
             raise RepositoryError("item_update_failed")
         return rows[0]
 
+    def delete_item(self, item_id: str) -> bool:
+        safe = parse.quote(str(item_id), safe="")
+        self._call("DELETE", f"escd_items?id=eq.{safe}")
+        return True
+
     def list_item_events_since(self, timestamp: str | None) -> list[dict[str, Any]]:
         if not timestamp:
             return self._call("GET", "escd_item_events?select=*&order=created_at.desc,id.asc&limit=300")
