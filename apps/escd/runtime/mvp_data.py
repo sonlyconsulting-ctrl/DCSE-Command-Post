@@ -394,90 +394,204 @@ def search_knowledge(query: str, limit: int = 200) -> list[dict]:
     ]
 
 
-def save_file_attachment(
-    file_name: str,
-    file_content_base64: str,
-    mime_type: str = "application/octet-stream",
-    record_type: str = "item",
-    record_id: str = ""
-) -> dict:
+def _storage_service_request(path: str, *, method: str = "POST", payload: dict | None = None, extra_headers: dict | None = None) -> tuple[str, dict]:
+    url, key = _service_config()
+    headers = {
+        "apikey": key,
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+    }
+    if extra_headers:
+        headers.update(extra_headers)
+    body = None if payload is None else json.dumps(payload).encode("utf-8")
+    req = request.Request(url + "/storage/v1/" + path.lstrip("/"), data=body, headers=headers, method=method)
     try:
-        data_bytes = base64.b64decode(file_content_base64)
+        with request.urlopen(req, timeout=15) as resp:
+            raw = resp.read().decode("utf-8")
+            return url, json.loads(raw or "{}")
     except Exception as exc:
-        raise MVPServiceError("invalid_file_payload") from exc
+        raise MVPServiceError(f"storage_request_failed: {exc}") from exc
 
-    size = len(data_bytes)
-    if size > 10 * 1024 * 1024:  # 10 MB limit
+
+def _safe_storage_path(storage_path: str) -> str:
+    path = str(storage_path or "").strip().lstrip("/")
+    if not path or ".." in path.split("/"):
+        raise MVPServiceError("invalid_storage_path")
+    return path
+
+
+def create_signed_attachment_upload(
+    file_name: str,
+    mime_type: str,
+    size: int,
+    record_type: str,
+    record_id: str,
+) -> dict:
+    clean_name = re.sub(r"[^A-Za-z0-9._\-]", "_", str(file_name or "").strip() or "file")
+    rec_type = str(record_type or "item").strip().lower()
+    rec_id = str(record_id or "").strip()
+    if not rec_id:
+        raise MVPServiceError("record_id_required")
+    try:
+        file_size = int(size)
+    except (TypeError, ValueError):
+        raise MVPServiceError("invalid_file_size") from None
+    if file_size < 1:
+        raise MVPServiceError("empty_file")
+    if file_size > 10 * 1024 * 1024:
         raise MVPServiceError("file_exceeds_size_limit")
 
-    url, key = _service_config()
-
-    sha256_hash = hashlib.sha256(data_bytes).hexdigest()
-    clean_name = re.sub(r"[^A-Za-z0-9._\-]", "_", file_name.strip() or "file")
-    storage_path = f"{record_type}s/{record_id or 'general'}/{sha256_hash[:8]}_{clean_name}"
-
-    upload_url = f"{url}/storage/v1/object/escd-files/{storage_path}"
-    req = request.Request(
-        upload_url,
-        data=data_bytes,
-        headers={
-            "apikey": key,
-            "Authorization": f"Bearer {key}",
-            "Content-Type": mime_type,
-            "x-upsert": "true",
-        },
-        method="POST"
+    nonce = hashlib.sha256(
+        f"{rec_type}\n{rec_id}\n{clean_name}\n{datetime.now(timezone.utc).isoformat()}".encode("utf-8")
+    ).hexdigest()[:16]
+    storage_path = f"{rec_type}s/{rec_id}/{nonce}_{clean_name}"
+    quoted = parse.quote("escd-files/" + storage_path, safe="/")
+    base_url, data = _storage_service_request(
+        f"object/upload/sign/{quoted}",
+        method="POST",
+        payload={},
+        extra_headers={"x-upsert": "false"},
     )
-    try:
-        with request.urlopen(req, timeout=30) as resp:
-            pass
-    except Exception as exc:
-        # Strict failure semantics: Never silently obscure storage failure
-        raise MVPServiceError(f"storage_upload_failed: {exc}") from exc
-
-    public_url = f"{url}/storage/v1/object/authenticated/escd-files/{storage_path}"
-    attachment = {
-        "id": sha256_hash[:16],
-        "name": clean_name,
-        "size": size,
-        "type": mime_type,
-        "sha256": sha256_hash,
+    relative = str(data.get("url") or "")
+    if not relative:
+        raise MVPServiceError("signed_upload_url_missing")
+    signed_url = relative if relative.startswith("http") else base_url.rstrip("/") + relative
+    return {
         "storage_path": storage_path,
-        "url": public_url,
-        "created_at": datetime.now(timezone.utc).isoformat()
+        "signed_upload_url": signed_url,
+        "expires_in": 7200,
+        "name": clean_name,
+        "type": str(mime_type or "application/octet-stream"),
+        "size": file_size,
     }
 
-    if record_id:
-        if record_type in {"item", "task", "idea"}:
-            from .repository import SupabaseRLSClient
-            client = SupabaseRLSClient(key)
-            item = client.get_item(record_id)
-            if item:
-                evidence_refs = item.get("evidence_refs") or []
-                if not isinstance(evidence_refs, list):
-                    evidence_refs = []
-                evidence_refs.append(attachment)
-                client.patch_item(record_id, {"evidence_refs": evidence_refs})
-        elif record_type == "asset":
-            patch_asset(record_id, {"storage_location": public_url})
-        elif record_type == "ddna":
-            patch_ddna_source(record_id, {"notes": f"Attachment: {clean_name} ({public_url})"})
 
+def _asset_by_id(asset_id: str) -> dict:
+    url, key = _service_config()
+    safe = parse.quote(str(asset_id), safe="")
+    col = "id" if "-" in str(asset_id) and len(str(asset_id)) == 36 else "asset_id"
+    _, rows = _http_json(
+        f"{url}/rest/v1/dcse_asset_registry?{col}=eq.{safe}&select=*&limit=1",
+        headers=_postgrest_headers(key, "public"),
+    )
+    return rows[0] if isinstance(rows, list) and rows else {}
+
+
+def _ddna_by_id(source_id: str) -> dict:
+    url, key = _ddna_config()
+    safe = parse.quote(str(source_id), safe="")
+    col = "id" if "-" in str(source_id) and len(str(source_id)) == 36 else "source_ref_id"
+    _, rows = _http_json(
+        f"{url}/rest/v1/ddna_source_queue?{col}=eq.{safe}&select=*&limit=1",
+        headers=_postgrest_headers(key, "dcse_cp"),
+    )
+    return rows[0] if isinstance(rows, list) and rows else {}
+
+
+def _ddna_attachment_marker(attachment: dict) -> str:
+    return "[ESCD_ATTACHMENT]" + json.dumps(attachment, separators=(",", ":"), sort_keys=True)
+
+
+def finalize_file_attachment(
+    *,
+    storage_path: str,
+    file_name: str,
+    mime_type: str,
+    size: int,
+    sha256: str,
+    record_type: str,
+    record_id: str,
+    repo=None,
+) -> dict:
+    path = _safe_storage_path(storage_path)
+    rec_type = str(record_type or "item").strip().lower()
+    rec_id = str(record_id or "").strip()
+    if not rec_id:
+        raise MVPServiceError("record_id_required")
+    expected_prefix = f"{rec_type}s/{rec_id}/"
+    if not path.startswith(expected_prefix):
+        raise MVPServiceError("storage_path_record_mismatch")
+    digest = str(sha256 or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise MVPServiceError("invalid_sha256")
+
+    attachment = {
+        "id": digest[:16],
+        "name": re.sub(r"[^A-Za-z0-9._\-]", "_", str(file_name or "").strip() or "file"),
+        "size": int(size or 0),
+        "type": str(mime_type or "application/octet-stream"),
+        "sha256": digest,
+        "storage_path": path,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    if rec_type in {"item", "task", "idea"}:
+        if repo is None:
+            raise MVPServiceError("repository_required")
+        item = repo.get_item(rec_id)
+        if not item:
+            raise MVPServiceError("item_not_found")
+        refs = item.get("evidence_refs") or []
+        refs = refs if isinstance(refs, list) else []
+        refs = [x for x in refs if not (isinstance(x, dict) and x.get("storage_path") == path)]
+        refs.append(attachment)
+        repo.patch_item(rec_id, {"evidence_refs": refs})
+    elif rec_type == "asset":
+        row = _asset_by_id(rec_id)
+        if not row:
+            raise MVPServiceError("asset_not_found")
+        metadata = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
+        refs = metadata.get("attachments") if isinstance(metadata.get("attachments"), list) else []
+        refs = [x for x in refs if not (isinstance(x, dict) and x.get("storage_path") == path)]
+        refs.append(attachment)
+        metadata = dict(metadata)
+        metadata["attachments"] = refs
+        patch_asset(rec_id, {"metadata": metadata})
+    elif rec_type == "ddna":
+        row = _ddna_by_id(rec_id)
+        if not row:
+            raise MVPServiceError("ddna_source_not_found")
+        existing_notes = str(row.get("notes") or "")
+        marker = _ddna_attachment_marker(attachment)
+        updated_notes = (existing_notes.rstrip() + "\n" + marker).strip() if existing_notes.strip() else marker
+        patch_ddna_source(rec_id, {"notes": updated_notes})
+    else:
+        raise MVPServiceError("invalid_record_type")
     return attachment
 
 
+def create_signed_attachment_download(storage_path: str, file_name: str = "", expires_in: int = 300) -> dict:
+    path = _safe_storage_path(storage_path)
+    ttl = max(60, min(int(expires_in or 300), 900))
+    quoted = parse.quote("escd-files/" + path, safe="/")
+    base_url, data = _storage_service_request(
+        f"object/sign/{quoted}",
+        method="POST",
+        payload={"expiresIn": ttl},
+    )
+    relative = str(data.get("signedURL") or data.get("signedUrl") or "")
+    if not relative:
+        raise MVPServiceError("signed_download_url_missing")
+    signed_url = relative if relative.startswith("http") else base_url.rstrip("/") + relative
+    if file_name:
+        joiner = "&" if "?" in signed_url else "?"
+        signed_url += joiner + "download=" + parse.quote(str(file_name), safe="")
+    return {"signed_url": signed_url, "expires_in": ttl, "storage_path": path}
+
+
 def delete_file_attachment(storage_path: str) -> bool:
+    path = _safe_storage_path(storage_path)
     url, key = _service_config()
-    del_payload = json.dumps({"prefixes": [storage_path]}).encode("utf-8")
+    del_payload = json.dumps({"prefixes": [path]}).encode("utf-8")
     req = request.Request(
         f"{url}/storage/v1/object/escd-files",
         data=del_payload,
         headers={
             "apikey": key,
             "Authorization": f"Bearer {key}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
-        method="DELETE"
+        method="DELETE",
     )
     try:
         with request.urlopen(req, timeout=15):
@@ -485,6 +599,62 @@ def delete_file_attachment(storage_path: str) -> bool:
     except Exception as exc:
         raise MVPServiceError(f"storage_delete_failed: {exc}") from exc
 
+
+def delete_record_attachment(
+    *,
+    storage_path: str,
+    record_type: str,
+    record_id: str,
+    repo=None,
+) -> bool:
+    path = _safe_storage_path(storage_path)
+    rec_type = str(record_type or "item").strip().lower()
+    rec_id = str(record_id or "").strip()
+    if not rec_id:
+        raise MVPServiceError("record_id_required")
+
+    delete_file_attachment(path)
+
+    if rec_type in {"item", "task", "idea"}:
+        if repo is None:
+            raise MVPServiceError("repository_required")
+        item = repo.get_item(rec_id)
+        if item:
+            refs = item.get("evidence_refs") or []
+            refs = refs if isinstance(refs, list) else []
+            refs = [x for x in refs if not (isinstance(x, dict) and x.get("storage_path") == path)]
+            repo.patch_item(rec_id, {"evidence_refs": refs})
+    elif rec_type == "asset":
+        row = _asset_by_id(rec_id)
+        if row:
+            metadata = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
+            refs = metadata.get("attachments") if isinstance(metadata.get("attachments"), list) else []
+            metadata = dict(metadata)
+            metadata["attachments"] = [
+                x for x in refs if not (isinstance(x, dict) and x.get("storage_path") == path)
+            ]
+            patch_asset(rec_id, {"metadata": metadata})
+    elif rec_type == "ddna":
+        row = _ddna_by_id(rec_id)
+        if row:
+            kept = []
+            for line in str(row.get("notes") or "").splitlines():
+                if line.startswith("[ESCD_ATTACHMENT]"):
+                    try:
+                        meta = json.loads(line[len("[ESCD_ATTACHMENT]"):])
+                    except Exception:
+                        meta = {}
+                    if meta.get("storage_path") == path:
+                        continue
+                kept.append(line)
+            patch_ddna_source(rec_id, {"notes": "\n".join(kept).strip()})
+    else:
+        raise MVPServiceError("invalid_record_type")
+    return True
+
+
+def save_file_attachment(*args, **kwargs):
+    raise MVPServiceError("direct_upload_required")
 
 def _openai_output_text(data: dict) -> str:
     direct = data.get("output_text")
