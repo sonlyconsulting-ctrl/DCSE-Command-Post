@@ -7,7 +7,7 @@ import json
 from apps.escd.api.mvp import handler
 
 
-class TestHandler(handler):
+class ESCDTestHandler(handler):
     def _auth(self):
         return object()
 
@@ -17,7 +17,7 @@ class TestHandler(handler):
 
 @contextmanager
 def live_server():
-    server = HTTPServer(("127.0.0.1", 0), TestHandler)
+    server = HTTPServer(("127.0.0.1", 0), ESCDTestHandler)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
