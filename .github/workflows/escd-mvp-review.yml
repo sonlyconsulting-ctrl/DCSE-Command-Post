@@ -13,6 +13,8 @@ on:
       - 'supabase/candidates/20260910_escd_mvp_items.sql'
       - 'vercel.json'
       - '.github/workflows/escd-mvp-review.yml'
+      - '.github/superseded-branches.txt'
+      - 'scripts/check_branch_lifecycle.py'
 
 permissions:
   contents: read
@@ -28,6 +30,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Check branch lifecycle
+        run: python scripts/check_branch_lifecycle.py
       - name: Install test dependencies
         run: |
           python -m pip install pytest
