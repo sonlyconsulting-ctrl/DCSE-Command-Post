@@ -1,0 +1,45 @@
+{
+  "project": "DCSE Rules Engineering",
+  "version": "0.2.0",
+  "lifecycle_status": "OPERATIVE",
+  "synchronized": true,
+  "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "canonical_path": "rules_engine",
+  "effective_date": "2026-09-13",
+  "promotion_authority": "Explicit DCS authorization",
+  "source_main_sha": "db8ed1fbfbe140121b06fbc3f49498616ed936c7",
+  "archive_blob_sha": "148cc77c3016d6b4e63b325377e542b41f2685bd",
+  "archive_sha256": "07daabedcade6e91ecd86582b30ac61e0e39a0ca0ba99c49ccd2a7cdfe72e518",
+  "tests": {
+    "promotion_suite": "15/15 PASS"
+  },
+  "scope": {
+    "entities": [
+      "TASK",
+      "IDEA",
+      "ASSET",
+      "DDNA",
+      "KNOWLEDGE"
+    ],
+    "capabilities": [
+      "ESCD",
+      "VOICE",
+      "SUPABASE",
+      "CONTENT",
+      "GITHUB",
+      "DEPLOYMENT",
+      "EMAIL",
+      "FILE-HANDLING",
+      "ASSET-GENERATION",
+      "EMPLOYMENT",
+      "SC",
+      "SS",
+      "TI",
+      "GOVERNANCE",
+      "TRIBUNAL",
+      "SECURITY",
+      "COMMUNICATIONS",
+      "MEDIA"
+    ]
+  }
+}
