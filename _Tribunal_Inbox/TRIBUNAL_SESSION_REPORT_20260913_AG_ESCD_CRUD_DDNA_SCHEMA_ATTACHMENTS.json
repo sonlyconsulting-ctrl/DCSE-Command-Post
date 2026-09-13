@@ -1,0 +1,33 @@
+{
+  "TRIBUNAL_MESSAGE_ID": "TRIB-20260913-ESCD-CRUD-DDNA-SCHEMA-ATTACHMENTS",
+  "TIMESTAMP": "2026-09-13T05:15:00.000Z",
+  "LANE": "DCSE // ESCD // TRIBUNAL",
+  "ORIGINATOR": "Antigravity",
+  "STATUS": "COMPLETE",
+  "CLASSIFICATION": "DCSE Command Post - ESCD Dashboard Full CRUD, Assets Parity, DDNA Schema Fix and Multi-Type File Attachments",
+  "TASK_ID": "DCSE-ESCD-CRUD-ATTACHMENTS-20260913-002",
+  "ACTION": "Dashboard first-column tabs full CRUD operations, Assets parity, DDNA schema correction (dcse_cp), and universal file attachment upload/save",
+  "FINDINGS": {
+    "root_causes": [
+      "Assets tab lacked Add form, detail inspection, editing, and deletion handlers.",
+      "DDNA queries referenced legacy schema 'dcse_ddna_legacy', which did not exist on the PostgREST server, throwing 406 Not Acceptable.",
+      "First column tabs (Workflows, Metrics, Deliverables, Actions, Evidence, Governance) only opened a read-only payload alert on 'Edit' click rather than allowing field edits, lifecycle updates, deletion, or file attachments.",
+      "No backend or UI mechanism existed for uploading and persisting file attachments across arbitrary ESCD record types."
+    ],
+    "resolutions": [
+      "Fixed DDNA PostgREST queries from dcse_ddna_legacy to dcse_cp in apps/escd/runtime/mvp_data.py.",
+      "Added CRUD operations for Assets (create, patch, delete) and DDNA sources (create, patch, delete) in mvp_data.py and API routes in apps/escd/api/mvp.py and api/mvp.py.",
+      "Added save_file_attachment with dual storage support: Supabase Storage bucket 'escd-files' with automatic base64 data URI fallback.",
+      "Constructed unified record detail modal (<dialog id='recordModal'>) with full field editing, status transitions, priority toggling, file attachments manager (upload, preview/download, remove), DDNA job log inspection, raw JSON toggle, and archive/delete controls.",
+      "Added initial file attachment upload inputs directly to item creation cards.",
+      "Added unit test suite apps/escd/tests/test_mvp_crud_attachments.py validating all endpoints, schemas, and file attachments (full suite passed: 209/209)."
+    ],
+    "git_commit": "1bde66c",
+    "git_branch": "feature/escd-minimal-mvp-006",
+    "git_remote": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post.git",
+    "redeployment_id": "dpl_ArgumrKNHia4Y9HAsPr8eDqVKozw",
+    "deployment_url": "https://sc-command-post-83f982j46-sonlyconsulting-ctrls-projects.vercel.app",
+    "production_url": "https://sc-command-post.vercel.app/escd",
+    "verification_result": "Production live smoke tests passed with HTTP 200 OK. UI bundle confirmed to serve recordModal, addAsset, addDDNA, and uploadFileToRecord. Full parity and CRUD operational."
+  }
+}

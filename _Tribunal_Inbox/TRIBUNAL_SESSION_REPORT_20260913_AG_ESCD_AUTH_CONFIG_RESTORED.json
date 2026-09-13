@@ -1,0 +1,18 @@
+{
+  "TRIBUNAL_MESSAGE_ID": "TRIB-20260913-ESCD-AUTH-CONFIG-RESTORED",
+  "TIMESTAMP": "2026-09-13T04:33:30.000Z",
+  "LANE": "DCSE // ESCD // TRIBUNAL",
+  "ORIGINATOR": "Antigravity",
+  "STATUS": "COMPLETE",
+  "CLASSIFICATION": "DCSE Command Post - ESCD Runtime Auth Configuration Restoration",
+  "TASK_ID": "DCSE-ESCD-RECOVERY-AUDIT-20260913-001",
+  "ACTION": "Restoration of missing Supabase environment variables in Vercel sc-command-post Production scope",
+  "FINDINGS": {
+    "root_cause": "Vercel environment variables (SUPABASE_URL, SUPABASE_ANON_KEY, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY) existed solely in Preview scope, absent from Production scope, triggering auth_configuration_missing exception.",
+    "resolution": "Populated all required Supabase variables into Production scope for sc-command-post and executed production redeployment.",
+    "redeployment_id": "dpl_GN8p9XX8PHYSVwGbKoSSen4zmSbq",
+    "deployment_url": "https://sc-command-post-4cf15h0xa-sonlyconsulting-ctrls-projects.vercel.app",
+    "production_url": "https://sc-command-post.vercel.app/escd",
+    "verification_result": "auth_configuration_missing is resolved; /api/mvp/login cleanly routes to Supabase Auth backend and evaluates credentials."
+  }
+}

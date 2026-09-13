@@ -1,0 +1,10 @@
+.pytest_cache
+.pytest_cache/**
+.git
+.venv
+venv
+__pycache__
+*.pyc
+tests
+apps/escd/tests
+.temp
