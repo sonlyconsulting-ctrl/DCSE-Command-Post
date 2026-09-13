@@ -34,7 +34,7 @@ async function installMocks(page) {
 test('desktop Phase 1 navigation exposes Knowledge and canonical records', async ({ page }) => {
   await installMocks(page);
   await page.goto('http://127.0.0.1:4173/mvp.html');
-  await expect(page.getByText('ESCD', { exact: true })).toBeVisible();
+  await expect(page.locator('.brand')).toContainText('ESCD');
   await page.getByRole('button', { name: 'Knowledge' }).first().click();
   await expect(page.locator('#knowledge')).toHaveClass(/active/);
   await expect(page.locator('#knowledgeList .row')).toHaveCount(24);
