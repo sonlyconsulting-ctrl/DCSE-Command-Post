@@ -1,9 +1,11 @@
 {
   "version": 2,
   "ignoreCommand": "[ \"$VERCEL_PROJECT_ID\" = \"prj_3t9SKxOUuW0peitSq97OHWDWCQy9\" ]",
+  "buildCommand": "if [ \"$VERCEL_ENV\" = \"production\" ]; then python scripts/validate_escd_production_config.py; else echo 'ESCD production config gate skipped for non-production'; fi",
   "rewrites": [
     { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
+    { "source": "/escd/attachments-v2.js", "destination": "/apps/escd/web/attachments-v2.js" },
     { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
     { "source": "/escd", "destination": "/apps/escd/web/login.html" },
     { "source": "/api/(.*)", "destination": "/api" },

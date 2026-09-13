@@ -1,0 +1,3 @@
+# ESCD branches that are historical and must not be reused for new release work.
+feature/escd-minimal-mvp-006
+feature/escd-runtime-repair-001
