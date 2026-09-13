@@ -55,6 +55,33 @@
     })});
   }
 
+  const legacyOpenRecordModal=window.openRecordModal;
+  if(typeof legacyOpenRecordModal==='function'){
+    window.openRecordModal=async function(type,record){
+      await legacyOpenRecordModal(type,record);
+      if(type==='knowledge')return;
+      const body=document.getElementById('recordModalBody');
+      const card=body&&[...body.querySelectorAll('.card')].find(x=>x.querySelector('strong')&&x.querySelector('strong').textContent.includes('Attachments / Persistent Files'));
+      if(!card)return;
+      const toolbar=card.querySelector('.toolbar');
+      for(const child of [...card.children])if(child!==card.querySelector('strong')&&child!==toolbar)child.remove();
+      const list=document.createElement('div');
+      const records=attachmentsFromRecord(record);
+      if(!records.length){const e=document.createElement('div');e.className='meta';e.textContent='No attachments.';list.append(e)}
+      for(const a of records){
+        const row=document.createElement('div');row.className='row';
+        const label=document.createElement('div');label.textContent=a.name||'attachment';
+        const actions=document.createElement('div');actions.className='actions';
+        const view=document.createElement('button');view.className='btn';view.textContent='Download / View';
+        view.onclick=()=>signedDownload(a).catch(e=>alert('Download failed: '+e.message));
+        const remove=document.createElement('button');remove.className='btn danger';remove.textContent='Remove';
+        remove.onclick=()=>removeAttachment(a,type,record.id||record.asset_id||record.source_ref_id).then(()=>{document.getElementById('recordModal').close();if(type==='asset')loadAssets();else if(type==='ddna')loadDDNA();else loadItems()}).catch(e=>alert('Remove failed: '+e.message));
+        actions.append(view,remove);row.append(label,actions);list.append(row);
+      }
+      card.insertBefore(list,toolbar||null);
+    };
+  }
+
   window.escdAttachments={
     list:attachmentsFromRecord,
     download:signedDownload,
