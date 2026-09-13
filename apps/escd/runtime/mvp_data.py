@@ -455,7 +455,8 @@ def create_signed_attachment_upload(
     relative = str(data.get("url") or "")
     if not relative:
         raise MVPServiceError("signed_upload_url_missing")
-    storage_base = base_url.rstrip("/") + "/storage/v1"\n    signed_url = relative if relative.startswith("http") else storage_base + (relative if relative.startswith("/") else "/" + relative)
+    storage_base = base_url.rstrip("/") + "/storage/v1"
+    signed_url = relative if relative.startswith("http") else storage_base + (relative if relative.startswith("/") else "/" + relative)
     return {
         "storage_path": storage_path,
         "signed_upload_url": signed_url,
@@ -572,7 +573,8 @@ def create_signed_attachment_download(storage_path: str, file_name: str = "", ex
     relative = str(data.get("signedURL") or data.get("signedUrl") or "")
     if not relative:
         raise MVPServiceError("signed_download_url_missing")
-    storage_base = base_url.rstrip("/") + "/storage/v1"\n    signed_url = relative if relative.startswith("http") else storage_base + (relative if relative.startswith("/") else "/" + relative)
+    storage_base = base_url.rstrip("/") + "/storage/v1"
+    signed_url = relative if relative.startswith("http") else storage_base + (relative if relative.startswith("/") else "/" + relative)
     if file_name:
         joiner = "&" if "?" in signed_url else "?"
         signed_url += joiner + "download=" + parse.quote(str(file_name), safe="")
