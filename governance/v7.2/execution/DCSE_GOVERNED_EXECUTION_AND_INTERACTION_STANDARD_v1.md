@@ -16,6 +16,8 @@ The standard controls how governed work starts, executes, validates, reconciles,
 
 ## 2. Universal Lifecycle
 
+**Invariant ID:** `GEIS-LIFECYCLE-001`
+
 `INTAKE -> PREFLIGHT -> AUTHORITY RESOLUTION -> PLAN -> EXECUTE -> VALIDATE -> RECONCILE -> COMPLETION EVIDENCE -> DCS CLOSEOUT`
 
 A substantive task is incomplete if the opening state or closing state is missing.
@@ -95,6 +97,8 @@ Material writes SHALL produce attributable evidence appropriate to the system, s
 - registry reconciliation record.
 
 Tool-backed execution claims require tool-backed evidence.
+
+**Invariant ID:** `GEIS-READBACK-001`
 
 **Readback invariant:** `WRITE WITHOUT READBACK = PARTIAL` for material system writes unless an equivalent independently verified confirmation is documented.
 
