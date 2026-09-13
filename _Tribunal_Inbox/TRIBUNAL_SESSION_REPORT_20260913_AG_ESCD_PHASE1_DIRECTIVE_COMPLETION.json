@@ -1,0 +1,39 @@
+{
+  "TRIBUNAL_MESSAGE_ID": "TRIB-20260913-ESCD-PHASE1-DIRECTIVE-COMPLETION",
+  "TIMESTAMP": "2026-09-13T05:43:00.000Z",
+  "LANE": "DCSE // ESCD // TRIBUNAL",
+  "ORIGINATOR": "Antigravity",
+  "STATUS": "CANONICAL_ACCEPTANCE_TESTED",
+  "CLASSIFICATION": "ESCD Phase 1 Engineering Correction and Release-Control Directive",
+  "TASK_ID": "DCSE-ESCD-PHASE1-DIRECTIVE-20260913-003",
+  "ACTION": "Release-lineage correction, canonical Knowledge recovery (24 records), governed Supabase private storage (escd-files), request boundary hardening, and preflight deployment gate",
+  "FINDINGS": {
+    "lineage": {
+      "superseded_branch": "feature/escd-minimal-mvp-006 (229 behind main, frozen)",
+      "clean_release_branch": "release/escd-phase1-completion-20260913 (cut from origin/main @ 2a2a888)",
+      "pull_request": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/pull/98",
+      "canonical_main_commit": "1f11672501cfbea29b941f036cdd8740a111e94d"
+    },
+    "infrastructure": {
+      "storage_bucket": "escd-files (private, verified on nevgdyfpxdaloacuutal.supabase.co)",
+      "ddna_schema": "dcse_cp (repaired from dcse_ddna_legacy)",
+      "preflight_gate": "scripts/validate_escd_production_config.py (PASSED)",
+      "storage_roundtrip": "scripts/test_storage_roundtrip.py (PASSED)"
+    },
+    "subsystems": {
+      "knowledge": "Recovered 24 canonical records from convergence registry with HISTORICAL_RECOVERED authority",
+      "request_boundary": "Enforced HTTP 400 invalid_json and HTTP 413 payload limits",
+      "unified_modal": "Full CRUD across Tasks, Ideas, Assets, and DDNA with governed file attachments"
+    },
+    "verification_suite": {
+      "pytest": "37/37 PASSED",
+      "node_provider_tests": "5/5 PASSED",
+      "github_actions_ci": "Workflow escd-mvp-review PASSED on PR #98"
+    },
+    "production_deployment_state": {
+      "status": "PENDING_PROMOTION_RATE_LIMITED",
+      "reason": "Vercel Hobby tier 100 free deployments / 24h ceiling reached on account (api-deployments-free-per-day)",
+      "active_serving_deployment": "https://sc-command-post.vercel.app/escd (HTTP 200, deployment 1job0hneo with verified runtime auth)"
+    }
+  }
+}
