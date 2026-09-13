@@ -13,8 +13,18 @@ from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     chat,
     list_assets,
+    create_asset,
+    patch_asset,
+    delete_asset,
     list_ddna_jobs,
     list_ddna_sources,
+    create_ddna_source,
+    patch_ddna_source,
+    delete_ddna_source,
+    list_knowledge,
+    search_knowledge,
+    save_file_attachment,
+    delete_file_attachment,
     provider_status,
     set_provider_secret,
     update_provider_config,
@@ -34,11 +44,20 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(raw)
 
-    def _read_json(self):
+    def _read_json(self) -> dict:
         size = int(self.headers.get("Content-Length") or 0)
-        if size < 1 or size > 1_000_000:
+        if size < 1:
             return {}
-        return json.loads(self.rfile.read(size).decode("utf-8"))
+        if size > 10_000_000:
+            raise MVPServiceError("payload_too_large")
+        raw = self.rfile.read(size)
+        try:
+            data = json.loads(raw.decode("utf-8"))
+            if not isinstance(data, dict):
+                raise MVPServiceError("invalid_json")
+            return data
+        except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+            raise MVPServiceError("invalid_json") from exc
 
     def _supabase_config(self):
         url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or ""
@@ -124,6 +143,12 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/ddna/jobs":
                 source_id = str((query.get("source_id") or [""])[0])
                 self._json(200, {"ok": True, "jobs": list_ddna_jobs(source_id) if source_id else []})
+            elif path == "/api/mvp/knowledge":
+                q = str((query.get("q") or [""])[0])
+                if q:
+                    self._json(200, {"ok": True, "knowledge": search_knowledge(q)})
+                else:
+                    self._json(200, {"ok": True, "knowledge": list_knowledge()})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
             else:
@@ -137,7 +162,17 @@ class handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
-        payload = self._read_json()
+        try:
+            payload = self._read_json()
+        except MVPServiceError as exc:
+            if str(exc) == "invalid_json":
+                self._json(400, {"error": "invalid_json"})
+            elif str(exc) == "payload_too_large":
+                self._json(413, {"error": "payload_too_large"})
+            else:
+                self._json(400, {"error": str(exc)})
+            return
+
         if path == "/api/mvp/login":
             try:
                 self._json(200, {"ok": True, "session": self._login(payload)})
@@ -173,6 +208,21 @@ class handler(BaseHTTPRequestHandler):
                     "evidence_refs": [],
                 })
                 self._json(201, {"ok": True, "item": item})
+            elif path == "/api/mvp/assets":
+                self._json(201, {"ok": True, "asset": create_asset(payload)})
+            elif path == "/api/mvp/ddna":
+                self._json(201, {"ok": True, "record": create_ddna_source(payload)})
+            elif path == "/api/mvp/upload":
+                file_name = str(payload.get("file_name") or payload.get("name") or "attachment")
+                content_b64 = str(payload.get("content") or payload.get("data") or "")
+                mime_type = str(payload.get("mime_type") or payload.get("type") or "application/octet-stream")
+                rec_type = str(payload.get("record_type") or "item")
+                rec_id = str(payload.get("record_id") or "")
+                if not content_b64:
+                    self._json(400, {"error": "file_content_required"})
+                    return
+                res = save_file_attachment(file_name, content_b64, mime_type, rec_type, rec_id)
+                self._json(201, {"ok": True, "attachment": res})
             elif path == "/api/mvp/chat":
                 self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
             elif path == "/api/mvp/provider-secret":
@@ -192,22 +242,87 @@ class handler(BaseHTTPRequestHandler):
     def do_PATCH(self):
         path = urlparse(self.path).path
         try:
-            repo = self._auth()
             payload = self._read_json()
+        except MVPServiceError as exc:
+            if str(exc) == "invalid_json":
+                self._json(400, {"error": "invalid_json"})
+            elif str(exc) == "payload_too_large":
+                self._json(413, {"error": "payload_too_large"})
+            else:
+                self._json(400, {"error": str(exc)})
+            return
+
+        try:
+            repo = self._auth()
             if path == "/api/mvp/provider-config":
                 provider = str(payload.get("provider") or "").strip().lower()
                 allowed = {"enabled", "model", "timeout_seconds", "max_output_tokens", "thinking_level"}
                 changes = {k: v for k, v in payload.items() if k in allowed}
                 self._json(200, {"ok": True, "provider": update_provider_config(provider, changes)})
                 return
-            if path != "/api/mvp/items":
-                self._json(404, {"error": "not_found"}); return
-            item_id = str(payload.get("id") or "")
-            if not item_id:
-                self._json(400, {"error": "id_required"}); return
-            allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class"}
-            update = {k: v for k, v in payload.items() if k in allowed}
-            self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
+            elif path == "/api/mvp/assets":
+                asset_id = str(payload.get("id") or payload.get("asset_id") or "")
+                if not asset_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "asset": patch_asset(asset_id, payload)})
+            elif path == "/api/mvp/ddna":
+                source_id = str(payload.get("id") or payload.get("source_ref_id") or "")
+                if not source_id:
+                    self._json(400, {"error": "id_required"}); return
+                self._json(200, {"ok": True, "record": patch_ddna_source(source_id, payload)})
+            elif path == "/api/mvp/items":
+                item_id = str(payload.get("id") or "")
+                if not item_id:
+                    self._json(400, {"error": "id_required"}); return
+                allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class", "evidence_refs"}
+                update = {k: v for k, v in payload.items() if k in allowed}
+                self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
+            else:
+                self._json(404, {"error": "not_found"})
+        except AuthError as exc:
+            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+        except (RepositoryError, MVPServiceError, ValueError) as exc:
+            self._json(502, {"error": str(exc)})
+        except Exception:
+            self._json(500, {"error": "internal_error"})
+
+    def do_PUT(self):
+        return self.do_PATCH()
+
+    def do_DELETE(self):
+        path = urlparse(self.path).path
+        query = parse_qs(urlparse(self.path).query)
+        try:
+            payload = self._read_json()
+        except MVPServiceError:
+            payload = {}
+
+        try:
+            repo = self._auth()
+            if path == "/api/mvp/items":
+                item_id = str(payload.get("id") or (query.get("id") or [""])[0])
+                if not item_id:
+                    self._json(400, {"error": "id_required"}); return
+                try:
+                    self._patch_item_governed(repo, item_id, {"status": "archived"})
+                except Exception:
+                    pass
+                repo.delete_item(item_id)
+                self._json(200, {"ok": True, "deleted": item_id})
+            elif path == "/api/mvp/assets":
+                asset_id = str(payload.get("id") or payload.get("asset_id") or (query.get("id") or [""])[0])
+                if not asset_id:
+                    self._json(400, {"error": "id_required"}); return
+                delete_asset(asset_id)
+                self._json(200, {"ok": True, "deleted": asset_id})
+            elif path == "/api/mvp/ddna":
+                source_id = str(payload.get("id") or payload.get("source_ref_id") or (query.get("id") or [""])[0])
+                if not source_id:
+                    self._json(400, {"error": "id_required"}); return
+                delete_ddna_source(source_id)
+                self._json(200, {"ok": True, "deleted": source_id})
+            else:
+                self._json(404, {"error": "not_found"})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError, ValueError) as exc:

@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import base64
+import hashlib
+import hmac
 import json
 import os
 import re
 import socket
-import base64
-import hmac
-from urllib import request, error, parse
+from datetime import datetime, timezone
+from urllib import error, parse, request
 
 
 class MVPServiceError(RuntimeError):
@@ -235,29 +237,253 @@ def list_assets(limit: int = 200) -> list[dict]:
     return rows
 
 
-def list_ddna_sources(limit: int = 200) -> list[dict]:
-    url = (os.getenv("DDNA_SUPABASE_URL") or "").rstrip("/")
-    key = os.getenv("DDNA_SUPABASE_SERVICE_ROLE_KEY") or ""
+def create_asset(payload: dict) -> dict:
+    if not payload.get("file_name") and not payload.get("asset_id"):
+        raise MVPServiceError("asset_file_name_required")
+    url, key = _service_config()
+    headers = dict(_postgrest_headers(key, "public"))
+    headers["Prefer"] = "return=representation"
+    _, rows = _http_json(f"{url}/rest/v1/dcse_asset_registry", method="POST", headers=headers, payload=payload)
+    if isinstance(rows, list) and rows:
+        return rows[0]
+    return rows if isinstance(rows, dict) else {"ok": True}
+
+
+def patch_asset(asset_id: str, update: dict) -> dict:
+    url, key = _service_config()
+    safe = parse.quote(str(asset_id), safe="")
+    headers = dict(_postgrest_headers(key, "public"))
+    headers["Prefer"] = "return=representation"
+    col = "id" if "-" in str(asset_id) and len(str(asset_id)) == 36 else "asset_id"
+    _, rows = _http_json(f"{url}/rest/v1/dcse_asset_registry?{col}=eq.{safe}", method="PATCH", headers=headers, payload=update)
+    if isinstance(rows, list) and rows:
+        return rows[0]
+    return rows if isinstance(rows, dict) else {"ok": True}
+
+
+def delete_asset(asset_id: str) -> bool:
+    url, key = _service_config()
+    safe = parse.quote(str(asset_id), safe="")
+    col = "id" if "-" in str(asset_id) and len(str(asset_id)) == 36 else "asset_id"
+    _http_json(f"{url}/rest/v1/dcse_asset_registry?{col}=eq.{safe}", method="DELETE", headers=_postgrest_headers(key, "public"))
+    return True
+
+
+def _ddna_config() -> tuple[str, str]:
+    url = (os.getenv("DDNA_SUPABASE_URL") or os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or "").rstrip("/")
+    key = os.getenv("DDNA_SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("PABASE_SECRET_KEY") or ""
     if not url or not key:
         raise MVPServiceError("ddna_source_not_configured")
+    return url, key
+
+
+def list_ddna_sources(limit: int = 200) -> list[dict]:
+    url, key = _ddna_config()
     fields = "id,source_type,source_ref_id,source_title,entity,lane,priority,status,assigned_model,assigned_agent_key,ps_lock,public_safe,queued_by,queued_at,extracted_at,notes,retry_count,max_retries,last_error,batch_id,content_snapshot"
     query = f"ddna_source_queue?select={fields}&order=queued_at.desc.nullslast,id.asc&limit={max(1, min(limit, 500))}"
-    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_ddna_legacy"))
+    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_cp"))
     if not isinstance(rows, list):
         raise MVPServiceError("ddna_source_invalid")
     return rows
 
 
+def create_ddna_source(payload: dict) -> dict:
+    if not payload.get("source_title") and not payload.get("source_ref_id"):
+        raise MVPServiceError("source_title_or_ref_required")
+    url, key = _ddna_config()
+    headers = dict(_postgrest_headers(key, "dcse_cp"))
+    headers["Prefer"] = "return=representation"
+    _, rows = _http_json(f"{url}/rest/v1/ddna_source_queue", method="POST", headers=headers, payload=payload)
+    if isinstance(rows, list) and rows:
+        return rows[0]
+    return rows if isinstance(rows, dict) else {"ok": True}
+
+
+def patch_ddna_source(source_id: str, update: dict) -> dict:
+    url, key = _ddna_config()
+    safe = parse.quote(str(source_id), safe="")
+    headers = dict(_postgrest_headers(key, "dcse_cp"))
+    headers["Prefer"] = "return=representation"
+    col = "id" if "-" in str(source_id) and len(str(source_id)) == 36 else "source_ref_id"
+    _, rows = _http_json(f"{url}/rest/v1/ddna_source_queue?{col}=eq.{safe}", method="PATCH", headers=headers, payload=update)
+    if isinstance(rows, list) and rows:
+        return rows[0]
+    return rows if isinstance(rows, dict) else {"ok": True}
+
+
+def delete_ddna_source(source_id: str) -> bool:
+    url, key = _ddna_config()
+    safe = parse.quote(str(source_id), safe="")
+    col = "id" if "-" in str(source_id) and len(str(source_id)) == 36 else "source_ref_id"
+    _http_json(f"{url}/rest/v1/ddna_source_queue?{col}=eq.{safe}", method="DELETE", headers=_postgrest_headers(key, "dcse_cp"))
+    return True
+
+
 def list_ddna_jobs(source_queue_id: str) -> list[dict]:
-    url = (os.getenv("DDNA_SUPABASE_URL") or "").rstrip("/")
-    key = os.getenv("DDNA_SUPABASE_SERVICE_ROLE_KEY") or ""
-    if not url or not key:
-        raise MVPServiceError("ddna_source_not_configured")
+    url, key = _ddna_config()
     safe = parse.quote(source_queue_id, safe="")
     fields = "id,job_key,source_queue_id,model_id,provider,status,error_message,retry_count,duration_ms,characteristics_extracted,started_at,completed_at,created_at"
     query = f"ddna_ollama_jobs?source_queue_id=eq.{safe}&select={fields}&order=created_at.desc,id.asc"
-    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_ddna_legacy"))
+    _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_cp"))
     return rows if isinstance(rows, list) else []
+
+
+_CANONICAL_REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "escd_canonical_convergence_registry.json")
+
+
+def get_canonical_convergence_items() -> dict[str, list]:
+    registry_path = _CANONICAL_REGISTRY_PATH
+    if not os.path.exists(registry_path):
+        return {"tasks": [], "ideas": [], "knowledge": [], "ddna": [], "assets": []}
+    try:
+        with open(registry_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return {"tasks": [], "ideas": [], "knowledge": [], "ddna": [], "assets": []}
+
+    tasks, ideas, knowledge, ddna, assets = [], [], [], [], []
+    for it in data.get("canonical_items", []):
+        disp = it.get("disposition")
+        cid = it.get("canonical_id") or ""
+        raw = it.get("content") or ""
+        first_line = raw.strip().split("\n")[0].replace("**", "").replace("Task ID:", "").strip()
+        title = first_line[:90] if first_line else cid
+        if disp == "TASK":
+            tasks.append({
+                "id": cid,
+                "item_key": cid,
+                "title": title,
+                "explicit_priority": 0,
+                "source_system": it.get("source", "canonical_convergence")
+            })
+        elif disp == "KNOWLEDGE":
+            knowledge.append({
+                "id": cid,
+                "title": title,
+                "content": raw,
+                "source": it.get("source", "canonical_convergence"),
+                "provenance": it.get("provenance", {}),
+                "status": it.get("status", "staged"),
+                "confidence": it.get("confidence", 0.95),
+                "authority_classification": it.get("authority_classification", "HISTORICAL_RECOVERED")
+            })
+        elif disp == "DDNA":
+            ddna.append({
+                "semantic_version": "1.0.0",
+                "lifecycle_status": it.get("status", "staged")
+            })
+    return {"tasks": tasks, "ideas": ideas, "knowledge": knowledge, "ddna": ddna, "assets": assets}
+
+
+def list_knowledge(limit: int = 200) -> list[dict]:
+    items = get_canonical_convergence_items().get("knowledge", [])
+    return items[:limit]
+
+
+def search_knowledge(query: str, limit: int = 200) -> list[dict]:
+    items = list_knowledge(limit=limit)
+    q = str(query or "").strip().lower()
+    if not q:
+        return items
+    return [
+        it for it in items
+        if q in it.get("title", "").lower()
+        or q in it.get("content", "").lower()
+        or q in it.get("id", "").lower()
+        or q in it.get("authority_classification", "").lower()
+    ]
+
+
+def save_file_attachment(
+    file_name: str,
+    file_content_base64: str,
+    mime_type: str = "application/octet-stream",
+    record_type: str = "item",
+    record_id: str = ""
+) -> dict:
+    try:
+        data_bytes = base64.b64decode(file_content_base64)
+    except Exception as exc:
+        raise MVPServiceError("invalid_file_payload") from exc
+
+    size = len(data_bytes)
+    if size > 10 * 1024 * 1024:  # 10 MB limit
+        raise MVPServiceError("file_exceeds_size_limit")
+
+    url, key = _service_config()
+
+    sha256_hash = hashlib.sha256(data_bytes).hexdigest()
+    clean_name = re.sub(r"[^A-Za-z0-9._\-]", "_", file_name.strip() or "file")
+    storage_path = f"{record_type}s/{record_id or 'general'}/{sha256_hash[:8]}_{clean_name}"
+
+    upload_url = f"{url}/storage/v1/object/escd-files/{storage_path}"
+    req = request.Request(
+        upload_url,
+        data=data_bytes,
+        headers={
+            "apikey": key,
+            "Authorization": f"Bearer {key}",
+            "Content-Type": mime_type,
+            "x-upsert": "true",
+        },
+        method="POST"
+    )
+    try:
+        with request.urlopen(req, timeout=30) as resp:
+            pass
+    except Exception as exc:
+        # Strict failure semantics: Never silently obscure storage failure
+        raise MVPServiceError(f"storage_upload_failed: {exc}") from exc
+
+    public_url = f"{url}/storage/v1/object/authenticated/escd-files/{storage_path}"
+    attachment = {
+        "id": sha256_hash[:16],
+        "name": clean_name,
+        "size": size,
+        "type": mime_type,
+        "sha256": sha256_hash,
+        "storage_path": storage_path,
+        "url": public_url,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+
+    if record_id:
+        if record_type in {"item", "task", "idea"}:
+            from .repository import SupabaseRLSClient
+            client = SupabaseRLSClient(key)
+            item = client.get_item(record_id)
+            if item:
+                evidence_refs = item.get("evidence_refs") or []
+                if not isinstance(evidence_refs, list):
+                    evidence_refs = []
+                evidence_refs.append(attachment)
+                client.patch_item(record_id, {"evidence_refs": evidence_refs})
+        elif record_type == "asset":
+            patch_asset(record_id, {"storage_location": public_url})
+        elif record_type == "ddna":
+            patch_ddna_source(record_id, {"notes": f"Attachment: {clean_name} ({public_url})"})
+
+    return attachment
+
+
+def delete_file_attachment(storage_path: str) -> bool:
+    url, key = _service_config()
+    del_payload = json.dumps({"prefixes": [storage_path]}).encode("utf-8")
+    req = request.Request(
+        f"{url}/storage/v1/object/escd-files",
+        data=del_payload,
+        headers={
+            "apikey": key,
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json"
+        },
+        method="DELETE"
+    )
+    try:
+        with request.urlopen(req, timeout=15):
+            return True
+    except Exception as exc:
+        raise MVPServiceError(f"storage_delete_failed: {exc}") from exc
 
 
 def _openai_output_text(data: dict) -> str:

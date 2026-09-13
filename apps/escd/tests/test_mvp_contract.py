@@ -7,7 +7,7 @@ LOGIN = ROOT / "web" / "login.html"
 
 def test_mvp_surface_is_real_data_only():
     html = APP.read_text(encoding="utf-8")
-    for label in ("Chat", "Tasks", "Ideas", "Assets", "DDNA"):
+    for label in ("Chat", "Tasks", "Ideas", "Assets", "DDNA", "Knowledge"):
         assert label in html
     assert "73 Queued" not in html
     assert "placeholder data" not in html.lower()

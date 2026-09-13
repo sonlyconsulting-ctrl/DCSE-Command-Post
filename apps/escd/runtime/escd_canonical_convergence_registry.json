@@ -1,0 +1,4345 @@
+{
+  "metadata": {
+    "title": "ESCD Canonical Content Convergence Registry",
+    "total_source_occurrences": 189,
+    "total_candidates": 158,
+    "duplicates_merged": 31,
+    "disposition_counts": {
+      "TASK": 54,
+      "HOLD": 25,
+      "IDEA": 9,
+      "SOURCE_ONLY": 3,
+      "ASSET": 3,
+      "DDNA": 40,
+      "KNOWLEDGE": 24
+    },
+    "governed_rules": [
+      "Tasks: no historical task becomes active automatically (status=inactive)",
+      "Ideas: remain noncommittal until disposition (status=noncommittal)",
+      "Assets: distinguish actual reusable asset from passages merely describing an asset",
+      "DDNA: retain persona/identity without turning descriptive text into operational instruction",
+      "Knowledge: distinguish reusable knowledge from evidence/source excerpts",
+      "SOURCE_ONLY: preserves valuable extracted passages that should not become operational records",
+      "HOLD: preserves unresolved contradictions or classification uncertainty"
+    ]
+  },
+  "canonical_items": [
+    {
+      "canonical_id": "CANON-001",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-001"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "RECURRING_ROUTINE_FRAMEWORK"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-002",
+      "content_hash": "150cd1e6f520",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-002"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "RECURRING_ROUTINE_FRAMEWORK"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Each run has a stable run ID and dedupe key. Replays must not create duplicate sends, calendar events, tasks, approvals, or evidence records."
+    },
+    {
+      "canonical_id": "CANON-003",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-003"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-004",
+      "content_hash": "aaafbbce9c11",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-004"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "ESCD separates conversational context from authoritative operational state. LLM transcript is never the system of record for task, approval, job, evidence, notification, or completion state."
+    },
+    {
+      "canonical_id": "CANON-005",
+      "content_hash": "59b916d12f16",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-005"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001-REV-AG01-001  \n**Parent:** DCSE-ESCD-001  \n**Lane:** DCSE / Command Post  \n**Reviewer:** ChatGPT / DCSE controller  \n**Review target:** `e287fd7ed41d555e9e5c9b0e00ed25fa9788f744`  \n**Source branch:** `feature/aegis-antigravity-slice001`  \n**Status:** REVIEW FINDINGS / HARD GATES PRESENT  \n**Date:** 2026-09-09"
+    },
+    {
+      "canonical_id": "CANON-006",
+      "content_hash": "99c52d265394",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-006"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "ASSISTANT_OPERATING_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** LOCKED CANDIDATE FOR IMPLEMENTATION"
+    },
+    {
+      "canonical_id": "CANON-007",
+      "content_hash": "8b7c3b957d15",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-007",
+          "OCC-DDN-007"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ASSISTANT_OPERATING_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'TASK']",
+      "content": "RUL-003 Separate chat, executive state, task state, job state, approval state, evidence state, notification state, and DDNA candidate state."
+    },
+    {
+      "canonical_id": "CANON-008",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-008"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CALENDAR_CONFLICT_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-009",
+      "content_hash": "bc825868d485",
+      "disposition": "HOLD",
+      "original_type": "IDEA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-009",
+          "OCC-IDE-003"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CALENDAR_CONFLICT_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['IDEA', 'TASK']",
+      "content": "ESCD may read authorized calendar state, reconcile it with tasks/routines, identify conflicts, prepare meetings, recommend schedule changes, and create proposed calendar actions. External calendar writes remain governed by the autonomy contract."
+    },
+    {
+      "canonical_id": "CANON-010",
+      "content_hash": "7cbc49cbc3a3",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-010"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CALENDAR_CONFLICT_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- `C1 overlap`: two events occupy overlapping time.\n- `C2 travel/buffer`: insufficient transition time between events.\n- `C3 task-deadline`: scheduled commitment conflicts with a high-priority due item.\n- `C4 preparation`: required preparation has no feasible time before meeting/event.\n- `C5 recurring collision`: recurring routines repeatedly collide with higher-value commitments.\n- `C6 stale/tentative`: tentative or stale event may distort planning."
+    },
+    {
+      "canonical_id": "CANON-011",
+      "content_hash": "bbf1dd7ed046",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-011"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CALENDAR_CONFLICT_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- affected events/tasks\n- conflict class\n- time window\n- source refs\n- impact\n- options\n- recommended resolution\n- approval requirement"
+    },
+    {
+      "canonical_id": "CANON-012",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-012"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NOTIFICATION_ESCALATION_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-013",
+      "content_hash": "8028a7b5edfc",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-013"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NOTIFICATION_ESCALATION_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- **N0 Informational:** routine completion/history, normally in-app only.\n- **N1 Attention:** upcoming commitment, useful update, low urgency.\n- **N2 Action Required:** approval, response, deadline, blocked high-value task.\n- **N3 Urgent:** near-term material deadline, failed critical workflow, major opportunity risk.\n- **N4 Hard Stop:** security, authority, secret exposure, destructive-action gate, material production/release issue."
+    },
+    {
+      "canonical_id": "CANON-014",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-014"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CONNECTOR_SOURCE_ROUTING_MATRIX"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-015",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-015"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "OBSERVABILITY_METRICS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-016",
+      "content_hash": "9c2e39e258e6",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-016"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "OBSERVABILITY_METRICS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- NBA agreement/override rate\n- briefing correction rate\n- false-positive urgency/escalation rate\n- duplicate-task creation rate\n- unsupported-claim detection count\n- approval bypass attempts blocked\n- stale/contradictory source incidents surfaced"
+    },
+    {
+      "canonical_id": "CANON-017",
+      "content_hash": "e71b05add24e",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-017"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_WORKFLOW_PROCESS.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "WORKFLOW_TEMPLATE_SCHEMA"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_WORKFLOW_PROCESS.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-018",
+      "content_hash": "a22e0afeafb0",
+      "disposition": "HOLD",
+      "original_type": "ASSET",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-018",
+          "OCC-ASS-001"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_TEMPLATE_SCHEMA"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['ASSET', 'TASK']",
+      "content": "Templates define how work should proceed. Instances bind the template to a specific product, project, asset, person, system, or task."
+    },
+    {
+      "canonical_id": "CANON-019",
+      "content_hash": "e40ae1044b8c",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-019"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Purpose:** Keep the assistant build moving as a controlled stream while separating non-material automatic progression from genuine DCS stop-gates."
+    },
+    {
+      "canonical_id": "CANON-020",
+      "content_hash": "ca4c6d594ba5",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-020",
+          "OCC-DDN-009",
+          "OCC-KNO-009"
+        ],
+        "occurrence_count": 3,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 3 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE', 'TASK']",
+      "content": "Deliverables:\n- ESCD identity/product boundary\n- requirements registry\n- task taxonomy\n- autonomy/approval contract\n- operating workflow/process stream\n- phase roadmap"
+    },
+    {
+      "canonical_id": "CANON-021",
+      "content_hash": "d82574ed7422",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-021"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "## Phase 2: Intake, tasking and executive queues"
+    },
+    {
+      "canonical_id": "CANON-022",
+      "content_hash": "d9f86aa6b54f",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-022"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Deliver:\n- governed retrieval contract\n- source/provenance display\n- candidate contribution path\n- conflict/duplicate handling\n- no silent authority promotion\n- task-relevant knowledge injection without making chat the source of truth"
+    },
+    {
+      "canonical_id": "CANON-023",
+      "content_hash": "ddca4051390b",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-023"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Independent non-conflicting workstreams may proceed concurrently, but they must preserve stable task IDs, branch ownership, evidence, and source boundaries. Do not allow two agents to edit the same implementation surface concurrently without explicit coordination."
+    },
+    {
+      "canonical_id": "CANON-024",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-024"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "EMAIL_MESSAGE_TRIAGE_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-025",
+      "content_hash": "8053ae91d039",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-025"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "EMAIL_MESSAGE_TRIAGE_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- Do not create separate tasks for every message in a thread if they represent one commitment.\n- Update the existing task/thread relationship where appropriate.\n- Newsletters/automated notifications should not enter NOW unless they create a real obligation or material signal.\n- Acknowledged unchanged messages do not re-escalate without new information."
+    },
+    {
+      "canonical_id": "CANON-026",
+      "content_hash": "74561c8b58c9",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-026"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "RULESET_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Lane:** DCSE / Command Post  \n**Status:** IMPLEMENTED AND LOCALLY TESTED  \n**Scope:** ESCD assistant core only. DCS Employment remains separate under DCS-EMPLOYMENT-BUILD-001."
+    },
+    {
+      "canonical_id": "CANON-027",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-027"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DECISION_RECORD_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-028",
+      "content_hash": "0a751939f6ec",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_EMPLOYMENT_BOUNDARY_PATCH.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-028"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EMPLOYMENT_BOUNDARY_PATCH.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "EMPLOYMENT_BOUNDARY_PATCH"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** OPERATIVE FOR THIS ESCD BUILD STREAM  \n**Related build:** `DCS-EMPLOYMENT-BUILD-001`"
+    },
+    {
+      "canonical_id": "CANON-029",
+      "content_hash": "e71b05add24e",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-029"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-030",
+      "content_hash": "66cefdd2d1f7",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-030"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "### 4. Classify\nAssign task taxonomy, mission, sensitivity/lane, and preliminary approval class."
+    },
+    {
+      "canonical_id": "CANON-031",
+      "content_hash": "eb73c920a0c2",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-031"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "`CAPTURE -> SOURCE LINK -> DEDUPE -> CLASSIFY -> PRIORITIZE -> ROUTE -> TASK/REFERENCE/ARCHIVE`"
+    },
+    {
+      "canonical_id": "CANON-032",
+      "content_hash": "dd02f3e72ee2",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-032"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- Preserve stable IDs across handoffs.\n- Separate source state from derived assistant state.\n- Every consequential state transition has provenance.\n- Do not create duplicate tasks for the same commitment merely because multiple systems report it.\n- Route material conflicts to decision/approval rather than silently resolving them.\n- Retry only within the autonomy contract.\n- A blocked item must identify the smallest action needed to unblock it.\n- Closeout must create the next action when the underlying commitment continues."
+    },
+    {
+      "canonical_id": "CANON-033",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-033"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "MOBILE_INTERACTION_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-034",
+      "content_hash": "2776cd5bf822",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-034"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "MOBILE_INTERACTION_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "1. **Today**: briefing, NOW, approvals, calendar conflicts, watch alerts.\n2. **Capture**: text-first quick capture, optional voice later.\n3. **Inbox**: triage queue.\n4. **Approvals**: concise consequence, evidence, action buttons.\n5. **Tasks**: active/waiting/watch/backlog filters.\n6. **Evidence**: source and receipt drill-down."
+    },
+    {
+      "canonical_id": "CANON-035",
+      "content_hash": "7227706ed090",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-035",
+          "OCC-DDN-020"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'TASK']",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Lane:** DCSE / Command Post  \n**Artifact:** Requirements and identity contract  \n**Status:** LOCKED CANDIDATE FOR IMPLEMENTATION  \n**Supersedes working product name:** Aegis"
+    },
+    {
+      "canonical_id": "CANON-036",
+      "content_hash": "16873d02e30f",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-036",
+          "OCC-DDN-023"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'TASK']",
+      "content": "- **DCSE** is the enterprise strategy, architecture, governance, portfolio, capability, opportunity, and cross-entity control environment.\n- **ESCD** is the DCS-facing executive/personal operating layer that turns governed enterprise state, commitments, communications, tasks, decisions, routines, projects, watch conditions, and knowledge into what DCS needs to know, decide, remember, or do next."
+    },
+    {
+      "canonical_id": "CANON-037",
+      "content_hash": "f4e2c118f7e3",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-037",
+          "OCC-IDE-005",
+          "OCC-DDN-024"
+        ],
+        "occurrence_count": 3,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 3 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'IDEA', 'TASK']",
+      "content": "- present a standalone, mobile-friendly personal/executive assistant experience\n- use Command Post governance, approvals, evidence, orchestration, and source boundaries\n- maintain persistent executive/task/job state independent of chat transcript\n- support general executive/personal-assistant duties first, with DCSE as a governed mission context\n- provide executive briefing, task/project management, inbox/pins, reminders, calendar awareness, communications triage, approvals, follow-up, research/workflow initiation, routines, monitoring, and governed delegation\n- expose provenance and distinguish fact, recommendation, proposed action, approval, execution, and evidence\n- remain advisory by default while taking bounded delegated actions under the autonomy contract\n- support product/project make, fix, review, release, monitor, and recurring operating workflows through reusable workflow templates"
+    },
+    {
+      "canonical_id": "CANON-038",
+      "content_hash": "13ab5c1a7d19",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-038"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "R-006 Task and project records with priority, state, dependencies, dates, source, mission/context, and evidence references."
+    },
+    {
+      "canonical_id": "CANON-039",
+      "content_hash": "c78d8ad11b89",
+      "disposition": "HOLD",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-039",
+          "OCC-KNO-017"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['KNOWLEDGE', 'TASK']",
+      "content": "R-106 Cross-source deduplication for pins, tasks, GitHub, Tribunal, calendar, communications, and assistant-created candidates."
+    },
+    {
+      "canonical_id": "CANON-040",
+      "content_hash": "3f74db58408f",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-040"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "## 5. Assistant task taxonomy"
+    },
+    {
+      "canonical_id": "CANON-041",
+      "content_hash": "28226e347d87",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-041"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Every ESCD item SHOULD resolve to one primary task class and may carry secondary tags."
+    },
+    {
+      "canonical_id": "CANON-042",
+      "content_hash": "14502bfd1f96",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-042"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Minimum routing attributes: `task_class`, `context`, `source`, `priority`, `urgency`, `value_relevance`, `approval_class`, `status`, `owner/executor`, `dependencies`, `due_at`, `evidence_refs`, `created_at`, `updated_at`."
+    },
+    {
+      "canonical_id": "CANON-043",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-043"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NEXT_BEST_ACTION_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-044",
+      "content_hash": "1ea7f6b5ea22",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-044"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NEXT_BEST_ACTION_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- mission priority\n- task/job priority\n- deadline urgency\n- revenue relevance\n- dependency unblock value\n- commitment/customer/recruiter consequence\n- aging/staleness\n- effort/complexity estimate\n- DCS explicit override\n- risk of delay\n- strategic leverage/reuse value"
+    },
+    {
+      "canonical_id": "CANON-045",
+      "content_hash": "3084d64d8e8c",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-045"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NEXT_BEST_ACTION_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "When two items are otherwise comparable, verified near-term income opportunities may outrank internal architecture work. Revenue relevance is never inferred from optimism; it must be supported by the opportunity/task record."
+    },
+    {
+      "canonical_id": "CANON-046",
+      "content_hash": "3091a197ccd1",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-046"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "NEXT_BEST_ACTION_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Tests must cover deterministic repeatability, blocked-item routing, overdue tasks, equal-score ties, DCS override, revenue weighting, stale-item handling, missing dates, waiting approvals, and identical input/output behavior."
+    },
+    {
+      "canonical_id": "CANON-047",
+      "content_hash": "9c234c5c4417",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-047"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Lane:** DCSE / Command Post  \n**Product:** ESCD  \n**Historical implementation lineage:** Aegis Executive Kernel  \n**Status:** READY FOR ENGINEERING EXECUTION"
+    },
+    {
+      "canonical_id": "CANON-048",
+      "content_hash": "9fc66b879475",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-048"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- NOW / APPROVAL / WAITING / WATCH / BACKLOG queues\n- deterministic NBA contract\n- persisted executive briefing and acknowledgement cursor\n- source/provenance-aware intake and dedupe\n- task/project/dependency state\n- decision records\n- failure/recovery and bounded retry\n- evidence/history drill-down"
+    },
+    {
+      "canonical_id": "CANON-049",
+      "content_hash": "09084458d57e",
+      "disposition": "HOLD",
+      "original_type": "IDEA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-049",
+          "OCC-IDE-006"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['IDEA', 'TASK']",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** LOCKED CANDIDATE FOR IMPLEMENTATION  \n**Purpose:** Define what ESCD may do without interruption, what must be logged, what must be proposed, what requires DCS approval, and what is prohibited."
+    },
+    {
+      "canonical_id": "CANON-050",
+      "content_hash": "5bf387fea15e",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-050"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Examples:\n- create/update internal ESCD task status from verified execution evidence\n- create reminder/notification intent within established policy\n- create internal candidate job/workflow\n- record a completed non-destructive check\n- update prioritization metadata\n- retry an approved idempotent internal operation within retry limits"
+    },
+    {
+      "canonical_id": "CANON-051",
+      "content_hash": "913143bc8436",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-051"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "Repository: `sonlyconsulting-ctrl/DCSE-Command-Post`\nTask: `DCSE-PA-MODULE-001`\nCurrent build lane: DCSE / Command Post\nFeature branch: `feature/aegis-executive-kernel`"
+    },
+    {
+      "canonical_id": "CANON-052",
+      "content_hash": "214fff413e70",
+      "disposition": "HOLD",
+      "original_type": "ASSET",
+      "normalized_type": "HOLD",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-052",
+          "OCC-ASS-005",
+          "OCC-DDN-044",
+          "OCC-KNO-024"
+        ],
+        "occurrence_count": 4,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 4 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['ASSET', 'KNOWLEDGE', 'TASK', 'DDNA']",
+      "content": "Existing Agent OS capabilities include task/portfolio CRUD, Tribunal dispatch, runtime health, phase gates, DCS decision queue, receipts/evidence, personas/assets, Supabase-backed governance surfaces, and prior security remediation. Reuse or refactor them. Do not rebuild those capabilities merely under an Aegis label."
+    },
+    {
+      "canonical_id": "CANON-053",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-053"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DCS_EMPLOYMENT_WORKFLOW"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-054",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-054"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "EXECUTIVE_BRIEFING_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-055",
+      "content_hash": "39288d82041c",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-055"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "EXECUTIVE_BRIEFING_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "DCS can acknowledge briefing, pin an item, change priority, defer, open evidence, approve/reject, or start the recommended action. Acknowledgement records a checkpoint; it does not alter task truth."
+    },
+    {
+      "canonical_id": "CANON-056",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-056"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DDNA_CANDIDATE_INGESTION_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-057",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-057"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "COMMAND_GRAMMAR_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-058",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-058"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "FAILURE_RECOVERY_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-059",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-059"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "UI_INFORMATION_ARCHITECTURE"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-060",
+      "content_hash": "7feec34ff4ee",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-060",
+          "OCC-IDE-015",
+          "OCC-DDN-050"
+        ],
+        "occurrence_count": 3,
+        "source_document": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "UI_INFORMATION_ARCHITECTURE"
+      ],
+      "duplicate_merge_relationship": "Merged 3 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'IDEA', 'TASK']",
+      "content": "1. **Today**: executive briefing, NOW queue, next-best action, approvals, commitments, recent completions.\n2. **Inbox**: pins/intake, untriaged items, source context, dedupe decisions.\n3. **Tasks & Projects**: active work, dependencies, milestones, statuses, filters by mission.\n4. **Employment**: opportunities, recruiter/client actions, submissions, follow-ups, interviews, revenue view.\n5. **Approvals & Decisions**: consequential proposed actions and decision packets.\n6. **Workflows**: delegated jobs, routines, watches, execution/retry state.\n7. **Evidence & History**: receipts, completed work, source/evidence chain, briefing history.\n8. **Connections**: connector health and source status without secret exposure.\n9. **Settings**: autonomy preferences, notifications, identity, display preferences, routine controls.\n10. **Command Post**: governed deep-link/hybrid access for enterprise control detail."
+    },
+    {
+      "canonical_id": "CANON-061",
+      "content_hash": "1a79c6d8ab83",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-061"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-PA-MODULE-001  \n**Lane:** DCSE / Command Post  \n**Execution model:** Codex + GPT-6 Astra  \n**Branch:** `feature/aegis-executive-kernel`  \n**Objective:** Bring the first usable Aegis Executive Kernel online as a governed vertical slice."
+    },
+    {
+      "canonical_id": "CANON-062",
+      "content_hash": "3e9f7658b796",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-062"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- mission priority\n- task/job priority\n- deadline/urgency\n- blocked/unblocked status\n- approval dependency\n- revenue relevance where known\n- aging/staleness\n- explicit DCS override"
+    },
+    {
+      "canonical_id": "CANON-063",
+      "content_hash": "cccd52334507",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-063"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "- inspect/read approved data\n- organize and prioritize\n- generate summaries\n- prepare drafts\n- create internal candidate tasks/jobs\n- run approved non-destructive checks/tests"
+    },
+    {
+      "canonical_id": "CANON-064",
+      "content_hash": "1854260ee75d",
+      "disposition": "HOLD",
+      "original_type": "ASSET",
+      "normalized_type": "HOLD",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-064",
+          "OCC-ASS-007",
+          "OCC-DDN-056",
+          "OCC-KNO-036"
+        ],
+        "occurrence_count": 4,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 4 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['ASSET', 'KNOWLEDGE', 'TASK', 'DDNA']",
+      "content": "- task queue\n- portfolio\n- Tribunal dispatch\n- DCS decision queue\n- receipts/evidence\n- phase gates\n- runtime health\n- Supabase schema\n- persona/assets governance"
+    },
+    {
+      "canonical_id": "CANON-065",
+      "content_hash": "289faf2b5ad8",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-065"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+          "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+          "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+          "DCSE-ESCD-001_OBSERVABILITY_METRICS.md",
+          "DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md",
+          "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+          "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+          "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+          "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "ACCEPTANCE_TEST_MATRIX"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md', 'DCSE-ESCD-001_STATE_DATA_MODEL.md', 'DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md', 'DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md', 'DCSE-ESCD-001_OBSERVABILITY_METRICS.md', 'DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md', 'DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md', 'DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md', 'DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md', 'DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001  \n**Status:** IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-066",
+      "content_hash": "2345833258d2",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-066",
+          "OCC-IDE-017",
+          "OCC-DDN-058"
+        ],
+        "occurrence_count": 3,
+        "source_document": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ACCEPTANCE_TEST_MATRIX"
+      ],
+      "duplicate_merge_relationship": "Merged 3 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'IDEA', 'TASK']",
+      "content": "1. Capture a pin -> dedupe/classify -> task -> NBA -> complete -> evidence -> briefing.\n2. Communication -> triage -> draft/proposal -> approval when consequential -> verified send/write receipt when authorized.\n3. Calendar event set -> conflict detection -> proposed resolution -> no silent external modification.\n4. Delegated internal job -> run -> fail transiently -> bounded retry -> verified completion.\n5. Consequential action -> approval -> reject -> ensure no execution.\n6. Connector unavailable -> preserve state -> route WAITING/WATCH -> recover.\n7. Session reload -> briefing delta remains based on persisted acknowledgement cursor.\n8. MAKE/FIX workflow -> validation -> test evidence -> RELEASE remains separately gated.\n9. DDNA candidate -> provenance -> candidate state -> verify no authority promotion."
+    },
+    {
+      "canonical_id": "CANON-067",
+      "content_hash": "e753ef8a8f80",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-067"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md",
+          "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+          "DCSE-ESCD-001_DECISION_RECORD_SPEC.md",
+          "DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md",
+          "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+          "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "inactive",
+      "historical_current": "historical",
+      "topic_relationships": [
+        "CONTACT_PERSON_CONTEXT_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md', 'DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md', 'DCSE-ESCD-001_DECISION_RECORD_SPEC.md', 'DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md', 'DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md', 'DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md']",
+      "disposition_rationale": "Historical task work order (retained as inactive/review)",
+      "content": "**Task ID:** DCSE-ESCD-001\n**Status:** CANDIDATE IMPLEMENTATION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-068",
+      "content_hash": "773b37fa4626",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-001"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "RECURRING_ROUTINE_FRAMEWORK"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "`TRIGGER -> ELIGIBILITY -> SOURCE READ -> DEDUPE -> AUTONOMY CHECK -> EXECUTE/PROPOSE -> VERIFY -> EVIDENCE -> NEXT RUN`"
+    },
+    {
+      "canonical_id": "CANON-069",
+      "content_hash": "c3cbc6a67422",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-002"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "### Approval\n`proposed -> pending -> approved | rejected | expired | withdrawn`"
+    },
+    {
+      "canonical_id": "CANON-070",
+      "content_hash": "38725b626087",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-004"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "NOTIFICATION_ESCALATION_POLICY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "Approval alerts must include the exact proposed action, consequence, destination, urgency, evidence, and approve/reject/defer choices. Never use ambiguous 'approve this' language."
+    },
+    {
+      "canonical_id": "CANON-071",
+      "content_hash": "f6f6b056e8b5",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-007"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "Every proposed action must resolve to exactly one execution class before dispatch."
+    },
+    {
+      "canonical_id": "CANON-072",
+      "content_hash": "db655002db14",
+      "disposition": "SOURCE_ONLY",
+      "original_type": "IDEA",
+      "normalized_type": "SOURCE_ONLY",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-008"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.85,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Short descriptive fragment preserved as source text",
+      "content": "### A2: PROPOSE"
+    },
+    {
+      "canonical_id": "CANON-073",
+      "content_hash": "30c0b93dd4b7",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-009",
+          "OCC-DDN-039"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'IDEA']",
+      "content": "Examples:\n- draft external email/message\n- propose calendar change\n- propose a new workflow with material implications\n- propose architecture change\n- propose purchase/subscription\n- propose public content\n- propose DDNA candidate knowledge/rule promotion"
+    },
+    {
+      "canonical_id": "CANON-074",
+      "content_hash": "6fa34b6a379c",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-010"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "`not_required | proposed | pending | approved | rejected | expired | revoked | executed`"
+    },
+    {
+      "canonical_id": "CANON-075",
+      "content_hash": "8b97762779ce",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-011"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "EXECUTIVE_BRIEFING_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "Each approval must show proposed action, consequence, destination, supporting evidence, rollback if applicable, expiration/urgency, and exact choice requested from DCS."
+    },
+    {
+      "canonical_id": "CANON-076",
+      "content_hash": "7c2d2e9282fd",
+      "disposition": "HOLD",
+      "original_type": "IDEA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-012",
+          "OCC-KNO-028"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DDNA_CANDIDATE_INGESTION_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['IDEA', 'KNOWLEDGE']",
+      "content": "- `candidate_id`\n- `candidate_type`: fact/preference/pattern/rule/template/procedure/relationship/context/other\n- `statement_or_payload`\n- `source_refs`\n- `provenance_chain`\n- `observed_at`\n- `scope`\n- `confidence/status`: verified/likely/unknown/assumption\n- `conflict_refs`\n- `duplication_refs`\n- `sensitivity/lane`\n- `proposed_consumers`\n- `retention recommendation`\n- `submitted_by`\n- `submission_reason`"
+    },
+    {
+      "canonical_id": "CANON-077",
+      "content_hash": "5ee1eea06e51",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-013"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "COMMAND_GRAMMAR_SPEC"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "1. Low-risk ambiguity may be resolved from verified context and recorded.\n2. Material ambiguity involving authority, recipient, destination, money, destructive action, privacy, or release requires clarification or approval.\n3. \"Make\" means create a new governed artifact/product/component from an explicit baseline or defined requirements.\n4. \"Fix\" means diagnose and correct an existing target while preserving known-good baseline and regression coverage.\n5. \"Continue\" means advance through already-authorized non-material steps, not expand scope silently.\n6. \"Send\", \"publish\", \"deploy\", \"buy\", \"delete\", \"merge\", and equivalent consequential verbs trigger authorization evaluation before execution.\n7. A parsed command is not evidence that execution occurred.\n8. ESCD should show the interpreted action when consequential execution is proposed."
+    },
+    {
+      "canonical_id": "CANON-078",
+      "content_hash": "2e323c0508c7",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-014"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "FAILURE_RECOVERY_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "Repeatedly failing jobs leave active execution and enter a review/dead-letter state with source payload reference, errors, retry history, and proposed remediation. They do not silently disappear."
+    },
+    {
+      "canonical_id": "CANON-079",
+      "content_hash": "214bc4f44eec",
+      "disposition": "IDEA",
+      "original_type": "IDEA",
+      "normalized_type": "IDEA",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-IDE-016"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "noncommittal",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Noncommittal idea / concept proposal",
+      "content": "The UI must visibly distinguish recommendation, proposed action, approved action, and completed action."
+    },
+    {
+      "canonical_id": "CANON-080",
+      "content_hash": "25d127f7d3e8",
+      "disposition": "SOURCE_ONLY",
+      "original_type": "ASSET",
+      "normalized_type": "SOURCE_ONLY",
+      "source": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-ASS-002"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.85,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_TEMPLATE_SCHEMA"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Passage merely describing an asset without defining it",
+      "content": "- `template_id`: stable identifier\n- `name`\n- `version`\n- `status`: draft/candidate/approved/superseded/archived\n- `template_type`: MAKE/FIX/REVIEW/RELEASE/MONITOR/ROUTINE/RESEARCH/COMMUNICATE/DECIDE/DO\n- `purpose`\n- `scope`\n- `supported_context_types`: product/project/asset/system/document/person/event/general\n- `input_contract`\n- `required_sources`\n- `preconditions`\n- `steps`\n- `decision_points`\n- `approval_points`\n- `executor_classes`\n- `connector_requirements`\n- `evidence_requirements`\n- `test_requirements`\n- `rollback_or_recovery`\n- `exit_criteria`\n- `follow_up_rules`\n- `notification_policy`\n- `sensitivity/lane restrictions`\n- `timeout/retry policy`\n- `owner`\n- `provenance`"
+    },
+    {
+      "canonical_id": "CANON-081",
+      "content_hash": "5ab6180865de",
+      "disposition": "ASSET",
+      "original_type": "ASSET",
+      "normalized_type": "ASSET",
+      "source": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-ASS-003"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_TEMPLATE_SCHEMA"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Reusable asset entry",
+      "content": "- product type\n- baseline/reference assets\n- entity/brand\n- audience/destination\n- architecture/technical requirements\n- validation rules\n- release destination"
+    },
+    {
+      "canonical_id": "CANON-082",
+      "content_hash": "a0c860e5a653",
+      "disposition": "ASSET",
+      "original_type": "ASSET",
+      "normalized_type": "ASSET",
+      "source": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-ASS-004"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_TEMPLATE_SCHEMA"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Reusable asset entry",
+      "content": "- affected product/asset\n- defect/problem statement\n- known-good baseline\n- severity\n- reproduction evidence\n- repair constraints\n- regression surface\n- rollback point"
+    },
+    {
+      "canonical_id": "CANON-083",
+      "content_hash": "7f9b9c8c8d04",
+      "disposition": "ASSET",
+      "original_type": "ASSET",
+      "normalized_type": "ASSET",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-ASS-006"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Reusable asset entry",
+      "content": "Build, test, and document the first usable version of Aegis. Do not stop at architecture narration. Inspect current state, reuse proven Command Post assets, implement one complete vertical slice, run two validation passes, repair defects, and leave an evidence-backed closeout."
+    },
+    {
+      "canonical_id": "CANON-084",
+      "content_hash": "29573bb4755b",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-001"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "RECURRING_ROUTINE_FRAMEWORK"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- executive briefing\n- inbox/pin triage\n- employment follow-up review\n- deadline/watch review\n- project/status reconciliation\n- evidence/receipt completeness check\n- connector health check\n- knowledge/DDNA candidate harvest\n- recurring personal/executive reminder"
+    },
+    {
+      "canonical_id": "CANON-085",
+      "content_hash": "456eedbeaab8",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-002"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Every durable record requires a stable immutable ID. Cross-system records retain external source IDs separately. Never use mutable title/text as identity."
+    },
+    {
+      "canonical_id": "CANON-086",
+      "content_hash": "314d049efb78",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-003"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md']",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "## DDNA boundary"
+    },
+    {
+      "canonical_id": "CANON-087",
+      "content_hash": "d05970fca2b3",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-004"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_STATE_DATA_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "STATE_DATA_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "DDNA content consumed by ESCD is referenced by governed identity/provenance. ESCD-derived observations enter DDNA only as candidate contributions and do not self-promote."
+    },
+    {
+      "canonical_id": "CANON-088",
+      "content_hash": "1df137eca575",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-005"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Impact if deployed: callers reaching the endpoint can invoke privileged reads/writes without proving DCS identity."
+    },
+    {
+      "canonical_id": "CANON-089",
+      "content_hash": "a025666971ea",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-006",
+          "OCC-KNO-007"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "- live Supabase privileges and exposed-schema configuration\n- Google OAuth provider/runtime identity linking\n- real RLS behavior against deployed schema\n- deployment behavior\n- Android push\n- production runtime interaction"
+    },
+    {
+      "canonical_id": "CANON-090",
+      "content_hash": "6595bc3a1e8d",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-008"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ASSISTANT_OPERATING_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "RUL-022 DDNA contributions from ESCD are candidates only. ESCD does not self-promote knowledge or business rules."
+    },
+    {
+      "canonical_id": "CANON-091",
+      "content_hash": "b7224ee602c5",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-010"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Deliver:\n- ESCD UI identity/refactor\n- persisted executive state\n- DCSE + DCS Employment missions\n- job lifecycle\n- briefing\n- deterministic NBA\n- approvals\n- evidence\n- RLS/security\n- responsive interface\n- test passes and rollback"
+    },
+    {
+      "canonical_id": "CANON-092",
+      "content_hash": "bdbc3f10af76",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-011"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "## Phase 5: DDNA/RAG knowledge integration"
+    },
+    {
+      "canonical_id": "CANON-093",
+      "content_hash": "a9dc332d4cef",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-012"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "Coordinate with dedicated DDNA consumer cutover; do not couple ESCD release to unfinished production cutover unless technically required."
+    },
+    {
+      "canonical_id": "CANON-094",
+      "content_hash": "9d55e258fded",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-013"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_PHASE_ROADMAP.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PHASE_ROADMAP"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "## Phase 8: Broader personal mission domains"
+    },
+    {
+      "canonical_id": "CANON-095",
+      "content_hash": "ca9b81027d91",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-014"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "EMAIL_MESSAGE_TRIAGE_RULES"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "1. External send is approval-gated by default.\n2. A future explicit delegation may permit narrowly scoped low-risk sends, but the scope must be recorded and revocable.\n3. Replies that create obligations, spend money, release confidential information, accept terms, make public claims, or alter schedules require explicit approval.\n4. Verify recipient identity before consequential send.\n5. Preserve sent-message evidence after actual send."
+    },
+    {
+      "canonical_id": "CANON-096",
+      "content_hash": "8c689d119654",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-015",
+          "OCC-KNO-010"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "RULESET_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "The executable rule sets derive from the ESCD requirements registry, autonomy contract, assistant operating rules, workflow process, next-best-action specification, state/data model, connector/source routing matrix, executive briefing specification, calendar policy, email/message triage rules, workflow template schema, failure/recovery model, notification policy, recurring routine framework, decision record specification, contact/person context specification, command grammar, mobile model, and DDNA candidate contract."
+    },
+    {
+      "canonical_id": "CANON-097",
+      "content_hash": "03c8507aa6df",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-016",
+          "OCC-KNO-011"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_RULESET_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "RULESET_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "- DCS Employment domain logic is not included in this rule-set count.\n- Supabase persistence, RLS, queues, live connector writes, Android push, and DDNA production ingestion are not claimed implemented by these pure policy tests.\n- No secret, service-role key, credential, production deployment, destructive operation, or external send is authorized by this registry.\n- DDNA output is candidate-only until governed validation/promotion."
+    },
+    {
+      "canonical_id": "CANON-098",
+      "content_hash": "6b5ba71d53fc",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-017",
+          "OCC-KNO-014"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "### 16. Learn-Candidate\nExtract reusable preference, pattern, rule, template, or knowledge only as a candidate. Route governed knowledge to DDNA/RAG/rule processes; do not self-promote."
+    },
+    {
+      "canonical_id": "CANON-099",
+      "content_hash": "5b7473b22de6",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-018"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "### DDNA contribution cycle"
+    },
+    {
+      "canonical_id": "CANON-100",
+      "content_hash": "760442f0f48a",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-019"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "ESCD consumes governed DDNA knowledge but does not make DDNA content authoritative merely by using it."
+    },
+    {
+      "canonical_id": "CANON-101",
+      "content_hash": "5ac167387d2a",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-021"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "## 1. Identity contract"
+    },
+    {
+      "canonical_id": "CANON-102",
+      "content_hash": "d05fd0f9f23d",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-022"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "The personal/executive assistant is named **ESCD**. ESCD is intentionally the inverse relationship of DCSE."
+    },
+    {
+      "canonical_id": "CANON-103",
+      "content_hash": "bb5627b3b2e1",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-025"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "- become a second enterprise governance authority\n- treat LLM transcript as authoritative state\n- silently promote DDNA/RAG/model output to doctrine or authority\n- bypass Command Post stop-gates\n- expose secrets or privileged credentials to browser/model/logs\n- infer successful execution without evidence\n- absorb specialized DCS Employment workflow logic into the ESCD core build"
+    },
+    {
+      "canonical_id": "CANON-104",
+      "content_hash": "f52e9faad8db",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-026"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "R-001 Dedicated ESCD operating surface with DCS identity and responsive desktop/Android-class layout."
+    },
+    {
+      "canonical_id": "CANON-105",
+      "content_hash": "c1f7b59b4ff1",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-027"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "R-002 One DCS principal with supported identity mapping where current authentication safely supports linked identities."
+    },
+    {
+      "canonical_id": "CANON-106",
+      "content_hash": "44602cfc0f7f",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-028"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "R-004 Core mission: general DCS executive/personal-assistant operations with governed DCSE context."
+    },
+    {
+      "canonical_id": "CANON-107",
+      "content_hash": "57e535884dd6",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-029",
+          "OCC-KNO-018"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "R-107 Workflow templates for repeatable personal, project, product, operational, make/fix, review, release, and monitoring processes."
+    },
+    {
+      "canonical_id": "CANON-108",
+      "content_hash": "79fe41b08659",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-030"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "R-111 DDNA candidate-ingestion interface with provenance/conflict handling and no self-promotion."
+    },
+    {
+      "canonical_id": "CANON-109",
+      "content_hash": "7268ce31cd8e",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-031"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "R-203 Broader personal-life mission domains."
+    },
+    {
+      "canonical_id": "CANON-110",
+      "content_hash": "6d27d1177bfa",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-032"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "REQUIREMENTS_REGISTRY"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "R-204 Additional personas/avatar presentation."
+    },
+    {
+      "canonical_id": "CANON-111",
+      "content_hash": "6d20cbb857fb",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-033",
+          "OCC-KNO-020"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "Also read root `AGENTS.md`, current operative governance, existing Aegis build packets, `apps/sc-agent-os/`, relevant Supabase migrations/security remediation, and current DDNA consumer-cutover state before touching shared dependencies."
+    },
+    {
+      "canonical_id": "CANON-112",
+      "content_hash": "2bc6d530c247",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-034"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- change user-facing product identity from Aegis to ESCD\n- migrate code/module/file names only where low-risk and traceable\n- preserve historical branch/commit references\n- do not mass-rename governance history or evidence\n- add compatibility notes where old identifiers remain intentionally"
+    },
+    {
+      "canonical_id": "CANON-113",
+      "content_hash": "1ee32f6388e3",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-035"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "## Tranche F: DDNA candidate interface"
+    },
+    {
+      "canonical_id": "CANON-114",
+      "content_hash": "418769b39f06",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-036"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "Implement only the candidate package/interface and provenance behavior. Do not perform or bundle the dedicated DDNA production consumer cutover."
+    },
+    {
+      "canonical_id": "CANON-115",
+      "content_hash": "314d049efb78",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-037"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": [
+          "DCSE-ESCD-001_STATE_DATA_MODEL.md"
+        ]
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences; mirrors in ['DCSE-ESCD-001_STATE_DATA_MODEL.md']",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "## DDNA boundary"
+    },
+    {
+      "canonical_id": "CANON-116",
+      "content_hash": "35d01181d4da",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-038"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Dedicated DDNA consumer cutover is a parallel controlled stream. ESCD may define interfaces and candidate contribution behavior, but must not independently switch production DDNA runtime, weaken service-role boundaries, or bundle DDNA cutover into ESCD work."
+    },
+    {
+      "canonical_id": "CANON-117",
+      "content_hash": "f79d818a95b4",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-040"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "At minimum:\n- send external email/message on DCS behalf unless a future narrowly delegated send policy explicitly authorizes the class\n- publish externally/publicly\n- spend money, purchase, subscribe, or create a financial obligation\n- production deployment or production runtime switch\n- destructive database/source operation\n- deletion of authoritative evidence/source records\n- credential, secret, authentication, identity, permission, or access-control change\n- merge/promote governance-controlled authority where DCS release is required\n- irreversible external action\n- material legal/privacy/security action\n- expansion into a materially different architecture or cost model"
+    },
+    {
+      "canonical_id": "CANON-118",
+      "content_hash": "3e7d9d1649c5",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-041",
+          "OCC-KNO-021"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "- expose passwords, tokens, service-role keys, private keys, recovery/MFA data, connection strings, or secrets to prompts, browser/client code, logs, GitHub, Tribunal, DDNA, or public artifacts\n- fabricate execution evidence, sources, authority, status, metrics, credentials, clients, outcomes, or completion\n- bypass RLS/security controls or approval gates\n- silently promote model/RAG/DDNA candidate content into operative authority\n- delete or rewrite evidence to conceal failure\n- cloud-route protected material contrary to lane controls\n- self-approve a DCS-required action"
+    },
+    {
+      "canonical_id": "CANON-119",
+      "content_hash": "256d1f0e8c7d",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-042"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_AUTONOMY_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AUTONOMY_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Approval records should capture: action identity, payload/version fingerprint where material, requester, approver, requested/decided timestamps, decision, conditions, expiration if applicable, execution evidence reference."
+    },
+    {
+      "canonical_id": "CANON-120",
+      "content_hash": "56e1bd508298",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-043"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Aegis is the DCS personal Executive Operating System. It is a single-principal internal operating surface that must feel standalone while remaining connected to the Command Post control plane."
+    },
+    {
+      "canonical_id": "CANON-121",
+      "content_hash": "6d3b755a3605",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-045"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- Google sign-in for the DCS principal\n- primary Sonly Consulting Google identity and DSEADO01 backup identity mapped to the same principal when technically supported\n- persisted executive session state independent of chat history\n- durable job lifecycle\n- next-best-action calculation\n- opening executive briefing from actual persisted state\n- approval queue\n- evidence/receipt history\n- bounded initiative\n- Command Post deep-link / hybrid operating view\n- Android-first notification architecture, with in-app and email secondary paths"
+    },
+    {
+      "canonical_id": "CANON-122",
+      "content_hash": "dde5f568bf59",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-046"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DCS_EMPLOYMENT_WORKFLOW.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCS_EMPLOYMENT_WORKFLOW"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "Every opportunity closes with disposition: submitted/no response, rejected, withdrawn, interview, offer accepted/declined, duplicate, stale, or invalid. Preserve lessons as DDNA candidates only after provenance and contradiction review."
+    },
+    {
+      "canonical_id": "CANON-123",
+      "content_hash": "a44ceb7db9fc",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-047"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DDNA_CANDIDATE_INGESTION_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "# ESCD DDNA CANDIDATE INGESTION CONTRACT"
+    },
+    {
+      "canonical_id": "CANON-124",
+      "content_hash": "1c85d801ee76",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-048"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DDNA_CANDIDATE_INGESTION_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "ESCD may surface potentially reusable knowledge, preferences, patterns, rules, templates, and observations to DDNA as candidates. ESCD does not promote them to authority."
+    },
+    {
+      "canonical_id": "CANON-125",
+      "content_hash": "eabeebbc4f78",
+      "disposition": "HOLD",
+      "original_type": "DDNA",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-049",
+          "OCC-KNO-029"
+        ],
+        "occurrence_count": 2,
+        "source_document": "DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.6,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DDNA_CANDIDATE_INGESTION_CONTRACT"
+      ],
+      "duplicate_merge_relationship": "Merged 2 occurrences",
+      "disposition_rationale": "Cross-type contradiction: found as ['DDNA', 'KNOWLEDGE']",
+      "content": "1. DDNA candidate presence is not authority.\n2. ESCD must preserve source provenance and material contradictions.\n3. Candidate extraction from communications must respect source permissions and confidentiality.\n4. Do not include secrets, credentials, private keys, recovery codes, or hidden auth material.\n5. Protected/sensitive lane material cannot be widened into general DDNA without explicit authorization.\n6. Duplicate/conflicting candidates should link rather than overwrite each other.\n7. Preferences inferred from repeated behavior remain inferred until explicitly confirmed or promoted under governed DDNA rules.\n8. ESCD consumes only the DDNA authority/status returned by the governed DDNA process.\n9. Dedicated DDNA consumer cutover remains a separate runtime release stream and is not authorized by this contract."
+    },
+    {
+      "canonical_id": "CANON-126",
+      "content_hash": "832980d24a5b",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-051"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "UI_INFORMATION_ARCHITECTURE"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- identity/mission context and current time\n- executive snapshot\n- next-best action card with rationale\n- approvals requiring DCS\n- today's commitments/deadlines\n- DCS Employment/revenue actions\n- blockers/waiting/watches\n- completed since last acknowledgement"
+    },
+    {
+      "canonical_id": "CANON-127",
+      "content_hash": "ef0306e27c46",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-052"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Aegis is DCS's personal Executive Operating System. It must feel standalone while using the Command Post as its governance/control plane. It is advisory by default, proactive within delegated authority, and never a voting executive decision-maker."
+    },
+    {
+      "canonical_id": "CANON-128",
+      "content_hash": "14f83c3909a8",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-053"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- Aegis identity/header\n- greeting mode by default\n- DCS Enterprise mission card\n- DCS Employment mission card\n- executive briefing panel\n- next-best-action panel\n- active/recent jobs\n- approvals requiring DCS\n- completed-since-last-session summary\n- Command Post access button/deep link\n- optional hybrid layout when practical without delaying the vertical slice"
+    },
+    {
+      "canonical_id": "CANON-129",
+      "content_hash": "e051a1eabf5e",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-054"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "Target identity model:"
+    },
+    {
+      "canonical_id": "CANON-130",
+      "content_hash": "b71b10b0c4e5",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-055"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.95,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Persona, identity, or organizational behavioral trait",
+      "content": "- one DCS principal\n- Sonly Consulting Google identity as primary\n- DSEADO01 Google identity as backup\n- both identities must resolve to the same Aegis principal when the current auth architecture safely supports linked identities"
+    },
+    {
+      "canonical_id": "CANON-131",
+      "content_hash": "49ecf4b3b036",
+      "disposition": "DDNA",
+      "original_type": "DDNA",
+      "normalized_type": "DDNA",
+      "source": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-DDN-057"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ACCEPTANCE_TEST_MATRIX"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "DDNA behavioral/identity attribute",
+      "content": "- rule IDs unique\n- rule-set registry valid\n- NBA weights total 100 percent\n- autonomy A0-A4 behavior\n- queue routing and state transition validity\n- source precedence/conflict preservation\n- calendar/communications/person-context rules\n- workflow-template and MAKE/FIX/RELEASE controls\n- bounded retry/recovery rules\n- notification/routine/mobile rules\n- DDNA candidate-only boundary\n- completion/evidence rules"
+    },
+    {
+      "canonical_id": "CANON-132",
+      "content_hash": "24fcd73c4c74",
+      "disposition": "SOURCE_ONLY",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "SOURCE_ONLY",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-001"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Audit or session evidence excerpt",
+      "content": "The target commit is verified in GitHub and contains the AG01 Aegis implementation checkpoint, tests, migration, and evidence documents. The review is against the immutable GitHub commit, not the prior Qwen workspace."
+    },
+    {
+      "canonical_id": "CANON-133",
+      "content_hash": "93ca2aaf24c2",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-002"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "This review verifies the committed test source and AG evidence but does not claim an independent local rerun because the ChatGPT execution container cannot network-clone the repository and the GitHub connector is read/review oriented. Therefore:"
+    },
+    {
+      "canonical_id": "CANON-134",
+      "content_hash": "b4097ecb19be",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-003"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "The server loads `SUPABASE_SERVICE_ROLE_KEY` and uses that key for all PostgREST operations. The API router contains no request authentication or DCS principal verification before session, mission, job, approval, evidence, briefing, NBA, notification, or health handlers run."
+    },
+    {
+      "canonical_id": "CANON-135",
+      "content_hash": "1bd845850790",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-004"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "The migration creates tables in schema `aegis`, while REST helpers request unqualified `/rest/v1/<table>` and do not show schema profile headers. Unless the Supabase/PostgREST runtime is configured with `aegis` as the active/default exposed profile, runtime calls may not address the intended schema."
+    },
+    {
+      "canonical_id": "CANON-136",
+      "content_hash": "eca0797d54f3",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-005"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "| Element | Classification | Reason |\n|---|---|---|\n| Zero-dependency Vercel serverless pattern | REUSE CANDIDATE | Proven repository pattern, but must inherit real auth/security mediation |\n| DCS visual tokens/responsive shell | REUSE | Useful UI baseline; preserve accessibility and sanitize rendering |\n| Job/event/evidence table concepts | REUSE/REFACTOR | Useful conceptual entities; reconcile with current ESCD state model and existing Command Post tables |\n| `aegis` schema as separate permanent domain | DEFER/REVIEW | Avoid duplicate orchestration/state schemas until current `dcse_cp` reuse analysis is complete |\n| 8-factor historical scoring engine | SUPERSEDE/REFACTOR | Current ESCD 54-rule/19-rule-set policy layer defines newer deterministic behavior and routing |\n| Briefing formatter/render concepts | REUSE/REPAIR | Useful formatting, but NBA contract and acknowledgement semantics are wrong |\n| Generic job transition handler | SUPERSEDE/REPAIR | Approval/evidence gates insufficient |\n| Approval endpoint | SUPERSEDE/REPAIR | No verified principal binding, request can self-identify as DCS |\n| Evidence endpoint | REPAIR | Provenance/auth verification absent |\n| Service-role REST helper pattern | REFACTOR | Server-side placement is correct, but requires authenticated application gate, schema routing, and least-privilege review |\n| Employment mission seed/surface | SUPERSEDE/DEFER | DCS Employment is separated from ESCD core |\n| Android push stub | DEFER | Device/runtime proof remains later work |\n| Google OAuth scaffold | REPAIR | Not merely dashboard configuration; application authorization boundary is not implemented in this checkpoint |\n| Existing 28-test suite | REUSE AS BASELINE ONLY | Keep useful tests, add real behavioral/security/integration tests |"
+    },
+    {
+      "canonical_id": "CANON-137",
+      "content_hash": "6b8ef698f399",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-006"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CHATGPT_AG01_INDEPENDENT_REVIEW_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CHATGPT_AG01_INDEPENDENT_REVIEW_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "`ANTIGRAVITY_HANDOFF.md` embeds an earlier short commit SHA while the verified checkpoint is `e287fd7ed41d555e9e5c9b0e00ed25fa9788f744`. This is P3 traceability housekeeping caused by amending the commit after writing the handoff. The GitHub target commit is controlling for this review."
+    },
+    {
+      "canonical_id": "CANON-138",
+      "content_hash": "aab6a0381ffd",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-008"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CONNECTOR_SOURCE_ROUTING_MATRIX"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "| Source / System | Primary ESCD Use | Read | Draft/Prepare | Write/Execute | Authority Notes |\n|---|---|---:|---:|---:|---|\n| GitHub | governance, code, issues, PRs, evidence | YES | YES | approval/rule bounded | Current repo authority when verified |\n| Supabase / Command Post | operational state, registries, jobs, evidence | YES | YES | server-side bounded | RLS/least privilege; secrets server-side |\n| Dedicated DDNA | governed knowledge/provenance | YES | candidate contribution | governed only | No self-promotion by ESCD |\n| Tribunal | audit/evidence/receipts | YES | prepare receipts | governed write path | Evidence source, not authority merely by existence |\n| Gmail | communications, recruiter/client follow-up | YES | YES | APPROVAL by default | External send consequential |\n| Google Calendar | commitments, meetings, deadlines | YES | event proposal | APPROVAL by default | Calendar write changes commitments |\n| Google Contacts | identity/recipient resolution | YES | n/a | limited approved update later | Resolve recipients before send |\n| Google Drive | files, docs, artifacts | YES | create/edit governed work product | bounded/approval by consequence | Respect source ownership/version |\n| Web/Public sources | research/current facts | YES | summarize/cite | no external mutation | Freshness/evidence required |\n| Local runtime/Codex | coding/testing/build operations | inspect when available | YES | bounded workspace execution | No secret exposure; no prod without approval |\n| ESCD state store | executive/task/job/approval/watch state | YES | YES | YES within policy | Operational source of truth for ESCD-native state |"
+    },
+    {
+      "canonical_id": "CANON-139",
+      "content_hash": "cc9d3999e5e2",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-012"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "# ESCD OPERATING WORKFLOW AND PROCESS STREAM"
+    },
+    {
+      "canonical_id": "CANON-140",
+      "content_hash": "655bc58804b1",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-013"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "### 1. Capture\nAccept a pin, message, email-derived commitment, calendar item, GitHub/Tribunal signal, DCS instruction, assistant observation, recurring trigger, or connector event. Preserve original source/provenance."
+    },
+    {
+      "canonical_id": "CANON-141",
+      "content_hash": "3fa3d3c68c21",
+      "disposition": "HOLD",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-015"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.7,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Knowledge item flagged with unresolved doctrine conflict",
+      "content": "`OBSERVATION/ARTIFACT -> PROVENANCE -> EXTRACT -> CLASSIFY -> DUPLICATE/CONFLICT CHECK -> CANDIDATE -> GOVERNED VALIDATION/PROMOTION PROCESS`"
+    },
+    {
+      "canonical_id": "CANON-142",
+      "content_hash": "6a39ce76906a",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-016"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_WORKFLOW_PROCESS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "WORKFLOW_PROCESS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "## Process controls"
+    },
+    {
+      "canonical_id": "CANON-143",
+      "content_hash": "e8f1e26128e1",
+      "disposition": "HOLD",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "HOLD",
+      "source": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-019"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_IMPLEMENTATION_PACKET_002.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.7,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "IMPLEMENTATION_PACKET_002"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Knowledge item flagged with unresolved doctrine conflict",
+      "content": "1. `DCSE-ESCD-001_REQUIREMENTS_REGISTRY.md`\n2. `DCSE-ESCD-001_AUTONOMY_CONTRACT.md`\n3. `DCSE-ESCD-001_ASSISTANT_OPERATING_RULES.md`\n4. `DCSE-ESCD-001_WORKFLOW_PROCESS.md`\n5. `DCSE-ESCD-001_PHASE_ROADMAP.md`\n6. `DCSE-ESCD-001_NEXT_BEST_ACTION_SPEC.md`\n7. `DCSE-ESCD-001_EXECUTIVE_BRIEFING_SPEC.md`\n8. `DCSE-ESCD-001_STATE_DATA_MODEL.md`\n9. `DCSE-ESCD-001_CONNECTOR_SOURCE_ROUTING_MATRIX.md`\n10. `DCSE-ESCD-001_NOTIFICATION_ESCALATION_POLICY.md`\n11. `DCSE-ESCD-001_RECURRING_ROUTINE_FRAMEWORK.md`\n12. `DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md`\n13. `DCSE-ESCD-001_UI_INFORMATION_ARCHITECTURE.md`\n14. `DCSE-ESCD-001_ACCEPTANCE_TEST_MATRIX.md`\n15. `DCSE-ESCD-001_OBSERVABILITY_METRICS.md`\n16. `DCSE-ESCD-001_WORKFLOW_TEMPLATE_SCHEMA.md`\n17. `DCSE-ESCD-001_DECISION_RECORD_SPEC.md`\n18. `DCSE-ESCD-001_CONTACT_PERSON_CONTEXT_SPEC.md`\n19. `DCSE-ESCD-001_CALENDAR_CONFLICT_POLICY.md`\n20. `DCSE-ESCD-001_EMAIL_MESSAGE_TRIAGE_RULES.md`\n21. `DCSE-ESCD-001_COMMAND_GRAMMAR_SPEC.md`\n22. `DCSE-ESCD-001_MOBILE_INTERACTION_MODEL.md`\n23. `DCSE-ESCD-001_DDNA_CANDIDATE_INGESTION_CONTRACT.md`"
+    },
+    {
+      "canonical_id": "CANON-144",
+      "content_hash": "d9e6e91a3a80",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-022"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "1. Inspect before changing.\n2. Reuse verified Command Post and SC Agent OS capabilities before creating duplicates.\n3. Build in vertical slices that end in executable tests and evidence.\n4. No placeholder integrations may be reported as working.\n5. No production deployment, destructive database action, credential change, or irreversible external action without explicit DCS approval.\n6. Never place secrets, tokens, service-role keys, private keys, connection strings, MFA data, or recovery data in source, prompts, logs, issues, documentation, or browser code.\n7. Use server-side mediation for privileged operations.\n8. All user/state tables in exposed Supabase schemas require RLS and tested authorization policies.\n9. Treat model output as advisory unless authority has been explicitly delegated by policy.\n10. Evidence outranks narrative. A build is incomplete until its claims are tested."
+    },
+    {
+      "canonical_id": "CANON-145",
+      "content_hash": "5791628e8279",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-023"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "- `DCSE_MANIFEST.yaml`\n- `governance/v7.2/`\n- `apps/sc-agent-os/`\n- `apps/sc-agent-os/docs/IMPLEMENTATION_STATUS.md`\n- `apps/sc-agent-os/docs/PRIVACY_CONTROLS.md`\n- `apps/sc-agent-os/docs/GOVERNANCE_GATES.md`\n- `apps/sc-agent-os/migrations/`\n- current Supabase schema and advisors\n- current Vercel/Netlify routing relevant to Command Post"
+    },
+    {
+      "canonical_id": "CANON-146",
+      "content_hash": "5b2c09665256",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-025"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "## Supabase rules"
+    },
+    {
+      "canonical_id": "CANON-147",
+      "content_hash": "5ba713bd4896",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-026"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "- Verify current Supabase docs/changelog before implementing features.\n- RLS on every table in exposed schemas.\n- Never use user-editable metadata for authorization.\n- Never expose `service_role` or secret keys to clients.\n- Prefer ownership predicates in RLS policies.\n- UPDATE policies require both `USING` and `WITH CHECK` where ownership can change.\n- Treat views and `SECURITY DEFINER` functions as security-sensitive.\n- Run advisors after schema/security changes.\n- Verify each schema change with test queries and adversarial authorization tests.\n- Use queues for durable asynchronous job dispatch when available and appropriate; use cron only as a trigger/scheduler, not as the primary orchestration engine."
+    },
+    {
+      "canonical_id": "CANON-148",
+      "content_hash": "c8d1e29cfb2a",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "AGENTS.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-027"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "AGENTS"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Pass 1: functional/integration\n- persistence\n- state transitions\n- Google auth behavior\n- RLS and unauthorized access\n- Supabase integration\n- job dispatch/retry/failure handling\n- approvals\n- evidence creation\n- connector failure behavior"
+    },
+    {
+      "canonical_id": "CANON-149",
+      "content_hash": "56f3cba1650a",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-030"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-ESCD-001_FAILURE_RECOVERY_MODEL.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "FAILURE_RECOVERY_MODEL"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Test connector timeout, auth expiration, model failure, approval expiry, RLS denial, uncertain send, interrupted process, duplicate retry, restart recovery, dead-letter routing, and rollback evidence."
+    },
+    {
+      "canonical_id": "CANON-150",
+      "content_hash": "b0a355c21f1f",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-031"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "1. `DCSE_MANIFEST.yaml`\n2. `governance/v7.2/`\n3. `apps/sc-agent-os/`\n4. existing migrations and schema assumptions\n5. current Command Post runtime/deployment wiring\n6. current Supabase project schema, RLS, auth settings, queues/cron availability, and advisors\n7. current GitHub issue/PR state that can materially affect the build"
+    },
+    {
+      "canonical_id": "CANON-151",
+      "content_hash": "b8c501d9ffaa",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-032"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Implement Google authentication through the existing Supabase project where compatible."
+    },
+    {
+      "canonical_id": "CANON-152",
+      "content_hash": "90f2bf8fa5d9",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-033"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Use Supabase Queue-backed dispatch if available and compatible with current project state. If not available/configured, implement a repository-local abstraction that can be swapped to Supabase Queues without redesigning the job state model. Do not fake queue completion."
+    },
+    {
+      "canonical_id": "CANON-153",
+      "content_hash": "b0202ed1cdb5",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-034"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "### 9. Supabase security"
+    },
+    {
+      "canonical_id": "CANON-154",
+      "content_hash": "e3d5926a0065",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-035"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE-PA-MODULE-001_BUILD_PACKET_001.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DCSE-PA-MODULE-001_BUILD_PACKET_001"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "- enable RLS on every exposed user/state table\n- use explicit owner/principal predicates\n- never authorize from user-editable metadata\n- keep service-role/secret credentials server-side\n- test SELECT/INSERT/UPDATE/DELETE behavior for authorized and unauthorized contexts\n- test anonymous rejection where required\n- inspect views and privileged functions\n- run Supabase advisors after changes\n- document residual findings"
+    },
+    {
+      "canonical_id": "CANON-155",
+      "content_hash": "4db7156d2dd1",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "System/Prompt",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-037"
+        ],
+        "occurrence_count": 1,
+        "source_document": "System/Prompt",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "System/Prompt"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Vercel Environment: App is deployed at https://sc-command-post-git-featu-b4f181-sonlyconsulting-ctrls-projects.vercel.app/escd/app"
+    },
+    {
+      "canonical_id": "CANON-156",
+      "content_hash": "e6d683414fd2",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "System/Prompt",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-038"
+        ],
+        "occurrence_count": 1,
+        "source_document": "System/Prompt",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "System/Prompt"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Tribunal Usage: Tribunal Inbox is used for JSON communication bus and receipts."
+    },
+    {
+      "canonical_id": "CANON-157",
+      "content_hash": "731982aa65c4",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "System/Prompt",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-039"
+        ],
+        "occurrence_count": 1,
+        "source_document": "System/Prompt",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "System/Prompt"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "GitHub Transaction: Files are pushed to remote and tracked in history."
+    },
+    {
+      "canonical_id": "CANON-158",
+      "content_hash": "149d4670e295",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "System/Prompt",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-040"
+        ],
+        "occurrence_count": 1,
+        "source_document": "System/Prompt",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "HISTORICAL_RECOVERED",
+      "confidence": 0.9,
+      "status": "staged",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "System/Prompt"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "General knowledge record",
+      "content": "Supabase URL: Extracted from local config, provides DB access."
+    }
+  ]
+}
