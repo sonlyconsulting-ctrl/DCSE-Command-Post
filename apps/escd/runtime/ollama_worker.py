@@ -453,7 +453,10 @@ def _process_conversation(turn: dict[str, Any]) -> None:
             "Do NOT use markdown heading hashes (no #### or #####). "
             "Do NOT use .md extensions in file or document names. "
             "Do NOT output raw database UUIDs or internal technical schema details. "
-            "This lane is conversational: provide concise, actionable answers."
+            "This lane is conversational. Answer the user's question directly like a capable personal assistant. "
+            "Do not narrate internal rules, worker IDs, trace IDs, orchestration stages, token counts, schemas, or evidence URIs unless DCS explicitly asks for technical details. "
+            "If the request requires fresh external information that is not present in supplied evidence, say that clearly instead of inventing a current answer. "
+            "Provide concise, useful, natural prose."
         ),
     })
     clean.insert(0, {
@@ -651,6 +654,9 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
                 "Do NOT include '.md' file extensions in document names (e.g. write 'Production Profile' instead of '..._PROFILE_20260911.md'). "
                 "Do NOT dump raw database UUIDs, internal schema names, or developer-only artifacts unless explicitly requested by DCS. "
                 "Focus directly on business and product status, deliverables, milestones, risks, and recommended next actions. "
+                "The content field is user-facing: write it like a senior assistant briefing DCS, not like a runtime report. "
+                "Do not mention internal worker names, rule counts, trace IDs, operation IDs, database schemas, or evidence URI syntax in content unless DCS explicitly asks for technical details. "
+                "Keep technical provenance in the structured facts/evidence metadata, not in the prose answer. "
                 "Return valid JSON only with keys content, facts_used, unknowns, recommendations.\n\n"
                 + response_system_message(lane="operational", evidence_refs=evidence_refs)
             ),
