@@ -9,6 +9,14 @@ from pathlib import Path
 from typing import Any
 from urllib import error, parse, request
 
+from apps.escd.runtime.response_policy import (
+    POLICY_ID,
+    RULE_IDS,
+    response_proof,
+    response_system_message,
+    validate_response_proof,
+)
+
 PROJECT_REF = "nevgdyfpxdaloacuutal"
 WORKER_KEY = os.getenv("ESCD_WORKER_KEY", "DCS-WINDOWS-OLLAMA-01")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:latest")
@@ -448,6 +456,10 @@ def _process_conversation(turn: dict[str, Any]) -> None:
             "This lane is conversational: provide concise, actionable answers."
         ),
     })
+    clean.insert(0, {
+        "role": "system",
+        "content": response_system_message(lane="conversation"),
+    })
 
     _patch_turn(turn["id"], {"state": "INTERPRETING", "stage": "PRECONDITION",
                              "active_provider": "ollama", "active_model": OLLAMA_MODEL})
@@ -456,18 +468,46 @@ def _process_conversation(turn: dict[str, Any]) -> None:
     _patch_turn(turn["id"], {"state": "EXECUTING", "stage": "EXECUTION"})
     content, raw = _ollama(clean)
     usage = _usage(raw)
-    payload_return = {"content": content, "mode": "conversation", "usage": usage}
-    refs = [f"ollama://{WORKER_KEY}/{OLLAMA_MODEL}/{turn['turn_key']}"]
+    truth = response_proof(
+        provider="ollama",
+        model=str(raw.get("model") or OLLAMA_MODEL),
+        request_messages=clean,
+        response_text=content,
+        provider_response_id=str(raw.get("created_at") or "") or None,
+        transport="local_ollama",
+        worker=WORKER_KEY,
+    )
+    truth_valid, truth_problems = validate_response_proof(truth)
+    if not truth_valid:
+        raise WorkerError("response_truth_proof_invalid:" + ",".join(truth_problems))
+    payload_return = {
+        "content": content,
+        "mode": "conversation",
+        "usage": usage,
+        "response_policy": {"policy_id": POLICY_ID, "rule_ids": list(RULE_IDS)},
+        "response_proof": truth,
+    }
+    refs = [
+        f"ollama://{WORKER_KEY}/{OLLAMA_MODEL}/{turn['turn_key']}",
+        "response-proof://" + truth["response_sha256"],
+    ]
     _record_return(turn["id"], "EXECUTION", "ollama", OLLAMA_MODEL, payload_return, refs)
     _patch_turn(turn["id"], {"state": "VERIFYING", "stage": "POSTCONDITION"})
     _event(
         turn["id"], "AUDIT", "AUDIT", "AUDITOR",
-        {"checks": {"nonempty_response": bool(content), "governed_actions_claimed": False}},
+        {"checks": {
+            "nonempty_response": bool(content),
+            "governed_actions_claimed": False,
+            "response_truth_proof_valid": truth_valid,
+            "response_policy": POLICY_ID,
+        }},
         evidence_refs=refs, actor_ref="dcse-conversation-audit",
     )
     _complete(turn, content, evidence_refs=refs, usage=usage, rule_evidence={
         "lane": "conversation",
         "governed_actions": 0,
+        "response_policy": {"policy_id": POLICY_ID, "rule_ids": list(RULE_IDS)},
+        "response_proof": truth,
     })
 
 
@@ -611,7 +651,8 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
                 "Do NOT include '.md' file extensions in document names (e.g. write 'Production Profile' instead of '..._PROFILE_20260911.md'). "
                 "Do NOT dump raw database UUIDs, internal schema names, or developer-only artifacts unless explicitly requested by DCS. "
                 "Focus directly on business and product status, deliverables, milestones, risks, and recommended next actions. "
-                "Return valid JSON only with keys content, facts_used, unknowns, recommendations."
+                "Return valid JSON only with keys content, facts_used, unknowns, recommendations.\n\n"
+                + response_system_message(lane="operational", evidence_refs=evidence_refs)
             ),
         },
         {"role": "user", "content": json.dumps(response_input, default=str)},
@@ -639,6 +680,22 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         content = f"Governed evaluation complete for: {candidate.get('objective') or request_text}."
 
     usage = _usage(raw_response)
+    response_messages = [
+        {"role": "system", "content": response_system_message(lane="operational", evidence_refs=evidence_refs)},
+        {"role": "user", "content": json.dumps(response_input, default=str)},
+    ]
+    truth = response_proof(
+        provider="ollama",
+        model=str(raw_response.get("model") or OLLAMA_MODEL),
+        request_messages=response_messages,
+        response_text=content,
+        provider_response_id=str(raw_response.get("created_at") or "") or None,
+        transport="local_ollama",
+        worker=WORKER_KEY,
+    )
+    truth_valid, truth_problems = validate_response_proof(truth)
+    if not truth_valid:
+        raise WorkerError("response_truth_proof_invalid:" + ",".join(truth_problems))
     provider_payload = {
         "content": content,
         "facts_used": response_obj.get("facts_used") or [],
@@ -646,9 +703,13 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         "recommendations": response_obj.get("recommendations") or [],
         "operation_candidate": candidate,
         "usage": usage,
+        "response_policy": {"policy_id": POLICY_ID, "rule_ids": list(RULE_IDS)},
+        "response_proof": truth,
     }
     provider_ref = f"ollama://{WORKER_KEY}/{OLLAMA_MODEL}/{turn['turn_key']}"
-    evidence_refs = sorted(set(evidence_refs + [provider_ref]))
+    evidence_refs = sorted(set(evidence_refs + [provider_ref, "response-proof://" + truth["response_sha256"]]))
+    rule_evidence["response_policy"] = {"policy_id": POLICY_ID, "rule_ids": list(RULE_IDS)}
+    rule_evidence["response_proof"] = truth
     _record_return(turn["id"], "EXECUTION", "ollama", OLLAMA_MODEL, provider_payload, evidence_refs)
 
     _patch_turn(turn["id"], {"state": "VERIFYING", "stage": "POSTCONDITION"})
@@ -661,6 +722,8 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         "rules_evaluated": rule_evidence.get("rule_count", 0),
         "rules_failed": rule_evidence.get("fail_count", 0),
         "rules_unknown": rule_evidence.get("unknown_count", 0),
+        "response_truth_proof_valid": truth_valid,
+        "response_policy": POLICY_ID,
     }
     _event(
         turn["id"], "AUDIT", "AUDIT", "AUDITOR",
