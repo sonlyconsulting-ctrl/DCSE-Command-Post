@@ -11,6 +11,7 @@
 *.log
 *.tmp
 *.swp
+logs/
 
 # Editors
 .vscode/

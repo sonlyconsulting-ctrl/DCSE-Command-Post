@@ -33,6 +33,7 @@ from apps.escd.runtime.mvp_data import (
     create_orchestration_turn,
     get_orchestration_turn,
     update_orchestration_turn_action,
+    get_trace_record,
 )
 
 
@@ -97,8 +98,14 @@ class handler(BaseHTTPRequestHandler):
         try:
             with request.urlopen(req, timeout=15) as response:
                 session = json.loads(response.read().decode("utf-8") or "{}")
-        except error.HTTPError:
-            raise AuthError("sign_in_failed") from None
+        except error.HTTPError as exc:
+            msg = "sign_in_failed"
+            try:
+                err_data = json.loads(exc.read().decode("utf-8"))
+                msg = str(err_data.get("msg") or err_data.get("error_description") or err_data.get("message") or "sign_in_failed")
+            except Exception:
+                pass
+            raise AuthError(msg) from None
         token = str(session.get("access_token") or "")
         if not token:
             raise AuthError("sign_in_failed")
@@ -156,6 +163,13 @@ class handler(BaseHTTPRequestHandler):
                     self._json(200, {"ok": True, "knowledge": list_knowledge()})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
+            elif path.startswith("/api/mvp/traces/"):
+                trace_id = path[len("/api/mvp/traces/"):].strip("/")
+                trace_data = get_trace_record(trace_id)
+                if trace_data:
+                    self._json(200, {"ok": True, "trace": trace_data})
+                else:
+                    self._json(404, {"error": "trace_not_found"})
             elif path.startswith("/api/mvp/orchestrate/turn/"):
                 turn_id = path[len("/api/mvp/orchestrate/turn/"):].strip("/")
                 self._json(200, {"ok": True, "turn": get_orchestration_turn(turn_id)})
