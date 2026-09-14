@@ -1,0 +1,52 @@
+{
+  "event_id": "POLLER-DISPATCH-20260914-001",
+  "lane": "SYSTEM",
+  "project": "DCSE Command Post",
+  "event_type": "poller_dispatch",
+  "status": "Ready for Production",
+  "timestamp": "2026-09-14T00:00:00Z",
+  "execution": {
+    "script": "tribunal/v7/job_tribunal_poller_v7.py",
+    "mode": "--once --dispatch",
+    "start_time": "2026-09-14T20:30:00Z",
+    "end_time": "2026-09-14T20:30:15Z",
+    "duration_seconds": 15
+  },
+  "tasks_processed": [
+    {
+      "task_id": "MENTAL-INGENUITY-DEPLOYMENT-20260809",
+      "outcome": "IDEMPOTENT_SKIP",
+      "receipt": "MENTAL-INGENUITY-DEPLOYMENT-20260809__7041A8CA7959.receipt.json"
+    },
+    {
+      "task_id": "SC-NETLIFY-DEPLOY-PACKAGE-20260819",
+      "outcome": "IDEMPOTENT_SKIP",
+      "receipt": "SC-NETLIFY-DEPLOY-PACKAGE-20260819__EB98CA6CDCE7.receipt.json"
+    },
+    {
+      "task_id": "POLAR-ACTIVATION-SYNTHETIC-001",
+      "outcome": "IDEMPOTENT_SKIP",
+      "receipt": "POLAR-ACTIVATION-SYNTHETIC-001__F863BA0E6D1A.receipt.json"
+    },
+    {
+      "task_id": "POLAR-CONFIRM-SYNTHETIC-002",
+      "outcome": "IDEMPOTENT_SKIP",
+      "receipt": "POLAR-CONFIRM-SYNTHETIC-002__DD9EEB04814E.receipt.json"
+    }
+  ],
+  "delivery": {
+    "status": "Complete",
+    "tasks_completed": 4,
+    "tasks_blocked": 0,
+    "tasks_failed": 0
+  },
+  "verification": {
+    "passed": true,
+    "all_receipts_present": true,
+    "all_outcomes_valid": true
+  },
+  "approvals": {
+    "dcs_required": false,
+    "runtime_authority": "OPERATIVE v7.2 §42"
+  }
+}
