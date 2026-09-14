@@ -214,7 +214,7 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/knowledge":
                 q = str((query.get("q") or [""])[0]).strip().lower()
                 static_rows = list_knowledge()
-                dynamic_rows = repo.list_dynamic_knowledge()
+                dynamic_rows = repo.list_dynamic_knowledge() if hasattr(repo, "list_dynamic_knowledge") else []
                 rows = static_rows + dynamic_rows
                 if q:
                     rows = [

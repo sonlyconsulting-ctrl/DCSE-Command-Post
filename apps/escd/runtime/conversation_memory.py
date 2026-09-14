@@ -72,8 +72,8 @@ def classify_message(text: str, *, has_attachment: bool = False,
     task_hits = sum(bool(p.search(clean)) for p in _TASK)
     knowledge_hits = sum(bool(p.search(clean)) for p in _KNOWLEDGE)
 
-    if idea_hits and task_hits == 0:
-        category, confidence, rationale = "IDEA", 0.93, "Exploratory/possibility language without a committed action."
+    if idea_hits and task_hits <= 1:
+        category, confidence, rationale = "IDEA", 0.93, "Exploratory/possibility language outweighs a single embedded action verb."
     elif task_hits:
         category = "TASK"
         confidence = min(0.98, 0.86 + (0.03 * min(task_hits, 4)))
