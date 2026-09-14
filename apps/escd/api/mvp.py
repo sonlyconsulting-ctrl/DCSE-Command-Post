@@ -9,6 +9,7 @@ from urllib.parse import urlparse, parse_qs
 
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
+from apps.escd.runtime.conversation_memory import persist_message_classification, operation_view
 from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     chat,
@@ -76,6 +77,7 @@ class handler(BaseHTTPRequestHandler):
         url, anon = self._supabase_config()
         auth = verify_supabase_user(token, url, anon)
         repo = SupabaseRLSClient(url, anon, token, schema="dcse_cp")
+        repo.user_id = auth.user_id
         authorize_operator(auth, repo.operator_self())
         return auth, repo
 
@@ -110,7 +112,64 @@ class handler(BaseHTTPRequestHandler):
         if not token:
             raise AuthError("sign_in_failed")
         auth, _ = self._repo_for_token(token)
-        return {"access_token": token, "expires_in": int(session.get("expires_in") or 3600), "user": {"email": auth.email}}
+        return {
+            "access_token": token,
+            "refresh_token": str(session.get("refresh_token") or ""),
+            "expires_in": int(session.get("expires_in") or 3600),
+            "user": {"email": auth.email},
+        }
+
+    def _refresh(self, payload: dict):
+        refresh_token = str(payload.get("refresh_token") or "").strip()
+        if not refresh_token:
+            raise AuthError("refresh_token_required")
+        url, anon = self._supabase_config()
+        body = json.dumps({"refresh_token": refresh_token}).encode("utf-8")
+        req = request.Request(
+            url + "/auth/v1/token?grant_type=refresh_token",
+            data=body,
+            headers={"apikey": anon, "Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with request.urlopen(req, timeout=15) as response:
+                session = json.loads(response.read().decode("utf-8") or "{}")
+        except error.HTTPError:
+            raise AuthError("session_refresh_failed") from None
+        token = str(session.get("access_token") or "")
+        if not token:
+            raise AuthError("session_refresh_failed")
+        auth, _ = self._repo_for_token(token)
+        return {
+            "access_token": token,
+            "refresh_token": str(session.get("refresh_token") or refresh_token),
+            "expires_in": int(session.get("expires_in") or 3600),
+            "user": {"email": auth.email},
+        }
+
+    @staticmethod
+    def _conversation_title(text: str) -> str:
+        clean = " ".join(str(text or "").split())
+        if not clean:
+            return "ESCD Conversation"
+        return clean[:117] + ("..." if len(clean) > 117 else "")
+
+    def _ensure_conversation(self, repo: SupabaseRLSClient, payload: dict, text: str, lane: str) -> str:
+        conversation_id = str(payload.get("conversation_id") or "").strip()
+        if conversation_id:
+            return conversation_id
+        conv = repo.create_conversation(
+            self._conversation_title(text),
+            metadata={"lane_mode": lane, "created_by_surface": "ESCD"},
+        )
+        return str(conv["id"])
+
+    @staticmethod
+    def _last_user_message(messages: list) -> dict:
+        for msg in reversed(messages or []):
+            if str(msg.get("role") or "").lower() == "user":
+                return msg
+        return {}
 
     def _patch_item_governed(self, repo: SupabaseRLSClient, item_id: str, update: dict):
         current = repo.get_item(item_id)
@@ -156,11 +215,22 @@ class handler(BaseHTTPRequestHandler):
                 source_id = str((query.get("source_id") or [""])[0])
                 self._json(200, {"ok": True, "jobs": list_ddna_jobs(source_id) if source_id else []})
             elif path == "/api/mvp/knowledge":
-                q = str((query.get("q") or [""])[0])
+                q = str((query.get("q") or [""])[0]).strip().lower()
+                static_rows = list_knowledge()
+                dynamic_rows = repo.list_dynamic_knowledge()
+                rows = static_rows + dynamic_rows
                 if q:
-                    self._json(200, {"ok": True, "knowledge": search_knowledge(q)})
-                else:
-                    self._json(200, {"ok": True, "knowledge": list_knowledge()})
+                    rows = [
+                        row for row in rows
+                        if q in json.dumps(row, default=str).lower()
+                    ]
+                self._json(200, {"ok": True, "knowledge": rows})
+            elif path == "/api/mvp/conversations":
+                limit = int((query.get("limit") or ["50"])[0] or 50)
+                self._json(200, {"ok": True, "conversations": repo.list_conversations(limit)})
+            elif path.startswith("/api/mvp/conversations/"):
+                conversation_id = path[len("/api/mvp/conversations/"):].strip("/")
+                self._json(200, {"ok": True, "snapshot": repo.conversation_snapshot(conversation_id)})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
             elif path.startswith("/api/mvp/traces/"):
@@ -172,7 +242,8 @@ class handler(BaseHTTPRequestHandler):
                     self._json(404, {"error": "trace_not_found"})
             elif path.startswith("/api/mvp/orchestrate/turn/"):
                 turn_id = path[len("/api/mvp/orchestrate/turn/"):].strip("/")
-                self._json(200, {"ok": True, "turn": get_orchestration_turn(turn_id)})
+                snapshot = repo.operation_turn_snapshot(turn_id)
+                self._json(200, {"ok": True, "turn": operation_view(snapshot), "events": snapshot.get("events") or []})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -198,6 +269,14 @@ class handler(BaseHTTPRequestHandler):
         if path == "/api/mvp/login":
             try:
                 self._json(200, {"ok": True, "session": self._login(payload)})
+            except AuthError as exc:
+                self._json(401, {"error": str(exc)})
+            except Exception:
+                self._json(500, {"error": "internal_error"})
+            return
+        if path == "/api/mvp/session/refresh":
+            try:
+                self._json(200, {"ok": True, "session": self._refresh(payload)})
             except AuthError as exc:
                 self._json(401, {"error": str(exc)})
             except Exception:
@@ -265,7 +344,75 @@ class handler(BaseHTTPRequestHandler):
                 )
                 self._json(200, {"ok": True, "download": res})
             elif path == "/api/mvp/chat":
-                self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
+                provider = str(payload.get("provider") or "openai").strip().lower()
+                messages = payload.get("messages") or []
+                user_msg = self._last_user_message(messages)
+                user_text = str(user_msg.get("content") or "").strip()
+                if not user_text:
+                    self._json(400, {"error": "chat_message_required"}); return
+                conversation_id = self._ensure_conversation(repo, payload, user_text, "conversational")
+                user_turn = repo.append_conversation_turn(
+                    conversation_id,
+                    "DCS",
+                    "user",
+                    user_text,
+                    {
+                        "lane": "conversational",
+                        "provider_preference": provider,
+                        "attachment": user_msg.get("attachment"),
+                    },
+                )
+                classification = persist_message_classification(
+                    repo,
+                    user_turn,
+                    user_text,
+                    attachment=user_msg.get("attachment"),
+                    operational=False,
+                )
+
+                if provider == "ollama":
+                    op = repo.submit_operation_turn(
+                        conversation_id,
+                        user_turn["id"],
+                        user_text,
+                        provider,
+                        {
+                            "mode": "conversation",
+                            "messages": messages[-30:],
+                            "classification": classification,
+                        },
+                    )
+                    snapshot = repo.operation_turn_snapshot(op["turn_key"])
+                    self._json(202, {
+                        "ok": True,
+                        "pending": True,
+                        "conversation_id": conversation_id,
+                        "turn_id": op["turn_key"],
+                        "turn": operation_view(snapshot),
+                        "classification": classification,
+                    })
+                else:
+                    response = chat(provider, messages)
+                    repo.append_conversation_turn(
+                        conversation_id,
+                        "ESCD",
+                        "assistant",
+                        str(response.get("content") or ""),
+                        {
+                            "lane": "conversational",
+                            "provider": response.get("provider"),
+                            "model": response.get("model"),
+                            "worker": response.get("worker"),
+                            "usage": response.get("usage"),
+                            "evidence_refs": response.get("evidence_refs") or [],
+                        },
+                    )
+                    self._json(200, {
+                        "ok": True,
+                        "response": response,
+                        "conversation_id": conversation_id,
+                        "classification": classification,
+                    })
             elif path == "/api/mvp/provider-secret":
                 provider = str(payload.get("provider") or "").strip().lower()
                 secret = str(payload.get("secret") or "")
@@ -273,18 +420,65 @@ class handler(BaseHTTPRequestHandler):
                 self._json(200, {"ok": True, "provider": result})
             elif path == "/api/mvp/orchestrate":
                 prompt = str(payload.get("prompt") or "").strip()
-                provider = str(payload.get("provider") or "ollama").strip()
+                if not prompt:
+                    self._json(400, {"error": "orchestration_prompt_required"}); return
+                provider = str(payload.get("provider") or "ollama").strip().lower()
                 context_refs = payload.get("context_refs") or []
-                user_id = getattr(repo, "user_id", None) or "DCS-OPERATOR"
-                turn = create_orchestration_turn(prompt=prompt, provider=provider, context_refs=context_refs, user_id=user_id)
-                self._json(200, {"ok": True, "turn_id": turn["turn_id"], "turn": turn})
+                conversation_id = self._ensure_conversation(repo, payload, prompt, "operational")
+                user_turn = repo.append_conversation_turn(
+                    conversation_id,
+                    "DCS",
+                    "user",
+                    prompt,
+                    {
+                        "lane": "operational",
+                        "provider_preference": provider,
+                        "context_refs": context_refs,
+                    },
+                )
+                classification = persist_message_classification(
+                    repo,
+                    user_turn,
+                    prompt,
+                    operational=True,
+                )
+                op = repo.submit_operation_turn(
+                    conversation_id,
+                    user_turn["id"],
+                    prompt,
+                    provider,
+                    {
+                        "mode": "orchestrate",
+                        "context_refs": context_refs,
+                        "classification": classification,
+                    },
+                )
+                for subject in classification.get("subjects") or []:
+                    try:
+                        repo.link_subject(
+                            subject["id"], "operation_turn", op["id"],
+                            relation_type="ABOUT",
+                            confidence=float(subject.get("confidence") or 0.9),
+                            provenance={"conversation_turn_id": user_turn["id"], "turn_key": op["turn_key"]},
+                        )
+                    except Exception:
+                        pass
+                snapshot = repo.operation_turn_snapshot(op["turn_key"])
+                self._json(202, {
+                    "ok": True,
+                    "conversation_id": conversation_id,
+                    "turn_id": op["turn_key"],
+                    "turn": operation_view(snapshot),
+                    "classification": classification,
+                })
             elif path.startswith("/api/mvp/orchestrate/turn/") and path.endswith("/action"):
                 parts = path.strip("/").split("/")
                 turn_id = parts[-2]
                 action = str(payload.get("action") or "").strip()
                 response_text = str(payload.get("response") or "").strip()
-                turn = update_orchestration_turn_action(turn_id, action=action, response_text=response_text)
-                self._json(200, {"ok": True, "turn": turn})
+                repo.control_operation_turn(turn_id, action=action, response_text=response_text)
+                snapshot = repo.operation_turn_snapshot(turn_id)
+                self._json(200, {"ok": True, "turn": operation_view(snapshot), "events": snapshot.get("events") or []})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
