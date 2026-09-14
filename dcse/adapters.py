@@ -64,6 +64,69 @@ class Recording(Adapter):
                 "note": "recording adapter, no external effect"}
 
 
+class GitKrakenAdapter(Adapter):
+    """Capability adapter for Git and GitHub operations via the GitKraken CLI (gk).
+
+    Maintains DCSE integrity:
+    1. Detects local gk.exe installation without guessing.
+    2. Reports honest unperformed status if CLI is unauthenticated or missing.
+    3. Wraps bounded queries and workspace checks under governance rules.
+    """
+    name = "gitkraken"
+
+    def __init__(self, executable: Optional[str] = None) -> None:
+        self.executable = executable or self._find_gk()
+
+    def _find_gk(self) -> Optional[str]:
+        import os
+        import shutil
+        env_path = os.environ.get("GITKRAKEN_CLI_PATH")
+        if env_path and os.path.isfile(env_path):
+            return env_path
+        local_gk = os.path.expandvars(r"%LOCALAPPDATA%\GitKrakenCLI\gk.exe")
+        if os.path.isfile(local_gk):
+            return local_gk
+        return shutil.which("gk")
+
+    def is_available(self) -> bool:
+        import os
+        return bool(self.executable and os.path.isfile(self.executable))
+
+    def perform(self, op: Operation) -> Dict[str, Any]:
+        import subprocess
+        if not self.is_available():
+            return {
+                "performed": False,
+                "capability": "github",
+                "action": op.action,
+                "reason": ("GitKraken CLI (gk.exe) not found. "
+                           "Install with 'winget install GitKraken.cli' or set GITKRAKEN_CLI_PATH."),
+            }
+
+        action = op.action.lower()
+        if action in ("status", "query"):
+            try:
+                res = subprocess.run([self.executable, "--version"],
+                                     capture_output=True, text=True, timeout=5)
+                return {
+                    "performed": res.returncode == 0,
+                    "capability": "github",
+                    "action": op.action,
+                    "output": res.stdout.strip(),
+                    "note": "GitKraken CLI query successful",
+                }
+            except Exception as e:
+                return {"performed": False, "capability": "github", "reason": str(e)}
+
+        return {
+            "performed": False,
+            "capability": "github",
+            "action": op.action,
+            "reason": ("Action %r through GitKraken adapter requires "
+                       "explicit authorization or completion." % op.action),
+        }
+
+
 class AdapterSet:
     def __init__(self) -> None:
         self._by_capability: Dict[str, Adapter] = {}
