@@ -30,6 +30,9 @@ from apps.escd.runtime.mvp_data import (
     provider_status,
     set_provider_secret,
     update_provider_config,
+    create_orchestration_turn,
+    get_orchestration_turn,
+    update_orchestration_turn_action,
 )
 
 
@@ -153,6 +156,9 @@ class handler(BaseHTTPRequestHandler):
                     self._json(200, {"ok": True, "knowledge": list_knowledge()})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
+            elif path.startswith("/api/mvp/orchestrate/turn/"):
+                turn_id = path[len("/api/mvp/orchestrate/turn/"):].strip("/")
+                self._json(200, {"ok": True, "turn": get_orchestration_turn(turn_id)})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
@@ -251,6 +257,20 @@ class handler(BaseHTTPRequestHandler):
                 secret = str(payload.get("secret") or "")
                 result = set_provider_secret(provider, secret)
                 self._json(200, {"ok": True, "provider": result})
+            elif path == "/api/mvp/orchestrate":
+                prompt = str(payload.get("prompt") or "").strip()
+                provider = str(payload.get("provider") or "ollama").strip()
+                context_refs = payload.get("context_refs") or []
+                user_id = getattr(repo, "user_id", None) or "DCS-OPERATOR"
+                turn = create_orchestration_turn(prompt=prompt, provider=provider, context_refs=context_refs, user_id=user_id)
+                self._json(200, {"ok": True, "turn_id": turn["turn_id"], "turn": turn})
+            elif path.startswith("/api/mvp/orchestrate/turn/") and path.endswith("/action"):
+                parts = path.strip("/").split("/")
+                turn_id = parts[-2]
+                action = str(payload.get("action") or "").strip()
+                response_text = str(payload.get("response") or "").strip()
+                turn = update_orchestration_turn_action(turn_id, action=action, response_text=response_text)
+                self._json(200, {"ok": True, "turn": turn})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
