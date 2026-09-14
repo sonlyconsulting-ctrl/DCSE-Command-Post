@@ -19,6 +19,7 @@ from dcse.model import Operation
 
 ROOT = Path(__file__).resolve().parents[1]
 APP_HTML = ROOT / "web" / "app.html"
+MVP_HTML = ROOT / "web" / "mvp.html"
 
 
 class ESCDTestHandler(handler):
@@ -42,22 +43,23 @@ def live_server():
 
 
 def test_escd_html_dual_lane_contract():
-    html = APP_HTML.read_text(encoding="utf-8")
-    assert '<option value="ollama">Ollama</option>' in html
-    assert 'id="send"' in html
-    assert 'id="orchestrate"' in html
-    assert ">Orchestrate</button>" in html
-    assert 'id="operationStrip"' in html
-    assert 'id="stripTurn"' in html
-    assert 'id="stripStage"' in html
-    assert 'id="stripProvider"' in html
-    assert 'id="stripWorker"' in html
-    assert 'id="stripStatus"' in html
-    assert 'id="stripStop"' in html
-    assert 'id="stripContinue"' in html
-    assert "$('orchestrate').onclick=orchestrate" in html
-    assert "$('stripStop').onclick=stopTurn" in html
-    assert "$('stripContinue').onclick=continueTurn" in html
+    for target in (APP_HTML, MVP_HTML):
+        html = target.read_text(encoding="utf-8")
+        assert '<option value="ollama">Ollama</option>' in html
+        assert 'id="send"' in html
+        assert 'id="orchestrate"' in html
+        assert ">Orchestrate</button>" in html
+        assert 'id="operationStrip"' in html
+        assert 'id="stripTurn"' in html
+        assert 'id="stripStage"' in html
+        assert 'id="stripProvider"' in html
+        assert 'id="stripWorker"' in html
+        assert 'id="stripStatus"' in html
+        assert 'id="stripStop"' in html
+        assert 'id="stripContinue"' in html
+        assert "$('orchestrate').onclick=orchestrate" in html
+        assert "$('stripStop').onclick=stopTurn" in html
+        assert "$('stripContinue').onclick=continueTurn" in html
 
 
 def test_ollama_adapter_v72_contract():
