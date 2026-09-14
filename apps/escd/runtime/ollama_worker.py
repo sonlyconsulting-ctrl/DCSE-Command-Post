@@ -347,8 +347,23 @@ def _usage(raw: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def format_as_escd_document(text: str) -> str:
+    import re
+    cleaned = str(text or "").strip()
+    cleaned = re.sub(r'(\b[\w\-]+)\.md\b', r'\1', cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r'^[ \t]*#{1,6}\s*', '', cleaned, flags=re.MULTILINE)
+    cleaned = cleaned.replace('**', '')
+    cleaned = cleaned.replace('`', '')
+    cleaned = re.sub(r'\s*\([iI][dD]:\s*[0-9a-fA-F\-]{36}\)', '', cleaned)
+    lines = [line for line in cleaned.splitlines() if not re.search(r'(?:dcse|worker|model|trace|task|file|schema|profile)://', line)]
+    cleaned = '\n'.join(lines)
+    cleaned = re.sub(r'\n{3,}', '\n\n', cleaned).strip()
+    return cleaned
+
+
 def _complete(turn: dict[str, Any], content: str, *, evidence_refs: list[str],
               usage: dict[str, Any], rule_evidence: dict[str, Any] | None = None) -> None:
+    formatted_content = format_as_escd_document(content)
     _patch_turn(turn["id"], {
         "state": "RESPONDING",
         "stage": "RESPONSE",
@@ -364,9 +379,9 @@ def _complete(turn: dict[str, Any], content: str, *, evidence_refs: list[str],
         "operation_turn_key": turn.get("turn_key"),
         "rule_evidence": rule_evidence or {},
     }
-    assistant_turn = _append_assistant_turn(turn, content, metadata)
+    assistant_turn = _append_assistant_turn(turn, formatted_content, metadata)
     final = {
-        "content": content,
+        "content": formatted_content,
         "control": "COMPLETE",
         "provider": "ollama",
         "model": OLLAMA_MODEL,
@@ -424,9 +439,13 @@ def _process_conversation(turn: dict[str, Any]) -> None:
     clean.insert(0, {
         "role": "system",
         "content": (
-            "You are ESCD's local conversational inference worker. Respond naturally and directly. "
-            "This lane is conversational only: do not claim that tools, deployments, database writes, "
-            "or governed actions occurred. Return only the conversational answer."
+            "You are ESCD, the executive co-founder and operational partner to DCS. "
+            "Respond naturally, authoritatively, and directly in clear executive prose. "
+            "Structure responses as clean text document content. "
+            "Do NOT use markdown heading hashes (no #### or #####). "
+            "Do NOT use .md extensions in file or document names. "
+            "Do NOT output raw database UUIDs or internal technical schema details. "
+            "This lane is conversational: provide concise, actionable answers."
         ),
     })
 
@@ -585,9 +604,13 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         {
             "role": "system",
             "content": (
-                "Produce the ESCD answer for the user using only the supplied persisted context and rule evaluation. "
-                "Do not invent files, schemas, deployments, rule results, or external actions. "
-                "Clearly distinguish verified facts, likely interpretations, unknowns, and recommended next actions. "
+                "You are ESCD, the executive co-founder and operational partner to DCS. "
+                "Produce an executive operational response for DCS using the supplied persisted context and rule evaluation. "
+                "Format your response as a clean, professional text document or briefing memo. "
+                "Do NOT use markdown heading hashes (no #### or #####). Use clean section titles on their own line. "
+                "Do NOT include '.md' file extensions in document names (e.g. write 'Production Profile' instead of '..._PROFILE_20260911.md'). "
+                "Do NOT dump raw database UUIDs, internal schema names, or developer-only artifacts unless explicitly requested by DCS. "
+                "Focus directly on business and product status, deliverables, milestones, risks, and recommended next actions. "
                 "Return valid JSON only with keys content, facts_used, unknowns, recommendations."
             ),
         },
