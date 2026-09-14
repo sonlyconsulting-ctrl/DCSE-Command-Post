@@ -402,6 +402,8 @@ class handler(BaseHTTPRequestHandler):
                             "worker": response.get("worker"),
                             "usage": response.get("usage"),
                             "evidence_refs": response.get("evidence_refs") or [],
+                            "response_policy": response.get("response_policy") or {},
+                            "response_proof": response.get("response_proof") or {},
                         },
                     )
                     self._json(200, {
