@@ -212,50 +212,6 @@ class OllamaAdapter(Adapter):
                     "evidence_refs": [f"ollama://{self.worker}/{self.model}/{turn_id}"]
                 }
         except Exception as exc:
-            # v7.2 failure semantics: explicit FAILED or candidate fallback
-            if op.facts.get("allow_offline_sim", False):
-                p_lower = prompt.lower()
-                evidence_refs = [f"ollama-sim://{self.worker}/{turn_id}"]
-                if any(k in p_lower for k in ("vow", "ss vow", "inquiry", "zip", "347cb648")):
-                    sim_content = (
-                        f"[{self.worker} / {self.model}]: Governed candidate reasoning for Vow & Go task inquiry. "
-                        f"Target Task: SS Vow and Go (347cb648-6140-40f2-91b5-8a0639fc21e8). "
-                        f"Inquiry bounds compliant with family_vow_go schema and RULESET05 standards. Bounded check PASS."
-                    )
-                    evidence_refs.extend([
-                        "task://347cb648-6140-40f2-91b5-8a0639fc21e8",
-                        "schema://supabase/family_vow_go",
-                    ])
-                else:
-                    sim_content = (
-                        f"[{self.worker} / {self.model}]: Governed candidate reasoning "
-                        f"for entity '{op.entity}', action '{op.action}'. Bounded check PASS."
-                    )
-                p_tok = max(1, len(prompt) // 4)
-                c_tok = max(1, len(sim_content) // 4)
-                return {
-                    "control": "RETURN_TO_ORCHESTRATOR",
-                    "performed": True,
-                    "status": "SUCCESS",
-                    "provider": "ollama",
-                    "model": self.model,
-                    "worker": self.worker,
-                    "turn_id": turn_id,
-                    "confidence": 0.90,
-                    "usage": {
-                        "prompt_tokens": p_tok,
-                        "completion_tokens": c_tok,
-                        "total_tokens": p_tok + c_tok,
-                        "cost_usd": 0.0,
-                        "cost_label": "$0.0000 (Local)",
-                    },
-                    "payload": {
-                        "content": sim_content,
-                        "analysis": sim_content,
-                        "offline_simulated": True
-                    },
-                    "evidence_refs": evidence_refs
-                }
             return {
                 "control": "RETURN_TO_ORCHESTRATOR",
                 "performed": False,
@@ -266,8 +222,11 @@ class OllamaAdapter(Adapter):
                 "turn_id": turn_id,
                 "confidence": 0.0,
                 "reason": f"Ollama connection failed: {exc}",
-                "payload": {},
-                "evidence_refs": []
+                "payload": {
+                    "error": "ollama_connection_failed",
+                    "detail": str(exc)[:300],
+                },
+                "evidence_refs": [],
             }
 
 

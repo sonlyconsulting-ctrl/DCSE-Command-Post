@@ -938,6 +938,8 @@ def _synthesize_ollama_reasoning(prompt: str, model: str, worker: str) -> tuple[
 
 def chat(provider: str, messages: list[dict]) -> dict:
     provider = str(provider or "").lower().strip()
+    if provider == "ollama":
+        raise MVPServiceError("ollama_requires_durable_worker_exchange")
     cfg = provider_runtime(provider)
     if not cfg.get("enabled"):
         raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
@@ -1086,6 +1088,7 @@ def _iso_now() -> str:
 
 
 def create_orchestration_turn(*args, prompt: str = "", provider: str = "ollama", context_refs: list = None, user_id: str = "DCS-OPERATOR", **kwargs) -> dict:
+    raise MVPServiceError("legacy_in_memory_orchestration_disabled")
     if args:
         if len(args) == 1:
             prompt = args[0]
