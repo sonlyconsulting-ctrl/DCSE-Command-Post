@@ -54,11 +54,10 @@ Sign in with Google
 if (location.hash && location.hash.includes('access_token=')) {
   try {
     const params = new URLSearchParams(location.hash.replace(/^#/, ''));
-    const at = params.get('access_token');
-    if (at) {
-      sessionStorage.setItem('escd_access_token', at);
-      location.replace('/escd/app');
-    }
+    const at = params.get('access_token'), rt = params.get('refresh_token');
+    if (at) sessionStorage.setItem('escd_access_token', at);
+    if (rt) sessionStorage.setItem('escd_refresh_token', rt);
+    if (at) location.replace('/escd/app');
   } catch (_) {}
 }
 if (sessionStorage.getItem('escd_access_token')) {
@@ -92,6 +91,7 @@ document.getElementById('login').addEventListener('submit', async e => {
       throw new Error(d.error || 'sign_in_failed');
     }
     sessionStorage.setItem('escd_access_token', d.session.access_token);
+    if (d.session.refresh_token) sessionStorage.setItem('escd_refresh_token', d.session.refresh_token);
     location.replace('/escd/app');
   } catch (x) {
     err.textContent = x.message;

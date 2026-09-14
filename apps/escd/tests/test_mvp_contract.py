@@ -49,12 +49,13 @@ def test_mvp_api_reads_live_sources():
     assert "DDNA_SUPABASE_SERVICE_ROLE_KEY" in service
 
 
-def test_mvp_chat_excludes_claude():
+def test_mvp_chat_includes_claude_as_first_class_provider():
     service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
     app = APP.read_text(encoding="utf-8")
-    assert "anthropic" not in service.lower()
-    assert "claude" not in service.lower()
-    assert "claude" not in app.lower()
+    assert "anthropic" in service.lower()
+    assert "claude" in service.lower()
+    assert "claude" in app.lower()
+    assert 'value="anthropic"' in app
 
 
 def test_mvp_provider_defaults_are_current_and_errors_are_actionable():
