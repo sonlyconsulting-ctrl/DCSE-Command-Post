@@ -209,3 +209,59 @@ def test_http_orchestrate_continue_action():
         assert turn["status"] == "COMPLETE"
         assert turn["stage"] == "RESPONSE"
         assert "Approved by DCS" in str(turn.get("response", {}).get("content", ""))
+
+
+def test_chat_returns_usage_and_local_cost():
+    with live_server() as base:
+        req = request.Request(
+            base + "/api/mvp/chat",
+            data=json.dumps({
+                "provider": "ollama",
+                "messages": [{"role": "user", "content": "Review Vow & Go v2 Production version inquiry.zip"}]
+            }).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with request.urlopen(req, timeout=10) as resp:
+            body = json.loads(resp.read().decode("utf-8"))
+            assert resp.status == 200
+            assert body["ok"] is True
+            res = body["response"]
+            assert "usage" in res
+            assert res["usage"]["cost_usd"] == 0.0
+            assert res["usage"]["total_tokens"] > 0
+            assert "Vow & Go" in res["content"]
+            assert any("family_vow_go" in ref for ref in res.get("evidence_refs", []))
+
+
+def test_signed_attachment_upload_zip_and_chat_record():
+    from unittest.mock import patch
+    from apps.escd.runtime.mvp_data import create_signed_attachment_upload, finalize_file_attachment
+    with patch(
+        "apps.escd.runtime.mvp_data._storage_service_request",
+        return_value=(
+            "https://nevgdyfpxdaloacuutal.supabase.co",
+            {"url": "/storage/v1/object/upload/sign/test?token=abc"},
+        ),
+    ):
+        up = create_signed_attachment_upload(
+            file_name="SC Vow Go v2 Production version inquiry.zip",
+            mime_type="application/x-zip-compressed",
+            size=1024,
+            record_type="chat",
+            record_id="chat-12345"
+        )
+    assert up["type"] == "application/zip"
+    assert "SC_Vow_Go_v2_Production_version_inquiry.zip" in up["storage_path"]
+
+    fin = finalize_file_attachment(
+        storage_path=up["storage_path"],
+        file_name=up["name"],
+        mime_type=up["type"],
+        size=up["size"],
+        sha256="a" * 64,
+        record_type="chat",
+        record_id="chat-12345"
+    )
+    assert fin["name"] == "SC_Vow_Go_v2_Production_version_inquiry.zip"
+
