@@ -85,7 +85,7 @@ def classify_message(text: str, *, has_attachment: bool = False,
     elif clean.endswith("?"):
         category, confidence, rationale = "CHAT_ONLY", 0.88, "Question requiring a response; the question itself is not durable knowledge."
     elif operational:
-        category, confidence, rationale = "TASK", 0.86, "Explicit Orchestrate lane request with no stronger category signal."
+        category, confidence, rationale = "CHAT_ONLY", 0.84, "Governed analysis request without an explicit durable-object creation signal."
     else:
         category, confidence, rationale = "CHAT_ONLY", 0.78, "Conversational statement with insufficient evidence for automatic materialization."
 
