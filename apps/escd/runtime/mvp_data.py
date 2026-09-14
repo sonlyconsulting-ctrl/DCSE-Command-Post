@@ -12,6 +12,14 @@ import time
 from urllib import error, parse, request
 import uuid
 
+from apps.escd.runtime.response_policy import (
+    POLICY_ID,
+    RULE_IDS,
+    apply_response_policy,
+    response_proof,
+    validate_response_proof,
+)
+
 
 class MVPServiceError(RuntimeError):
     pass
@@ -805,7 +813,41 @@ def chat(provider: str, messages: list[dict]) -> dict:
     if not clean:
         raise MVPServiceError("chat_message_required")
 
-    last_prompt = clean[-1]["content"] if clean else "No query"
+    # The response policy is injected server-side so desktop/mobile clients and
+    # every remote provider receive the same truth/authority contract.
+    clean = apply_response_policy(clean, lane="conversation")
+    last_prompt = next(
+        (m["content"] for m in reversed(clean) if m.get("role") == "user"),
+        "No query",
+    )
+
+    def finalize_provider_response(*, actual_model: str, text: str, usage: dict,
+                                   raw_data: dict, worker: str, evidence_ref: str) -> dict:
+        proof = response_proof(
+            provider=provider,
+            model=actual_model,
+            request_messages=clean,
+            response_text=text,
+            provider_response_id=str((raw_data or {}).get("id") or "") or None,
+            transport="https_api",
+            worker=worker,
+        )
+        valid, problems = validate_response_proof(proof)
+        if not valid:
+            raise MVPServiceError("response_truth_proof_invalid:" + ",".join(problems))
+        return {
+            "provider": provider,
+            "model": actual_model,
+            "worker": worker,
+            "content": text,
+            "usage": usage,
+            "evidence_refs": [evidence_ref, "response-proof://" + proof["response_sha256"]],
+            "response_policy": {
+                "policy_id": POLICY_ID,
+                "rule_ids": list(RULE_IDS),
+            },
+            "response_proof": proof,
+        }
 
     try:
         if provider == "openai":
@@ -820,7 +862,15 @@ def chat(provider: str, messages: list[dict]) -> dict:
             if not text:
                 raise MVPServiceError("OpenAI returned an empty response")
             usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usage"))
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text, "usage": usage}
+            actual_model = str((data or {}).get("model") or model)
+            return finalize_provider_response(
+                actual_model=actual_model,
+                text=text,
+                usage=usage,
+                raw_data=data or {},
+                worker="api.openai.com",
+                evidence_ref=f"openai://api.openai.com/{actual_model}/responses",
+            )
 
         if provider == "gemini":
             contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in clean if m["role"] != "system"]
@@ -841,7 +891,14 @@ def chat(provider: str, messages: list[dict]) -> dict:
             if not text:
                 raise MVPServiceError("Gemini returned an empty response")
             usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usageMetadata"))
-            return {"provider": provider, "model": model, "content": text, "usage": usage}
+            return finalize_provider_response(
+                actual_model=model,
+                text=text,
+                usage=usage,
+                raw_data=data or {},
+                worker="generativelanguage.googleapis.com",
+                evidence_ref=f"gemini://generativelanguage.googleapis.com/{model}/generateContent",
+            )
 
         if provider == "openrouter":
             _, data = _http_json(
@@ -856,7 +913,15 @@ def chat(provider: str, messages: list[dict]) -> dict:
             if not text:
                 raise MVPServiceError("OpenRouter returned an empty response")
             usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usage"))
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text, "usage": usage}
+            actual_model = str((data or {}).get("model") or model)
+            return finalize_provider_response(
+                actual_model=actual_model,
+                text=text,
+                usage=usage,
+                raw_data=data or {},
+                worker="openrouter.ai",
+                evidence_ref=f"openrouter://openrouter.ai/{actual_model}/chat/completions",
+            )
 
         if provider == "anthropic":
             system_parts = []
@@ -903,14 +968,15 @@ def chat(provider: str, messages: list[dict]) -> dict:
                     "completion_tokens": raw_usage.get("output_tokens"),
                 }
             )
-            return {
-                "provider": provider,
-                "model": (data or {}).get("model") or model,
-                "worker": "api.anthropic.com",
-                "content": text,
-                "usage": usage,
-                "evidence_refs": [f"anthropic://api.anthropic.com/{model}/messages"],
-            }
+            actual_model = str((data or {}).get("model") or model)
+            return finalize_provider_response(
+                actual_model=actual_model,
+                text=text,
+                usage=usage,
+                raw_data=data or {},
+                worker="api.anthropic.com",
+                evidence_ref=f"anthropic://api.anthropic.com/{actual_model}/messages",
+            )
 
         raise MVPServiceError("unsupported_provider")
     except Exception as exc:
