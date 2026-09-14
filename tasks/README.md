@@ -16,7 +16,7 @@ python -m dcse tasks
 That prints every task, its reconciliation status, whether it is runnable, and whether it needs DCS approval.
 The arrow (`->`) marks the next runnable task. A task with unmet dependencies or non-READY reconciliation status is blocked.
 
-Open `tasks/queue/<id>.json` (or `tasks/<id>.json`). Read all of it before touching anything, particularly `scope`, `forbidden`, and `acceptance`.
+Open `tasks/queue/<id>.json`. Read all of it before touching anything, particularly `scope`, `forbidden`, and `acceptance`.
 
 ## Fields of Consequence
 
