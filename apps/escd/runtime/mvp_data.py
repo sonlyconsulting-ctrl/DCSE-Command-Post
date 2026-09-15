@@ -8,7 +8,9 @@ import os
 import re
 import socket
 from datetime import datetime, timezone
+import time
 from urllib import error, parse, request
+import uuid
 
 
 class MVPServiceError(RuntimeError):
@@ -126,17 +128,33 @@ def _fallback_config(provider: str) -> dict:
         "openai": {"provider": "openai", "enabled": True, "model": "gpt-5.6-sol", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
         "gemini": {"provider": "gemini", "enabled": True, "model": "gemini-3.8-flash", "timeout_seconds": 25, "max_output_tokens": 768, "thinking_level": "low"},
         "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+        "ollama": {"provider": "ollama", "enabled": True, "model": "qwen2.5-coder:latest", "timeout_seconds": 60, "max_output_tokens": 2048, "thinking_level": None, "worker": "DCS-WINDOWS-OLLAMA-01", "base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")},
     }
     cfg = dict(defaults.get(provider) or {})
     cfg["api_key"] = _env_secret(provider)
-    cfg["credential_source"] = "environment" if cfg["api_key"] else "none"
+    cfg["credential_source"] = "environment" if cfg["api_key"] else ("local/exchange" if provider == "ollama" else "none")
     return cfg
 
 
 def provider_runtime(provider: str) -> dict:
     provider = str(provider or "").lower().strip()
-    if provider not in {"openai", "gemini", "openrouter"}:
+    if provider not in {"openai", "gemini", "openrouter", "ollama"}:
         raise MVPServiceError("unsupported_provider")
+    if provider == "ollama":
+        try:
+            rows = _rpc("get_escd_provider_runtime", {"p_provider": provider})
+            row = rows[0] if isinstance(rows, list) and rows else (rows if isinstance(rows, dict) else None)
+        except Exception:
+            row = None
+        if not row:
+            cfg = _fallback_config("ollama")
+            cfg["registry_available"] = True
+            cfg["configured"] = True
+            return cfg
+        cfg = dict(row)
+        cfg["registry_available"] = True
+        cfg["configured"] = True
+        return cfg
     try:
         rows = _rpc("get_escd_provider_runtime", {"p_provider": provider})
         row = rows[0] if isinstance(rows, list) and rows else (rows if isinstance(rows, dict) else None)
@@ -163,15 +181,16 @@ def provider_runtime(provider: str) -> dict:
 
 def provider_status() -> dict:
     result = {}
-    for provider in ("openai", "gemini", "openrouter"):
+    for provider in ("ollama", "openai", "gemini", "openrouter"):
         try:
             cfg = provider_runtime(provider)
         except MVPServiceError as exc:
             result[provider] = {"enabled": False, "configured": False, "registry_available": False, "registry_error": str(exc), "credential_source": "none"}
             continue
         result[provider] = {
+            "provider": provider,
             "enabled": bool(cfg.get("enabled")),
-            "configured": bool(cfg.get("api_key")),
+            "configured": bool(cfg.get("api_key")) or (provider == "ollama"),
             "model": cfg.get("model"),
             "timeout_seconds": cfg.get("timeout_seconds"),
             "max_output_tokens": cfg.get("max_output_tokens"),
@@ -180,6 +199,9 @@ def provider_status() -> dict:
             "registry_available": True,
             "project_ref": cfg.get("project_ref"),
         }
+        if provider == "ollama":
+            result[provider]["worker"] = cfg.get("worker", "DCS-WINDOWS-OLLAMA-01")
+            result[provider]["exchange"] = "supabase-worker-bridge"
     return result
 
 
@@ -428,6 +450,9 @@ def create_signed_attachment_upload(
     record_id: str,
 ) -> dict:
     clean_name = re.sub(r"[^A-Za-z0-9._\-]", "_", str(file_name or "").strip() or "file")
+    clean_mime = str(mime_type or "application/octet-stream").strip()
+    if clean_name.lower().endswith(".zip") and (clean_mime in ("application/x-zip-compressed", "application/octet-stream", "") or "zip" in clean_mime):
+        clean_mime = "application/zip"
     rec_type = str(record_type or "item").strip().lower()
     rec_id = str(record_id or "").strip()
     if not rec_id:
@@ -462,7 +487,7 @@ def create_signed_attachment_upload(
         "signed_upload_url": signed_url,
         "expires_in": 7200,
         "name": clean_name,
-        "type": str(mime_type or "application/octet-stream"),
+        "type": clean_mime,
         "size": file_size,
     }
 
@@ -556,6 +581,8 @@ def finalize_file_attachment(
         marker = _ddna_attachment_marker(attachment)
         updated_notes = (existing_notes.rstrip() + "\n" + marker).strip() if existing_notes.strip() else marker
         patch_ddna_source(rec_id, {"notes": updated_notes})
+    elif rec_type in {"chat", "turn"}:
+        pass  # Client binds attachment metadata into message context / turn facts
     else:
         raise MVPServiceError("invalid_record_type")
     return attachment
@@ -672,13 +699,88 @@ def _openai_output_text(data: dict) -> str:
     return "\n".join(chunks).strip()
 
 
+def estimate_tokens_and_cost(provider: str, model: str, prompt_text: str, completion_text: str, raw_usage: dict | None = None) -> dict:
+    prov = str(provider or "").lower().strip()
+    mod = str(model or "").lower().strip()
+
+    if raw_usage and isinstance(raw_usage, dict):
+        p_tokens = int(raw_usage.get("prompt_tokens") or raw_usage.get("input_tokens") or raw_usage.get("prompt_eval_count") or 0)
+        c_tokens = int(raw_usage.get("completion_tokens") or raw_usage.get("output_tokens") or raw_usage.get("eval_count") or 0)
+    else:
+        p_tokens = max(1, len(prompt_text) // 4)
+        c_tokens = max(1, len(completion_text) // 4)
+
+    total = p_tokens + c_tokens
+
+    if prov == "ollama":
+        cost = 0.0
+        label = "$0.0000 (Local Inference - Zero API Cost)"
+    elif "gpt-4o-mini" in mod:
+        cost = (p_tokens * 0.15 + c_tokens * 0.60) / 1_000_000
+        label = f"${cost:.6f}"
+    elif "gpt-4o" in mod:
+        cost = (p_tokens * 2.50 + c_tokens * 10.00) / 1_000_000
+        label = f"${cost:.6f}"
+    elif "flash" in mod:
+        cost = (p_tokens * 0.075 + c_tokens * 0.30) / 1_000_000
+        label = f"${cost:.6f}"
+    elif "pro" in mod:
+        cost = (p_tokens * 1.25 + c_tokens * 5.00) / 1_000_000
+        label = f"${cost:.6f}"
+    else:
+        cost = (p_tokens * 0.50 + c_tokens * 1.50) / 1_000_000
+        label = f"${cost:.6f}"
+
+    return {
+        "prompt_tokens": p_tokens,
+        "completion_tokens": c_tokens,
+        "total_tokens": total,
+        "cost_usd": round(cost, 6),
+        "cost_label": label,
+        "model": model,
+        "provider": provider,
+    }
+
+
+TRACE_RECORDS: dict[str, dict] = {}
+
+
+def _save_trace(trace_id: str, record: dict) -> None:
+    TRACE_RECORDS[trace_id] = record
+    for base in [os.path.join(os.path.abspath("."), "logs", "traces"), "/tmp/traces"]:
+        try:
+            os.makedirs(base, exist_ok=True)
+            path = os.path.join(base, f"{trace_id}.json")
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(record, f, indent=2)
+            break
+        except Exception:
+            continue
+
+
+def get_trace_record(trace_id: str) -> dict | None:
+    if trace_id in TRACE_RECORDS:
+        return TRACE_RECORDS[trace_id]
+    for base in [os.path.join(os.path.abspath("."), "logs", "traces"), "/tmp/traces"]:
+        path = os.path.join(base, f"{trace_id}.json")
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+    return None
+
+
 def chat(provider: str, messages: list[dict]) -> dict:
     provider = str(provider or "").lower().strip()
+    if provider == "ollama":
+        raise MVPServiceError("ollama_requires_durable_worker_exchange")
     cfg = provider_runtime(provider)
     if not cfg.get("enabled"):
         raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
     key = str(cfg.get("api_key") or "")
-    if not key:
+    if not key and provider != "ollama":
         raise MVPServiceError(f"{provider.title()} credential is not configured. Add it in ESCD Provider Settings")
     model = str(cfg.get("model") or "").strip()
     timeout = int(cfg.get("timeout_seconds") or 30)
@@ -693,6 +795,8 @@ def chat(provider: str, messages: list[dict]) -> dict:
     if not clean:
         raise MVPServiceError("chat_message_required")
 
+    last_prompt = clean[-1]["content"] if clean else "No query"
+
     try:
         if provider == "openai":
             _, data = _http_json(
@@ -705,7 +809,8 @@ def chat(provider: str, messages: list[dict]) -> dict:
             text = _openai_output_text(data or {})
             if not text:
                 raise MVPServiceError("OpenAI returned an empty response")
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
+            usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usage"))
+            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text, "usage": usage}
 
         if provider == "gemini":
             contents = [{"role": "model" if m["role"] == "assistant" else "user", "parts": [{"text": m["content"]}]} for m in clean if m["role"] != "system"]
@@ -725,7 +830,8 @@ def chat(provider: str, messages: list[dict]) -> dict:
             text = "\n".join(str(x.get("text") or "") for x in parts if x.get("text")).strip()
             if not text:
                 raise MVPServiceError("Gemini returned an empty response")
-            return {"provider": provider, "model": model, "content": text}
+            usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usageMetadata"))
+            return {"provider": provider, "model": model, "content": text, "usage": usage}
 
         if provider == "openrouter":
             _, data = _http_json(
@@ -739,7 +845,8 @@ def chat(provider: str, messages: list[dict]) -> dict:
             text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
             if not text:
                 raise MVPServiceError("OpenRouter returned an empty response")
-            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text}
+            usage = estimate_tokens_and_cost(provider, model, last_prompt, text, (data or {}).get("usage"))
+            return {"provider": provider, "model": (data or {}).get("model") or model, "content": text, "usage": usage}
 
         raise MVPServiceError("unsupported_provider")
     except Exception as exc:
