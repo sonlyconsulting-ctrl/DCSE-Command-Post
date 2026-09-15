@@ -1,6 +1,6 @@
 # DCSE Supabase Schema, RLS, Privacy, and Agent Access Doctrine v1
 
-**Status:** CANDIDATE pending PR review  
+**Status:** OPERATIVE — DCS Level Zero approved 2026-09-15  
 **Controlling entity:** DCSE Database Security Control (DSC)  
 **Authority:** DCS / CTO; administered by the designated database owner  
 **Applies to:** developers, agents, migrations, SQL Editor changes, Edge Functions, server runtimes, Vercel/Netlify functions, local workers, REST, GraphQL, Realtime, Storage, and direct Postgres connections.
@@ -135,3 +135,8 @@ The following are required evidence gates, not optional cleanup:
 7. A RAG implementation begins with a verified schema/vector/provider/provenance/privacy/retrieval/retention baseline before ingestion.
 
 Review-only authority never implies permission to remediate, merge, deploy, promote, rotate credentials, modify configuration, or ingest production data.
+
+
+## Level Zero approval record
+
+DCS Level Zero approved this control as part of Topics 1–6 in the Supabase governance and hardening package on 2026-09-15. Ollama runtime verification, the first anti-drift workflow run, and post-merge deployment observation remain mandatory evidence gates and were not waived.
