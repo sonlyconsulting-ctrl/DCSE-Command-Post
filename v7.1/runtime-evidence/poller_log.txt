@@ -1,0 +1,761 @@
+2026-07-28 13:41:27Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:41:27Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:41:27Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:41:27Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:41:27Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:41:27Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:41:27Z  Cycle complete.
+2026-07-28 13:42:17Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:42:17Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:42:17Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:42:17Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:42:17Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:42:17Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:42:17Z  Cycle complete.
+2026-07-28 13:43:13Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:43:14Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:43:14Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:43:14Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:43:14Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:43:14Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:43:14Z  Cycle complete.
+2026-07-28 13:44:16Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:44:16Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:44:16Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:44:17Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:44:17Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:44:17Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:44:17Z  Cycle complete.
+2026-07-28 13:45:13Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:45:13Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:45:13Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:45:13Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:45:13Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:45:13Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:45:14Z  Cycle complete.
+2026-07-28 13:46:15Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:46:15Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:46:15Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:46:15Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:46:15Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:46:15Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:46:15Z  Cycle complete.
+2026-07-28 13:47:18Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:47:18Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:47:18Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:47:18Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:47:18Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:47:18Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:47:18Z  Cycle complete.
+2026-07-28 13:48:28Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:48:28Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:48:28Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:48:28Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:48:28Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:48:28Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:48:28Z  Cycle complete.
+2026-07-28 13:49:10Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:49:11Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:49:11Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:49:11Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:49:11Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:49:11Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:49:11Z  Cycle complete.
+2026-07-28 13:50:13Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:50:13Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:50:13Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:50:14Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:50:14Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:50:14Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:50:14Z  Cycle complete.
+2026-07-28 13:51:42Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:51:43Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:51:43Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:51:43Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:51:43Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:51:43Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:51:43Z  Cycle complete.
+2026-07-28 13:52:22Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:52:23Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:52:23Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:52:23Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:52:23Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:52:23Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:52:23Z  Cycle complete.
+2026-07-28 13:53:37Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:53:38Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:53:38Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:53:38Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:53:38Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:53:38Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:53:38Z  NEW ASSIGNMENT: task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728 title="Confirm permanent promotion coordinator operation" lane=SYSTEM task_type=monitor task_status=assigned
+2026-07-28 13:53:38Z  CLAIMED: task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728 assignment_id=952853ca-fb25-41dc-be56-d271c62ee5bd
+2026-07-28 13:53:44Z  ERROR calling submit_agent_result (schema=dcse_cp) : {"code":"23514","details":"Failing row contains (c7ee5c2c-5ea3-4ae3-ba96-5bbb574e0f76, V69-PROMOTION-COORDINATOR-RESPONSE-20260728, Confirm permanent promotion coordinator operation, Poll Supabase, report receipt and dispatch status, create any mi..., SYSTEM, internal, monitor, 5, awaiting_dcs_review, single, 28bf7e25-924c-47b6-aa47-b21f8b52c16f, null, null, {\"promotion_batch\": \"v69-methodology-d18-d21\"}, {}, {\"autonomous_dispatch_required\": true}, f, t, ChatGPT Navigator, null, null, 2026-07-28 16:30:17.859374+00, 2026-07-28 17:53:40.734793+00).","hint":null,"message":"new row for relation \"agent_tasks\" violates check constraint \"agent_tasks_status_check\""}
+2026-07-28 13:53:44Z  SUBMIT FAILED: task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728 response=
+2026-07-28 13:53:44Z  Cycle complete.
+2026-07-28 13:58:32Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 13:58:33Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 13:58:33Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 13:58:33Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:58:33Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 13:58:33Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 13:58:33Z  NEW ASSIGNMENT: task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728 title="Confirm permanent promotion coordinator operation" lane=SYSTEM task_type=monitor task_status=assigned
+2026-07-28 13:58:33Z  CLAIMED: task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728 assignment_id=952853ca-fb25-41dc-be56-d271c62ee5bd
+2026-07-28 14:18:36Z  TIMEOUT: claude -p exceeded 20 min for task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728, killing.
+2026-07-28 14:18:39Z  SUBMITTED (blocked/timeout): task_key=V69-PROMOTION-COORDINATOR-RESPONSE-20260728
+2026-07-28 14:18:40Z  Cycle complete.
+2026-07-28 14:26:38Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:26:39Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:26:39Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:26:40Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:26:40Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:26:40Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:26:40Z  Cycle complete.
+2026-07-28 14:27:39Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:27:39Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:27:39Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:27:39Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:27:39Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:27:39Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:27:39Z  Cycle complete.
+2026-07-28 14:29:27Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:29:32Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:29:32Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:29:32Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:29:35Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:30:13Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:30:23Z  Cycle complete.
+2026-07-28 14:34:13Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:34:19Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:34:19Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:34:19Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:34:19Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:34:20Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:34:20Z  Cycle complete.
+2026-07-28 14:35:31Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:35:31Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:35:31Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:35:32Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:35:32Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:35:32Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:35:32Z  Cycle complete.
+2026-07-28 14:37:37Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:37:39Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:37:39Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:37:39Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:37:39Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:37:40Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:37:40Z  Cycle complete.
+2026-07-28 14:42:50Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:42:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:42:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:42:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:42:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:42:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:42:51Z  Cycle complete.
+2026-07-28 14:49:37Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 14:49:37Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 14:49:37Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 14:49:37Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:49:37Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 14:49:37Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 14:49:37Z  Cycle complete.
+2026-07-28 15:01:32Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:01:33Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:01:33Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:01:33Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:01:33Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:01:34Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:01:39Z  Cycle complete.
+2026-07-28 15:02:18Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:02:20Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:02:21Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:02:21Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:02:21Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:02:21Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:02:27Z  Cycle complete.
+2026-07-28 15:04:30Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:04:31Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:04:31Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:04:31Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:04:31Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:04:31Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:04:31Z  Cycle complete.
+2026-07-28 15:33:59Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:34:01Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:34:01Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:34:01Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:34:01Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:34:01Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:34:02Z  Cycle complete.
+2026-07-28 15:34:14Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:34:15Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:34:15Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:34:15Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:34:15Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:34:15Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:34:15Z  Cycle complete.
+2026-07-28 15:35:56Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:35:57Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:35:57Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:35:57Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:35:57Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:35:57Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:35:57Z  Cycle complete.
+2026-07-28 15:37:22Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:37:22Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:37:22Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:37:22Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:37:22Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:37:22Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:37:22Z  Cycle complete.
+2026-07-28 15:39:01Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:39:01Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:39:01Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:39:01Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:39:01Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:39:02Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:39:02Z  Cycle complete.
+2026-07-28 15:39:56Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:39:56Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:39:56Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:39:56Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:39:56Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:39:56Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:39:56Z  Cycle complete.
+2026-07-28 15:43:47Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:43:47Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:43:47Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:43:47Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:43:47Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:43:47Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:43:47Z  Cycle complete.
+2026-07-28 15:45:26Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:45:26Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:45:26Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:45:26Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:45:26Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:45:26Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:45:26Z  Cycle complete.
+2026-07-28 15:52:02Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:52:03Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:52:03Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:52:03Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:52:03Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:52:03Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:52:03Z  Cycle complete.
+2026-07-28 15:53:54Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:53:55Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:53:55Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:53:56Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:53:56Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:53:56Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:53:56Z  Cycle complete.
+2026-07-28 15:56:58Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 15:56:58Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 15:56:58Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 15:56:58Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:56:58Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 15:56:59Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 15:56:59Z  Cycle complete.
+2026-07-28 16:00:18Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:00:18Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:00:18Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:00:18Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:00:18Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:00:19Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:00:19Z  Cycle complete.
+2026-07-28 16:01:39Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:01:40Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:01:40Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:01:40Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:01:40Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:01:40Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:01:40Z  Cycle complete.
+2026-07-28 16:01:52Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:01:52Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:01:52Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:01:52Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:01:52Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:01:52Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:01:52Z  Cycle complete.
+2026-07-28 16:03:06Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:03:06Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:03:06Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:03:07Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:03:07Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:03:07Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:03:08Z  Cycle complete.
+2026-07-28 16:03:55Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:03:56Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:03:56Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:03:56Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:03:56Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:03:56Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:03:56Z  Cycle complete.
+2026-07-28 16:05:37Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:05:37Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:05:37Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:05:37Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:05:37Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:05:37Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:05:37Z  Cycle complete.
+2026-07-28 16:06:01Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:06:01Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:06:01Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:06:02Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:06:02Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:06:02Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:06:02Z  Cycle complete.
+2026-07-28 16:06:52Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:06:52Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:06:52Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:06:52Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:06:52Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:06:52Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:06:52Z  Cycle complete.
+2026-07-28 16:07:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:07:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:07:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:07:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:07:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:07:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:07:53Z  Cycle complete.
+2026-07-28 16:08:52Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:08:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:08:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:08:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:08:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:08:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:08:53Z  Cycle complete.
+2026-07-28 16:09:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:09:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:09:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:09:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:09:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:09:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:09:53Z  Cycle complete.
+2026-07-28 16:10:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:10:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:10:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:10:54Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:10:54Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:10:54Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:10:54Z  Cycle complete.
+2026-07-28 16:11:54Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:11:54Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:11:54Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:11:54Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:11:54Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:11:54Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:11:54Z  Cycle complete.
+2026-07-28 16:12:49Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:12:49Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:12:49Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:12:49Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:12:49Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:12:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:12:50Z  Cycle complete.
+2026-07-28 16:19:46Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:19:48Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:19:48Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:19:48Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:19:48Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:19:48Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:19:48Z  Cycle complete.
+2026-07-28 16:20:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:20:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:20:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:20:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:20:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:20:54Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:20:54Z  Cycle complete.
+2026-07-28 16:21:49Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:21:49Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:21:49Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:21:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:21:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:21:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:21:50Z  Cycle complete.
+2026-07-28 16:22:49Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:22:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:22:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:22:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:22:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:22:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:22:50Z  Cycle complete.
+2026-07-28 16:23:50Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:23:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:23:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:23:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:23:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:23:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:23:50Z  Cycle complete.
+2026-07-28 16:24:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:24:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:24:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:24:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:24:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:24:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:24:51Z  Cycle complete.
+2026-07-28 16:25:49Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:25:49Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:25:49Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:25:49Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:25:49Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:25:49Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:25:49Z  Cycle complete.
+2026-07-28 16:26:49Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:26:49Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:26:49Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:26:49Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:26:49Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:26:49Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:26:49Z  Cycle complete.
+2026-07-28 16:27:50Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:27:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:27:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:27:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:27:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:27:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:27:50Z  Cycle complete.
+2026-07-28 16:29:54Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:29:55Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:29:55Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:29:55Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:29:55Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:29:55Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:29:55Z  Cycle complete.
+2026-07-28 16:30:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:30:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:30:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:30:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:30:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:30:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:30:53Z  Cycle complete.
+2026-07-28 16:31:55Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:31:55Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:31:55Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:31:55Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:31:55Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:31:55Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:31:55Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:31:55Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:31:55Z  Cycle complete.
+2026-07-28 16:33:04Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:33:04Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:33:04Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:33:04Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:04Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:33:04Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:04Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:33:05Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:05Z  Cycle complete.
+2026-07-28 16:33:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:33:52Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:33:52Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:33:52Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:52Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:33:52Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:52Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:33:52Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:33:52Z  Cycle complete.
+2026-07-28 16:34:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:34:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:34:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:34:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:34:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:34:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:34:51Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:34:51Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:34:51Z  Cycle complete.
+2026-07-28 16:35:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:35:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:35:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:35:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:35:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:35:52Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:35:52Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:35:52Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:35:52Z  Cycle complete.
+2026-07-28 16:36:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:36:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:36:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:36:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:36:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:36:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:36:51Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:36:52Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:36:52Z  Cycle complete.
+2026-07-28 16:37:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:37:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:37:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:37:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:37:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:37:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:37:53Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:37:53Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:37:53Z  Cycle complete.
+2026-07-28 16:38:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:38:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:38:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:38:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:38:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:38:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:38:51Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:38:51Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:38:51Z  Cycle complete.
+2026-07-28 16:39:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:39:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:39:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:39:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:39:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:39:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:39:51Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:39:51Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:39:51Z  Cycle complete.
+2026-07-28 16:40:50Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:40:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:40:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:40:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:40:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:40:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:40:50Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:40:50Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:40:50Z  Cycle complete.
+2026-07-28 16:42:57Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:42:59Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:42:59Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:42:59Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:42:59Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:43:00Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:43:00Z  NEW ASSIGNMENT: task_key=DCSE-V7-PROMOTION-REPAIR-001 title="Repair v7 promotion blockers and return promotion-ready evidence" lane=SYSTEM task_type=build task_status=assigned
+2026-07-28 16:43:01Z  BLOCKED: task_key=DCSE-V7-PROMOTION-REPAIR-001 -- task_key not in temporary validation allowlist
+2026-07-28 16:43:02Z  Cycle complete.
+2026-07-28 16:44:03Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:44:03Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:44:03Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:44:03Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:44:03Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:44:04Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:44:04Z  Cycle complete.
+2026-07-28 16:44:55Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:44:56Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:44:56Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:44:56Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:44:56Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:44:56Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:44:56Z  Cycle complete.
+2026-07-28 16:45:52Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:45:52Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:45:52Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:45:52Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:45:52Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:45:52Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:45:52Z  Cycle complete.
+2026-07-28 16:46:50Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:46:50Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:46:50Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:46:50Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:46:50Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:46:50Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:46:50Z  Cycle complete.
+2026-07-28 16:49:01Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:49:02Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:49:02Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:49:02Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:49:02Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:49:02Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:49:02Z  Cycle complete.
+2026-07-28 16:50:27Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:50:28Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:50:28Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:50:28Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:50:28Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:50:29Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:50:29Z  Cycle complete.
+2026-07-28 16:51:22Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:51:23Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:51:23Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:51:23Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:51:23Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:51:23Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:51:23Z  Cycle complete.
+2026-07-28 16:52:01Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:52:01Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:52:01Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:52:01Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:52:01Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:52:01Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:52:01Z  Cycle complete.
+2026-07-28 16:52:56Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:52:58Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:52:58Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:52:58Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:52:58Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:52:58Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:52:58Z  Cycle complete.
+2026-07-28 16:55:38Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:55:42Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:55:42Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:55:42Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:55:42Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:55:42Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:55:48Z  Cycle complete.
+2026-07-28 16:57:02Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:57:02Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:57:02Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:57:02Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:57:02Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:57:02Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:57:02Z  Cycle complete.
+2026-07-28 16:57:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 16:57:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 16:57:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 16:57:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:57:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 16:57:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 16:57:53Z  Cycle complete.
+2026-07-28 17:00:00Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:00:00Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:00:00Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:00:00Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:00:00Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:00:00Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:00:01Z  Cycle complete.
+2026-07-28 17:00:59Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:01:00Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:01:00Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:01:00Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:01:00Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:01:00Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:01:00Z  Cycle complete.
+2026-07-28 17:02:09Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:02:09Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:02:09Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:02:09Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:02:09Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:02:09Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:02:10Z  Cycle complete.
+2026-07-28 17:03:02Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:03:03Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:03:03Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:03:03Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:03:03Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:03:03Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:03:03Z  Cycle complete.
+2026-07-28 17:06:03Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:06:03Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:06:03Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:06:04Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:06:04Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:06:04Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:06:04Z  Cycle complete.
+2026-07-28 17:08:09Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:08:11Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:08:11Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:08:11Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:08:11Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:08:11Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:08:11Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:08:11Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:08:12Z  Cycle complete.
+2026-07-28 17:09:24Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:09:24Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:09:24Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:09:24Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:24Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:09:24Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:24Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:09:24Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:24Z  Cycle complete.
+2026-07-28 17:09:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:09:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:09:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:09:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:09:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:53Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:09:53Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:09:53Z  Cycle complete.
+2026-07-28 17:10:53Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:10:53Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:10:53Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:10:53Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:10:53Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:10:53Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:10:53Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:10:53Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:10:53Z  Cycle complete.
+2026-07-28 17:11:57Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:11:58Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:11:58Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:11:58Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:11:58Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:11:58Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:11:58Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:11:58Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:11:58Z  Cycle complete.
+2026-07-28 17:12:51Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:12:51Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:12:51Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:12:51Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:12:51Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:12:51Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:12:51Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:12:52Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:12:52Z  Cycle complete.
+2026-07-28 17:14:11Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:14:11Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:14:11Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:14:12Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:14:12Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:14:12Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:14:12Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:14:12Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:14:12Z  Cycle complete.
+2026-07-28 17:15:05Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:15:06Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:15:06Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:15:06Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:15:06Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:15:06Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:15:06Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:15:06Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:15:07Z  Cycle complete.
+2026-07-28 17:16:27Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:16:28Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:16:28Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:16:28Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:16:28Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:16:28Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:16:28Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:16:28Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:16:28Z  Cycle complete.
+2026-07-28 17:20:15Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:20:16Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:20:16Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:20:16Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:20:16Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:20:16Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:20:16Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:20:16Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:20:16Z  Cycle complete.
+2026-07-28 17:22:26Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:22:26Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:22:26Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:22:26Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:22:26Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:22:26Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:22:26Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:22:26Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:22:26Z  Cycle complete.
+2026-07-28 17:23:10Z  NEW ASSIGNMENT: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 title="SC Hero Line DDNA Synthesis" lane=SC task_type=synthesis task_status=running
+2026-07-28 17:23:10Z  BLOCKED: task_key=MVT011_SC_HERO_LINE_DDNA_20260714 -- task_key not in temporary validation allowlist; dcs_decision_required=true - requires DCS Level 0, not an autonomous action
+2026-07-28 17:23:10Z  NEW ASSIGNMENT: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 title="CP Runtime Health, Local Model Maintenance, and Multi-Model Orchestration" lane=SYSTEM task_type=build task_status=running
+2026-07-28 17:23:10Z  BLOCKED: task_key=MVT014_LOCAL_HERMES_RUNTIME_REMEDIATION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:23:10Z  NEW ASSIGNMENT: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 title="TSL July 18 MVP Reconstruction and Realtime Member Platform" lane=TSL task_type=build task_status=running
+2026-07-28 17:23:10Z  BLOCKED: task_key=MVT013_TSL_MVP_RECONSTRUCTION_20260714 -- task_key not in temporary validation allowlist
+2026-07-28 17:23:10Z  NEW ASSIGNMENT: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 title="Resolve staging target and complete v7 promotion validation" lane=SYSTEM task_type=review task_status=assigned
+2026-07-28 17:23:10Z  BLOCKED: task_key=DCSE-V7-STAGING-TARGET-RESOLUTION-001 -- task_key not in temporary validation allowlist
+2026-07-28 17:23:10Z  Cycle complete.

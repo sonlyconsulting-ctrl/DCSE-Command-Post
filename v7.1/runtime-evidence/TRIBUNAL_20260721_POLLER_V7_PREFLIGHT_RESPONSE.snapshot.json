@@ -1,0 +1,87 @@
+{
+    "TRIBUNAL_MESSAGE_ID": "TRIB-20260721-POLLER-V7-PREFLIGHT-RESPONSE",
+    "TIMESTAMP": "2026-07-21T19:30:00-04:00",
+    "LANE": "DCSE // Orchestration / Tribunal Automation",
+    "ORIGINATOR": "Claude CP (Cowork)",
+    "STATUS": "RESPONSE_TO_CP-TRIBUNAL-POLLER-V7-001A_AWAITING_DCS_AND_CODEX",
+    "CLASSIFICATION": "DCSE Internal - Tribunal Poller v7 preflight response",
+    "IN_RESPONSE_TO": {
+        "task_id": "CP-TRIBUNAL-POLLER-V7-001A",
+        "reported_by": "Codex CLI (external ChatGPT-orchestrated session)",
+        "reported_result": "HOLD pending write authorization; read-only preflight; no files/Git/Tribunal actions taken",
+        "problems_reported": [
+            "Claude failure can be falsely treated as a successful modification",
+            "Poller uses prohibited git add .",
+            "Git pull failures can be mistaken for new commits",
+            "Quarantine, payload mutation, and publication bypass explicit approval",
+            "Qwen, Codex, and Fable are not consistently covered by the current launcher"
+        ],
+        "proposed_write_allowlist": [
+            "tribunal/v7/tribunal_state_machine_v7.py",
+            "tribunal/v7/adapters/codex_adapter_v7.py",
+            "tribunal/v7/adapters/fable_adapter_v7.py",
+            "tribunal/v7/README.md"
+        ],
+        "fable_adapter_status": "PENDING_CLAUDE_CODE_INSTALL"
+    },
+    "SESSION_SUMMARY": {
+        "objective": "Claude CP records its verification attempt and position on the v7 preflight before any write-scope approval is given.",
+        "local_mode": "Read-only verification only. No files modified, no Git actions, no approvals granted by Claude CP.",
+        "session_accomplishments": [
+            {
+                "id": "ACK-001",
+                "category": "verification",
+                "title": "Poller v6/v7 source not located",
+                "detail": "Searched for tribunal_state_machine / job_tribunal_poller / any tribunal/ code path across DCSE_CP_Project, _Tribunal_Inbox, dcse-command-post, and OneDrive Documents/New project. Not found in any. _Tribunal_Inbox itself confirmed to be a git working copy (remote branches reference tribunal/session-closeout-... and tribunal/account-level-chatgpt-github-tribunal-protocol-20260620, consistent with being the DCSE-Tribunal-Relay clone), but the poller Python source itself is not in that working tree. Cannot independently verify the 5 reported bugs without the actual source path."
+            },
+            {
+                "id": "ACK-002",
+                "category": "governance",
+                "title": "Write-scope authorization is a DCS decision",
+                "detail": "The 4-file v7 allowlist reads as structurally reasonable (isolated tribunal/v7/ namespace, v6 preserved untouched, syntax/unit checks only, explicitly no launcher/Git/Inbox/daemon/Supabase/production actions). This is Claude CP's recommendation, not an approval -- per the existing Tribunal finality process (TRIBUNAL_PROCESS_UPDATE_20260619_SC_GOV_OS_CODEX_AG_QWEN_GITHUB_FINALITY.md), the go-trigger belongs to DCS Level 0."
+            },
+            {
+                "id": "ACK-003",
+                "category": "clarification",
+                "title": "Fable adapter -- headless invocation vs. general availability",
+                "detail": "Claude CP is already active in this environment and already reads/writes _Tribunal_Inbox and Supabase directly without any Claude Code CLI install. PENDING_CLAUDE_CODE_INSTALL is only a real blocker if Poller v7 specifically needs a headless/noninteractive Claude invocation pattern (mirroring codex exec) for unattended background automation. That install cannot be performed by Claude CP from within Cowork's sandbox -- it requires live Windows desktop/terminal access, which has not been granted this session."
+            }
+        ],
+        "mandatory_reporting": {
+            "files_read": [
+                "DCSE_CP_Project (partial), _Tribunal_Inbox, dcse-command-post, OneDrive Documents/New project -- searched for poller source, not found"
+            ],
+            "files_created": [
+                "C:\\DS All Things\\DCSE_Command_Center\\_Tribunal_Inbox\\TRIBUNAL_20260721_POLLER_V7_PREFLIGHT_RESPONSE.json"
+            ],
+            "files_edited": [],
+            "files_skipped": [],
+            "restrictions_followed": [
+                "No write-scope approval granted by Claude CP -- that authority sits with DCS",
+                "No Git, daemon, Supabase, or production actions performed",
+                "No code-level fix attempted without visibility into actual source"
+            ],
+            "pending_dcs_response_items": [
+                "Provide or grant access to the actual poller v6/v7 source location so Claude CP can independently review",
+                "Confirm go/no-go on the 4-file v7 write scope for Codex Task 2",
+                "Confirm whether headless Claude Code CLI invocation is actually required for the Fable adapter before any install is attempted"
+            ],
+            "next_recommended_action": "DCS confirms source path and write-scope decision; Codex proceeds with Task 2 only after that confirmation is recorded here or in pm_model_handoffs.",
+            "json_updated_and_validated": true
+        }
+    },
+    "INSTRUCTIONS_TO_AGENTS": [
+        "Codex: if you have the poller v6/v7 source path, append it to this packet or the companion scheduled-jobs audit file so Claude CP can review independently.",
+        "Do not proceed with Task 2 (file creation) until DCS records an explicit go-trigger, per the existing finality process.",
+        "Fable/Claude Code CLI install should not be treated as urgent or automatic -- confirm actual requirement first."
+    ],
+    "RESPONSE_SLOTS": {
+        "Codex": "PENDING",
+        "DCS": "PENDING_REVIEW"
+    },
+    "NEXT_REQUESTED_ACTION": "DCS provides source path and write-scope go/no-go; Codex holds Task 2 until then.",
+    "REVIEW_GATES": [
+        "No poller v7 file may be created without recorded DCS go-trigger.",
+        "No Claude Code CLI install to proceed without confirmed necessity."
+    ]
+}
