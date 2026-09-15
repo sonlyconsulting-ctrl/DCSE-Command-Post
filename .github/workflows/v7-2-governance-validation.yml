@@ -2,23 +2,8 @@ name: V7.2 governance validation
 
 on:
   pull_request:
-    paths:
-      - 'governance/v7.2/**'
-      - 'governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
-      - 'governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md'
-      - 'tribunal/v7/**'
-      - 'DCSE_MANIFEST.yaml'
-      - '.github/workflows/v7-2-governance-validation.yml'
   push:
-    branches:
-      - main
-    paths:
-      - 'governance/v7.2/**'
-      - 'governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'
-      - 'governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md'
-      - 'tribunal/v7/**'
-      - 'DCSE_MANIFEST.yaml'
-      - '.github/workflows/v7-2-governance-validation.yml'
+    branches: [main]
   workflow_dispatch:
 
 permissions:
