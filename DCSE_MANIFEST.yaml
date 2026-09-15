@@ -350,3 +350,17 @@ promotion_gate:
   controller_designation_commit: "f72c3288f301d38dc8184d2bbd55c6ef17eae670"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"
+
+platform_governance_packages:
+  vercel:
+    package_id: "DCSE-V72-VERCEL-GOVERNANCE-PACKAGE-20260915"
+    status: "OPERATIVE"
+    authority: "DCS_LEVEL_0"
+    operative_designation: "governance/v7.2/platforms/vercel/DCSE_VERCEL_GOVERNANCE_PACKAGE_OPERATIVE_DESIGNATION_20260915.md"
+    doctrine: "governance/v7.2/platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md"
+    operations_manual: "docs/vercel/DCSE_VERCEL_HUMAN_AGENT_OPERATIONS_MANUAL_v1.md"
+    annotated_source: "docs/vercel/DCSE_Vercel_Masterclass_Annotated_Source_20260915.md"
+    control_matrix: "governance/v7.2/platforms/vercel/DCSE_VERCEL_CONTROL_MATRIX_v1.json"
+    promotion_rollback_checklist: "governance/v7.2/platforms/vercel/DCSE_VERCEL_PROMOTION_ROLLBACK_CHECKLIST_v1.md"
+    promotion_receipt: "tribunal/v7/DCSE_VERCEL_GOVERNANCE_PACKAGE_PROMOTION_RECEIPT_20260915.md"
+    scope_boundary: "Vercel governance only; no Vercel production deployment and no Supabase remediation authorized by package promotion."
