@@ -1,6 +1,6 @@
 # DCSE Supabase Controlled Setup and Verification Manual v1
 
-**Status:** CANDIDATE
+**Status:** OPERATIVE — DCS Level Zero approved 2026-09-15
 **Controlling entity:** DCSE Database Security Control (DSC)
 **Task source:** DCSE-SUPABASE-REVIEW-VERIFY-20260915-002
 **Applies to:** new Supabase projects, schemas, tables, views, functions, RLS, agents, local workers, and RAG stores.
@@ -72,3 +72,8 @@ Stop and escalate on unknown consumer credentials, service keys in model/browser
 ## 7. Exit
 
 Setup is complete only when the intended consumer succeeds, denied roles fail, advisors introduce no unaccepted security finding, GitHub matches live history, and the evidence packet and Handoff ID are recorded.
+
+
+## Level Zero approval record
+
+DCS Level Zero approved this control as part of Topics 1–6 in the Supabase governance and hardening package on 2026-09-15. Ollama runtime verification, the first anti-drift workflow run, and post-merge deployment observation remain mandatory evidence gates and were not waived.
