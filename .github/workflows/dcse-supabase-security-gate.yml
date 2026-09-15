@@ -1,0 +1,62 @@
+name: DCSE Supabase Security Gate
+
+on:
+  pull_request:
+    branches: [main, integration, staging]
+    paths:
+      - "supabase/**/*.sql"
+      - "scripts/ci/validate_supabase_security.py"
+      - ".github/workflows/dcse-supabase-security-gate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-security-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  anti-drift:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve changed migrations
+        id: changed
+        shell: bash
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ]; then base="HEAD^"; fi
+          git diff --diff-filter=ACMR --name-only "$base" HEAD -- 'supabase/**/*.sql' > /tmp/dcse-sql-files.txt
+          sed 's/^/file: /' /tmp/dcse-sql-files.txt
+
+      - name: Static migration security gate
+        shell: bash
+        run: |
+          mapfile -t files < /tmp/dcse-sql-files.txt
+          python3 scripts/ci/validate_supabase_security.py "${files[@]}"
+
+      - name: Compile validator
+        run: python3 -m py_compile scripts/ci/validate_supabase_security.py
+
+  local-database-proof:
+    if: ${{ hashFiles('supabase/config.toml') != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start pinned local Supabase
+        run: npx --yes supabase@2.81.3 start
+      - name: Reset and apply migrations
+        run: npx --yes supabase@2.81.3 db reset --local
+      - name: Run database tests
+        run: npx --yes supabase@2.81.3 test db
+      - name: Run database linter
+        run: npx --yes supabase@2.81.3 db lint --local --level warning
+      - name: Stop local Supabase
+        if: always()
+        run: npx --yes supabase@2.81.3 stop --no-backup
