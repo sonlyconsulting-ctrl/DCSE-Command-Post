@@ -79,16 +79,22 @@ Record:
 
 PS access is denied unless separately and expressly authorized.
 
-### Gate B: GitHub bootstrap
+### Gate B: GitHub bootstrap and authority load
 
-1. Resolve repository by exact full name.
-2. Verify authentication.
-3. Verify repository visibility and permissions.
-4. Verify default branch.
-5. Verify canonical v7.2 branch.
-6. Verify PR #29.
-7. Verify required governance files.
-8. If operating locally, verify `git remote -v`, fetched refs, current branch, current commit, and shallow or grafted history.
+1. Resolve `sonlyconsulting-ctrl/DCSE-Command-Post` by exact full name.
+2. Verify authentication, repository visibility, permissions, and `main`.
+3. **Read the Master Profile first:** `governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`.
+4. Verify the operative designation and authority synchronization record.
+5. Read `governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md`.
+6. Read the Doctrine Index and this onboarding/access standard.
+7. Route source/persistence through D22 and task doctrine through D21.
+8. Load D03 only when model/agent orchestration is involved.
+9. Load stop-gates and applicable platform controls.
+10. Resolve the designated product/project repository and its `DCSE_PROJECT_MANIFEST.yaml` or equivalent.
+11. Load the exact Task ID/work order, source files, and asset manifest.
+12. If operating locally, verify `git remote -v`, fetched refs, current branch, current commit, and shallow or grafted history.
+
+Historical PR numbers are evidence only and are not startup dependencies.
 
 ### Gate C: Supabase bootstrap
 
@@ -125,7 +131,10 @@ LANE: <authorized lane>
 GITHUB AUTHENTICATED: YES/NO
 REPOSITORY VERIFIED: YES/NO
 CANONICAL BRANCH VERIFIED: YES/NO
-PR #29 VERIFIED: YES/NO
+MASTER PROFILE VERIFIED: YES/NO
+PARTICIPANT NAVIGATION VERIFIED: YES/NO
+PROJECT REPOSITORY VERIFIED: YES/NO/NOT YET ROUTED
+PROJECT MANIFEST VERIFIED: YES/NO/NOT APPLICABLE
 DCSE-DDNA VERIFIED: YES/NO/NOT APPLICABLE
 SC-COMMAND-POST VERIFIED: YES/NO/NOT APPLICABLE
 LOCAL WORKSPACE: CONNECTED/LOCAL-ONLY/NOT USED
@@ -158,33 +167,34 @@ Prohibited:
 Every governed task compiler, relay, or orchestrator should attach this packet:
 
 ```yaml
-participant_contract: DCSE_V7_1_UNIVERSAL_AGENT_ONBOARDING
-repository: sonlyconsulting-ctrl/DCSE-Command-Post
-canonical_branch: governance/v7.2-owned-product-harness
-canonical_pr: 29
+participant_contract: DCSE_V7_2_UNIVERSAL_AGENT_ONBOARDING
+governance_repository: sonlyconsulting-ctrl/DCSE-Command-Post
+canonical_branch: main
+master_profile: governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md
+participant_navigation: governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md
 governance_path: governance/v7.2/
+project_repository: RESOLVE_FROM_TASK
+project_manifest: DCSE_PROJECT_MANIFEST.yaml
 supabase:
   governance:
     name: DCSE-DDNA
     project_id: uutpzaiqymyufljdgdaa
-    access_priority: governance_first
   operations:
     name: SC-Command-Post
     project_id: nevgdyfpxdaloacuutal
-    access_priority: operations_first
 required_access:
   github_authenticated: true
   supabase_mcp_or_control_plane: true
   service_role_to_model: false
 required_checks:
-  - repository_metadata
-  - branches
-  - pull_requests
-  - issues
-  - files
-  - governance_registry
-  - operations_registry
-negative_finding_policy: scoped_only
+  - master_profile_first
+  - operative_designation
+  - participant_navigation
+  - doctrine_router
+  - project_repository
+  - project_manifest
+  - active_task
+  - asset_manifest_when_applicable
 startup_ack_required: true
 ```
 
@@ -245,13 +255,14 @@ A participant is onboarding-complete only when:
 
 1. identity, role, lane, and confidentiality are recorded;
 2. authenticated GitHub is verified;
-3. the canonical branch and PR are verified;
-4. the applicable Supabase projects are verified through approved access;
-5. one safe read succeeds on each applicable project;
-6. the startup acknowledgment is recorded;
-7. no secret is exposed;
-8. negative findings are scoped;
-9. the participant accepts DCS promotion authority and Stop-Gates.
+3. the Master Profile, navigation standard, and canonical branch are verified;
+4. the designated project repository and project manifest are verified when the task has reached project execution;
+5. the applicable Supabase projects are verified through approved access;
+6. one safe read succeeds on each applicable Supabase project;
+7. the startup acknowledgment is recorded;
+8. no secret is exposed;
+9. negative findings are scoped;
+10. the participant accepts DCS promotion authority and Stop-Gates.
 
 ## 11. Current status
 

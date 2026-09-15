@@ -1,6 +1,6 @@
 # DCSE v7.2 Governance - START HERE
 
-**Purpose:** Single front door for the operative v7.2 governance package.  
+**Purpose:** Navigation front door used only after the Master Profile. The Master Profile v7.2 is the mandatory first authoritative document for every participant.  
 **Controller:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`  
 **Doctrine Root:** `doctrines/`  
 **Doctrine Set:** D01 through D22  
@@ -9,13 +9,18 @@
 
 ## Startup Route
 
-1. Read the operative R5 Master Profile.
-2. Read the v7.2 Doctrine Index.
-3. Use D22 to verify canonical source identity and distribution state.
-4. Use D21 to classify the task and load only the required doctrine subset.
-5. Load D03 for model/agent orchestration when delegation or model routing is involved.
-6. Apply onboarding, stop-gates, project instructions, and task-specific methods as routed.
-7. Record DCL/evidence and closeout under D21/D04.
+**Mandatory first read:** `DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md`
+
+1. Read the Master Profile v7.2 as Navigator/Conductor.
+2. Verify its operative designation and authority synchronization record.
+3. Read `DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md`.
+4. Read the v7.2 Doctrine Index and Universal Agent Onboarding/Access Standard.
+5. Use D22 to verify canonical source identity, persistence, and distribution state.
+6. Use D21 to classify the task and load only the required doctrine subset.
+7. Load D03 for model/agent orchestration when delegation or model routing is involved.
+8. Apply stop-gates, platform controls, project instructions, and task-specific methods as routed.
+9. Move to the designated product/project repository, resolve its project manifest, then load the exact task files and asset manifest.
+10. Record DCL/evidence and closeout under D21/D04.
 
 No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its controlling doctrine. Historical folders remain lineage/evidence only.
 
@@ -50,6 +55,8 @@ No ordinary v7.2 task should need to search v7.1 or v6.9 folders to locate its c
 
 ## Required Associated Controls
 
+- `DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md`
+- `templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md`
 - `DCSE_MANIFEST.yaml` at repository root
 - `registry/DCSE_Doctrine_Index_v7-2.md`
 - `UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md`

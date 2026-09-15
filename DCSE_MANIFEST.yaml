@@ -3,13 +3,16 @@ dcse:
   package_status: "OPERATIVE"
   activation_merge_commit: "b4303bdf9f703b468808711a9dedf746e9c17649"
   principle: "Structure Precedes Scale."
-  front_door: "governance/v7.2/00_START_HERE.md"
+  front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  navigation_after_master: "governance/v7.2/00_START_HERE.md"
+  participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
   doctrine_root: "governance/v7.2/doctrines/"
   complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
   compatibility_mirror: "governance/v7.2/source/"
   constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
   doctrine_index: "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   bounded_independent_authority: "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
@@ -30,7 +33,9 @@ canonical:
     repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
     authority_branch: "main"
     governance_path: "governance/v7.2/"
-    front_door: "governance/v7.2/00_START_HERE.md"
+    front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+    navigation_after_master: "governance/v7.2/00_START_HERE.md"
+    participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
     doctrine_root: "governance/v7.2/doctrines/"
     complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
     controller_path: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
@@ -56,22 +61,22 @@ canonical:
       role: "operational state registry"
 
 mandatory_entry_sequence:
-  - "governance/v7.2/00_START_HERE.md"
-  - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   - "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   - "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  - "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
+  - "governance/v7.2/00_START_HERE.md"
   - "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
+  - "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md"
   - "governance/v7.2/dcs_express_directives.v7.2.json"
-  - "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
   - "governance/v7.2/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
   - "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md"
-  - "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"
-  - "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md"
-  - "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
-  - "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md"
-  - "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md"
+  - "governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md when orchestration applies"
+  - "governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md"
+  - "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md as applicable"
   - "task-routed doctrines selected by D21 and the operative controller"
-  - "applicable assignment or instruction"
+  - "designated project repository and DCSE_PROJECT_MANIFEST.yaml"
+  - "applicable task/work-order files and asset manifest"
 
 authority_routes:
   final_human_authority: "DCS Level 0"
@@ -125,9 +130,10 @@ zones:
 startup_sequence:
   - verify_repository
   - verify_main_authority_branch
-  - load_r5_operative_designation
   - load_v7_2_master_profile
+  - load_r5_operative_designation
   - load_v7_2_governance_sync
+  - load_participant_navigation_and_project_bootstrap
   - load_v7_2_doctrine_index
   - load_express_dcs_directive_registry
   - load_task_traceability_and_navigable_closeout_directive
@@ -139,7 +145,9 @@ startup_sequence:
   - route_doctrines_through_d21
   - verify_github_access_when_required
   - verify_supabase_access_when_required
-  - load_assignment
+  - resolve_designated_project_repository
+  - load_project_manifest
+  - load_assignment_and_task_asset_manifest
   - produce_startup_acknowledgment
   - begin_bounded_work
   - maintain_doctrine_consideration_log
@@ -213,9 +221,10 @@ runtime_task_contract:
 model_harmony:
   authority_chain_required: true
   common_chain:
-    - r5_operative_designation
     - v7_2_master_profile
+    - r5_operative_designation
     - v7_2_governance_sync
+    - participant_navigation_and_project_bootstrap
     - v7_2_doctrine_index
     - express_dcs_directive_registry
     - d22_v7_2_source_reconciliation
