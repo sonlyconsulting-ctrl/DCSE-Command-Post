@@ -1,0 +1,52 @@
+dcl:
+  task_id: "DCSE-V72-PLATFORM-GOVERNANCE-20260915-02"
+  timestamp: "2026-09-15"
+  model_or_agent: "ChatGPT GPT-5.6 Sol / DCS Sovereign Auditor"
+  lane: "SC / DCSE Command Post"
+  task_type: "platform_governance_package_reconciliation_and_promotion"
+  destination: "sonlyconsulting-ctrl/DCSE-Command-Post main"
+  authority_source:
+    master_profile: "DCSE v7.2 OPERATIVE via DCSE_MANIFEST.yaml"
+    d22_status: "ACTIVE / OPERATIVE / PROMOTED"
+  loaded:
+    - "DCSE_MANIFEST.yaml"
+    - "governance/v7.2/00_START_HERE.md"
+    - "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md"
+    - "governance/v7.2/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
+    - "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md"
+    - "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+    - "DCSE_Vercel_Masterclass_Annotated_Source_20260915.md"
+    - "DCSE_SUPABASE_BROADER_DATABASE_AUDIT_2026-09-15.md"
+    - "Pasted markdown.md"
+  applied:
+    - "D21 task routing and completion controls"
+    - "D22 canonical GitHub and evidence routing"
+    - "D05-style promotion evidence and rollback separation"
+    - "Vercel source identity, environment, preview, deployment, observability, cost, agent, promotion and rollback controls"
+    - "Supabase HOLD preserved as independent scope boundary"
+  evaluated_not_applied:
+    - "cross-platform tutorial claims not required to govern Vercel"
+    - "Supabase remediation sequence"
+    - "GitHub masterclass training content beyond shared source/evidence controls"
+  excluded_by_lane:
+    - "PS protected doctrine and evidence"
+  excluded_by_access:
+    - "Vercel production mutation"
+    - "Supabase production mutation"
+    - "secret values"
+  missing: []
+  contradictions:
+    - "Annotated source is instructional and non-authoritative; resolved by promoting a separate doctrine and retaining source status."
+    - "Supabase audit says do not merge/promote its remediation scope; resolved by explicit scope firewall so Vercel governance promotion does not promote database remediation."
+  security:
+    secret_scan: PASS
+    ps_scan: PASS
+    access_check: PASS
+  validation:
+    - "uploaded source readability confirmed"
+    - "live main authority chain read back through GitHub connector"
+    - "current main base identified as d95b74ff43eb6107fd210654ecb29c54cdfe1d46"
+    - "final exact-head CI validation required before merge"
+  evidence:
+    - "tribunal/v7/DCSE_VERCEL_GOVERNANCE_PACKAGE_PROMOTION_RECEIPT_20260915.md"
+  exit_status: "CANDIDATE_PENDING_PR_VALIDATION"
