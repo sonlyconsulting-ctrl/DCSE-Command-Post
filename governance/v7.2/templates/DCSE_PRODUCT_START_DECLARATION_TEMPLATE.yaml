@@ -1,0 +1,55 @@
+schema_version: "1.0"
+task_id: ""
+parent_task_id: null
+project_id: ""
+product_name: ""
+entity: ""
+lane: ""
+status: "START_GATE_REVIEW"
+governance:
+  master_profile: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+  product_methodology: "D20"
+repository:
+  full_name: ""
+  branch: "main"
+destination:
+  type: ""
+  primary_url: ""
+  url_state: "VERIFIED|RESERVED|TBD_BY_DCS_E|NOT_APPLICABLE"
+  cta: ""
+  checkout_or_access_handoff: ""
+audience:
+  personas: []
+brand:
+  logo_assets: []
+  palette_ref: ""
+  typography_ref: ""
+  voice_tone_ref: ""
+  persona_image_assets: []
+  background_assets: []
+  source_reference_assets: []
+assets:
+  manifest: "assets/DCSE_MEDIA_ASSET_MANIFEST.json"
+  canonical_binary_storage: ""
+commercial:
+  package_sku: ""
+  price_state: ""
+  fulfillment: ""
+architecture:
+  runtime: []
+  databases: []
+  storage: []
+  integrations: []
+  environment_variable_names: []
+measurement:
+  analytics: []
+  seo_aeo_geo: []
+quality:
+  accessibility_target: ""
+  device_targets: []
+  acceptance_criteria: []
+  release_authority: "DCS Level 0 or verified delegation"
+  rollback_reference: ""
+escalation:
+  dcs_e_required: false
+  reasons: []
