@@ -32,6 +32,15 @@ jobs:
               Path('governance/v7.2/00_START_HERE.md'),
               Path('governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md'),
               Path('governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md'),
+              Path('governance/v7.2/platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md'),
+              Path('governance/v7.2/platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md'),
+              Path('governance/v7.2/platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md'),
+              Path('governance/v7.2/platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md'),
+              Path('governance/v7.2/product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md'),
+              Path('governance/v7.2/media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md'),
+              Path('governance/v7.2/media/DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1.json'),
+              Path('governance/v7.2/templates/DCSE_PRODUCT_START_DECLARATION_TEMPLATE.yaml'),
+              Path('governance/v7.2/templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json'),
               Path('governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json'),
               Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md'),
               Path('governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'),
@@ -137,6 +146,14 @@ jobs:
                   errors.append(f'Compatibility mirror missing: {mirror_path}')
               elif canonical_path.read_bytes() != mirror_path.read_bytes():
                   errors.append(f'Compatibility mirror drift: {canonical_path} != {mirror_path}')
+
+          # New v7.2 media schema must remain valid JSON.
+          media_schema = Path('governance/v7.2/media/DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1.json')
+          if media_schema.is_file():
+              try:
+                  json.loads(read(media_schema))
+              except Exception as exc:
+                  errors.append(f'Media Asset Manifest schema invalid JSON: {exc}')
 
           for json_path in [
               Path('governance/v7.2/rule-foundry/DCSE_RULESET05_CONTENT_ARTIFACT_v2.json'),
