@@ -120,3 +120,17 @@ Current corpus state: `VALIDATING`. Wave 2 structural/deterministic/adversarial 
 ## Navigation Rule
 
 **Current governance lives under `governance/v7.2/`. Historical governance remains available for lineage but SHALL NOT be used as the normal startup path.**
+
+## Platform Governance Packages
+
+### Vercel
+
+The promoted Vercel package is registered through:
+- `platforms/vercel/DCSE_VERCEL_GOVERNANCE_PACKAGE_OPERATIVE_DESIGNATION_20260915.md`
+- `platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md`
+- `../../docs/vercel/DCSE_VERCEL_HUMAN_AGENT_OPERATIONS_MANUAL_v1.md`
+- `../../docs/vercel/DCSE_Vercel_Masterclass_Annotated_Source_20260915.md`
+- `platforms/vercel/DCSE_VERCEL_CONTROL_MATRIX_v1.json`
+- `platforms/vercel/DCSE_VERCEL_PROMOTION_ROLLBACK_CHECKLIST_v1.md`
+
+This package governs Vercel-specific delivery and agent operations under the existing v7.2 authority chain. It does not authorize production deployment or satisfy the independent Supabase remediation HOLD.
