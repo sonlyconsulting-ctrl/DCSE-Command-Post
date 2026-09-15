@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1",
+  "title": "DCSE Media Asset Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "project_id",
+    "assets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_storage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "asset_id",
+          "title",
+          "media_type",
+          "status",
+          "classification"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "purpose": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "asset_class": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canonical_storage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canonical_uri": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "git_lfs_oid": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[A-Fa-f0-9]{64}$"
+          },
+          "byte_size": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "mime_type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "width": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "height": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "duration_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "entity": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lane": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "classification": {
+            "type": "string"
+          },
+          "source_provenance": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "creator_provider": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rights_status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "release_status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "access_class": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "derived_from": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "validation_status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

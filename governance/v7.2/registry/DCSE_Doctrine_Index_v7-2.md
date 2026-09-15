@@ -85,6 +85,28 @@ Package presence does not independently create promotion authority. Exact lifecy
 
 `governance/v7.2/source/doctrines/` and `governance/v7.2/source/registry/` are temporary compatibility/lineage mirrors. The canonical operational paths are `governance/v7.2/doctrines/`, `governance/v7.2/registry/`, and the root R5 controller. CI must report any byte drift while the mirrors remain.
 
+
+
+## 4.2 Platform Governance Modules
+
+Platform-specific doctrines specialize execution under the controlling numbered doctrines. They are not new D-numbers and do not expand constitutional authority by file existence.
+
+| Platform | Platform doctrine | Controlling numbered doctrines |
+|---|---|---|
+| GitHub | `platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md` | D22, D05, D04, D21, D03 |
+| Vercel | `platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md` | D20, D21, D22, D05 |
+| Supabase | `platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md` | D15, D22, D21, D05 |
+
+Routing index: `platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md`.
+
+The shared `execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md` remains the common execution envelope. It does not replace the separate platform doctrines.
+
+## 4.3 Product Start and Shared Media Controls
+
+- `product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md` consolidates required pre-build product identity, URL/destination, brand/persona/media, architecture, commercial, measurement, quality, and release inputs under D20.
+- `media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md` governs cross-product media indexing, storage routing, access class, provenance, rights, and derived-asset lineage under D06/D09/D10/D12/D18/D19/D20/D22.
+- Missing required product/persona/current-image/background/source assets or release-target URL/destination triggers `DCS_E_PRODUCT_START_ESCALATION` rather than model inference.
+
 ## 5. Cross-System Governance Map
 
 ### GitHub

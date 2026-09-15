@@ -79,6 +79,18 @@ Required actions:
 
 **Quality Gate:** No material implementation proceeds without sufficient intake framing.
 
+### 3.1.1 Product Start Gate and Build Declaration
+
+Before material implementation begins, the product SHALL satisfy the `DCSE Product Start Gate and Build Declaration Standard v1`.
+
+The start declaration consolidates upstream requirements that must be known before build, including product identity, owning entity/lane, audience/persona, destination and URL/route state, CTA/conversion path, brand system, current persona/product imagery, backgrounds/source/reference assets, media manifest, product/package/pricing state when applicable, runtime/integration dependencies, analytics/SEO requirements where applicable, accessibility/QA criteria, promotion authority, and rollback.
+
+If a required prerequisite is missing, contradictory, stale, or unverified and proceeding would require the builder/model to invent or materially assume it, the task SHALL trigger `DCS_E_PRODUCT_START_ESCALATION` and remain `PARTIAL / START_GATE_BLOCKED` for dependent work.
+
+The gate SHALL first perform Reuse Before Redesign against prior approved project, brand, persona, URL, architecture, and asset records before requesting recreation or new decisions.
+
+**Quality Gate:** A product build may not enter material implementation with unresolved mandatory start inputs that would cause avoidable redesign, regeneration, re-editing, or release ambiguity.
+
 ### 3.2 Reuse-Before-Redesign Gate
 
 Before Build, search existing DCSE repositories, registries, approved baselines, DDNA records, Tribunal evidence, product assets, templates, workflows, integrations, prior deployments, and validated technical implementations.
@@ -239,7 +251,7 @@ D20 activates when DCSE is designing, assembling, materially changing, testing, 
 
 The operative sequence is:
 
-`INTAKE -> SEARCH PROVEN SOLUTIONS -> REUSE/ADAPT/COMPOSE/REDESIGN DECISION -> BUILD -> TEST -> PACKAGE -> PROMOTE -> DEPLOY -> CAPTURE REUSABLE PATTERN`
+`INTAKE -> PRODUCT START GATE -> SEARCH PROVEN SOLUTIONS -> REUSE/ADAPT/COMPOSE/REDESIGN DECISION -> BUILD -> TEST -> PACKAGE -> PROMOTE -> DEPLOY -> CAPTURE REUSABLE PATTERN`
 
 When only a bounded phase is requested, execute only that phase plus required upstream authority/evidence checks.
 
@@ -260,6 +272,7 @@ When only a bounded phase is requested, execute only that phase plus required up
 - D19 Visual Creation Pipeline: visual sub-pipeline.
 - D21 Doctrine Runtime Engine: runtime validation and execution controls.
 - D22 Source Authority and Runtime Distribution: controlling canonical-source, registry, synchronization, drift, and persistence-routing doctrine.
+- DCSE Product Start Gate and Build Declaration Standard v1: consolidated deterministic start prerequisites and DCS-E escalation.
 
 ---
 

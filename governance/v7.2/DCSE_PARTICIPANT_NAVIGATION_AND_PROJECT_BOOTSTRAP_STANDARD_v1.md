@@ -90,8 +90,9 @@ Once the project manifest is resolved, task execution loads only the Minimum Eff
 2. exact product/task source files;
 3. task-routed doctrine/methodology;
 4. project architecture and interface contracts;
-5. required assets and asset manifest;
-6. applicable test/evidence criteria.
+5. product start declaration and gate state;
+6. required assets and asset manifest;
+7. applicable test/evidence criteria.
 
 Historical or unrelated repository content is not automatically loaded.
 
@@ -184,6 +185,8 @@ An agent receiving a media workflow SHALL be given:
 8. evidence requirements.
 
 If the agent cannot retrieve the binary through an authenticated supported surface, it SHALL report access as unavailable rather than fabricate asset access.
+
+Before any product/media build, resolve the `DCSE Product Start Gate and Build Declaration Standard v1`. Missing required brand/persona/current-image/background/source assets or unresolved release-target URL/destination SHALL trigger `DCS_E_PRODUCT_START_ESCALATION`.
 
 ## 9. Repository handoff
 

@@ -189,7 +189,17 @@
     "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md",
     "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md",
     "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md",
-    "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+    "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md",
+    "governance/v7.2/platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md",
+    "governance/v7.2/platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md",
+    "governance/v7.2/platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md",
+    "governance/v7.2/platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md",
+    "governance/v7.2/product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md",
+    "governance/v7.2/media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md",
+    "governance/v7.2/media/DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1.json",
+    "governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md",
+    "governance/v7.2/templates/DCSE_PRODUCT_START_DECLARATION_TEMPLATE.yaml",
+    "governance/v7.2/templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json"
   ],
   "baseline_checkpoints": [
     {
