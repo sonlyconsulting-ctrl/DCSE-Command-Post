@@ -774,3 +774,10 @@ ORDER BY visibility_timeout_at ASC;
 5. **Predictive Routing**: Route task to worker likeliest to succeed (based on historical metrics)
 6. **Partial Result Recovery**: Resume task mid-stream if interrupted
 7. **Live Progress**: Stream execution updates to CP Dashboard via websocket/Realtime
+
+
+## Supabase hardening acceptance gate (2026-09-15)
+
+The `v7_worker` schema is an internal service-only boundary. Persistent workers use the approved server-side service credential or a future dedicated non-bypass worker role; `anon` and ordinary `authenticated` access are prohibited. The credential remains outside model context.
+
+Any worker, RPC, credential, project-binding, RLS, grant, or queue-contract change requires the controlled acceptance cycle in `docs/runbooks/DCSE_OLLAMA_WORKER_SUPABASE_ACCEPTANCE_RUNBOOK_v1.md`. Repository configuration is not runtime proof. Promotion requires a claim → heartbeat → result → release/close receipt and negative client-role evidence. Never restore client grants to resolve a worker credential or configuration failure.
