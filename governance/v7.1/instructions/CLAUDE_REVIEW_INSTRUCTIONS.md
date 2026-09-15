@@ -30,6 +30,34 @@ At minimum, review:
 6. affected execution and instruction files;
 7. corresponding runtime registry records when access is authorized.
 
+## Operational Cross-Reference Requirement (Added 2026-08-08)
+
+Every review MUST cross-reference the candidate against the live operational state, not only against the document itself. Document-only review has previously missed CRITICAL findings. Before completing the review, execute all four of the following checks and disclose the results:
+
+**OC-1 — Lane registry vs. live task routing:**
+Query `dcse_cp.agent_tasks` for all distinct `lane` values with non-zero task counts. Every lane with active tasks must appear in the candidate registry OR have an explicit disposition (demoted, routed-through, or excluded with rationale). Report any lane present in the DB but absent or unrouted in the candidate.
+
+```sql
+SELECT lane, COUNT(*) FROM dcse_cp.agent_tasks WHERE lane IS NOT NULL GROUP BY lane ORDER BY count DESC;
+```
+
+**OC-2 — Doctrine completeness vs. DB:**
+Query `dcse_cp.governance_directives` for all promoted rows. For each row, verify a compiled section exists in the candidate. Report any promoted directive with no corresponding compiled section and no formal deferral disposition.
+
+```sql
+SELECT directive_key, title, status, promotion_status FROM dcse_cp.governance_directives ORDER BY directive_key;
+```
+
+**OC-3 — Runtime surfaces vs. candidate mandatory-surface list:**
+Query `dcse_cp.runtime_surface_registry` for all enabled surfaces. Verify the candidate's mandatory runtime surfaces section names them. Report any enabled surface absent from the candidate's activation gate requirements.
+
+```sql
+SELECT runtime_surface, can_claim, enabled, polling_mode FROM dcse_cp.runtime_surface_registry ORDER BY enabled DESC, runtime_surface;
+```
+
+**OC-4 — Acceptance tests self-reference check:**
+For every mechanical acceptance test (MP72-*) that validates a registry, list, or set defined in the same candidate document, flag it as potentially circular. A valid acceptance test validates against an independently authoritative source (DB row, external commit hash, prior ratified artifact) — not against the candidate's own content.
+
 ## Canonical Discovery Requirement
 
 Before stating that any branch, file, issue, pull request, task, receipt, or registry record is absent, follow `../AGENT_DISCOVERY_AND_QUERY_PROTOCOL.md` and disclose the evidence surfaces actually queried.
