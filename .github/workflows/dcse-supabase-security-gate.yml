@@ -7,6 +7,12 @@ on:
       - "supabase/**/*.sql"
       - "scripts/ci/validate_supabase_security.py"
       - ".github/workflows/dcse-supabase-security-gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "supabase/**/*.sql"
+      - "scripts/ci/validate_supabase_security.py"
+      - ".github/workflows/dcse-supabase-security-gate.yml"
   workflow_dispatch:
 
 permissions:
@@ -44,19 +50,39 @@ jobs:
         run: python3 -m py_compile scripts/ci/validate_supabase_security.py
 
   local-database-proof:
-    if: ${{ hashFiles('supabase/config.toml') != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+
+      - name: Detect local Supabase configuration
+        id: local
+        shell: bash
+        run: |
+          if [ -f supabase/config.toml ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "Local Supabase proof enabled."
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Local Supabase proof not applicable: supabase/config.toml is absent."
+          fi
+
       - name: Start pinned local Supabase
+        if: steps.local.outputs.enabled == 'true'
         run: npx --yes supabase@2.81.3 start
+
       - name: Reset and apply migrations
+        if: steps.local.outputs.enabled == 'true'
         run: npx --yes supabase@2.81.3 db reset --local
+
       - name: Run database tests
+        if: steps.local.outputs.enabled == 'true'
         run: npx --yes supabase@2.81.3 test db
+
       - name: Run database linter
+        if: steps.local.outputs.enabled == 'true'
         run: npx --yes supabase@2.81.3 db lint --local --level warning
+
       - name: Stop local Supabase
-        if: always()
+        if: ${{ always() && steps.local.outputs.enabled == 'true' }}
         run: npx --yes supabase@2.81.3 stop --no-backup
