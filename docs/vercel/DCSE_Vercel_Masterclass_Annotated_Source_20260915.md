@@ -697,3 +697,326 @@ The current team is on the Hobby plan. Limits must be treated as design inputs.
 Vercel reported more than 100 deployments in a day, blocking further preview attempts for a period. Several projects linked to one repository amplified the operational impact.
 
 ### Cost/limit controls
+- prevent irrelevant project builds;
+- consolidate true duplicates;
+- use explicit monorepo roots;
+- avoid retry storms;
+- cache dependencies and builds appropriately;
+- inspect usage before adopting heavy background workloads;
+- set spending controls and alerts where supported;
+- evaluate paid-plan benefits against revenue and time saved;
+- archive only after dependency and domain verification.
+
+### Structure before upgrade
+
+A paid plan can raise limits but will not correct duplicate projects, ambiguous ownership, misconfigured roots, or uncontrolled triggers.
+
+---
+
+## 22. Security and Protection
+
+### Required controls
+
+- least-privilege team access;
+- multifactor authentication;
+- protected previews where appropriate;
+- server-only secrets;
+- safe headers and CORS policy;
+- authentication and authorization in APIs;
+- auditability of production changes;
+- webhook signature validation;
+- rate limits and abuse controls;
+- dependency and runtime updates;
+- incident recovery.
+
+### OIDC
+
+Vercel OIDC can provide short-lived runtime access to external systems. It does not replace the token used by the Vercel CLI in CI.
+
+### Public-variable warning
+
+Environment variables designed for client exposure are not secrets. Review rendered bundles and browser network behavior, not only source filenames.
+
+---
+
+## 23. Failure Diagnosis
+
+### Build failure sequence
+
+1. Confirm exact project and deployment.
+2. Confirm Git SHA and root directory.
+3. Read the first material build error.
+4. Reproduce locally when practical.
+5. Check lockfile and runtime versions.
+6. Check required environment-variable presence.
+7. Check framework/output configuration.
+8. Apply the smallest bounded correction.
+9. build and test once;
+10. record result and remaining unknowns.
+
+### Runtime failure sequence
+
+1. Confirm the domain targets the expected deployment.
+2. Inspect runtime errors and request logs.
+3. Reproduce with a traceable request.
+4. Identify the first unverified dependency.
+5. Check data/provider responses.
+6. assess whether rollback is safer than forward correction;
+7. execute only within authority;
+8. verify the user journey after recovery.
+
+### Rate-limit failure
+
+Do not repeatedly redeploy into a known plan limit. Preserve evidence, stop automated retries, identify unnecessary triggers, and schedule one controlled validation after capacity returns.
+
+---
+
+## 24. DCSE Case Studies
+
+### Case A: Command Post monorepo
+
+**Problem:** Several Vercel projects watch the same repository.  
+**Lesson:** Project identity and root/path filtering are mandatory to avoid cross-project deployment storms.
+
+### Case B: ESCD plus local Ollama
+
+**Problem:** Cloud Functions cannot reach the DCS workstation’s localhost.  
+**Lesson:** Vercel hosts UI/API; Supabase holds durable exchange state; the local worker calls Ollama and returns evidence.
+
+### Case C: Preview blocked by Hobby limit
+
+**Problem:** Required acceptance cannot run because preview capacity is exhausted.  
+**Lesson:** This is an infrastructure gate, not proof that application code failed. Correct triggers and project sprawl before assuming payment is the only solution.
+
+### Case D: Product review project
+
+**Problem:** A review URL exists without a verified Git link.  
+**Lesson:** A usable preview can still have weak provenance. Record source archive/SHA, deployment ID, and lifecycle status.
+
+### Case E: Production success claim
+
+**Problem:** CLI output says deployment completed.  
+**Lesson:** Inspect deployment status, domain assignment, routes, logs, and customer flow before claiming production readiness.
+
+---
+
+## 25. Tutorial Exercises
+
+### Foundation
+
+1. Explain project, deployment, domain, environment, and Function.
+2. List the DCSE Vercel projects and classify linked versus unlinked.
+3. Inspect `.vercel/project.json` or repo linkage without exposing credentials.
+4. Compare Development, Preview, and Production variables.
+5. Read a `vercel.json` and map each rule to runtime behavior.
+
+### Deployment practice
+
+6. Create a preview from a disposable training branch.
+7. Record its project ID, deployment ID, URL, Git SHA, and status.
+8. Run a desktop/mobile smoke test.
+9. inspect build and runtime logs;
+10. demonstrate rollback planning without touching production.
+
+### Advanced
+
+11. Design path filters for five projects linked to one monorepo.
+12. Build a deployment evidence packet that reconciles GitHub and Vercel.
+13. Diagnose a missing Preview environment variable without revealing its value.
+14. Model an agent workflow that can inspect but not deploy.
+15. Design an idempotent queue consumer.
+16. Compare direct provider APIs with AI Gateway for ESCD.
+17. Create a founder decision card for a failed production release.
+18. Audit the customer experience from domain through checkout/fulfillment.
+
+---
+
+## 26. Recommended DCSE Vercel Improvement Backlog
+
+These are recommendations, not approved changes.
+
+### Priority 1 — Establish inventory truth
+
+- Classify all fourteen projects as active, review, hold, superseded, or archival candidate.
+- Map each domain to project and current production deployment.
+- Record Git source/root or artifact provenance.
+- identify duplicate or ambiguous projects;
+- preserve rollback before retiring anything.
+
+### Priority 2 — Control monorepo deployments
+
+- Define a root and trigger policy for every Command Post-linked project.
+- Prevent documentation-only and unrelated product changes from building all projects.
+- Add deployment-rate monitoring and bounded retry behavior.
+
+### Priority 3 — Standardize environments
+
+- Create a variable-name matrix across Development, Preview, and Production.
+- Separate public variables from secrets.
+- Add preview-parity checks for required nonproduction credentials.
+
+### Priority 4 — Strengthen promotion evidence
+
+- Bind previews to exact PR head SHAs.
+- Require browser/API/runtime checks.
+- capture post-promotion logs and errors;
+- reconcile domains and Supabase migrations;
+- require DCS approval for production/public release.
+
+### Priority 5 — Improve the Human Experience
+
+- Provide one product-to-project-to-domain registry.
+- Surface exceptions and required decisions rather than raw deployment volume.
+- Add customer-journey acceptance for commercial products.
+
+---
+
+## 27. Production-Readiness Brief Template
+
+```markdown
+# Vercel Production-Readiness Brief
+
+## Identity
+- Task ID:
+- Product/entity:
+- Vercel team/project ID:
+- Source repository/branch/SHA:
+- Deployment ID/URL:
+- Intended domains:
+
+## Verified
+
+## Likely
+
+## Unknown
+
+## Build evidence
+
+## Preview runtime evidence
+
+## Environment and secret review
+
+## Data/provider dependencies
+
+## Customer journey
+
+## Observability
+
+## Cost/limit state
+
+## Rollback
+
+## Remaining gates
+
+## Recommended DCS disposition
+```
+
+---
+
+## 28. Masterclass Integration Guide
+
+Combine this file with:
+
+1. current official Vercel documentation;
+2. safe demonstrations in a disposable or review project;
+3. the DCSE GitHub masterclass source;
+4. Supabase/database orchestration material;
+5. product-specific customer-experience acceptance;
+6. a final governed capstone.
+
+### Suggested module sequence
+
+1. Platform mental model
+2. Teams and projects
+3. Git linking and monorepos
+4. Configuration
+5. Environments and secrets
+6. Previews and protection
+7. Functions and Fluid Compute
+8. Domains, routing, and caching
+9. Logs and observability
+10. CI/CD, promotion, and rollback
+11. AI, MCP, queues, and sandboxes
+12. Agentic operations and human stop-gates
+13. Cost, limits, and inventory governance
+14. Customer experience and capstone
+
+---
+
+## 29. Source Register
+
+### DCSE sources
+
+- `DCSE_MANIFEST.yaml`
+- `CLAUDE.md`
+- `vercel.json`
+- `apps/escd/vercel.json`
+- `.github/workflows/escd-mvp-review.yml`
+- `governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md`
+- `governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md`
+- `governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md`
+
+### Current Vercel reference areas
+
+- <https://vercel.com/docs>
+- <https://vercel.com/docs/deployments>
+- <https://vercel.com/docs/git>
+- <https://vercel.com/docs/cli>
+- <https://vercel.com/docs/functions>
+- <https://vercel.com/docs/environment-variables>
+- <https://vercel.com/docs/observability>
+- <https://vercel.com/docs/oidc>
+- <https://vercel.com/docs/project-configuration/vercel-ts>
+
+Official documentation controls for current platform behavior. Account-specific evidence controls for DCSE’s actual configuration.
+
+---
+
+## 30. Exit Criteria for the Final Tutorial
+
+The final tutorial is ready when:
+
+- platform claims are verified against current official documentation;
+- all demonstrations use safe nonproduction boundaries;
+- every deployment is tied to an exact project and source identity;
+- no secret values appear;
+- Hobby-plan limits and cost tradeoffs are addressed;
+- monorepo project behavior is demonstrated;
+- preview protection remains intact;
+- Functions, data, local workers, and governance authority are not conflated;
+- agent permissions and DCS stop-gates are explicit;
+- founder, developer/reviewer, agent, and customer experiences are represented;
+- the learner can distinguish build, preview, validation, promotion, observation, reconciliation, and completion.
+
+---
+
+## 31. Closeout
+
+### Deliverable
+
+One annotated Vercel source file designed to pair with the DCSE GitHub masterclass source.
+
+### Evidence basis
+
+- read-only Vercel team and project inventory;
+- current Vercel platform guidance available on 2026-09-15;
+- pinned DCSE Command Post main source at `f76120307af680104e600c02742826baf844c531`;
+- recent DCSE preview-limit evidence.
+
+### Material findings
+
+1. Fourteen projects are visible on a Hobby-plan team.
+2. Five projects link to the Command Post monorepo.
+3. Eight projects show no Git link in the summary inventory.
+4. Recent deployment volume exhausted the daily free-deployment allowance.
+5. Inventory, root-directory control, and deployment-trigger governance should precede either scaling or plan upgrades.
+
+### Non-actions
+
+No Vercel, GitHub, Supabase, domain, production, or billing state was changed.
+
+### Handoff ID
+
+`DCSE-TI-VERCEL-MASTERCLASS-SOURCE-20260915-001-H01`
+
+**Structure Precedes Scale. Evidence Precedes Promotion. Human Experience Completes Delivery.**
