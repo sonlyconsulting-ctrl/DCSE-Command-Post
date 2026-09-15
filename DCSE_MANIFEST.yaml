@@ -20,6 +20,9 @@ dcse:
   governed_execution_standard: "governance/v7.2/execution/DCSE_GOVERNED_EXECUTION_AND_INTERACTION_STANDARD_v1.md"
   conversation_intake_closeout: "governance/v7.2/execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md"
   platform_execution_profiles: "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md"
+  platform_governance_index: "governance/v7.2/platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md"
+  product_start_gate: "governance/v7.2/product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md"
+  shared_media_standard: "governance/v7.2/media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md"
   cross_system_reconciliation: "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
   baseline_checkpoint: "governance/v7.2/baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
@@ -361,6 +364,16 @@ promotion_gate:
   current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"
 
 platform_governance_packages:
+  github:
+    status: "OPERATIVE_ON_PROMOTION"
+    doctrine: "governance/v7.2/platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md"
+    controlling_doctrines: ["D22","D05","D04","D21","D03"]
+  supabase:
+    status: "OPERATIVE_NORMALIZED"
+    doctrine: "governance/v7.2/platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md"
+    compatibility_doctrine: "governance/v7.2/DCSE_SUPABASE_SCHEMA_RLS_AND_AGENT_ACCESS_DOCTRINE_v1.md"
+    operations_manual: "docs/supabase/DCSE_SUPABASE_CONTROLLED_SETUP_AND_VERIFICATION_MANUAL_v1.md"
+    controlling_doctrines: ["D15","D22","D21","D05"]
   vercel:
     package_id: "DCSE-V72-VERCEL-GOVERNANCE-PACKAGE-20260915"
     status: "OPERATIVE"
