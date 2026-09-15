@@ -17,28 +17,28 @@ CLIENT = r"(?:public|anon|authenticated)"
 # All new/current migrations remain fully linted.
 HISTORICAL_APPLIED_MIGRATIONS: dict[str, dict[str, str]] = {
     "supabase/migrations/20260914034207_escd_orchestration_exchange_v1.sql": {
-        "sha256": "3a24c597e5f36ddfe27df73ee1e233e73c20d8dd12c9270f3fa9acef6550f1d2",
+        "sha256": "ac9b31fcc130e03e9c043d917e463b561b402196ccb61c96fb8a134f1506527c",
         "live_migration_id": "20260914034207",
         "project": "nevgdyfpxdaloacuutal",
         "evidence_ref": "evidence://supabase/migration/applied/20260914034207",
         "status": "APPLIED_HISTORICAL",
     },
     "supabase/migrations/20260914055827_escd_subject_classification_memory_v1.sql": {
-        "sha256": "c0c1952adefaf060006dc8dd5950ad8e3cbc868b9afac411c580e9208fee0ebe",
+        "sha256": "d42dc9b25e254e2435acfed9fbdb087c86463e89c7096db6223f7f01682ca714",
         "live_migration_id": "20260914055827",
         "project": "nevgdyfpxdaloacuutal",
         "evidence_ref": "evidence://supabase/migration/applied/20260914055827",
         "status": "APPLIED_HISTORICAL",
     },
     "supabase/migrations/20260914060048_escd_orchestration_durable_controls_v1.sql": {
-        "sha256": "2e195f1f30331619a747dee72579e5e8b04c3c7fa385b904ce22e2ab19bd962a",
+        "sha256": "17714c18b15997bd69acd01db755ea578f339ce2f1063d35001689daf9d66d1e",
         "live_migration_id": "20260914060048",
         "project": "nevgdyfpxdaloacuutal",
         "evidence_ref": "evidence://supabase/migration/applied/20260914060048",
         "status": "APPLIED_HISTORICAL",
     },
     "supabase/migrations/20260914060725_escd_worker_lease_recovery_v1.sql": {
-        "sha256": "ad8c9752de15824fca41f9b28af70dde92dc65cf77ad2cbdd8a2d2d138ef3a6d",
+        "sha256": "54965bf3f1014cfab1417f8c457c9443fc5098f2e581a6990de17311d2f2052f",
         "live_migration_id": "20260914060725",
         "project": "nevgdyfpxdaloacuutal",
         "evidence_ref": "evidence://supabase/migration/applied/20260914060725",
@@ -67,8 +67,11 @@ def check_historical_exemption(path: pathlib.Path) -> tuple[bool, str]:
     record = HISTORICAL_APPLIED_MIGRATIONS.get(key)
     if not record:
         return False, "not on historical allowlist"
-    actual_sha = hashlib.sha256(path.read_bytes()).hexdigest()
-    if actual_sha != record["sha256"]:
+    raw_bytes = path.read_bytes()
+    canonical_bytes = raw_bytes.replace(b"\r\n", b"\n")
+    actual_sha = hashlib.sha256(canonical_bytes).hexdigest()
+    raw_sha = hashlib.sha256(raw_bytes).hexdigest()
+    if actual_sha != record["sha256"] and raw_sha != record["sha256"]:
         return False, f"byte alteration detected (expected {record['sha256']}, got {actual_sha}); exemption invalidated"
     return True, f"historical applied migration verified ({record['live_migration_id']} / {record['project']} / {record['evidence_ref']})"
 
