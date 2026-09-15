@@ -337,3 +337,363 @@ With Git integration, nonproduction branch pushes commonly create previews autom
 - runtime errors and logs;
 - environment-variable completeness;
 - no production mutation unless explicitly part of a safe test.
+
+### Deployment protection
+
+Do not disable protection merely to simplify agent access. Use authorized protected-preview access, such as `vercel curl` or a scoped share mechanism.
+
+### Hobby-plan lesson
+
+Preview abundance is not free operationally. Recent DCSE evidence showed the daily deployment ceiling could block PR validation. Path filters, ignored builds, consolidated projects, and controlled retry behavior are therefore governance and cost controls.
+
+---
+
+## 11. Production Deployment, Promotion, and Rollback
+
+### Direct production deployment
+
+```bash
+vercel deploy --prod
+```
+
+This is a production-changing action and remains a DCS stop-gate unless previously authorized through a bounded procedure.
+
+### Promote a validated deployment
+
+```bash
+vercel promote <deployment-url-or-id>
+```
+
+Promotion reassigns production traffic to an existing deployment without rebuilding. It is useful when the exact preview artifact has already been validated.
+
+### Rollback
+
+```bash
+vercel rollback
+vercel rollback <deployment-url-or-id>
+```
+
+Rollback must identify the target, scope, data compatibility, and expected user impact. Reverting application traffic does not automatically reverse database migrations or external side effects.
+
+### DCSE deployment-state model
+
+| State | Required meaning |
+|---|---|
+| BUILT | Build completed |
+| PREVIEW_READY | Candidate URL is available |
+| VALIDATED | Required preview tests passed |
+| APPROVED | Human/governance gate passed |
+| PROMOTED | Production traffic points to the accepted deployment |
+| OBSERVED | Post-promotion runtime was inspected |
+| RECONCILED | GitHub, Vercel, data, and evidence agree |
+| COMPLETE | Requested human/product outcome is satisfied |
+
+---
+
+## 12. Vercel Functions and Fluid Compute
+
+Vercel Functions can host server-side application logic in Node.js, Python, and other supported runtimes.
+
+### Suitable DCSE work
+
+- authenticated APIs;
+- bounded AI-provider calls;
+- webhook receivers;
+- server-side metadata and file processing;
+- database-backed product operations;
+- payment callback handling;
+- controlled orchestration entry points;
+- response streaming.
+
+### Unsuitable pattern
+
+A Vercel Function should not attempt to call `localhost:11434` on DCS’s Windows computer. Vercel’s localhost belongs to the remote function environment, not the DCS workstation.
+
+### Durable work
+
+For operations that outlive a request or require recovery, use a durable queue/state architecture. Vercel Queues or an existing Supabase worker exchange may be evaluated. Do not silently split authority between both.
+
+### Function design checklist
+
+- validate input before external access;
+- authenticate and authorize;
+- set bounded timeouts;
+- make retries idempotent;
+- separate public and server-only configuration;
+- avoid fabricated fallbacks;
+- return honest failure states;
+- record trace and evidence IDs;
+- support cancellation when meaningful;
+- account for concurrency and cost.
+
+---
+
+## 13. Routing, Middleware, and Caching
+
+### Routing
+
+Use rewrites, redirects, headers, and Routing Middleware only when their responsibility is explicit.
+
+### Middleware
+
+Current guidance does not require Edge runtime for middleware. Prefer the standard Node.js/Fluid Compute path unless a proven requirement dictates otherwise.
+
+### Caching questions
+
+- Is content user-specific?
+- Is the response safe to share between users?
+- What is the freshness requirement?
+- Who invalidates the cache?
+- Can a deployment serve stale governance or product content?
+- Does rollback restore the expected cache behavior?
+
+### DCSE warning
+
+Caching can make source and runtime appear inconsistent. A verification packet should state whether cache was bypassed, revalidated, or expected to remain warm.
+
+---
+
+## 14. Domains and DNS
+
+Projects, deployments, aliases, and domains must be distinguished.
+
+### Domain verification checklist
+
+- exact domain;
+- owning entity/product;
+- target Vercel project;
+- current production deployment;
+- DNS provider and records;
+- redirect/canonical-host behavior;
+- certificate status;
+- both apex and `www` behavior where applicable;
+- legacy aliases;
+- rollback path.
+
+### DCSE architecture note
+
+SC.com uses a Netlify-primary architecture with selected Wix experiences. Vercel remains a valid surface for specific products, previews, applications, or services. A domain decision must respect the product’s approved architecture rather than defaulting every web experience to Vercel.
+
+---
+
+## 15. Observability and Runtime Evidence
+
+### Useful CLI inspection
+
+```bash
+vercel ls
+vercel inspect <deployment-url>
+vercel logs <deployment-url>
+vercel logs <deployment-url> --follow
+```
+
+### Evidence levels
+
+| Evidence | What it supports |
+|---|---|
+| Build log | Build steps and build failure/success |
+| Deployment status | Platform lifecycle state |
+| Function/runtime logs | Observed request execution |
+| Browser test | User-visible behavior |
+| Network trace | API and asset behavior |
+| Provider/database record | External side of an exchange |
+| Deployment SHA | Source-to-deployment identity |
+| Post-release monitoring | Early production health |
+
+### What “READY” does not prove
+
+It does not prove that every route works, authentication is correct, data is current, the customer flow completes, or the expected domain targets the deployment.
+
+---
+
+## 16. GitHub and Vercel Integration
+
+### Normal flow
+
+`branch push → Vercel preview → GitHub deployment/check status → tests/review → DCS decision → promotion`
+
+### Controls needed for a monorepo
+
+- explicit root directory per project;
+- ignored-build rules or path-based deployment controls;
+- predictable production branch;
+- no accidental deployment from documentation-only commits;
+- exact mapping from PR head SHA to preview deployment;
+- preview comment/status that identifies project and URL;
+- no production promotion solely because a PR merged.
+
+### Dual-system evidence
+
+GitHub proves the reviewed source and checks. Vercel proves the build/deployment object. The acceptance record must connect them using the exact commit SHA and deployment identity.
+
+---
+
+## 17. CI/CD Patterns
+
+### Git-managed deployment
+
+Use Vercel Git integration for routine automatic previews when project/root configuration is reliable.
+
+### Controlled prebuilt deployment
+
+```bash
+vercel pull --yes --environment=preview
+vercel build
+# run tests against the build or preview as designed
+vercel deploy --prebuilt
+```
+
+For production:
+
+```bash
+vercel pull --yes --environment=production
+vercel build --prod
+vercel deploy --prebuilt --prod
+```
+
+### CI credentials
+
+CI commonly needs Vercel token, organization/team ID, and project ID. Store all credentials as secrets. Pin the CLI version rather than relying on `latest` in a governed pipeline.
+
+### Promotion pattern
+
+Build once, validate that exact deployment, then promote it. This reduces the risk that a production rebuild differs from the tested preview.
+
+---
+
+## 18. Agentic Vercel Operations
+
+Agents can assist with:
+
+- listing projects and deployments;
+- identifying project/root mismatches;
+- inspecting build logs;
+- correlating PR SHAs and deployments;
+- running protected-preview smoke tests;
+- reviewing runtime errors;
+- preparing environment-variable presence matrices;
+- comparing configuration;
+- recommending rollback;
+- creating evidence packets.
+
+### Agent contract
+
+Every substantive Vercel assignment should include:
+
+- Task ID;
+- project ID and human-readable name;
+- team;
+- environment;
+- source repository, branch, and SHA;
+- authorized actions;
+- prohibited production/destructive actions;
+- expected URLs and routes;
+- required environment-variable names;
+- test matrix;
+- cost/rate-limit boundary;
+- rollback target;
+- evidence and handoff requirements.
+
+### No autonomous expansion
+
+An agent authorized to inspect a failed preview is not authorized to redeploy production, add domains, change billing, expose a protected deployment, or rotate secrets.
+
+---
+
+## 19. Vercel AI Gateway, MCP, Queues, and Sandbox
+
+### AI Gateway
+
+Potential value:
+
+- unified access to multiple AI providers;
+- centralized model usage and observability;
+- fallbacks and routing;
+- reduced provider-specific application wiring.
+
+DCSE must still capture the actual provider/model path and must never let fallback masquerade as the requested provider.
+
+### Vercel MCP
+
+Potential value:
+
+- give authorized agents structured access to projects, deployments, and logs;
+- reduce brittle screen automation;
+- support read-only diagnostics and evidence collection.
+
+Permissions remain bounded by the connected identity and tool authorization.
+
+### Queues
+
+Potential value:
+
+- durable event delivery;
+- decoupled background work;
+- retryable processing.
+
+At-least-once delivery requires idempotency and duplicate handling.
+
+### Sandbox
+
+Potential value:
+
+- isolate generated or untrusted code;
+- run bounded validation;
+- separate experimentation from production.
+
+Sandbox output is evidence of sandbox behavior, not automatic approval for production.
+
+### Eve and durable agents
+
+Eve may be evaluated for new agent systems. It should not replace existing ESCD orchestration merely because it offers durable sessions, tools, skills, subagents, schedules, and evals. First perform a build/buy/hybrid/defer assessment.
+
+---
+
+## 20. The Human Experience
+
+### Founder/operator experience
+
+The founder needs:
+
+- which products are live;
+- which deployment serves each domain;
+- what failed and why;
+- which failures affect revenue or customers;
+- expected cost or plan-limit impact;
+- which decision is required;
+- whether rollback is safe.
+
+The founder should not have to navigate fourteen project histories to answer one product question.
+
+### Developer/reviewer experience
+
+Developers and reviewers need:
+
+- deterministic project linking;
+- predictable previews;
+- complete environment configuration;
+- readable logs;
+- exact source/deployment correlation;
+- fast feedback without unnecessary builds;
+- reproducible tests;
+- clear promotion authority.
+
+### Human-agent partnership
+
+Agents should compress noisy platform detail into evidence-backed decisions while preserving direct links and exact identifiers. Humans retain authority for production, spending, security exceptions, material architecture changes, and public/customer consequences.
+
+### Customer experience
+
+The customer experiences availability, speed, correctness, continuity, privacy, purchase/fulfillment behavior, and recovery. A green build that fails checkout or loses session state is not production-ready.
+
+---
+
+## 21. Cost, Limits, and Scale
+
+The current team is on the Hobby plan. Limits must be treated as design inputs.
+
+### Recent DCSE example
+
+Vercel reported more than 100 deployments in a day, blocking further preview attempts for a period. Several projects linked to one repository amplified the operational impact.
+
+### Cost/limit controls
