@@ -120,3 +120,18 @@ An exception records rule, object, reason, alternatives, risk owner, compensatin
 - https://supabase.com/docs/guides/database/postgres/row-level-security
 - https://supabase.com/docs/guides/database/postgres/roles
 - https://supabase.com/docs/guides/security/product-security
+
+
+## 14. Mandatory review/verify controls
+
+The following are required evidence gates, not optional cleanup:
+
+1. A local/background worker change requires one controlled service-role claim, heartbeat, result, and release/close cycle plus anonymous and unrelated-authenticated denial proof.
+2. Every client-executable SECURITY DEFINER must be classified and reviewed before promotion.
+3. Authentication hardening settings require user-flow impact review before activation.
+4. Each release records the authoritative Data API enabled state, exposed schemas, extra search path, intended consumers, and effective grants.
+5. Database doctrine changes remain CANDIDATE until reconciled with operative governance and expressly designated.
+6. A production database change is incomplete until the repository migration and live history match.
+7. A RAG implementation begins with a verified schema/vector/provider/provenance/privacy/retrieval/retention baseline before ingestion.
+
+Review-only authority never implies permission to remediate, merge, deploy, promote, rotate credentials, modify configuration, or ingest production data.
