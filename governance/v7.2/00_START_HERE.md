@@ -141,3 +141,23 @@ The promoted Vercel package is registered through:
 - `platforms/vercel/DCSE_VERCEL_PROMOTION_ROLLBACK_CHECKLIST_v1.md`
 
 This package governs Vercel-specific delivery and agent operations under the existing v7.2 authority chain. It does not authorize production deployment or satisfy the independent Supabase remediation HOLD.
+
+
+## Platform Governance Index
+
+- `platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md`
+- `platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md`
+- `platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md`
+- `platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md`
+
+These are separate platform-specific governance modules subordinate to the Master Profile and controlling D01-D22 doctrines. They are not new D-number doctrines.
+
+## Product Start and Shared Media
+
+- `product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md`
+- `media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md`
+- `media/DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1.json`
+- `templates/DCSE_PRODUCT_START_DECLARATION_TEMPLATE.yaml`
+- `templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json`
+
+A material product build SHALL resolve its product-start declaration and media/brand prerequisites before entering material implementation. Missing mandatory inputs route to DCS-E rather than being invented.
