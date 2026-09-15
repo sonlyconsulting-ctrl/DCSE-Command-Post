@@ -29,7 +29,12 @@ class TestConvergence(unittest.TestCase):
 
     def test_01_operative_rules_engine_scale_and_registry(self):
         """Verify OPERATIVE v0.2.1 package materializes and registers 148 rules + 5 composites."""
-        sys.path.insert(0, str(HERE / "rules_engine/runtime/DCSE_Rules_Engineering_Operative_v0_2"))
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("bootstrap", str(HERE / "rules_engine" / "bootstrap.py"))
+        bs = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bs)
+        root = bs.materialize()
+        sys.path.insert(0, str(root))
         from dcse_rules.runtime.registry import load_registry
         reg = load_registry()
         rules = reg["rules"]

@@ -1,16 +1,21 @@
 {
   "project": "DCSE Rules Engineering",
   "version": "0.2.1",
-  "lifecycle_status": "OPERATIVE",
-  "synchronized": true,
+  "lifecycle_status": "CANDIDATE",
+  "synchronized": false,
   "canonical_repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
   "canonical_path": "rules_engine",
   "effective_date": "2026-09-15",
-  "promotion_authority": "DCS Level 0 Governed Supersession under Issue #119",
+  "promotion_authority": "Pending explicit DCS Level 0 Promotion; candidate repair under Issue #119",
   "superseded_version": "0.2.0",
-  "superseded_reason": "Repair canonical tar.gz EOF truncation in git blob 148cc77c3016d6b4e63b325377e542b41f2685bd; verified content-equivalent to promoted source blueprint",
+  "superseded_reason": "Repairs canonical tar.gz EOF truncation in git blob 148cc77c3016d6b4e63b325377e542b41f2685bd; verified content-equivalent to promoted source blueprint. Preserves historical v0.2 OPERATIVE designation as lineage until explicit promotion.",
   "archive_filename": "DCSE_Rules_Engineering_Operative_v0_2_1.tar.gz",
   "archive_sha256": "7ee1e8e215be2bd4895535daab66efb8a064aa4f30006ee5ed4897a0f0a2747f",
+  "historical_lineage": {
+    "version": "0.2.0",
+    "status": "OPERATIVE_LINEAGE",
+    "scope": "148 atomic rules + 5 composites across 5 entity families, 18 capability families, and 1 meta family"
+  },
   "tests": {
     "promotion_suite": "12/12 PASS (plus registry uniqueness and full 148-rule scale verification)"
   },
