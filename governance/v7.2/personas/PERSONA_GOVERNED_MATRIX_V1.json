@@ -1,0 +1,606 @@
+{
+  "schema_version": "1.0.0",
+  "governance_standard": "DCSE D10 Audience Architecture v7.2",
+  "task_id": "DCSE-PERSONA-WEBSET-20260915-01",
+  "classification": "INTERNAL_GOVERNANCE_MATRIX",
+  "public_rendering_rule": "STRICT_ISOLATION - internal_d10_id must NEVER be rendered to public UI",
+  "persona_count": 17,
+  "personas": [
+    {
+      "id": 1,
+      "internal_d10_id": "1. Tas",
+      "public_nickname": "The Homegrown Navigator",
+      "public_slug": "homegrown-navigator",
+      "cluster": "life-transition",
+      "cluster_label": "Family & Community",
+      "source_refs": [
+        "D10:1",
+        "Master_Profile_v7.2",
+        "CTJ-Family"
+      ],
+      "essence": "Guiding family growth, education, and household community with clarity, intention, and calm order.",
+      "intended_outcome": "Establish an orderly, self-directed homeschool learning environment and household community publication without tech overwhelm.",
+      "motivations": "Empowering household with independent learning, practical family order, wholesome community enrichment, and calm daily routines.",
+      "frictions": "Overcomplicated technological jargon, cluttered dashboards, aggressive marketing funnels, and overwhelming digital noise.",
+      "interaction_style": "Calm, structured, transparent, step-by-step guidance, and printable or distraction-free materials.",
+      "tech_media_preference": "Prefers clean, low-technical layouts, calm mobile-first reading, and straightforward printable steps.",
+      "trust_factors": "Transparent pricing, distraction-free reading modes, respectful family-first language, and zero clickbait.",
+      "avoid_factors": "Hidden fees, fast-talking promotional video sales letters, dark patterns, and complex software dependencies.",
+      "move_forward_guidance": "Crystal-clear roadmaps, distraction-free reading modes, and modular practical toolkits that honor family time.",
+      "relevant_governed_pathways": [
+        "/ctj/unified",
+        "/resources/family-curriculum",
+        "/community/local-bulletin"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-TAS-001"
+      ],
+      "image_generation_requirement": "PERSONA_TAS_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"></path><polyline points=\"9 22 9 12 15 12 15 22\"></polyline></svg>"
+    },
+    {
+      "id": 2,
+      "internal_d10_id": "2. Podcast Buddies (Dex, Paul, Jack)",
+      "public_nickname": "The Seasoned Sports Circle",
+      "public_slug": "seasoned-sports-circle",
+      "cluster": "curiosity",
+      "cluster_label": "Sports & Syndicate",
+      "source_refs": [
+        "D10:2",
+        "TedoSportsLounge",
+        "SS_Syndicate"
+      ],
+      "essence": "Deep camaraderie, seasoned sports intellect, and shared investment curiosity across trusted peer groups.",
+      "intended_outcome": "Evaluate high-signal sports analytics, engage in informed syndicate discussions, and explore legitimate sports investment opportunities.",
+      "motivations": "Analyzing competitive metrics, enjoying spirited game discussions, and discovering legitimate syndicate or subscription opportunities.",
+      "frictions": "Surface-level hype, confusing onboarding flows, juvenile betting apps, and platforms that lack genuine respect for domain depth.",
+      "interaction_style": "Direct, analytical, audio-friendly, peer-to-peer discussion, data tables with actionable summaries.",
+      "tech_media_preference": "Tablet, desktop, and podcast-native; comfortable with data tables if clear, accessible, and high-contrast.",
+      "trust_factors": "Deep domain credibility, authentic podcast hosts, transparent syndication mechanics, and verifiable win/loss performance data.",
+      "avoid_factors": "Get-rich-quick sports betting gimmicks, opaque syndication terms, and flashy animations that slow down navigation.",
+      "move_forward_guidance": "Transparent syndication mechanics, crisp audio/podcast integration, and rich analytical sports intelligence.",
+      "relevant_governed_pathways": [
+        "/sports/syndicate-overview",
+        "/podcasts/sports-lounge",
+        "/research/competitive-metrics"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-SPORTS-001"
+      ],
+      "image_generation_requirement": "PERSONA_SPORTS_CIRCLE_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24\"></path></svg>"
+    },
+    {
+      "id": 3,
+      "internal_d10_id": "3. Leslie & Camelia",
+      "public_nickname": "The Second-Act Builders",
+      "public_slug": "second-act-builders",
+      "cluster": "life-transition",
+      "cluster_label": "Reinvention & Wellness",
+      "source_refs": [
+        "D10:3",
+        "SC_Enterprise",
+        "Public_Health_Hustle"
+      ],
+      "essence": "Balancing health consciousness, spiritual vitality, and thriving independent side enterprises in midlife.",
+      "intended_outcome": "Launch and scale sustainable side consulting or service ventures while maintaining full-time health careers and spiritual balance.",
+      "motivations": "Creating financial autonomy, sustaining holistic family health, and turning decades of lived wisdom into rewarding ventures.",
+      "frictions": "Juggling demanding service careers with new business setup; fatigue from fragmented single-purpose tools and time famine.",
+      "interaction_style": "Empathetic, holistic, dignified, modular evening/weekend study rhythms, clear milestones.",
+      "tech_media_preference": "Moderate; values intuitive cloud workflows, guided setup wizards, and empathetic customer communication.",
+      "trust_factors": "Dignified tone, holistic balance between enterprise and health, proven practical execution frameworks.",
+      "avoid_factors": "Aggressive hustle-culture posturing, 24/7 grind mentality, and chaotic multi-tool tech stacks.",
+      "move_forward_guidance": "Turnkey enterprise blueprints, wellness-aligned scheduling, and respectful, dignified business coaching.",
+      "relevant_governed_pathways": [
+        "/consulting/enterprise-blueprint",
+        "/wellness/balanced-executive",
+        "/learning/midlife-ventures"
+      ],
+      "visual_state": "FOUND",
+      "asset_ids": [
+        "PERSONA-LESLIE-001"
+      ],
+      "image_generation_requirement": null,
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": "Stock candidate freepik__...28928.jpeg verified licensed non-identifying representation",
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\"></path></svg>"
+    },
+    {
+      "id": 4,
+      "internal_d10_id": "4. Shy & Crystal",
+      "public_nickname": "The Social Explorers",
+      "public_slug": "social-explorers",
+      "cluster": "life-transition",
+      "cluster_label": "Culture & Travel",
+      "source_refs": [
+        "D10:4",
+        "Social_Commerce",
+        "Family_Travel"
+      ],
+      "essence": "Vibrant young parents seeking joyful escapism, social connection, and attainable travel adventures.",
+      "intended_outcome": "Discover affordable, highly memorable family travel getaways and social community experiences within realistic household budgets.",
+      "motivations": "Breaking free from mundane workplace routines through enriching family getaways, cultural discovery, and social sharing.",
+      "frictions": "Constrained household budgets, deceptive promotional rates, cumbersome booking interfaces, and lack of child-friendly clarity.",
+      "interaction_style": "Visual-first, energetic, social-proof driven, mobile-responsive, direct messaging friendly.",
+      "tech_media_preference": "Social-first & mobile-first (TikTok, Instagram, Facebook); rapid visual skimmers and video consumers.",
+      "trust_factors": "All-inclusive upfront pricing, authentic video testimonials from real parents, instant mobile confirmations.",
+      "avoid_factors": "Hidden booking fees, fine print surcharges, wall-of-text terms, and slow mobile loading.",
+      "move_forward_guidance": "Bite-sized mobile visual guides, transparent all-inclusive trip pricing, and vibrant social proofs.",
+      "relevant_governed_pathways": [
+        "/travel/family-escapes",
+        "/community/explorer-hub",
+        "/budget/all-inclusive-planner"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-SOCIAL-001"
+      ],
+      "image_generation_requirement": "PERSONA_SOCIAL_EXPLORERS_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><line x1=\"2\" y1=\"12\" x2=\"22\" y2=\"12\"></line><path d=\"M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z\"></path></svg>"
+    },
+    {
+      "id": 5,
+      "internal_d10_id": "5. JJr",
+      "public_nickname": "The Faithful Learner",
+      "public_slug": "faithful-learner",
+      "cluster": "curiosity",
+      "cluster_label": "Study & Reflection",
+      "source_refs": [
+        "D10:5",
+        "Faith_History",
+        "Digital_Campaigns"
+      ],
+      "essence": "Devoted to timeless historical truth, scripture depth, and continuous personal moral reflection.",
+      "intended_outcome": "Deepen understanding of historical biblical contexts, lineage studies, and foundational moral philosophy through rigorous digital curricula.",
+      "motivations": "Engaging in scholarly, historical context study and sharing structured faith lessons across generations.",
+      "frictions": "Superficial modern retellings, intrusive popups, commercial sensationalism, and dilution of theological depth.",
+      "interaction_style": "Reverent, scholarly, reflective, typographic focus, footnote/cross-reference clarity.",
+      "tech_media_preference": "Comfortable with e-readers, digital study Bibles, and audio devotionals on mobile or tablet.",
+      "trust_factors": "Historical accuracy, rigorous textual citations, scholarly objectivity, and reverent design aesthetics.",
+      "avoid_factors": "Sensationalized clickbait, loud animations, aggressive donation prompts, and doctrinal dogmatism.",
+      "move_forward_guidance": "Distraction-free typographic layouts, cross-referenced historical indexes, and searchable theological libraries.",
+      "relevant_governed_pathways": [
+        "/curriculum/scripture-history",
+        "/library/textual-commentaries",
+        "/audio/historical-studies"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-FAITH-001"
+      ],
+      "image_generation_requirement": "PERSONA_FAITHFUL_LEARNER_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"></path><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z\"></path></svg>"
+    },
+    {
+      "id": 6,
+      "internal_d10_id": "6. Fred & Clarence",
+      "public_nickname": "The Curious Retirees",
+      "public_slug": "curious-retirees",
+      "cluster": "curiosity",
+      "cluster_label": "Mental Agility",
+      "source_refs": [
+        "D10:6",
+        "Mind_Agility",
+        "Cognitive_Puzzles"
+      ],
+      "essence": "Exercising keen mental agility, playful inquisitiveness, and lifelong learning in their golden years.",
+      "intended_outcome": "Engage in daily cognitive challenges, intellectual quizzes, and puzzles that stimulate sharpness and friendly social interaction.",
+      "motivations": "Staying intellectually sharp, solving engaging cognitive challenges, and enjoying friendly puzzle competition.",
+      "frictions": "Tiny low-contrast fonts, confusing navigation gestures, timed pressure spikes, and aggressive microtransactions in modern apps.",
+      "interaction_style": "Patient, generous, clear, celebratory of progress, accessible tactile typography.",
+      "tech_media_preference": "Prefers large-screen tablets and desktops with clear contrast, generous tap targets, and readable typography.",
+      "trust_factors": "Large clear fonts, zero surprise subscriptions, generous undo features, and dignified respectful tone.",
+      "avoid_factors": "Microtransaction paywalls, timed stress countdowns, dark low-contrast UI, and patronizing simplifications.",
+      "move_forward_guidance": "High-contrast cognitive games, thought-provoking quizzes, and clean daily brain challenges with zero pressure.",
+      "relevant_governed_pathways": [
+        "/puzzles/daily-agility",
+        "/learning/lifelong-inquiry",
+        "/community/retiree-circle"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-RETIREE-001"
+      ],
+      "image_generation_requirement": "PERSONA_CURIOUS_RETIREES_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon></svg>"
+    },
+    {
+      "id": 7,
+      "internal_d10_id": "7. BMP (Henry/Elizabeth)",
+      "public_nickname": "The Rebuilding Founders",
+      "public_slug": "rebuilding-founders",
+      "cluster": "enterprise",
+      "cluster_label": "Resilient Operations",
+      "source_refs": [
+        "D10:7",
+        "Medical_Supply_B2B",
+        "Operational_Resilience"
+      ],
+      "essence": "Seasoned medical supply and commercial service owners modernizing mission-critical operations.",
+      "intended_outcome": "Overhaul fragile supply chains, digitize inventory tracking, and restore operational profit margins.",
+      "motivations": "Restructuring supply logistics, stabilizing operational margins, and insulating the business against supply shocks.",
+      "frictions": "Bloated legacy enterprise software, vendor lock-in, brittle inventory synchronization, and endless consulting overhead.",
+      "interaction_style": "Executive, bottom-line oriented, metric-driven, pragmatic, architecture-conscious.",
+      "tech_media_preference": "Pragmatic enterprise user; expects reliable spreadsheets, deterministic APIs, and dependable CRM/ERP.",
+      "trust_factors": "Auditable margin improvement, data ownership, zero vendor lock-in, and battle-tested operational frameworks.",
+      "avoid_factors": "Vague SaaS buzzwords, unproven disruptive hype, lengthy implementations, and opaque fee structures.",
+      "move_forward_guidance": "Lean automated inventory reconciliation, clear margin dashboards, and resilient multi-vendor supply architectures.",
+      "relevant_governed_pathways": [
+        "/b2b/supply-resilience",
+        "/operations/margin-audits",
+        "/automation/erp-integration"
+      ],
+      "visual_state": "DECISION_REQUIRED",
+      "asset_ids": [
+        "CLIENT-BMP-PORTRAIT-001"
+      ],
+      "image_generation_requirement": "PERSONA_REBUILDING_FOUNDERS_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": "Real client portrait LC Ward (c9066bfa...) held internal; representative non-identifying architectural spec used on public route pending Level 0 release.",
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z\"></path></svg>"
+    },
+    {
+      "id": 8,
+      "internal_d10_id": "8. Non-Profit/Church Leaders",
+      "public_nickname": "The Mission Leaders",
+      "public_slug": "mission-leaders",
+      "cluster": "enterprise",
+      "cluster_label": "Civic & Purpose",
+      "source_refs": [
+        "D10:8",
+        "Civic_Operations",
+        "Fundraising_Automation"
+      ],
+      "essence": "Stewarding community non-profits, faith organizations, and mission-driven service institutions.",
+      "intended_outcome": "Implement automated donor outreach, volunteer coordination, and stewardship workflows on a modest budget.",
+      "motivations": "Maximizing donor engagement, scaling community outreach, and modernizing volunteer coordination through automation.",
+      "frictions": "Extremely tight operating budgets, donor fatigue, staff burnout from manual recordkeeping, and complex tech curves.",
+      "interaction_style": "Servant-leader oriented, warm, mission-grounded, clear budget justifications.",
+      "tech_media_preference": "Relies on cloud tools, email newsletters, and member databases; needs intuitive non-technical interfaces.",
+      "trust_factors": "Transparent nonprofit pricing tiers, respect for volunteer time, data privacy for congregation/donors.",
+      "avoid_factors": "High recurring enterprise licensing, cold commercial sales reps, and overly complex CRM architectures.",
+      "move_forward_guidance": "Affordable donor stewardship workflows, automated event communications, and volunteer scheduling systems.",
+      "relevant_governed_pathways": [
+        "/civic/donor-automation",
+        "/outreach/volunteer-system",
+        "/governance/stewardship-portal"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-MISSION-001"
+      ],
+      "image_generation_requirement": "PERSONA_MISSION_LEADERS_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2\"></path><circle cx=\"9\" cy=\"7\" r=\"4\"></circle><path d=\"M23 21v-2a4 4 0 0 0-3-3.87\"></path><path d=\"M16 3.13a4 4 0 0 1 0 7.75\"></path></svg>"
+    },
+    {
+      "id": 9,
+      "internal_d10_id": "9. X5O Solutions",
+      "public_nickname": "The Local Growth Owner",
+      "public_slug": "local-growth-owner",
+      "cluster": "enterprise",
+      "cluster_label": "Local Commerce",
+      "source_refs": [
+        "D10:9",
+        "Local_SEO",
+        "Service_Biz_Growth"
+      ],
+      "essence": "Hands-on local service provider turning neighborhood reputation into steady digital customer acquisition.",
+      "intended_outcome": "Generate steady inbound customer calls, automate review requests, and dominate localized search results.",
+      "motivations": "Driving qualified local inbound calls, booking repeat appointments, and ranking at the top of local searches.",
+      "frictions": "Paying for agency retainers with zero transparency, spam leads, and confusing SEO promises.",
+      "interaction_style": "Fast, direct, mobile-accessible, results-first, zero corporate fluff.",
+      "tech_media_preference": "Runs the business on smartphone, SMS, and WhatsApp; values immediate notification and simple dials.",
+      "trust_factors": "Pay-for-performance clarity, direct phone/SMS support, clear conversion reports showing actual phone calls.",
+      "avoid_factors": "Vague monthly vanity impressions, 12-month lock-in agency contracts, and confusing jargon.",
+      "move_forward_guidance": "High-converting localized landing pages, automated SMS booking confirmations, and verified review funnels.",
+      "relevant_governed_pathways": [
+        "/local/acquisition-engine",
+        "/seo/review-funnels",
+        "/sms/instant-booking"
+      ],
+      "visual_state": "DECISION_REQUIRED",
+      "asset_ids": [
+        "CLIENT-X5O-PORTRAIT-001",
+        "CLIENT-X5O-LOGO-001"
+      ],
+      "image_generation_requirement": "PERSONA_LOCAL_GROWTH_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": "Real client portrait Tamyra Kelly (f0acf02e...) held internal; representative non-identifying trade visual used on public route pending Level 0 commercial release.",
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><line x1=\"18\" y1=\"20\" x2=\"18\" y2=\"10\"></line><line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"4\"></line><line x1=\"6\" y1=\"20\" x2=\"6\" y2=\"14\"></line></svg>"
+    },
+    {
+      "id": 10,
+      "internal_d10_id": "10. Ivan (IC)",
+      "public_nickname": "The Technical Explorer",
+      "public_slug": "technical-explorer",
+      "cluster": "curiosity",
+      "cluster_label": "Engineering & Craft",
+      "source_refs": [
+        "D10:10",
+        "Systems_Engineering",
+        "Precision_Craft"
+      ],
+      "essence": "Senior technical mind and outdoor enthusiast demanding precision, first-principles logic, and mastery.",
+      "intended_outcome": "Verify system architecture, audit technical capabilities, and apply rigorous analytical thinking to hardware/software domains.",
+      "motivations": "Deconstructing complex technical systems, mastering precision skills (photography, diving, mechanics), and optimizing craft.",
+      "frictions": "Marketing fluff, hand-waving explanations, opaque abstractions, and systems that treat users like passive consumers.",
+      "interaction_style": "First-principles logic, terminal/CLI friendly, schema-exact, verifiable, zero adjectives.",
+      "tech_media_preference": "Expert / Power User; comfortable with terminals, specifications, raw data, and rigorous technical manuals.",
+      "trust_factors": "Open architecture documentation, reproducible benchmarks, mathematical rigor, and honest error disclosures.",
+      "avoid_factors": "Superficial landing page claims, lack of source or API documentation, and dumbed-down wizard flows.",
+      "move_forward_guidance": "Uncompromising technical accuracy, verifiable architectural proofs, and deep-dive documentation.",
+      "relevant_governed_pathways": [
+        "/specs/system-architecture",
+        "/benchmarks/proof-engine",
+        "/docs/engineering-manual"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-TECH-001"
+      ],
+      "image_generation_requirement": "PERSONA_TECHNICAL_EXPLORER_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><circle cx=\"12\" cy=\"12\" r=\"3\"></circle><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"></path></svg>"
+    },
+    {
+      "id": 11,
+      "internal_d10_id": "11. Gen Z (GN, Nic, ASP)",
+      "public_nickname": "The Creative Next Gen",
+      "public_slug": "creative-next-gen",
+      "cluster": "curiosity",
+      "cluster_label": "Digital & Media",
+      "source_refs": [
+        "D10:11",
+        "Digital_Native",
+        "Generative_Media"
+      ],
+      "essence": "Hyper-creative, digitally native polymath blending multimedia art, digital identity, and creative tools.",
+      "intended_outcome": "Express bold creative identity, monetize digital designs/content, and leverage generative AI tools without technical friction.",
+      "motivations": "Expressing distinct creative voice, building digital cultural relevance, and testing emerging AI capabilities organically.",
+      "frictions": "Rigid corporate formats, slow bureaucratic processes, and tools that stifle spontaneous visual creativity.",
+      "interaction_style": "Visual, non-linear, experimental, fast feedback loops, collaborative canvases.",
+      "tech_media_preference": "Native fluency across multi-modal tools, short-form editing, prompt tinkering, and collaborative canvases.",
+      "trust_factors": "Creator-first licensing terms, aesthetic excellence, authentic cultural resonance, and active community discord/channels.",
+      "avoid_factors": "Stodgy enterprise design, patronizing youth marketing, slow desktop-only software, and rigid copyright grabs.",
+      "move_forward_guidance": "Rapid generative prototypes, fluid multimedia workflows, and real-time community feedback channels.",
+      "relevant_governed_pathways": [
+        "/creative/studio-sandbox",
+        "/media/generative-lab",
+        "/creator/monetization-kit"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-CREATIVE-001"
+      ],
+      "image_generation_requirement": "PERSONA_CREATIVE_NEXT_GEN_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M12 19l7-7 3 3-7 7-3-3z\"></path><path d=\"M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z\"></path><path d=\"M2 2l7.586 7.586\"></path><circle cx=\"11\" cy=\"11\" r=\"2\"></circle></svg>"
+    },
+    {
+      "id": 12,
+      "internal_d10_id": "12. Tina & Lisa",
+      "public_nickname": "The Side-Stream Professionals",
+      "public_slug": "side-stream-professionals",
+      "cluster": "enterprise",
+      "cluster_label": "Advisory & Leverage",
+      "source_refs": [
+        "D10:12",
+        "Executive_Consulting",
+        "Passive_Streams"
+      ],
+      "essence": "Accomplished corporate leaders monetizing specialized expertise into recurring advisory retainers.",
+      "intended_outcome": "Build a premium executive advisory or fractional consulting practice that runs quietly and seamlessly alongside primary careers.",
+      "motivations": "Diversifying career revenue without risking their primary corporate role; building high-margin digital advisory assets.",
+      "frictions": "Compliance and confidentiality constraints, scarce executive bandwidth, and distaste for low-rent marketing tactics.",
+      "interaction_style": "Executive, discreet, polished, highly structured, calendar-protective.",
+      "tech_media_preference": "Enterprise desktop & productivity suite savvy; expects executive polish, calendar sync, and clean security.",
+      "trust_factors": "Discreet confidentiality frameworks, professional peer reputation, high-ticket retainer structures.",
+      "avoid_factors": "Public hype marketing, low-ticket coaching funnels, amateur branding, and conflict of interest hazards.",
+      "move_forward_guidance": "White-label fractional frameworks, executive client intake workflows, and discrete automated retainer billing.",
+      "relevant_governed_pathways": [
+        "/advisory/fractional-suite",
+        "/executive/client-portal",
+        "/frameworks/retainer-contracts"
+      ],
+      "visual_state": "FOUND",
+      "asset_ids": [
+        "PERSONA-TINA-LISA-001"
+      ],
+      "image_generation_requirement": null,
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": "Stock candidate freepik_assistant...jpeg verified licensed professional non-identifying representation",
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><rect x=\"2\" y=\"7\" width=\"20\" height=\"14\" rx=\"2\" ry=\"2\"></rect><path d=\"M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\"></path></svg>"
+    },
+    {
+      "id": 13,
+      "internal_d10_id": "13. Mik",
+      "public_nickname": "The Working Listener",
+      "public_slug": "working-listener",
+      "cluster": "hourly",
+      "cluster_label": "Practical Mobility",
+      "source_refs": [
+        "D10:13",
+        "Audio_Curriculum",
+        "Logistics_Workforce"
+      ],
+      "essence": "Fulfillment and logistics worker learning continuously through headphones during long physical shifts.",
+      "intended_outcome": "Acquire economic insights, commercial trade literacy, and career pivot skills hands-free during hourly fulfillment shifts.",
+      "motivations": "Gaining practical skills, understanding civic economics, and planning a sustainable route to higher-paying trades.",
+      "frictions": "Exhaustion after physical labor, zero screen time during working hours, and complex prerequisite courses.",
+      "interaction_style": "Audio-first, concise chaptering, no visual requirement, respectful of blue-collar reality.",
+      "tech_media_preference": "Audio-first; relies heavily on podcasts, voice notes, and YouTube playlists on budget smartphones.",
+      "trust_factors": "Authentic voice, practical no-BS advice, zero requirement to look at a phone screen during shifts.",
+      "avoid_factors": "Long reading assignments during work hours, patronizing white-collar metaphors, and expensive gear requirements.",
+      "move_forward_guidance": "Audio-first curriculum modules, bite-sized key takeaways, and low-bandwidth offline playback options.",
+      "relevant_governed_pathways": [
+        "/audio/shift-curriculum",
+        "/mobility/trades-overview",
+        "/podcasts/local-dynamics"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-WORKER-001"
+      ],
+      "image_generation_requirement": "PERSONA_WORKING_LISTENER_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M3 18v-6a9 9 0 0 1 18 0v6\"></path><path d=\"M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z\"></path></svg>"
+    },
+    {
+      "id": 14,
+      "internal_d10_id": "14. CS",
+      "public_nickname": "The Comeback Seeker",
+      "public_slug": "comeback-seeker",
+      "cluster": "hourly",
+      "cluster_label": "Resilience & Dignity",
+      "source_refs": [
+        "D10:14",
+        "Economic_Re-entry",
+        "Supportive_Positioning"
+      ],
+      "essence": "Rebuilding household economic foundation on fixed support with relentless resilience and dignity.",
+      "intended_outcome": "Secure legitimate supplemental income streams without risking disability or fixed retirement entitlements.",
+      "motivations": "Re-entering the productive economy, proving their worth, and establishing dignified supplemental income.",
+      "frictions": "Fear of predatory scams, past career setbacks, ageism, and anxiety about falling behind technological shifts.",
+      "interaction_style": "Supportive, encouraging, non-judgmental, crystal clear, safety-first.",
+      "tech_media_preference": "Basic to intermediate; requires patient onboarding, clear affirmations, and zero hidden penalties.",
+      "trust_factors": "Clear legal boundaries on fixed support, dignity-first language, free introductory trial, patient human contact.",
+      "avoid_factors": "High upfront financial commitments, aggressive countdown timers, shaming language, and speculative trading schemes.",
+      "move_forward_guidance": "Dignity-first milestone pacing, transparent step-by-step guidance, and direct encouragement from real advocates.",
+      "relevant_governed_pathways": [
+        "/dignity/milestone-program",
+        "/income/fixed-safe-supplements",
+        "/guidance/mentor-circle"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-COMEBACK-001"
+      ],
+      "image_generation_requirement": "PERSONA_COMEBACK_SEEKER_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><polyline points=\"23 6 13.5 15.5 8.5 10.5 1 18\"></polyline><polyline points=\"17 6 23 6 23 12\"></polyline></svg>"
+    },
+    {
+      "id": 15,
+      "internal_d10_id": "15. Ccs",
+      "public_nickname": "The Frugal Hobbyist",
+      "public_slug": "frugal-hobbyist",
+      "cluster": "curiosity",
+      "cluster_label": "Hobby & Craft",
+      "source_refs": [
+        "D10:15",
+        "Hobby_Commerce",
+        "Zero_Risk_Craft"
+      ],
+      "essence": "Comfortably retired creator turning cherished personal hobbies into modest, zero-risk supplemental streams.",
+      "intended_outcome": "Share and sell craft creations (woodworking, gardening, crafts) locally without taking on business debt or stress.",
+      "motivations": "Sharing handcrafted creations, woodworking, or gardening secrets without taking on debt or business stress.",
+      "frictions": "Complex payment gateways, scary tax compliance warnings, and aggressive growth-hacker jargon.",
+      "interaction_style": "Friendly, straightforward, low-pressure, visually clean, step-by-step.",
+      "tech_media_preference": "Tablet-friendly; values simple Etsy-like simplicity, visual catalog builders, and clear receipts.",
+      "trust_factors": "Simple pricing, zero monthly recurring minimums, friendly neighborly tone, simple receipts.",
+      "avoid_factors": "Complex merchant bank accounts, venture-capital growth jargon, high monthly fees, and automated upsells.",
+      "move_forward_guidance": "Zero-stress hobby commerce setups, straightforward local market payment guides, and community showcase templates.",
+      "relevant_governed_pathways": [
+        "/craft/showcase-builder",
+        "/local/market-payments",
+        "/guides/hobby-to-income"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-HOBBY-001"
+      ],
+      "image_generation_requirement": "PERSONA_FRUGAL_HOBBYIST_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path></svg>"
+    },
+    {
+      "id": 16,
+      "internal_d10_id": "16. Jdc",
+      "public_nickname": "The Justice Professional",
+      "public_slug": "justice-professional",
+      "cluster": "enterprise",
+      "cluster_label": "Advocacy & Ethics",
+      "source_refs": [
+        "D10:16",
+        "Civil_Rights_Stories",
+        "Evidentiary_Integrity"
+      ],
+      "essence": "Legal and advocacy specialist dedicated to authentic civil rights, systemic integrity, and ethical truth.",
+      "intended_outcome": "Publish, analyze, and preserve verifiable historical documentation of civil rights and discrimination cases with unimpeachable provenance.",
+      "motivations": "Documenting systemic discrimination, publishing rigorous case studies, and preserving indelible evidentiary records.",
+      "frictions": "Sensationalized reporting, unverifiable claims, clickbait journalism, and platforms vulnerable to revisionist data tampering.",
+      "interaction_style": "Scholarly, precise, evidentiary, citations required, tamper-evident.",
+      "tech_media_preference": "High literacy with legal databases, citation standards, and verifiable digital document archives.",
+      "trust_factors": "Immutable audit trails, direct primary-source citations, non-partisan ethical framing, and cryptographic integrity.",
+      "avoid_factors": "Emotionalized partisan rhetoric, missing bibliographies, anonymous sourcing, and unverified allegations.",
+      "move_forward_guidance": "Cryptographically verifiable audit trails, tamper-proof evidentiary citation formats, and scholarly dossier publishing.",
+      "relevant_governed_pathways": [
+        "/evidence/civil-rights-dossiers",
+        "/archive/tamper-proof-records",
+        "/standards/evidentiary-audit"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-JUSTICE-001"
+      ],
+      "image_generation_requirement": "PERSONA_JUSTICE_PROFESSIONAL_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M12 3v18\"></path><path d=\"M3 7l9-4 9 4\"></path><path d=\"M6 7l-3 7h6l-3-7z\"></path><path d=\"M18 7l-3 7h6l-3-7z\"></path></svg>"
+    },
+    {
+      "id": 17,
+      "internal_d10_id": "17. Sjc",
+      "public_nickname": "The Time-Poor Starter",
+      "public_slug": "time-poor-starter",
+      "cluster": "hourly",
+      "cluster_label": "Skill Acceleration",
+      "source_refs": [
+        "D10:17",
+        "Micro_Learning",
+        "AI_Displacement_Shield"
+      ],
+      "essence": "Hourly wage worker feeling the pressure of automation, carving out fifteen-minute learning sprints daily.",
+      "intended_outcome": "Master essential digital skills and AI literacy in 10-15 minute daily increments to advance out of vulnerable hourly roles.",
+      "motivations": "Acquiring future-proof digital literacy and upgrading job tier before automation makes current shifts obsolete.",
+      "frictions": "Zero surplus time between shifts and family care; anxiety and paralysis from confusing tech buzzwords.",
+      "interaction_style": "High-density micro-learning, progress saved automatically, mobile snackable lessons, empathetic reassurance.",
+      "tech_media_preference": "Mobile-dependent; interacts in short bursts during commutes, breaks, and late evenings.",
+      "trust_factors": "Zero wasted minutes, clear employer-recognized micro-credentials, realistic non-hyped learning curves.",
+      "avoid_factors": "Hour-long video lectures without summaries, academic theory without immediate job utility, expensive bootcamps.",
+      "move_forward_guidance": "Five-minute micro-lessons, zero-friction mobile quizzes, and clear, practical certifications that matter to employers.",
+      "relevant_governed_pathways": [
+        "/skills/daily-micro-sprint",
+        "/literacy/practical-ai-basics",
+        "/career/hourly-advancement"
+      ],
+      "visual_state": "GENERATABLE",
+      "asset_ids": [
+        "PERSONA-SPEC-SJC-001"
+      ],
+      "image_generation_requirement": "PERSONA_SJC_001_IMAGE_SPEC.yaml",
+      "public_safe_status": "VERIFIED_PUBLIC_SAFE",
+      "unresolved_rights_evidence": null,
+      "svg_icon": "<svg class=\"persona-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg>"
+    }
+  ]
+}

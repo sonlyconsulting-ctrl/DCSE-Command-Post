@@ -1,0 +1,34 @@
+spec_id: PERSONA-SPEC-TECH-001
+public_slug: technical-explorer
+public_essence: The Technical Explorer
+governed_source_refs:
+- D10:10
+- Systems_Engineering
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Senior systems engineer and technical explorer
+composition: Cinematic portrait of a focused engineer in their late 40s inspecting
+  precision hardware specifications
+environment: High-tech workshop with schematics, camera lenses, or precision diving
+  instruments on workbenches
+style_wardrobe_constraints: Practical dark tactical or outdoor tech fleece, analytical
+  calm focus
+palette:
+- '#0A192F'
+- '#38BDF8'
+- '#D4AF37'
+- '#0F172A'
+prohibited_inferences:
+- no real client likeness
+- no likeness to IC
+- no fictional superhero tropes
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/technical-explorer/index.html
+alt_text: A senior technical engineer examining precision specifications in a clean
+  engineering workshop.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

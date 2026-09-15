@@ -1,0 +1,33 @@
+spec_id: PERSONA-SPEC-SJC-001
+public_slug: time-poor-starter
+public_essence: The Time-Poor Starter
+governed_source_refs:
+- D10:17
+- AI_Displacement_Shield
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Motivated hourly worker advancing their digital skills in short bursts
+composition: "Candid medium shot of a focused worker completing a quick interactive\
+  \ module on their phone at a caf\xE9 table"
+environment: Quiet diner booth or community hub with coffee cup and notebook during
+  a quick study break
+style_wardrobe_constraints: Casual practical work clothes, intense but hopeful concentration,
+  clean modern aesthetic
+palette:
+- '#0A192F'
+- '#50C878'
+- '#D4AF37'
+- '#334155'
+prohibited_inferences:
+- no real client likeness
+- no panic or defeatist tropes
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/time-poor-starter/index.html
+alt_text: A focused adult completing a 10-minute digital skills lesson on a phone
+  during a study break.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

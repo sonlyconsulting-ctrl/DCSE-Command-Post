@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Comeback Seeker | DCSE Persona Essence</title>
+  <meta name="description" content="Rebuilding household economic foundation on fixed support with relentless resilience and dignity." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A192F;
+      --bg-card: #112240;
+      --bg-card-hover: #172a4c;
+      --bg-surface: #0f1c34;
+      --text-main: #F7FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dark: #997A15;
+      --gold-glow: rgba(212, 175, 55, 0.18);
+      --emerald: #50C878;
+      --emerald-glow: rgba(80, 200, 120, 0.15);
+      --platinum: #E2E8F0;
+      --charcoal: #121820;
+      --border-color: rgba(212, 175, 55, 0.22);
+      --border-subtle: rgba(226, 232, 240, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --shadow-card: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .ambient-glow {
+      position: fixed;
+      top: -20vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 80vh;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(80, 200, 120, 0.04) 40%, rgba(10, 25, 47, 0) 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 2.5rem 1.5rem 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    nav.breadcrumbs {
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    nav.breadcrumbs a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav.breadcrumbs a:hover {
+      text-decoration: underline;
+      color: var(--gold-light);
+    }
+    nav.breadcrumbs span.separator {
+      color: var(--text-subtle);
+    }
+    nav.breadcrumbs span.current {
+      color: var(--text-muted);
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+    }
+    .badge-pill::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    .hero-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-card);
+    }
+    .hero-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+    .hero-avatar svg {
+      width: 52px;
+      height: 52px;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .cluster-tag {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .essence-statement {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--gold-light);
+      line-height: 1.5;
+    }
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      width: 100%;
+      flex-grow: 1;
+    }
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .content-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+    }
+    .content-card h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      color: #FFFFFF;
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card-full {
+      grid-column: 1 / -1;
+    }
+    .text-body {
+      font-size: 0.95rem;
+      color: var(--platinum);
+      line-height: 1.6;
+    }
+    .positive-card {
+      border-left: 4px solid var(--emerald);
+    }
+    .caution-card {
+      border-left: 4px solid var(--gold);
+    }
+    .action-box {
+      background: rgba(80, 200, 120, 0.08);
+      border: 1px solid rgba(80, 200, 120, 0.3);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      margin-top: 1.5rem;
+    }
+    .action-box h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--emerald);
+      margin-bottom: 0.75rem;
+    }
+    .action-box p {
+      font-size: 1.05rem;
+      color: #E6F4EA;
+      line-height: 1.6;
+    }
+    .pathways-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      list-style: none;
+    }
+    .pathway-item a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .pathway-item a:hover {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold);
+      color: #FFFFFF;
+    }
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      background: var(--bg-dark);
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .footer-gov {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+      .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.75rem;
+      }
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <header>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Persona Essence Atlas</a>
+      <span class="separator">/</span>
+      <span class="current">The Comeback Seeker</span>
+    </nav>
+    <div class="badge-pill">
+      <span>D10 Audience Essence</span>
+      <span>•</span>
+      <span>Governed Profile</span>
+      <span>•</span>
+      <span>DCS-E Certified</span>
+    </div>
+    <div class="hero-container">
+      <div class="hero-avatar" aria-label="Visual representation for The Comeback Seeker">
+        <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+      </div>
+      <div class="hero-content">
+        <span class="cluster-tag">Resilience & Dignity</span>
+        <h1>The Comeback Seeker</h1>
+        <p class="essence-statement">"Rebuilding household economic foundation on fixed support with relentless resilience and dignity."</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-grid">
+      <!-- Intended Outcome -->
+      <article class="content-card card-full">
+        <h2>What This Person Is Trying to Accomplish</h2>
+        <p class="text-body">Secure legitimate supplemental income streams without risking disability or fixed retirement entitlements.</p>
+      </article>
+
+      <!-- Motivations -->
+      <article class="content-card positive-card">
+        <h2>Core Motivations</h2>
+        <p class="text-body">Re-entering the productive economy, proving their worth, and establishing dignified supplemental income.</p>
+      </article>
+
+      <!-- Frictions -->
+      <article class="content-card caution-card">
+        <h2>Common Friction & Barriers</h2>
+        <p class="text-body">Fear of predatory scams, past career setbacks, ageism, and anxiety about falling behind technological shifts.</p>
+      </article>
+
+      <!-- Interaction Style -->
+      <article class="content-card">
+        <h2>Preferred Interaction Style</h2>
+        <p class="text-body">Supportive, encouraging, non-judgmental, crystal clear, safety-first.</p>
+      </article>
+
+      <!-- Tech & Media -->
+      <article class="content-card">
+        <h2>Technology & Media Preference</h2>
+        <p class="text-body">Basic to intermediate; requires patient onboarding, clear affirmations, and zero hidden penalties.</p>
+      </article>
+
+      <!-- Trust Factors -->
+      <article class="content-card positive-card">
+        <h2>What Earns Trust</h2>
+        <p class="text-body">Clear legal boundaries on fixed support, dignity-first language, free introductory trial, patient human contact.</p>
+      </article>
+
+      <!-- Avoid Factors -->
+      <article class="content-card caution-card">
+        <h2>What Creates Friction (Avoid)</h2>
+        <p class="text-body">High upfront financial commitments, aggressive countdown timers, shaming language, and speculative trading schemes.</p>
+      </article>
+
+      <!-- Relevant Governed Pathways -->
+      <article class="content-card card-full">
+        <h2>Relevant Governed Pathways</h2>
+        <p class="text-body">Structured navigation pathways calibrated for The Comeback Seeker:</p>
+        <ul class="pathways-list">
+          <li class="pathway-item"><a href="#/dignity/milestone-program"><span>&rarr;</span> Dignity/Milestone Program</a></li>
+          <li class="pathway-item"><a href="#/income/fixed-safe-supplements"><span>&rarr;</span> Income/Fixed Safe Supplements</a></li>
+          <li class="pathway-item"><a href="#/guidance/mentor-circle"><span>&rarr;</span> Guidance/Mentor Circle</a></li>
+        </ul>
+      </article>
+    </div>
+
+    <!-- Move Forward Guidance -->
+    <section class="action-box">
+      <h2>What Helps Them Move Forward</h2>
+      <p>Dignity-first milestone pacing, transparent step-by-step guidance, and direct encouragement from real advocates.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-gov">
+      <span>Task ID: DCSE-PERSONA-WEBSET-20260915-01</span>
+      <span>•</span>
+      <span>Parent Issue: #121 / #116</span>
+      <span>•</span>
+      <span>Public Safe Status: VERIFIED_PUBLIC_SAFE</span>
+      <span>•</span>
+      <span>Visual Resolution: GENERATABLE</span>
+    </div>
+    <p>
+      &copy; 2026 DCSE Command Post. Architecture by <a href="https://www.sonlyconsulting.com" target="_blank" rel="noopener noreferrer">Sonly Consulting</a>. All rights reserved.
+    </p>
+  </footer>
+</body>
+</html>
