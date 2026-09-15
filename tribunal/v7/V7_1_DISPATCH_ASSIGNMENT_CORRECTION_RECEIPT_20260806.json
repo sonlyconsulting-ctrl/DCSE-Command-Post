@@ -1,0 +1,93 @@
+{
+  "receipt_type": "V7_1_DISPATCH_ASSIGNMENT_CORRECTION",
+  "receipt_version": "1.0.0",
+  "generated_at": "2026-08-06T22:25:00Z",
+  "lane": "SYSTEM",
+  "classification": "INTERNAL",
+  "authority": "DCS-directed bounded correction",
+  "subject": {
+    "test_task_key": "TRIB-MSI2KCUN",
+    "title": "DCSE Poll test",
+    "task_id": "5cd1c48b-f1b7-4ae7-ab52-1fc9b42ddf30",
+    "assignment_id": "395ac4dd-12bd-415e-a65f-9a9e04da4762",
+    "assigned_agent_key": "claude_code"
+  },
+  "root_cause": {
+    "dispatch_layer": "CP Dispatch inserted dcse_cp.agent_tasks but did not create dcse_cp.agent_task_assignments.",
+    "consumer_layer": "dcse_cp.get_agent_inbox reads assignment rows, so task-only dispatches were invisible to pollers.",
+    "host_layer": "The Windows scheduled runtime is emitting dcse_cp heartbeats but is not claiming an inbox-visible assignment. v7_worker heartbeat evidence reports a local-only stale branch and stopped updating at 2026-08-06T22:02:50Z."
+  },
+  "database_correction": {
+    "status": "APPLIED_AND_TESTED",
+    "project": "SC-Command-Post",
+    "project_ref": "nevgdyfpxdaloacuutal",
+    "migration_commit": "0916ff27eafad8b23e18bbbb1be3b65ecdecb72d",
+    "migration_path": "supabase/migrations/20260806222000_route_cp_dispatch_to_assignments.sql",
+    "objects": [
+      "dcse_cp.route_task_assignment(uuid,text)",
+      "dcse_cp.auto_route_cp_dispatch_task()",
+      "dcse_cp.trg_route_cp_dispatch_task"
+    ],
+    "routing_contract": [
+      "active agent only",
+      "authorized lane required",
+      "fresh heartbeat required",
+      "poller capability required",
+      "compatible allowed action required",
+      "PS confidential tasks blocked",
+      "DCS-decision-required tasks blocked",
+      "no eligible runtime leaves task pending"
+    ]
+  },
+  "verification": {
+    "existing_test_routed": true,
+    "existing_test_in_claude_inbox": true,
+    "synthetic_trigger_test_key": "TRIB-ROUTER-TEST-20260806-01",
+    "synthetic_trigger_test_result": "PASS",
+    "synthetic_test_deleted": true,
+    "claim_observed": false,
+    "result_observed": false
+  },
+  "security_correction": {
+    "status": "APPLIED_AND_RESCANNED",
+    "commit": "616d5dcfc60bc3bde11d4c54e8fadf00c62453f5",
+    "migration_path": "supabase/migrations/20260806222500_lock_dispatch_router_function_privileges.sql",
+    "finding": "The trigger helper inherited executable privileges for PostgREST roles.",
+    "resolution": "Trigger helper execution revoked from public, anon, authenticated and service_role. Controlled route function restricted to service_role.",
+    "new_router_advisor_findings_remaining": false,
+    "pre_existing_unrelated_advisor_findings_remaining": true
+  },
+  "host_sync_package": {
+    "status": "READY_NOT_EXECUTED",
+    "commit": "87e389bb957deb975e5af9fca9d0c9687aa07df1",
+    "path": "tribunal/v7/runtime-evidence/Invoke-V71ClaudePollerRuntimeSync.ps1",
+    "target_scheduled_task": "DCSE_ClaudeCode_Poller",
+    "target_worker_path": "C:\\DS All Things\\DCSE_Command_Center\\v7.0\\09_WORKERS\\claude_code_poller.ps1",
+    "canonical_commit": "d5ead62093982632b7612e4748c182a036220314",
+    "canonical_poller_git_blob_sha": "daae619a3bc71016fede9cdd29341b51ac68356b",
+    "rollback_included": true,
+    "claim_verification_included": true,
+    "secrets_exposed": false
+  },
+  "disposition": "DB_BRIDGE_PASS_HOST_SYNC_REQUIRED",
+  "verified": [
+    "CP Dispatch assignment-row creation is corrected in the live database.",
+    "TRIB-MSI2KCUN is assigned to claude_code and returned by get_agent_inbox.",
+    "A fresh synthetic CP Dispatch insert automatically created the assignment and event.",
+    "The new trigger-helper privilege finding was corrected and cleared on rescan.",
+    "The current Windows host did not claim the inbox-visible task after a subsequent heartbeat cycle."
+  ],
+  "unknown": [
+    "Exact local bytes currently executed by the Windows scheduled task.",
+    "Whether the host sync script will complete successfully before it is executed on the Windows host.",
+    "Final claim, invocation, result, and reconciliation state for TRIB-MSI2KCUN."
+  ],
+  "exit_criteria": [
+    "Run the bounded host sync script on the Windows Command Center host.",
+    "Verify installed poller blob SHA daae619a3bc71016fede9cdd29341b51ac68356b.",
+    "Observe TRIB-MSI2KCUN assignment transition from assigned to running or a governed blocked result.",
+    "Capture fresh dcse_cp and v7_worker heartbeats from the same runtime cycle.",
+    "Record final task result and GitHub/Supabase/Tribunal reconciliation receipt.",
+    "Obtain independent review before merge or promotion."
+  ]
+}
