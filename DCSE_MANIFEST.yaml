@@ -12,6 +12,7 @@ dcse:
   constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
   operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
   governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
   doctrine_index: "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   bounded_independent_authority: "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
@@ -220,9 +221,10 @@ runtime_task_contract:
 model_harmony:
   authority_chain_required: true
   common_chain:
-    - r5_operative_designation
     - v7_2_master_profile
+    - r5_operative_designation
     - v7_2_governance_sync
+    - participant_navigation_and_project_bootstrap
     - v7_2_doctrine_index
     - express_dcs_directive_registry
     - d22_v7_2_source_reconciliation
