@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0",
+  "package_id": "DCSE-V72-VERCEL-GOVERNANCE-PACKAGE-20260915",
+  "task_id": "DCSE-V72-PLATFORM-GOVERNANCE-20260915-02",
+  "status": "OPERATIVE",
+  "authority": "DCS_LEVEL_0",
+  "approved_date": "2026-09-15",
+  "controls": [
+    {
+      "id": "VCL-ID-001",
+      "area": "project_identity",
+      "rule": "Every governed project has team/project ID, product purpose, repository, branch, root, domains, environment model, owner, lifecycle state, and rollback.",
+      "gate": "before_preview_or_production",
+      "evidence": [
+        "project_identity_record"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-SRC-001",
+      "area": "source_provenance",
+      "rule": "Every preview or production claim binds exact Git SHA to exact Vercel project and deployment.",
+      "gate": "promotion",
+      "evidence": [
+        "git_sha",
+        "deployment_id"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-MONO-001",
+      "area": "monorepo",
+      "rule": "Each project sharing a repository has explicit root and trigger controls; unrelated changes must not fan out uncontrolled deployments.",
+      "gate": "continuous",
+      "evidence": [
+        "root_trigger_map"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-ENV-001",
+      "area": "environment",
+      "rule": "Development, Preview, and Production variable inventories are distinct and values are never recorded in evidence.",
+      "gate": "preview_and_promotion",
+      "evidence": [
+        "variable_name_matrix"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-SEC-001",
+      "area": "secrets",
+      "rule": "Privileged tokens, service-role keys, database credentials, and provider secrets remain server-side in approved secret stores.",
+      "gate": "always",
+      "evidence": [
+        "secret_scan",
+        "placement_review"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-PREV-001",
+      "area": "preview",
+      "rule": "Preview acceptance covers project/root/SHA, protected access, route/API checks, applicable device/UI checks, auth/data/provider path, console/runtime errors, and critical user journey.",
+      "gate": "before_approval",
+      "evidence": [
+        "preview_acceptance"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-PROT-001",
+      "area": "deployment_protection",
+      "rule": "Protection is not disabled merely to simplify agent access.",
+      "gate": "always",
+      "evidence": [
+        "protection_state"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-FN-001",
+      "area": "functions",
+      "rule": "Functions validate input, authenticate/authorize, bound timeouts/retries, keep secrets server-side, return honest failure states, and emit trace/evidence IDs.",
+      "gate": "build_and_runtime_review",
+      "evidence": [
+        "function_review",
+        "runtime_test"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-LOCAL-001",
+      "area": "local_compute",
+      "rule": "Cloud Functions do not assume localhost access to DCS workstations; local inference uses an authorized durable exchange/worker path.",
+      "gate": "architecture_review",
+      "evidence": [
+        "architecture_map"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-DOM-001",
+      "area": "domains",
+      "rule": "Domain changes identify exact domain, owner, project/deployment target, DNS/certificate/canonical behavior, legacy aliases, and rollback.",
+      "gate": "reserved",
+      "evidence": [
+        "domain_change_record"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-STATE-001",
+      "area": "lifecycle",
+      "rule": "BUILT, PREVIEW_READY, VALIDATED, APPROVED, PROMOTED, OBSERVED, RECONCILED, and COMPLETE are distinct states.",
+      "gate": "always",
+      "evidence": [
+        "state_transition_log"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-PROM-001",
+      "area": "promotion",
+      "rule": "Production promotion requires exact validated deployment, checks, environment review, dependencies, domain/customer-path proof, rollback, and DCS approval or verified delegation.",
+      "gate": "reserved",
+      "evidence": [
+        "promotion_checklist",
+        "approval_receipt"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-RB-001",
+      "area": "rollback",
+      "rule": "Rollback records target deployment, reason, scope, user impact, data compatibility, post-rollback verification, and unresolved external side effects.",
+      "gate": "reserved",
+      "evidence": [
+        "rollback_record"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-COST-001",
+      "area": "cost_capacity",
+      "rule": "Quota exhaustion stops retry storms; plan upgrades do not substitute for correcting duplicate projects, bad roots, or uncontrolled triggers.",
+      "gate": "continuous",
+      "evidence": [
+        "usage_limit_record"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "VCL-OBS-001",
+      "area": "observability",
+      "rule": "READY/build state alone is insufficient; runtime logs and user-visible behavior are required when relevant.",
+      "gate": "validation",
+      "evidence": [
+        "logs",
+        "browser_or_api_test"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "VCL-XREC-001",
+      "area": "reconciliation",
+      "rule": "GitHub source, Vercel deployment/runtime, data-side effects, and Tribunal decisions reconcile before COMPLETE.",
+      "gate": "closeout",
+      "evidence": [
+        "cross_system_reconciliation"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-AGENT-001",
+      "area": "agent_authority",
+      "rule": "Inspection authority does not imply deploy, promote, domain, billing, protection, secret, or cross-system mutation authority.",
+      "gate": "before_mutation",
+      "evidence": [
+        "task_preflight"
+      ],
+      "severity": "critical"
+    },
+    {
+      "id": "VCL-SUPA-001",
+      "area": "supabase_boundary",
+      "rule": "Vercel governance promotion does not waive the independent 2026-09-15 Supabase audit HOLD or authorize database remediation.",
+      "gate": "always",
+      "evidence": [
+        "scope_boundary"
+      ],
+      "severity": "critical"
+    }
+  ],
+  "state_machine": [
+    "BUILT",
+    "PREVIEW_READY",
+    "VALIDATED",
+    "APPROVED",
+    "PROMOTED",
+    "OBSERVED",
+    "RECONCILED",
+    "COMPLETE"
+  ],
+  "reserved_actions": [
+    "production_promotion",
+    "domain_change",
+    "billing_or_spend_change",
+    "security_exception",
+    "secret_rotation_or_exposure_response",
+    "destructive_action",
+    "material_architecture_change",
+    "public_release_unless_delegated"
+  ],
+  "package_artifacts": [
+    "governance/v7.2/platforms/vercel/DCSE_VERCEL_AGENT_PLATFORM_DOCTRINE_v1.md",
+    "docs/vercel/DCSE_VERCEL_HUMAN_AGENT_OPERATIONS_MANUAL_v1.md",
+    "docs/vercel/DCSE_Vercel_Masterclass_Annotated_Source_20260915.md",
+    "governance/v7.2/platforms/vercel/DCSE_VERCEL_CONTROL_MATRIX_v1.json",
+    "governance/v7.2/platforms/vercel/DCSE_VERCEL_PROMOTION_ROLLBACK_CHECKLIST_v1.md"
+  ]
+}
