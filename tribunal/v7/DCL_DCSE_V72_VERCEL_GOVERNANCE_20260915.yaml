@@ -46,7 +46,9 @@ dcl:
     - "uploaded source readability confirmed"
     - "live main authority chain read back through GitHub connector"
     - "current main base identified as d95b74ff43eb6107fd210654ecb29c54cdfe1d46"
-    - "final exact-head CI validation required before merge"
+    - "exact-head CI validation run 35000664830 PASS"
+    - "main merge d63d24ee86b3872625b5c088d0d74feec814a2a7 and readback PASS"
+    - "DCSE-DDNA artifact/authority/promotion registry readback PASS"
   evidence:
     - "tribunal/v7/DCSE_VERCEL_GOVERNANCE_PACKAGE_PROMOTION_RECEIPT_20260915.md"
-  exit_status: "CANDIDATE_PENDING_PR_VALIDATION"
+  exit_status: "COMPLETE"
