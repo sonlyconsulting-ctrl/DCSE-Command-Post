@@ -30,6 +30,8 @@ jobs:
 
           required = [
               Path('governance/v7.2/00_START_HERE.md'),
+              Path('governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md'),
+              Path('governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md'),
               Path('governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json'),
               Path('governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md'),
               Path('governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md'),
@@ -108,8 +110,12 @@ jobs:
                   expected_ids = [f'D{i:02d}' for i in range(1, 23)]
                   if ids != expected_ids:
                       errors.append('V7.2 canonical package manifest must contain exactly D01-D22 in order.')
-                  if pkg.get('front_door') != 'governance/v7.2/00_START_HERE.md':
-                      errors.append('V7.2 canonical package manifest front door is incorrect.')
+                  if pkg.get('front_door') != 'governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md':
+                      errors.append('V7.2 canonical package manifest front door must be the Master Profile.')
+                  if pkg.get('navigation_after_master') != 'governance/v7.2/00_START_HERE.md':
+                      errors.append('V7.2 package navigation-after-master route is incorrect.')
+                  if pkg.get('participant_navigation') != 'governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md':
+                      errors.append('V7.2 participant navigation standard is missing or incorrect.')
               except Exception as exc:
                   errors.append(f'V7.2 canonical package manifest invalid JSON: {exc}')
 
@@ -292,7 +298,9 @@ jobs:
           if manifest.is_file():
               manifest_text = read(manifest)
               required_manifest_values = [
-                  'front_door: "governance/v7.2/00_START_HERE.md"',
+                  'front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
+                  'navigation_after_master: "governance/v7.2/00_START_HERE.md"',
+                  'participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"',
                   'doctrine_root: "governance/v7.2/doctrines/"',
                   'complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"',
                   'constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
