@@ -1,6 +1,6 @@
 # DCSE Ollama Worker Supabase Acceptance Runbook v1
 
-**Status:** CANDIDATE
+**Status:** OPERATIVE — DCS Level Zero approved 2026-09-15
 **Architecture:** Supplements `02_ARCHITECTURE/V7_AGENT_WORKER_ARCHITECTURE.md`
 **Security boundary:** `v7_worker` is INTERNAL_SERVER_ONLY and service-role accessible. The model never receives the credential.
 
@@ -55,3 +55,8 @@ Prove that the local Ollama worker remains operational after Supabase privilege 
 ## 6. Pass criteria
 
 PASS requires a complete claim-to-close cycle, durable evidence, zero duplicate claim, correct lane enforcement, preserved service access, and verified client denial. Repository configuration alone is not runtime proof.
+
+
+## Level Zero approval record
+
+DCS Level Zero approved this control as part of Topics 1–6 in the Supabase governance and hardening package on 2026-09-15. Ollama runtime verification, the first anti-drift workflow run, and post-merge deployment observation remain mandatory evidence gates and were not waived.
