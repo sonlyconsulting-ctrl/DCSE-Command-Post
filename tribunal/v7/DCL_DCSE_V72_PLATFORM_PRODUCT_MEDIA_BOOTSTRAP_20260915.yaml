@@ -1,0 +1,77 @@
+dcl:
+  task_id: "DCSE-V72-PRODUCT-MEDIA-BOOTSTRAP-20260915-01"
+  parent_task_id: "DCSE-V72-PLATFORM-GOVERNANCE-20260915-02"
+  date: "2026-09-15"
+  lane: "SC / DCSE Command Post"
+  task_type: "platform_doctrine_product_start_shared_media_bootstrap"
+  authority: "DCS Level 0"
+  source_authority:
+    master_profile: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+    product_methodology: "D20"
+    persistence: "D22"
+    database: "D15"
+    media: ["D12","D18","D19"]
+    brand: ["D08","D09","D10"]
+  applied:
+    - "Master Profile v7.2 first-entry invariant"
+    - "D20 Product Assembly lifecycle"
+    - "D22 canonical source and persistence routing"
+    - "D15 database administration and access boundaries"
+    - "D09/D10 brand and persona asset controls"
+    - "D18/D19 media and visual pipelines"
+    - "Universal participant/project bootstrap"
+    - "Supabase platform doctrine and current official Storage/RLS guidance"
+  created:
+    - "governance/v7.2/platforms/DCSE_PLATFORM_GOVERNANCE_INDEX_v1.md"
+    - "governance/v7.2/platforms/github/DCSE_GITHUB_AGENT_PLATFORM_DOCTRINE_v1.md"
+    - "governance/v7.2/platforms/supabase/DCSE_SUPABASE_AGENT_PLATFORM_DOCTRINE_v1.md"
+    - "governance/v7.2/product/DCSE_PRODUCT_START_GATE_AND_BUILD_DECLARATION_STANDARD_v1.md"
+    - "governance/v7.2/media/DCSE_SHARED_MEDIA_ASSET_STANDARD_v1.md"
+    - "governance/v7.2/media/DCSE_MEDIA_ASSET_MANIFEST_SCHEMA_v1.json"
+    - "governance/v7.2/templates/DCSE_PRODUCT_START_DECLARATION_TEMPLATE.yaml"
+    - "governance/v7.2/templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json"
+  modified:
+    - "D20 canonical and compatibility mirror"
+    - "DCSE project manifest template"
+    - "participant navigation standard"
+    - "00_START_HERE"
+    - "DCSE_MANIFEST.yaml"
+    - "V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
+    - "Doctrine Index canonical and mirror"
+    - "v7.2 governance CI"
+  runtime_changes:
+    - "SC-Command-Post migration 20260915174832 dcse_shared_media_asset_foundation"
+    - "private dcse-media-assets bucket"
+    - "service-only dcse_media.asset_registry"
+  product_rollout:
+    - "SC-TedoSportsLounge PR #4"
+    - "SC-Video-Tool-App PR #2"
+    - "ctj-mental-ingenuity PR #2"
+  excluded:
+    - "PS protected content"
+    - "public media access"
+    - "production deployment"
+    - "secret values"
+    - "unverified CTJ family repository canonicalization"
+  contradictions:
+    - "All participants access resolved as all authorized participants, not public/anonymous access."
+    - "Platform masterclass source is instructional; platform doctrine is authority-bearing only through promoted governance."
+    - "RLS enabled/no policy is intentional for internal server-only media registry with client grants revoked."
+  missing_or_pending:
+    - "canonical GitHub annotated masterclass source is not yet present in docs/github"
+    - "Supabase annotated masterclass source is not yet normalized as a dedicated docs/supabase masterclass source"
+    - "participant identity broker/RLS contract for direct media retrieval"
+    - "binary SHA-256 for current Git-hosted media"
+    - "asset rights/provenance verification"
+    - "DCS-E resolution of product-specific start-gate findings"
+  validation:
+    - "Supabase first migration attempt rolled back after platform-owned table COMMENT permission error"
+    - "corrected migration applied successfully"
+    - "private bucket and service-only registry access read back"
+    - "Supabase security/performance advisors run"
+    - "D20 canonical/mirror byte equality restored"
+    - "Doctrine Index canonical/mirror byte equality restored"
+    - "Command Post exact-head governance validation pending"
+  evidence:
+    - "tribunal/v7/DCSE_PLATFORM_PRODUCT_START_SHARED_MEDIA_FOUNDATION_RECEIPT_20260915.md"
+  exit_status: "CANDIDATE_PENDING_PR_VALIDATION_AND_PRODUCT_PR_CLOSEOUT"
