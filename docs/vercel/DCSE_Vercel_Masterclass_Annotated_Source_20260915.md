@@ -697,6 +697,7 @@ The current team is on the Hobby plan. Limits must be treated as design inputs.
 Vercel reported more than 100 deployments in a day, blocking further preview attempts for a period. Several projects linked to one repository amplified the operational impact.
 
 ### Cost/limit controls
+
 - prevent irrelevant project builds;
 - consolidate true duplicates;
 - use explicit monorepo roots;
