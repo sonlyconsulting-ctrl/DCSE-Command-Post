@@ -153,7 +153,8 @@
     "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md",
     "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md",
     "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md",
-    "governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md"
+    "governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md",
+    "governance/v7.2/execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md"
   ],
   "rules": {
     "historical_versions_are_lineage_only": true,
@@ -218,7 +219,11 @@
       "Vercel",
       "Supabase"
     ],
-    "cross_system_reconciliation_required_for_material_multi_system_work": true
+    "cross_system_reconciliation_required_for_material_multi_system_work": true,
+    "runtime_directive_capture": true,
+    "escd_existing_new_resolution": true,
+    "runtime_directive_capture_standard": "governance/v7.2/execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md",
+    "runtime_directive_capture_authority": "DCS-DIR-20260916-001"
   },
   "candidate_rule_sets": [
     {
