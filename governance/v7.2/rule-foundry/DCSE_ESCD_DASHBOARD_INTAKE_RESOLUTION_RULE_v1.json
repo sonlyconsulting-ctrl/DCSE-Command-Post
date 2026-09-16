@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "rule_id": "DCSE-ESCD-DASHBOARD-INTAKE-RESOLUTION-001",
   "title": "ESCD / Dashboard Intake Must Resolve Existing vs New Before Response",
-  "lifecycle": "CANDIDATE",
-  "authority_status": "candidate_from_dcs_directive",
+  "lifecycle": "OPERATIVE_DIRECTIVE_REPRESENTATION",
+  "authority_status": "ACTIVE_BY_DCS_DIRECTIVE",
   "task_id": "DCSE-ESCD-DASHBOARD-INTAKE-RESOLUTION-20260916-01",
   "lane": "DCSE",
   "entity": "DCSE",
@@ -86,5 +86,7 @@
     "action performed",
     "cross-links where applicable"
   ],
-  "note": "This candidate operationalizes the DCS directive that mentioning ESCD/dashboard is an instruction to resolve and persist the item, not merely discuss placement."
+  "note": "Operational behavior is active by DCS Level 0 directive through the canonical v7.2 standard. This JSON is its deterministic representation; formal Rule Foundry corpus promotion remains separately observable.",
+  "express_directive": "DCS-DIR-20260916-001",
+  "ruleset_promotion_status": "CANDIDATE_FOR_RULE_CORPUS_INTEGRATION"
 }
