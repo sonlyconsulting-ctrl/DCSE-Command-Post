@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.14",
+  "registry_version": "7.2.15",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-16T03:00:00-04:00",
+  "updated_at": "2026-09-16T03:15:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -264,6 +264,25 @@
       "status": "ACTIVE_BY_DCS_DIRECTIVE",
       "incorporation_commit": "8bba2b3d54b0081c271551a7c90ac27587858ad3",
       "supersedes": "No prior single control required all qualifying DCS runtime corrections to be resolved into v7.2 and ESCD persistence."
+    },
+    {
+      "directive_id": "DCS-DIR-20260916-002",
+      "issued_at": "2026-09-16T03:15:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "Standardize header/footer and outer-site chrome across SC and SS product/task web surfaces using reusable entity-aware structure while preserving separate SC/SS brands, approved navigation, support/legal routes, accessibility, and verified commerce-link boundaries.",
+      "canonical_path": "governance/v7.2/web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md",
+      "affected_sections": [
+        "SC/SS web experience structure",
+        "product/task site chrome",
+        "header/footer reuse",
+        "brand separation",
+        "navigation consistency",
+        "commerce link verification"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "ACTIVE_BY_DCS_DIRECTIVE",
+      "incorporation_commit": "e5055b0323f8ad5fb2d308668885098aba05d7ea",
+      "supersedes": "No prior single SC/SS reusable site-chrome standard."
     }
   ]
 }
