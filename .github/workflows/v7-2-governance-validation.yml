@@ -354,6 +354,10 @@ jobs:
 
           print('V7.2 authority, routing, traceability, and safety validation passed.')
 
+      - name: Validate closure integrity guard
+        run: |
+          python -m unittest tests/test_closure_integrity_guard.py -v
+
       - name: Upload governance validation errors
         if: failure()
         uses: actions/upload-artifact@v4

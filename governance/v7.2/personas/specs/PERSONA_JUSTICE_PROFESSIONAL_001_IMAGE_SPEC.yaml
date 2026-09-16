@@ -1,0 +1,32 @@
+spec_id: PERSONA-SPEC-JUSTICE-001
+public_slug: justice-professional
+public_essence: The Justice Professional
+governed_source_refs:
+- D10:16
+- Civil_Rights_Stories
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Legal advocacy researcher and evidentiary analyst
+composition: Authoritative three-quarter portrait of an attorney or legal researcher
+  in an archive office
+environment: Law office or historical archive with organized case dossiers and legal
+  volumes
+style_wardrobe_constraints: Sharp tailored suit or dark blazer, serious ethical determination,
+  neat grooming
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#1E293B'
+- '#CBD5E1'
+prohibited_inferences:
+- no real client likeness
+- no court theatrical melodrama
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/justice-professional/index.html
+alt_text: A legal advocacy researcher organizing case documentation in a legal archive.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

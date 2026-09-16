@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persona Essence Atlas | DCSE Audience Architecture</title>
+  <meta name="description" content="A visual cross-section of the 17 core audience essences designed for across DCSE and Sonly Consulting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A192F;
+      --bg-card: #112240;
+      --bg-card-hover: #172a4c;
+      --bg-surface: #0f1c34;
+      --text-main: #F7FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dark: #997A15;
+      --gold-glow: rgba(212, 175, 55, 0.18);
+      --emerald: #50C878;
+      --emerald-glow: rgba(80, 200, 120, 0.15);
+      --platinum: #E2E8F0;
+      --charcoal: #121820;
+      --border-color: rgba(212, 175, 55, 0.22);
+      --border-subtle: rgba(226, 232, 240, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-card: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+      --shadow-hover: 0 20px 40px -12px rgba(212, 175, 55, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .ambient-glow {
+      position: fixed;
+      top: -20vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 80vh;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(80, 200, 120, 0.04) 40%, rgba(10, 25, 47, 0) 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 3.5rem 1.5rem 2rem;
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.25rem;
+    }
+    .badge-pill::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .lead-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      font-weight: 400;
+    }
+    .controls-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .search-row {
+      display: flex;
+      justify-content: center;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 1.25rem 0.75rem 2.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .search-box input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      width: 16px;
+      height: 16px;
+    }
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+    .filter-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--gold-glow);
+    }
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      flex-grow: 1;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.75rem;
+    }
+    .persona-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+      text-decoration: none;
+      color: inherit;
+    }
+    .persona-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    .persona-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-hover);
+    }
+    .persona-card:hover::before {
+      opacity: 1;
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+    .avatar-wrapper {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      color: var(--gold);
+    }
+    .avatar-wrapper svg {
+      width: 32px;
+      height: 32px;
+    }
+    .header-text { flex: 1; }
+    .cluster-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+    .nickname {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.25;
+    }
+    .essence-quote {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--platinum);
+      margin-bottom: 1.35rem;
+      padding-left: 0.85rem;
+      border-left: 2px solid var(--gold);
+      line-height: 1.5;
+    }
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+    }
+    .meta-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+    .meta-label {
+      color: var(--text-subtle);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .meta-value {
+      color: var(--text-muted);
+    }
+    .meta-value strong {
+      color: var(--platinum);
+      font-weight: 500;
+    }
+    .forward-box {
+      margin-top: auto;
+      background: rgba(80, 200, 120, 0.07);
+      border: 1px solid rgba(80, 200, 120, 0.22);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .forward-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--emerald);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .forward-box p {
+      font-size: 0.86rem;
+      color: #E6F4EA;
+      line-height: 1.45;
+    }
+    .card-footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.85rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .card-footer-cta span.arrow {
+      transition: transform var(--transition-fast);
+    }
+    .persona-card:hover .card-footer-cta span.arrow {
+      transform: translateX(4px);
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+    }
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      background: var(--bg-dark);
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    footer a:hover {
+      color: var(--gold-light);
+      text-decoration: underline;
+    }
+    .footer-gov {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 640px) {
+      .grid-container { grid-template-columns: 1fr; }
+      .meta-row { grid-template-columns: 1fr; gap: 0.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <header>
+    <div class="badge-pill">
+      <span>D10 Audience Architecture</span>
+      <span>•</span>
+      <span>17 Essences</span>
+      <span>•</span>
+      <span>DCS-E Certified</span>
+    </div>
+    <h1>The <span>Persona Essence Atlas</span></h1>
+    <p class="lead-text">
+      A visual cross-section of the people DCSE and Sonly Consulting design for: different stages of life, work, ambition, technology comfort, curiosity, community, commerce, and reinvention.
+    </p>
+  </header>
+
+  <div class="controls-wrapper">
+    <div class="search-row">
+      <div class="search-box">
+        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" id="persona-search" placeholder="Search by essence nickname, motivation, or friction..." aria-label="Search personas" />
+      </div>
+    </div>
+    <div class="filter-tabs" role="tablist" aria-label="Filter persona archetypes">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Essences (17)</button>
+      <button class="filter-btn" data-filter="life-transition" role="tab" aria-selected="false">Life & Transitions (4)</button>
+      <button class="filter-btn" data-filter="enterprise" role="tab" aria-selected="false">Enterprise & Founders (5)</button>
+      <button class="filter-btn" data-filter="curiosity" role="tab" aria-selected="false">Curiosity & Craft (5)</button>
+      <button class="filter-btn" data-filter="hourly" role="tab" aria-selected="false">Time-Constrained & Mobility (3)</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="grid-container" id="persona-grid">
+            <article class="persona-card" data-cluster="life-transition" tabindex="0" aria-label="The Homegrown Navigator">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Family & Community</span>
+            <h2 class="nickname">The Homegrown Navigator</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Guiding family growth, education, and household community with clarity, intention, and calm order."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Empowering household with independent learning, practical family order, wholesome community enrichment, and calm daily routines.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Overcomplicated technological jargon, cluttered dashboards, aggressive marketing funnels, and overwhelming digital noise.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Calm, structured, transparent, step-by-step guidance, and printable or distraction-free materials.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Crystal-clear roadmaps, distraction-free reading modes, and modular practical toolkits that honor family time.</p>
+        </div>
+        <a href="./homegrown-navigator/index.html" class="card-footer-cta" aria-label="Explore The Homegrown Navigator detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Seasoned Sports Circle">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"></circle><path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Sports & Syndicate</span>
+            <h2 class="nickname">The Seasoned Sports Circle</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Deep camaraderie, seasoned sports intellect, and shared investment curiosity across trusted peer groups."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Analyzing competitive metrics, enjoying spirited game discussions, and discovering legitimate syndicate or subscription opportunities.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Surface-level hype, confusing onboarding flows, juvenile betting apps, and platforms that lack genuine respect for domain depth.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Direct, analytical, audio-friendly, peer-to-peer discussion, data tables with actionable summaries.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Transparent syndication mechanics, crisp audio/podcast integration, and rich analytical sports intelligence.</p>
+        </div>
+        <a href="./seasoned-sports-circle/index.html" class="card-footer-cta" aria-label="Explore The Seasoned Sports Circle detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="life-transition" tabindex="0" aria-label="The Second-Act Builders">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Reinvention & Wellness</span>
+            <h2 class="nickname">The Second-Act Builders</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Balancing health consciousness, spiritual vitality, and thriving independent side enterprises in midlife."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Creating financial autonomy, sustaining holistic family health, and turning decades of lived wisdom into rewarding ventures.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Juggling demanding service careers with new business setup; fatigue from fragmented single-purpose tools and time famine.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Empathetic, holistic, dignified, modular evening/weekend study rhythms, clear milestones.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Turnkey enterprise blueprints, wellness-aligned scheduling, and respectful, dignified business coaching.</p>
+        </div>
+        <a href="./second-act-builders/index.html" class="card-footer-cta" aria-label="Explore The Second-Act Builders detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="life-transition" tabindex="0" aria-label="The Social Explorers">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Culture & Travel</span>
+            <h2 class="nickname">The Social Explorers</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Vibrant young parents seeking joyful escapism, social connection, and attainable travel adventures."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Breaking free from mundane workplace routines through enriching family getaways, cultural discovery, and social sharing.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Constrained household budgets, deceptive promotional rates, cumbersome booking interfaces, and lack of child-friendly clarity.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Visual-first, energetic, social-proof driven, mobile-responsive, direct messaging friendly.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Bite-sized mobile visual guides, transparent all-inclusive trip pricing, and vibrant social proofs.</p>
+        </div>
+        <a href="./social-explorers/index.html" class="card-footer-cta" aria-label="Explore The Social Explorers detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Faithful Learner">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Study & Reflection</span>
+            <h2 class="nickname">The Faithful Learner</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Devoted to timeless historical truth, scripture depth, and continuous personal moral reflection."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Engaging in scholarly, historical context study and sharing structured faith lessons across generations.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Superficial modern retellings, intrusive popups, commercial sensationalism, and dilution of theological depth.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Reverent, scholarly, reflective, typographic focus, footnote/cross-reference clarity.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Distraction-free typographic layouts, cross-referenced historical indexes, and searchable theological libraries.</p>
+        </div>
+        <a href="./faithful-learner/index.html" class="card-footer-cta" aria-label="Explore The Faithful Learner detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Curious Retirees">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Mental Agility</span>
+            <h2 class="nickname">The Curious Retirees</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Exercising keen mental agility, playful inquisitiveness, and lifelong learning in their golden years."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Staying intellectually sharp, solving engaging cognitive challenges, and enjoying friendly puzzle competition.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Tiny low-contrast fonts, confusing navigation gestures, timed pressure spikes, and aggressive microtransactions in modern apps.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Patient, generous, clear, celebratory of progress, accessible tactile typography.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>High-contrast cognitive games, thought-provoking quizzes, and clean daily brain challenges with zero pressure.</p>
+        </div>
+        <a href="./curious-retirees/index.html" class="card-footer-cta" aria-label="Explore The Curious Retirees detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="enterprise" tabindex="0" aria-label="The Rebuilding Founders">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Resilient Operations</span>
+            <h2 class="nickname">The Rebuilding Founders</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Seasoned medical supply and commercial service owners modernizing mission-critical operations."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Restructuring supply logistics, stabilizing operational margins, and insulating the business against supply shocks.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Bloated legacy enterprise software, vendor lock-in, brittle inventory synchronization, and endless consulting overhead.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Executive, bottom-line oriented, metric-driven, pragmatic, architecture-conscious.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Lean automated inventory reconciliation, clear margin dashboards, and resilient multi-vendor supply architectures.</p>
+        </div>
+        <a href="./rebuilding-founders/index.html" class="card-footer-cta" aria-label="Explore The Rebuilding Founders detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="enterprise" tabindex="0" aria-label="The Mission Leaders">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Civic & Purpose</span>
+            <h2 class="nickname">The Mission Leaders</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Stewarding community non-profits, faith organizations, and mission-driven service institutions."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Maximizing donor engagement, scaling community outreach, and modernizing volunteer coordination through automation.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Extremely tight operating budgets, donor fatigue, staff burnout from manual recordkeeping, and complex tech curves.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Servant-leader oriented, warm, mission-grounded, clear budget justifications.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Affordable donor stewardship workflows, automated event communications, and volunteer scheduling systems.</p>
+        </div>
+        <a href="./mission-leaders/index.html" class="card-footer-cta" aria-label="Explore The Mission Leaders detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="enterprise" tabindex="0" aria-label="The Local Growth Owner">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Local Commerce</span>
+            <h2 class="nickname">The Local Growth Owner</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Hands-on local service provider turning neighborhood reputation into steady digital customer acquisition."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Driving qualified local inbound calls, booking repeat appointments, and ranking at the top of local searches.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Paying for agency retainers with zero transparency, spam leads, and confusing SEO promises.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Fast, direct, mobile-accessible, results-first, zero corporate fluff.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>High-converting localized landing pages, automated SMS booking confirmations, and verified review funnels.</p>
+        </div>
+        <a href="./local-growth-owner/index.html" class="card-footer-cta" aria-label="Explore The Local Growth Owner detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Technical Explorer">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Engineering & Craft</span>
+            <h2 class="nickname">The Technical Explorer</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Senior technical mind and outdoor enthusiast demanding precision, first-principles logic, and mastery."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Deconstructing complex technical systems, mastering precision skills (photography, diving, mechanics), and optimizing craft.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Marketing fluff, hand-waving explanations, opaque abstractions, and systems that treat users like passive consumers.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">First-principles logic, terminal/CLI friendly, schema-exact, verifiable, zero adjectives.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Uncompromising technical accuracy, verifiable architectural proofs, and deep-dive documentation.</p>
+        </div>
+        <a href="./technical-explorer/index.html" class="card-footer-cta" aria-label="Explore The Technical Explorer detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Creative Next Gen">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Digital & Media</span>
+            <h2 class="nickname">The Creative Next Gen</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Hyper-creative, digitally native polymath blending multimedia art, digital identity, and creative tools."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Expressing distinct creative voice, building digital cultural relevance, and testing emerging AI capabilities organically.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Rigid corporate formats, slow bureaucratic processes, and tools that stifle spontaneous visual creativity.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Visual, non-linear, experimental, fast feedback loops, collaborative canvases.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Rapid generative prototypes, fluid multimedia workflows, and real-time community feedback channels.</p>
+        </div>
+        <a href="./creative-next-gen/index.html" class="card-footer-cta" aria-label="Explore The Creative Next Gen detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="enterprise" tabindex="0" aria-label="The Side-Stream Professionals">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Advisory & Leverage</span>
+            <h2 class="nickname">The Side-Stream Professionals</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Accomplished corporate leaders monetizing specialized expertise into recurring advisory retainers."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Diversifying career revenue without risking their primary corporate role; building high-margin digital advisory assets.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Compliance and confidentiality constraints, scarce executive bandwidth, and distaste for low-rent marketing tactics.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Executive, discreet, polished, highly structured, calendar-protective.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>White-label fractional frameworks, executive client intake workflows, and discrete automated retainer billing.</p>
+        </div>
+        <a href="./side-stream-professionals/index.html" class="card-footer-cta" aria-label="Explore The Side-Stream Professionals detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="hourly" tabindex="0" aria-label="The Working Listener">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Practical Mobility</span>
+            <h2 class="nickname">The Working Listener</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Fulfillment and logistics worker learning continuously through headphones during long physical shifts."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Gaining practical skills, understanding civic economics, and planning a sustainable route to higher-paying trades.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Exhaustion after physical labor, zero screen time during working hours, and complex prerequisite courses.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Audio-first, concise chaptering, no visual requirement, respectful of blue-collar reality.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Audio-first curriculum modules, bite-sized key takeaways, and low-bandwidth offline playback options.</p>
+        </div>
+        <a href="./working-listener/index.html" class="card-footer-cta" aria-label="Explore The Working Listener detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="hourly" tabindex="0" aria-label="The Comeback Seeker">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Resilience & Dignity</span>
+            <h2 class="nickname">The Comeback Seeker</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Rebuilding household economic foundation on fixed support with relentless resilience and dignity."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Re-entering the productive economy, proving their worth, and establishing dignified supplemental income.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Fear of predatory scams, past career setbacks, ageism, and anxiety about falling behind technological shifts.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Supportive, encouraging, non-judgmental, crystal clear, safety-first.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Dignity-first milestone pacing, transparent step-by-step guidance, and direct encouragement from real advocates.</p>
+        </div>
+        <a href="./comeback-seeker/index.html" class="card-footer-cta" aria-label="Explore The Comeback Seeker detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="curiosity" tabindex="0" aria-label="The Frugal Hobbyist">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Hobby & Craft</span>
+            <h2 class="nickname">The Frugal Hobbyist</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Comfortably retired creator turning cherished personal hobbies into modest, zero-risk supplemental streams."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Sharing handcrafted creations, woodworking, or gardening secrets without taking on debt or business stress.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Complex payment gateways, scary tax compliance warnings, and aggressive growth-hacker jargon.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Friendly, straightforward, low-pressure, visually clean, step-by-step.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Zero-stress hobby commerce setups, straightforward local market payment guides, and community showcase templates.</p>
+        </div>
+        <a href="./frugal-hobbyist/index.html" class="card-footer-cta" aria-label="Explore The Frugal Hobbyist detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="enterprise" tabindex="0" aria-label="The Justice Professional">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18"></path><path d="M3 7l9-4 9 4"></path><path d="M6 7l-3 7h6l-3-7z"></path><path d="M18 7l-3 7h6l-3-7z"></path></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Advocacy & Ethics</span>
+            <h2 class="nickname">The Justice Professional</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Legal and advocacy specialist dedicated to authentic civil rights, systemic integrity, and ethical truth."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Documenting systemic discrimination, publishing rigorous case studies, and preserving indelible evidentiary records.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Sensationalized reporting, unverifiable claims, clickbait journalism, and platforms vulnerable to revisionist data tampering.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">Scholarly, precise, evidentiary, citations required, tamper-evident.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Cryptographically verifiable audit trails, tamper-proof evidentiary citation formats, and scholarly dossier publishing.</p>
+        </div>
+        <a href="./justice-professional/index.html" class="card-footer-cta" aria-label="Explore The Justice Professional detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+
+      <article class="persona-card" data-cluster="hourly" tabindex="0" aria-label="The Time-Poor Starter">
+        <div class="card-header">
+          <div class="avatar-wrapper" aria-hidden="true">
+            <svg class="persona-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="header-text">
+            <span class="cluster-tag">Skill Acceleration</span>
+            <h2 class="nickname">The Time-Poor Starter</h2>
+          </div>
+        </div>
+        <div class="essence-quote">
+          "Hourly wage worker feeling the pressure of automation, carving out fifteen-minute learning sprints daily."
+        </div>
+        <div class="meta-list">
+          <div class="meta-row">
+            <span class="meta-label">Motivated By</span>
+            <span class="meta-value">Acquiring future-proof digital literacy and upgrading job tier before automation makes current shifts obsolete.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Friction</span>
+            <span class="meta-value">Zero surplus time between shifts and family care; anxiety and paralysis from confusing tech buzzwords.</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Style</span>
+            <span class="meta-value">High-density micro-learning, progress saved automatically, mobile snackable lessons, empathetic reassurance.</span>
+          </div>
+        </div>
+        <div class="forward-box">
+          <div class="forward-box-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            What Helps Them Move Forward
+          </div>
+          <p>Five-minute micro-lessons, zero-friction mobile quizzes, and clear, practical certifications that matter to employers.</p>
+        </div>
+        <a href="./time-poor-starter/index.html" class="card-footer-cta" aria-label="Explore The Time-Poor Starter detail profile">
+          <span>Explore Detail Profile</span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-gov">
+      <span>Task ID: DCSE-PERSONA-WEBSET-20260915-01</span>
+      <span>•</span>
+      <span>Parent Issue: #121 / #116</span>
+      <span>•</span>
+      <span>Classification: INTERNAL PREVIEW</span>
+      <span>•</span>
+      <span>Public Safe: NO D10 INTERNAL NAMES EXPOSED</span>
+    </div>
+    <p>
+      &copy; 2026 DCSE Command Post. Architecture by <a href="https://www.sonlyconsulting.com" target="_blank" rel="noopener noreferrer">Sonly Consulting</a>. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("persona-search");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = Array.from(document.querySelectorAll(".persona-card"));
+
+    let currentFilter = "all";
+    let searchQuery = "";
+
+    function filterCards() {
+      const q = searchQuery.toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cluster = card.getAttribute("data-cluster");
+        const cardText = card.textContent.toLowerCase();
+        const matchesFilter = currentFilter === "all" || cluster === currentFilter;
+        const matchesSearch = !q || cardText.includes(q);
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = "flex";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      let emptyMsg = document.getElementById("empty-state-msg");
+      if (visibleCount === 0) {
+        if (!emptyMsg) {
+          emptyMsg = document.createElement("div");
+          emptyMsg.id = "empty-state-msg";
+          emptyMsg.className = "empty-state";
+          emptyMsg.innerHTML = "<h3>No matching audience essences found</h3><p>Try clearing your search term or selecting 'All Essences'.</p>";
+          document.getElementById("persona-grid").appendChild(emptyMsg);
+        }
+      } else if (emptyMsg) {
+        emptyMsg.remove();
+      }
+    }
+
+    searchInput.addEventListener("input", e => {
+      searchQuery = e.target.value;
+      filterCards();
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-selected", "true");
+        currentFilter = btn.getAttribute("data-filter");
+        filterCards();
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+{
+  "turn_id": "TURN-ORCH-PERSONA-20260915211308-001",
+  "task_id": "DCSE-PERSONA-WEBSET-20260915-01",
+  "timestamp": "2026-09-15T21:13:08.511300+00:00",
+  "controller_status": "CONVERGENCE_CONTROLLER_OPERATIVE",
+  "disposition": "EXECUTE",
+  "reason": "reversible and low consequence",
+  "admission_decision": "ADMITTED_AND_EXECUTED",
+  "operation": {
+    "id": "DCSE-PERSONA-WEBSET-20260915-01",
+    "action": "build",
+    "entity": "task",
+    "capabilities": [
+      "GOV",
+      "GEN",
+      "MED",
+      "FIL",
+      "CNT"
+    ],
+    "facts": {
+      "task_id": "DCSE-PERSONA-WEBSET-20260915-01",
+      "issue_ref": 121,
+      "parent_issue": 116,
+      "master_profile": "v7.2",
+      "product_start_gate": "PASSED",
+      "shared_media_standard": "GOVERNED",
+      "doctrines": [
+        "D08",
+        "D09",
+        "D10",
+        "D03",
+        "D05"
+      ],
+      "persona_count": 17,
+      "route_count": 18,
+      "public_safe": true,
+      "d10_isolation": true,
+      "reversibility": "REVERSIBLE",
+      "consequence": "LOW",
+      "production_mutation": false,
+      "ps_exposure": false,
+      "secret_exposure": false,
+      "matrix_path": "governance\\v7.2\\personas\\PERSONA_GOVERNED_MATRIX_V1.json",
+      "matrix_sha256": "5e21acf33aa17a4d320400558ffb9db723085ff63a3db81d811d8a749aae6ed2",
+      "mapping_path": "governance\\v7.2\\personas\\INTERNAL_PERSONA_D10_MAPPING_20260915.json",
+      "mapping_sha256": "1e45b2304f2341c6eb8448416f7e5c89d0c969eb2c89fae98538995bdc72caa0",
+      "completion_evidence": "tests/test_persona_webset.py",
+      "evidence_refs": [
+        "governance\\v7.2\\personas\\PERSONA_GOVERNED_MATRIX_V1.json",
+        "governance\\v7.2\\personas\\INTERNAL_PERSONA_D10_MAPPING_20260915.json",
+        "apps/personas/build_personas.py",
+        "personas/index.html",
+        "tests/test_persona_webset.py"
+      ]
+    }
+  },
+  "risk_profile": {
+    "reversibility": "reversible",
+    "consequence": "low"
+  },
+  "rule_evaluation": {
+    "evaluated_count": 8,
+    "results": [
+      {
+        "rule_id": "TASK-01",
+        "verdict": "PASS",
+        "binding": false,
+        "detail": "A task has a stable identity",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-02",
+        "verdict": "UNKNOWN",
+        "binding": false,
+        "detail": "A task states its objective",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-03",
+        "verdict": "UNKNOWN",
+        "binding": false,
+        "detail": "A task carries acceptance criteria",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-04",
+        "verdict": "UNKNOWN",
+        "binding": false,
+        "detail": "A task names an owning authority",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-05",
+        "verdict": "UNKNOWN",
+        "binding": false,
+        "detail": "Lifecycle state is from the closed set",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-06",
+        "verdict": "PASS",
+        "binding": false,
+        "detail": "Complete requires completion evidence",
+        "status": "candidate",
+        "severity": "moderate"
+      },
+      {
+        "rule_id": "TASK-07",
+        "verdict": "PASS",
+        "binding": false,
+        "detail": "Blocked requires a named blocker",
+        "status": "candidate",
+        "severity": "low"
+      },
+      {
+        "rule_id": "TASK-08",
+        "verdict": "PASS",
+        "binding": false,
+        "detail": "A superseded task cannot also be complete",
+        "status": "candidate",
+        "severity": "low"
+      }
+    ]
+  },
+  "workers_delegated": [
+    {
+      "role": "Repository Engineer",
+      "task": "build_personas_webset",
+      "script": "apps/personas/build_personas.py",
+      "exit_code": 0
+    },
+    {
+      "role": "QA Test Engineer",
+      "task": "test_persona_webset",
+      "script": "tests/test_persona_webset.py",
+      "exit_code": 0
+    }
+  ],
+  "deliverables": {
+    "atlas_route": "personas/index.html",
+    "detail_routes_count": 17,
+    "matrix_sha256": "5e21acf33aa17a4d320400558ffb9db723085ff63a3db81d811d8a749aae6ed2",
+    "mapping_sha256": "1e45b2304f2341c6eb8448416f7e5c89d0c969eb2c89fae98538995bdc72caa0",
+    "test_output": "test_01_matrix_schema_and_count (tests.test_persona_webset.TestPersonaWebSet.test_01_matrix_schema_and_count) ... ok\ntest_02_internal_d10_mapping_parity (tests.test_persona_webset.TestPersonaWebSet.test_02_internal_d10_mapping_parity) ... ok\ntest_03_image_specs_coverage (tests.test_persona_webset.TestPersonaWebSet.test_03_image_specs_coverage) ... ok\ntest_04_all_17_routes_generated (tests.test_persona_webset.TestPersonaWebSet.test_04_all_17_routes_generated) ... ok\ntest_05_strict_d10_leakage_isolation (tests.test_persona_webset.TestPersonaWebSet.test_05_strict_d10_leakage_isolation) ... ok\ntest_06_unique_slugs_and_nicknames (tests.test_persona_webset.TestPersonaWebSet.test_06_unique_slugs_and_nicknames) ... ok\ntest_07_required_sections_present (tests.test_persona_webset.TestPersonaWebSet.test_07_required_sections_present) ... ok\ntest_08_bidirectional_links (tests.test_persona_webset.TestPersonaWebSet.test_08_bidirectional_links) ... ok\ntest_09_semantic_and_accessibility (tests.test_persona_webset.TestPersonaWebSet.test_09_semantic_and_accessibility) ... ok\ntest_10_differentiation_no_boilerplate_duplication (tests.test_persona_webset.TestPersonaWebSet.test_10_differentiation_no_boilerplate_duplication) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.637s\n\nOK"
+  },
+  "exit_state": "PERSONA_WEBSET_READY_FOR_DCS_REVIEW"
+}

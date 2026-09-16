@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persona Essence Atlas | DCSE Audience Architecture</title>
+  <meta name="description" content="A visual cross-section of the 17 core audience essences designed for across DCSE and Sonly Consulting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A192F;
+      --bg-card: #112240;
+      --bg-card-hover: #172a4c;
+      --bg-surface: #0f1c34;
+      --text-main: #F7FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --gold-dark: #997A15;
+      --gold-glow: rgba(212, 175, 55, 0.18);
+      --emerald: #50C878;
+      --emerald-glow: rgba(80, 200, 120, 0.15);
+      --platinum: #E2E8F0;
+      --charcoal: #121820;
+      --border-color: rgba(212, 175, 55, 0.22);
+      --border-subtle: rgba(226, 232, 240, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-card: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+      --shadow-hover: 0 20px 40px -12px rgba(212, 175, 55, 0.25);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .ambient-glow {
+      position: fixed;
+      top: -20vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 80vh;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(80, 200, 120, 0.04) 40%, rgba(10, 25, 47, 0) 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    header {
+      position: relative;
+      z-index: 10;
+      padding: 3.5rem 1.5rem 2rem;
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.25rem;
+    }
+    .badge-pill::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--emerald);
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .lead-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      font-weight: 400;
+    }
+    .controls-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .search-row {
+      display: flex;
+      justify-content: center;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 1.25rem 0.75rem 2.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition-fast);
+    }
+    .search-box input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+    .search-icon {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      width: 16px;
+      height: 16px;
+    }
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+    .filter-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--gold-glow);
+    }
+    main {
+      position: relative;
+      z-index: 10;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      flex-grow: 1;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.75rem;
+    }
+    .persona-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: transform var(--transition-smooth), border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+      text-decoration: none;
+      color: inherit;
+    }
+    .persona-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+    .persona-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+      box-shadow: var(--shadow-hover);
+    }
+    .persona-card:hover::before {
+      opacity: 1;
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.15rem;
+      margin-bottom: 1.25rem;
+    }
+    .avatar-wrapper {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      color: var(--gold);
+    }
+    .avatar-wrapper svg {
+      width: 32px;
+      height: 32px;
+    }
+    .header-text { flex: 1; }
+    .cluster-tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+    .nickname {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.25;
+    }
+    .essence-quote {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--platinum);
+      margin-bottom: 1.35rem;
+      padding-left: 0.85rem;
+      border-left: 2px solid var(--gold);
+      line-height: 1.5;
+    }
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+    }
+    .meta-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+    .meta-label {
+      color: var(--text-subtle);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .meta-value {
+      color: var(--text-muted);
+    }
+    .meta-value strong {
+      color: var(--platinum);
+      font-weight: 500;
+    }
+    .forward-box {
+      margin-top: auto;
+      background: rgba(80, 200, 120, 0.07);
+      border: 1px solid rgba(80, 200, 120, 0.22);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .forward-box-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--emerald);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .forward-box p {
+      font-size: 0.86rem;
+      color: #E6F4EA;
+      line-height: 1.45;
+    }
+    .card-footer-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.85rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .card-footer-cta span.arrow {
+      transition: transform var(--transition-fast);
+    }
+    .persona-card:hover .card-footer-cta span.arrow {
+      transform: translateX(4px);
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--text-muted);
+    }
+    footer {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      background: var(--bg-dark);
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    footer a:hover {
+      color: var(--gold-light);
+      text-decoration: underline;
+    }
+    .footer-gov {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 640px) {
+      .grid-container { grid-template-columns: 1fr; }
+      .meta-row { grid-template-columns: 1fr; gap: 0.15rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <header>
+    <div class="badge-pill">
+      <span>D10 Audience Architecture</span>
+      <span>•</span>
+      <span>17 Essences</span>
+      <span>•</span>
+      <span>DCS-E Certified</span>
+    </div>
+    <h1>The <span>Persona Essence Atlas</span></h1>
+    <p class="lead-text">
+      A visual cross-section of the people DCSE and Sonly Consulting design for: different stages of life, work, ambition, technology comfort, curiosity, community, commerce, and reinvention.
+    </p>
+  </header>
+
+  <div class="controls-wrapper">
+    <div class="search-row">
+      <div class="search-box">
+        <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input type="text" id="persona-search" placeholder="Search by essence nickname, motivation, or friction..." aria-label="Search personas" />
+      </div>
+    </div>
+    <div class="filter-tabs" role="tablist" aria-label="Filter persona archetypes">
+      <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Essences (17)</button>
+      <button class="filter-btn" data-filter="life-transition" role="tab" aria-selected="false">Life & Transitions (4)</button>
+      <button class="filter-btn" data-filter="enterprise" role="tab" aria-selected="false">Enterprise & Founders (5)</button>
+      <button class="filter-btn" data-filter="curiosity" role="tab" aria-selected="false">Curiosity & Craft (5)</button>
+      <button class="filter-btn" data-filter="hourly" role="tab" aria-selected="false">Time-Constrained & Mobility (3)</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="grid-container" id="persona-grid">
+      {{grid_items_html}}
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-gov">
+      <span>Task ID: DCSE-PERSONA-WEBSET-20260915-01</span>
+      <span>•</span>
+      <span>Parent Issue: #121 / #116</span>
+      <span>•</span>
+      <span>Classification: INTERNAL PREVIEW</span>
+      <span>•</span>
+      <span>Public Safe: NO D10 INTERNAL NAMES EXPOSED</span>
+    </div>
+    <p>
+      &copy; 2026 DCSE Command Post. Architecture by <a href="https://www.sonlyconsulting.com" target="_blank" rel="noopener noreferrer">Sonly Consulting</a>. All rights reserved.
+    </p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById("persona-search");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = Array.from(document.querySelectorAll(".persona-card"));
+
+    let currentFilter = "all";
+    let searchQuery = "";
+
+    function filterCards() {
+      const q = searchQuery.toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cluster = card.getAttribute("data-cluster");
+        const cardText = card.textContent.toLowerCase();
+        const matchesFilter = currentFilter === "all" || cluster === currentFilter;
+        const matchesSearch = !q || cardText.includes(q);
+
+        if (matchesFilter && matchesSearch) {
+          card.style.display = "flex";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      let emptyMsg = document.getElementById("empty-state-msg");
+      if (visibleCount === 0) {
+        if (!emptyMsg) {
+          emptyMsg = document.createElement("div");
+          emptyMsg.id = "empty-state-msg";
+          emptyMsg.className = "empty-state";
+          emptyMsg.innerHTML = "<h3>No matching audience essences found</h3><p>Try clearing your search term or selecting 'All Essences'.</p>";
+          document.getElementById("persona-grid").appendChild(emptyMsg);
+        }
+      } else if (emptyMsg) {
+        emptyMsg.remove();
+      }
+    }
+
+    searchInput.addEventListener("input", e => {
+      searchQuery = e.target.value;
+      filterCards();
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+        });
+        btn.classList.add("active");
+        btn.setAttribute("aria-selected", "true");
+        currentFilter = btn.getAttribute("data-filter");
+        filterCards();
+      });
+    });
+  </script>
+</body>
+</html>

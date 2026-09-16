@@ -1,0 +1,31 @@
+spec_id: PERSONA-SPEC-HOBBY-001
+public_slug: frugal-hobbyist
+public_essence: The Frugal Hobbyist
+governed_source_refs:
+- D10:15
+- Hobby_Commerce
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Retired artisan enjoying woodworking or gardening craft
+composition: Close medium portrait of a smiling retired maker in a workshop inspecting
+  a finished wooden craft piece
+environment: Organized sunlit home woodworking garage or greenhouse potting bench
+style_wardrobe_constraints: Canvas workshop apron over flannel shirt, weathered capable
+  hands, warm joyful smile
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#8B5A2B'
+- '#F5F5DC'
+prohibited_inferences:
+- no real client likeness
+- no industrial factory danger
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/frugal-hobbyist/index.html
+alt_text: An artisan in an apron admiring a handcrafted wooden item in a sunny workshop.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

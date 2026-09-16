@@ -1,0 +1,33 @@
+spec_id: PERSONA-SPEC-COMEBACK-001
+public_slug: comeback-seeker
+public_essence: The Comeback Seeker
+governed_source_refs:
+- D10:14
+- Economic_Re-entry
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Resilient individual re-entering economic productivity
+composition: Warm upright portrait of a mature individual in their early 50s seated
+  at a clean table reviewing course certificates
+environment: Quiet neighborhood library study room or bright kitchen corner with notebooks
+style_wardrobe_constraints: Neat pressed button-down shirt, serene expression of earned
+  pride, dignified smile
+palette:
+- '#0A192F'
+- '#50C878'
+- '#D4AF37'
+- '#F8FAFC'
+prohibited_inferences:
+- no real client likeness
+- no pity or distress tropes
+- no dilapidated backgrounds
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/comeback-seeker/index.html
+alt_text: A confident person reviewing skill certificates at a tidy desk with quiet
+  dignity.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

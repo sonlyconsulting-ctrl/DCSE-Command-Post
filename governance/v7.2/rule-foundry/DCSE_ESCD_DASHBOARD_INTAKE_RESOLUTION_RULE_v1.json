@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "rule_id": "DCSE-ESCD-DASHBOARD-INTAKE-RESOLUTION-001",
+  "title": "ESCD / Dashboard Intake Must Resolve Existing vs New Before Response",
+  "lifecycle": "OPERATIVE_DIRECTIVE_REPRESENTATION",
+  "authority_status": "ACTIVE_BY_DCS_DIRECTIVE",
+  "task_id": "DCSE-ESCD-DASHBOARD-INTAKE-RESOLUTION-20260916-01",
+  "lane": "DCSE",
+  "entity": "DCSE",
+  "trigger": {
+    "any_of": [
+      "DCS explicitly presents an item for ESCD",
+      "DCS explicitly presents an item for the dashboard",
+      "DCS directs that a task, knowledge item, artifact, idea, decision, risk, or follow-on be recorded in ESCD/dashboard"
+    ]
+  },
+  "required_resolution": [
+    "Classify the presented item by type, lane, entity, authority, sensitivity, and lifecycle.",
+    "Search the predetermined destination registry or registries for an existing matching record before creating anything.",
+    "If an existing record is found, update or link that record rather than creating a duplicate.",
+    "If no existing record is found, create the record immediately in the predetermined destination appropriate to its type.",
+    "Return the resolved state as EXISTING_UPDATED, EXISTING_LINKED, NEW_CREATED, or BLOCKED with evidence identifiers."
+  ],
+  "predetermined_destinations": {
+    "dashboard_item": {
+      "table": "public.items",
+      "types": [
+        "ToDo",
+        "Idea",
+        "Asset",
+        "DCSDCse"
+      ],
+      "purpose": "ESCD/dashboard user-facing work and knowledge surface"
+    },
+    "project_task": {
+      "table": "public.pm_tasks",
+      "purpose": "durable substantive project task with Task ID, owner, status, validation, and closeout lifecycle"
+    },
+    "artifact": {
+      "table": "public.pm_artifacts",
+      "purpose": "durable artifact/evidence pointer; may also surface in public.items as an Asset when useful"
+    },
+    "decision": {
+      "table": "public.pm_decisions",
+      "purpose": "material decision requiring durable decision history"
+    },
+    "risk": {
+      "table": "public.pm_risks",
+      "purpose": "material risk"
+    },
+    "blocker": {
+      "table": "public.pm_blockers",
+      "purpose": "active blocker"
+    },
+    "ddna_knowledge": {
+      "tables": [
+        "dcse_ddna.source_artifacts",
+        "dcse_ddna.extraction_items",
+        "dcse_memory.vector_memory_sources",
+        "dcse_memory.vector_memory_chunks"
+      ],
+      "purpose": "governed source/learning/retrieval state; surfaced to ESCD only when operationally useful"
+    }
+  },
+  "duplicate_resolution": {
+    "precedence": [
+      "exact Task ID / task_code",
+      "exact durable artifact or source key",
+      "same normalized title and project/lane",
+      "same external evidence URL or GitHub issue/commit",
+      "semantic similarity requiring human-safe conservative match"
+    ],
+    "rule": "When uncertain whether a semantically similar record is the same object, link/cross-reference and mark REVIEW rather than silently merge."
+  },
+  "stop_gates": [
+    "PS or protected information would cross into a non-PS dashboard surface",
+    "secret or credential exposure",
+    "unclear destructive or promotion authority",
+    "destination requires schema or permission change not already authorized"
+  ],
+  "completion_evidence": [
+    "resolved classification",
+    "destination",
+    "existing/new determination",
+    "record identifier",
+    "action performed",
+    "cross-links where applicable"
+  ],
+  "note": "Operational behavior is active by DCS Level 0 directive through the canonical v7.2 standard. This JSON is its deterministic representation; formal Rule Foundry corpus promotion remains separately observable.",
+  "express_directive": "DCS-DIR-20260916-001",
+  "ruleset_promotion_status": "CANDIDATE_FOR_RULE_CORPUS_INTEGRATION"
+}

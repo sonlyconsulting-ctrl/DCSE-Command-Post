@@ -96,8 +96,9 @@ Active execution controls:
 - `execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md`
 - `execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md`
 - `execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md`
+- `execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md`
 
-These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
+These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, cross-system completion evidence, continuous capture of qualifying DCS runtime directives into v7.2, and immediate ESCD/dashboard existing-vs-new persistence resolution. They are subordinate to R5 and routed doctrine.
 
 ## Rule Corpus Development
 
@@ -161,3 +162,20 @@ These are separate platform-specific governance modules subordinate to the Maste
 - `templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json`
 
 A material product build SHALL resolve its product-start declaration and media/brand prerequisites before entering material implementation. Missing mandatory inputs route to DCS-E rather than being invented.
+
+
+## SC / SS Shared Web Chrome
+
+- `web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md`
+
+SC and SS product/task web surfaces use reusable entity-aware header/footer structure while preserving distinct approved branding, navigation, support/legal destinations, accessibility, and verified commerce-link boundaries.
+
+
+## DDNA Forensic Recovery and Bulk Media Capture
+
+- `implementations/DCSE_DDNA_FORENSIC_ESTATE_EXTRACTION_PATTERN_20260916.md`
+- `media/DCSE_BULK_MEDIA_AND_CREATIVE_CODEBASE_CAPTURE_STANDARD_v1.md`
+- `media/DCSE_BULK_MEDIA_CAPTURE_CONFIG_TEMPLATE.json`
+- `../../scripts/dcse_media_codebase_bulk_capture.py`
+
+Use the forensic pattern for alias-heavy historical/local-estate recovery where discovery evidence may be strong but canonical synchronization is unresolved. Use the bulk-media standard/tool for domain-first media inventory, hashing, deduplication, code-consumption tracking, and optional safe creative-codebase staging.

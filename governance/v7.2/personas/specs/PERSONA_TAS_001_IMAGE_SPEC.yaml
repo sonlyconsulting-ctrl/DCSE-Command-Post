@@ -1,0 +1,37 @@
+spec_id: PERSONA-SPEC-TAS-001
+public_slug: homegrown-navigator
+public_essence: The Homegrown Navigator
+governed_source_refs:
+- D10:1
+- CTJ-Family
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Calm, thoughtful homeschool parent and community organizer
+composition: Medium portrait in warm natural light, seated by a clean wooden table
+  with notebooks and open books
+environment: Organized sunlit home study room, soft plant in background, quiet and
+  peaceful atmosphere
+style_wardrobe_constraints: Modest casual earth-tone sweater, approachable, warm smile,
+  neat hair, zero logos or branding
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#50C878'
+- '#E2E8F0'
+- '#8B5A2B'
+prohibited_inferences:
+- no real client likeness
+- no distressed expressions
+- no chaotic mess
+- no high-tech screens
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/homegrown-navigator/index.html
+- /personas/index.html
+alt_text: A thoughtful parent seated at a clean wooden study desk in soft morning
+  light, reviewing family learning materials.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED
