@@ -20,6 +20,7 @@ import sys
 from typing import Any, Callable, Dict, List, Optional, Sequence
 
 from adapters import AdapterSet, DEFAULT_ADAPTERS
+from closure import RULE_ID as CLOSURE_RULE_ID, RULESET as CLOSURE_RULESET, SOURCE_REFS as CLOSURE_SOURCE_REFS, VERSION as CLOSURE_VERSION, validate_closeout
 from model import (ACTIVE, BINDING, BOTH, CANDIDATE, ESCALATE, EXECUTE,
                    EXECUTE_AS_CANDIDATE, FAIL, HIGH, IRREVERSIBLE, LOW,
                    MODERATE, NOT_TRIGGERED, Operation, Outcome, PASS, Plan,
@@ -109,6 +110,29 @@ class Orchestrator:
                 CONSEQUENCE_RANK[declared_con] > CONSEQUENCE_RANK[worst_con]:
             worst_con = declared_con
 
+        # Closure integrity is an operative controller invariant sourced from
+        # existing DCS authority. It is injected here rather than left to worker
+        # narrative so a terminal/review-ready state cannot be self-declared.
+        closure = validate_closeout(op)
+        if closure.applicable:
+            closure_result = RuleResult(
+                rule_id=CLOSURE_RULE_ID,
+                verdict=PASS if closure.passed else FAIL,
+                binding=True,
+                detail=closure.detail,
+                missing=tuple(closure.missing),
+                ruleset=CLOSURE_RULESET,
+                version=CLOSURE_VERSION,
+                status="OPERATIVE_DIRECTIVE",
+                source_ref="; ".join(CLOSURE_SOURCE_REFS),
+                severity="HIGH" if not closure.passed else "NORMAL",
+                disposition="" if closure.passed else "HOLD_REMEDIATE",
+                evidence_refs=tuple(closure.evidence_refs),
+            )
+            plan.results.append(closure_result)
+            if self.recorder is not None:
+                self.recorder(CLOSURE_RULE_ID, op, closure_result)
+
         plan.reversibility = worst_rev
         plan.consequence = worst_con
         return plan
@@ -124,6 +148,25 @@ class Orchestrator:
 
         outcome = Outcome(operation_id=op.id, disposition=disposition,
                           reason=reason, plan=plan)
+
+        closure_failure = next(
+            (r for r in plan.results
+             if r.rule_id == CLOSURE_RULE_ID and r.binding and r.verdict == FAIL),
+            None,
+        )
+        if closure_failure is not None:
+            # Refusing the state transition is not the same as declaring the
+            # underlying implementation failed. Preserve technical completion,
+            # expose the evidence gap, and make remediation machine-actionable.
+            outcome.reason = closure_failure.detail
+            outcome.execution = {
+                "performed": False,
+                "state": "TECHNICALLY_COMPLETE",
+                "review_state": "HUMAN_REVIEW_EVIDENCE_PENDING",
+                "requested_transition": op.get("target_state", op.action),
+                "remediation_required": list(closure_failure.missing),
+                "authority_refs": list(CLOSURE_SOURCE_REFS),
+            }
 
         if execute and disposition in (EXECUTE, EXECUTE_AS_CANDIDATE):
             adapter = self.adapters.for_operation(op)
