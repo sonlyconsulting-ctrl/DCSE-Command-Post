@@ -162,3 +162,10 @@ These are separate platform-specific governance modules subordinate to the Maste
 - `templates/DCSE_MEDIA_ASSET_MANIFEST_TEMPLATE.json`
 
 A material product build SHALL resolve its product-start declaration and media/brand prerequisites before entering material implementation. Missing mandatory inputs route to DCS-E rather than being invented.
+
+
+## SC / SS Shared Web Chrome
+
+- `web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md`
+
+SC and SS product/task web surfaces use reusable entity-aware header/footer structure while preserving distinct approved branding, navigation, support/legal destinations, accessibility, and verified commerce-link boundaries.
