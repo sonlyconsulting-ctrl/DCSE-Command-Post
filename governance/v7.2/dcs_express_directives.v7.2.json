@@ -1,8 +1,8 @@
 {
-  "registry_version": "7.2.13",
+  "registry_version": "7.2.14",
   "controller_family": "DCSE Master Profile v7.2",
   "authority": "DCS",
-  "updated_at": "2026-09-11T15:35:00-04:00",
+  "updated_at": "2026-09-16T03:00:00-04:00",
   "directives": [
     {
       "directive_id": "DCS-DIR-20260808-001",
@@ -245,6 +245,25 @@
       "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
       "status": "APPROVED_ACTIVE_AUTHORIZED_FOR_RULE_DEVELOPMENT",
       "supersedes": "Extends DCS-DIR-20260911-003."
+    },
+    {
+      "directive_id": "DCS-DIR-20260916-001",
+      "issued_at": "2026-09-16T03:00:00-04:00",
+      "issuing_authority": "DCS Level 0",
+      "directive_text": "Require prospective DCS operating directions stated as should, must, default, always, whenever, from now on, make this the rule, or equivalent to be resolved against the current v7.2 package and persisted into the narrowest correct v7.2 or project control rather than remaining chat-only. When DCS presents an item for ESCD/dashboard, immediately determine existing versus new, update/link the existing record or create the new record in its predetermined destination, and return evidence.",
+      "canonical_path": "governance/v7.2/execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md",
+      "affected_sections": [
+        "conversation runtime directive capture",
+        "v7.2 continuous learning and governance integration",
+        "ESCD/dashboard intake routing",
+        "existing versus new resolution",
+        "cross-system persistence evidence",
+        "DDNA operational learning inputs"
+      ],
+      "authority_state": "DCS_LEVEL_0_EXPRESS_DIRECTION",
+      "status": "ACTIVE_BY_DCS_DIRECTIVE",
+      "incorporation_commit": "8bba2b3d54b0081c271551a7c90ac27587858ad3",
+      "supersedes": "No prior single control required all qualifying DCS runtime corrections to be resolved into v7.2 and ESCD persistence."
     }
   ]
 }
