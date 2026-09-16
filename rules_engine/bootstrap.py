@@ -19,7 +19,9 @@ import tarfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ARCHIVE = HERE / "DCSE_Rules_Engineering_Operative_v0_2.tar.gz"
+ARCHIVE = HERE / "DCSE_Rules_Engineering_Operative_v0_2_1.tar.gz"
+if not ARCHIVE.exists():
+    ARCHIVE = HERE / "DCSE_Rules_Engineering_Operative_v0_2.tar.gz"
 RUNTIME = HERE / "runtime"
 ROOT = RUNTIME / "DCSE_Rules_Engineering_Operative_v0_2"
 

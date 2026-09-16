@@ -1,0 +1,34 @@
+spec_id: PERSONA-SPEC-LOCAL-001
+public_slug: local-growth-owner
+public_essence: The Local Growth Owner
+governed_source_refs:
+- D10:9
+- Local_Commerce
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Hands-on local service business entrepreneur
+composition: Medium portrait of an energetic trades or service business owner holding
+  a smartphone with booking alerts
+environment: Clean local storefront office or service van exterior in an active neighborhood
+  setting
+style_wardrobe_constraints: Clean branded service polo (fictional generic trade),
+  confident upright posture
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#059669'
+- '#E2E8F0'
+prohibited_inferences:
+- no real client likeness
+- no likeness to Tamyra Kelly
+- no X5O proprietary marks
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/local-growth-owner/index.html
+alt_text: A local service entrepreneur reviewing customer booking confirmations on
+  a smartphone outside their shop.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

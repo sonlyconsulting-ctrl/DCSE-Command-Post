@@ -1,0 +1,143 @@
+{
+  "task_id": "DCSE-PERSONA-WEBSET-20260915-01",
+  "classification": "STRICTLY_INTERNAL_D10_MAPPING",
+  "d10_isolation_rule": "Internal D10 IDs, real names, and client identities SHALL NOT be emitted to public routes or HTML files.",
+  "mappings": [
+    {
+      "id": 1,
+      "internal_d10_id": "1. Tas",
+      "public_nickname": "The Homegrown Navigator",
+      "public_slug": "homegrown-navigator",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 2,
+      "internal_d10_id": "2. Podcast Buddies (Dex, Paul, Jack)",
+      "public_nickname": "The Seasoned Sports Circle",
+      "public_slug": "seasoned-sports-circle",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 3,
+      "internal_d10_id": "3. Leslie & Camelia",
+      "public_nickname": "The Second-Act Builders",
+      "public_slug": "second-act-builders",
+      "visual_state": "FOUND",
+      "unresolved_rights_evidence": "Stock candidate freepik__...28928.jpeg verified licensed non-identifying representation"
+    },
+    {
+      "id": 4,
+      "internal_d10_id": "4. Shy & Crystal",
+      "public_nickname": "The Social Explorers",
+      "public_slug": "social-explorers",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 5,
+      "internal_d10_id": "5. JJr",
+      "public_nickname": "The Faithful Learner",
+      "public_slug": "faithful-learner",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 6,
+      "internal_d10_id": "6. Fred & Clarence",
+      "public_nickname": "The Curious Retirees",
+      "public_slug": "curious-retirees",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 7,
+      "internal_d10_id": "7. BMP (Henry/Elizabeth)",
+      "public_nickname": "The Rebuilding Founders",
+      "public_slug": "rebuilding-founders",
+      "visual_state": "DECISION_REQUIRED",
+      "unresolved_rights_evidence": "Real client portrait LC Ward (c9066bfa...) held internal; representative non-identifying architectural spec used on public route pending Level 0 release."
+    },
+    {
+      "id": 8,
+      "internal_d10_id": "8. Non-Profit/Church Leaders",
+      "public_nickname": "The Mission Leaders",
+      "public_slug": "mission-leaders",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 9,
+      "internal_d10_id": "9. X5O Solutions",
+      "public_nickname": "The Local Growth Owner",
+      "public_slug": "local-growth-owner",
+      "visual_state": "DECISION_REQUIRED",
+      "unresolved_rights_evidence": "Real client portrait Tamyra Kelly (f0acf02e...) held internal; representative non-identifying trade visual used on public route pending Level 0 commercial release."
+    },
+    {
+      "id": 10,
+      "internal_d10_id": "10. Ivan (IC)",
+      "public_nickname": "The Technical Explorer",
+      "public_slug": "technical-explorer",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 11,
+      "internal_d10_id": "11. Gen Z (GN, Nic, ASP)",
+      "public_nickname": "The Creative Next Gen",
+      "public_slug": "creative-next-gen",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 12,
+      "internal_d10_id": "12. Tina & Lisa",
+      "public_nickname": "The Side-Stream Professionals",
+      "public_slug": "side-stream-professionals",
+      "visual_state": "FOUND",
+      "unresolved_rights_evidence": "Stock candidate freepik_assistant...jpeg verified licensed professional non-identifying representation"
+    },
+    {
+      "id": 13,
+      "internal_d10_id": "13. Mik",
+      "public_nickname": "The Working Listener",
+      "public_slug": "working-listener",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 14,
+      "internal_d10_id": "14. CS",
+      "public_nickname": "The Comeback Seeker",
+      "public_slug": "comeback-seeker",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 15,
+      "internal_d10_id": "15. Ccs",
+      "public_nickname": "The Frugal Hobbyist",
+      "public_slug": "frugal-hobbyist",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 16,
+      "internal_d10_id": "16. Jdc",
+      "public_nickname": "The Justice Professional",
+      "public_slug": "justice-professional",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    },
+    {
+      "id": 17,
+      "internal_d10_id": "17. Sjc",
+      "public_nickname": "The Time-Poor Starter",
+      "public_slug": "time-poor-starter",
+      "visual_state": "GENERATABLE",
+      "unresolved_rights_evidence": null
+    }
+  ]
+}

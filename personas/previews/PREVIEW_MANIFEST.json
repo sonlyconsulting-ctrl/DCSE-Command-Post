@@ -1,0 +1,379 @@
+{
+  "task_id": "DCSE-PERSONA-WEBSET-20260915-01",
+  "parent_issue": 121,
+  "source_head_sha": "e7432cd599b98f6a940ccc043a5ec565fa707698",
+  "package_type": "SELF_CONTAINED_HUMAN_REVIEW_PREVIEW_BUNDLE",
+  "created_at": "2026-09-15T23:30:00Z",
+  "page_count": 18,
+  "desktop_screenshots_count": 18,
+  "mobile_screenshots_count": 18,
+  "total_files": 55,
+  "files": [
+    {
+      "type": "ATLAS_INDEX",
+      "route": "/personas/index.html",
+      "relative_path": "index.html",
+      "size_bytes": 55868,
+      "sha256": "f1e92590d54f9593f5968d0856293fdae7f92161242c9604b558ef0aef6c48c4"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "homegrown-navigator",
+      "route": "/personas/homegrown-navigator/index.html",
+      "relative_path": "homegrown-navigator/index.html",
+      "size_bytes": 12781,
+      "sha256": "5cdd7fac085acc43bb718626538ea9275c0ab000ed9df740cf5e64b2a15ca306"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "seasoned-sports-circle",
+      "route": "/personas/seasoned-sports-circle/index.html",
+      "relative_path": "seasoned-sports-circle/index.html",
+      "size_bytes": 12912,
+      "sha256": "643f86df6ee8f778a1b1194bc7b41f4e55f995adc954a7e5d40173dc62dd279d"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "second-act-builders",
+      "route": "/personas/second-act-builders/index.html",
+      "relative_path": "second-act-builders/index.html",
+      "size_bytes": 12761,
+      "sha256": "4ccd20afa52afcd3643245b5f650572fa9c7b751f8aa14df889cf64fe21e30dd"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "social-explorers",
+      "route": "/personas/social-explorers/index.html",
+      "relative_path": "social-explorers/index.html",
+      "size_bytes": 12823,
+      "sha256": "67741b46a21b0f2b20477088f306ebdb6dcb8fc0e7dc1b045006cf0fd650208f"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "faithful-learner",
+      "route": "/personas/faithful-learner/index.html",
+      "relative_path": "faithful-learner/index.html",
+      "size_bytes": 12755,
+      "sha256": "ce6eab0df7eb97481695d3e3c746dbb30afc2d257dba19948ae1f9253cda3840"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "curious-retirees",
+      "route": "/personas/curious-retirees/index.html",
+      "relative_path": "curious-retirees/index.html",
+      "size_bytes": 12766,
+      "sha256": "9987a7c2695afc96a33a58146b63d12db0a761ed2bbd94f5a292b564cf3ffae6"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "rebuilding-founders",
+      "route": "/personas/rebuilding-founders/index.html",
+      "relative_path": "rebuilding-founders/index.html",
+      "size_bytes": 12715,
+      "sha256": "6ab0ca76838eb82d332039338530ff45878781f65df54d6a5738b7f505614eeb"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "mission-leaders",
+      "route": "/personas/mission-leaders/index.html",
+      "relative_path": "mission-leaders/index.html",
+      "size_bytes": 12774,
+      "sha256": "62c49b097b6092915422f43df18d0e828df60feae0f0f4f1b9097b95a7f680e3"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "local-growth-owner",
+      "route": "/personas/local-growth-owner/index.html",
+      "relative_path": "local-growth-owner/index.html",
+      "size_bytes": 12682,
+      "sha256": "8c8bdb92c9373cad81cef2cf5209a4b3b7e40ce07827b0e263f2d7dc50267767"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "technical-explorer",
+      "route": "/personas/technical-explorer/index.html",
+      "relative_path": "technical-explorer/index.html",
+      "size_bytes": 13442,
+      "sha256": "74a49cba2f5e5307b669cfe93163a7e11bf8cb044a05f489968239b1013c4aaa"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "creative-next-gen",
+      "route": "/personas/creative-next-gen/index.html",
+      "relative_path": "creative-next-gen/index.html",
+      "size_bytes": 12813,
+      "sha256": "d49a0e48259c2daa0dd4b7510b025c75ff93ee7460311bd69b1aab57a46e1fc0"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "side-stream-professionals",
+      "route": "/personas/side-stream-professionals/index.html",
+      "relative_path": "side-stream-professionals/index.html",
+      "size_bytes": 12795,
+      "sha256": "f2171ca8401d75621cbc5674c7e01f81bb8368fd4c13a8fcb99d9cf546aca578"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "working-listener",
+      "route": "/personas/working-listener/index.html",
+      "relative_path": "working-listener/index.html",
+      "size_bytes": 12786,
+      "sha256": "1b79d27b4a8cea7bd896e4d22bcabc1b3aa6e1045a370430a27857a1d17f76be"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "comeback-seeker",
+      "route": "/personas/comeback-seeker/index.html",
+      "relative_path": "comeback-seeker/index.html",
+      "size_bytes": 12704,
+      "sha256": "36a2107e3638de3101f51b34115f7817adfd7b3b42026d749772a0ff29bcab9b"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "frugal-hobbyist",
+      "route": "/personas/frugal-hobbyist/index.html",
+      "relative_path": "frugal-hobbyist/index.html",
+      "size_bytes": 12708,
+      "sha256": "f21207f7a8a73bc8062d4b4c4a9646944e7d5c80b5a501bb107870ed7335c875"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "justice-professional",
+      "route": "/personas/justice-professional/index.html",
+      "relative_path": "justice-professional/index.html",
+      "size_bytes": 12839,
+      "sha256": "df4a18037db2c67d945a1816f062f3fe7d25e9935dc46dff4ae8e1844e8f48b7"
+    },
+    {
+      "type": "PERSONA_DETAIL",
+      "slug": "time-poor-starter",
+      "route": "/personas/time-poor-starter/index.html",
+      "relative_path": "time-poor-starter/index.html",
+      "size_bytes": 12751,
+      "sha256": "3666fdfcb1b3b002c4e803813048a491496234f206d6ad8be65578df2990aa3e"
+    },
+    {
+      "type": "REVIEW_GALLERY",
+      "route": "/personas/previews/review_index.html",
+      "relative_path": "previews/review_index.html",
+      "size_bytes": 48211,
+      "sha256": "cbbbd7de9830244f95d5bd4218ebab211c096ae2ae6aea1e27d0e6a207ea1bdd"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\atlas_desktop.png",
+      "size_bytes": 1366501,
+      "sha256": "698625fa92943d470472e3858c2d7c700c406c8b669e81e7e73a8ab2b8601c8f"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\comeback-seeker_desktop.png",
+      "size_bytes": 326003,
+      "sha256": "4686fff10f8d5d48fd05cc008a5e8aaa109fb66f5a8f5d31702a18325c71b965"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\creative-next-gen_desktop.png",
+      "size_bytes": 330096,
+      "sha256": "378abd7baae9175086c7454e0906b5aecf2cede2a92f59fe246dfcf15c79ad97"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\curious-retirees_desktop.png",
+      "size_bytes": 325060,
+      "sha256": "a1f5dd7c86db93bab7558f810e6cb466f2bb475e048046744f9d7b4bf8d5f16e"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\faithful-learner_desktop.png",
+      "size_bytes": 316804,
+      "sha256": "c488865e3df2a1dcb27708f1b439085e8de2490fba1f1888a598bc520d346bbd"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\frugal-hobbyist_desktop.png",
+      "size_bytes": 322985,
+      "sha256": "68f5c52c7a5ab12b31f2bc5683945661815f0ebcb6a73f5d6dee87a6b1ab5422"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\homegrown-navigator_desktop.png",
+      "size_bytes": 327774,
+      "sha256": "e670d4b5b7a238683254f9581562a29b4e3afd4cf245aba4306ed2f750b5c3e7"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\justice-professional_desktop.png",
+      "size_bytes": 333188,
+      "sha256": "50757d92478a5a5c4e74bfe550fff6fd0a2106b4d3623575c6f929680be83f46"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\local-growth-owner_desktop.png",
+      "size_bytes": 322751,
+      "sha256": "6f238cc54c7b37a0184b6bfd5a2404c8f58696ffb0c745c0f251e66f2b4e267e"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\mission-leaders_desktop.png",
+      "size_bytes": 321827,
+      "sha256": "e41a95f2a2b6888418bd611dab82eb4a632b55f833bd19cbf9eecd9785c32f55"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\rebuilding-founders_desktop.png",
+      "size_bytes": 327903,
+      "sha256": "43c012d2296d9797bd02db954c801e557cf0c565230e4e59d5c22f55c0b47791"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\seasoned-sports-circle_desktop.png",
+      "size_bytes": 347355,
+      "sha256": "ef6d0129a5a701cd301694991c30f200aee115753defc8dc1d3b60e5fa20087c"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\second-act-builders_desktop.png",
+      "size_bytes": 328821,
+      "sha256": "349cb8edb481ef6ec66619b12dfd9f06b76e3f69dded7fac5fb8b45e4b346a1c"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\side-stream-professionals_desktop.png",
+      "size_bytes": 330129,
+      "sha256": "bb318dbbf0e4bf74a2a3559ed45ec997b046bc65ee703fa5f5e43654fa6b91bf"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\social-explorers_desktop.png",
+      "size_bytes": 327316,
+      "sha256": "6b9540041f68e2ff8fbbe5fec4bded3654eca5bd75dec5e32d3b8aaffdd5df18"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\technical-explorer_desktop.png",
+      "size_bytes": 327950,
+      "sha256": "c5cc8c1702464d492728a938ddac31b291798704019086aa9b54871f87675d88"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\time-poor-starter_desktop.png",
+      "size_bytes": 325967,
+      "sha256": "e91e6cf9cfc11776253a9bc010411c0d36dcff9c6a9bd6a48b4ec72a1c222345"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\desktop\\working-listener_desktop.png",
+      "size_bytes": 322255,
+      "sha256": "e9635fc344e3604e443be6bf701d6d61177d4413236db1f56d6e50125ef9ad0a"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\atlas_mobile.png",
+      "size_bytes": 1312518,
+      "sha256": "716fb9acd55f23594a7f13999425925b0397723d6f4c3af82d2520da8e7717d9"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\comeback-seeker_mobile.png",
+      "size_bytes": 266992,
+      "sha256": "479c47bd4f85cede48fe83541bec50365ccf59ba9eef8548ef2068ad1a2f6cc7"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\creative-next-gen_mobile.png",
+      "size_bytes": 270147,
+      "sha256": "77391d19deb10b3942362b4c12d94e902ebc75f3668e9411156f767fde38e780"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\curious-retirees_mobile.png",
+      "size_bytes": 265890,
+      "sha256": "953a9b71e6087d24f9e881231c0b22d9c9a7e1321db291173eea2159433fba35"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\faithful-learner_mobile.png",
+      "size_bytes": 259261,
+      "sha256": "587c92823425c62a7ea14ea9493c4777160e267e3e462fcfa8a121e52beb3e1e"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\frugal-hobbyist_mobile.png",
+      "size_bytes": 265075,
+      "sha256": "848066de9811f39a1407e04843fb6e20a6c50996100d18f84e762ada3de4f106"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\homegrown-navigator_mobile.png",
+      "size_bytes": 268670,
+      "sha256": "ce7e7e0b2744bf1883dbb2a1138cd126b34a85be9d2709a6cc6a3be3032bdfd6"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\justice-professional_mobile.png",
+      "size_bytes": 269911,
+      "sha256": "9e5b27532318354f965d97fd951af071394da30c7e6f5c66c75d76b7a128a7f5"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\local-growth-owner_mobile.png",
+      "size_bytes": 262337,
+      "sha256": "26163e78ad1458a9c7f9458d202e211897f458d81b8d6bfc6ea5b1072f013312"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\mission-leaders_mobile.png",
+      "size_bytes": 265983,
+      "sha256": "3fd8c0e4c259a0bd777fbc7d45e29ae9bac77c2b9385fe3a673e4f156e6b3416"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\rebuilding-founders_mobile.png",
+      "size_bytes": 271040,
+      "sha256": "9302e9d0676763b953c4e7b42ed517fecf185b3549f598d418c128a601c2fc9d"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\seasoned-sports-circle_mobile.png",
+      "size_bytes": 285371,
+      "sha256": "77df80e37fd88aa414a190308a32752aefa34bbd7d07b269d1166398f30cad74"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\second-act-builders_mobile.png",
+      "size_bytes": 271947,
+      "sha256": "786d9e7fb0870415cd0649532cf44bc5e7ee70cff7ef039b67c7d9dc2bec86fd"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\side-stream-professionals_mobile.png",
+      "size_bytes": 275908,
+      "sha256": "b8e4fcbf89170fb8b28c9ea4d3f0120b576671edae936240972fc36438188845"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\social-explorers_mobile.png",
+      "size_bytes": 268515,
+      "sha256": "03862e1c0a188e7460a3a26021e5cc9d5bb6d70668c7f2a68028557e76945be9"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\technical-explorer_mobile.png",
+      "size_bytes": 270184,
+      "sha256": "a166902062ff1c8c14a3c33221d4145476854c46ab417f6ee17b6c0b17553b13"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\time-poor-starter_mobile.png",
+      "size_bytes": 268816,
+      "sha256": "641bfe7b9cdf91e6863ab3cdcb3bfa5cb4d1b9069d12d32f7807cb7e22634137"
+    },
+    {
+      "type": "SCREENSHOT",
+      "relative_path": "previews/screenshots\\mobile\\working-listener_mobile.png",
+      "size_bytes": 266447,
+      "sha256": "39f80ded033e5bc6f4cf55c797cea1aaab3be7546bf78e497b5c6d8f83aee7ee"
+    }
+  ]
+}

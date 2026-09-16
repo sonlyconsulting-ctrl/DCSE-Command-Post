@@ -50,6 +50,7 @@ htmlcov/
 
 # Compressed files
 *.zip
+!personas/previews/*.zip
 *.gz
 *.tar
 *.tgz
@@ -68,6 +69,8 @@ htmlcov/
 *.lz
 *.lzo
 *.tar.gz
+!rules_engine/*.tar.gz
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+rules_engine/runtime/

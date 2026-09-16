@@ -1,0 +1,34 @@
+spec_id: PERSONA-SPEC-RETIREE-001
+public_slug: curious-retirees
+public_essence: The Curious Retirees
+governed_source_refs:
+- D10:6
+- Mind_Agility
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Sharp, active senior enjoying an intellectual chess challenge or cognitive
+  puzzle
+composition: Frontal warm medium shot of a cheerful retiree in their late 60s looking
+  up with bright engaging eyes
+environment: Bright community center garden room or home solarium with chess board
+  or tablet on table
+style_wardrobe_constraints: Comfortable linen shirt or knit vest, sharp inquisitive
+  smile, lively posture
+palette:
+- '#0A192F'
+- '#50C878'
+- '#D4AF37'
+- '#FFFFFF'
+prohibited_inferences:
+- no real client likeness
+- no frail medical tropes
+- no clinical hospital surroundings
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/curious-retirees/index.html
+alt_text: A smiling senior enjoying cognitive challenges in a sunlit garden room.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

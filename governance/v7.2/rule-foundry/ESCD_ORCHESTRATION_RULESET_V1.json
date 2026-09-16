@@ -1,0 +1,122 @@
+{
+  "ruleset_id": "ESCD-ORCH-TURN-V1",
+  "authority": "DCS explicit direction 2026-09-13",
+  "governance_status": "OPERATIVE-PATCH",
+  "runtime_status": "PARTIAL",
+  "rules": [
+    {
+      "id": "ORCH-001",
+      "name": "Orchestrator owns control",
+      "stage": "ALL",
+      "enforcement": [
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-002",
+      "name": "Control and payload return together",
+      "stage": "POSTCONDITION",
+      "enforcement": [
+        "database_live",
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-003",
+      "name": "Session and turn lifecycles are separate",
+      "stage": "INGRESS",
+      "enforcement": [
+        "database_live",
+        "ui_required"
+      ]
+    },
+    {
+      "id": "ORCH-004",
+      "name": "Turn reaches defined terminal or waiting state",
+      "stage": "ALL",
+      "enforcement": [
+        "database_live",
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-005",
+      "name": "Supabase durable state outranks transport",
+      "stage": "ALL",
+      "enforcement": [
+        "database_live",
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-006",
+      "name": "Validate return packet before continuation",
+      "stage": "POSTCONDITION",
+      "enforcement": [
+        "database_live",
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-007",
+      "name": "Local Ollama only through authorized local worker",
+      "stage": "PRECONDITION",
+      "enforcement": [
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-008",
+      "name": "Provider-neutral return contract",
+      "stage": "ALL",
+      "enforcement": [
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-009",
+      "name": "Bound orchestration loops",
+      "stage": "EXECUTION",
+      "enforcement": [
+        "runtime_required"
+      ]
+    },
+    {
+      "id": "ORCH-010",
+      "name": "Continue/Resume is contextual",
+      "stage": "RESPONSE",
+      "enforcement": [
+        "ui_required",
+        "runtime_required"
+      ]
+    }
+  ],
+  "terminal_states": [
+    "COMPLETE",
+    "WAITING_USER",
+    "ESCALATED",
+    "REFUSED",
+    "FAILED",
+    "CANCELLED"
+  ],
+  "provider_return_controls": [
+    "RETURN_TO_ORCHESTRATOR",
+    "COMPLETE",
+    "NEEDS_TOOL",
+    "NEEDS_USER",
+    "RETRY",
+    "ESCALATE",
+    "FAIL"
+  ],
+  "canonical_stages": [
+    "INGRESS",
+    "PRECONDITION",
+    "EXECUTION",
+    "POSTCONDITION",
+    "AUDIT",
+    "RESPONSE",
+    "TERMINAL"
+  ],
+  "supabase_migration": "20260914034207_escd_orchestration_exchange_v1",
+  "bootstrap_turn": "TURN-F8097456A9CE"
+}

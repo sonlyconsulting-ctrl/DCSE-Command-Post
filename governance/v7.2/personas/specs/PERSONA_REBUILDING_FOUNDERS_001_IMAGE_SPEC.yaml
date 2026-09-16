@@ -1,0 +1,33 @@
+spec_id: PERSONA-SPEC-REBUILD-001
+public_slug: rebuilding-founders
+public_essence: The Rebuilding Founders
+governed_source_refs:
+- D10:7
+- Operational_Resilience
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Pragmatic commercial operations director inspecting logistics models
+composition: Three-quarter architectural profile of an operations leader reviewing
+  warehouse digital workflows
+environment: Modern clean distribution logistics center or industrial conference mezzanine
+style_wardrobe_constraints: Professional work blazer or crisp collared shirt with
+  high-visibility accents, focused expression
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#64748B'
+- '#1E293B'
+prohibited_inferences:
+- no real client likeness
+- no likeness to LC Ward
+- no specific vendor trademarks
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/rebuilding-founders/index.html
+alt_text: An operations director analyzing supply chain flow metrics in a clean distribution
+  facility.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

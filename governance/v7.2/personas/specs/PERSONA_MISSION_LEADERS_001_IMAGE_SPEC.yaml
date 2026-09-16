@@ -1,0 +1,33 @@
+spec_id: PERSONA-SPEC-MISSION-001
+public_slug: mission-leaders
+public_essence: The Mission Leaders
+governed_source_refs:
+- D10:8
+- Civic_Operations
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Dedicated community non-profit director leading an outreach initiative
+composition: Warm candid portrait of a civic leader engaging with community volunteer
+  plans
+environment: Community civic hall or modern non-profit center with mission banners
+  and daylight
+style_wardrobe_constraints: Business casual, approachable open collar, welcoming sincere
+  expression
+palette:
+- '#0A192F'
+- '#50C878'
+- '#3B82F6'
+- '#F8FAFC'
+prohibited_inferences:
+- no real client likeness
+- no partisan political badges
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/mission-leaders/index.html
+alt_text: A non-profit leader reviewing volunteer outreach schedules in a welcoming
+  community center.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED

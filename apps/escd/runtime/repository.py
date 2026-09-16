@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any
 from urllib import request, error, parse
+import uuid
 
 
 class RepositoryError(RuntimeError):
@@ -19,6 +20,7 @@ class SupabaseRLSClient:
         self.anon_key = anon_key
         self.access_token = access_token
         self.schema = schema
+        self.user_id: str | None = None
 
     def _headers(self, write: bool = False) -> dict[str, str]:
         headers = {
@@ -47,6 +49,171 @@ class SupabaseRLSClient:
         except error.HTTPError as exc:
             exc.read()
             raise RepositoryError(f"postgrest_{exc.code}") from None
+
+
+    def _rpc(self, name: str, payload: dict[str, Any]) -> Any:
+        return self._call("POST", f"rpc/{name}", payload)
+
+    @staticmethod
+    def _one(value: Any) -> dict[str, Any] | None:
+        if isinstance(value, list):
+            return value[0] if value else None
+        return value if isinstance(value, dict) else None
+
+    # Persistent ESCD conversation / orchestration memory.
+    def create_conversation(self, title: str, *, external_ref: str | None = None,
+                            metadata: dict[str, Any] | None = None) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "external_ref": external_ref or f"ESCD-{uuid.uuid4().hex[:16].upper()}",
+            "title": (str(title or "ESCD Conversation").strip() or "ESCD Conversation")[:180],
+            "lane": "DCSE",
+            "confidentiality": "internal",
+            "status": "planned",
+            "source_system": "ESCD",
+            "metadata": metadata or {},
+        }
+        if self.user_id:
+            payload["created_by"] = self.user_id
+            payload["updated_by"] = self.user_id
+        rows = self._call("POST", "conversations", payload)
+        row = self._one(rows)
+        if not row:
+            raise RepositoryError("conversation_create_failed")
+        return row
+
+    def list_conversations(self, limit: int = 50) -> list[dict[str, Any]]:
+        rows = self._rpc("escd_recent_conversations", {"p_limit": max(1, min(int(limit), 200))})
+        return rows if isinstance(rows, list) else []
+
+    def conversation_snapshot(self, conversation_id: str) -> dict[str, Any]:
+        data = self._rpc("escd_conversation_snapshot", {"p_conversation_id": conversation_id})
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        if not row:
+            raise RepositoryError("conversation_not_found")
+        return row
+
+    def append_conversation_turn(self, conversation_id: str, actor_label: str,
+                                 actor_role: str, summary: str,
+                                 metadata: dict[str, Any] | None = None) -> dict[str, Any]:
+        data = self._rpc("escd_append_conversation_turn", {
+            "p_conversation_id": conversation_id,
+            "p_actor_label": actor_label,
+            "p_actor_role": actor_role,
+            "p_summary": summary,
+            "p_metadata": metadata or {},
+        })
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        if not row:
+            raise RepositoryError("conversation_turn_create_failed")
+        return row
+
+    def resolve_subjects(self, text: str, limit: int = 10) -> list[dict[str, Any]]:
+        rows = self._rpc("escd_resolve_subjects", {
+            "p_text": str(text or ""),
+            "p_limit": max(1, min(int(limit), 50)),
+        })
+        return rows if isinstance(rows, list) else []
+
+    def link_subject(self, subject_id: str, object_type: str, object_ref: str,
+                     relation_type: str = "RELATED", confidence: float = 1.0,
+                     provenance: dict[str, Any] | None = None) -> dict[str, Any] | None:
+        payload: dict[str, Any] = {
+            "subject_id": subject_id,
+            "object_type": object_type,
+            "object_ref": str(object_ref),
+            "relation_type": relation_type,
+            "confidence": max(0.0, min(float(confidence), 1.0)),
+            "provenance": provenance or {},
+        }
+        if self.user_id:
+            payload["created_by_user_id"] = self.user_id
+        try:
+            rows = self._call("POST", "escd_subject_links", payload)
+        except RepositoryError as exc:
+            if str(exc) == "postgrest_409":
+                return None
+            raise
+        return self._one(rows)
+
+    def create_turn_classification(self, payload: dict[str, Any]) -> dict[str, Any]:
+        body = dict(payload)
+        if self.user_id:
+            body["created_by_user_id"] = self.user_id
+        try:
+            rows = self._call("POST", "escd_turn_classifications", body)
+        except RepositoryError as exc:
+            if str(exc) == "postgrest_409":
+                turn_id = parse.quote(str(body.get("conversation_turn_id") or ""), safe="")
+                existing = self._call("GET", f"escd_turn_classifications?conversation_turn_id=eq.{turn_id}&select=*&limit=1")
+                row = self._one(existing)
+                if row:
+                    return row
+            raise
+        row = self._one(rows)
+        if not row:
+            raise RepositoryError("turn_classification_create_failed")
+        return row
+
+    def materialize_classification(self, classification_id: str, force: bool = False) -> dict[str, Any]:
+        data = self._rpc("escd_materialize_classification", {
+            "p_classification_id": classification_id,
+            "p_force": bool(force),
+        })
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        return row or {}
+
+    def list_dynamic_knowledge(self, limit: int = 200) -> list[dict[str, Any]]:
+        return self._call(
+            "GET",
+            "escd_knowledge_records?select=*&order=updated_at.desc,id.asc&limit="
+            + str(max(1, min(int(limit), 500))),
+        )
+
+    def submit_operation_turn(self, conversation_id: str, request_turn_id: str,
+                              request_text: str, provider_preference: str | None,
+                              request_payload: dict[str, Any] | None = None) -> dict[str, Any]:
+        data = self._rpc("escd_submit_operation_turn", {
+            "p_conversation_id": conversation_id,
+            "p_request_turn_id": request_turn_id,
+            "p_request_text": request_text,
+            "p_provider_preference": provider_preference,
+            "p_request_payload": request_payload or {},
+        })
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        if not row:
+            raise RepositoryError("operation_turn_submit_failed")
+        return row
+
+    def operation_turn_snapshot(self, turn_key: str) -> dict[str, Any]:
+        data = self._rpc("escd_operation_turn_snapshot", {"p_turn_key": turn_key})
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        if not row:
+            raise RepositoryError("operation_turn_not_found")
+        return row
+
+    def control_operation_turn(self, turn_key: str, action: str,
+                               response_text: str = "") -> dict[str, Any]:
+        data = self._rpc("escd_user_control_turn", {
+            "p_turn_key": turn_key,
+            "p_action": action,
+            "p_response_text": response_text,
+        })
+        row = self._one(data)
+        if row is None and isinstance(data, dict):
+            row = data
+        if not row:
+            raise RepositoryError("operation_turn_control_failed")
+        return row
 
     def operator_self(self) -> list[dict[str, Any]]:
         return self._call("GET", "operator_accounts?select=user_id,email,active,access_scope")

@@ -9,21 +9,31 @@
 
   window.uploadFileToRecord=async function(file,recType,recId){
     if(file.size>10*1024*1024)throw new Error('File exceeds 10 MB limit');
+    let mime=file.type||'';
+    const lowerName=file.name.toLowerCase();
+    if(!mime||mime==='application/x-zip-compressed'||(lowerName.endsWith('.zip')&&mime.includes('zip'))){
+      mime='application/zip';
+    }
+    if(!mime)mime='application/octet-stream';
     const init=await api('/attachments/upload-url',{method:'POST',body:JSON.stringify({
-      file_name:file.name,mime_type:file.type||'application/octet-stream',
+      file_name:file.name,mime_type:mime,
       size:file.size,record_type:recType,record_id:recId
     })});
     const u=init.upload;
     if(!u||!u.signed_upload_url||!u.storage_path)throw new Error('Signed upload authorization missing');
     const uploaded=await fetch(u.signed_upload_url,{
       method:'PUT',body:file,
-      headers:{'Content-Type':file.type||'application/octet-stream','x-upsert':'false'}
+      headers:{'Content-Type':mime,'x-upsert':'false'}
     });
-    if(!uploaded.ok)throw new Error('Direct Storage upload failed ('+uploaded.status+')');
+    if(!uploaded.ok){
+      let errDetail='';
+      try{errDetail=await uploaded.text()}catch(_){}
+      throw new Error('Direct Storage upload failed ('+uploaded.status+(errDetail?': '+errDetail:'')+')');
+    }
     const sha256=await sha256Hex(file);
     return await api('/attachments/finalize',{method:'POST',body:JSON.stringify({
       storage_path:u.storage_path,file_name:file.name,
-      mime_type:file.type||'application/octet-stream',
+      mime_type:mime,
       size:file.size,sha256,record_type:recType,record_id:recId
     })});
   };

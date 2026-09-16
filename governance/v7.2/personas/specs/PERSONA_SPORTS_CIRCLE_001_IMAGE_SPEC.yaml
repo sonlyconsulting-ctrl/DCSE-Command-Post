@@ -1,0 +1,35 @@
+spec_id: PERSONA-SPEC-SPORTS-001
+public_slug: seasoned-sports-circle
+public_essence: The Seasoned Sports Circle
+governed_source_refs:
+- D10:2
+- TSL
+classification: REPRESENTATIVE_FICTIONAL
+visual_role: Mature sports analyst and enthusiast group member
+composition: Waist-up portrait of a distinguished sports enthusiast in their 50s enjoying
+  game analytics on a tablet
+environment: Warm upscale sports lounge with rich wood, subtle leather seating, soft
+  warm ambient lighting
+style_wardrobe_constraints: Tasteful tailored polo or knit sweater, relaxed confidence,
+  glasses, natural greying hair
+palette:
+- '#0A192F'
+- '#D4AF37'
+- '#121820'
+- '#94A3B8'
+prohibited_inferences:
+- no real client likeness
+- no gambling casino visuals
+- no team trademarks
+- no beer mugs
+outputs:
+  minimum_1_1: 1024x1024
+  minimum_16_9: 1920x1080
+target_placements:
+- /personas/seasoned-sports-circle/index.html
+alt_text: A mature sports enthusiast reviewing game analytics on a tablet in a handsome
+  lounge environment.
+provenance:
+  created_by: DCSE-PERSONA-WEBSET-20260915-01
+  pipeline: DCSE Image Gen v1
+review_state: SPEC_APPROVED
