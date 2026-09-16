@@ -1,0 +1,45 @@
+{
+  "task_id": "DCSE-CD-PERSONA-ATLAS-ORCH-WRAP-20260916-01",
+  "parent_issue": 122,
+  "source_key": "DCSE-CD-PERSONA-ATLAS-ORCH-WRAP-20260916",
+  "source_title": "Claude Design Persona Atlas Orchestration Test Wrap",
+  "source_git_commit": "b8b160efd9713f8b7988ff7bb2866b628a42aa47",
+  "source_path": "tribunal/v7/DCSE_CD_PERSONA_ATLAS_ORCHESTRATION_TEST_WRAP_20260916.md",
+  "source_sha256": "a20163d236054530e4338bee2e65e83cb663963752f78bde5d4fa5dc6ec17da1",
+  "authority_status": "observed_evidence",
+  "phase_scope": "phase2a_test",
+  "ingestion_allowed": true,
+  "ddna": {
+    "source_artifact_registered": true,
+    "extraction_run_key": "DDNA-CD-ORCH-WRAP-20260916-R1",
+    "extraction_items": 10,
+    "review_status": "observed",
+    "promoted_rules": 0
+  },
+  "rag": {
+    "vector_source_registered": true,
+    "chunk_count": 10,
+    "embedded_count": 0,
+    "embedding_model_state": "PENDING_EXTERNAL_EMBEDDING",
+    "runtime_ready": false,
+    "next_gate": "EMBED -> RETRIEVAL_EVAL -> FILTER_FIREWALL_EVAL -> UDC_CONSUMPTION"
+  },
+  "chunk_families": [
+    "executive_evidence",
+    "successful_patterns",
+    "root_causes",
+    "residual_findings",
+    "orchestration_pattern",
+    "asset_architecture",
+    "runtime_evidence",
+    "rag_transition",
+    "follow_on_work",
+    "dcl_closing"
+  ],
+  "restrictions": [
+    "Evidence and learning context do not create constitutional authority.",
+    "No RAG runtime-ready claim until embeddings and retrieval evaluations pass.",
+    "No PS content is included in this corpus.",
+    "Provenance and authority metadata must remain attached during retrieval."
+  ]
+}
