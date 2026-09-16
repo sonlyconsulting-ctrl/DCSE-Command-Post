@@ -154,7 +154,8 @@
     "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md",
     "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md",
     "governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md",
-    "governance/v7.2/execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md"
+    "governance/v7.2/execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md",
+    "governance/v7.2/web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md"
   ],
   "rules": {
     "historical_versions_are_lineage_only": true,
@@ -166,7 +167,8 @@
     "no_passive_gate": true
   },
   "implementation_profiles": [
-    "governance/v7.2/implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md"
+    "governance/v7.2/implementations/DCSE_SIX_PRODUCT_SEQUENTIAL_PARALLEL_PRODUCTION_PROFILE_20260911.md",
+    "governance/v7.2/web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md"
   ],
   "capability_module_activation": {
     "authority": "DCS-DIR-20260911-001",
