@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "roots": [
+    "C:\\\\DS All Things\\\\DCSE Media Production",
+    "C:\\\\DS All Things\\\\SC SS All Thangs",
+    "C:\\\\DS All Things\\\\DCSE_DOWNLOAD FILES"
+  ],
+  "default_domain": "unclassified",
+  "max_copy_bytes": 26214400,
+  "include_exts": [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+    ".gif",
+    ".svg",
+    ".mp4",
+    ".webm",
+    ".mov",
+    ".m4v",
+    ".ogg",
+    ".mp3",
+    ".wav",
+    ".m4a",
+    ".pdf"
+  ],
+  "domain_rules": [
+    {
+      "pattern": "ctj|critical thinker",
+      "domain": "ctj"
+    },
+    {
+      "pattern": "tedosports|\\btsl\\b",
+      "domain": "tsl"
+    },
+    {
+      "pattern": "x5o|x50",
+      "domain": "x5o"
+    },
+    {
+      "pattern": "b4l|baller4life",
+      "domain": "b4l"
+    },
+    {
+      "pattern": "smoove|smoove spots|\\\\SS\\\\",
+      "domain": "ss"
+    },
+    {
+      "pattern": "sonly consulting|\\\\SC\\\\",
+      "domain": "sc"
+    },
+    {
+      "pattern": "persona|sisdee|sis dee|sister denise",
+      "domain": "personas"
+    }
+  ],
+  "role_rules": [
+    {
+      "pattern": "logo|wordmark|mark",
+      "role": "brand"
+    },
+    {
+      "pattern": "hero|banner|cover",
+      "role": "hero"
+    },
+    {
+      "pattern": "portrait|persona|headshot",
+      "role": "persona"
+    },
+    {
+      "pattern": "background|texture",
+      "role": "background"
+    },
+    {
+      "pattern": "tutorial|guide|intro",
+      "role": "training_media"
+    }
+  ]
+}
