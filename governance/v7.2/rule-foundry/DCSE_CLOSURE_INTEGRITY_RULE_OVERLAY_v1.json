@@ -1,0 +1,89 @@
+{
+  "artifact_id": "DCSE-CLOSURE-INTEGRITY-RULE-OVERLAY-v1",
+  "status": "candidate",
+  "task_id": "DCSE-CLOSURE-INTEGRITY-GUARD-20260915-01",
+  "issue": 123,
+  "purpose": "Machine-testable overlay of existing closeout authority. Does not create new authority or a new enterprise rule family.",
+  "authority_refs": [
+    "DCS-DIR-20260906-002",
+    "governance/v7.2/DCSE_V7_2_COMPLETION_EVIDENCE_COLLECTOR_DIRECTIVE_20260906.md",
+    "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md",
+    "governance/v7.2/execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md"
+  ],
+  "family_mapping": [
+    "RS02_TASK_CONVERSATION_EXECUTION_LIFECYCLE",
+    "RS04_SOURCE_EVIDENCE_TRUTH",
+    "RS08_WEB_APP_DIGITAL_EXPERIENCE",
+    "RS19_EXCEPTION_CONFLICT_DRIFT"
+  ],
+  "runtime_enforcement_id": "CLOSEOUT-HUMAN-REVIEW-001",
+  "rules": [
+    {
+      "rule_id": "CLOSEOUT-HR-001",
+      "title": "Substantive completion requires human-review evidence",
+      "status": "candidate",
+      "statement": "A substantive task may not transition to COMPLETE, READY_FOR_DCS_REVIEW, CLOSED, or equivalent unless its human-review evidence contract is satisfied.",
+      "tests": {
+        "positive": ["Complete with accessible artifact, exact source identity, validation results, unresolved findings, and applicable review evidence."],
+        "negative": ["Complete with only a narrative completion claim."],
+        "boundary": ["Non-substantive administrative transition explicitly declares substantive=false."]
+      }
+    },
+    {
+      "rule_id": "CLOSEOUT-HR-002",
+      "title": "Browser-renderable work requires preview or documented equivalent",
+      "status": "candidate",
+      "statement": "Browser-renderable work requires a working non-production preview or a self-contained review bundle with a working review index before review-ready completion.",
+      "tests": {
+        "positive": ["Self-contained ZIP plus review index, screenshots, exact SHA, hash manifest, and accessibility evidence."],
+        "negative": ["Repository HTML source links only."],
+        "boundary": ["Preview URL exists but is expired or inaccessible."]
+      }
+    },
+    {
+      "rule_id": "CLOSEOUT-HR-003",
+      "title": "Technical completion is not review readiness",
+      "status": "candidate",
+      "statement": "When implementation and tests are complete but human-review evidence is incomplete, state must remain TECHNICALLY_COMPLETE / HUMAN_REVIEW_EVIDENCE_PENDING.",
+      "tests": {
+        "positive": ["Missing preview evidence yields remediation state without invalidating technical implementation."],
+        "negative": ["Worker self-declares READY_FOR_DCS_REVIEW despite missing review evidence."],
+        "boundary": ["Evidence becomes accessible after prior technical completion and transition is reevaluated."]
+      }
+    },
+    {
+      "rule_id": "CLOSEOUT-HR-004",
+      "title": "Review evidence must be accessible and source-bound",
+      "status": "candidate",
+      "statement": "Review evidence must identify the exact source version/hash and include independent accessibility/probe evidence; an inaccessible or expired reference cannot support review-ready status.",
+      "tests": {
+        "positive": ["Artifact accessibility probe PASS with exact source SHA."],
+        "negative": ["Unverified URL or expired preview."],
+        "boundary": ["Artifact exists but accessibility evidence is missing."]
+      }
+    },
+    {
+      "rule_id": "CLOSEOUT-HR-005",
+      "title": "Review evidence requirements depend on artifact class",
+      "status": "candidate",
+      "statement": "The closeout evidence contract must match the natural review form of the artifact: browser, file/package, runtime/database, or media.",
+      "tests": {
+        "positive": ["Database completion uses runtime query evidence and migration/runtime identity without browser preview."],
+        "negative": ["Browser build attempts to substitute source code link for rendered preview."],
+        "boundary": ["Document requires rendered preview only when raw source is not the natural human-review form."]
+      }
+    },
+    {
+      "rule_id": "CLOSEOUT-HR-006",
+      "title": "Evidence drift downgrades status",
+      "status": "candidate",
+      "statement": "If previously accepted review evidence becomes inaccessible, mismatched, expired, or source-drifted before DCS decision, review-ready status must be downgraded and remediation opened.",
+      "tests": {
+        "positive": ["Accessible review package remains source-bound and valid."],
+        "negative": ["Preview expires before DCS review but READY_FOR_DCS_REVIEW remains asserted."],
+        "boundary": ["New package supersedes expired package and restores readiness after verification."]
+      }
+    }
+  ],
+  "promotion_rule": "Candidate overlay cannot self-promote. Runtime enforcement here is justified only by already-operative underlying authority; this artifact is provenance/normalization pending Rule Foundry reconciliation."
+}
