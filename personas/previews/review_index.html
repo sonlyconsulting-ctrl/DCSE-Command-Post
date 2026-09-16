@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Persona Essence Web Set &mdash; Human Review Gallery</title>
+  <meta name="description" content="Visual human review surface for the 18-page DCSE Persona Essence Web Set." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0A192F;
+      --bg-card: #112240;
+      --bg-surface: #0f1c34;
+      --text-main: #F7FAFC;
+      --text-muted: #94A3B8;
+      --text-subtle: #64748B;
+      --gold: #D4AF37;
+      --gold-light: #F3E5AB;
+      --emerald: #50C878;
+      --platinum: #E2E8F0;
+      --border-color: rgba(212, 175, 55, 0.22);
+      --border-subtle: rgba(226, 232, 240, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-color);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.25rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 0.75rem;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #FFFFFF 30%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .lead-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+    }
+    .gov-specs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.85rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      color: var(--text-subtle);
+      margin-bottom: 2rem;
+    }
+    .gov-specs-bar strong {
+      color: var(--gold-light);
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1.1rem;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .filter-btn.active {
+      background: var(--gold);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+      font-weight: 600;
+    }
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    .review-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      box-shadow: 0 10px 30px -10px rgba(2, 12, 27, 0.7);
+    }
+    .review-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.25rem;
+    }
+    .review-badge-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cluster-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--emerald);
+    }
+    .view-route-id {
+      font-size: 0.75rem;
+      font-family: monospace;
+      color: var(--text-subtle);
+    }
+    .review-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.6rem;
+      color: #FFFFFF;
+    }
+    .card-essence {
+      font-size: 0.98rem;
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg-dark);
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+    }
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--platinum);
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: #FFFFFF;
+    }
+    .review-visuals {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .preview-pane {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .pane-bar {
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .image-wrapper {
+      max-height: 520px;
+      overflow-y: auto;
+      background: #060e1a;
+    }
+    .image-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-subtle);
+      background: var(--bg-dark);
+    }
+    @media (max-width: 900px) {
+      .review-visuals { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge-pill">
+      <span>DCS Level 0 Review Surface</span>
+      <span>&bull;</span>
+      <span>18 Pages</span>
+      <span>&bull;</span>
+      <span>Desktop &amp; Mobile Previews</span>
+    </div>
+    <h1>Persona Web Set <span>Human Review Gallery</span></h1>
+    <p class="lead-text">
+      Self-contained visual review surface for the Persona Essence Atlas and all 17 governed audience essence detail pages.
+    </p>
+    <div class="gov-specs-bar">
+      <span>Task ID: <strong>DCSE-PERSONA-WEBSET-20260915-01</strong></span>
+      <span>Control Issue: <strong>#121</strong></span>
+      <span>Spine PR: <strong>#120</strong></span>
+      <span>Source SHA: <strong>e7432cd599b98f6a940ccc043a5ec565fa707698</strong></span>
+      <span>Status: <strong>READY FOR DCS REVIEW</strong></span>
+    </div>
+    <div class="controls">
+      <button class="filter-btn active" data-filter="all">All Pages (18)</button>
+      <button class="filter-btn" data-filter="life-transition">Family &amp; Transitions (4)</button>
+      <button class="filter-btn" data-filter="enterprise">Enterprise &amp; Founders (5)</button>
+      <button class="filter-btn" data-filter="curiosity">Curiosity &amp; Craft (5)</button>
+      <button class="filter-btn" data-filter="hourly">Time-Constrained &amp; Mobility (3)</button>
+    </div>
+  </header>
+
+  <main id="gallery-container">
+    
+      <article class="review-item" data-cluster="all">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Audience Architecture</span>
+            <span class="view-route-id">#0 &bull; atlas</span>
+          </div>
+          <h2 class="review-title">Persona Essence Atlas (Landing Index)</h2>
+          <p class="card-essence">Shared architectural index across all 17 distinct D10 audience essences.</p>
+          <div class="action-buttons">
+            <a href="../index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/atlas_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/atlas_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/atlas_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/atlas_desktop.png" alt="Desktop view of Persona Essence Atlas (Landing Index)" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/atlas_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/atlas_mobile.png" alt="Mobile view of Persona Essence Atlas (Landing Index)" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="life-transition">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Family & Community</span>
+            <span class="view-route-id">#1 &bull; homegrown-navigator</span>
+          </div>
+          <h2 class="review-title">The Homegrown Navigator</h2>
+          <p class="card-essence">"Guiding family growth, education, and household community with clarity, intention, and calm order."</p>
+          <div class="action-buttons">
+            <a href="../homegrown-navigator/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/homegrown-navigator_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/homegrown-navigator_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/homegrown-navigator_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/homegrown-navigator_desktop.png" alt="Desktop view of The Homegrown Navigator" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/homegrown-navigator_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/homegrown-navigator_mobile.png" alt="Mobile view of The Homegrown Navigator" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Sports & Syndicate</span>
+            <span class="view-route-id">#2 &bull; seasoned-sports-circle</span>
+          </div>
+          <h2 class="review-title">The Seasoned Sports Circle</h2>
+          <p class="card-essence">"Deep camaraderie, seasoned sports intellect, and shared investment curiosity across trusted peer groups."</p>
+          <div class="action-buttons">
+            <a href="../seasoned-sports-circle/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/seasoned-sports-circle_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/seasoned-sports-circle_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/seasoned-sports-circle_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/seasoned-sports-circle_desktop.png" alt="Desktop view of The Seasoned Sports Circle" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/seasoned-sports-circle_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/seasoned-sports-circle_mobile.png" alt="Mobile view of The Seasoned Sports Circle" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="life-transition">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Reinvention & Wellness</span>
+            <span class="view-route-id">#3 &bull; second-act-builders</span>
+          </div>
+          <h2 class="review-title">The Second-Act Builders</h2>
+          <p class="card-essence">"Balancing health consciousness, spiritual vitality, and thriving independent side enterprises in midlife."</p>
+          <div class="action-buttons">
+            <a href="../second-act-builders/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/second-act-builders_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/second-act-builders_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/second-act-builders_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/second-act-builders_desktop.png" alt="Desktop view of The Second-Act Builders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/second-act-builders_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/second-act-builders_mobile.png" alt="Mobile view of The Second-Act Builders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="life-transition">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Culture & Travel</span>
+            <span class="view-route-id">#4 &bull; social-explorers</span>
+          </div>
+          <h2 class="review-title">The Social Explorers</h2>
+          <p class="card-essence">"Vibrant young parents seeking joyful escapism, social connection, and attainable travel adventures."</p>
+          <div class="action-buttons">
+            <a href="../social-explorers/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/social-explorers_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/social-explorers_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/social-explorers_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/social-explorers_desktop.png" alt="Desktop view of The Social Explorers" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/social-explorers_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/social-explorers_mobile.png" alt="Mobile view of The Social Explorers" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Study & Reflection</span>
+            <span class="view-route-id">#5 &bull; faithful-learner</span>
+          </div>
+          <h2 class="review-title">The Faithful Learner</h2>
+          <p class="card-essence">"Devoted to timeless historical truth, scripture depth, and continuous personal moral reflection."</p>
+          <div class="action-buttons">
+            <a href="../faithful-learner/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/faithful-learner_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/faithful-learner_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/faithful-learner_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/faithful-learner_desktop.png" alt="Desktop view of The Faithful Learner" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/faithful-learner_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/faithful-learner_mobile.png" alt="Mobile view of The Faithful Learner" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Mental Agility</span>
+            <span class="view-route-id">#6 &bull; curious-retirees</span>
+          </div>
+          <h2 class="review-title">The Curious Retirees</h2>
+          <p class="card-essence">"Exercising keen mental agility, playful inquisitiveness, and lifelong learning in their golden years."</p>
+          <div class="action-buttons">
+            <a href="../curious-retirees/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/curious-retirees_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/curious-retirees_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/curious-retirees_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/curious-retirees_desktop.png" alt="Desktop view of The Curious Retirees" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/curious-retirees_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/curious-retirees_mobile.png" alt="Mobile view of The Curious Retirees" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="enterprise">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Resilient Operations</span>
+            <span class="view-route-id">#7 &bull; rebuilding-founders</span>
+          </div>
+          <h2 class="review-title">The Rebuilding Founders</h2>
+          <p class="card-essence">"Seasoned medical supply and commercial service owners modernizing mission-critical operations."</p>
+          <div class="action-buttons">
+            <a href="../rebuilding-founders/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/rebuilding-founders_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/rebuilding-founders_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/rebuilding-founders_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/rebuilding-founders_desktop.png" alt="Desktop view of The Rebuilding Founders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/rebuilding-founders_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/rebuilding-founders_mobile.png" alt="Mobile view of The Rebuilding Founders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="enterprise">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Civic & Purpose</span>
+            <span class="view-route-id">#8 &bull; mission-leaders</span>
+          </div>
+          <h2 class="review-title">The Mission Leaders</h2>
+          <p class="card-essence">"Stewarding community non-profits, faith organizations, and mission-driven service institutions."</p>
+          <div class="action-buttons">
+            <a href="../mission-leaders/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/mission-leaders_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/mission-leaders_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/mission-leaders_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/mission-leaders_desktop.png" alt="Desktop view of The Mission Leaders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/mission-leaders_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/mission-leaders_mobile.png" alt="Mobile view of The Mission Leaders" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="enterprise">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Local Commerce</span>
+            <span class="view-route-id">#9 &bull; local-growth-owner</span>
+          </div>
+          <h2 class="review-title">The Local Growth Owner</h2>
+          <p class="card-essence">"Hands-on local service provider turning neighborhood reputation into steady digital customer acquisition."</p>
+          <div class="action-buttons">
+            <a href="../local-growth-owner/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/local-growth-owner_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/local-growth-owner_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/local-growth-owner_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/local-growth-owner_desktop.png" alt="Desktop view of The Local Growth Owner" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/local-growth-owner_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/local-growth-owner_mobile.png" alt="Mobile view of The Local Growth Owner" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Engineering & Craft</span>
+            <span class="view-route-id">#10 &bull; technical-explorer</span>
+          </div>
+          <h2 class="review-title">The Technical Explorer</h2>
+          <p class="card-essence">"Senior technical mind and outdoor enthusiast demanding precision, first-principles logic, and mastery."</p>
+          <div class="action-buttons">
+            <a href="../technical-explorer/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/technical-explorer_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/technical-explorer_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/technical-explorer_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/technical-explorer_desktop.png" alt="Desktop view of The Technical Explorer" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/technical-explorer_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/technical-explorer_mobile.png" alt="Mobile view of The Technical Explorer" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Digital & Media</span>
+            <span class="view-route-id">#11 &bull; creative-next-gen</span>
+          </div>
+          <h2 class="review-title">The Creative Next Gen</h2>
+          <p class="card-essence">"Hyper-creative, digitally native polymath blending multimedia art, digital identity, and creative tools."</p>
+          <div class="action-buttons">
+            <a href="../creative-next-gen/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/creative-next-gen_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/creative-next-gen_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/creative-next-gen_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/creative-next-gen_desktop.png" alt="Desktop view of The Creative Next Gen" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/creative-next-gen_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/creative-next-gen_mobile.png" alt="Mobile view of The Creative Next Gen" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="enterprise">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Advisory & Leverage</span>
+            <span class="view-route-id">#12 &bull; side-stream-professionals</span>
+          </div>
+          <h2 class="review-title">The Side-Stream Professionals</h2>
+          <p class="card-essence">"Accomplished corporate leaders monetizing specialized expertise into recurring advisory retainers."</p>
+          <div class="action-buttons">
+            <a href="../side-stream-professionals/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/side-stream-professionals_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/side-stream-professionals_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/side-stream-professionals_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/side-stream-professionals_desktop.png" alt="Desktop view of The Side-Stream Professionals" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/side-stream-professionals_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/side-stream-professionals_mobile.png" alt="Mobile view of The Side-Stream Professionals" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="hourly">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Practical Mobility</span>
+            <span class="view-route-id">#13 &bull; working-listener</span>
+          </div>
+          <h2 class="review-title">The Working Listener</h2>
+          <p class="card-essence">"Fulfillment and logistics worker learning continuously through headphones during long physical shifts."</p>
+          <div class="action-buttons">
+            <a href="../working-listener/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/working-listener_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/working-listener_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/working-listener_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/working-listener_desktop.png" alt="Desktop view of The Working Listener" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/working-listener_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/working-listener_mobile.png" alt="Mobile view of The Working Listener" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="hourly">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Resilience & Dignity</span>
+            <span class="view-route-id">#14 &bull; comeback-seeker</span>
+          </div>
+          <h2 class="review-title">The Comeback Seeker</h2>
+          <p class="card-essence">"Rebuilding household economic foundation on fixed support with relentless resilience and dignity."</p>
+          <div class="action-buttons">
+            <a href="../comeback-seeker/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/comeback-seeker_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/comeback-seeker_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/comeback-seeker_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/comeback-seeker_desktop.png" alt="Desktop view of The Comeback Seeker" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/comeback-seeker_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/comeback-seeker_mobile.png" alt="Mobile view of The Comeback Seeker" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="curiosity">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Hobby & Craft</span>
+            <span class="view-route-id">#15 &bull; frugal-hobbyist</span>
+          </div>
+          <h2 class="review-title">The Frugal Hobbyist</h2>
+          <p class="card-essence">"Comfortably retired creator turning cherished personal hobbies into modest, zero-risk supplemental streams."</p>
+          <div class="action-buttons">
+            <a href="../frugal-hobbyist/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/frugal-hobbyist_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/frugal-hobbyist_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/frugal-hobbyist_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/frugal-hobbyist_desktop.png" alt="Desktop view of The Frugal Hobbyist" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/frugal-hobbyist_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/frugal-hobbyist_mobile.png" alt="Mobile view of The Frugal Hobbyist" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="enterprise">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Advocacy & Ethics</span>
+            <span class="view-route-id">#16 &bull; justice-professional</span>
+          </div>
+          <h2 class="review-title">The Justice Professional</h2>
+          <p class="card-essence">"Legal and advocacy specialist dedicated to authentic civil rights, systemic integrity, and ethical truth."</p>
+          <div class="action-buttons">
+            <a href="../justice-professional/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/justice-professional_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/justice-professional_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/justice-professional_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/justice-professional_desktop.png" alt="Desktop view of The Justice Professional" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/justice-professional_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/justice-professional_mobile.png" alt="Mobile view of The Justice Professional" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="review-item" data-cluster="hourly">
+        <div class="review-header">
+          <div class="review-badge-row">
+            <span class="cluster-tag">Skill Acceleration</span>
+            <span class="view-route-id">#17 &bull; time-poor-starter</span>
+          </div>
+          <h2 class="review-title">The Time-Poor Starter</h2>
+          <p class="card-essence">"Hourly wage worker feeling the pressure of automation, carving out fifteen-minute learning sprints daily."</p>
+          <div class="action-buttons">
+            <a href="../time-poor-starter/index.html" target="_blank" class="btn btn-primary" rel="noopener">
+              <span>Open Live Web Page &rarr;</span>
+            </a>
+            <a href="screenshots/desktop/time-poor-starter_desktop.png" target="_blank" class="btn btn-secondary" rel="noopener">Desktop Screenshot</a>
+            <a href="screenshots/mobile/time-poor-starter_mobile.png" target="_blank" class="btn btn-secondary" rel="noopener">Mobile Screenshot</a>
+          </div>
+        </div>
+        <div class="review-visuals">
+          <div class="preview-pane desktop-pane">
+            <div class="pane-bar"><span>Desktop (1440 &times; 900)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/desktop/time-poor-starter_desktop.png" target="_blank" title="Click to view full desktop screenshot">
+                <img src="screenshots/desktop/time-poor-starter_desktop.png" alt="Desktop view of The Time-Poor Starter" loading="lazy" />
+              </a>
+            </div>
+          </div>
+          <div class="preview-pane mobile-pane">
+            <div class="pane-bar"><span>Mobile (390 &times; 844)</span></div>
+            <div class="image-wrapper">
+              <a href="screenshots/mobile/time-poor-starter_mobile.png" target="_blank" title="Click to view full mobile screenshot">
+                <img src="screenshots/mobile/time-poor-starter_mobile.png" alt="Mobile view of The Time-Poor Starter" loading="lazy" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+  </main>
+
+  <footer>
+    <p>DCSE Governance v7.2 &bull; Architecture by Sonly Consulting &bull; Zero Public Exposure of Internal D10 Identities</p>
+  </footer>
+
+  <script>
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const items = document.querySelectorAll(".review-item");
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.getAttribute("data-filter");
+
+        items.forEach(item => {
+          const itemCluster = item.getAttribute("data-cluster");
+          if (filter === "all" || itemCluster === filter || itemCluster === "all") {
+            item.style.display = "flex";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

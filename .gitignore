@@ -50,6 +50,7 @@ htmlcov/
 
 # Compressed files
 *.zip
+!personas/previews/*.zip
 *.gz
 *.tar
 *.tgz

@@ -108,17 +108,19 @@ class TestPersonaWebSet(unittest.TestCase):
             self.assertGreater(detail_page.stat().st_size, 1000, f"Detail page {slug} is suspiciously small")
 
     def test_05_strict_d10_leakage_isolation(self):
+        route_html_files = [PERSONAS_DIR / "index.html"] + [PERSONAS_DIR / p["public_slug"] / "index.html" for p in self.personas]
+        self.assertEqual(len(route_html_files), 18, f"Expected 18 route HTML files (1 Atlas + 17 detail), found {len(route_html_files)}")
+
+        # Check ALL HTML files anywhere in personas directory (routes + previews)
         all_html_files = list(PERSONAS_DIR.glob("**/*.html"))
-        self.assertEqual(len(all_html_files), 18, f"Expected 18 HTML files (1 Atlas + 17 detail), found {len(all_html_files)}")
+        self.assertGreaterEqual(len(all_html_files), 18, f"Expected at least 18 HTML files, found {len(all_html_files)}")
 
         leaks = []
         for html_file in all_html_files:
             content = html_file.read_text(encoding="utf-8")
             for token in INTERNAL_D10_RESTRICTED_TOKENS:
-                # Use regex with word boundaries where appropriate to avoid false positives
                 pattern = r"\b" + re.escape(token) + r"\b"
                 if re.search(pattern, content, re.IGNORECASE):
-                    # Check if false positive
                     leaks.append((str(html_file.relative_to(BASE_DIR)), token))
 
         self.assertEqual(len(leaks), 0, f"Detected D10 internal tokens leaked into public HTML: {leaks}")
