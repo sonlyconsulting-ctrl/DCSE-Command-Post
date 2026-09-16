@@ -169,3 +169,13 @@ A material product build SHALL resolve its product-start declaration and media/b
 - `web/DCSE_SC_SS_SHARED_SITE_CHROME_STANDARD_v1.md`
 
 SC and SS product/task web surfaces use reusable entity-aware header/footer structure while preserving distinct approved branding, navigation, support/legal destinations, accessibility, and verified commerce-link boundaries.
+
+
+## DDNA Forensic Recovery and Bulk Media Capture
+
+- `implementations/DCSE_DDNA_FORENSIC_ESTATE_EXTRACTION_PATTERN_20260916.md`
+- `media/DCSE_BULK_MEDIA_AND_CREATIVE_CODEBASE_CAPTURE_STANDARD_v1.md`
+- `media/DCSE_BULK_MEDIA_CAPTURE_CONFIG_TEMPLATE.json`
+- `../../scripts/dcse_media_codebase_bulk_capture.py`
+
+Use the forensic pattern for alias-heavy historical/local-estate recovery where discovery evidence may be strong but canonical synchronization is unresolved. Use the bulk-media standard/tool for domain-first media inventory, hashing, deduplication, code-consumption tracking, and optional safe creative-codebase staging.
