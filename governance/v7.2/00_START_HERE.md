@@ -96,8 +96,9 @@ Active execution controls:
 - `execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md`
 - `execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md`
 - `execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md`
+- `execution/DCSE_RUNTIME_DIRECTIVE_CAPTURE_AND_ESCD_ROUTING_STANDARD_v1.md`
 
-These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
+These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, cross-system completion evidence, continuous capture of qualifying DCS runtime directives into v7.2, and immediate ESCD/dashboard existing-vs-new persistence resolution. They are subordinate to R5 and routed doctrine.
 
 ## Rule Corpus Development
 
