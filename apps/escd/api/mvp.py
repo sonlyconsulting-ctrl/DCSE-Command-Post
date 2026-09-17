@@ -33,7 +33,19 @@ from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_us
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
 from apps.escd.runtime.mvp_data import (
     MVPServiceError,
+    canonical_item_payload,
+    canonical_record,
     chat,
+    create_asset,
+    create_knowledge,
+    is_uuid,
+    merge_live_and_canonical,
+    orchestrator_agents,
+    orchestrator_reply,
+    orchestrator_send,
+    orchestrator_threads,
+    update_asset,
+    update_knowledge,
     get_canonical_convergence_items,
     get_conversation_state,
     list_assets,
@@ -51,7 +63,7 @@ from apps.escd.runtime.mvp_data import (
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.4"
+    server_version = "ESCD-MVP/0.6.1"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -87,7 +99,9 @@ class handler(BaseHTTPRequestHandler):
         return auth, repo
 
     def _auth(self):
-        return self._repo_for_token(extract_bearer(self.headers))[1]
+        auth, repo = self._repo_for_token(extract_bearer(self.headers))
+        self._operator_email = auth.email or ""
+        return repo
 
     def _login(self, payload: dict):
         email_value = str(payload.get("email") or "").strip().lower()
@@ -113,7 +127,20 @@ class handler(BaseHTTPRequestHandler):
         auth, _ = self._repo_for_token(token)
         return {"access_token": token, "expires_in": int(session.get("expires_in") or 3600), "user": {"email": auth.email}}
 
+    def _resolve_item_id(self, repo: SupabaseRLSClient, item_id: str) -> str:
+        """Canonical registry tasks and ideas are read-only; editing one adopts it into escd_items first."""
+        if is_uuid(item_id):
+            return item_id
+        existing = repo.get_item_by_key(item_id)
+        if existing:
+            return str(existing["id"])
+        canonical = canonical_record("task", item_id) or canonical_record("idea", item_id)
+        if not canonical:
+            raise RepositoryError("item_not_found")
+        return str(repo.create_item(canonical_item_payload(canonical))["id"])
+
     def _patch_item_governed(self, repo: SupabaseRLSClient, item_id: str, update: dict):
+        item_id = self._resolve_item_id(repo, item_id)
         current = repo.get_item(item_id)
         if not current:
             raise RepositoryError("item_not_found")
@@ -132,6 +159,8 @@ class handler(BaseHTTPRequestHandler):
             rest = dict(update)
             rest["status"] = "completed"
             return repo.patch_item(item_id, rest)
+        if target == "archived" and current_status == "archived":
+            return current
         if target == "archived" and current_status not in {"completed", "cancelled"}:
             first = dict(update)
             first["status"] = "cancelled"
@@ -143,7 +172,7 @@ class handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.4", "providers": provider_status()})
+            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.6.1", "providers": provider_status()})
             return
 
         try:
@@ -155,21 +184,22 @@ class handler(BaseHTTPRequestHandler):
                 except Exception:
                     pass
                 canonical = get_canonical_convergence_items()
-                merged = list(live_items)
-                existing_keys = {str(x.get("id") or x.get("item_key") or "") for x in live_items}
-                for it in canonical.get("tasks", []) + canonical.get("ideas", []):
-                    if str(it.get("id") or it.get("item_key")) not in existing_keys:
-                        merged.append(it)
+                merged = merge_live_and_canonical(live_items, canonical.get("tasks", []) + canonical.get("ideas", []), ("item_key",))
                 self._json(200, {"ok": True, "items": merged})
             elif path == "/api/mvp/assets":
                 self._json(200, {"ok": True, "assets": list_assets()})
             elif path == "/api/mvp/knowledge":
-                self._json(200, {"ok": True, "knowledge": list_knowledge()})
+                self._json(200, {"ok": True, "knowledge": list_knowledge(repo=repo)})
             elif path == "/api/mvp/ddna":
                 self._json(200, {"ok": True, "records": list_ddna_sources()})
             elif path == "/api/mvp/ddna/jobs":
                 source_id = str((query.get("source_id") or [""])[0])
                 self._json(200, {"ok": True, "jobs": list_ddna_jobs(source_id) if source_id else []})
+            elif path == "/api/mvp/orchestrator/agents":
+                self._json(200, {"ok": True, "agents": orchestrator_agents()})
+            elif path == "/api/mvp/orchestrator/threads":
+                days = int((query.get("days") or [7])[0])
+                self._json(200, dict({"ok": True}, **orchestrator_threads(days)))
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
             elif path == "/api/mvp/conversation":
@@ -225,6 +255,17 @@ class handler(BaseHTTPRequestHandler):
                     "evidence_refs": [],
                 })
                 self._json(201, {"ok": True, "item": item})
+            elif path == "/api/mvp/knowledge":
+                self._json(201, {"ok": True, "record": create_knowledge(repo, payload)})
+            elif path == "/api/mvp/assets":
+                self._json(201, {"ok": True, "asset": create_asset(payload)})
+            elif path == "/api/mvp/orchestrator/send":
+                record = payload.get("record") if isinstance(payload.get("record"), dict) else None
+                result = orchestrator_send(payload.get("recipients") or [], payload.get("subject"), payload.get("body"), record, getattr(self, "_operator_email", ""))
+                self._json(201, dict({"ok": True}, **result))
+            elif path == "/api/mvp/orchestrator/reply":
+                result = orchestrator_reply(str(payload.get("message_id") or ""), payload.get("body"), getattr(self, "_operator_email", ""))
+                self._json(201, dict({"ok": True}, **result))
             elif path == "/api/mvp/chat":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 prov = str(payload.get("provider") or "openai").strip()
@@ -262,6 +303,20 @@ class handler(BaseHTTPRequestHandler):
                 changes = {k: v for k, v in payload.items() if k in allowed}
                 self._json(200, {"ok": True, "provider": update_provider_config(provider, changes)})
                 return
+            if path == "/api/mvp/knowledge":
+                record_id = str(payload.get("id") or "")
+                if not record_id:
+                    self._json(400, {"error": "id_required"}); return
+                allowed = {"title", "content", "status", "authority_classification", "confidence"}
+                self._json(200, {"ok": True, "record": update_knowledge(repo, record_id, {k: v for k, v in payload.items() if k in allowed})})
+                return
+            if path == "/api/mvp/assets":
+                asset_id = str(payload.get("asset_id") or "")
+                if not asset_id:
+                    self._json(400, {"error": "asset_id_required"}); return
+                allowed = {"file_name", "asset_type", "topic", "description", "storage_location", "semantic_version", "notes", "package", "entity_lane", "firewall_security_tag", "lifecycle_status", "sha256"}
+                self._json(200, {"ok": True, "asset": update_asset(asset_id, {k: v for k, v in payload.items() if k in allowed})})
+                return
             if path != "/api/mvp/items":
                 self._json(404, {"error": "not_found"}); return
             item_id = str(payload.get("id") or "")
@@ -270,6 +325,30 @@ class handler(BaseHTTPRequestHandler):
             allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class"}
             update = {k: v for k, v in payload.items() if k in allowed}
             self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
+        except AuthError as exc:
+            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+        except (RepositoryError, MVPServiceError, ValueError) as exc:
+            self._json(502, {"error": str(exc)})
+        except Exception:
+            self._json(500, {"error": "internal_error"})
+
+    def do_DELETE(self):
+        """Delete is a governed, recorded archive. No ESCD record is hard-deleted."""
+        parsed = urlparse(self.path)
+        path = parsed.path
+        record_id = str((parse_qs(parsed.query).get("id") or [""])[0]).strip()
+        try:
+            repo = self._auth()
+            if not record_id:
+                self._json(400, {"error": "id_required"}); return
+            if path == "/api/mvp/items":
+                self._json(200, {"ok": True, "archived": True, "item": self._patch_item_governed(repo, record_id, {"status": "archived"})})
+            elif path == "/api/mvp/knowledge":
+                self._json(200, {"ok": True, "archived": True, "record": update_knowledge(repo, record_id, {"status": "archived"})})
+            elif path == "/api/mvp/assets":
+                self._json(200, {"ok": True, "archived": True, "asset": update_asset(record_id, {"lifecycle_status": "Retired"})})
+            else:
+                self._json(404, {"error": "not_found"})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError, ValueError) as exc:

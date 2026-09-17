@@ -194,6 +194,39 @@ class SupabaseRLSClient:
             raise RepositoryError("item_update_failed")
         return rows[0]
 
+    # ESCD knowledge records (RLS: DCS owner only).
+    def list_knowledge(self) -> list[dict[str, Any]]:
+        return self._call("GET", "escd_knowledge_records?select=*&order=updated_at.desc,id.asc&limit=500")
+
+    def get_knowledge(self, record_id: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(record_id), safe="")
+        rows = self._call("GET", f"escd_knowledge_records?id=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def get_knowledge_by_key(self, knowledge_key: str) -> dict[str, Any] | None:
+        safe = parse.quote(str(knowledge_key), safe="")
+        rows = self._call("GET", f"escd_knowledge_records?knowledge_key=eq.{safe}&select=*&limit=1")
+        return rows[0] if rows else None
+
+    def create_knowledge(self, payload: dict[str, Any]) -> dict[str, Any]:
+        key = str(payload.get("knowledge_key") or "")
+        if not key:
+            raise RepositoryError("knowledge_key_required")
+        existing = self.get_knowledge_by_key(key)
+        if existing:
+            return existing
+        rows = self._call("POST", "escd_knowledge_records", payload)
+        if not rows:
+            raise RepositoryError("knowledge_create_failed")
+        return rows[0]
+
+    def patch_knowledge(self, record_id: str, update: dict[str, Any]) -> dict[str, Any]:
+        safe = parse.quote(str(record_id), safe="")
+        rows = self._call("PATCH", f"escd_knowledge_records?id=eq.{safe}", update)
+        if not rows:
+            raise RepositoryError("knowledge_update_failed")
+        return rows[0]
+
     def list_item_events_since(self, timestamp: str | None) -> list[dict[str, Any]]:
         if not timestamp:
             return self._call("GET", "escd_item_events?select=*&order=created_at.desc,id.asc&limit=300")

@@ -21,4 +21,10 @@ Vercel Preview branch: feature/escd-minimal-mvp-006. Production URLs built from 
 
 Deferred:
 - ANTHROPIC_API_KEY is not consumed by ESCD MVP 006.
-- Mistral/Ollama is not consumed by ESCD MVP 006.
+- Mistral is not consumed by ESCD MVP 006.
+
+Ollama (added 2026-09-17, ESCD-MVP-0.5):
+- Registry row dcse_cp.escd_provider_config provider=ollama, model gpt-oss:120b, Vault secret name escd/ollama/api_key (no key stored yet).
+- Endpoint: OLLAMA_BASE_URL server variable, https only. Default https://ollama.com (Ollama Cloud), which requires an Ollama API key saved through Provider settings or OLLAMA_API_KEY.
+- A self-hosted Ollama on a laptop is not reachable from Vercel as localhost. It needs a stable https endpoint (for example a tunnel) set as OLLAMA_BASE_URL; a key is then optional.
+- Request adapter: POST {base}/api/chat with stream=false and options.num_predict = max output tokens.

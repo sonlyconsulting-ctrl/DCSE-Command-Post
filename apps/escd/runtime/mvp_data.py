@@ -6,12 +6,34 @@ import re
 import socket
 import base64
 import hmac
+import hashlib
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib import request, error, parse
 
 
 class MVPServiceError(RuntimeError):
     pass
+
+
+PROVIDERS = ("openai", "anthropic", "gemini", "openrouter", "ollama")
+ANTHROPIC_VERSION = "2023-06-01"
+OLLAMA_DEFAULT_BASE_URL = "https://ollama.com"
+
+
+def _ollama_base_url() -> str:
+    raw = (os.getenv("OLLAMA_BASE_URL") or OLLAMA_DEFAULT_BASE_URL).strip().rstrip("/")
+    parsed = parse.urlparse(raw)
+    if parsed.scheme != "https" or not parsed.hostname:
+        raise MVPServiceError("OLLAMA_BASE_URL must be an https URL reachable from the ESCD server")
+    return raw
+
+
+def _ollama_requires_key() -> bool:
+    try:
+        return parse.urlparse(_ollama_base_url()).hostname in {"ollama.com", "www.ollama.com"}
+    except MVPServiceError:
+        return True
 
 
 class ProviderHTTPError(MVPServiceError):
@@ -26,6 +48,7 @@ def _safe_provider_detail(value: str) -> str:
     if not text:
         return "Provider request failed"
     patterns = [
+        (r"sk-ant-[A-Za-z0-9_\-]{8,}", "sk-ant-***"),
         (r"sk-proj-[A-Za-z0-9_\-]{8,}", "sk-proj-***"),
         (r"sk-or-v1-[A-Za-z0-9_\-]{8,}", "sk-or-v1-***"),
         (r"sk-[A-Za-z0-9_\-]{8,}", "sk-***"),
@@ -117,6 +140,10 @@ def _env_secret(provider: str) -> str:
         return os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
     if provider == "openrouter":
         return os.getenv("OPENROUTER_API_KEY") or ""
+    if provider == "ollama":
+        return os.getenv("OLLAMA_API_KEY") or ""
+    if provider == "anthropic":
+        return os.getenv("ANTHROPIC_API_KEY") or ""
     return ""
 
 
@@ -125,6 +152,8 @@ def _fallback_config(provider: str) -> dict:
         "openai": {"provider": "openai", "enabled": True, "model": "gpt-5.6-sol", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
         "gemini": {"provider": "gemini", "enabled": True, "model": "gemini-3.8-flash", "timeout_seconds": 25, "max_output_tokens": 768, "thinking_level": "low"},
         "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+        "anthropic": {"provider": "anthropic", "enabled": True, "model": "claude-sonnet-5", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
+        "ollama": {"provider": "ollama", "enabled": True, "model": "gpt-oss:120b", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
     }
     cfg = dict(defaults.get(provider) or {})
     cfg["api_key"] = _env_secret(provider)
@@ -134,7 +163,7 @@ def _fallback_config(provider: str) -> dict:
 
 def provider_runtime(provider: str) -> dict:
     provider = str(provider or "").lower().strip()
-    if provider not in {"openai", "gemini", "openrouter"}:
+    if provider not in PROVIDERS:
         raise MVPServiceError("unsupported_provider")
     try:
         rows = _rpc("get_escd_provider_runtime", {"p_provider": provider})
@@ -162,7 +191,7 @@ def provider_runtime(provider: str) -> dict:
 
 def provider_status() -> dict:
     result = {}
-    for provider in ("openai", "gemini", "openrouter"):
+    for provider in PROVIDERS:
         try:
             cfg = provider_runtime(provider)
         except MVPServiceError as exc:
@@ -170,7 +199,7 @@ def provider_status() -> dict:
             continue
         result[provider] = {
             "enabled": bool(cfg.get("enabled")),
-            "configured": bool(cfg.get("api_key")),
+            "configured": bool(cfg.get("api_key")) or (provider == "ollama" and not _ollama_requires_key()),
             "model": cfg.get("model"),
             "timeout_seconds": cfg.get("timeout_seconds"),
             "max_output_tokens": cfg.get("max_output_tokens"),
@@ -184,7 +213,7 @@ def provider_status() -> dict:
 
 def set_provider_secret(provider: str, secret: str) -> dict:
     provider = str(provider or "").lower().strip()
-    if provider not in {"openai", "gemini", "openrouter"}:
+    if provider not in PROVIDERS:
         raise MVPServiceError("unsupported_provider")
     if len(str(secret or "").strip()) < 10:
         raise MVPServiceError("provider_secret_required")
@@ -202,7 +231,7 @@ def set_provider_secret(provider: str, secret: str) -> dict:
 
 def update_provider_config(provider: str, changes: dict) -> dict:
     provider = str(provider or "").lower().strip()
-    if provider not in {"openai", "gemini", "openrouter"}:
+    if provider not in PROVIDERS:
         raise MVPServiceError("unsupported_provider")
     payload = {
         "p_provider": provider,
@@ -216,11 +245,15 @@ def update_provider_config(provider: str, changes: dict) -> dict:
     return data[0] if isinstance(data, list) and data else data
 
 
+def _provider_name(provider: str) -> str:
+    return {"openai": "OpenAI", "anthropic": "Claude", "openrouter": "OpenRouter"}.get(provider, provider.title())
+
+
 def _provider_failure(provider: str, exc: Exception) -> MVPServiceError:
     if isinstance(exc, ProviderHTTPError):
         labels = {400: "request rejected", 401: "authentication failed", 403: "access denied", 404: "model or endpoint not found", 429: "rate or quota limited"}
         label = labels.get(exc.status, f"HTTP {exc.status}")
-        return MVPServiceError(f"{provider.title()} {label}: {exc.detail}")
+        return MVPServiceError(f"{_provider_name(provider)} {label}: {exc.detail}")
     text = str(exc)
     if text == "provider_timeout":
         return MVPServiceError(f"{provider.title()} timed out before responding")
@@ -311,14 +344,244 @@ def get_canonical_convergence_items() -> dict[str, list[dict]]:
     return {"tasks": tasks, "ideas": ideas, "knowledge": knowledge, "ddna": ddna, "assets": assets}
 
 
-def list_knowledge(limit: int = 200) -> list[dict]:
-    items = get_canonical_convergence_items().get("knowledge", [])
-    return items[:limit]
+UUID_RE = re.compile(r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+KNOWLEDGE_STATUSES = {"staged", "active", "superseded", "archived"}
+KNOWLEDGE_AUTHORITY = {"OBSERVED", "VERIFIED", "LIKELY", "UNKNOWN", "DCS_DIRECTION", "DERIVED"}
+ASSET_LIFECYCLE = {"Draft", "Review", "Active", "Deprecated", "Retired"}
+ASSET_LANES = {"DCSE", "DCS", "SC", "SS", "TI", "TSL", "FAMILY"}
+ASSET_TAGS = {"Public", "SC-Internal", "SS-Internal", "TI-Internal", "DCSE-Confidential", "PPR-Protected"}
+
+
+def is_uuid(value) -> bool:
+    return bool(UUID_RE.match(str(value or "")))
+
+
+def canonical_record(kind: str, record_id: str) -> dict | None:
+    bucket = {"task": "tasks", "idea": "ideas", "knowledge": "knowledge", "asset": "assets"}.get(kind)
+    if not bucket:
+        return None
+    for item in get_canonical_convergence_items().get(bucket, []):
+        if str(item.get("id")) == str(record_id):
+            return item
+    return None
+
+
+def canonical_item_payload(item: dict) -> dict:
+    """escd_items payload for adopting a read-only canonical registry task or idea."""
+    kind = "idea" if item.get("context") == "idea" else "task"
+    key = str(item.get("item_key") or item.get("id"))
+    return {
+        "item_key": key,
+        "title": str(item.get("title") or key)[:500],
+        "summary": item.get("summary"),
+        "status": "captured",
+        "task_class": "CAPTURE" if kind == "idea" else "DO",
+        "context": kind,
+        "actionable": False,
+        "explicit_priority": 0,
+        "source_system": "canonical_convergence",
+        "source_id": key,
+        "normalized_intent": str(item.get("title") or key)[:500],
+        "source_refs": ["escd:canonical:" + key],
+        "evidence_refs": [],
+    }
+
+
+def merge_live_and_canonical(live: list[dict], canonical: list[dict], key_fields: tuple[str, ...]) -> list[dict]:
+    """Live rows win. A canonical row is shown only when no live row carries its id or key."""
+    seen = set()
+    for row in live:
+        for field in ("id",) + key_fields:
+            if row.get(field) not in (None, ""):
+                seen.add(str(row.get(field)))
+    merged = list(live)
+    for row in canonical:
+        if str(row.get("id")) not in seen:
+            merged.append(dict(row, record_origin="canonical_registry"))
+    return merged
+
+
+def _knowledge_update(payload: dict) -> dict:
+    update = {}
+    if "title" in payload:
+        title = str(payload.get("title") or "").strip()
+        if not title:
+            raise MVPServiceError("title_required")
+        update["title"] = title[:500]
+    if "content" in payload:
+        content = str(payload.get("content") or "").strip()
+        if not content:
+            raise MVPServiceError("content_required")
+        update["content"] = content
+    if "status" in payload:
+        if payload["status"] not in KNOWLEDGE_STATUSES:
+            raise MVPServiceError("invalid_status")
+        update["status"] = payload["status"]
+    if "authority_classification" in payload:
+        if payload["authority_classification"] not in KNOWLEDGE_AUTHORITY:
+            raise MVPServiceError("invalid_authority_classification")
+        update["authority_classification"] = payload["authority_classification"]
+    if "confidence" in payload and payload["confidence"] not in (None, ""):
+        value = float(payload["confidence"])
+        if not 0 <= value <= 1:
+            raise MVPServiceError("confidence_out_of_range")
+        update["confidence"] = value
+    return update
+
+
+def create_knowledge(repo, payload: dict) -> dict:
+    fields = _knowledge_update({"title": payload.get("title"), "content": payload.get("content"), **{k: payload[k] for k in ("status", "authority_classification", "confidence") if k in payload}})
+    key = "escd-knowledge-" + hashlib.sha256((fields["title"].lower() + "\n" + fields["content"]).encode()).hexdigest()[:32]
+    record = {"knowledge_key": key, "status": "staged", "authority_classification": "DERIVED", "evidence_refs": [], "provenance": {"source": "escd_mvp_manual"}}
+    record.update(fields)
+    return repo.create_knowledge(record)
+
+
+def adopt_canonical_knowledge(repo, record_id: str) -> dict:
+    item = canonical_record("knowledge", record_id)
+    if not item:
+        raise MVPServiceError("knowledge_not_found")
+    existing = repo.get_knowledge_by_key(str(item["id"]))
+    if existing:
+        return existing
+    authority = item.get("authority_classification")
+    status = item.get("status")
+    return repo.create_knowledge({
+        "knowledge_key": str(item["id"]),
+        "title": str(item.get("title") or item["id"])[:500],
+        "content": str(item.get("content") or item.get("title") or item["id"]),
+        "status": status if status in KNOWLEDGE_STATUSES else "staged",
+        "authority_classification": authority if authority in KNOWLEDGE_AUTHORITY else "OBSERVED",
+        "confidence": float(item.get("confidence") or 0.5),
+        "evidence_refs": [],
+        "provenance": {"source": "canonical_convergence", "canonical_id": str(item["id"]), "original_authority_classification": authority, "original_status": status},
+    })
+
+
+def update_knowledge(repo, record_id: str, payload: dict) -> dict:
+    update = _knowledge_update(payload)
+    if not update:
+        raise MVPServiceError("no_changes")
+    if not is_uuid(record_id):
+        record_id = adopt_canonical_knowledge(repo, record_id)["id"]
+    return repo.patch_knowledge(record_id, update)
+
+
+def list_knowledge(limit: int = 200, repo=None) -> list[dict]:
+    live = []
+    if repo is not None:
+        try:
+            live = repo.list_knowledge()
+        except Exception:
+            live = []
+    canonical = get_canonical_convergence_items().get("knowledge", [])
+    return merge_live_and_canonical(live, canonical, ("knowledge_key",))[:limit]
+
+
+def _asset_is_ps(row: dict) -> bool:
+    lane = str(row.get("entity_lane") or "").strip().upper()
+    return lane == "PS" or lane.startswith("PS ") or lane.startswith("PS/") or str(row.get("firewall_security_tag") or "") == "PS-Locked"
+
+
+def _asset_fields(payload: dict, creating: bool) -> dict:
+    text_fields = ("file_name", "asset_type", "topic", "description", "storage_location", "semantic_version", "notes", "package")
+    update = {}
+    for field in text_fields:
+        if field in payload and payload[field] is not None:
+            update[field] = str(payload[field]).strip()
+    if "entity_lane" in payload:
+        lane = str(payload.get("entity_lane") or "").strip()
+        if lane.upper() not in ASSET_LANES:
+            raise MVPServiceError("invalid_or_protected_lane")
+        update["entity_lane"] = lane.upper()
+    if "firewall_security_tag" in payload:
+        if payload["firewall_security_tag"] not in ASSET_TAGS:
+            raise MVPServiceError("invalid_or_protected_security_tag")
+        update["firewall_security_tag"] = payload["firewall_security_tag"]
+    if "lifecycle_status" in payload:
+        if payload["lifecycle_status"] not in ASSET_LIFECYCLE:
+            raise MVPServiceError("invalid_lifecycle_status")
+        update["lifecycle_status"] = payload["lifecycle_status"]
+    if "sha256" in payload and str(payload.get("sha256") or "").strip():
+        digest = str(payload["sha256"]).strip().lower()
+        if not re.fullmatch(r"[0-9a-f]{64}", digest):
+            raise MVPServiceError("sha256_must_be_64_hex")
+        update["sha256"] = digest
+    required = ("file_name", "asset_type", "topic", "description", "storage_location", "entity_lane", "firewall_security_tag")
+    for field in required:
+        if (creating or field in update) and not update.get(field):
+            raise MVPServiceError(field + "_required")
+    return update
+
+
+def _asset_request(method: str, query: str, payload=None):
+    url, key = _service_config()
+    headers = _postgrest_headers(key, "public")
+    headers["Prefer"] = "return=representation"
+    try:
+        _, rows = _http_json(f"{url}/rest/v1/{query}", method=method, headers=headers, payload=payload, timeout=15)
+    except ProviderHTTPError as exc:
+        raise MVPServiceError(f"asset_registry_{exc.status}: {exc.detail}") from None
+    return rows if isinstance(rows, list) else []
+
+
+def get_asset(asset_id: str) -> dict | None:
+    rows = _asset_request("GET", "dcse_asset_registry?select=*&limit=1&asset_id=eq." + parse.quote(str(asset_id), safe=""))
+    return rows[0] if rows else None
+
+
+def create_asset(payload: dict) -> dict:
+    fields = _asset_fields(payload, creating=True)
+    asset_id = str(payload.get("asset_id") or "").strip() or "ESCD-ASSET-" + hashlib.sha256((fields["file_name"] + "\n" + fields["storage_location"]).encode()).hexdigest()[:12].upper()
+    if not re.fullmatch(r"[A-Za-z0-9._:\-]{3,120}", asset_id):
+        raise MVPServiceError("invalid_asset_id")
+    if get_asset(asset_id):
+        raise MVPServiceError("asset_id_already_exists")
+    record = {"asset_id": asset_id, "author_model": "escd_mvp_operator", "sha256": "UNVERIFIED", "hash_verified": False, "lifecycle_status": "Draft", "semantic_version": "1.0.0"}
+    record.update(fields)
+    rows = _asset_request("POST", "dcse_asset_registry", record)
+    if not rows:
+        raise MVPServiceError("asset_create_failed")
+    return rows[0]
+
+
+def update_asset(asset_id: str, payload: dict) -> dict:
+    existing = get_asset(asset_id)
+    if existing and _asset_is_ps(existing):
+        raise MVPServiceError("protected_lane_record")
+    if not existing:
+        canonical = canonical_record("asset", asset_id)
+        if not canonical:
+            raise MVPServiceError("asset_not_found")
+        seed = {
+            "asset_id": str(canonical["asset_id"]),
+            "file_name": canonical.get("file_name") or canonical["asset_id"],
+            "asset_type": canonical.get("asset_type") or "Canonical Asset",
+            "topic": canonical.get("topic") or canonical["asset_id"],
+            "description": canonical.get("topic") or canonical["asset_id"],
+            "storage_location": "escd:canonical_convergence_registry",
+            "entity_lane": "DCSE",
+            "firewall_security_tag": "DCSE-Confidential",
+        }
+        seed.update({k: v for k, v in payload.items() if k != "asset_id"})
+        return create_asset(seed)
+    fields = _asset_fields(payload, creating=False)
+    if not fields:
+        raise MVPServiceError("no_changes")
+    if "sha256" in fields and fields["sha256"] != existing.get("sha256"):
+        fields["hash_verified"] = False
+        fields["hash_verified_at"] = None
+    fields["last_modified_at"] = datetime.now(timezone.utc).isoformat()
+    rows = _asset_request("PATCH", "dcse_asset_registry?asset_id=eq." + parse.quote(str(asset_id), safe=""), fields)
+    if not rows:
+        raise MVPServiceError("asset_update_failed")
+    return rows[0]
 
 
 def list_assets(limit: int = 200) -> list[dict]:
     url, key = _service_config()
-    query = "dcse_asset_registry?select=*&order=last_modified_at.desc.nullslast,created_at.desc.nullslast,id.asc&limit=" + str(max(1, min(limit, 500)))
+    # Lane firewall: PS-locked and PS-lane rows never reach the ESCD surface.
+    query = "dcse_asset_registry?select=*&firewall_security_tag=neq.PS-Locked&entity_lane=not.ilike.PS*&order=last_modified_at.desc.nullslast,created_at.desc.nullslast,id.asc&limit=" + str(max(1, min(limit, 500)))
     rows = []
     try:
         _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "public"))
@@ -326,12 +589,9 @@ def list_assets(limit: int = 200) -> list[dict]:
         pass
     if not isinstance(rows, list):
         rows = []
+    rows = [r for r in rows if not _asset_is_ps(r)]
     canonical = get_canonical_convergence_items().get("assets", [])
-    existing_ids = {str(r.get("asset_id") or r.get("id")) for r in rows}
-    for item in canonical:
-        if str(item.get("asset_id")) not in existing_ids:
-            rows.append(item)
-    return rows[:limit]
+    return merge_live_and_canonical(rows, canonical, ("asset_id",))[:limit]
 
 
 def list_ddna_sources(limit: int = 200) -> list[dict]:
@@ -446,7 +706,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
 
     cfg = provider_runtime(provider)
     key = str(cfg.get("api_key") or "")
-    if not key:
+    if not key and not (provider == "ollama" and not _ollama_requires_key()):
         raise MVPServiceError(f"{provider.title()} credential is not configured. Add it in ESCD Provider Settings")
     if not cfg.get("enabled"):
         try:
@@ -476,6 +736,10 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
 
     # Assemble governed context packet
     clean = assemble_context_packet(state, last_user, turns, retrieved)
+    clean.insert(1 if clean and clean[0].get("role") == "system" else 0, {
+        "role": "system",
+        "content": f"Current execution engine for this reply: {_provider_name(provider)} ({model}). Identity stays ESCD; name this engine if asked which engine or model answered.",
+    })
 
     try:
         data = None
@@ -532,6 +796,48 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             if not text:
                 raise MVPServiceError("OpenRouter returned an empty response")
 
+        elif provider == "anthropic":
+            system_text = "\n".join(m["content"] for m in clean if m["role"] == "system").strip()
+            turns = []
+            for m in clean:
+                if m["role"] == "system":
+                    continue
+                role = "assistant" if m["role"] == "assistant" else "user"
+                if turns and turns[-1]["role"] == role:
+                    turns[-1]["content"] += "\n\n" + m["content"]
+                else:
+                    turns.append({"role": role, "content": m["content"]})
+            while turns and turns[0]["role"] != "user":
+                turns.pop(0)
+            payload = {"model": model, "max_tokens": max_tokens, "messages": turns}
+            if system_text:
+                payload["system"] = system_text
+            _, data = _http_json(
+                "https://api.anthropic.com/v1/messages",
+                method="POST",
+                headers={"x-api-key": key, "anthropic-version": ANTHROPIC_VERSION, "Content-Type": "application/json"},
+                payload=payload,
+                timeout=timeout,
+            )
+            text = "\n".join(str(b.get("text") or "") for b in ((data or {}).get("content") or []) if b.get("type") == "text").strip()
+            if not text:
+                raise MVPServiceError("Claude returned an empty response")
+
+        elif provider == "ollama":
+            headers = {"Content-Type": "application/json"}
+            if key:
+                headers["Authorization"] = f"Bearer {key}"
+            _, data = _http_json(
+                _ollama_base_url() + "/api/chat",
+                method="POST",
+                headers=headers,
+                payload={"model": model, "messages": clean, "stream": False, "options": {"num_predict": max_tokens}},
+                timeout=timeout,
+            )
+            text = str((((data or {}).get("message") or {}).get("content") or "")).strip()
+            if not text:
+                raise MVPServiceError("Ollama returned an empty response")
+
         else:
             raise MVPServiceError("unsupported_provider")
 
@@ -565,8 +871,213 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
         }
 
     except Exception as exc:
-        if isinstance(exc, MVPServiceError) and not isinstance(exc, ProviderHTTPError) and str(exc).startswith(("OpenAI returned", "Gemini returned", "OpenRouter returned")):
+        if isinstance(exc, MVPServiceError) and not isinstance(exc, ProviderHTTPError) and str(exc).startswith(("OpenAI returned", "Claude returned", "Gemini returned", "OpenRouter returned", "Ollama returned")):
             raise
         raise _provider_failure(provider, exc) from None
 
 
+
+
+# ---------------------------------------------------------------------------
+# AI Orchestrator (DCSE agent message bus). ESCD participates as the DCS console
+# under the dcs_authority identity. Messages are communication only
+# (execution_authorized is always false at the database); every delivery carries a receipt.
+# ---------------------------------------------------------------------------
+ORCH_IDENTITY = "dcs_authority"
+ORCH_READER = "dcs_authority@escd-console"
+ORCH_AGENT_KEY_RE = re.compile(r"^[a-z0-9_]{2,64}$")
+ORCH_MESSAGE_FIELDS = "id,correlation_id,reply_to,sender,recipient_agent_key,subject,body,message_class,status,attempts,max_attempts,first_delivered_at,acknowledged_at,acknowledged_by_instance,receipt,expires_at,metadata,created_at"
+
+
+def _orch_get(query: str):
+    url, key = _service_config()
+    try:
+        _, rows = _http_json(f"{url}/rest/v1/{query}", headers=_postgrest_headers(key, "dcse_cp"), timeout=12)
+    except ProviderHTTPError as exc:
+        raise MVPServiceError(f"orchestrator_read_failed_{exc.status}") from None
+    return rows if isinstance(rows, list) else []
+
+
+def _orch_rpc(name: str, payload: dict):
+    try:
+        return _rpc(name, payload)
+    except ProviderHTTPError as exc:
+        detail = str(exc.detail or "")
+        for code in ("REPLY_NOT_ELIGIBLE", "DUPLICATE_REPLY"):
+            if code in detail:
+                raise MVPServiceError(code) from None
+        raise MVPServiceError(f"orchestrator_write_failed_{exc.status}") from None
+
+
+def orchestrator_agents() -> list[dict]:
+    rows = _orch_get("agent_registry?select=agent_key,display_name,agent_type,status,metadata&status=in.(active,standby)&order=agent_key.asc")
+    out = []
+    for row in rows:
+        key = str(row.get("agent_key") or "")
+        if key == ORCH_IDENTITY or not ORCH_AGENT_KEY_RE.match(key):
+            continue
+        meta = row.get("metadata") or {}
+        surface = str(meta.get("expected_runtime_surface") or meta.get("verified_runtime_surface") or "")
+        # Host CLI agents get messages pushed by the Windows worker; chat surfaces pull them.
+        mode = meta.get("delivery_mode") or ("push" if surface.endswith("_cli") else "pull")
+        out.append({
+            "agent_key": key,
+            "display_name": row.get("display_name") or key,
+            "agent_type": row.get("agent_type"),
+            "status": row.get("status"),
+            "delivery_mode": mode,
+            "admission_status": meta.get("admission_status") or meta.get("v7_1_runtime_admission_status"),
+        })
+    return out
+
+
+def _orch_clean_text(value, field: str, limit: int) -> str:
+    text = str(value or "").strip()
+    if not text:
+        raise MVPServiceError(field + "_required")
+    if len(text) > limit:
+        raise MVPServiceError(f"{field}_too_long_max_{limit}")
+    return text
+
+
+def orchestrator_send(recipients, subject, body, record=None, operator_email: str = "") -> dict:
+    if isinstance(recipients, str):
+        recipients = [recipients]
+    wanted = []
+    for r in recipients or []:
+        key = str(r or "").strip().lower()
+        if key and key not in wanted:
+            wanted.append(key)
+    if not wanted:
+        raise MVPServiceError("recipient_required")
+    if len(wanted) > 12:
+        raise MVPServiceError("too_many_recipients")
+    known = {a["agent_key"] for a in orchestrator_agents()}
+    unknown = [k for k in wanted if k not in known]
+    if unknown:
+        raise MVPServiceError("unknown_or_inactive_agent: " + ", ".join(unknown))
+    subject = _orch_clean_text(subject, "subject", 200)
+    body = _orch_clean_text(body, "body", 20000)
+    metadata = {"origin": "escd_console", "expects_reply": True}
+    if operator_email:
+        metadata["operator"] = str(operator_email)[:200]
+    if isinstance(record, dict) and record.get("id"):
+        metadata["record"] = {
+            "kind": str(record.get("kind") or "")[:20],
+            "id": str(record.get("id"))[:120],
+            "title": str(record.get("title") or "")[:300],
+        }
+    import uuid as _uuid
+    correlation = str(_uuid.uuid4())
+    sent = []
+    for key in wanted:
+        message_id = _orch_rpc("send_agent_message", {
+            "p_sender": ORCH_IDENTITY,
+            "p_recipient_agent_key": key,
+            "p_subject": subject,
+            "p_body": body,
+            "p_message_class": "communication",
+            "p_ttl_minutes": 1440,
+            "p_correlation_id": correlation,
+            "p_metadata": metadata,
+        })
+        sent.append({"message_id": message_id, "recipient": key})
+    return {"correlation_id": correlation, "sent": sent}
+
+
+def orchestrator_sync(limit: int = 50) -> list[dict]:
+    """Pull new messages addressed to DCS. The database records a reader receipt for each."""
+    rows = _orch_rpc("read_agent_messages", {"p_agent_key": ORCH_IDENTITY, "p_reader_instance": ORCH_READER, "p_limit": max(1, min(int(limit), 100))})
+    return rows if isinstance(rows, list) else []
+
+
+def orchestrator_threads(days: int = 7) -> dict:
+    received = orchestrator_sync()
+    since = datetime.now(timezone.utc).timestamp() - max(1, min(int(days), 30)) * 86400
+    since_iso = parse.quote(datetime.fromtimestamp(since, timezone.utc).isoformat(), safe="")
+    base = f"agent_messages?select={ORCH_MESSAGE_FIELDS}&created_at=gte.{since_iso}&order=created_at.asc&limit=500"
+    rows = _orch_get(base + f"&or=(sender.eq.{ORCH_IDENTITY},recipient_agent_key.eq.{ORCH_IDENTITY})")
+    # Include other participants' messages inside the same conversations (for example agent-to-agent replies).
+    corr = sorted({str(r.get("correlation_id")) for r in rows if r.get("correlation_id")})
+    if corr:
+        extra = []
+        for i in range(0, len(corr), 40):
+            chunk = ",".join(corr[i:i + 40])
+            extra.extend(_orch_get(f"agent_messages?select={ORCH_MESSAGE_FIELDS}&correlation_id=in.({chunk})&order=created_at.asc&limit=500"))
+        seen = {str(r.get("id")) for r in rows}
+        rows.extend(r for r in extra if str(r.get("id")) not in seen)
+    health = {}
+    sent_ids = [str(r["id"]) for r in rows if r.get("sender") == ORCH_IDENTITY]
+    for i in range(0, len(sent_ids), 60):
+        chunk = ",".join(sent_ids[i:i + 60])
+        for h in _orch_get(f"agent_message_delivery_status?select=id,delivery_health,recipient_last_heartbeat&id=in.({chunk})"):
+            health[str(h.get("id"))] = h
+    threads = {}
+    for r in sorted(rows, key=lambda x: str(x.get("created_at"))):
+        receipt = r.get("receipt") or {}
+        msg = {k: r.get(k) for k in ("id", "reply_to", "sender", "recipient_agent_key", "subject", "body", "message_class", "status", "attempts", "max_attempts", "first_delivered_at", "acknowledged_at", "acknowledged_by_instance", "expires_at", "created_at")}
+        msg["receipt_type"] = receipt.get("receipt_type") if isinstance(receipt, dict) else None
+        msg["delivery_health"] = (health.get(str(r.get("id"))) or {}).get("delivery_health")
+        msg["recipient_last_heartbeat"] = (health.get(str(r.get("id"))) or {}).get("recipient_last_heartbeat")
+        msg["record"] = (r.get("metadata") or {}).get("record")
+        msg["incoming"] = r.get("recipient_agent_key") == ORCH_IDENTITY
+        cid = str(r.get("correlation_id") or r.get("id"))
+        t = threads.setdefault(cid, {"correlation_id": cid, "subject": r.get("subject"), "participants": [], "messages": [], "record": None})
+        for p in (r.get("sender"), r.get("recipient_agent_key")):
+            if p and p not in t["participants"]:
+                t["participants"].append(p)
+        if msg["record"] and not t["record"]:
+            t["record"] = msg["record"]
+        t["messages"].append(msg)
+    new_ids = {str(x.get("id")) for x in received}
+    out = []
+    for t in threads.values():
+        t["last_at"] = t["messages"][-1]["created_at"]
+        t["new_count"] = sum(1 for m in t["messages"] if str(m["id"]) in new_ids)
+        out.append(t)
+    out.sort(key=lambda t: str(t["last_at"]), reverse=True)
+    return {"threads": out, "new_count": len(new_ids), "identity": ORCH_IDENTITY}
+
+
+def orchestrator_reply(message_id: str, body: str, operator_email: str = "") -> dict:
+    if not is_uuid(message_id):
+        raise MVPServiceError("invalid_message_id")
+    body = _orch_clean_text(body, "body", 20000)
+    rows = _orch_get(f"agent_messages?select=id,sender,recipient_agent_key,subject,correlation_id&id=eq.{message_id}&limit=1")
+    if not rows:
+        raise MVPServiceError("message_not_found")
+    orig = rows[0]
+    if orig.get("recipient_agent_key") != ORCH_IDENTITY:
+        raise MVPServiceError("can_only_reply_to_messages_addressed_to_dcs")
+    to = str(orig.get("sender") or "")
+    if not ORCH_AGENT_KEY_RE.match(to):
+        raise MVPServiceError("sender_is_not_a_registered_agent")
+    subject = str(orig.get("subject") or "")
+    if not subject.lower().startswith("re:"):
+        subject = "RE: " + subject
+    metadata = {"origin": "escd_console", "expects_reply": True}
+    if operator_email:
+        metadata["operator"] = str(operator_email)[:200]
+    payload = {
+        "p_sender": ORCH_IDENTITY,
+        "p_recipient_agent_key": to,
+        "p_subject": subject[:200],
+        "p_body": body,
+        "p_message_class": "reply",
+        "p_ttl_minutes": 1440,
+        "p_correlation_id": orig.get("correlation_id"),
+        "p_reply_to": orig.get("id"),
+        "p_metadata": metadata,
+    }
+    mode = "reply"
+    try:
+        new_id = _orch_rpc("send_agent_message", payload)
+    except MVPServiceError as exc:
+        # The database stops agents from answering acknowledgements (and from answering twice).
+        # DCS keeps the conversation going with a follow-up in the same thread, which agents may answer.
+        if str(exc) not in {"REPLY_NOT_ELIGIBLE", "DUPLICATE_REPLY"}:
+            raise
+        payload.update({"p_message_class": "communication", "p_reply_to": None, "p_metadata": dict(metadata, follow_up_of=str(orig.get("id")))})
+        new_id = _orch_rpc("send_agent_message", payload)
+        mode = "follow_up"
+    return {"message_id": new_id, "recipient": to, "correlation_id": orig.get("correlation_id"), "mode": mode}

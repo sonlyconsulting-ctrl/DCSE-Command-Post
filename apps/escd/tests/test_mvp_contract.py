@@ -49,12 +49,14 @@ def test_mvp_api_reads_live_sources():
     assert "DDNA_SUPABASE_SERVICE_ROLE_KEY" in service
 
 
-def test_mvp_chat_excludes_claude():
+def test_claude_provider_is_server_side_only():
+    # DCS decision 2026-09-17 retired the earlier no-Claude rule; Claude is a chat provider.
     service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
-    app = APP.read_text(encoding="utf-8")
-    assert "anthropic" not in service.lower()
-    assert "claude" not in service.lower()
-    assert "claude" not in app.lower()
+    browser = (ROOT / "web" / "mvp.html").read_text(encoding="utf-8") + APP.read_text(encoding="utf-8") + LOGIN.read_text(encoding="utf-8")
+    assert '"https://api.anthropic.com/v1/messages"' in service
+    assert "ANTHROPIC_API_KEY" in service and "sk-ant-***" in service
+    assert "ANTHROPIC_API_KEY" not in browser
+    assert "x-api-key" not in browser
 
 
 def test_mvp_provider_defaults_are_current_and_errors_are_actionable():
