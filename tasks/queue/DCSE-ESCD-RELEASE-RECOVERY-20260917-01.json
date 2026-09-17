@@ -1,0 +1,50 @@
+{
+  "task_id": "DCSE-ESCD-RELEASE-RECOVERY-20260917-01",
+  "parent": "DCSE Command Post",
+  "lane": "SC/DCSE",
+  "priority": 95,
+  "status": "READY_FOR_ENGINEERING",
+  "authority": {
+    "decision": "GO",
+    "authority": "DCS Level 0",
+    "scope": "Recover ESCD functionality and produce a working non-production Vercel Preview. No production promotion."
+  },
+  "repository": "sonlyconsulting-ctrl/DCSE-Command-Post",
+  "branch": "dcse/escd-recovery-20260917",
+  "pull_request": 136,
+  "baseline_commit": "b6c86daddfe3cad1ac0e8cf5cd0fe5d80fc06953",
+  "instructions": [
+    "Work from the recovery branch and inspect current files before editing. Do not overwrite the branch with current main's stripped ESCD UI.",
+    "Resolve branch conflicts by preserving current canonical governance/security fixes while retaining the recovered ESCD application capabilities.",
+    "Restore functional navigation for Chat, Projects, Tasks, Ideas, Knowledge, Assets, DDNA, History, and Settings. Settings must be a first-class screen, not merely a hidden Chat panel.",
+    "Restore provider configuration and API-key replacement in Settings using server-side Vault/environment paths only. Never return, render, log, commit, or prefill stored secret values. Show only configured/unconfigured and credential source metadata.",
+    "Implement a hierarchical system/model selector. Required system families/capabilities: OpenAI, Claude/Anthropic, Gemini, OpenRouter, Ollama, Qwen, Codex, Cowork, Qwen Code. Multiple models must be selectable under a family where the backend can actually route them.",
+    "Do not hard-code a fake success list. Derive selectable/configured state from a server-side registry/catalog. Mark unsupported or unreachable entries unavailable with an explicit reason.",
+    "OpenAI family must support model switching through the provider model parameter/registry. Claude family must support configured Anthropic models. Gemini family must support configured Gemini models. OpenRouter may expose governed model IDs/auto routing. Qwen may route through OpenRouter or Ollama only when the selected transport is actually configured. Codex, Cowork, and Qwen Code are execution participants/capabilities, not falsely represented as generic chat-completion providers unless a verified API adapter exists.",
+    "Standalone Vercel ESCD must directly call API-capable cloud providers. Windows is not a prerequisite for Chat. Local Ollama/local execution may use the existing durable worker bridge as an adapter.",
+    "Preserve conversation continuity/History, attachments, operation strip/orchestration controls, provider response truth metadata, Tasks/Ideas CRUD, Assets, DDNA, and Knowledge.",
+    "Projects must use an existing verified project-state source if present. If project state exists only in an older ESCD runtime branch, recover that source with provenance. Do not invent a new production schema merely to make the tab render.",
+    "Fix mobile layout: one navigation mechanism at mobile width, no duplicate vertical plus bottom nav, no missing required screens, no dead workspace caused by hidden/failed rendering.",
+    "Add visible build identity in Settings: environment, ESCD version/recovery label, Git commit SHA when available. Do not expose sensitive environment values.",
+    "Run existing ESCD tests plus regression tests for all navigation screens, provider/model selector population, provider switching, Settings config save, API-key replacement response redaction, Chat send, conversation persistence, mobile 390x844 navigation, and unavailable-provider failure behavior.",
+    "Deploy ONLY a Vercel Preview of sc-escd from this recovery candidate. Do not promote Production.",
+    "Run at least one live nonce Chat test against a configured cloud provider from the Preview. Record provider/model/transport/response proof without recording secrets.",
+    "Inspect Preview runtime/build logs and return the Preview URL, deployment ID, commit SHA, test results, unresolved provider transports, rollback reference, and screenshots or browser evidence for desktop/mobile."
+  ],
+  "required_acceptance": {
+    "navigation": "Chat, Projects, Tasks, Ideas, Knowledge, Assets, DDNA, History, Settings all render and their supported operations work.",
+    "model_selector": "Family -> model/capability selection works and reflects real configured availability.",
+    "settings": "Provider config and API-key replacement work server-side without secret disclosure.",
+    "chat": "Preview produces a genuine model response and reports failures truthfully.",
+    "mobile": "390x844 browser test passes without duplicate navigation or hidden core functions.",
+    "preview": "Vercel Preview READY and human-reviewable; production unchanged."
+  },
+  "security": {
+    "secrets_in_repo": false,
+    "secrets_in_client": false,
+    "production_deploy_authorized": false,
+    "destructive_db_change_authorized": false
+  },
+  "rollback": "Preserve current production deployment and main. Recovery branch/PR can be abandoned or reverted without production impact.",
+  "exit_state": "Return PARTIAL unless every required acceptance item has fresh evidence."
+}
