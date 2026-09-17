@@ -4,8 +4,30 @@ from http.server import BaseHTTPRequestHandler
 import hashlib
 import json
 import os
+import sys
+import types
+from pathlib import Path
 from urllib import request, error
 from urllib.parse import urlparse, parse_qs
+
+# Resilient dual-root bootstrap for standalone Vercel deployment
+_escd_root = Path(__file__).resolve().parent.parent
+if str(_escd_root) not in sys.path:
+    sys.path.insert(0, str(_escd_root))
+_monorepo_root = _escd_root.parent.parent
+if _monorepo_root.exists() and str(_monorepo_root) not in sys.path:
+    sys.path.insert(0, str(_monorepo_root))
+
+if "apps.escd" not in sys.modules:
+    try:
+        import runtime  # type: ignore
+        _apps_mod = sys.modules.setdefault("apps", types.ModuleType("apps"))
+        _escd_mod = sys.modules.setdefault("apps.escd", types.ModuleType("apps.escd"))
+        _apps_mod.escd = _escd_mod
+        _escd_mod.runtime = runtime
+        sys.modules["apps.escd.runtime"] = runtime
+    except ImportError:
+        pass
 
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
@@ -119,6 +141,13 @@ class handler(BaseHTTPRequestHandler):
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
             self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.4", "providers": provider_status()})
+            return
+        if path == "/api/mvp/auth-config":
+            try:
+                url, anon = self._supabase_config()
+                self._json(200, {"ok": True, "supabase_url": url, "supabase_anon_key": anon})
+            except Exception as exc:
+                self._json(500, {"ok": False, "error": str(exc)})
             return
         try:
             repo = self._auth()
