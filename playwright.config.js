@@ -36,11 +36,13 @@ module.exports = defineConfig({
     },
   ],
 
-  webServer: {
-    command: 'python -m http.server 4173 --directory apps/escd/web',
-    url: 'http://127.0.0.1:4173',
-    reuseExistingServer: !process.env.CI,
-  },
+  ...(process.env.CI ? {} : {
+    webServer: {
+      command: 'python -m http.server 4173 --directory apps/escd/web',
+      url: 'http://127.0.0.1:4173',
+      reuseExistingServer: false,
+    },
+  }),
 
   ...(usePreInstalledChromium && {
     use: {
