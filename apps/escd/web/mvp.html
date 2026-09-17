@@ -1161,7 +1161,19 @@
     const API = '/api/mvp';
     const $ = id => document.getElementById(id);
 
+    
+    // Parse OAuth hash if redirected directly to app
+    const hash = window.location.hash ? window.location.hash.substring(1) : '';
+    if (hash) {
+      const p = new URLSearchParams(hash);
+      const tok = p.get('access_token');
+      if (tok) {
+        sessionStorage.setItem('escd_access_token', tok);
+        window.history.replaceState(null, null, window.location.pathname);
+      }
+    }
     let accessToken = sessionStorage.getItem('escd_access_token') || '';
+
     let conversationId = sessionStorage.getItem('escd_conversation_id') || ('conv_' + Date.now());
     let currentTab = 'home';
     let messages = [];

@@ -363,7 +363,16 @@
     });
 
     // Bootstrap
+    
+    // Show error from URL parameters if redirected
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlError = urlParams.get('error') || urlParams.get('error_description');
+    if (urlError) {
+      showError('Authentication notice: ' + urlError.replace(/_/g, ' '));
+    }
+
     handleOAuthHash();
+
     if (sessionStorage.getItem('escd_access_token')) {
       window.location.replace('/escd/app');
     }
