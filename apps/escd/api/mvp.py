@@ -67,7 +67,10 @@ class handler(BaseHTTPRequestHandler):
         size = int(self.headers.get("Content-Length") or 0)
         if size < 1 or size > 1_000_000:
             return {}
-        return json.loads(self.rfile.read(size).decode("utf-8"))
+        try:
+            return json.loads(self.rfile.read(size).decode("utf-8"))
+        except (ValueError, UnicodeDecodeError):
+            return {}
 
     def _supabase_config(self):
         url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or ""
