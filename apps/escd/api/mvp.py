@@ -71,7 +71,7 @@ class handler(BaseHTTPRequestHandler):
 
     def _supabase_config(self):
         url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or ""
-        anon = os.getenv("SUPABASE_ANON_KEY") or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY") or ""
+        anon = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_ANON_KEY") or os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY") or ""
         if not url or not anon:
             raise AuthError("auth_configuration_missing")
         return url.rstrip("/"), anon
@@ -142,13 +142,7 @@ class handler(BaseHTTPRequestHandler):
         if path == "/api/mvp/health":
             self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.4", "providers": provider_status()})
             return
-        if path == "/api/mvp/auth-config":
-            try:
-                url, anon = self._supabase_config()
-                self._json(200, {"ok": True, "supabase_url": url, "supabase_anon_key": anon})
-            except Exception as exc:
-                self._json(500, {"ok": False, "error": str(exc)})
-            return
+
         try:
             repo = self._auth()
             if path == "/api/mvp/items":

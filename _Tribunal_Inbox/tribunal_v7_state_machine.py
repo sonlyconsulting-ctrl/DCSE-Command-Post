@@ -126,6 +126,7 @@ class TaskSpec:
     approved_at: str
     source_file: Path
     source_sha256: str
+    operator_contact: dict[str, Any] | None = None
 
     @classmethod
     def from_packet(
@@ -144,8 +145,8 @@ class TaskSpec:
             raise GovernanceError("POLLER_V7.task_id is missing or invalid")
 
         worker = str(block.get("worker", "")).strip().lower()
-        if worker not in {"codex", "fable"}:
-            raise GovernanceError("POLLER_V7.worker must be codex or fable")
+        if worker not in {"codex", "fable", "antigravity"}:
+            raise GovernanceError("POLLER_V7.worker must be codex, fable, or antigravity")
 
         prompt = str(block.get("prompt", "")).strip()
         if len(prompt) < 20:
@@ -153,7 +154,15 @@ class TaskSpec:
 
         working_directory = Path(str(block.get("working_directory", ""))).expanduser()
         if not working_directory.is_absolute() or not working_directory.is_dir():
-            raise GovernanceError("working_directory must be an existing absolute directory")
+            matched = False
+            for root in allowed_roots:
+                root_res = root.resolve()
+                if root_res.is_dir() and (root_res.name.lower() == working_directory.name.lower() or str(working_directory).lower().endswith(root_res.name.lower())):
+                    working_directory = root_res
+                    matched = True
+                    break
+            if not matched:
+                raise GovernanceError("working_directory must be an existing absolute directory")
         if not is_within(working_directory, allowed_roots):
             raise GovernanceError("working_directory is outside the configured allow roots")
 
@@ -193,6 +202,28 @@ class TaskSpec:
         approved_at = str(authorization.get("approved_at", "")).strip()
         if not approved_by or not approved_at:
             raise GovernanceError("authorization requires approved_by and approved_at")
+        dcs_decision_ref = str(authorization.get("dcs_decision_ref", "")).strip()
+        if not dcs_decision_ref:
+            raise GovernanceError(
+                "authorization.dcs_decision_ref is required (DCS-DIR-20260916-001); "
+                "a self-written GO is not DCS authorization"
+            )
+        verify_dcs_decision(dcs_decision_ref)
+
+        operator_contact: dict[str, Any] | None = None
+        raw_operator = block.get("operator") or packet.get("operator") or block.get("contact")
+        if isinstance(raw_operator, dict):
+            operator_contact = {
+                "name": str(raw_operator.get("name", approved_by or "DCS")).strip(),
+                "phone": str(raw_operator.get("phone", raw_operator.get("mobile", ""))).strip(),
+                "lane": str(raw_operator.get("lane", "DCSE")).strip(),
+            }
+        elif isinstance(raw_operator, str) and raw_operator.strip():
+            operator_contact = {
+                "name": approved_by or "DCS",
+                "phone": raw_operator.strip(),
+                "lane": "DCSE",
+            }
 
         return cls(
             task_id=task_id,
@@ -206,7 +237,33 @@ class TaskSpec:
             approved_at=approved_at,
             source_file=source_file.resolve(),
             source_sha256=source_sha256.upper(),
+            operator_contact=operator_contact,
         )
+
+
+def verify_dcs_decision(ref: str) -> None:
+    """Fail closed unless ref resolves to an ACTIVE DCS directive in dcse_cp."""
+    import urllib.parse
+    import urllib.request
+
+    url = os.environ.get("DCSE_SUPABASE_URL", "").rstrip("/")
+    key = os.environ.get("DCSE_SUPABASE_SERVICE_KEY", "")
+    if not url or not key:
+        raise GovernanceError("cannot verify dcs_decision_ref: control-plane credentials not loaded")
+    query = urllib.parse.urlencode(
+        {"id": f"eq.{ref}", "status": "eq.ACTIVE", "select": "id,approved_by"}
+    )
+    request = urllib.request.Request(
+        f"{url}/rest/v1/governance_directives?{query}",
+        headers={"apikey": key, "Authorization": f"Bearer {key}", "Accept-Profile": "dcse_cp"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            rows = json.loads(response.read().decode("utf-8"))
+    except Exception as exc:  # network or auth failure => fail closed
+        raise GovernanceError(f"cannot verify dcs_decision_ref {ref}: {type(exc).__name__}") from exc
+    if not rows or not str(rows[0].get("approved_by", "")).upper().startswith("DCS"):
+        raise GovernanceError(f"dcs_decision_ref {ref} is not an ACTIVE DCS directive")
 
 
 def new_receipt(source_file: Path, source_sha256: str, task_id: str) -> dict[str, Any]:

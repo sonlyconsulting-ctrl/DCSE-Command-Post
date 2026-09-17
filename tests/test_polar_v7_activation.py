@@ -4,8 +4,14 @@ import os
 import json
 from pathlib import Path
 
-# Add _Tribunal_Inbox to sys.path
-sys.path.insert(0, str(Path(r'C:\DS All Things\DCSE_Command_Center\_Tribunal_Inbox').resolve()))
+# Portable root and inbox resolution
+ROOT_DIR = Path(r'C:\DS All Things\DCSE_Command_Center')
+if not ROOT_DIR.exists():
+    ROOT_DIR = Path(__file__).resolve().parent.parent
+
+INBOX_DIR = ROOT_DIR / "_Tribunal_Inbox"
+if str(INBOX_DIR.resolve()) not in sys.path:
+    sys.path.insert(0, str(INBOX_DIR.resolve()))
 
 from tribunal_v7_state_machine import (
     PollerState,
@@ -34,7 +40,7 @@ class TestPolarV7Activation(unittest.TestCase):
                 'task_id': 'TEST-POLAR-VALID-001',
                 'worker': 'codex',
                 'prompt': 'A valid prompt of sufficient length for test execution.',
-                'working_directory': r'C:\DS All Things\DCSE_Command_Center',
+                'working_directory': str(ROOT_DIR),
                 'sandbox': 'read-only',
                 'timeout_seconds': 60,
                 'expected_outputs': [],
@@ -47,9 +53,9 @@ class TestPolarV7Activation(unittest.TestCase):
         }
         spec = TaskSpec.from_packet(
             packet,
-            Path(r'C:\DS All Things\DCSE_Command_Center\_Tribunal_Inbox\test.json'),
+            INBOX_DIR / 'test.json',
             '0' * 64,
-            [Path(r'C:\DS All Things\DCSE_Command_Center')]
+            [ROOT_DIR]
         )
         self.assertEqual(spec.task_id, 'TEST-POLAR-VALID-001')
         self.assertEqual(spec.worker, 'codex')
@@ -62,7 +68,7 @@ class TestPolarV7Activation(unittest.TestCase):
                 'task_id': 'TEST-POLAR-BAD-001',
                 'worker': 'codex',
                 'prompt': 'A valid prompt of sufficient length for test execution.',
-                'working_directory': r'C:\DS All Things\DCSE_Command_Center',
+                'working_directory': str(ROOT_DIR),
                 'sandbox': 'read-only',
                 'timeout_seconds': 60,
                 'expected_outputs': [],
@@ -76,9 +82,9 @@ class TestPolarV7Activation(unittest.TestCase):
         with self.assertRaises(GovernanceError):
             TaskSpec.from_packet(
                 bad_packet,
-                Path(r'C:\DS All Things\DCSE_Command_Center\_Tribunal_Inbox\test.json'),
+                INBOX_DIR / 'test.json',
                 '0' * 64,
-                [Path(r'C:\DS All Things\DCSE_Command_Center')]
+                [ROOT_DIR]
             )
 
     def test_04_verification_error_on_failed_worker(self):
@@ -86,13 +92,13 @@ class TestPolarV7Activation(unittest.TestCase):
             task_id='TEST-SPEC-001',
             worker='fable',
             prompt='A valid prompt of sufficient length for test execution.',
-            working_directory=Path(r'C:\DS All Things\DCSE_Command_Center'),
+            working_directory=ROOT_DIR,
             sandbox='read-only',
             timeout_seconds=60,
             expected_outputs=(),
             approved_by='DCS',
             approved_at='2026-09-10T21:45:00Z',
-            source_file=Path(r'C:\DS All Things\DCSE_Command_Center\_Tribunal_Inbox\test.json'),
+            source_file=INBOX_DIR / 'test.json',
             source_sha256='0' * 64
         )
         worker_result = run_fable(spec)
@@ -118,6 +124,40 @@ class TestPolarV7Activation(unittest.TestCase):
             receipt_file.write_text(json.dumps({"source_sha256": "A" * 64, "state": "AUTHORIZED", "outcome": "AUTHORIZED_DRY_RUN_HOLD"}), encoding="utf-8")
             self.assertTrue(poller.terminal_receipt_exists(receipt_file, "A" * 64, dispatch=False))
             self.assertFalse(poller.terminal_receipt_exists(receipt_file, "A" * 64, dispatch=True))
+
+    def test_06_operator_contact_enrichment(self):
+        packet = {
+            'POLLER_V7': {
+                'task_id': 'TEST-POLAR-CONTACT-001',
+                'worker': 'codex',
+                'prompt': 'A valid prompt of sufficient length for test execution.',
+                'working_directory': str(ROOT_DIR),
+                'sandbox': 'read-only',
+                'timeout_seconds': 60,
+                'expected_outputs': [],
+                'operator': {
+                    'name': 'DCS',
+                    'phone': '(260) 452-9097',
+                    'lane': 'DCSE'
+                },
+                'authorization': {
+                    'decision': 'GO',
+                    'approved_by': 'DCS',
+                    'approved_at': '2026-09-14T15:30:00Z'
+                }
+            }
+        }
+        spec = TaskSpec.from_packet(
+            packet,
+            INBOX_DIR / 'test.json',
+            '0' * 64,
+            [ROOT_DIR]
+        )
+        self.assertEqual(spec.task_id, 'TEST-POLAR-CONTACT-001')
+        self.assertIsNotNone(spec.operator_contact)
+        self.assertEqual(spec.operator_contact.get('phone'), '(260) 452-9097')
+        self.assertEqual(spec.operator_contact.get('name'), 'DCS')
+        self.assertEqual(spec.operator_contact.get('lane'), 'DCSE')
 
 if __name__ == '__main__':
     unittest.main()

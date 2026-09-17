@@ -15,6 +15,7 @@ from typing import Any
 
 from tribunal_v7_codex_adapter import run_codex
 from tribunal_v7_fable_adapter import run_fable
+from tribunal_v7_agy_adapter import run_antigravity
 from tribunal_v7_state_machine import (
     GovernanceError,
     PollerState,
@@ -141,6 +142,9 @@ def process_packet(
             "expected_outputs": list(spec.expected_outputs),
             "timeout_seconds": spec.timeout_seconds,
         }
+        if spec.operator_contact:
+            receipt["authorized_scope"]["operator_contact"] = spec.operator_contact
+            receipt["operator_contact"] = spec.operator_contact
         atomic_write_json(out, receipt)
 
         if not dispatch:
@@ -152,6 +156,8 @@ def process_packet(
         atomic_write_json(out, receipt)
         if spec.worker == "codex":
             worker_result = run_codex(spec)
+        elif spec.worker == "antigravity":
+            worker_result = run_antigravity(spec)
         else:
             worker_result = run_fable(spec)
 
@@ -243,7 +249,12 @@ def main(argv: list[str] | None = None) -> int:
         log(json.dumps({"error": "poll interval must be at least 5 seconds"}))
         return 2
 
+    stop_file = runtime_dir / "STOP"
     while True:
+        # DCS-DIR-20260916-001 kill switch: create _Poller_v7_Runtime/STOP to halt.
+        if stop_file.exists():
+            log(json.dumps({"outcome": "STOP_FILE_PRESENT", "path": str(stop_file)}))
+            return 0
         run_once(inbox, runtime_dir, allowed_roots, args.dispatch)
         if not args.watch:
             return 0
