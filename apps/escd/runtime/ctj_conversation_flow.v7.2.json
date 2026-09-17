@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "cf_id": "ESCD-CF-CTJ-V72-001",
+  "family_id": "CTJ",
+  "status": "CANDIDATE",
+  "governance_floor": "DCSE-v7.2",
+  "entry_aliases": {
+    "CTJ-SCA": ["sca", "strategic clarity assessment", "ctj assessment"],
+    "CTJ-P1": ["ctj part 1", "part 1", "building clarity and confidence"],
+    "CTJ-P2": ["ctj part 2", "part 2", "exploring ideas and making moves"],
+    "CTJ-P3": ["ctj part 3", "part 3", "finding meaning and balance"],
+    "CTJ-UNIFIED": ["ctj unified", "unified", "unified edition", "unified path", "the unified product"],
+    "CTJ-COLLECTION": ["ctj collection", "complete collection", "complete ctj keeper collection"],
+    "CTJ-MEMBERSHIP": ["ctj membership", "membership"],
+    "CTJ-FOCUS-FLOW": ["focus and flow", "focus & flow"],
+    "CTJ-MENTAL-INGENUITY": ["mental ingenuity"]
+  },
+  "family_invariants": {
+    "entity": "Sonly Consulting",
+    "purpose": "critical-thinking and strategic-clarity product family",
+    "interaction": ["preserve_user_agency", "evidence_first_claims", "no_unsupported_clinical_or_psychometric_claims"],
+    "brand": {
+      "mood": ["cinematic intelligence", "composed", "strategic", "action-oriented"],
+      "visual_language": ["path", "convergence", "compass_or_orbit", "horizon", "journey"],
+      "identity_rule": "family resemblance without forced identical artwork"
+    }
+  },
+  "resolution_states": {
+    "UNKNOWN": {"terminal": false, "action": "continue_authorized_retrieval"},
+    "SEARCHED_NOT_FOUND": {"terminal": false, "action": "report_sources_searched_and_continue_independent_work"},
+    "VERIFIED_ABSENT": {"terminal": true, "action": "report_absence_with_evidence"}
+  },
+  "request_classes": ["INVENTORY", "REVIEW", "CREATE", "TRANSFORM", "CORRECT", "PACKAGE", "BRAND_MEDIA", "COMMERCIALIZE", "DEPLOY", "TEST", "RELEASE", "SUPPORT", "GOVERNANCE"],
+  "action_modes": ["READ", "ANALYZE", "GENERATE", "TRANSFORM", "MUTATE", "VALIDATE", "PROMOTE"],
+  "stages": [
+    {"id":"CF-01","name":"INGEST","action":"preserve_literal_request_context_artifacts_corrections"},
+    {"id":"CF-02","name":"RESOLVE_IDENTITY","action":"resolve_alias_to_canonical_object_without_hiding_conflict"},
+    {"id":"CF-03","name":"RETRIEVE","action":"retrieve_enterprise_evidence_before_user_escalation"},
+    {"id":"CF-04","name":"EXTRACT_VARIABLES","action":"extract_turn_session_task_product_entity_preference_governance_derived_variables_with_provenance"},
+    {"id":"CF-05","name":"CLASSIFY_REQUEST","action":"assign_one_or_more_request_classes"},
+    {"id":"CF-06","name":"LOAD_PRODUCT_DNA","action":"load_family_invariants_product_semantics_lifecycle_evidence"},
+    {"id":"CF-07","name":"APPLY_CONTROLS","action":"apply_v7_2_authority_lane_stopgate_evidence_security_rollback_controls"},
+    {"id":"CF-08","name":"ACTION_MODE","action":"select_read_analyze_generate_transform_mutate_validate_promote"},
+    {"id":"CF-09","name":"EXECUTE","action":"execute_permitted_action_allowing_creative_generation_inside_invariants"},
+    {"id":"CF-10","name":"VALIDATE","action":"validate_semantic_fidelity_family_conformity_technical_and_release_controls"},
+    {"id":"CF-11","name":"RECORD_EVIDENCE","action":"record_artifacts_urls_commits_deployments_tests_provenance_reasoning_state"},
+    {"id":"CF-12","name":"DDNA_LEARN","action":"extract_candidate_ddna_dedupe_contradiction_check_score_authority_confidence"},
+    {"id":"CF-13","name":"UPDATE_SEMANTIC_OBJECT","action":"update_candidate_state_only_when_supported_preserve_history_rollback"},
+    {"id":"CF-14","name":"RETURN","action":"return_result_evidence_unresolved_values_next_executable_action_without_reasking_retrievable_facts"}
+  ],
+  "transformation_rule": {
+    "id": "CTJ-CF-TR-001",
+    "inputs": ["retrieved_ingredients", "current_instruction", "ctj_ddna", "v7_2_controls"],
+    "rule": "Create, update, or link governed objects. Generation may be creative; validation enforces invariants after generation rather than reducing generation to static substitution."
+  },
+  "ddna": {
+    "candidate_families": ["CTJ_PRODUCT_DNA", "CTJ_BRAND_VISUAL_DNA", "CTJ_WORKFLOW_DNA", "DCS_INTERACTION_CORRECTION_DNA", "ENTERPRISE_RETRIEVAL_DNA"],
+    "pipeline": ["EXTRACT", "CLASSIFY", "NORMALIZE", "DEDUPLICATE", "CORRELATE", "DETECT_PATTERNS", "CHECK_CONTRADICTIONS", "SCORE_AUTHORITY_CONFIDENCE", "CANDIDATE", "VALIDATE", "PROMOTE"],
+    "rule": "conversation is evidence; DDNA is semantic distillation; transcript is not authoritative operational state"
+  },
+  "no_stoppage": {
+    "rule": "Missing nonessential fields do not stop the flow. Continue independent work and type unresolved values UNKNOWN.",
+    "hard_stop_categories": ["authority_gate", "security_gate", "destructive_gate", "release_promotion_gate"]
+  },
+  "certification_scenarios": ["unified_asset_retrieval", "unified_brand_generation", "ctj_sell_readiness", "unified_title_propagation", "dcs_correction_to_ddna_candidate"]
+}
