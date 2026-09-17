@@ -129,13 +129,10 @@ if (Test-Path $StateFile) {
 
 try { $branch = (git -C $WorkspacePath rev-parse --abbrev-ref HEAD 2>$null) } catch { $branch = 'unknown' }
 
-# ---- 1. Heartbeats (both identities; only claude_code executes) --------
+# ---- 1. Heartbeats (dcse_cp identity executes) ----------------------------
 Invoke-Rpc 'agent_heartbeat' @{ p_agent_key = $AgentKeyCP; p_task_key = $null; p_status = 'online'
   p_capability_status = @{ poller = 'active'; host = $env:COMPUTERNAME }; p_notes = 'automated poller cycle' } 'dcse_cp' | Out-Null
 
-Invoke-Rpc 'send_heartbeat' @{ p_agent_id = $AgentIdWorker; p_status = 'idle'; p_current_task_id = $null
-  p_current_lane = $Lane; p_workspace_path = $WorkspacePath; p_branch_name = $branch
-  p_model_version = 'claude-code'; p_capabilities = @{ tool_use = $true }; p_metrics = @{ cycle_at = (Get-Date).ToString('o') } } 'v7_worker' | Out-Null
 
 # ---- 2. Fetch agent registry authorization once per cycle --------------
 $authLanes = @()
@@ -280,3 +277,18 @@ foreach ($t in $inbox) {
 
 $state | ConvertTo-Json -Depth 10 | Set-Content -Path $StateFile
 if ($stateChanged) { Write-Log "Cycle complete." }
+
+# ---- 4. ESCD On-Demand Host Supervisor -----------------------------------
+$supervisorScript = Join-Path $PSScriptRoot 'escd_polar_host_supervisor.ps1'
+if (Test-Path $supervisorScript) {
+  try {
+    . $supervisorScript
+    $escdStatus = Invoke-EscdPolarHostSupervisor -SupabaseUrl $SupabaseUrl -ServiceKey $ServiceKey -WorkspacePath $WorkspacePath -Mode 'ON_DEMAND'
+    if ($escdStatus.action -in @('STARTED', 'RUNNING', 'HOLD')) {
+      Write-Log "ESCD_SUPERVISOR: action=$($escdStatus.action) reason=$($escdStatus.reason) turn_key=$($escdStatus.turn_key)"
+    }
+  } catch {
+    Write-Log "ESCD_SUPERVISOR_ERROR: $($_.Exception.Message)"
+  }
+}
+

@@ -1,0 +1,48 @@
+{
+  "acceptance": [
+    {
+      "command": "python -m dcse test",
+      "expect": "0 failures, and the three coverage assertions all pass",
+      "why": "the suite refuses a rule with no refusal case"
+    },
+    {
+      "command": "python -m dcse bench --against baseline.json",
+      "expect": "no regressed entries",
+      "why": "new cases did not change behaviour"
+    }
+  ],
+  "action": "edit",
+  "capabilities": [
+    "github"
+  ],
+  "consequence": "low",
+  "depends_on": [],
+  "directive": "ESCD-GOV-20260913-001",
+  "entity": "task",
+  "facts": {},
+  "forbidden": [
+    "Do not weaken a rule to make a test pass. If the rule is wrong, say so and stop; changing the rule is a different decision.",
+    "Do not add a PASS-only case to satisfy coverage."
+  ],
+  "id": "T-002",
+  "issued_by": "Claude (Cowork)",
+  "objective": "Five registered doctrine rules sit at candidate because nothing proves them. Either they earn provisional or we learn they are unenforceable as written, and both outcomes are useful.",
+  "reconciliation": "READY",
+  "reconciliation_note": "",
+  "report": [
+    "For each of the five, the cases added and their expected verdicts.",
+    "Any rule you could not make fail, and why."
+  ],
+  "reversibility": "reversible",
+  "scope": [
+    "dcse/tests.py",
+    "dcse/rules/"
+  ],
+  "status": "open",
+  "steps": [
+    "The five: gap as a computed difference, abstention, facts and frames separate, To-Be traceability, bounded generative transformation.",
+    "For each, add at least one case that expects PASS and at least one that expects FAIL or UNKNOWN. The suite enforces the second and will tell you if you skip it.",
+    "If a rule cannot be made to fail on purpose, do not invent a case to satisfy the coverage check. Report it instead. A rule that cannot refuse either does nothing or nobody understands it, and both should stop here."
+  ],
+  "title": "Write the five missing rule tests"
+}
