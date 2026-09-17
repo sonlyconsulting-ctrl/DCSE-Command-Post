@@ -33,10 +33,15 @@ jobs:
       - name: Check branch lifecycle
         run: python scripts/check_branch_lifecycle.py
       - name: Install test dependencies
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: /opt/pw-browsers
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: |
           python -m pip install pytest
           npm install --no-save @playwright/test@1.55.0
-          npx playwright install --with-deps chromium
+          if [ ! -d "$PLAYWRIGHT_BROWSERS_PATH/chromium" ]; then
+            npx playwright install --with-deps chromium
+          fi
       - name: Compile ESCD Python and validate deployment config syntax
         run: |
           python -m py_compile api/mvp.py apps/escd/api/mvp.py apps/escd/runtime/auth.py apps/escd/runtime/repository.py apps/escd/runtime/mvp_data.py scripts/validate_escd_production_config.py
@@ -47,8 +52,12 @@ jobs:
       - name: Run provider settings browser-script tests
         run: node --test tests/escd-provider-settings.test.js
       - name: Run Playwright desktop and mobile acceptance checks
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: /opt/pw-browsers
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: |
           python -m http.server 4173 --directory apps/escd/web >/tmp/escd-http.log 2>&1 &
+          sleep 2
           npx playwright test tests/escd-phase1-e2e.spec.js --reporter=line
       - name: Verify production validator is strict and has no local fallback
         run: |

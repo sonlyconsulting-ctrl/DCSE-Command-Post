@@ -1,0 +1,68 @@
+{
+  "acceptance": [
+    {
+      "command": "git diff --stat",
+      "expect": "exactly one file changed, vercel.json, unless a workflow file was also required",
+      "why": "scope containment, GH-04"
+    },
+    {
+      "command": "python -m dcse run --entity task --action promote --cap deployment --bind --fact build_command_is_validator=false --fact build_output_path=<the real path> --fact build_artifact_present=true --fact commit_sha=<sha> --fact is_ancestor_of_main=true --fact preflight_passed=true --fact preflight_allows_fallback=false --fact author=<you> --fact promoter=dcs --no-execute",
+      "expect": "DEP-02 reports PASS rather than FAIL",
+      "why": "the rule that describes this exact defect stops describing it"
+    },
+    {
+      "command": "python -m dcse bench --against baseline.json",
+      "expect": "nothing moved, or fixed entries only. Any regressed entry means stop.",
+      "why": "the change did not break something else"
+    }
+  ],
+  "action": "edit",
+  "capabilities": [
+    "github"
+  ],
+  "consequence": "low",
+  "depends_on": [],
+  "directive": "ESCD-GOV-20260913-001",
+  "entity": "task",
+  "facts": {
+    "branch": "fix/escd-build-output",
+    "changed_paths": [
+      "vercel.json"
+    ],
+    "declared_scope": [
+      "vercel.json",
+      ".github/"
+    ]
+  },
+  "forbidden": [
+    "Do not deploy or promote anything. That is a separate task and a separate decision.",
+    "Do not remove or weaken the ESCD validation script.",
+    "Do not change the Vercel project settings through the dashboard. The repository is the canonical source and a dashboard change leaves no diff."
+  ],
+  "hold_ref": "DCS direction 2026-09-13, orchestrator role",
+  "id": "T-001",
+  "issued_by": "Claude (Cowork)",
+  "objective": "Production promotion fails with STATIC_BUILD_NO_OUT_DIR because the configuration validator occupies buildCommand, so it runs, exits zero, and emits no build artifact.",
+  "reconciliation": "HOLD_DCS",
+  "reconciliation_note": "DCS paused Vercel and deployment architectural changes while the role of the Python orchestrator is settled. The diagnosis stands and the fix is still two lines; the pause is about sequencing, not about correctness.",
+  "report": [
+    "The buildCommand before and after, verbatim.",
+    "The output directory the project actually emits and how you determined it.",
+    "The three acceptance command outputs, pasted, not summarised.",
+    "The branch name and commit sha."
+  ],
+  "reversibility": "reversible",
+  "scope": [
+    "vercel.json",
+    ".github/workflows/"
+  ],
+  "status": "open",
+  "steps": [
+    "Read the root vercel.json and record its current buildCommand verbatim.",
+    "Confirm the project framework preset. The gate report says none, so an output directory of .next is wrong for this project.",
+    "Move the ESCD production validation script to a step that runs BEFORE the framework build. Do not delete it; it passed and it is doing its job.",
+    "Set buildCommand to whatever actually produces the deployable output, and set outputDirectory to the path that build emits.",
+    "Do not deploy. This task ends at a committed change on a branch."
+  ],
+  "title": "Move the ESCD validator out of the build command slot"
+}
