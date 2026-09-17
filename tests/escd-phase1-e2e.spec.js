@@ -38,7 +38,7 @@ test('desktop Phase 1 navigation exposes Knowledge and canonical records', async
   await page.getByRole('button', { name: 'Knowledge' }).first().click();
   await expect(page.locator('#knowledge')).toHaveClass(/active/);
   await expect(page.locator('#knowledgeList .row')).toHaveCount(24);
-  await expect(page.getByPlaceholder('Search canonical knowledge...')).toBeVisible();
+  await expect(page.getByPlaceholder('Search knowledge...')).toBeVisible();
 });
 
 test.describe('mobile viewport', () => {
