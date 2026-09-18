@@ -66,10 +66,11 @@ try {
   console.log('━━ FILES ━━━');
 
   entries.forEach(entry => {
-    if (entry.data.length === 0) {
+    const data = entry.getData();
+    if (data.length === 0) {
       findings.fail.push(`File is empty: ${entry.name}`);
     } else {
-      findings.pass.push(`✓ ${entry.name} (${formatBytes(entry.data.length)})`);
+      findings.pass.push(`✓ ${entry.name} (${formatBytes(data.length)})`);
     }
   });
 
