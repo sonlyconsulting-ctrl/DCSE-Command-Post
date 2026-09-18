@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CTJ: Focus & Flow™ MVP v1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://opendyslexic.org/css/opendyslexic.css" rel="stylesheet">
+    
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'sc-navy': '#0A0F24',
+              'sc-gold': '#C8A444',
+              'sc-ivory': '#F6F2E9',
+              'sc-ink': '#0E1422',
+              'sc-muted': '#6E7480',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              dyslexic: ['OpenDyslexic', 'sans-serif'],
+            },
+            animation: {
+              'breathing': 'breathe 16s infinite ease-in-out',
+              'peripheral': 'fadeDots 10s infinite',
+            },
+            keyframes: {
+              breathe: {
+                '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                '25%': { transform: 'scale(1.5)', opacity: '1' },   /* Inhale 4s */
+                '50%': { transform: 'scale(1.5)', opacity: '1' },   /* Hold 4s */
+                '75%': { transform: 'scale(1)', opacity: '0.8' },   /* Exhale 4s */
+              },
+              fadeDots: {
+                '0%, 100%': { opacity: '0.1' },
+                '50%': { opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* Accessibility Utilities */
+      .focus-ring {
+        outline: none;
+      }
+      body:not(.using-mouse) .focus-ring:focus-visible {
+        box-shadow: 0 0 0 2px #C8A444;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+      
+      /* High Contrast Mode Overrides */
+      .high-contrast {
+        --sc-navy: #000000 !important;
+        --sc-gold: #FFFF00 !important;
+        --sc-ivory: #FFFFFF !important;
+        --sc-ink: #000000 !important;
+        --sc-muted: #000000 !important;
+        background-color: #000000 !important;
+        color: #FFFFFF !important;
+      }
+      .high-contrast .bg-sc-ivory {
+        background-color: #000000 !important;
+        border: 2px solid #FFFFFF !important;
+        color: #FFFFFF !important;
+      }
+      .high-contrast .text-sc-navy {
+        color: #FFFFFF !important;
+      }
+      .high-contrast .text-sc-ink {
+        color: #FFFFFF !important;
+      }
+      .high-contrast button {
+        border: 2px solid #FFFFFF !important;
+      }
+
+      /* Reduced Motion */
+      @media (prefers-reduced-motion: reduce) {
+        *, ::before, ::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+      
+      body.reduce-motion * {
+         animation: none !important;
+         transition: none !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "canvas-confetti": "https://aistudiocdn.com/canvas-confetti@^1.9.4",
+    "jspdf": "https://aistudiocdn.com/jspdf@^3.0.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-sc-navy text-sc-ivory antialiased min-h-screen flex flex-col selection:bg-sc-gold selection:text-sc-navy">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

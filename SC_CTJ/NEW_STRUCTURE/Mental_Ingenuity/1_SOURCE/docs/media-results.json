@@ -1,0 +1,242 @@
+{
+  "results": [
+    {
+      "name": "Image asset served: hero.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: map.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_signal.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_forge.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_perspective.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_causal.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_vault.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: chamber_summit.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: about.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Image asset served: social.webp",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Video asset served: video/opening.mp4",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Video asset served: video/opening.webm",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Video asset served: video/poster.jpg",
+      "pass": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "Audio decodes: music_opening",
+      "pass": true,
+      "detail": "32s, 232856 bytes"
+    },
+    {
+      "name": "Audio decodes: music_map",
+      "pass": true,
+      "detail": "40s, 303944 bytes"
+    },
+    {
+      "name": "Audio decodes: music_focus",
+      "pass": true,
+      "detail": "36s, 252976 bytes"
+    },
+    {
+      "name": "Audio decodes: music_structure",
+      "pass": true,
+      "detail": "36s, 272167 bytes"
+    },
+    {
+      "name": "Audio decodes: music_tension",
+      "pass": true,
+      "detail": "36s, 274785 bytes"
+    },
+    {
+      "name": "Audio decodes: music_summit",
+      "pass": true,
+      "detail": "40s, 294363 bytes"
+    },
+    {
+      "name": "Audio decodes: music_complete",
+      "pass": true,
+      "detail": "12s, 16731 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_signal",
+      "pass": true,
+      "detail": "28s, 223623 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_forge",
+      "pass": true,
+      "detail": "28s, 223937 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_perspective",
+      "pass": true,
+      "detail": "28s, 218485 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_causal",
+      "pass": true,
+      "detail": "28s, 217188 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_vault",
+      "pass": true,
+      "detail": "28s, 226194 bytes"
+    },
+    {
+      "name": "Audio decodes: amb_summit",
+      "pass": true,
+      "detail": "28s, 214324 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_select",
+      "pass": true,
+      "detail": "0.2s, 3885 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_place",
+      "pass": true,
+      "detail": "0.3s, 4049 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_invalid",
+      "pass": true,
+      "detail": "0.3s, 6485 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_rotate",
+      "pass": true,
+      "detail": "0.3s, 3918 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_connect",
+      "pass": true,
+      "detail": "0.4s, 4121 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_activate",
+      "pass": true,
+      "detail": "0.5s, 4375 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_reset",
+      "pass": true,
+      "detail": "0.4s, 4266 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_hint",
+      "pass": true,
+      "detail": "0.6s, 4537 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_discover",
+      "pass": true,
+      "detail": "0.7s, 4652 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_complete",
+      "pass": true,
+      "detail": "1.2s, 6103 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_unlock",
+      "pass": true,
+      "detail": "0.8s, 5256 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_rule_change",
+      "pass": true,
+      "detail": "1s, 5140 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_achievement",
+      "pass": true,
+      "detail": "0.9s, 5005 bytes"
+    },
+    {
+      "name": "Audio decodes: sfx_final",
+      "pass": true,
+      "detail": "2.6s, 8867 bytes"
+    },
+    {
+      "name": "Cinematic video present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Cinematic video plays (autoplay muted)",
+      "pass": true,
+      "detail": "{\"present\":true,\"readyState\":4,\"currentTime\":9.015026,\"paused\":false,\"error\":null,\"muted\":true}"
+    },
+    {
+      "name": "Cinematic video starts muted (no sound before choice)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "Reduced motion replaces video with a loaded still alternative",
+      "pass": true,
+      "detail": "{\"reduced\":true,\"video\":false,\"poster\":true,\"posterComplete\":true,\"posterWidth\":1920,\"transcript\":true}"
+    },
+    {
+      "name": "Missing asset request resolves without page failure",
+      "pass": true,
+      "detail": "HTTP 200, state complete"
+    },
+    {
+      "name": "No console errors during media verification",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "videoState": {
+    "present": true,
+    "readyState": 4,
+    "currentTime": 9.015026,
+    "paused": false,
+    "error": null,
+    "muted": true
+  }
+}

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Critical Thinker’s Journey™: Part 2 - Exploring Ideas and Making Moves</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-gold: #F7E6B5;
+            --text-navy: #0E2A47;
+            --accent-gold: #C89E4F;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            background-color: var(--text-navy); /* Dark navy background for cover */
+            color: var(--background-gold); /* Gold text for cover */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .cover-page img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-page h1 {
+            font-size: 3.5em;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            color: var(--background-gold); /* Gold for main title on cover */
+        }
+
+        .cover-page h2 {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-top: 0;
+            color: var(--accent-gold); /* Muted gold for subtitle on cover */
+        }
+
+        .cover-page .author, .cover-page .copyright {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: var(--background-gold); /* Gold for author/copyright on cover */
+        }
+        .cover-page .copyright {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9em;
+        }
+
+
+        /* General Section Styling */
+        .section-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .section-container:last-of-type {
+            page-break-after: auto; /* No page break after the very last section */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-navy); /* Dark navy for all headings */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 { font-size: 2.5em; text-align: center; }
+        h2 { font-size: 2em; border-bottom: 2px solid var(--accent-gold); padding-bottom: 5px; margin-top: 2em;}
+        h3 { font-size: 1.5em; color: var(--text-navy); margin-top: 1.5em;} /* Ensure h3 also dark navy */
+        h4 { font-size: 1.2em; color: var(--text-navy); margin-top: 1.2em;} /* Ensure h4 also dark navy */
+
+        .header-footer-section { /* Renamed to avoid conflict with global footer */
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            padding: 10px 5%;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid var(--accent-gold);
+            border-bottom: 1px solid var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .page-break {
+            page-break-after: always;
+            height: 0; /* Ensures no extra space from the div */
+            overflow: hidden; /* Hides any content if somehow present */
+        }
+
+        /* Table of Contents */
+        .toc-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .toc-container h1 {
+            color: var(--text-navy); /* Dark navy for TOC title */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-navy); /* Dark navy for links */
+            text-decoration: none;
+            font-size: 1.1em;
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px dashed var(--text-navy); /* Changed to navy for better contrast */
+            transition: color 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-navy); /* Changed to navy for better contrast */
+            border-bottom-color: var(--accent-gold); /* Optional: can change border on hover for effect */
+        }
+
+        .toc-list .part-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            color: var(--text-navy); /* Dark navy for part titles */
+        }
+
+        .toc-list .day-title {
+            margin-left: 20px;
+            font-size: 1em;
+        }
+
+        /* Workbook Specifics */
+        .mini-framework-box, .visual-aid-box {
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            background-color: rgba(200, 158, 79, 0.1); /* Slightly transparent accent gold */
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .mini-framework-box strong, .visual-aid-box strong {
+            color: var(--text-navy); /* Dark navy for strong text */
+        }
+
+        .prompt-section {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .prompt-section p {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px; /* Default height for response areas */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            color: var(--text-navy); /* Dark navy text */
+            background-color: var(--white); /* White background */
+            box-sizing: border-box;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        /* Specific heights for prompts */
+        textarea.short-response { min-height: 40px; } /* Up to 25 words */
+        textarea.medium-response { min-height: 80px; } /* 50-75 words */
+        textarea.long-response { min-height: 100px; } /* 50-100 words */
+        textarea.bonus-response { min-height: 120px; } /* 100-word explanation */
+        textarea.checkpoint-response { min-height: 150px; } /* 100-150 words */
+        textarea.final-reflection-response { min-height: 150px; } /* 100-150 words */
+
+
+        .word-count-guide {
+            font-size: 0.85em;
+            color: var(--text-navy); /* Dark navy for guide text */
+            margin-top: 2px;
+            display: block;
+        }
+
+        .visual-aid-space {
+            border: 1px dashed var(--accent-gold); /* Accent gold dashed border */
+            padding: 20px;
+            min-height: 150px;
+            margin: 20px 0;
+            text-align: center;
+            color: var(--text-navy); /* Dark navy text */
+            font-style: italic;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+            color: var(--text-navy); /* Dark navy for icons */
+        }
+
+        /* Global Footer */
+        .global-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: var(--text-navy); /* Dark navy text */
+            border-top: 1px solid var(--accent-gold); /* Accent gold border */
+            margin-top: 50px;
+            padding: 10px 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-page, .section-container, .toc-container {
+                page-break-after: always;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .cover-page {
+                background-color: var(--text-navy) !important;
+                color: var(--background-gold) !important;
+            }
+            .cover-page h1 { color: var(--background-gold) !important; }
+            .cover-page h2 { color: var(--accent-gold) !important; }
+            .cover-page .author, .cover-page .copyright { color: var(--background-gold) !important; }
+
+
+            .section-container, .toc-container {
+                background-color: white !important;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            .mini-framework-box, .visual-aid-box {
+                background-color: rgba(200, 158, 79, 0.05) !important; /* Lighter for print */
+                border-color: var(--accent-gold) !important;
+            }
+
+            .header-footer-section {
+                background-color: var(--background-gold) !important;
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            textarea {
+                border: 1px solid var(--accent-gold) !important;
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                min-height: 1.5in;
+                height: auto !important;
+                overflow: hidden !important;
+            }
+
+            .icon {
+                color: var(--text-navy) !important;
+            }
+
+            .global-footer {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+                background-color: white !important; /* Ensure footer background is white for print */
+            }
+
+            .day-section, .checkpoint-section, .reflection-section, .prompt-section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .cover-page h1 { font-size: 2.5em; }
+            .cover-page h2 { font-size: 1.4em; }
+            .section-container, .toc-container { padding: 20px 3%; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.5em; }
+            h3 { font-size: 1.2em; }
+            .toc-list a { font-size: 1em; }
+            .toc-list .part-title { font-size: 1.2em; }
+            .global-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .global-footer span {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cover-page">
+        <img src="https://googleusercontent.com/file_content/0" alt="The Critical Thinker's Journey™">
+        <h1>The Critical Thinker’s Journey™</h1>
+        <h2>Part 2: Exploring Ideas and Making Moves</h2>
+        <div class="author">Published by Sonly Consulting</div>
+        <div class="copyright">© 2025 Sonly Consulting</div>
+    </div>
+
+    <div class="section-container" id="author-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Author's Note</h2>
+        </div>
+        <p>This is more than a journal — it's an invitation to awaken the thinker within you and discover the profound power of how you think. In a world spinning with constant change, challenges, and crises, the ability to pause, breathe deeply, and approach life with crystalline clarity isn't just helpful — it's life‑changing magic.</p>
+        <p>The Critical Thinker's Journey™ is woven from the very fabric of real life itself — those unexpected setbacks that steal your breath, the sudden opportunities that make your heart race, the hard decisions that test your core, and the milestone moments that lift your spirit skyward. Life also gifts us unexpected joys: a goal achieved sooner than your wildest dreams imagined, a beautiful outcome that emerges from nowhere like morning light, or that electric spark of vision that suddenly opens infinite new horizons. This journey embraces all of that — the raw struggles and the pure celebrations — so you can see your unique path with the perspective of a wise observer and the heart of a courageous explorer.</p>
+        <p>Structure becomes your sanctuary because it gives sacred shape to your experiences. It helps you see intricate patterns instead of bewildering chaos, boundless possibilities instead of towering walls, and clear steps forward instead of paralyzing standstills. Engaging with The Critical Thinker's Journey™ helps you recognize profound clarity in the very center of uncertainty and nurture visionary thoughts when inspiration strikes like lightning.</p>
+        <p>Sonly Consulting walks alongside you in that sacred process. Literally, through the carefully crafted tools we've built — the journals that become your trusted confidants, the audio companions that speak directly to your soul, and the resources designed to meet you exactly wherever you are in this moment. And figuratively, through the ethos we share with our creative arm (SS): an unwavering belief that thoughtful design, intentional reflection, and transformative personal growth are meant to be woven seamlessly into the beautiful tapestry of everyday life.</p>
+        <p>This journey is not meant to be finished and kicked to the curb. It is meant to be lived with passion, revisited with wonder, and carried forward with purpose — a trusted companion for the extraordinary real journey you're courageously walking. When you close these pages, the journey continues within you, radiating outward into every decision, every relationship, every dream you dare to chase.</p>
+    </div>
+
+    <div class="section-container" id="intro-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Introduction</h2>
+        </div>
+        <p>Step boldly into something extraordinary. You're about to embark on The Critical Thinker's Journey™ — not just a collection of pages, but a transformative experience that will reshape how you see yourself, your challenges, and your infinite potential.</p>
+        <p>🌟 The Heart of This Journey</p>
+        <p>This isn't traditional learning — it's experiential awakening. Every reflection and challenge stretches different dimensions of your thinking:</p>
+        <ul>
+            <li>Analytical Precision</li>
+            <li>Creative Innovation</li>
+            <li>Intuitive Wisdom</li>
+            <li>Systems Thinking</li>
+            <li>Empathetic Understanding</li>
+            <li>Strategic Visioning</li>
+        </ul>
+        <p>🗺 Your Journey Map</p>
+        <ul>
+            <li>PART 1: FOUNDATION → Clarity & Confidence</li>
+            <li>PART 2: Exploring Ideas and Making Moves → Movement & Adaptation</li>
+            <li>PART 3: INTEGRATION → Purpose & Balance</li>
+            <li>THE FULL SERIES → Complete Transformation</li>
+        </ul>
+        <p>🎯 How This Journey Challenges You</p>
+        <p>Question assumptions, synthesize viewpoints, generate solutions, build mental models, practice metacognition, and develop intellectual courage.</p>
+        <p>You're not just learning about critical thinking — you're becoming a critical thinker.</p>
+    </div>
+
+    <div class="section-container" id="part2-welcome" data-part="2" data-subtitle="Exploring Ideas and Making Moves">
+        
+        <h2>🚀 WELCOME TO<br>Part 2: Exploring Ideas and Making Moves<br><span style="font-size:0.9em; font-weight:normal;">Exploration · Movement · Adaptation</span></h2>
+        <p>Building on Part 1’s logical foundations, this workbook turns theory into action. You’ll design experiments to test ideas, overcome decision paralysis, and embrace uncertainty as a path to growth. Over 10 days, you’ll learn to view failures as data points and adapt iteratively, making your thinking dynamic and resilient.</p>
+        <p>Use this digital workbook to type in digital fields. Each day offers a theme, mini-framework, tip, and prompts. Stay curious, act boldly, and <strong>GET YOUR THINK ON!</strong> 🤔</p>
+    </div>
+
+    <div class="section-container" id="how-to-use-global" data-part="2" data-subtitle="Exploring Ideas and Making Moves">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>How to Use This Workbook (Digital Version)</h2>
+        </div>
+        <ul>
+            <li><strong>Daily Commitment:</strong> Work this into your schedule in a set or impromptu setting, aiming for consecutive and persistent engagement (10-15 minutes daily).</li>
+            <li><strong>Response Areas:</strong> Type your responses directly into the digital fields. Word count guides encourage concise and focused thinking. Note: Visual Aid sections have been repurposed for textual descriptions or structured outlines, allowing for deeper digital reflection.</li>
+            <li><strong>Methods:</strong> Type, speak aloud, or outline responses.</li>
+            <li><strong>Structure:</strong> 10 days, 2 weekly checkpoints, 1 final reflection.</li>
+        </ul>
+        <h3>Who It’s For:</h3>
+        <ul>
+            <li>Professionals testing new strategies</li>
+            <li>Students applying knowledge practically</li>
+            <li>Anyone seeking to act decisively and learn from outcomes</li>
+        </ul>
+        <h3>Weekly Topics:</h3>
+        <ul>
+            <li><strong>Week 1:</strong> Evidence & Experimentation (Days 1–5)</li>
+            <li><strong>Week 2:</strong> Creative Action & Adaptation (Days 6–10)</li>
+            <li>Weekly Checkpoints</li>
+            <li>Final Reflection</li>
+        </ul>
+
+        <h2 id="part2-about-frameworks">About the Mini-Frameworks</h2>
+        <p>Mini-Frameworks guide your experiments, drawn from evidence analysis, creativity, and iterative learning. They encourage action and adaptation. Use them flexibly and revisit what works.</p>
+
+        <h2 id="part2-response-fields">How to Use the Response Fields</h2>
+        <p>Each prompt includes a Response Area with word count guides. Type in digital fields. Focused responses drive actionable thinking.</p>
+        <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+    </div>
+
+    <div class="toc-container">
+        <h1>The Critical Thinker’s Journey™: Table of Contents</h1>
+        <ul class="toc-list">
+            <li><a href="#how-to-use-global" class="part-title">How to Use This Workbook (Digital Version)</a></li>
+            <li><a href="#part2-welcome" class="part-title">Part 2: Exploring Ideas and Making Moves</a></li>
+            <li><a href="#part2-week1" class="day-title">WEEK 1: EVIDENCE & EXPERIMENTATION</a></li>
+            <li><a href="#part2-day1" class="day-title">Day 1 | Testing Arguments</a></li>
+            <li><a href="#part2-day2" class="day-title">Day 2 | Evidence in Action</a></li>
+            <li><a href="#part2-day3" class="day-title">Day 3 | Correlation vs Causation</a></li>
+            <li><a href="#part2-day4" class="day-title">Day 4 | Overcoming Decision Paralysis</a></li>
+            <li><a href="#part2-day5" class="day-title">Day 5 | Learning from Failure</a></li>
+            <li><a href="#part2-checkpoint1" class="day-title">WEEK 1 CHECKPOINT</a></li>
+            <li><a href="#part2-week2" class="day-title">WEEK 2: CREATIVE ACTION & ADAPTATION</a></li>
+            <li><a href="#part2-day6" class="day-title">Day 6 | Creative Experiments</a></li>
+            <li><a href="#part2-day7" class="day-title">Day 7 | Lateral Action</a></li>
+            <li><a href="#part2-day8" class="day-title">Day 8 | Adaptive Mental Models</a></li>
+            <li><a href="#part2-day9" class="day-title">Day 9 | Actionable Analogies</a></li>
+            <li><a href="#part2-day10" class="day-title">Day 10 | Breakthrough Experiments</a></li>
+            <li><a href="#part2-checkpoint2" class="day-title">WEEK 2 CHECKPOINT</a></li>
+            <li><a href="#part2-final-reflection" class="day-title">FINAL REFLECTION</a></li>
+        </ul>
+    </div>
+
+    <div id="part2-content" class="section-container" data-part="2" data-subtitle="Exploring Ideas and Making Moves">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Part 2: Exploring Ideas and Making Moves</h2>
+            <p>Published by Sonly Consulting</p>
+            <p><em>Digital Workbook Edition with Fillable Fields</em></p>
+        </div>
+
+        <h1 id="part2-week1">WEEK 1: EVIDENCE & EXPERIMENTATION</h1>
+
+        <div class="day-section" id="part2-day1">
+            <h2>Day 1 | Testing Arguments</h2>
+            <p><strong>Theme Overview:</strong> Strong arguments need testing. Experimenting with evidence validates or refines your reasoning.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Tiny Experiment: Design a small test for an argument (hypothesis, action, outcome).
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Treat every argument as a hypothesis to test, not a truth to defend.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Outline a 'Tiny Experiment' you could run in an everyday context, whether it's improving a personal habit, testing a new creative technique, or understanding a social dynamic. Clearly state your Hypothesis, the Action you would take, and the Outcome you would measure. Reflect on what you hope to learn from this experimental cycle.
+                <textarea class="long-response" placeholder="Outline your experimental cycle (Hypothesis, Action, Outcome) for a real-life situation. Reflect on the insights you anticipate gaining."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write an argument you want to test in real life.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design a Tiny Experiment: State your hypothesis, action, and expected outcome. What evidence will you collect?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might confirmation bias affect your experiment’s design or interpretation?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “Failure is simply the opportunity to begin again.” —Henry Ford. How does this relate to testing arguments?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain testing arguments to a colleague using a workplace example.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day2">
+            <h2>Day 2 | Evidence in Action</h2>
+            <p><strong>Theme Overview:</strong> Evidence drives effective experiments. Evaluating sources ensures your actions are grounded in reliable data.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Source Experiment: Test a source’s credibility by acting on its advice and observing results.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Act on evidence, but verify its source first.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Choose a piece of information (e.g., from an article, a friend's advice, a social media post) that influenced a recent decision. Describe how you would evaluate its source using a checklist approach: considering the source's 'Expertise', potential 'Bias', and the 'Verifiability' of the information. Reflect on how this critical evaluation impacts your trust and subsequent actions.
+                <textarea class="long-response" placeholder="Evaluate a source using a checklist (Expertise, Bias, Verifiability). Reflect on how this impacts trust and action."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a source (e.g., article, advice) shaping a recent decision.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design a Source Experiment: Act on the source’s advice. How will you measure results? Assess expertise, bias, and verifiability.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might you adjust your action if the source proves unreliable?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “Knowledge is power.” —Francis Bacon. How does source reliability impact action?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your source evaluation today with a year ago.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day3">
+            <h2>Day 3 | Correlation vs Causation</h2>
+            <p><strong>Theme Overview:</strong> Acting on correlations without testing causation can lead to flawed outcomes. Experiments clarify true causes.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Causal Experiment: Test if one event causes another (action, measure, analyze).
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Correlation isn’t causation—test before acting.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a pattern you've observed in your daily life or work where you might have assumed one thing caused another (e.g., 'Every time I do X, Y happens'). Outline the two 'Correlated Trends' and then explain how you would design a simple 'Causal Experiment' to test if one truly causes the other. Reflect on the importance of testing assumptions before acting.
+                <textarea class="long-response" placeholder="Outline correlated trends and a 'Causal Experiment' to test if one causes the other. Reflect on testing assumptions."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a pattern where you assumed one thing caused another.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design a Causal Experiment: Describe your action, measurement, and analysis to test causation.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might overlooking alternative causes skew your experiment?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Propose a follow-up experiment to confirm your findings.</p>
+                <textarea class="bonus-response" placeholder="Experiment + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Experiment + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Ask someone’s opinion on your pattern and why.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day4">
+            <h2>Day 4 | Overcoming Decision Paralysis</h2>
+            <p><strong>Theme Overview:</strong> Decision paralysis stalls action. Small experiments break the cycle by testing options quickly.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Triple Check (Head, Heart, Hand): Analyze (logic), feel (intuition), act (experiment).
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Start small to build momentum; indecision is worse than a wrong move.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall a decision you're currently stuck on. Describe how you would apply the 'Triple Check' framework: what does your 'Head' (logic/analysis) tell you, what does your 'Heart' (intuition/emotion) feel, and what small 'Hand' (action/experiment) could you take to move forward? Reflect on how aligning these three aspects helps overcome indecision.
+                <textarea class="long-response" placeholder="Apply the 'Triple Check' (Head, Heart, Hand) to a stuck decision. Reflect on how alignment helps move forward."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a decision you’re stuck on.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Triple Check, analyze logically, check your intuition, and propose a small action to test.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> What fears or biases might be stalling your action?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “Action is the antidote to despair.” —Joan Baez. How does this relate to decision paralysis?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain decision paralysis to a friend using a relatable example.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day5">
+            <h2>Day 5 | Learning from Failure</h2>
+            <p><strong>Theme Overview:</strong> Failures are data points for growth. Experiments turn setbacks into insights.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Failure Analysis: Describe failure, identify causes, propose next steps.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Every failure teaches something—don’t waste the lesson.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a recent setback or 'failure' in a personal or professional endeavor. Outline the 'Failure Analysis' cycle: what was the 'Action', what was the 'Failure', what 'Insight' did you gain, and what 'Next Action' will you take based on that learning? Reflect on how viewing failures as data points fuels growth.
+                <textarea class="long-response" placeholder="Outline a 'Failure Analysis' (Action, Failure, Insight, Next Action). Reflect on turning setbacks into growth."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a recent failure or setback.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Failure Analysis, describe the failure, its causes, and one actionable insight.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can you design a new experiment based on this insight?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “I have not failed. I’ve just found 10,000 ways that won’t work.” —Thomas Edison. How does this relate to failure?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Share your failure insight with a colleague to spark discussion.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part2-checkpoint1">
+            <h2>WEEK 1 CHECKPOINT</h2>
+            <p>Reflect on your progress in experimenting with evidence. Which mini-framework drove the most action? What failure surprised you?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h1 id="part2-week2">WEEK 2: CREATIVE ACTION & ADAPTATION</h1>
+
+        <div class="day-section" id="part2-day6">
+            <h2>Day 6 | Creative Experiments</h2>
+            <p><strong>Theme Overview:</strong> Creativity fuels innovative experiments. Combining logic with imagination sparks actionable solutions.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Tiny Experiment: Test a creative idea through a small, measurable action.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Creativity thrives when you act, measure, and adapt.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a creative idea you have for solving a problem, no matter how small. Outline a 'Tiny Experiment' to test this idea: what is the 'Idea', what 'Action' will you take, and how will you measure the 'Results'? Reflect on how acting on creative ideas, even in small ways, can spark innovation.
+                <textarea class="long-response" placeholder="Outline a 'Tiny Experiment' for a creative idea (Idea, Action, Results). Reflect on sparking innovation through action."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a creative idea for solving a problem.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design a Tiny Experiment: State your idea, action, and success metric.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might routine thinking limit your creative experiment?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Propose a hybrid logic-creativity experiment. Explain its potential.</p>
+                <textarea class="bonus-response" placeholder="Experiment + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Experiment + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Pitch your idea as a proposal to a client.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day7">
+            <h2>Day 7 | Lateral Action</h2>
+            <p><strong>Theme Overview:</strong> Lateral thinking tests unconventional approaches through action, breaking from routine solutions.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> IF-THEN Experiment: Test an unconventional “if” to a “then” outcome.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Ask: “What if the opposite were true?” to spark new actions.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Think of a problem you've approached conventionally. Describe an 'unconventional' or 'lateral' action you could take that challenges the norm. Outline the 'IF-THEN Experiment' for this: 'IF' you take this unconventional action, 'THEN' what unexpected outcome might occur? Reflect on how breaking from routine can lead to breakthroughs.
+                <textarea class="long-response" placeholder="Outline an 'IF-THEN Experiment' for an unconventional action. Reflect on how breaking routine leads to breakthroughs."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about an unconventional solution you’ve considered.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design an IF-THEN Experiment: What unconventional action will you test? What outcome do you expect?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might you overcome resistance to unconventional actions?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Test a lateral solution on a current problem. Explain its potential.</p>
+                <textarea class="bonus-response" placeholder="Solution + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Solution + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Diagram your lateral action as a flowchart with detours.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day8">
+            <h2>Day 8 | Adaptive Mental Models</h2>
+            <p><strong>Theme Overview:</strong> Mental models guide action, but they must adapt to new evidence. Experimenting refines them.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Model Experiment: Act on a mental model, observe results, update.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Update models when reality doesn’t match.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a 'mental model' or assumption you use to navigate a particular situation (e.g., how people behave in meetings, how a certain task always unfolds). Outline a 'Model Experiment': what 'Action' would you take based on your current model, what 'Results' would you observe, and how would you 'Update' your model if reality didn't match? Reflect on the importance of adapting your internal maps to new evidence.
+                <textarea class="long-response" placeholder="Outline a 'Model Experiment' (Action, Results, Update) for a mental model. Reflect on adapting your internal maps."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a mental model you use for decisions or actions.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design a Model Experiment: Act on your model and observe results. Where might reality challenge it?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How can you stay open to updating your model?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Update your model based on a recent action’s outcome.</p>
+                <textarea class="bonus-response" placeholder="Updated model + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Updated model + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your model with one from a year ago.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day9">
+            <h2>Day 9 | Actionable Analogies</h2>
+            <p><strong>Theme Overview:</strong> Analogies clarify ideas for action. Testing them ensures they guide effective experiments.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Analogy Experiment: Act on an analogy and evaluate its fit.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Good analogies clarify; test them to avoid oversimplification.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Formulate an analogy for a complex idea or problem you're facing (e.g., 'My team is like an orchestra...'). Describe an 'Analogy Experiment': how would you 'Act' based on this analogy, and where might it 'Hold' true or 'Mislead' you? Reflect on how testing analogies ensures they truly clarify and guide effective action.
+                <textarea class="long-response" placeholder="Outline an 'Analogy Experiment' (Act, Hold, Mislead) for a complex idea. Reflect on how testing analogies guides action."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write an analogy for a complex idea you want to act on.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design an Analogy Experiment: Act on the analogy. Does it hold? Where might it mislead?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might your analogy limit or enhance your action?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Write a dialogue using your analogy to plan an action.</p>
+                <textarea class="bonus-response" placeholder="Dialogue + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Dialogue + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Create an analogy for a current news topic to guide action.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part2-day10">
+            <h2>Day 10 | Breakthrough Experiments</h2>
+            <p><strong>Theme Overview:</strong> Breakthroughs come from bold experiments that challenge assumptions and connect ideas in new ways.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Opposite Experiment: Act on a flipped assumption and observe results.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Ask “Why not?” to spark breakthroughs.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Identify a deeply held assumption about a problem or situation. Describe an 'Opposite Experiment': what 'Bold Action' would you take if you completely 'Flipped' that assumption? Outline the expected 'Results' and reflect on how challenging core assumptions can lead to unexpected breakthroughs.
+                <textarea class="long-response" placeholder="Outline an 'Opposite Experiment' (Flipped Assumption, Bold Action, Results). Reflect on challenging assumptions for breakthroughs."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a bold idea for action that challenges norms.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Design an Opposite Experiment: Flip an assumption, act, and measure results.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might this bold action reshape your approach to problems?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “The real voyage of discovery consists not in seeking new landscapes, but in having new eyes.” —Marcel Proust. How does this relate to breakthroughs?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Describe a historical breakthrough driven by bold action.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part2-checkpoint2">
+            <h2>WEEK 2 CHECKPOINT</h2>
+            <p>Reflect on your creative and adaptive actions. Which mini-framework sparked the most innovation? How has experimentation changed your thinking?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="reflection-section" id="part2-final-reflection">
+            <h2>FINAL REFLECTION</h2>
+            <p>You’ve turned logic into action! Review your experiments and reflect:</p>
+            <ul>
+                <li>What’s your biggest action-oriented insight?</li>
+                <li>How will you keep experimenting?</li>
+                <li>Who can you inspire with your approach?</li>
+            </ul>
+            <textarea class="final-reflection-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+            <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+        </div>
+    </div>
+
+    <div class="global-footer">
+        <span id="footer-part-info">The Critical Thinker’s Journey™ – Part 2: Exploring Ideas and Making Moves</span>
+        <span id="footer-page-info">Page 1 of 1</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerPageInfo = document.getElementById('footer-page-info');
+            const footerPartInfo = document.getElementById('footer-part-info');
+            const sections = document.querySelectorAll('.section-container');
+            
+            // Function to update footer based on scroll position
+            function updateFooter() {
+                let currentSectionIndex = 0;
+                for (let i = 0; i < sections.length; i++) {
+                    const rect = sections[i].getBoundingClientRect();
+                    // If the top of the section is in view (or mostly in view)
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        currentSectionIndex = i;
+                        break;
+                    }
+                }
+
+                // Update page number
+                footerPageInfo.textContent = `Page ${currentSectionIndex + 1} of ${sections.length}`;
+
+                // Update part info (static for single part file)
+                footerPartInfo.textContent = `The Critical Thinker’s Journey™ – Part 2: Exploring Ideas and Making Moves`;
+            }
+
+            window.addEventListener('scroll', updateFooter);
+            window.addEventListener('resize', updateFooter);
+            updateFooter(); // Initial call
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "CTJ: Focus & Flow™ MVP v1.0",
+  "description": "A single-session, local-first, privacy-first micro-app for strategic thinking. Features focus warm-ups, guided journaling, and voice input.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

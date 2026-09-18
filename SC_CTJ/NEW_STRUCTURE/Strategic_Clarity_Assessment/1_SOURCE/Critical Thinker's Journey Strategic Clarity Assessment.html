@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GET YOUR THINK ON!™ | Strategic Clarity Assessment</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --navy:#06162C;
+  --gold:#D4AF37;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #06162C, #050B17);
+  color: #E5E7EB;
+}
+.card-elegant {
+  background: rgba(15,20,25,0.85);
+  border: 1px solid rgba(212,175,55,0.25);
+  border-radius: 14px;
+  padding: 32px;
+}
+.insight-box {
+  background: rgba(212,175,55,0.08);
+  border-left: 4px solid #D4AF37;
+  padding: 18px;
+  border-radius: 10px;
+}
+.insight-box.highlight {
+  background: rgba(212,175,55,0.15);
+}
+.cta-primary {
+  background: linear-gradient(135deg, #D4AF37, #C0A028);
+  color: #06162C;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 800;
+  width: 100%;
+}
+.cta-secondary {
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.5);
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+}
+</style>
+</head>
+
+<body>
+<div class="min-h-screen flex items-center justify-center p-6">
+  <div class="max-w-3xl w-full space-y-10">
+
+    <!-- INTRO -->
+    <section id="intro">
+      <div class="card-elegant text-center">
+        <h1 class="text-4xl font-bold mb-4" style="font-family:'Playfair Display',serif;">
+          GET YOUR THINK ON!™
+        </h1>
+
+        <p class="text-lg mb-4">
+          A 31-question diagnostic that reveals how your decisions actually form under pressure.
+        </p>
+
+        <p class="text-sm text-gray-400 mb-6">
+          5–7 minutes · No hype · Real insight
+        </p>
+
+        <!-- Diagnostic Covenant -->
+        <div class="insight-box highlight mb-8 text-left">
+          <strong>This is a diagnostic, not a quiz.</strong><br><br>
+          It identifies your current <em>strategic operating pattern</em>—how clarity, systems,
+          and action interact when stakes rise.<br><br>
+          The outcome is not advice or motivation. It is a
+          <strong>directional blueprint</strong> designed to reduce uncertainty and enable movement.
+        </div>
+
+        <button class="cta-primary">Begin Assessment</button>
+      </div>
+    </section>
+
+    <!-- CHECKPOINT -->
+    <section id="checkpoint">
+      <div class="card-elegant">
+        <h2 class="text-xl font-bold mb-4">Pattern Check</h2>
+
+        <div class="insight-box">
+          <strong>What this means:</strong>
+          <p class="mt-2">
+            Low clarity here is not an effort problem. Tighten the decision frame before taking action,
+            or execution will continue to stall.
+          </p>
+        </div>
+
+        <button class="cta-secondary mt-6">Continue to Results</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="results">
+      <div class="card-elegant">
+        <h2 class="text-2xl font-bold mb-4">Your Strategic Clarity Profile</h2>
+
+        <!-- Sequencing Lock -->
+        <div class="insight-box highlight mb-6">
+          <strong>Do this in order (next 7 days):</strong>
+          <ol class="list-decimal ml-6 mt-3">
+            <li>Name the constraint you are currently tolerating.</li>
+            <li>Simplify one decision within the next 24 hours.</li>
+            <li>Build one supporting system this week to protect momentum.</li>
+          </ol>
+        </div>
+
+        <!-- Authority Anchor -->
+        <p class="text-sm text-gray-400 mb-6">
+          <em>Most stalled execution is not caused by lack of effort,
+          but by an unclear decision frame.</em>
+        </p>
+
+        <button class="cta-primary">Download My Results</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "mental-ingenuity",
+  "private": true,
+  "version": "0.9.0",
+  "description": "Mental Ingenuity. Powered by Sonly Consulting. Internal prototype of a layered mental adventure game.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5173",
+    "build": "tsc --noEmit && vite build",
+    "build:test": "tsc --noEmit && vite build --mode test --outDir dist-test",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "test:e2e": "node tests/e2e.mjs",
+    "test:media": "node tests/media.mjs",
+    "test:production": "node scripts/verifyProduction.mjs",
+    "test": "node scripts/runTests.mjs",
+    "brand-scan": "node scripts/brandScan.mjs"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.62.1",
+    "typescript": "^5.6.3",
+    "vite": "^6.3.5"
+  }
+}

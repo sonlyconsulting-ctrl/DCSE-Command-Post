@@ -1,0 +1,62 @@
+PASS  Cinematic opens with controlled brand text
+PASS  Attribution line correct on cinematic
+screenshot: 01-cinematic.png
+PASS  No audio initialization before user gesture
+PASS  Start screen reached
+PASS  Opening line present
+screenshot: 02-start.png
+PASS  Chamber map reached
+screenshot: 03-map.png
+PASS  Tab hidden pauses music
+PASS  Tab visible resumes music
+PASS  The Signal Chamber challenge 1 completion shows Reasoning Record
+screenshot: 04-thesignalchamber.png
+PASS  The Signal Chamber challenge 2 completion shows Reasoning Record
+PASS  The Signal Chamber challenge 3 completion shows Reasoning Record
+PASS  The Constraint Forge challenge 1 completion shows Reasoning Record
+PASS  The Constraint Forge challenge 2 completion shows Reasoning Record
+PASS  The Constraint Forge challenge 3 completion shows Reasoning Record
+PASS  The Perspective Engine challenge 1 completion shows Reasoning Record
+screenshot: 06-theperspectiveengine.png
+PASS  The Perspective Engine challenge 2 completion shows Reasoning Record
+PASS  The Perspective Engine challenge 3 completion shows Reasoning Record
+PASS  The Causal Labyrinth challenge 1 completion shows Reasoning Record
+screenshot: 07-causallabyrinth.png
+PASS  The Causal Labyrinth challenge 2 completion shows Reasoning Record
+PASS  The Causal Labyrinth challenge 3 completion shows Reasoning Record
+PASS  The Paradox Vault challenge 1 completion shows Reasoning Record
+screenshot: 08-paradoxvault.png
+PASS  The Paradox Vault challenge 2 completion shows Reasoning Record
+PASS  The Paradox Vault challenge 3 completion shows Reasoning Record
+PASS  The Summit challenge 1 completion shows Reasoning Record
+screenshot: 09-summit.png
+PASS  The Summit challenge 2 completion shows Reasoning Record
+PASS  The Summit challenge 3 completion shows Reasoning Record
+PASS  Final Reasoning Signature view reached
+PASS  Signature title assigned  [Pattern Navigator]
+PASS  Signature disclaimer present
+screenshot: 10-signature.png
+PASS  Local save contains completed summit results
+PASS  Save marks ascent finished
+PASS  Achievements recorded  [first_light,forged_path,economical,true_sight,chain_reader,vault_breaker,ascendant,unassisted]
+screenshot: 11-settings.png
+PASS  Session resume offered after reload  [Continue the Ascent]
+PASS  Progress persisted across reload (six completed chambers)  [done nodes: 6]
+PASS  Corrupted save falls back safely with notice
+PASS  Locked chamber cannot be entered
+PASS  Refresh during chamber offers resume
+PASS  Resume returns player into the chamber
+PASS  Reset increments attempt and zeroes moves (cumulative telemetry)  [Moves: 0Par: 4Attempt: 2Hints left: 3ResetPause]
+screenshot: 12-pause.png
+PASS  Pause overlay opens and closes
+PASS  Reduced motion setting applies motion-suppression class
+PASS  Keyboard-only completion of Signal Chamber challenge 1
+PASS  Large desktop viewport has no horizontal overflow  [0px]
+PASS  Mobile portrait viewport has no horizontal overflow  [0px]
+screenshot: 13-mobile-map.png
+PASS  Touch interaction enters a chamber on mobile
+screenshot: 14-mobile-chamber.png
+PASS  No material console errors
+PASS  No uncaught page errors
+
+47/47 tests passed

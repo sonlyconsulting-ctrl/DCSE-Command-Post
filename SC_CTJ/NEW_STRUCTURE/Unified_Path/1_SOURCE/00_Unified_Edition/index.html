@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Critical Thinker's Journey™ | Unified Master Edition</title>
+    <style>
+:root{
+  --bg:#071B34;
+  --panel:#0B2547;
+  --panel2:#0E2A52;
+  --text:#EAF2FF;
+  --muted:#BFD2EA;
+  --gold:#C89E4F;
+  --gold2:#F7E6B5;
+  --border:rgba(200,158,79,.28);
+  --shadow:0 14px 50px rgba(0,0,0,.35);
+  --radius:14px;
+  --radius2:18px;
+  --focus:0 0 0 3px rgba(200,158,79,.28);
+  --maxw:1200px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  line-height:1.55;
+  color:var(--text);
+  background:radial-gradient(1200px 700px at 50% -100px, rgba(200,158,79,.18), transparent 60%), var(--bg);
+  padding:18px;
+  max-width:var(--maxw);
+  margin:0 auto;
+}
+
+a{color:var(--gold2); text-underline-offset:3px}
+a:hover{opacity:.92}
+
+h1,h2,h3,h4{line-height:1.15}
+h1,h2{color:var(--gold2)}
+h3,h4{color:var(--gold)}
+
+p{color:var(--muted)}
+strong{color:var(--text)}
+
+hr{border:none; border-top:1px solid var(--border); margin:22px 0}
+
+.card, .container, .section, .header, .toc-container, .content-card, .module-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--border);
+  border-radius:var(--radius2);
+  box-shadow:var(--shadow);
+}
+
+.header{
+  text-align:center;
+  padding:28px 18px;
+  margin-bottom:16px;
+  position:relative;
+}
+
+.logo{
+  font-weight:900;
+  font-size:34px;
+  letter-spacing:-.6px;
+  color:var(--gold2);
+  margin:0 0 6px 0;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:15px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  color:var(--gold2);
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(200,158,79,.06);
+  font-size:13px;
+  margin-top:12px;
+}
+
+.topbar{
+  position:sticky;
+  top:10px;
+  z-index:50;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 12px;
+  margin:0 0 16px 0;
+  background:rgba(7,27,52,.78);
+  border:1px solid var(--border);
+  border-radius:14px;
+  backdrop-filter: blur(10px);
+}
+
+.topbar .left, .topbar .right{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(200,158,79,.06);
+  color:var(--gold2);
+  font-size:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:rgba(200,158,79,.06);
+  color:var(--gold2);
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .06s ease, opacity .15s ease, background .15s ease;
+  user-select:none;
+}
+.btn:hover{opacity:.95}
+.btn:active{transform:translateY(1px)}
+.btn.primary{
+  background:linear-gradient(180deg, rgba(200,158,79,.22), rgba(200,158,79,.10));
+  border-color:rgba(200,158,79,.55);
+}
+.btn.ghost{
+  background:transparent;
+}
+.btn:focus{outline:none; box-shadow:var(--focus)}
+
+.layout{
+  display:grid;
+  grid-template-columns: 330px 1fr;
+  gap:16px;
+  align-items:start;
+}
+
+@media (max-width: 980px){
+  .layout{grid-template-columns:1fr}
+  .toc-container{position:relative !important; top:auto !important}
+}
+
+.toc-container{
+  padding:14px 14px;
+  position:sticky;
+  top:84px;
+}
+
+.toc-title{
+  font-weight:900;
+  color:var(--gold2);
+  font-size:14px;
+  letter-spacing:.3px;
+  margin:0 0 10px 0;
+}
+
+.toc-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  max-height: calc(100vh - 170px);
+  overflow:auto;
+}
+
+.toc-list a{
+  display:block;
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid transparent;
+  text-decoration:none;
+  color:var(--muted);
+}
+.toc-list a:hover{
+  color:var(--text);
+  border-color:rgba(200,158,79,.25);
+  background:rgba(255,255,255,.03);
+}
+.toc-list a.active{
+  color:var(--gold2);
+  border-color:rgba(200,158,79,.55);
+  background:rgba(200,158,79,.08);
+}
+
+.toc-part{
+  padding:10px 10px;
+  border-radius:12px;
+  border:1px solid rgba(200,158,79,.18);
+  background:rgba(200,158,79,.06);
+  color:var(--gold2);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.main{
+  min-width:0;
+}
+
+.content-card, .container, .section, .module-card{
+  padding:18px 16px;
+  margin-bottom:16px;
+}
+
+.section-title{
+  margin:0 0 10px 0;
+}
+
+.small-note{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.response-area{
+  min-height:110px;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(200,158,79,.28);
+  background:rgba(0,0,0,.16);
+  color:var(--text);
+  outline:none;
+}
+.response-area:focus{box-shadow:var(--focus); border-color:rgba(200,158,79,.55)}
+.response-area:empty:before{
+  content: attr(data-placeholder);
+  color:rgba(191,210,234,.65);
+}
+
+.mic-inline{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+}
+.mic-btn{
+  border:1px solid rgba(200,158,79,.35);
+  background:rgba(200,158,79,.08);
+  color:var(--gold2);
+  border-radius:999px;
+  padding:8px 10px;
+  cursor:pointer;
+  font-weight:800;
+}
+.mic-btn[aria-pressed="true"]{
+  background:rgba(200,158,79,.18);
+  border-color:rgba(200,158,79,.7);
+}
+
+.kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(200,158,79,.28);
+  background:rgba(0,0,0,.18);
+  color:var(--gold2);
+}
+
+.print-only{display:none}
+@media print{
+  body{background:white !important; color:#0E2A47 !important; max-width:none; padding:0}
+  .topbar,.toc-container{display:none !important}
+  .card,.container,.section,.header,.content-card,.module-card{box-shadow:none !important; border:1px solid #ddd !important; background:white !important}
+  p{color:#222 !important}
+  h1,h2,h3,h4{color:#111 !important}
+  .response-area{background:white !important; color:#111 !important; border:1px solid #ccc !important}
+  a{color:#111 !important; text-decoration:none}
+}
+
+
+/* === v9 UX patch: responsiveness + SCA paging + error clarity === */
+body{max-width:none;margin:0;background:radial-gradient(1200px 700px at 50% -100px, rgba(200,158,79,.18), transparent 60%), var(--bg);}
+.page-wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(10px,2vw,18px);}
+.layout{grid-template-columns:minmax(0,330px) minmax(0,1fr);}
+@media (max-width: 980px){.layout{grid-template-columns:1fr}.page-wrap{padding:12px}}
+#results-section,#how-to-deploy{display:none;}
+.sca-progress{margin:14px 0 10px}
+.sca-progress .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--border);overflow:hidden}
+.sca-progress .fill{height:100%;width:0%;background:linear-gradient(90deg, rgba(200,158,79,.35), rgba(247,230,181,.75));}
+.sca-progress .meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:13px}
+.sca-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.sca-controls .btn{min-width:180px}
+.sca-controls .btn.secondary{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--gold2)}
+.sca-error{display:none;margin-top:10px;padding:14px 14px;border-radius:14px;border:1px solid rgba(255,80,80,.45);background:rgba(255,80,80,.10);color:var(--text)}
+.sca-error strong{color:var(--gold2)}
+.sca-missing-list{margin:10px 0 0;padding:0;list-style:none;display:flex;gap:8px;flex-wrap:wrap}
+.sca-missing-list button{cursor:pointer;border-radius:999px;border:1px solid rgba(255,80,80,.45);background:rgba(255,80,80,.14);color:var(--text);padding:6px 10px;font-size:12px}
+.question.missing{border-color:rgba(255,80,80,.55);box-shadow:0 0 0 3px rgba(255,80,80,.14)}
+.question .req{display:none;margin-left:10px;font-size:12px;color:rgba(255,140,140,.95);font-weight:700}
+.question.missing .req{display:inline}
+.small-hint{font-size:13px;color:var(--muted)}
+
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<div class="topbar" role="region" aria-label="CTJ Toolkit">
+  <div class="left">
+    <button class="btn primary" id="btnSave" type="button">Save</button>
+    <button class="btn" id="btnExportTxt" type="button">Export TXT</button>
+    <button class="btn" id="btnPrint" type="button">Print / PDF</button>
+    <button class="btn ghost" id="btnReset" type="button">Reset</button>
+  </div>
+  <div class="right">
+    <span class="status-pill" id="saveStatus">Not saved</span>
+    <span class="status-pill" id="voiceStatus">🎙️ Dictation: Off</span>
+  </div>
+</div>
+
+    <div class="header">
+        <div class="logo">The Critical Thinker's Journey™</div>
+        <div class="subtitle">Unified Master Edition — A complete system to integrate clarity, action, and purpose into your thought processing system.</div>
+    </div>
+    
+    <div class="manifesto">
+        <div class="manifesto-content">
+            <p>This is more than a collection of tools—it's an invitation to awaken the thinker within you and discover the profound power of how you think. In a world spinning with constant change, challenges, and crises, the ability to pause, breathe deeply, and approach life with crystalline clarity isn't just helpful—it's life-changing magic.</p>
+            <p>The Critical Thinker's Journey™ is woven from the very fabric of real life itself—those unexpected setbacks that steal your breath, the sudden opportunities that make your heart race, the hard decisions that test your core, and the milestone moments that lift your spirit skyward. This journey embraces all of that—the raw struggles and the pure celebrations—so you can see your unique path with the perspective of a wise observer and the heart of a courageous explorer.</p>
+            <p>Structure becomes your sanctuary because it gives sacred shape to your experiences. It helps you see intricate patterns instead of bewildering chaos, boundless possibilities instead of towering walls, and clear steps forward instead of paralyzing standstills. Engaging with The Critical Thinker's Journey™ helps you recognize profound clarity in the very center of uncertainty and nurture visionary thoughts when inspiration strikes like lightning.</p>
+            <p>This Unified Master Edition integrates all three parts of the journey into a single, cohesive system. You'll begin with the Strategic Clarity Assessment to understand your unique thinking patterns, then move through targeted interventions designed specifically for your needs. This isn't about adding another system to manage—it's about transforming how you process information, make decisions, and take action. By the end, you'll have integrated these practices into your thought processing system, creating lasting change that radiates into every area of your life.</p>
+        </div>
+    </div>
+    
+    
+<div class="layout">
+  <aside>
+<div class="toc-container">
+        <div class="toc-title">Journey Map</div>
+  </aside>
+  <main class="main" id="mainContent">
+        <ul class="toc-list">
+            <li><a href="#sca-section">Strategic Clarity Assessment</a></li>
+            <li><a href="#results-section">Your Strategic Clarity Profile</a></li>
+            <li><a href="#how-to-deploy">How to Deploy Clarity</a></li>
+            <li class="toc-part"><strong>PART 1: FOUNDATION</strong> → Clarity & Confidence</li>
+            <li><a href="#part1-welcome">Part 1 Introduction</a></li>
+            <li><a href="#part1-week1">Week 1: Foundations of Logic</a></li>
+            <li><a href="#part1-day1">Day 1 | What Is Logic?</a></li>
+            <li><a href="#part1-day2">Day 2 | Thinking in Statements</a></li>
+            <li><a href="#part1-day3">Day 3 | Truth vs Belief</a></li>
+            <li><a href="#part1-day4">Day 4 | Deductive & Inductive Reasoning</a></li>
+            <li><a href="#part1-day5">Day 5 | The Power of a Premise</a></li>
+            <li><a href="#part1-checkpoint1">Week 1 Checkpoint</a></li>
+            <li><a href="#part1-week2">Week 2: Bias & Fallacies</a></li>
+            <li><a href="#part1-day6">Day 6 | What Is Bias?</a></li>
+            <li><a href="#part1-day7">Day 7 | Confirmation Bias</a></li>
+            <li><a href="#part1-day8">Day 8 | Availability Heuristic</a></li>
+            <li><a href="#part1-day9">Day 9 | Ad Hominem & Straw Man</a></li>
+            <li><a href="#part1-day10">Day 10 | False Dilemmas & Red Herrings</a></li>
+            <li><a href="#part1-checkpoint2">Week 2 Checkpoint</a></li>
+            <li><a href="#part1-final-reflection">Final Reflection</a></li>
+            <li class="toc-part"><strong>PART 2: EXPLORATION</strong> → Movement & Adaptation</li>
+            <li><a href="#part2-welcome">Part 2 Introduction</a></li>
+            <li><a href="#part2-week1">Week 1: Evidence & Experimentation</a></li>
+            <li><a href="#part2-day1">Day 1 | Testing Arguments</a></li>
+            <li><a href="#part2-day2">Day 2 | Evidence in Action</a></li>
+            <li><a href="#part2-day3">Day 3 | Correlation vs Causation</a></li>
+            <li><a href="#part2-day4">Day 4 | Overcoming Decision Paralysis</a></li>
+            <li><a href="#part2-day5">Day 5 | Learning from Failure</a></li>
+            <li><a href="#part2-checkpoint1">Week 1 Checkpoint</a></li>
+            <li><a href="#part2-week2">Week 2: Creative Action & Adaptation</a></li>
+            <li><a href="#part2-day6">Day 6 | Creative Experiments</a></li>
+            <li><a href="#part2-day7">Day 7 | Lateral Action</a></li>
+            <li><a href="#part2-day8">Day 8 | Adaptive Mental Models</a></li>
+            <li><a href="#part2-day9">Day 9 | Actionable Analogies</a></li>
+            <li><a href="#part2-day10">Day 10 | Breakthrough Experiments</a></li>
+            <li><a href="#part2-checkpoint2">Week 2 Checkpoint</a></li>
+            <li><a href="#part2-final-reflection">Final Reflection</a></li>
+            <li class="toc-part"><strong>PART 3: INTEGRATION</strong> → Purpose & Balance</li>
+            <li><a href="#part3-welcome">Part 3 Introduction</a></li>
+            <li><a href="#part3-week1">Week 1: Mindset & Emotional Clarity</a></li>
+            <li><a href="#part3-day1">Day 1 | Understanding Mindsets</a></li>
+            <li><a href="#part3-day2">Day 2 | Affective Labeling</a></li>
+            <li><a href="#part3-day3">Day 3 | Cognitive Scripts</a></li>
+            <li><a href="#part3-day4">Day 4 | Decision Clarity</a></li>
+            <li><a href="#part3-day5">Day 5 | Self-Anthropology</a></li>
+            <li><a href="#part3-checkpoint1">Week 1 Checkpoint</a></li>
+            <li><a href="#part3-week2">Week 2: Purposeful Living</a></li>
+            <li><a href="#part3-day6">Day 6 | Aligning with Purpose</a></li>
+            <li><a href="#part3-day7">Day 7 | Managing Emotional Triggers</a></li>
+            <li><a href="#part3-day8">Day 8 | Complex Life Scenarios</a></li>
+            <li><a href="#part3-day9">Day 9 | Mapping a Conscious Life</a></li>
+            <li><a href="#part3-day10">Day 10 | Living with Intention</a></li>
+            <li><a href="#part3-checkpoint2">Week 2 Checkpoint</a></li>
+            <li><a href="#part3-final-reflection">Final Reflection</a></li>
+            <li><a href="#post-completion">Post-Completion Roadmap</a></li>
+        </ul>
+    </div>
+    
+    <div class="container" id="sca-section">
+        <div class="section-title">Strategic Clarity Assessment</div>
+        <p>This 31-question diagnostic reveals your clarity pattern—how you move from complexity to confident action. Your responses are private and stay with you. No email required. No automatic follow-ups.</p>
+
+        <div class="sca-progress" aria-label="Assessment progress">
+            <div class="bar" aria-hidden="true"><div class="fill" id="scaProgressFill"></div></div>
+            <div class="meta">
+                <span id="scaProgressText">Progress: 0 / 31 answered</span>
+                <span id="scaAutoSaveText" class="small-hint">Auto‑save: on</span>
+            </div>
+        </div>
+
+        <div class="sca-error" id="scaError" role="alert" aria-live="polite"></div>
+
+        
+        <div id="questions-container"></div>
+        
+        
+        <div class="sca-controls">
+            <button class="btn secondary" id="scaPrev" type="button">Back</button>
+            <button class="btn secondary" id="scaResetAssessment" type="button">Reset Assessment</button>
+            <button class="btn" id="scaNext" type="button">Save & Continue</button>
+            <button class="btn" id="submit-assessment" type="button">Complete Assessment & View Results</button>
+        </div>
+
+        
+        <div class="footer-note">31 prompts. Private. Pressure-free. Progress saves on this device, so you can pause and return.</div>
+    </div>
+    
+    <div class="results-container" id="results-section">
+        <div class="results-title">Your Strategic Clarity Profile</div>
+        
+        <p style="text-align: center; font-size: 19px; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Your unique thinking pattern reveals how you process information, make decisions, and take action. Below is your personalized profile with targeted interventions to strengthen your clarity.
+        </p>
+        
+        <div class="profile-container" id="profile-scores">
+            <!-- Scores will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="anchors-container">
+            <div class="anchor-title">Your Authority Anchors</div>
+            <p style="margin-bottom: 20px; font-size: 17px;">Based on your profile, these targeted interventions will strengthen your clarity pattern. Click any link to jump directly to your prescribed section.</p>
+            <div id="authority-anchors">
+                <!-- Authority anchors will be inserted here by JavaScript -->
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="btn" id="retake-assessment">
+                <span>Retake Assessment</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="how-to-deploy" id="how-to-deploy">
+        <div class="how-to-title">How to Deploy Clarity</div>
+        <p style="font-size: 18px; line-height: 1.7; max-width: 800px; margin: 0 auto;">
+            Your Strategic Clarity Profile has identified specific areas for development. To get the most from this journey:
+        </p>
+        <ul style="margin: 25px auto; max-width: 700px; padding-left: 25px; font-size: 17px; line-height: 1.8;">
+            <li style="margin-bottom: 12px;"><strong>Start with your prescribed interventions</strong> - The Authority Anchors section has identified your priority areas. Begin with these specific days in the CTJ modules.</li>
+            <li style="margin-bottom: 12px;"><strong>Complete one day per session</strong> - Each day's exercise is designed for 10-15 minutes of focused reflection. Consistency matters more than duration.</li>
+            <li style="margin-bottom: 12px;"><strong>Apply before you move on</strong> - The true power comes from applying each concept before progressing to the next day. Let the practices integrate into your thought processing system.</li>
+            <li style="margin-bottom: 12px;"><strong>Revisit your profile</strong> - After completing your prescribed interventions, retake the assessment to measure your growth and identify new areas for development.</li>
+        </ul>
+        <p style="font-size: 18px; line-height: 1.7; max-width: 800px; margin: 25px auto 0; font-weight: 600;">
+            Remember: This journey transforms how you think. By integrating these practices into your thought processing system, you'll develop lasting clarity that serves you in every decision and challenge.
+        </p>
+    </div>
+    
+    <!-- PART 1: FOUNDATION -->
+    <div class="part-header">
+        <div class="part-title">PART 1: FOUNDATION</div>
+        <div class="part-subtitle">Clarity & Confidence — Building the bedrock of precise, logical thinking. If your Precision score is low, this section is non-negotiable.</div>
+    </div>
+    
+    <div class="container" id="part1-welcome">
+        <div class="section-title">Building Clarity and Confidence</div>
+        <p>This workbook begins your journey to sharpen your thinking with precision and clarity. You'll build a foundation in logical reasoning, identify biases that cloud judgment, and learn to structure arguments effectively. Designed for classrooms, boardrooms, or personal growth, this 10-day journey strengthens your mind like an athlete trains their body—through deliberate, structured practice.</p>
+        <p>Use this digital workbook to type in the fields. Each day offers a theme, mini-framework, logic tip, and prompts to guide your thinking. Stay consistent, be honest, and GET YOUR THINK ON! 🤔</p>
+    </div>
+    
+    <div class="container" id="part1-week1">
+        <div class="section-title">WEEK 1: FOUNDATIONS OF LOGIC</div>
+    </div>
+    
+    <div class="day-section" id="part1-day1">
+        <div class="day-title">Day 1 | What Is Logic?</div>
+        <div class="theme-overview">Theme Overview: Logic is the structured framework that separates fact from opinion and belief from proof, improving decision-making in daily life.</div>
+        
+        <div class="mini-framework">
+            <strong>IF-THEN Statements:</strong> Break situations into cause-and-effect relationships.
+        </div>
+        
+        <div class="tip-box" data-tip-type="LOGIC TIP">
+            Logic isn't about being right; it's about being consistent and clear. Example: "IF I wake early, THEN I'm more productive."
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Describe a real-life situation where you could apply an IF-THEN flowchart. This could be a personal decision, a simple work process, or even how you troubleshoot a common issue. Outline the 'IF (condition)' and 'THEN (outcome)' steps in plain language. Reflect on how breaking it down like this helps clarify the situation.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write your belief about what logic means to you personally.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Using IF-THEN Statements, outline a recent decision. Identify conditions (IF) and outcomes (THEN). What evidence supported these connections?</p>
+            <div class="response-area" contenteditable="true">Between 75–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>For a complex situation you face, how would you use IF-THEN to clarify elements or solutions?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Reflect on: "The unexamined life is not worth living." —Socrates. How does this relate to logic?</p>
+            <div class="response-area" contenteditable="true">10-word summary + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Explain logic to a 10-year-old using a daily example.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <div class="day-section" id="part1-day2">
+        <div class="day-title">Day 2 | Thinking in Statements</div>
+        <div class="theme-overview">Theme Overview: Thoughts are often unspoken statements. Converting them to clear, testable statements refines reasoning.</div>
+        
+        <div class="mini-framework">
+            <strong>Declarative Sentences:</strong> Use "I think... because..." to structure reasoning.
+        </div>
+        
+        <div class="tip-box" data-tip-type="LOGIC TIP">
+            Every belief can be a statement; every statement can be tested.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Describe a belief you hold about a daily situation (e.g., a relationship, a work task, a personal habit). Outline the 'I think... because...' structure of your reasoning. Reflect on how articulating this helps clarify the belief and its foundations.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write a strong belief about work, relationships, or life.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Using Declarative Sentences, convert your belief into a statement. What experiences or data support it? What counter-arguments could weaken it?</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>How might personal experiences or biases influence your statement's framing or evidence?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Convert your belief into a syllogism (e.g., All A are B; C is A; C is B).</p>
+            <div class="response-area" contenteditable="true">Syllogism + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Diagram your thought process using boxes and arrows.</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+    </div>
+    
+    <!-- Additional Part 1 days would continue here in the full implementation -->
+    
+    <div class="checkpoint" id="part1-checkpoint1">
+        <div class="section-title">WEEK 1 CHECKPOINT</div>
+        <p>Reflect on your progress in building logical foundations. Which mini-framework was most helpful, and why? How has your understanding of logic evolved?</p>
+        <div class="response-area" contenteditable="true">Between 100–150 words</div>
+    </div>
+    
+    <!-- Part 1 Week 2 content would continue here -->
+    
+    <div class="final-reflection" id="part1-final-reflection">
+        <div class="section-title">FINAL REFLECTION</div>
+        <p>Congratulations! You've built a foundation for clear, logical thinking. Review your responses and consider:</p>
+        <ul style="margin: 20px 0 25px; padding-left: 25px; text-align: left; max-width: 700px; margin-left: auto; margin-right: auto;">
+            <li>What's your biggest insight?</li>
+            <li>How will you apply these tools?</li>
+            <li>Who can you help with your skills?</li>
+        </ul>
+        <div class="response-area" contenteditable="true" style="max-width: 700px; margin: 0 auto; min-height: 100px;">Between 100–150 words</div>
+    </div>
+    
+    <div class="part-footer">
+        Part 1: Foundations (Logic)
+    </div>
+    
+    <!-- PART 2: EXPLORATION -->
+    <div class="part-header">
+        <div class="part-title">PART 2: EXPLORATION</div>
+        <div class="part-subtitle">Movement & Adaptation — Building on Part 1's logical foundations, this workbook turns theory into action. You'll design experiments to test ideas, overcome decision paralysis, and embrace uncertainty as a path to growth. Experiments are designed to produce evidence within 24–72 hours.</div>
+    </div>
+    
+    <div class="container" id="part2-welcome">
+        <div class="section-title">Exploring Ideas and Making Moves</div>
+        <p>Building on Part 1's logical foundations, this workbook turns theory into action. You'll design experiments to test ideas, overcome decision paralysis, and embrace uncertainty as a path to growth. Over 10 days, you'll learn to view failures as data points and adapt iteratively, making your thinking dynamic and resilient.</p>
+        <p>Use this digital workbook to type in digital fields. Each day offers a theme, mini-framework, tip, and prompts. Stay curious, act boldly, and GET YOUR THINK ON! 🤔</p>
+    </div>
+    
+    <div class="container" id="part2-week1">
+        <div class="section-title">WEEK 1: EVIDENCE & EXPERIMENTATION</div>
+    </div>
+    
+    <div class="day-section" id="part2-day1">
+        <div class="day-title">Day 1 | Testing Arguments</div>
+        <div class="theme-overview">Theme Overview: Strong arguments need testing. Experimenting with evidence validates or refines your reasoning.</div>
+        
+        <div class="mini-framework">
+            <strong>Tiny Experiment:</strong> Design a small test for an argument (hypothesis, action, outcome).
+        </div>
+        
+        <div class="tip-box" data-tip-type="ACTION TIP">
+            Treat every argument as a hypothesis to test, not a truth to defend.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Outline a 'Tiny Experiment' you could run in an everyday context, whether it's improving a personal habit, testing a new creative technique, or understanding a social dynamic. Clearly state your Hypothesis, the Action you would take, and the Outcome you would measure. Reflect on what you hope to learn from this experimental cycle.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write an argument you want to test in real life.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Design a Tiny Experiment: State your hypothesis, action, and expected outcome. What evidence will you collect?</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>How might confirmation bias affect your experiment's design or interpretation?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Reflect on: "Failure is simply the opportunity to begin again." —Henry Ford. How does this relate to testing arguments?</p>
+            <div class="response-area" contenteditable="true">10-word summary + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Explain testing arguments to a colleague using a workplace example.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <!-- Additional Part 2 days would continue here in the full implementation -->
+    
+    <div class="day-section" id="part2-day4">
+        <div class="day-title">Day 4 | Overcoming Decision Paralysis</div>
+        <div class="theme-overview">Theme Overview: Decision paralysis stalls action. Small experiments break the cycle by testing options quickly.</div>
+        
+        <div class="mini-framework">
+            <strong>Triple Check (Head, Heart, Hand):</strong> Analyze (logic), feel (intuition), act (experiment).
+        </div>
+        
+        <div class="tip-box" data-tip-type="ACTION TIP">
+            Start small to build momentum; indecision is worse than a wrong move.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Recall a decision you're currently stuck on. Describe how you would apply the 'Triple Check' framework: what does your 'Head' (logic/analysis) tell you, what does your 'Heart' (intuition/emotion) feel, and what small 'Hand' (action/experiment) could you take to move forward? Reflect on how aligning these three aspects helps overcome indecision.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write about a decision you're stuck on.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Using Triple Check, analyze logically, check your intuition, and propose a small action to test.</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>What fears or biases might be stalling your action?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Reflect on: "Action is the antidote to despair." —Joan Baez. How does this relate to decision paralysis?</p>
+            <div class="response-area" contenteditable="true">10-word summary + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Explain decision paralysis to a friend using a relatable example.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <div class="day-section" id="part2-day10">
+        <div class="day-title">Day 10 | Breakthrough Experiments</div>
+        <div class="theme-overview">Theme Overview: Breakthroughs come from bold experiments that challenge assumptions and connect ideas in new ways.</div>
+        
+        <div class="mini-framework">
+            <strong>Opposite Experiment:</strong> Act on a flipped assumption and observe results.
+        </div>
+        
+        <div class="tip-box" data-tip-type="ACTION TIP">
+            Ask "Why not?" to spark breakthroughs.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Identify a deeply held assumption about a problem or situation. Describe an 'Opposite Experiment': what 'Bold Action' would you take if you completely 'Flipped' that assumption? Outline the expected 'Results' and reflect on how challenging core assumptions can lead to unexpected breakthroughs.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write about a bold idea for action that challenges norms.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Design an Opposite Experiment: Flip an assumption, act, and measure results.</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>How might this bold action reshape your approach to problems?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Reflect on: "The real voyage of discovery consists not in seeking new landscapes, but in having new eyes." —Marcel Proust. How does this relate to breakthroughs?</p>
+            <div class="response-area" contenteditable="true">10-word summary + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Describe a historical breakthrough driven by bold action.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <!-- Part 2 Week 2 Checkpoint and Final Reflection would continue here -->
+    
+    <div class="part-footer">
+        Part 2: Exploration (Action)
+    </div>
+    
+    <!-- PART 3: INTEGRATION -->
+    <div class="part-header">
+        <div class="part-title">PART 3: INTEGRATION</div>
+        <div class="part-subtitle">Purpose & Balance — This workbook deepens your journey by exploring your inner landscape. Building on Parts 1 and 2, you'll reflect on mindsets, manage emotions, and align actions with purpose. Over 10 days, you'll practice metacognition and emotional intelligence to live intentionally.</div>
+    </div>
+    
+    <div class="container" id="part3-welcome">
+        <div class="section-title">Finding Meaning and Balance</div>
+        <p>This workbook deepens your journey by exploring your inner landscape. Building on Parts 1 and 2, you'll reflect on mindsets, manage emotions, and align actions with purpose. Over 10 days, you'll practice metacognition and emotional intelligence to live intentionally.</p>
+        <p>Use this digital workbook to type in digital fields. Each day offers a theme, mini-framework, tip, and prompts. Stay reflective, stay purposeful, and GET YOUR THINK ON! 🤔</p>
+    </div>
+    
+    <div class="container" id="part3-week1">
+        <div class="section-title">WEEK 1: MINDSET & EMOTIONAL CLARITY</div>
+    </div>
+    
+    <div class="day-section" id="part3-day1">
+        <div class="day-title">Day 1 | Understanding Mindsets</div>
+        <div class="theme-overview">Theme Overview: Mindsets shape how you perceive and act. Identifying subconscious mindsets (e.g., cynical, perfectionist) enables conscious change.</div>
+        
+        <div class="mini-framework">
+            <strong>Mindset Audit:</strong> Identify your mindset, its impact, and an alternative.
+        </div>
+        
+        <div class="tip-box" data-tip-type="CLARITY TIP">
+            Your mindset isn't fixed; you can choose a new lens.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Describe a 'mindset' (e.g., cynical, perfectionist, growth-oriented) that often shapes your decisions in a particular area of your life. Outline its 'Impact' on your actions and propose an 'Alternative Mindset' you'd like to adopt. Reflect on how consciously choosing a new 'lens' can transform your approach.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write about a mindset (e.g., cynical, optimistic) that shapes your decisions.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Using Mindset Audit, describe how this mindset affects your actions. Propose an alternative mindset.</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>How might this mindset stem from past experiences or fears?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Reflect on: "The mind is everything. What you think, you become." —Buddha. How does this relate to mindsets?</p>
+            <div class="response-area" contenteditable="true">10-word summary + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Explain your mindset to a friend to spark discussion.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <!-- Additional Part 3 days would continue here in the full implementation -->
+    
+    <div class="day-section" id="part3-day10">
+        <div class="day-title">Day 10 | Living with Intention</div>
+        <div class="theme-overview">Theme Overview: Intentional living means every choice reflects your purpose, creating a fulfilling life.</div>
+        
+        <div class="mini-framework">
+            <strong>Before & After:</strong> Compare past and purposeful decision-making.
+        </div>
+        
+        <div class="tip-box" data-tip-type="CLARITY TIP">
+            Intention turns actions into steps toward purpose.
+        </div>
+        
+        <div class="visual-aid">
+            <strong>Visual Aid:</strong> Recall your most meaningful life choice and a less intentional one. Describe your 'Before & After' comparison: outline the 'Past Choice' and the 'Purposeful Choice', highlighting how intention transformed the latter. Reflect on how every choice can become a step towards a more fulfilling, purpose-driven life.
+            <div class="response-area" contenteditable="true">Describe your visual aid (up to 100 words)</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="💡">Prompt 1:</div>
+            <p>Write about your most meaningful life choice.</p>
+            <div class="response-area" contenteditable="true">Up to 25 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="✏️">Prompt 2:</div>
+            <p>Using Before & After, compare this choice with a less intentional one.</p>
+            <div class="response-area" contenteditable="true">Between 50–75 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🎯">Prompt 3:</div>
+            <p>How will you make future choices more intentional?</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title" data-icon="🔄">Bonus:</div>
+            <p>Write a letter to your future self about living intentionally.</p>
+            <div class="response-area" contenteditable="true">Letter + 100-word explanation</div>
+        </div>
+        
+        <div class="prompt">
+            <div class="prompt-title">Dig Deeper:</div>
+            <p>Share your biggest insight on intentional living.</p>
+            <div class="response-area" contenteditable="true">Between 50–100 words</div>
+        </div>
+    </div>
+    
+    <!-- Part 3 Week 2 Checkpoint and Final Reflection would continue here -->
+    
+    <div class="roadmap" id="post-completion">
+        <div class="roadmap-title">Post-Completion Roadmap</div>
+        <p style="text-align: center; font-size: 18px; margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Your journey doesn't end here. This roadmap guides your continued growth after completing the 30-day program.
+        </p>
+        
+        <div class="roadmap-steps">
+            <div class="roadmap-step" data-step="1">
+                <div class="roadmap-step-title">Days 31-45: Integration Phase</div>
+                <p>Review your most impactful insights from each part. Choose one practice from each module to incorporate into your daily routine. Journal about how these practices are changing your decision-making.</p>
+            </div>
+            <div class="roadmap-step" data-step="2">
+                <div class="roadmap-step-title">Days 46-60: Application Phase</div>
+                <p>Identify one complex challenge at work or in your personal life. Apply the complete CTJ framework: use Part 1 tools to clarify the problem, Part 2 experiments to test solutions, and Part 3 practices to align with your purpose.</p>
+            </div>
+            <div class="roadmap-step" data-step="3">
+                <div class="roadmap-step-title">Days 61-90: Mastery Phase</div>
+                <p>Teach one CTJ concept to someone you trust. Create your own mini-framework based on your unique insights. Revisit your Strategic Clarity Assessment to measure your growth and identify new areas for development.</p>
+            </div>
+            <div class="roadmap-step" data-step="4">
+                <div class="roadmap-step-title">90+ Days: Living the Journey</div>
+                <p>The Critical Thinker's Journey becomes invisible because it's fully integrated into your thought processing system. You'll naturally apply these practices without conscious effort. Continue to refine your approach and share your wisdom with others.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="final-reflection" id="part3-final-reflection">
+        <div class="section-title">FINAL REFLECTION</div>
+        <p>You've crafted a conscious life! Review your journey and reflect:</p>
+        <ul style="margin: 20px 0 25px; padding-left: 25px; text-align: left; max-width: 700px; margin-left: auto; margin-right: auto;">
+            <li>What's your biggest insight on purpose and emotion?</li>
+            <li>How will you live intentionally?</li>
+            <li>Who can you inspire with your clarity?</li>
+        </ul>
+        <div class="response-area" contenteditable="true" style="max-width: 700px; margin: 0 auto; min-height: 100px;">Between 100–150 words</div>
+    </div>
+    
+    <div class="part-footer">
+        Part 3: Integration (Clarity)
+    </div>
+    
+    <div class="unified-footer">
+        <span>The Critical Thinker's Journey™ — Unified Master Edition</span>
+    </div>
+
+    <script>
+        // SCA Questions and Configuration (Exposed for QA)
+        window.SCA_QUESTIONS = [
+            // Analytical Precision (P1) - 10 questions
+            { id: 1, pillar: 'P1', text: "I break down complex problems into smaller, manageable parts." },
+            { id: 2, pillar: 'P1', text: "I question assumptions before accepting conclusions." },
+            { id: 3, pillar: 'P1', text: "I prefer data over anecdotes when making decisions." },
+            { id: 4, pillar: 'P1', text: "I can easily spot flaws in arguments." },
+            { id: 5, pillar: 'P1', text: "I enjoy solving logic puzzles and brain teasers." },
+            { id: 6, pillar: 'P1', text: "I seek out evidence that contradicts my beliefs." },
+            { id: 7, pillar: 'P1', text: "I can explain my reasoning step by step." },
+            { id: 8, pillar: 'P1', text: "I am careful to define terms clearly before discussing them." },
+            { id: 9, pillar: 'P1', text: "I am aware of my cognitive biases and work to mitigate them." },
+            { id: 10, pillar: 'P1', text: "I enjoy learning new frameworks for thinking." },
+            
+            // Systems Thinking (P2) - 10 questions
+            { id: 11, pillar: 'P2', text: "I see connections between seemingly unrelated events." },
+            { id: 12, pillar: 'P2', text: "I consider second- and third-order consequences of my actions." },
+            { id: 13, pillar: 'P2', text: "I look for patterns in data and behavior." },
+            { id: 14, pillar: 'P2', text: "I understand how my role fits into the larger organization." },
+            { id: 15, pillar: 'P2', text: "I can map out the key components of a complex system." },
+            { id: 16, pillar: 'P2', text: "I anticipate how changes in one area will affect others." },
+            { id: 17, pillar: 'P2', text: "I look for root causes, not just symptoms." },
+            { id: 18, pillar: 'P2', text: "I consider the long-term implications of decisions." },
+            { id: 19, pillar: 'P2', text: "I am curious about how things work at a fundamental level." },
+            { id: 20, pillar: 'P2', text: "I can hold multiple perspectives in mind at once." },
+            
+            // Actionable Intent (P3) - 11 questions
+            { id: 21, pillar: 'P3', text: "I make decisions quickly when needed." },
+            { id: 22, pillar: 'P3', text: "I am comfortable with uncertainty and ambiguity." },
+            { id: 23, pillar: 'P3', text: "I take action even when I don't have all the information." },
+            { id: 24, pillar: 'P3', text: "I learn from my mistakes and adjust course." },
+            { id: 25, pillar: 'P3', text: "I set clear goals and track my progress." },
+            { id: 26, pillar: 'P3', text: "I am good at prioritizing tasks." },
+            { id: 27, pillar: 'P3', text: "I can pivot when new information comes to light." },
+            { id: 28, pillar: 'P3', text: "I am not afraid to experiment and try new approaches." },
+            { id: 29, pillar: 'P3', text: "I follow through on commitments." },
+            { id: 30, pillar: 'P3', text: "I communicate my decisions clearly to others." },
+            { id: 31, pillar: 'P3', text: "I reflect on my decisions to improve future ones." }
+        ];
+        
+        window.SCA_PILLAR_MAP = window.SCA_QUESTIONS.map(q => q.pillar);
+        window.SCA_WEIGHTS = { P1: 1.0, P2: 1.2, P3: 1.5 };
+        
+        // Authority Anchor Logic (Exposed for QA)
+        window.getAuthorityAnchors = function(scores) {
+            const anchors = [];
+            
+            // GATE_A: P1 < 60%
+            if (scores.P1 < 60) {
+                anchors.push({
+                    gate: "GATE_A",
+                    condition: "Analytical Precision < 60%",
+                    message: "Logic Ladder unstable. Foundation required.",
+                    prescription: "Part 1 Days 1–5",
+                    link: "#part1-day1"
+                });
+            }
+            
+            // GATE_B: P2 < 60%
+            if (scores.P2 < 60) {
+                anchors.push({
+                    gate: "GATE_B",
+                    condition: "Systems Thinking < 60%",
+                    message: "System patterns missed. Adaptation required.",
+                    prescription: "Part 2 Days 1–3",
+                    link: "#part2-day1"
+                });
+            }
+            
+            // GATE_C: P3 < 60%
+            if (scores.P3 < 60) {
+                anchors.push({
+                    gate: "GATE_C",
+                    condition: "Actionable Intent < 60%",
+                    message: "Decision paralysis detected. Actionable Intent required.",
+                    prescription: "Part 2 Day 4 + Part 3 Day 10",
+                    link: "#part2-day4"
+                });
+            }
+            
+            // GATE_D: P1 ≥ 75% AND P3 < 60%
+            if (scores.P1 >= 75 && scores.P3 < 60) {
+                anchors.push({
+                    gate: "GATE_D",
+                    condition: "High logic, stalled execution (Researcher's Trap)",
+                    message: "High logic, stalled execution (Researcher's Trap).",
+                    prescription: "Part 2 Days 1–2 + Day 4",
+                    link: "#part2-day1"
+                });
+            }
+            
+            // GATE_E: P1 < 60% AND P3 ≥ 75%
+            if (scores.P1 < 60 && scores.P3 >= 75) {
+                anchors.push({
+                    gate: "GATE_E",
+                    condition: "Fast action with weak premises (Misdirected Energy)",
+                    message: "Fast action with weak premises (Misdirected Energy).",
+                    prescription: "Part 1 Days 1–5",
+                    link: "#part1-day1"
+                });
+            }
+            
+            // GATE_F: P1 ≥ 80% AND P2 ≥ 80%
+            if (scores.P1 >= 80 && scores.P2 >= 80) {
+                anchors.push({
+                    gate: "GATE_F",
+                    condition: "Mastery detected in Precision & Systems",
+                    message: "Mastery detected. Transition to synthesis.",
+                    prescription: "Part 2 Day 10 + Unified Edition",
+                    link: "#part2-day10"
+                });
+            }
+            
+            return anchors;
+        };
+        
+        // DOM Elements
+        const questionsContainer = document.getElementById('questions-container');
+        const submitBtn = document.getElementById('submit-assessment');
+        const resultsSection = document.getElementById('results-section');
+        const scaSection = document.getElementById('sca-section');
+        const profileScores = document.getElementById('profile-scores');
+        const authorityAnchors = document.getElementById('authority-anchors');
+        const retakeBtn = document.getElementById('retake-assessment');
+        
+        
+        // --- v9: Paged SCA rendering (reduces scroll + improves error recovery)
+        const PAGE_SIZE = 5;
+        const totalQuestions = window.SCA_QUESTIONS.length;
+
+        // Local SCA state (answers + current page); synced with localStorage + CTJ save system
+        const SCA_LS_KEY = "ctj_sca_state_v9";
+        let scaState = { page: 0, answers: {} };
+
+        const progressFill = document.getElementById("scaProgressFill");
+        const progressText = document.getElementById("scaProgressText");
+        const autoSaveText = document.getElementById("scaAutoSaveText");
+        const errBox = document.getElementById("scaError");
+
+        const btnPrev = document.getElementById("scaPrev");
+        const btnNext = document.getElementById("scaNext");
+        const btnResetAssessment = document.getElementById("scaResetAssessment");
+
+        // Build an index map: questionId -> index
+        const qIndex = new Map(window.SCA_QUESTIONS.map((q, i) => [q.id, i]));
+
+        const pillarLabel = (p) => p === "P1" ? "Analytical Precision" : (p === "P2" ? "Systems Thinking" : "Actionable Intent");
+
+        function saveScaLocal(){
+            try{
+                localStorage.setItem(SCA_LS_KEY, JSON.stringify(scaState));
+            }catch(e){ /* ignore */ }
+        }
+
+        function loadScaLocal(){
+            try{
+                const raw = localStorage.getItem(SCA_LS_KEY);
+                if(!raw) return;
+                const parsed = JSON.parse(raw);
+                if(parsed && typeof parsed === "object"){
+                    scaState = { page: Math.max(0, parsed.page||0), answers: parsed.answers||{} };
+                }
+            }catch(e){ /* ignore */ }
+        }
+
+        // Auto-save debounce (also triggers full CTJ save when available)
+        let saveTimer = null;
+        function autoSave(){
+            if(saveTimer) clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                saveScaLocal();
+                if(typeof window.ctjSaveNow === "function"){
+                    window.ctjSaveNow();
+                }
+                if(autoSaveText) autoSaveText.textContent = "Auto‑save: saved";
+                setTimeout(()=>{ if(autoSaveText) autoSaveText.textContent = "Auto‑save: on"; }, 900);
+            }, 300);
+        }
+
+        function answeredCount(){
+            return Object.keys(scaState.answers||{}).length;
+        }
+
+        function updateProgress(){
+            const count = answeredCount();
+            const pct = Math.round((count / totalQuestions) * 100);
+            if(progressFill) progressFill.style.width = pct + "%";
+            if(progressText) progressText.textContent = `Progress: ${count} / ${totalQuestions} answered`;
+        }
+
+        function clearError(){
+            if(!errBox) return;
+            errBox.style.display = "none";
+            errBox.innerHTML = "";
+        }
+
+        function showError(missingIds){
+            if(!errBox) return;
+            const firstMissing = missingIds[0];
+            errBox.style.display = "block";
+            errBox.innerHTML = `
+                <strong>Incomplete assessment.</strong> Missing ${missingIds.length} response${missingIds.length>1?"s":""}.
+                <div class="small-hint" style="margin-top:6px">Tap a number to jump to it:</div>
+                <ul class="sca-missing-list">
+                  ${missingIds.map(id => `<li><button type="button" data-miss="${id}">Q${id}</button></li>`).join("")}
+                </ul>
+            `;
+            errBox.querySelectorAll("button[data-miss]").forEach(btn=>{
+                btn.addEventListener("click", ()=>{
+                    const id = parseInt(btn.getAttribute("data-miss"),10);
+                    jumpToQuestion(id);
+                });
+            });
+            // Jump to first missing automatically (without stealing focus aggressively)
+            jumpToQuestion(firstMissing);
+        }
+
+        function markMissingOnPage(page){
+            const start = page * PAGE_SIZE;
+            const end = Math.min(totalQuestions, start + PAGE_SIZE);
+            const slice = window.SCA_QUESTIONS.slice(start, end);
+            slice.forEach(q=>{
+                const card = document.getElementById(`qcard-${q.id}`);
+                const has = scaState.answers && scaState.answers[q.id] != null;
+                if(card){
+                    card.classList.toggle("missing", !has);
+                }
+            });
+        }
+
+        function renderPage(page){
+            clearError();
+            scaState.page = Math.max(0, Math.min(page, Math.ceil(totalQuestions / PAGE_SIZE) - 1));
+            saveScaLocal();
+
+            const start = scaState.page * PAGE_SIZE;
+            const end = Math.min(totalQuestions, start + PAGE_SIZE);
+            const slice = window.SCA_QUESTIONS.slice(start, end);
+
+            questionsContainer.innerHTML = "";
+            slice.forEach(question => {
+                const qDiv = document.createElement("div");
+                qDiv.className = "question";
+                qDiv.id = `qcard-${question.id}`;
+                const label = pillarLabel(question.pillar);
+                qDiv.innerHTML = `
+                    <div class="question-pillar">${label}<span class="req">• Required</span></div>
+                    <div class="question-text">${question.id}. ${question.text}</div>
+                    <div class="scale-container">
+                        ${[1,2,3,4,5].map(v=>`
+                          <div class="scale-option">
+                            <input type="radio" name="q${question.id}" value="${v}" class="scale-input">
+                            <div class="scale-label">${v===1?"Never":v===2?"Rarely":v===3?"Sometimes":v===4?"Often":"Always"}</div>
+                          </div>
+                        `).join("")}
+                    </div>
+                `;
+                questionsContainer.appendChild(qDiv);
+
+                // Restore selection
+                const saved = scaState.answers?.[question.id];
+                if(saved){
+                    const sel = qDiv.querySelector(`input[name="q${question.id}"][value="${saved}"]`);
+                    if(sel) sel.checked = true;
+                }
+
+                // Listen changes
+                qDiv.querySelectorAll(`input[name="q${question.id}"]`).forEach(inp=>{
+                    inp.addEventListener("change", ()=>{
+                        scaState.answers[question.id] = parseInt(inp.value,10);
+                        qDiv.classList.remove("missing");
+                        updateProgress();
+                        autoSave();
+                    });
+                });
+            });
+
+            // Buttons state
+            if(btnPrev) btnPrev.disabled = scaState.page === 0;
+            const lastPage = scaState.page >= Math.ceil(totalQuestions / PAGE_SIZE) - 1;
+            if(btnNext) btnNext.style.display = lastPage ? "none" : "inline-flex";
+            if(submitBtn) submitBtn.style.display = lastPage ? "inline-flex" : "none";
+
+            updateProgress();
+            markMissingOnPage(scaState.page);
+
+            // Scroll to top of assessment block for UX in long pages
+            scaSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function jumpToQuestion(id){
+            const idx = qIndex.get(id);
+            if(idx == null) return;
+            const page = Math.floor(idx / PAGE_SIZE);
+            if(page !== scaState.page){
+                renderPage(page);
+            }
+            // After render, highlight and scroll to card
+            setTimeout(()=>{
+                const card = document.getElementById(`qcard-${id}`);
+                if(card){
+                    card.classList.add("missing");
+                    card.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }, 60);
+        }
+
+        btnPrev?.addEventListener("click", ()=> renderPage(scaState.page - 1));
+        btnNext?.addEventListener("click", ()=> {
+            // mark missing on this page before moving on
+            markMissingOnPage(scaState.page);
+            // allow moving even if incomplete (user can come back); save & continue
+            autoSave();
+            renderPage(scaState.page + 1);
+        });
+
+        btnResetAssessment?.addEventListener("click", ()=>{
+            if(!confirm("Reset assessment responses? This clears all 31 answers.")) return;
+            scaState = { page: 0, answers: {} };
+            try{ localStorage.removeItem(SCA_LS_KEY); }catch(e){}
+            // clear any existing radio selections on DOM (current page only)
+            document.querySelectorAll('#questions-container input[type="radio"]').forEach(r=> r.checked=false);
+            clearError();
+            updateProgress();
+            autoSave();
+            renderPage(0);
+        });
+
+        // Load + initial render
+        loadScaLocal();
+        renderPage(scaState.page);
+
+
+        // Submit Assessment Handler
+        submitBtn.addEventListener('click', function() {
+            // Gather answers from paged state (scoped, auto-saved)
+            const answers = (scaState && scaState.answers) ? scaState.answers : {};
+            const missing = [];
+            window.SCA_QUESTIONS.forEach(question => {
+                if (answers[question.id] == null) missing.push(question.id);
+            });
+
+            if (missing.length) {
+                showError(missing);
+                return;
+            }
+
+            // Ensure results sections are visible
+            resultsSection.style.display = 'block';
+            const deploy = document.getElementById('how-to-deploy');
+            if (deploy) deploy.style.display = 'block';
+
+// Calculate raw scores for each pillar
+            const rawScores = { P1: 0, P2: 0, P3: 0 };
+            const questionCounts = { P1: 0, P2: 0, P3: 0 };
+            
+            window.SCA_QUESTIONS.forEach(question => {
+                rawScores[question.pillar] += answers[question.id];
+                questionCounts[question.pillar]++;
+            });
+            
+            // Calculate weighted percentages
+            const scores = {
+                P1: Math.round((rawScores.P1 / (questionCounts.P1 * 5)) * 100),
+                P2: Math.round((rawScores.P2 / (questionCounts.P2 * 5)) * 100),
+                P3: Math.round((rawScores.P3 / (questionCounts.P3 * 5)) * 100)
+            };
+            
+            // Apply weights
+            const weightedScores = {
+                P1: Math.min(100, Math.round(scores.P1 * window.SCA_WEIGHTS.P1)),
+                P2: Math.min(100, Math.round(scores.P2 * window.SCA_WEIGHTS.P2)),
+                P3: Math.min(100, Math.round(scores.P3 * window.SCA_WEIGHTS.P3))
+            };
+            
+            // Display profile scores
+            profileScores.innerHTML = `
+                <div class="profile-card">
+                    <div class="profile-label">Analytical Precision</div>
+                    <div class="profile-score">${weightedScores.P1}%</div>
+                    <div class="profile-desc">Logical reasoning and clarity of thought</div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-label">Systems Thinking</div>
+                    <div class="profile-score">${weightedScores.P2}%</div>
+                    <div class="profile-desc">Seeing patterns and connections</div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-label">Actionable Intent</div>
+                    <div class="profile-score">${weightedScores.P3}%</div>
+                    <div class="profile-desc">Decision-making and execution</div>
+                </div>
+            `;
+            
+            // Get and display authority anchors
+            const anchors = window.getAuthorityAnchors(weightedScores);
+            if (anchors.length > 0) {
+                authorityAnchors.innerHTML = anchors.map(anchor => `
+                    <div class="anchor-card">
+                        <div class="anchor-condition">${anchor.condition}</div>
+                        <div class="anchor-message">${anchor.message}</div>
+                        <div class="anchor-prescription"><strong>Recommended next step:</strong> ${anchor.prescription}</div>
+                        <a href="${anchor.link}" class="anchor-link">Go to Intervention Section</a>
+                    </div>
+                `).join('');
+            } else {
+                authorityAnchors.innerHTML = `
+                    <div class="anchor-card">
+                        <div class="anchor-condition">Balanced Profile</div>
+                        <div class="anchor-message">Your profile reads as balanced across the three pillars. That’s a strength. The goal now is steady refinement—use the journey to sharpen consistency under real pressure, not chase perfection.</div>
+                        <div class="anchor-prescription"><strong>Recommended next step:</strong> Start with Part 1, then move in order. Use Unified when a quick, executive review is needed.</div>
+                        <a href="#part1-welcome" class="anchor-link">Begin Part 1: Foundation</a>
+                    </div>
+                `;
+            }
+            
+            // Show results, hide assessment
+            resultsSection.style.display = 'block';
+            scaSection.style.display = 'none';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Retake Assessment Handler
+        retakeBtn.addEventListener('click', function() {
+            resultsSection.style.display = 'none';
+            const deploy = document.getElementById('how-to-deploy');
+            if (deploy) deploy.style.display = 'none';
+
+            // Reset all radio buttons
+            document.querySelectorAll('.scale-input').forEach(input => {
+                input.checked = false;
+            });
+            
+            // Show assessment, hide results
+            scaSection.style.display = 'block';
+            resultsSection.style.display = 'none';
+            
+            // Scroll to assessment
+            scaSection.scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+  </main>
+</div>
+
+<script>
+(() => {
+  const LS_KEY = "ctj_unified_state_v8";
+  const statusEl = document.getElementById("saveStatus");
+  const voiceEl = document.getElementById("voiceStatus");
+  const btnSave = document.getElementById("btnSave");
+  const btnExportTxt = document.getElementById("btnExportTxt");
+  const btnPrint = document.getElementById("btnPrint");
+  const btnReset = document.getElementById("btnReset");
+
+  const nowStamp = () => new Date().toLocaleString();
+
+  function setStatus(msg){ if(statusEl) statusEl.textContent = msg; }
+
+  // --- Persistence helpers
+  function captureState(){
+    const state = { v: 8, savedAt: Date.now(), fields: {}, checks: {}, radios: {}, textInputs: {}, selects: {} };
+    // contenteditable blocks
+    const edits = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+    edits.forEach((el, i) => {
+      if (!el.dataset.key) el.dataset.key = `ce_${String(i+1).padStart(3,'0')}`;
+      state.fields[el.dataset.key] = el.innerHTML;
+    });
+
+    // inputs / textarea / select (including dynamically created)
+    const allInputs = Array.from(document.querySelectorAll('input, textarea, select'));
+    allInputs.forEach((el, i) => {
+      const key = el.id || el.name || el.getAttribute('data-key') || `in_${String(i+1).padStart(3,'0')}`;
+      if (el.type === "checkbox") state.checks[key] = !!el.checked;
+      else if (el.type === "radio") {
+        if (el.checked) state.radios[el.name || key] = el.value;
+      } else if (el.tagName === "SELECT") state.selects[key] = el.value;
+      else state.textInputs[key] = el.value;
+      if (!el.getAttribute('data-key')) el.setAttribute('data-key', key);
+    });
+
+    return state;
+  }
+
+  function applyState(state){
+    if(!state) return;
+
+    // contenteditable
+    const edits = Array.from(document.querySelectorAll('[contenteditable="true"]'));
+    edits.forEach((el, i) => {
+      const key = el.dataset.key || `ce_${String(i+1).padStart(3,'0')}`;
+      el.dataset.key = key;
+      if (state.fields && state.fields[key] !== undefined) el.innerHTML = state.fields[key];
+    });
+
+    // inputs
+    const allInputs = Array.from(document.querySelectorAll('input, textarea, select'));
+    allInputs.forEach((el, i) => {
+      const key = el.getAttribute('data-key') || el.id || el.name || `in_${String(i+1).padStart(3,'0')}`;
+      el.setAttribute('data-key', key);
+
+      if (el.type === "checkbox") {
+        if (state.checks && state.checks[key] !== undefined) el.checked = !!state.checks[key];
+      } else if (el.type === "radio") {
+        const group = el.name || key;
+        if (state.radios && state.radios[group] !== undefined) el.checked = (el.value === state.radios[group]);
+      } else if (el.tagName === "SELECT") {
+        if (state.selects && state.selects[key] !== undefined) el.value = state.selects[key];
+      } else {
+        if (state.textInputs && state.textInputs[key] !== undefined) el.value = state.textInputs[key];
+      }
+    });
+  }
+
+  function saveNow(){
+    try{
+      const state = captureState();
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+      setStatus(`Saved • ${nowStamp()}`);
+    }catch(e){
+      setStatus("Save failed (storage blocked)");
+      console.warn(e);
+    }
+  }
+
+  function loadSaved(){
+    try{
+      const raw = localStorage.getItem(LS_KEY);
+      if(!raw) return false;
+      const state = JSON.parse(raw);
+      applyState(state);
+      setStatus(`Restored • ${nowStamp()}`);
+      return true;
+    }catch(e){
+      console.warn(e);
+      return false;
+    }
+  }
+
+  // Debounced autosave
+  let t = null;
+  function scheduleSave(){
+    clearTimeout(t);
+    t = setTimeout(saveNow, 650);
+    setStatus("Editing…");
+  }
+
+  function bindAutosave(){
+    document.addEventListener("input", scheduleSave, true);
+    document.addEventListener("change", scheduleSave, true);
+    document.addEventListener("blur", (e) => {
+      if (e.target && e.target.matches && e.target.matches('[contenteditable="true"]')) scheduleSave();
+    }, true);
+  }
+
+  // --- TXT Export
+  function exportTxt(){
+    const lines = [];
+    lines.push("THE CRITICAL THINKER'S JOURNEY™ — UNIFIED MASTER EDITION");
+    lines.push(`Exported: ${nowStamp()}`);
+    lines.push("");
+    // Collect each response-area with nearest previous heading
+    const responses = Array.from(document.querySelectorAll('.response-area[contenteditable="true"]'));
+    responses.forEach((el, i) => {
+      let heading = null;
+      let p = el;
+      for (let j=0; j<10 && p; j++){
+        p = p.previousElementSibling;
+        if (!p) break;
+        const tag = (p.tagName||"").toLowerCase();
+        if (["h1","h2","h3","h4"].includes(tag)){
+          heading = p.textContent.trim();
+          break;
+        }
+      }
+      if (!heading) {
+        // try closest parent section header
+        const sec = el.closest("section, .content-card, .section, .container, .module-card");
+        const h = sec ? sec.querySelector("h1,h2,h3,h4") : null;
+        heading = (h && h.textContent.trim()) || `Response ${i+1}`;
+      }
+      lines.push(`## ${heading}`);
+      lines.push(el.innerText.replace(/\n{3,}/g, "\n\n").trim() || "[blank]");
+      lines.push("");
+    });
+
+    // Also include any radio/checkbox selections (best effort)
+    const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked'));
+    if (checked.length){
+      lines.push("## Selections");
+      checked.forEach(el => {
+        const label = document.querySelector(`label[for="${el.id}"]`);
+        lines.push(`- ${label ? label.innerText.trim() : (el.name || el.id || "selection")}: ${el.value || "checked"}`);
+      });
+      lines.push("");
+    }
+
+    const blob = new Blob([lines.join("\n")], {type:"text/plain;charset=utf-8"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `CTJ_Unified_Export_${new Date().toISOString().slice(0,10)}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }
+
+  // --- Voice dictation (Web Speech API)
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let rec = null;
+  let dictOn = false;
+  let activeTarget = null;
+
+  function isEditable(el){
+    if(!el) return false;
+    if (el.isContentEditable) return true;
+    const t = (el.tagName||"").toLowerCase();
+    if (t === "textarea") return true;
+    if (t === "input") {
+      const ty = (el.type||"text").toLowerCase();
+      return ["text","search","email","url","tel"].includes(ty);
+    }
+    return false;
+  }
+
+  function insertText(target, text){
+    if(!target) return;
+    if (target.isContentEditable){
+      // insert at caret if possible; fallback append
+      try{
+        const sel = window.getSelection();
+        if(sel && sel.rangeCount){
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(document.createTextNode(text));
+          range.collapse(false);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } else {
+          target.innerText += text;
+        }
+      }catch(e){
+        target.innerText += text;
+      }
+    } else {
+      const start = target.selectionStart ?? target.value.length;
+      const end = target.selectionEnd ?? target.value.length;
+      const before = target.value.slice(0,start);
+      const after = target.value.slice(end);
+      target.value = before + text + after;
+      const pos = start + text.length;
+      target.setSelectionRange(pos,pos);
+      target.dispatchEvent(new Event("input", {bubbles:true}));
+    }
+    scheduleSave();
+  }
+
+  function startDictation(){
+    if(!SpeechRecognition){
+      voiceEl.textContent = "🎙️ Dictation: Unsupported";
+      return;
+    }
+    if(!rec){
+      rec = new SpeechRecognition();
+      rec.continuous = true;
+      rec.interimResults = true;
+      rec.lang = "en-US";
+      rec.onresult = (e) => {
+        let interim = "";
+        let finalTxt = "";
+        for (let i = e.resultIndex; i < e.results.length; i++){
+          const tr = e.results[i][0].transcript;
+          if (e.results[i].isFinal) finalTxt += tr;
+          else interim += tr;
+        }
+        if (finalTxt && activeTarget){
+          insertText(activeTarget, (finalTxt.trim() + " "));
+        }
+        voiceEl.textContent = `🎙️ Dictation: ${dictOn ? "On" : "Off"}${interim ? " • Listening…" : ""}`;
+      };
+      rec.onerror = () => {
+        voiceEl.textContent = "🎙️ Dictation: Error";
+      };
+      rec.onend = () => {
+        if(dictOn){
+          // try to restart (Chrome sometimes stops)
+          try{ rec.start(); }catch(_){}
+        } else {
+          voiceEl.textContent = "🎙️ Dictation: Off";
+        }
+      };
+    }
+    dictOn = true;
+    voiceEl.textContent = "🎙️ Dictation: On";
+    try{ rec.start(); }catch(_){}
+  }
+
+  function stopDictation(){
+    dictOn = false;
+    try{ rec && rec.stop(); }catch(_){}
+    voiceEl.textContent = "🎙️ Dictation: Off";
+  }
+
+  function toggleDictation(){
+    if(dictOn) stopDictation();
+    else startDictation();
+  }
+
+  // Add mic buttons near every response-area
+  function installMicButtons(){
+    const blocks = Array.from(document.querySelectorAll('.response-area[contenteditable="true"]'));
+    blocks.forEach((el) => {
+      if (el.dataset.micInstalled) return;
+      el.dataset.micInstalled = "1";
+      el.setAttribute("data-placeholder", el.getAttribute("data-placeholder") || "Type here… or use Dictation.");
+      const wrap = document.createElement("div");
+      wrap.className = "mic-inline";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "mic-btn";
+      btn.textContent = "🎙️ Dictate into this";
+      btn.setAttribute("aria-pressed", "false");
+      btn.addEventListener("click", () => {
+        activeTarget = el;
+        // focus so caret is at end
+        el.focus();
+        // toggle dictation on; keep global dictation state
+        if(!dictOn){ startDictation(); btn.setAttribute("aria-pressed","true"); }
+        else { stopDictation(); btn.setAttribute("aria-pressed","false"); }
+      });
+      wrap.appendChild(btn);
+      // Insert after element
+      el.insertAdjacentElement("afterend", wrap);
+      // Set activeTarget on focus
+      el.addEventListener("focus", () => { activeTarget = el; }, true);
+    });
+  }
+
+  // TOC active highlight
+  function setupTocActive(){
+    const links = Array.from(document.querySelectorAll('.toc-list a[href^="#"]'));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute("href")))
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
+    };
+
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(visible && visible.target && visible.target.id) setActive(visible.target.id);
+    }, {rootMargin: "-20% 0px -70% 0px", threshold: [0.1, 0.2, 0.35, 0.5]});
+
+    sections.forEach(s => obs.observe(s));
+  }
+
+  // MutationObserver: bind persistence and mic buttons even when assessment renders new nodes
+  const mo = new MutationObserver(() => {
+    installMicButtons();
+  });
+
+  function init(){
+    bindAutosave();
+    installMicButtons();
+    setupTocActive();
+    mo.observe(document.body, {subtree:true, childList:true});
+
+    // Load saved state once
+    loadSaved();
+
+    // Wire buttons
+    btnSave && btnSave.addEventListener("click", saveNow);
+    btnExportTxt && btnExportTxt.addEventListener("click", exportTxt);
+    btnPrint && btnPrint.addEventListener("click", () => window.print());
+    btnReset && btnReset.addEventListener("click", () => {
+      const ok = confirm("Reset this CTJ session? This clears local saved content on this device.");
+      if(!ok) return;
+      try{ localStorage.removeItem(LS_KEY); }catch(_){}
+      location.reload();
+    });
+
+    // Toggle dictation by clicking status pill (desktop convenience)
+    voiceEl && voiceEl.addEventListener("click", toggleDictation);
+
+    // Track active target on click/focus
+    document.addEventListener("focusin", (e) => {
+      if (isEditable(e.target)) activeTarget = e.target;
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s"){
+        e.preventDefault();
+        saveNow();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p"){
+        // Let browser print, but ensure saved
+        saveNow();
+      }
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", init);
+  // Expose safe hooks for other modules
+  window.ctjSaveNow = saveNow;
+  window.ctjSetStatus = setStatus;
+})();
+</script>
+
+</div>
+</body>
+</html>
+

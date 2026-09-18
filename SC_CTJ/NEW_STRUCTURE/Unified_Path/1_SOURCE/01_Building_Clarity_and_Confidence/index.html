@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Critical Thinker’s Journey™: Part 1 - Building Clarity and Confidence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Georgia&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-gold: #F7E6B5;
+            --text-navy: #0E2A47;
+            --accent-gold: #C89E4F;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+        }
+
+        /* Cover Page Styling */
+        .cover-page {
+            background-color: var(--text-navy); /* Dark navy background for cover */
+            color: var(--background-gold); /* Gold text for cover */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .cover-page img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cover-page h1 {
+            font-size: 3.5em;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            color: var(--background-gold); /* Gold for main title on cover */
+        }
+
+        .cover-page h2 {
+            font-size: 1.8em;
+            font-weight: normal;
+            margin-top: 0;
+            color: var(--accent-gold); /* Muted gold for subtitle on cover */
+        }
+
+        .cover-page .author, .cover-page .copyright {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: var(--background-gold); /* Gold for author/copyright on cover */
+        }
+        .cover-page .copyright {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9em;
+        }
+
+
+        /* General Section Styling */
+        .section-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .section-container:last-of-type {
+            page-break-after: auto; /* No page break after the very last section */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-navy); /* Dark navy for all headings */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 { font-size: 2.5em; text-align: center; }
+        h2 { font-size: 2em; border-bottom: 2px solid var(--accent-gold); padding-bottom: 5px; margin-top: 2em;}
+        h3 { font-size: 1.5em; color: var(--text-navy); margin-top: 1.5em;} /* Ensure h3 also dark navy */
+        h4 { font-size: 1.2em; color: var(--text-navy); margin-top: 1.2em;} /* Ensure h4 also dark navy */
+
+        .header-footer-section { /* Renamed to avoid conflict with global footer */
+            background-color: var(--background-gold); /* Soft gold background */
+            color: var(--text-navy); /* Dark navy text */
+            padding: 10px 5%;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid var(--accent-gold);
+            border-bottom: 1px solid var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .page-break {
+            page-break-after: always;
+            height: 0; /* Ensures no extra space from the div */
+            overflow: hidden; /* Hides any content if somehow present */
+        }
+
+        /* Table of Contents */
+        .toc-container {
+            padding: 40px 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-gold);
+            color: var(--text-navy);
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+
+        .toc-container h1 {
+            color: var(--text-navy); /* Dark navy for TOC title */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 10px;
+        }
+
+        .toc-list a {
+            color: var(--text-navy); /* Dark navy for links */
+            text-decoration: none;
+            font-size: 1.1em;
+            display: block;
+            padding: 5px 0;
+            border-bottom: 1px dashed var(--text-navy); /* Changed to navy for better contrast */
+            transition: color 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            color: var(--text-navy); /* Changed to navy for better contrast */
+            border-bottom-color: var(--accent-gold); /* Optional: can change border on hover for effect */
+        }
+
+        .toc-list .part-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 20px;
+            color: var(--text-navy); /* Dark navy for part titles */
+        }
+
+        .toc-list .day-title {
+            margin-left: 20px;
+            font-size: 1em;
+        }
+
+        /* Workbook Specifics */
+        .mini-framework-box, .visual-aid-box {
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            background-color: rgba(200, 158, 79, 0.1); /* Slightly transparent accent gold */
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .mini-framework-box strong, .visual-aid-box strong {
+            color: var(--text-navy); /* Dark navy for strong text */
+        }
+
+        .prompt-section {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .prompt-section p {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 80px; /* Default height for response areas */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid var(--accent-gold); /* Accent gold border */
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            color: var(--text-navy); /* Dark navy text */
+            background-color: var(--white); /* White background */
+            box-sizing: border-box;
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        /* Specific heights for prompts */
+        textarea.short-response { min-height: 40px; } /* Up to 25 words */
+        textarea.medium-response { min-height: 80px; } /* 50-75 words */
+        textarea.long-response { min-height: 100px; } /* 50-100 words */
+        textarea.bonus-response { min-height: 120px; } /* 100-word explanation */
+        textarea.checkpoint-response { min-height: 150px; } /* 100-150 words */
+        textarea.final-reflection-response { min-height: 150px; } /* 100-150 words */
+
+
+        .word-count-guide {
+            font-size: 0.85em;
+            color: var(--text-navy); /* Dark navy for guide text */
+            margin-top: 2px;
+            display: block;
+        }
+
+        .visual-aid-space {
+            border: 1px dashed var(--accent-gold); /* Accent gold dashed border */
+            padding: 20px;
+            min-height: 150px;
+            margin: 20px 0;
+            text-align: center;
+            color: var(--text-navy); /* Dark navy text */
+            font-style: italic;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon {
+            font-size: 1.2em;
+            margin-right: 8px;
+            color: var(--text-navy); /* Dark navy for icons */
+        }
+
+        /* Global Footer */
+        .global-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: var(--text-navy); /* Dark navy text */
+            border-top: 1px solid var(--accent-gold); /* Accent gold border */
+            margin-top: 50px;
+            padding: 10px 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .cover-page, .section-container, .toc-container {
+                page-break-after: always;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .cover-page {
+                background-color: var(--text-navy) !important;
+                color: var(--background-gold) !important;
+            }
+            .cover-page h1 { color: var(--background-gold) !important; }
+            .cover-page h2 { color: var(--accent-gold) !important; }
+            .cover-page .author, .cover-page .copyright { color: var(--background-gold) !important; }
+
+
+            .section-container, .toc-container {
+                background-color: white !important;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            .mini-framework-box, .visual-aid-box {
+                background-color: rgba(200, 158, 79, 0.05) !important; /* Lighter for print */
+                border-color: var(--accent-gold) !important;
+            }
+
+            .header-footer-section {
+                background-color: var(--background-gold) !important;
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+            }
+
+            textarea {
+                border: 1px solid var(--accent-gold) !important;
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                min-height: 1.5in;
+                height: auto !important;
+                overflow: hidden !important;
+            }
+
+            .icon {
+                color: var(--text-navy) !important;
+            }
+
+            .global-footer {
+                color: var(--text-navy) !important;
+                border-color: var(--accent-gold) !important;
+                background-color: white !important; /* Ensure footer background is white for print */
+            }
+
+            .day-section, .checkpoint-section, .reflection-section, .prompt-section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .cover-page h1 { font-size: 2.5em; }
+            .cover-page h2 { font-size: 1.4em; }
+            .section-container, .toc-container { padding: 20px 3%; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.6em; }
+            h3 { font-size: 1.3em; }
+            .toc-list a { font-size: 1em; }
+            .toc-list .part-title { font-size: 1.2em; }
+            .global-footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .global-footer span {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cover-page">
+        <img src="https://googleusercontent.com/file_content/0" alt="The Critical Thinker's Journey™">
+        <h1>The Critical Thinker’s Journey™</h1>
+        <h2>Part 1: Building Clarity and Confidence</h2>
+        <div class="author">Published by Sonly Consulting</div>
+        <div class="copyright">© 2025 Sonly Consulting</div>
+    </div>
+
+    <div class="section-container" id="author-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Author's Note</h2>
+        </div>
+        <p>This is more than a journal — it's an invitation to awaken the thinker within you and discover the profound power of how you think. In a world spinning with constant change, challenges, and crises, the ability to pause, breathe deeply, and approach life with crystalline clarity isn't just helpful — it's life‑changing magic.</p>
+        <p>The Critical Thinker's Journey™ is woven from the very fabric of real life itself — those unexpected setbacks that steal your breath, the sudden opportunities that make your heart race, the hard decisions that test your core, and the milestone moments that lift your spirit skyward. Life also gifts us unexpected joys: a goal achieved sooner than your wildest dreams imagined, a beautiful outcome that emerges from nowhere like morning light, or that electric spark of vision that suddenly opens infinite new horizons. This journey embraces all of that — the raw struggles and the pure celebrations — so you can see your unique path with the perspective of a wise observer and the heart of a courageous explorer.</p>
+        <p>Structure becomes your sanctuary because it gives sacred shape to your experiences. It helps you see intricate patterns instead of bewildering chaos, boundless possibilities instead of towering walls, and clear steps forward instead of paralyzing standstills. Engaging with The Critical Thinker's Journey™ helps you recognize profound clarity in the very center of uncertainty and nurture visionary thoughts when inspiration strikes like lightning.</p>
+        <p>Sonly Consulting walks alongside you in that sacred process. Literally, through the carefully crafted tools we've built — the journals that become your trusted confidants, the audio companions that speak directly to your soul, and the resources designed to meet you exactly wherever you are in this moment. And figuratively, through the ethos we share with our creative arm (SS): an unwavering belief that thoughtful design, intentional reflection, and transformative personal growth are meant to be woven seamlessly into the beautiful tapestry of everyday life.</p>
+        <p>This journey is not meant to be finished and kicked to the curb. It is meant to be lived with passion, revisited with wonder, and carried forward with purpose — a trusted companion for the extraordinary real journey you're courageously walking. When you close these pages, the journey continues within you, radiating outward into every decision, every relationship, every dream you dare to chase.</p>
+    </div>
+
+    <div class="section-container" id="intro-page">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>Introduction</h2>
+        </div>
+        <p>Step boldly into something extraordinary. You're about to embark on The Critical Thinker's Journey™ — not just a collection of pages, but a transformative experience that will reshape how you see yourself, your challenges, and your infinite potential.</p>
+        <p>🌟 The Heart of This Journey</p>
+        <p>This isn't traditional learning — it's experiential awakening. Every reflection and challenge stretches different dimensions of your thinking:</p>
+        <ul>
+            <li>Analytical Precision</li>
+            <li>Creative Innovation</li>
+            <li>Intuitive Wisdom</li>
+            <li>Systems Thinking</li>
+            <li>Empathetic Understanding</li>
+            <li>Strategic Visioning</li>
+        </ul>
+        <p>🗺 Your Journey Map</p>
+        <ul>
+            <li>PART 1: FOUNDATION → Clarity & Confidence</li>
+            <li>PART 2: EXPLORATION → Movement & Adaptation</li>
+            <li>PART 3: INTEGRATION → Purpose & Balance</li>
+            <li>THE FULL SERIES → Complete Transformation</li>
+        </ul>
+        <p>🎯 How This Journey Challenges You</p>
+        <p>Question assumptions, synthesize viewpoints, generate solutions, build mental models, practice metacognition, and develop intellectual courage.</p>
+        <p>You're not just learning about critical thinking — you're becoming a critical thinker.</p>
+    </div>
+
+    <div class="section-container" id="part1-welcome" data-part="1" data-subtitle="Building Clarity and Confidence">
+        
+        <h2>🌱 WELCOME TO<br>Part 1: Building Clarity and Confidence<br><span style="font-size:0.9em; font-weight:normal;">Foundation · Clarity · Confidence</span></h2>
+        <p>This workbook begins your journey to sharpen your thinking with precision and clarity. You’ll build a foundation in logical reasoning, identify biases that cloud judgment, and learn to structure arguments effectively. Designed for classrooms, boardrooms, or personal growth, this 10-day journey strengthens your mind like an athlete trains their body—through deliberate, structured practice.</p>
+        <p>Use this digital workbook to type in the fields. Each day offers a theme, mini-framework, logic tip, and prompts to guide your thinking. Stay consistent, be honest, and <strong>GET YOUR THINK ON!</strong> 🤔</p>
+    </div>
+
+    <div class="section-container" id="how-to-use-global" data-part="1" data-subtitle="Building Clarity and Confidence">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™</h1>
+            <h2>How to Use This Workbook (Digital Version)</h2>
+        </div>
+        <ul>
+            <li><strong>Daily Commitment:</strong> Work this into your schedule in a set or impromptu setting, aiming for consecutive and persistent engagement (10-15 minutes daily).</li>
+            <li><strong>Response Areas:</strong> Type your responses directly into the digital fields. Word count guides encourage concise and focused thinking. Note: Visual Aid sections have been repurposed for textual descriptions or structured outlines, allowing for deeper digital reflection.</li>
+            <li><strong>Methods:</strong> Type, speak aloud, or outline responses.</li>
+            <li><strong>Structure:</strong> 10 days, 2 weekly checkpoints, 1 final reflection.</li>
+        </ul>
+        <h3>Who It’s For:</h3>
+        <ul>
+            <li>Adults making decisions</li>
+            <li>Parents teaching reasoning</li>
+            <li>Students preparing for debate or leadership</li>
+            <li>Lifelong learners seeking clarity</li>
+        </ul>
+        <h3>Weekly Topics:</h3>
+        <ul>
+            <li><strong>Week 1:</strong> Foundations of Logic (Days 1–5)</li>
+            <li><strong>Week 2:</strong> Bias & Fallacies (Days 6–10)</li>
+            <li>Weekly Checkpoints</li>
+            <li>Final Reflection</li>
+        </ul>
+
+        <h2 id="part1-about-frameworks">About the Mini-Frameworks</h2>
+        <p>Each day includes a Mini-Framework—a tool to structure your thinking. Drawn from logic and argumentation, they build mental clarity. Use them as guides, revisit favorites, and don’t worry if one doesn’t click immediately—your mind is growing stronger.</p>
+
+        <h2 id="part1-response-fields">How to Use the Response Fields</h2>
+        <p>Each prompt includes a Response Area with a target word count (guides, not limits). Type in digital fields. Focus your words to strengthen your thinking.</p>
+        <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+    </div>
+
+    <div class="toc-container">
+        <h1>The Critical Thinker’s Journey™: Table of Contents</h1>
+        <ul class="toc-list">
+            <li><a href="#how-to-use-global" class="part-title">How to Use This Workbook (Digital Version)</a></li>
+            <li><a href="#part1-welcome" class="part-title">Part 1: Building Clarity and Confidence</a></li>
+            <li><a href="#part1-week1" class="day-title">WEEK 1: FOUNDATIONS OF LOGIC</a></li>
+            <li><a href="#part1-day1" class="day-title">Day 1 | What Is Logic?</a></li>
+            <li><a href="#part1-day2" class="day-title">Day 2 | Thinking in Statements</a></li>
+            <li><a href="#part1-day3" class="day-title">Day 3 | Truth vs Belief</a></li>
+            <li><a href="#part1-day4" class="day-title">Day 4 | Deductive & Inductive Reasoning</a></li>
+            <li><a href="#part1-day5" class="day-title">Day 5 | The Power of a Premise</a></li>
+            <li><a href="#part1-checkpoint1" class="day-title">WEEK 1 CHECKPOINT</a></li>
+            <li><a href="#part1-week2" class="day-title">WEEK 2: BIAS & FALLACIES</a></li>
+            <li><a href="#part1-day6" class="day-title">Day 6 | What Is Bias?</a></li>
+            <li><a href="#part1-day7" class="day-title">Day 7 | Confirmation Bias</a></li>
+            <li><a href="#part1-day8" class="day-title">Day 8 | Availability Heuristic</a></li>
+            <li><a href="#part1-day9" class="day-title">Day 9 | Ad Hominem & Straw Man</a></li>
+            <li><a href="#part1-day10" class="day-title">Day 10 | False Dilemmas & Red Herrings</a></li>
+            <li><a href="#part1-checkpoint2" class="day-title">WEEK 2 CHECKPOINT</a></li>
+            <li><a href="#part1-final-reflection" class="day-title">FINAL REFLECTION</a></li>
+        </ul>
+    </div>
+
+    <div id="part1-content" class="section-container" data-part="1" data-subtitle="Building Clarity and Confidence">
+        <div class="header-footer-section">
+            <h1>The Critical Thinker’s Journey™: Part 1</h1>
+            <h2>Part 1: Building Clarity and Confidence</h2>
+            <p>Published by Sonly Consulting</p>
+            <p><em>Digital Workbook Edition with Fillable Fields</em></p>
+        </div>
+
+        <h1 id="part1-week1">WEEK 1: FOUNDATIONS OF LOGIC</h1>
+
+        <div class="day-section" id="part1-day1">
+            <h2>Day 1 | What Is Logic?</h2>
+            <p><strong>Theme Overview:</strong> Logic is the structured framework that separates fact from opinion and belief from proof, improving decision-making in daily life.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> IF-THEN Statements: Break situations into cause-and-effect relationships.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Logic isn’t about being right; it’s about being consistent and clear. Example: “IF I wake early, THEN I’m more productive.”</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a real-life situation where you could apply an IF-THEN flowchart. This could be a personal decision, a simple work process, or even how you troubleshoot a common issue. Outline the 'IF (condition)' and 'THEN (outcome)' steps in plain language. Reflect on how breaking it down like this helps clarify the situation.
+                <textarea class="long-response" placeholder="Describe your IF-THEN flowchart, detailing the conditions and outcomes in a relatable daily scenario. Reflect on how this structured thinking brings clarity."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write your belief about what logic means to you personally.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using IF-THEN Statements, outline a recent decision. Identify conditions (IF) and outcomes (THEN). What evidence supported these connections?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 75–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> For a complex situation you face, how would you use IF-THEN to clarify elements or solutions?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “The unexamined life is not worth living.” —Socrates. How does this relate to logic?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain logic to a 10-year-old using a daily example.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day2">
+            <h2>Day 2 | Thinking in Statements</h2>
+            <p><strong>Theme Overview:</strong> Thoughts are often unspoken statements. Converting them to clear, testable statements refines reasoning.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Declarative Sentences: Use “I think... because...” to structure reasoning.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Every belief can be a statement; every statement can be tested.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a belief you hold about a daily situation (e.g., a relationship, a work task, a personal habit). Outline the 'I think... because...' structure of your reasoning. Reflect on how articulating this helps clarify the belief and its foundations.
+                <textarea class="long-response" placeholder="Outline your 'I think... because...' reasoning for a daily belief. Reflect on how this articulation clarifies your perspective."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a strong belief about work, relationships, or life.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Declarative Sentences, convert your belief into a statement. What experiences or data support it? What counter-arguments could weaken it?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might personal experiences or biases influence your statement’s framing or evidence?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Convert your belief into a syllogism (e.g., All A are B; C is A; C is B).</p>
+                <textarea class="bonus-response" placeholder="Syllogism + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Syllogism + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Diagram your thought process using boxes and arrows.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day3">
+            <h2>Day 3 | Truth vs Belief</h2>
+            <p><strong>Theme Overview:</strong> Truth exists independently; belief is what we think exists. This distinction sharpens reasoning.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Logic Ladder: Start with a fact, add assumptions, then conclusions. Example: “Fact: It’s raining. Assumption: I’ll get wet. Conclusion: Take an umbrella.”
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Ask: “Do I believe this because it’s true, or think it’s true because I believe it?”</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Choose a personal belief or a common assumption you encounter. Outline the 'Logic Ladder' for it: identify a foundational 'Fact', the 'Assumption(s)' built upon it, and the resulting 'Conclusion'. Reflect on how clearly separating these elements impacts your understanding.
+                <textarea class="long-response" placeholder="Outline the Fact, Assumption(s), and Conclusion for a belief or assumption. Reflect on the clarity gained from this separation."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a strong belief you can’t prove with certainty.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using the Logic Ladder, identify facts or assumptions leading to your belief’s conclusion. What evidence supports each step?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might distinguishing truth from belief have changed a past decision?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “Belief does not make truth.” —Voltaire. How does this relate to truth vs belief?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your view today with a year ago on this topic.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day4">
+            <h2>Day 4 | Deductive & Inductive Reasoning</h2>
+            <p><strong>Theme Overview:</strong> Deductive reasoning moves from general principles to specific conclusions; inductive reasoning builds principles from observations. Both are key to logical thinking.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Reasoning Type Identifier: Determine if your reasoning is inductive (observations → pattern) or deductive (principle → conclusion).
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Deductive reasoning ensures certainty if premises are true; inductive reasoning offers probability.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a situation where you used either inductive or deductive reasoning. If inductive, list the specific 'Observations' that led to a 'Pattern'. If deductive, state the general 'Principle' and the 'Conclusion' derived from it. Reflect on how identifying the type of reasoning helps evaluate its strength.
+                <textarea class="long-response" placeholder="Describe a situation using either inductive (Observations → Pattern) or deductive (Principle → Conclusion) reasoning. Reflect on how this identification aids evaluation."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a pattern you’ve noticed in life or work.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using the Reasoning Type Identifier, is your pattern inductive (list observations) or deductive (state principle)?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might biases influence your interpretation of observations or principles?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Predict an outcome based on your pattern. Explain your reasoning.</p>
+                <textarea class="bonus-response" placeholder="Prediction + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Prediction + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Ask someone’s opinion on your pattern and why.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day5">
+            <h2>Day 5 | The Power of a Premise</h2>
+            <p><strong>Theme Overview:</strong> Premises are the starting points of reasoning. Weak premises lead to flawed conclusions, no matter how logical the process.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Point-Evidence-Reason (PER Method): Make a claim, support with data, explain why it matters.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Question your premises; conclusions are only as strong as the weakest link.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Think of a recent confident decision you made. Describe it using the Point-Evidence-Reason (PER) method: state your 'Point' (decision), the 'Evidence' that supported it, and the underlying 'Reason' (premise). Reflect on how clearly defining your premises strengthens your decision-making.
+                <textarea class="long-response" placeholder="Outline a decision using the PER method (Point, Evidence, Reason). Reflect on how strong premises impact your confidence."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a recent confident decision.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using PER, state your decision (Point), evidence, and premise (Reason).</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> If a premise proved false, how would your reasoning change? What new premises might you explore?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Challenge one premise. How does it alter your conclusion?</p>
+                <textarea class="bonus-response" placeholder="Premise + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Premise + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Connect premises to a current news event.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part1-checkpoint1">
+            <h2>WEEK 1 CHECKPOINT</h2>
+            <p>Reflect on your progress in building logical foundations. Which mini-framework was most helpful, and why? How has your understanding of logic evolved?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <h1 id="part1-week2">WEEK 2: BIAS & FALLACIES</h1>
+
+        <div class="day-section" id="part1-day6">
+            <h2>Day 6 | What Is Bias?</h2>
+            <p><strong>Theme Overview:</strong> Bias is the unconscious tendency to favor certain perspectives, clouding judgment. Recognizing biases is key to clearer thinking.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> What if... So what... Now what? Explore implications, consequences, actions.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Don’t eliminate bias; recognize when it affects your judgment.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a situation where you suspect bias might have influenced your perception or a decision. Outline what you initially 'Believed' (biased side) versus the broader 'Facts' that might offer a different perspective. Reflect on how recognizing this potential imbalance helps you seek a more objective view.
+                <textarea class="long-response" placeholder="Describe a situation where bias might have influenced you, outlining the 'Belief' vs. 'Facts'. Reflect on seeking objectivity."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a time you realized you were wrong about something important.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> What if you realized earlier? What consequences or actions would change? What facts led to your shift?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> Where did preconceptions shape your interpretation of facts?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “We see the world not as it is, but as we are.” —Anaïs Nin. How does this relate to bias?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Explain your realization to invite discussion.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day7">
+            <h2>Day 7 | Confirmation Bias</h2>
+            <p><strong>Theme Overview:</strong> Confirmation bias favors information that supports existing beliefs, ignoring contradictions. It’s a common thinking trap.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Seek Disconfirming Evidence: Actively challenge your opinions.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Strong arguments withstand scrutiny; seek counter-evidence.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall a strong opinion you hold. Describe the type of 'Counter-Evidence' you would actively seek to challenge it. Reflect on how deliberately searching for disconfirming information strengthens (or modifies) your understanding, rather than just confirming existing views.
+                <textarea class="long-response" placeholder="Describe the counter-evidence you would seek for a strong opinion. Reflect on how this process strengthens your understanding."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a strong opinion on politics, religion, or social issues.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> List reasons and sources supporting your opinion. Identify weaknesses or counter-arguments.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words]</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How would you seek disconfirming evidence before forming this opinion?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “The beginning of wisdom is calling things by their right names.” —Confucius. How does precision affect conclusions?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Describe your thought process with imagery or metaphors.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day8">
+            <h2>Day 8 | Availability Heuristic</h2>
+            <p><strong>Theme Overview:</strong> The availability heuristic overestimates likelihood based on easily recalled examples, skewing perception of probability.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Evidence Balancer: List evidence for and against your fear/concern.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Easy-to-remember events aren’t necessarily more likely.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Think of a fear or concern that feels very real to you due to easily recalled examples (e.g., news stories, personal anecdotes). Outline the 'Memories' that make it feel prominent versus the broader 'Facts' or statistics that might offer a different perspective. Reflect on how the availability of information can skew your perception of probability.
+                <textarea class="long-response" placeholder="Outline 'Memories' vs. 'Facts' for a current fear/concern. Reflect on how easily recalled information can skew perception."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a fear or concern that feels very real now.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Evidence Balancer, list evidence supporting and countering your fear.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> How might recent experiences exaggerate this concern?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Convert your fear into an IF-THEN statement and test its logic.</p>
+                <textarea class="bonus-response" placeholder="IF-THEN statement + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: IF-THEN statement + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Compare your view today with a year ago.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day9">
+            <h2>Day 9 | Ad Hominem & Straw Man</h2>
+            <p><strong>Theme Overview:</strong> Ad hominem attacks the person, not the argument; straw man misrepresents positions. Both derail reasoning.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Argument Focus: Concentrate on ideas, not people, and represent views fairly.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Attack ideas, not people; fairly challenge opposing views.</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Describe a heated discussion you've witnessed or participated in. Outline how you would reframe the conversation to focus solely on the 'Idea' or argument, rather than attacking the 'Person' or misrepresenting their 'Position'. Reflect on how this shift promotes more constructive dialogue.
+                <textarea class="long-response" placeholder="Describe reframing a heated discussion to focus on 'Idea' over 'Person/Position'. Reflect on fostering constructive dialogue."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write about a heated disagreement.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> Using Argument Focus, identify key ideas. Did anyone attack the person or misrepresent positions?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> What’s the first logical step to clarify the disagreement? How might this change your perspective?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Reflect on: “To understand is to forgive, even oneself.” —Alexander Chase. How does this relate to avoiding personal attacks?</p>
+                <textarea class="bonus-response" placeholder="10-word summary + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: 10-word summary + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Ask someone’s opinion on the disagreement and why.</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="day-section" id="part1-day10">
+            <h2>Day 10 | False Dilemmas & Red Herrings</h2>
+            <p><strong>Theme Overview:</strong> False dilemmas present only two options when more exist; red herrings distract with irrelevant information. Both limit clear thinking.</p>
+            <div class="mini-framework-box">
+                <strong>Mini-Framework:</strong> Declarative Sentences: State your “two-option” choice as “I think X because...”. Identify a third option or red herring.
+            </div>
+            <p><strong>🧠 Thinker's Tip:</strong> Look for unmentioned third options when told “either-or.”</p>
+            <div class="visual-aid-box">
+                <strong>Visual Aid:</strong> Recall a situation where you felt presented with only 'Option 1' or 'Option 2'. Describe these two options and then brainstorm a viable 'Alternative' or a 'Red Herring' that might have distracted from other possibilities. Reflect on how identifying false dilemmas opens up new solutions.
+                <textarea class="long-response" placeholder="Outline a 'False Dilemma' situation (Option 1, Option 2, Alternative/Red Herring). Reflect on identifying new solutions."></textarea>
+                <span class="word-count-guide">Response Area: Describe your visual aid (up to 100 words)</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">💡</span> <strong>Prompt 1:</strong> Write a choice with seemingly only two options.</p>
+                <textarea class="short-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Up to 25 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">✏️</span> <strong>Prompt 2:</strong> State your reasoning for the two options. Imagine a third option or scenario where neither applies. What evidence supports or weakens the two-option view?</p>
+                <textarea class="medium-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–75 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🎯</span> <strong>Prompt 3:</strong> Does your background make you favor one option unconsciously?</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+            <div class="prompt-section">
+                <p><span class="icon">🔄</span> <strong>Bonus:</strong> Identify a third option and explain its viability.</p>
+                <textarea class="bonus-response" placeholder="Third option + 100-word explanation"></textarea>
+                <span class="word-count-guide">Response Area: Third option + 100-word explanation</span>
+            </div>
+            <div class="prompt-section">
+                <p><strong>Dig Deeper:</strong> Connect this theme to a news event.</p>
+                <textarea class="long-response" placeholder="Your response here..."></textarea>
+                <span class="word-count-guide">Response Area: Between 50–100 words</span>
+            </div>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="checkpoint-section" id="part1-checkpoint2">
+            <h2>WEEK 2 CHECKPOINT</h2>
+            <p>Reflect on spotting biases and fallacies. Which mini-framework helped most? What biases surprised you?</p>
+            <textarea class="checkpoint-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="reflection-section" id="part1-final-reflection">
+            <h2>FINAL REFLECTION</h2>
+            <p>Congratulations! You’ve built a foundation for clear, logical thinking. Review your responses and consider:</p>
+            <ul>
+                <li>What’s your biggest insight?</li>
+                <li>How will you apply these tools?</li>
+                <li>Who can you help with your skills?</li>
+            </ul>
+            <textarea class="final-reflection-response" placeholder="Your reflection here..."></textarea>
+            <span class="word-count-guide">Response Area: Between 100–150 words</span>
+            <p><strong>Mindfully Crafted,</strong><br><strong>Sonly Consulting</strong></p>
+        </div>
+    </div>
+
+    <div class="global-footer">
+        <span id="footer-part-info">The Critical Thinker’s Journey™ – Part 1: Building Clarity and Confidence</span>
+        <span id="footer-page-info">Page 1 of 1</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const footerPageInfo = document.getElementById('footer-page-info');
+            const footerPartInfo = document.getElementById('footer-part-info');
+            const sections = document.querySelectorAll('.section-container');
+            
+            // Function to update footer based on scroll position
+            function updateFooter() {
+                let currentSectionIndex = 0;
+                for (let i = 0; i < sections.length; i++) {
+                    const rect = sections[i].getBoundingClientRect();
+                    // If the top of the section is in view (or mostly in view)
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        currentSectionIndex = i;
+                        break;
+                    }
+                }
+
+                // Update page number
+                footerPageInfo.textContent = `Page ${currentSectionIndex + 1} of ${sections.length}`;
+
+                // Update part info (static for single part file)
+                footerPartInfo.textContent = `The Critical Thinker’s Journey™ – Part 1: Building Clarity and Confidence`;
+            }
+
+            window.addEventListener('scroll', updateFooter);
+            window.addEventListener('resize', updateFooter);
+            updateFooter(); // Initial call
+        });
+    </script>
+</body>
+</html>
