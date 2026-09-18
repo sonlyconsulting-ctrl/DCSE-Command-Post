@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "sca",
+    "name": "Strategic Clarity Assessment",
+    "subtitle": null,
+    "role": "DISCOVER",
+    "effort": "30-45 minutes",
+    "price": "20"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Describe what the SCA is and what makes it useful.",
+    "what_you_do": "[CONTENT NEEDED] Explain the 31-question assessment process.",
+    "what_you_produce": "[CONTENT NEEDED] List the three results: Strategic Clarity Profile, Pattern Analysis, Immediate Blueprint.",
+    "save_resume_behavior": "Your work saves automatically as you answer. You can close anytime and return where you left off.",
+    "privacy_statement": "All your responses stay in your browser's local storage. The SCA does not send your answers to a server or analyze them externally.",
+    "reset_behavior": "You can reset and start fresh with a new assessment at any time. Resetting clears all responses for that session.",
+    "product_boundaries": "This is an educational self-assessment. It is not a diagnostic tool, personality test, clinical evaluation, or professional advice.",
+    "accessibility_statement": "The SCA supports High Contrast, Readable Font, Text Scale, and Reduced Motion controls.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "Assess your current thinking across three dimensions of clarity.",
+    "display_url": "https://ctj.sonlyconsulting.com/sca"
+  }
+}

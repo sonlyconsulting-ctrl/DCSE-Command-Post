@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "mental-ingenuity",
+    "name": "Mental Ingenuity",
+    "subtitle": null,
+    "role": "PROVE",
+    "effort": "Self-paced chambers",
+    "price": "20"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Explain Mental Ingenuity as an interactive proving ground for reasoning under pressure.",
+    "what_you_do": "[CONTENT NEEDED] Describe the chamber-based gameplay, challenges, and reasoning tests.",
+    "what_you_produce": "[CONTENT NEEDED] List: Reasoning Signature, chamber ascents, challenge records.",
+    "save_resume_behavior": "Your progress saves automatically within the game. You can ascend chambers at your own pace. Achievements and your Reasoning Signature are preserved.",
+    "privacy_statement": "All gameplay data stays in your browser. No data is sent externally or used for analysis. Your reasoning patterns are private to you.",
+    "reset_behavior": "You can reset Mental Ingenuity and start fresh. Resetting clears all chamber progress and achievements. Exported Reasoning Signatures are saved separately.",
+    "product_boundaries": "Mental Ingenuity is an educational interactive game focused on reasoning practice. It does not assess intelligence, diagnose cognitive abilities, or provide clinical evaluation.",
+    "accessibility_statement": "[CONTENT NEEDED] Describe accessibility features specific to Mental Ingenuity (audio, visual, gameplay controls).",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "Test and strengthen your reasoning through interactive chambers and challenges.",
+    "display_url": "https://ctj.sonlyconsulting.com/mental-ingenuity"
+  }
+}

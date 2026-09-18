@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "part2",
+    "name": "Part 2: Exploring Ideas and Making Moves",
+    "subtitle": null,
+    "role": "LEARN",
+    "effort": "10 days, 10-15 min/day",
+    "price": "39"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Explain Part 2's focus on options, experiments, and action.",
+    "what_you_do": "[CONTENT NEEDED] Describe the 10-day curriculum, daily experiments, and practical moves.",
+    "what_you_produce": "[CONTENT NEEDED] List deliverables: options workbook, experiment records, action plan.",
+    "save_resume_behavior": "Your daily work saves automatically. Pause between days and resume anytime. All experiments and actions are tracked.",
+    "privacy_statement": "All responses stay locally in your browser. No data is sent externally or used for any purpose beyond your own reflection.",
+    "reset_behavior": "You can reset Part 2 and start fresh. Resetting clears all responses. Exported workbooks and action plans are saved separately.",
+    "product_boundaries": "Part 2 is an educational curriculum focused on deliberate exploration. It does not provide professional business, career, or life coaching.",
+    "accessibility_statement": "Part 2 supports High Contrast, Readable Font, Text Scale, and Reduced Motion. Optional browser dictation available.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "A 10-day curriculum for exploring ideas and making deliberate moves.",
+    "display_url": "https://ctj.sonlyconsulting.com/part2"
+  }
+}

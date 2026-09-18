@@ -1,0 +1,72 @@
+{
+  "package": {
+    "type": "LAUNCH_PACK",
+    "version": "1.0.0",
+    "generated": "{{GENERATED_ISO_TIMESTAMP}}",
+    "generator_version": "1.0.0"
+  },
+  "product": {
+    "id": "{{PRODUCT_ID}}",
+    "name": "{{PRODUCT_NAME}}",
+    "subtitle": "{{PRODUCT_SUBTITLE}}",
+    "family": "The Critical Thinker's Journey™",
+    "role": "{{ROLE}}",
+    "price": "{{PRICE}}",
+    "repository": "{{REPOSITORY}}",
+    "branch": "{{BRANCH}}",
+    "commit": "{{COMMIT_SHA}}"
+  },
+  "files": [
+    {
+      "filename": "00_START_HERE.pdf",
+      "description": "One-page premium introduction",
+      "size_bytes": "{{FILE_SIZE_00}}",
+      "hash_sha256": "{{HASH_00}}",
+      "required": true
+    },
+    {
+      "filename": "01_OPEN_PRODUCT.html",
+      "description": "Branded product launcher",
+      "size_bytes": "{{FILE_SIZE_01}}",
+      "hash_sha256": "{{HASH_01}}",
+      "required": true,
+      "notes": "Contains no embedded secrets or credentials"
+    },
+    {
+      "filename": "02_PRODUCT_GUIDE.pdf",
+      "description": "Product user guide (3-6 pages)",
+      "size_bytes": "{{FILE_SIZE_02}}",
+      "hash_sha256": "{{HASH_02}}",
+      "required": true
+    },
+    {
+      "filename": "03_PACKAGE_MANIFEST.json",
+      "description": "This file",
+      "size_bytes": "{{FILE_SIZE_03}}",
+      "hash_sha256": "{{HASH_03}}",
+      "required": true
+    }
+  ],
+  "compliance": {
+    "secrets_scan": "PASS",
+    "pii_scan": "PASS",
+    "accessibility_tested": false,
+    "notes": "Secrets and PII scans performed. Formal accessibility review pending release QA."
+  },
+  "customer_info": {
+    "what_you_bought": "{{WHAT_YOU_BOUGHT}}",
+    "time_commitment": "{{EFFORT}}",
+    "what_you_produce": "{{WHAT_YOU_PRODUCE}}",
+    "support_url": "{{SUPPORT_URL}}"
+  },
+  "integrity": {
+    "total_files": 4,
+    "package_sha256": "{{PACKAGE_SHA256}}",
+    "verification_instructions": "All file hashes should match the values above. If any file has been modified, its hash will differ."
+  },
+  "next_steps": [
+    "Open 01_OPEN_PRODUCT.html to begin",
+    "Keep 02_PRODUCT_GUIDE.pdf as reference",
+    "When complete, you'll generate a Keeper Pack with your results"
+  ]
+}

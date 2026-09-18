@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "part3",
+    "name": "Part 3: Finding Meaning and Balance",
+    "subtitle": null,
+    "role": "LEARN",
+    "effort": "10 days, 10-15 min/day",
+    "price": "39"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Explain Part 3's focus on meaning, values, emotion, and balance.",
+    "what_you_do": "[CONTENT NEEDED] Describe the 10-day curriculum exploring values, relationships, and integration.",
+    "what_you_produce": "[CONTENT NEEDED] List deliverables: values workbook, integration reflections, alignment statement.",
+    "save_resume_behavior": "Your daily responses save automatically. You can work at your own pace across 10 days. Progress is preserved across sessions.",
+    "privacy_statement": "All responses are stored locally in your browser. No data is transmitted externally or used for purposes beyond your own reflection.",
+    "reset_behavior": "You can reset Part 3 and begin again. Resetting clears all responses. If you've exported your values workbook, it remains saved separately.",
+    "product_boundaries": "Part 3 is an educational curriculum exploring meaning and values. It is not therapy, counseling, or a substitute for mental health professional support.",
+    "accessibility_statement": "Part 3 supports High Contrast, Readable Font, Text Scale, and Reduced Motion. Optional browser dictation is available.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "A 10-day journey to explore meaning, values, and what truly matters to you.",
+    "display_url": "https://ctj.sonlyconsulting.com/part3"
+  }
+}

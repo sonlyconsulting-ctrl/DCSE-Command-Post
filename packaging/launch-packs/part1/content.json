@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "part1",
+    "name": "Part 1: Building Clarity and Confidence",
+    "subtitle": null,
+    "role": "LEARN",
+    "effort": "10 days, 10-15 min/day",
+    "price": "39"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Explain Part 1's focus on clarity, evidence, and bias.",
+    "what_you_do": "[CONTENT NEEDED] Describe the 10-day curriculum structure, daily prompts, and checkpoint reflections.",
+    "what_you_produce": "[CONTENT NEEDED] List what they'll keep: clarity workbook, insights journal, final reflection.",
+    "save_resume_behavior": "Your daily responses save automatically. You can pause between days and return anytime. Progress is tracked across all 10 days.",
+    "privacy_statement": "All responses are stored locally in your browser. No data is sent to external servers or used for analysis.",
+    "reset_behavior": "You can reset Part 1 and start over. Resetting clears all responses. If you've exported your workbook, that file is saved separately.",
+    "product_boundaries": "Part 1 is an educational curriculum. It does not diagnose cognitive patterns, treat conditions, or replace professional consultation.",
+    "accessibility_statement": "Part 1 supports High Contrast, Readable Font, Text Scale, and Reduced Motion. Optional browser dictation is available.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "A 10-day journey to build clarity and confidence in how you think.",
+    "display_url": "https://ctj.sonlyconsulting.com/part1"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "products": [
+    {
+      "id": "sca",
+      "name": "Strategic Clarity Assessment",
+      "subtitle": null,
+      "role": "DISCOVER",
+      "effort": "30-45 minutes",
+      "produce": "Strategic Clarity Profile + Pattern Analysis + Blueprint",
+      "price": 20,
+      "repository": "sonlyconsulting-ctrl/CTJ-MVP-11252025",
+      "branch": "review/sca-modernization-20260912",
+      "keeper_basename": "CTJ_Strategic_Clarity_Profile"
+    },
+    {
+      "id": "part1",
+      "name": "Part 1: Building Clarity and Confidence",
+      "subtitle": null,
+      "role": "LEARN",
+      "effort": "10 days, 10-15 min/day",
+      "produce": "Clarity workbook + insights + final reflection",
+      "price": 39,
+      "repository": "sonlyconsulting-ctrl/SS-CTJ-Part1",
+      "branch": "review/part1-modernization-20260912",
+      "keeper_basename": "CTJ_Part_1_Workbook_Record"
+    },
+    {
+      "id": "part2",
+      "name": "Part 2: Exploring Ideas and Making Moves",
+      "subtitle": null,
+      "role": "LEARN",
+      "effort": "10 days, 10-15 min/day",
+      "produce": "Options workbook + experiments + action plan",
+      "price": 39,
+      "repository": "sonlyconsulting-ctrl/SS-CTJ-Part2",
+      "branch": "review/part2-modernization-20260912",
+      "keeper_basename": "CTJ_Part_2_Workbook_Record"
+    },
+    {
+      "id": "part3",
+      "name": "Part 3: Finding Meaning and Balance",
+      "subtitle": null,
+      "role": "LEARN",
+      "effort": "10 days, 10-15 min/day",
+      "produce": "Values workbook + integration + alignment statement",
+      "price": 39,
+      "repository": "sonlyconsulting-ctrl/SS-CTJ-Part3",
+      "branch": "review/part3-reconstruction-20260912",
+      "keeper_basename": "CTJ_Part_3_Workbook_Record"
+    },
+    {
+      "id": "focus-and-flow",
+      "name": "CTJ: Focus & Flow",
+      "subtitle": null,
+      "role": "PRACTICE",
+      "effort": "Daily sessions, 5-10 min",
+      "produce": "Focus Reset + Session journal + weekly patterns",
+      "price": 20,
+      "repository": "sonlyconsulting-ctrl/ctj-focus-and-flow",
+      "branch": "review/product-fixes-20260912",
+      "keeper_basename": "CTJ_Focus_Flow_Session_Record"
+    },
+    {
+      "id": "mental-ingenuity",
+      "name": "Mental Ingenuity",
+      "subtitle": null,
+      "role": "PROVE",
+      "effort": "Self-paced chambers",
+      "produce": "Reasoning Signature + chamber ascents + record",
+      "price": 20,
+      "repository": "sonlyconsulting-ctrl/ctj-mental-ingenuity",
+      "branch": "review/product-fixes-20260912",
+      "keeper_basename": "CTJ_Mental_Ingenuity_Reasoning_Signature"
+    },
+    {
+      "id": "unified",
+      "name": "Unified Edition",
+      "subtitle": "The Complete Logic Map",
+      "role": "INTEGRATE",
+      "effort": "2-4 hours",
+      "produce": "Complete Logic Map + Final Decision Statement + export",
+      "price": 119,
+      "repository": "sonlyconsulting-ctrl/CTJ-MVP-11252025",
+      "branch": "review/unified-rearchitecture-20260912",
+      "keeper_basename": "CTJ_Unified_Complete_Logic_Map"
+    }
+  ],
+  "branding": {
+    "family_name": "The Critical Thinker's Journey™",
+    "foundation_color": "#2B2B2B",
+    "platinum_color": "#E8E8E8",
+    "gold_accent": "#D4A574",
+    "blue_accent": "#4A7BA7",
+    "serif_font": "Georgia, serif",
+    "body_font": "system-ui, -apple-system, sans-serif"
+  },
+  "package_version": "1.0.0"
+}

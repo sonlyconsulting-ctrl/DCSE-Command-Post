@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>START HERE: {{PRODUCT_NAME}}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Georgia, serif;
+      background: #2B2B2B;
+      color: #2B2B2B;
+      width: 8.5in;
+      height: 11in;
+      padding: 0.75in;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .family-line {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .product-title {
+      font-size: 32px;
+      font-weight: bold;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      color: #2B2B2B;
+    }
+
+    .product-subtitle {
+      font-size: 16px;
+      color: #666;
+      font-style: italic;
+    }
+
+    .role-badge {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.5rem 1rem;
+      background: #E8E8E8;
+      color: #2B2B2B;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .content {
+      margin: 2rem 0;
+    }
+
+    .section {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #999;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-value {
+      font-size: 14px;
+      color: #2B2B2B;
+      line-height: 1.8;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #D4A574, transparent);
+      margin: 1.5rem 0;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      color: #999;
+      border-top: 1px solid #E8E8E8;
+      padding-top: 1rem;
+    }
+
+    strong {
+      color: #2B2B2B;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="family-line">The Critical Thinker's Journey™</div>
+      <h1 class="product-title">{{PRODUCT_NAME}}</h1>
+      {{#PRODUCT_SUBTITLE}}
+      <p class="product-subtitle">{{PRODUCT_SUBTITLE}}</p>
+      {{/PRODUCT_SUBTITLE}}
+      <div class="role-badge">{{ROLE}}</div>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <div class="section-label">What You've Purchased</div>
+        <div class="section-value">{{WHAT_YOU_BOUGHT}}</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-label">Time Commitment</div>
+        <div class="section-value">{{EFFORT}}</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-label">What You'll Keep</div>
+        <div class="section-value">{{WHAT_YOU_PRODUCE}}</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-label">How to Start</div>
+        <div class="section-value">
+          <strong>1.</strong> Open the file <code>01_OPEN_PRODUCT.html</code><br>
+          <strong>2.</strong> Click the <strong>START</strong> button<br>
+          <strong>3.</strong> Read <code>02_PRODUCT_GUIDE.pdf</code> for help anytime
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>For support, visit {{SUPPORT_URL}}</p>
+      <p style="margin-top: 0.5rem; font-size: 10px;">Generated {{GENERATED_DATE}}</p>
+    </div>
+  </div>
+</body>
+</html>

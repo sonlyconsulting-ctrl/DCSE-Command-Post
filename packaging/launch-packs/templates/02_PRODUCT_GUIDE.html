@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PRODUCT_NAME}} – Product Guide</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    @page {
+      size: letter;
+      margin: 0.75in;
+    }
+
+    body {
+      font-family: Georgia, serif;
+      background: white;
+      color: #2B2B2B;
+      line-height: 1.6;
+      font-size: 11pt;
+    }
+
+    .cover {
+      page-break-after: always;
+      text-align: center;
+      padding: 2in 0;
+      border-bottom: 2px solid #D4A574;
+      margin-bottom: 2in;
+    }
+
+    .family-line {
+      font-size: 10pt;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 1in;
+    }
+
+    h1 {
+      font-size: 28pt;
+      font-weight: bold;
+      line-height: 1.2;
+      margin-bottom: 0.5in;
+    }
+
+    .subtitle {
+      font-size: 14pt;
+      color: #666;
+      font-style: italic;
+      margin-bottom: 1in;
+    }
+
+    .role-info {
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 1in;
+    }
+
+    h2 {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-top: 0.5in;
+      margin-bottom: 0.25in;
+      padding-bottom: 0.1in;
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    h3 {
+      font-size: 12pt;
+      font-weight: bold;
+      margin-top: 0.3in;
+      margin-bottom: 0.15in;
+      color: #4A7BA7;
+    }
+
+    p {
+      margin-bottom: 0.25in;
+      line-height: 1.7;
+    }
+
+    ul, ol {
+      margin-left: 0.5in;
+      margin-bottom: 0.25in;
+    }
+
+    li {
+      margin-bottom: 0.1in;
+    }
+
+    .sidebar {
+      background: #F5F5F5;
+      padding: 0.3in;
+      margin: 0.25in 0;
+      border-left: 3px solid #D4A574;
+      page-break-inside: avoid;
+    }
+
+    .sidebar p {
+      font-size: 10pt;
+      margin-bottom: 0.15in;
+    }
+
+    code, kbd {
+      font-family: monospace;
+      background: #F5F5F5;
+      padding: 0.05in 0.1in;
+      border-radius: 2px;
+      font-size: 10pt;
+    }
+
+    .footer {
+      margin-top: 0.5in;
+      padding-top: 0.25in;
+      border-top: 1px solid #E8E8E8;
+      font-size: 9pt;
+      color: #999;
+    }
+
+    .page-break {
+      page-break-after: always;
+    }
+
+    @media print {
+      body { background: white; }
+      a { color: #4A7BA7; }
+    }
+  </style>
+</head>
+<body>
+  <!-- COVER -->
+  <div class="cover">
+    <div class="family-line">The Critical Thinker's Journey™</div>
+    <h1>{{PRODUCT_NAME}}</h1>
+    {{#PRODUCT_SUBTITLE}}
+    <p class="subtitle">{{PRODUCT_SUBTITLE}}</p>
+    {{/PRODUCT_SUBTITLE}}
+    <div class="role-info">{{ROLE}} • {{EFFORT}}</div>
+  </div>
+
+  <!-- PAGE 1: OVERVIEW -->
+  <h2>What Is {{PRODUCT_NAME}}?</h2>
+  <p>{{PRODUCT_OVERVIEW}}</p>
+
+  <h3>What You'll Do</h3>
+  <p>{{WHAT_YOU_DO}}</p>
+
+  <h3>What You'll Keep</h3>
+  <p>{{WHAT_YOU_PRODUCE}}</p>
+
+  <div class="sidebar">
+    <p><strong>Expected Time:</strong> {{EFFORT}}</p>
+    <p><strong>No Experience Required</strong> – this product is designed for anyone, regardless of background.</p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 2: HOW TO USE -->
+  <h2>How to Use This Product</h2>
+
+  <h3>Getting Started</h3>
+  <ol>
+    <li>Open the file <code>01_OPEN_PRODUCT.html</code></li>
+    <li>Click <strong>START NOW</strong></li>
+    <li>Work through the product at your own pace</li>
+    <li>When finished, download your results</li>
+  </ol>
+
+  <h3>Saving and Resuming</h3>
+  <p>{{SAVE_RESUME_BEHAVIOR}}</p>
+
+  <h3>Display Controls</h3>
+  <p>In the product, you can customize how things look:</p>
+  <ul>
+    <li><strong>High Contrast</strong> – makes text and buttons easier to read</li>
+    <li><strong>Readable Font</strong> – uses a more legible typeface</li>
+    <li><strong>Text Scale</strong> – increases or decreases text size</li>
+    <li><strong>Reduced Motion</strong> – minimizes animations and transitions</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 3: FEATURES & EXPORTS -->
+  <h2>Features and Exports</h2>
+
+  <h3>Local Privacy</h3>
+  <p>{{PRIVACY_STATEMENT}}</p>
+
+  <h3>Exporting Your Results</h3>
+  <p>When you complete {{PRODUCT_NAME}}, you can download your work in three formats:</p>
+  <ul>
+    <li><strong>PDF</strong> – a formatted document for printing or sharing</li>
+    <li><strong>TXT</strong> – plain text, readable on any device</li>
+    <li><strong>JSON</strong> – structured data for backup or integration</li>
+  </ul>
+
+  <div class="sidebar">
+    <p><strong>Your Work Stays Yours</strong> — all data is stored locally in your browser. We never access, store, or analyze your responses on a server.</p>
+  </div>
+
+  <h3>Resetting or Starting Over</h3>
+  <p>{{RESET_BEHAVIOR}}</p>
+
+  <div class="page-break"></div>
+
+  <!-- PAGE 4: SUPPORT & BOUNDARIES -->
+  <h2>Support and Important Boundaries</h2>
+
+  <h3>Getting Help</h3>
+  <p>If you have questions or encounter issues:</p>
+  <ul>
+    <li>Visit <strong>{{SUPPORT_URL}}</strong></li>
+    <li>Check the FAQ section in the product itself</li>
+    <li>Review this guide again for common questions</li>
+  </ul>
+
+  <h3>What This Product Is Not</h3>
+  <p>{{PRODUCT_BOUNDARIES}}</p>
+
+  <h3>Accessibility</h3>
+  <p>{{ACCESSIBILITY_STATEMENT}}</p>
+
+  <div class="footer">
+    <p>© 2026 Sonly Consulting. The Critical Thinker's Journey™ is a trademark of Sonly Consulting, Inc.</p>
+    <p>Generated: {{GENERATED_DATE}} | Product Version: {{PRODUCT_VERSION}} | Guide Version: {{GUIDE_VERSION}}</p>
+  </div>
+</body>
+</html>

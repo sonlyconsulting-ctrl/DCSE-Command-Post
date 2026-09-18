@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Open {{PRODUCT_NAME}}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --foundation: #2B2B2B;
+      --platinum: #E8E8E8;
+      --gold: #D4A574;
+      --blue: #4A7BA7;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --foundation: #E8E8E8;
+        --platinum: #2B2B2B;
+      }
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--platinum);
+      color: var(--foundation);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .hero {
+      margin-bottom: 2rem;
+    }
+
+    .family-line {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--foundation);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 28px;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: var(--foundation);
+      opacity: 0.8;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      background: var(--foundation);
+      color: var(--platinum);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .content {
+      background: var(--foundation);
+      color: var(--platinum);
+      padding: 2rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+    }
+
+    .content p {
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 14px;
+    }
+
+    .content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--foundation);
+      opacity: 0.3;
+      margin: 1.5rem 0;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--blue);
+      color: var(--platinum);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 2px solid var(--blue);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
+    }
+
+    .cta-button:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .cta-button:focus {
+      outline: 2px solid var(--foundation);
+      outline-offset: 4px;
+    }
+
+    .cta-button:active {
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-button {
+        transition: none;
+      }
+      .cta-button:hover {
+        transform: none;
+      }
+    }
+
+    .fallback {
+      font-size: 12px;
+      color: var(--foundation);
+      opacity: 0.7;
+      margin-top: 1.5rem;
+    }
+
+    .fallback a {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid var(--blue);
+    }
+
+    .fallback a:hover {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
+      .content {
+        padding: 1.5rem;
+      }
+      .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="family-line">The Critical Thinker's Journey™</div>
+      <h1>{{PRODUCT_NAME}}</h1>
+      {{#PRODUCT_SUBTITLE}}
+      <p class="subtitle">{{PRODUCT_SUBTITLE}}</p>
+      {{/PRODUCT_SUBTITLE}}
+      <div class="role-badge">{{ROLE}}</div>
+    </div>
+
+    <div class="content">
+      <p><strong>{{PRODUCT_ROLE_DESCRIPTION}}</strong></p>
+      <div class="divider"></div>
+      <p>You'll work through {{EFFORT}} to produce {{WHAT_YOU_PRODUCE}}.</p>
+    </div>
+
+    <a href="{{PRODUCT_URL}}" class="cta-button">Start Now</a>
+
+    <div class="fallback">
+      <p>If the button above doesn't work, visit:<br>
+      <a href="{{PRODUCT_URL}}">{{PRODUCT_DISPLAY_URL}}</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Keyboard accessibility
+    document.addEventListener('DOMContentLoaded', function() {
+      const button = document.querySelector('.cta-button');
+      if (button) {
+        button.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

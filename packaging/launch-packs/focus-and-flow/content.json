@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "focus-and-flow",
+    "name": "CTJ: Focus & Flow",
+    "subtitle": null,
+    "role": "PRACTICE",
+    "effort": "Daily sessions, 5-10 min",
+    "price": "20"
+  },
+  "guide": {
+    "overview": "[CONTENT NEEDED] Explain Focus & Flow as a daily companion for deliberate, focused work.",
+    "what_you_do": "[CONTENT NEEDED] Describe daily sessions, Focus Reset, Thinking Partner, and habit building.",
+    "what_you_produce": "[CONTENT NEEDED] List: session journal, weekly patterns, focus insights.",
+    "save_resume_behavior": "Each session saves automatically. You can do short sessions anytime. Your Focus Reset and journal entries are preserved across all sessions.",
+    "privacy_statement": "All session data stays in your browser. No data is sent to servers or used externally. Your focus patterns are for your eyes only.",
+    "reset_behavior": "You can reset Focus & Flow and start fresh. Resetting clears all session history. If you've exported your session record, that file is saved separately.",
+    "product_boundaries": "Focus & Flow is an educational practice tool. It does not diagnose attention conditions, treat ADHD, or replace medical consultation.",
+    "accessibility_statement": "Focus & Flow supports High Contrast, Readable Font, Text Scale, and Reduced Motion. Animations can be disabled.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "A daily companion for focused work and deliberate thinking.",
+    "display_url": "https://ctj.sonlyconsulting.com/focus-and-flow"
+  }
+}

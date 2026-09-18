@@ -1,0 +1,28 @@
+{
+  "product": {
+    "id": "unified",
+    "name": "Unified Edition",
+    "subtitle": "The Complete Logic Map",
+    "role": "INTEGRATE",
+    "effort": "2-4 hours",
+    "price": "119"
+  },
+  "guide": {
+    "overview": "The Unified Edition is a premium capstone experience that synthesizes critical thinking across multiple dimensions. You bring a real decision, challenge, or choice—one with genuine stakes, uncertainty, or competing values. The Unified Edition walks you through structured scenarios and reflection to build a complete reasoning map of that decision.",
+    "what_you_do": "You answer intake questions about a decision you're facing, then work through four scenarios that test your thinking from different angles: separating signal from pressure, exploring tradeoffs, checking alignment with values, and applying the complete logic map to your real situation. Throughout, you encounter interludes that help you notice how your thinking is evolving.",
+    "what_you_produce": "A Complete Logic Map showing your reasoning across six dimensions: Clarity, Exploration, Alignment, Decision, Revision, and Reflection. Plus a Final Decision Statement—a clear articulation of what you'll do, why it fits the evidence and what matters to you, and the specific condition that would make you revisit it.",
+    "save_resume_behavior": "Your work saves automatically as you fill in responses. You can close the product anytime and return to where you left off. Your responses remain stored in your browser until you export them.",
+    "privacy_statement": "All your responses stay in your browser's local storage. The Unified Edition does not send your answers to a server, log them, analyze them, or use them for any purpose beyond your own reflection. You control when and how to export your results.",
+    "reset_behavior": "You can reset your current session and start fresh with a new decision at any time. Resetting clears all responses for that session. If you've exported your Logic Map, you'll still have that file saved elsewhere.",
+    "product_boundaries": "This product is educational and reflective. It is not medical, psychological, legal, financial, or professional advice. The Unified Edition helps you reason through decisions; it does not diagnose conditions, predict outcomes, or replace consultation with qualified professionals when appropriate. The Complete Logic Map is a record of your reasoning, not a guarantee of success.",
+    "accessibility_statement": "The Unified Edition supports High Contrast, Readable Font, Text Scale, and Reduced Motion controls. If you experience accessibility barriers, please contact support.",
+    "support_url": "https://www.sonlyconsulting.com/support",
+    "generated_date": "2026-09-18",
+    "product_version": "1.0.0",
+    "guide_version": "1.0.0"
+  },
+  "launcher": {
+    "role_description": "Apply everything you've learned to a real decision that matters.",
+    "display_url": "https://ctj.sonlyconsulting.com/unified"
+  }
+}

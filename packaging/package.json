@@ -1,0 +1,16 @@
+{
+  "name": "ctj-packaging",
+  "version": "1.0.0",
+  "description": "CTJ Launch Pack and Keeper Pack generation",
+  "scripts": {
+    "build:launch-pack": "node scripts/build-launch-pack.js",
+    "build:keeper-pack": "node scripts/build-keeper-pack.js",
+    "validate:package": "node scripts/validate-package.js",
+    "generate:all": "node scripts/generate-all-packs.js"
+  },
+  "dependencies": {
+    "pdfkit": "^0.13.0",
+    "archiver": "^6.0.0",
+    "sharp": "^0.33.0"
+  }
+}
