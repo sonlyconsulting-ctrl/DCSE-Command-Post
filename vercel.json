@@ -9,6 +9,7 @@
     { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
     { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
     { "source": "/escd", "destination": "/apps/escd/web/login.html" },
+    { "source": "/login", "destination": "/apps/escd/web/login.html" },
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/(.*)", "destination": "/api" }
   ]

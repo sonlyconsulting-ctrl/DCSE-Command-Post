@@ -147,6 +147,37 @@ def _env_secret(provider: str) -> str:
     return ""
 
 
+PROVIDER_CATALOG = {
+    "openai": [
+        {"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol (Flagship)", "tier": "flagship"},
+        {"id": "gpt-4o", "name": "GPT-4o (Production Fast)", "tier": "balanced"},
+        {"id": "o3-mini", "name": "o3-mini (High Reasoning / STEM)", "tier": "reasoning"},
+        {"id": "gpt-4.1-mini", "name": "GPT-4.1 Mini (High Throughput)", "tier": "fast"},
+    ],
+    "anthropic": [
+        {"id": "claude-sonnet-5", "name": "Claude Sonnet 5 (Operative)", "tier": "flagship"},
+        {"id": "claude-3-7-sonnet-20250219", "name": "Claude 3.7 Sonnet (Hybrid Reasoning)", "tier": "reasoning"},
+        {"id": "claude-3-5-haiku-20241022", "name": "Claude 3.5 Haiku (Fast Triage)", "tier": "fast"},
+    ],
+    "gemini": [
+        {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash (Operative)", "tier": "fast"},
+        {"id": "gemini-2.5-pro", "name": "Gemini 2.5 Pro (Deep Context)", "tier": "flagship"},
+        {"id": "gemini-2.5-flash", "name": "Gemini 2.5 Flash (Mobile Fast)", "tier": "fast"},
+    ],
+    "openrouter": [
+        {"id": "openrouter/auto", "name": "OpenRouter Auto-Route", "tier": "auto"},
+        {"id": "deepseek/deepseek-r1", "name": "DeepSeek R1 (Economic Logic)", "tier": "reasoning"},
+        {"id": "qwen/qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B (Governance)", "tier": "flagship"},
+        {"id": "nousresearch/hermes-3-llama-3.1-405b", "name": "Hermes 3 405B (Uncensored Local)", "tier": "flagship"},
+    ],
+    "ollama": [
+        {"id": "gpt-oss:120b", "name": "GPT-OSS 120B (Operative)", "tier": "flagship"},
+        {"id": "deepseek-r1:70b", "name": "DeepSeek R1 70B", "tier": "reasoning"},
+        {"id": "qwen2.5:72b", "name": "Qwen 2.5 72B", "tier": "flagship"},
+    ],
+}
+
+
 def _fallback_config(provider: str) -> dict:
     defaults = {
         "openai": {"provider": "openai", "enabled": True, "model": "gpt-5.6-sol", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
@@ -207,6 +238,7 @@ def provider_status() -> dict:
             "credential_source": cfg.get("credential_source"),
             "registry_available": True,
             "project_ref": cfg.get("project_ref"),
+            "catalog": PROVIDER_CATALOG.get(provider, []),
         }
     return result
 
@@ -692,7 +724,7 @@ def list_saved_chats(limit: int = 50) -> list[dict]:
     return ConversationStore.list_saved_chats(limit)
 
 
-def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default") -> dict:
+def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default", model_override: str = None) -> dict:
     from apps.escd.runtime.continuity import (
         ConversationStore,
         TurnRecord,
@@ -714,7 +746,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             cfg["enabled"] = True
         except Exception:
             raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
-    model = str(cfg.get("model") or "").strip()
+    model = str(model_override or "").strip() or str(cfg.get("model") or "").strip()
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
 

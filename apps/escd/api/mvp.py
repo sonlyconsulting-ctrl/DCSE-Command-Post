@@ -269,8 +269,9 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/chat":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 prov = str(payload.get("provider") or "openai").strip()
+                model_sel = str(payload.get("model") or "").strip() or None
                 msgs = payload.get("messages") or []
-                self._json(200, {"ok": True, "response": chat(prov, msgs, conversation_id=cid)})
+                self._json(200, {"ok": True, "response": chat(prov, msgs, conversation_id=cid, model_override=model_sel)})
             elif path == "/api/mvp/chat/save":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 title = str(payload.get("title") or "").strip()
