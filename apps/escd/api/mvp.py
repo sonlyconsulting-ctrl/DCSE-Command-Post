@@ -245,7 +245,7 @@ class handler(BaseHTTPRequestHandler):
                 )
                 self._json(200, {"ok": True, "download": res})
             elif path == "/api/mvp/chat":
-                self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [])})
+                self._json(200, {"ok": True, "response": chat(str(payload.get("provider") or "openai"), payload.get("messages") or [], payload.get("model"))})
             elif path == "/api/mvp/provider-secret":
                 provider = str(payload.get("provider") or "").strip().lower()
                 secret = str(payload.get("secret") or "")
