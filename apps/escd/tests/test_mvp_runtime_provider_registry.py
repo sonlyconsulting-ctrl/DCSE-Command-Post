@@ -49,3 +49,17 @@ def test_openrouter_is_dormant_runtime_provider():
     html = UI.read_text(encoding="utf-8")
     assert "https://openrouter.ai/api/v1/chat/completions" in service
     assert 'option value="openrouter"' in html
+
+
+def test_multimodel_provider_catalog_and_ui():
+    service = SERVICE.read_text(encoding="utf-8")
+    html = UI.read_text(encoding="utf-8")
+    assert '"qwen"' in service
+    assert '"qwen-max"' in service
+    assert '"gpt-5.6-sol"' in service
+    assert '"claude-sonnet-5"' in service
+    assert 'id="chatModelSelect"' in html
+    assert 'ChatGPT (OpenAI)' in html
+    assert 'Claude (Anthropic)' in html
+    assert 'Qwen (Alibaba)' in html
+
