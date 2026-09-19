@@ -7,7 +7,7 @@ LOGIN = ROOT / "web" / "login.html"
 
 def test_mvp_surface_is_real_data_only():
     html = APP.read_text(encoding="utf-8")
-    for label in ("Chat", "Tasks", "Ideas", "Assets", "DDNA", "Knowledge"):
+    for label in ("Chat", "Tasks", "Ideas", "Assets", "DDNA"):
         assert label in html
     assert "73 Queued" not in html
     assert "placeholder data" not in html.lower()
@@ -49,12 +49,14 @@ def test_mvp_api_reads_live_sources():
     assert "DDNA_SUPABASE_SERVICE_ROLE_KEY" in service
 
 
-def test_mvp_chat_excludes_claude():
+def test_claude_provider_is_server_side_only():
+    # DCS decision 2026-09-17 retired the earlier no-Claude rule; Claude is a chat provider.
     service = (ROOT / "runtime" / "mvp_data.py").read_text(encoding="utf-8")
-    app = APP.read_text(encoding="utf-8")
-    assert "anthropic" not in service.lower()
-    assert "claude" not in service.lower()
-    assert "claude" not in app.lower()
+    browser = (ROOT / "web" / "mvp.html").read_text(encoding="utf-8") + APP.read_text(encoding="utf-8") + LOGIN.read_text(encoding="utf-8")
+    assert '"https://api.anthropic.com/v1/messages"' in service
+    assert "ANTHROPIC_API_KEY" in service and "sk-ant-***" in service
+    assert "ANTHROPIC_API_KEY" not in browser
+    assert "x-api-key" not in browser
 
 
 def test_mvp_provider_defaults_are_current_and_errors_are_actionable():
@@ -82,3 +84,25 @@ def test_mvp_routes_to_operable_surface():
     routes = (ROOT / "vercel.json").read_text(encoding="utf-8")
     assert '"src":"/app","dest":"/web/app.html"' in routes
     assert '"src":"/","dest":"/web/login.html"' in routes
+
+
+def test_canonical_convergence_registry_loaded():
+    from apps.escd.runtime.mvp_data import get_canonical_convergence_items, list_knowledge
+    items = get_canonical_convergence_items()
+    assert len(items["tasks"]) > 0
+    assert len(items["ideas"]) > 0
+    assert len(items["knowledge"]) > 0
+    assert len(items["ddna"]) > 0
+    assert len(items["assets"]) > 0
+    k_list = list_knowledge()
+    assert len(k_list) == len(items["knowledge"])
+
+
+def test_mvp_html_has_knowledge_and_detail_modal():
+    mvp_html = (ROOT / "web" / "mvp.html").read_text(encoding="utf-8")
+    assert 'id="knowledge"' in mvp_html
+    assert 'id="detailModal"' in mvp_html
+    assert "openModal" in mvp_html
+    assert "loadKnowledge" in mvp_html
+    assert "alert(JSON.stringify" not in mvp_html
+
