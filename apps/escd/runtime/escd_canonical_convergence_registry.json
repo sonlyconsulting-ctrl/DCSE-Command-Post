@@ -2,10 +2,10 @@
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
     "total_source_occurrences": 189,
-    "total_candidates": 158,
+    "total_candidates": 159,
     "duplicates_merged": 31,
     "disposition_counts": {
-      "TASK": 54,
+      "TASK": 55,
       "HOLD": 25,
       "IDEA": 9,
       "SOURCE_ONLY": 3,
@@ -4340,6 +4340,34 @@
       "duplicate_merge_relationship": "Merged 1 occurrences",
       "disposition_rationale": "General knowledge record",
       "content": "Supabase URL: Extracted from local config, provides DB access."
+    },
+    {
+      "canonical_id": "CANON-159",
+      "content_hash": "e5cd20260919",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-INCIDENT-20260919-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-159"
+        ],
+        "occurrence_count": 1,
+        "source_document": "INCIDENT_REPORT_20260919_ESCD_DEPLOYMENT_FAILURE_AND_ANTIGRAVITY_INVESTIGATION.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1.0,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "INCIDENT_INVESTIGATION",
+        "DEPLOYMENT_GOVERNANCE",
+        "VERCEL_RESET_TRACKING"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "DCS direct mandate: formal investigation of Antigravity reliability & Vercel deployment completion probe upon rate-limit reset",
+      "content": "Investigate Antigravity reliability & verify ESCD live deployment upon Vercel reset\n\n- Issue: https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/issues/152\n- Incident Record: docs/governance/INCIDENT_REPORT_20260919_ESCD_DEPLOYMENT_FAILURE_AND_ANTIGRAVITY_INVESTIGATION.md\n- PR Merged: #153 (commit eece38a)\n- Status: Incomplete pending Vercel 24hr reset (api-deployments-free-per-day)\n- Verification: Direct probe of sc-escd.vercel.app/escd/app DOM for chatModelSelect & multi-model catalog"
     }
   ]
 }
