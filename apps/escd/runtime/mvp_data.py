@@ -161,6 +161,22 @@ def provider_runtime(provider: str) -> dict:
     return cfg
 
 
+# ESCD's deliberately small text-chat model menu. Listed models are selectable,
+# not a claim that the configured API account has access to each one.
+OPENAI_CHAT_MODELS = (
+    ("gpt-5.6-sol", "GPT-5.6 Sol"),
+    ("gpt-5.6-terra", "GPT-5.6 Terra"),
+    ("gpt-5.6-luna", "GPT-5.6 Luna"),
+)
+
+
+def _openai_chat_model_options(configured: str) -> list[dict[str, str]]:
+    models = [{"id": model_id, "label": label} for model_id, label in OPENAI_CHAT_MODELS]
+    if configured and configured not in {item["id"] for item in models}:
+        models.insert(0, {"id": configured, "label": f"{configured} (configured)"})
+    return models
+
+
 def provider_status() -> dict:
     result = {}
     for provider in ("openai", "gemini", "openrouter"):
@@ -173,6 +189,7 @@ def provider_status() -> dict:
             "enabled": bool(cfg.get("enabled")),
             "configured": bool(cfg.get("api_key")),
             "model": cfg.get("model"),
+            "chat_models": _openai_chat_model_options(str(cfg.get("model") or "").strip()) if provider == "openai" else [],
             "timeout_seconds": cfg.get("timeout_seconds"),
             "max_output_tokens": cfg.get("max_output_tokens"),
             "thinking_level": cfg.get("thinking_level"),
@@ -672,7 +689,7 @@ def _openai_output_text(data: dict) -> str:
     return "\n".join(chunks).strip()
 
 
-def chat(provider: str, messages: list[dict]) -> dict:
+def chat(provider: str, messages: list[dict], model_override: str | None = None) -> dict:
     provider = str(provider or "").lower().strip()
     cfg = provider_runtime(provider)
     if not cfg.get("enabled"):
@@ -681,6 +698,16 @@ def chat(provider: str, messages: list[dict]) -> dict:
     if not key:
         raise MVPServiceError(f"{provider.title()} credential is not configured. Add it in ESCD Provider Settings")
     model = str(cfg.get("model") or "").strip()
+    # The client may select only a server-approved OpenAI chat model. Never
+    # forward an arbitrary model ID to a provider or mutate the shared registry.
+    if model_override is not None:
+        if provider != "openai" or not isinstance(model_override, str):
+            raise MVPServiceError("chat_model_override_not_supported")
+        requested = model_override.strip()
+        approved = {item["id"] for item in _openai_chat_model_options(model)}
+        if not requested or requested not in approved:
+            raise MVPServiceError("chat_model_not_approved")
+        model = requested
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
 
