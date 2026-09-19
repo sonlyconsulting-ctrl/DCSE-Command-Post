@@ -24,7 +24,7 @@ test('ESCD OpenAI selection uses existing server-side provider registry and Resp
   const runtime = read('apps/escd/runtime/mvp_data.py');
   assert.match(runtime, /get_escd_provider_runtime/);
   assert.match(runtime, /https:\/\/api\.openai\.com\/v1\/responses/);
-  assert.match(runtime, /\\"openai\\": \{\\"provider\\": \"openai\"/);
+  assert.ok(runtime.includes('"openai": {"provider": "openai"'));
   assert.doesNotMatch(read('apps/escd/web/mvp.html'), /OPENAI_API_KEY/);
   assert.doesNotMatch(read('apps/escd/web/app.html'), /OPENAI_API_KEY/);
 });
