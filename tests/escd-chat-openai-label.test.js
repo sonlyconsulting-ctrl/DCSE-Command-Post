@@ -28,3 +28,32 @@ test('ESCD OpenAI selection uses existing server-side provider registry and Resp
   assert.doesNotMatch(read('apps/escd/web/mvp.html'), /OPENAI_API_KEY/);
   assert.doesNotMatch(read('apps/escd/web/app.html'), /OPENAI_API_KEY/);
 });
+
+test('ESCD primary and alternative chat views expose a model selector only for OpenAI', () => {
+  for (const page of ['apps/escd/web/mvp.html', 'apps/escd/web/app.html']) {
+    const ui = read(page);
+    assert.match(ui, /id="chatModelWrap" hidden/);
+    assert.match(ui, /id="chatModel" aria-label="OpenAI chat model"/);
+    assert.match(ui, /function loadChatModels\(\)/);
+    assert.match(ui, /providerData\.openai/);
+    assert.match(ui, /chat_models\|\|\[\]/);
+    assert.match(ui, /\$\('provider'\)\.onchange=loadChatModels/);
+    assert.match(ui, /model:\$\('provider'\)\.value==='openai'\?\$\('chatModel'\)\.value:undefined/);
+    assert.doesNotMatch(ui, /OPENAI_API_KEY/);
+  }
+});
+
+test('ESCD server authorizes per-request model IDs without mutating the provider registry', () => {
+  const service = read('apps/escd/runtime/mvp_data.py');
+  const api = read('apps/escd/api/mvp.py');
+  assert.match(service, /OPENAI_CHAT_MODELS\s*=\s*\(/);
+  for (const id of ['gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna']) {
+    assert.ok(service.includes(id));
+  }
+  assert.match(service, /chat_model_not_approved/);
+  assert.match(service, /chat_model_override_not_supported/);
+  assert.match(service, /requested not in approved/);
+  assert.match(service, /def chat\(provider: str, messages: list\[dict\], model_override:/);
+  assert.match(api, /payload\.get\("model"\)/);
+  assert.match(service, /"model": model, "input": clean/);
+});
