@@ -184,3 +184,21 @@ def test_conversation_api_get_and_reset():
     assert reset["turns"] == []
 
 
+def test_ctj_cf_semantic_identity_resolution_in_context_packet():
+    state = ConversationState(conversation_id="test_ctj_cf_conv")
+    turns = []
+    retrieved = retrieve_governed_context("What is the price of the Unified product?")
+    packet = assemble_context_packet(state, "Tell me about Unified Edition", turns, retrieved)
+
+    # Context packet must contain CTJ ER-002 Identity Resolution
+    system_content = packet[0]["content"]
+    assert "CTJ CONVERSATION FLOW (ER-002 Identity Resolution)" in system_content
+    assert "Canonical Target(s): CTJ-UNIFIED" in system_content
+
+    # Retrieved items should include CanonicalProduct
+    canon_items = [r for r in retrieved if r.get("type") == "CanonicalProduct"]
+    assert len(canon_items) > 0
+    assert canon_items[0]["id"] == "CTJ-UNIFIED"
+
+
+

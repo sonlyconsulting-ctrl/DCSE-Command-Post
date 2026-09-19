@@ -82,6 +82,22 @@ def retrieve_governed_context(query: str, limit: int = 5) -> list[dict[str, Any]
 
     collected: list[dict[str, Any]] = []
 
+    # Tasks & Ideas
+    try:
+        canonical = get_canonical_convergence_items()
+        for item in canonical.get("tasks", []) + canonical.get("ideas", []):
+            text = f"{item.get('title','')} {item.get('summary','')} {item.get('normalized_intent','')}".lower()
+            if any(t in text for t in terms):
+                collected.append({
+                    "type": "Task" if item.get("context") != "idea" else "Idea",
+                    "id": item.get("item_key") or item.get("id"),
+                    "title": item.get("title"),
+                    "summary": (item.get("summary") or item.get("normalized_intent") or "")[:250],
+                    "status": item.get("status", "captured"),
+                })
+    except Exception:
+        pass
+
     # Knowledge
     try:
         for k in list_knowledge(limit=100):
@@ -127,6 +143,25 @@ def retrieve_governed_context(query: str, limit: int = 5) -> list[dict[str, Any]
     except Exception:
         pass
 
+    # CTJ Semantic Identity Resolution (Rule ER-002) - Highest priority enterprise objects
+    try:
+        from apps.escd.runtime.ctj_cf import resolve_ctj_objects, load_config
+        canonical_hits = resolve_ctj_objects(query)
+        if canonical_hits:
+            cfg = load_config()
+            family_inv = cfg.get("family_invariants", {})
+            for hit in reversed(canonical_hits):
+                aliases = cfg.get("entry_aliases", {}).get(hit, [])
+                collected.insert(0, {
+                    "type": "CanonicalProduct",
+                    "id": hit,
+                    "title": f"CTJ Product: {hit}",
+                    "summary": f"Canonical semantic object for {', '.join(aliases)}. Family: {family_inv.get('family_id', 'CTJ')} ({family_inv.get('entity', 'Sonly Consulting')}).",
+                    "status": "CANONICAL",
+                })
+    except Exception:
+        pass
+
     return collected[:limit]
 
 
@@ -141,6 +176,21 @@ def assemble_context_packet(
 
     # System instruction: DCSE Kernel + relevant retrieved context (if any)
     system_sections = [DCSE_KERNEL.strip()]
+
+    # CTJ CF DDNA extraction & resolution state
+    try:
+        from apps.escd.runtime.ctj_cf import start_ctj_cf
+        cf_state = start_ctj_cf(current_turn)
+        if cf_state.canonical_objects:
+            system_sections.append(
+                f"CTJ CONVERSATION FLOW (ER-002 Identity Resolution):\n"
+                f"- Canonical Target(s): {', '.join(cf_state.canonical_objects)}\n"
+                f"- Request Classes: {', '.join(cf_state.request_classes)}\n"
+                f"- Action Modes: {', '.join(cf_state.action_modes)}\n"
+                f"- Resolution State: {cf_state.resolution_state}"
+            )
+    except Exception:
+        pass
 
     if retrieved:
         retrieval_lines = ["RELEVANT ESCD CONTEXT (Retrieval similarity does not establish authority):"]
