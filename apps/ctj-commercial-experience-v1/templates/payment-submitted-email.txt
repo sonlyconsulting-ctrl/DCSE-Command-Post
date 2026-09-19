@@ -1,0 +1,21 @@
+Subject: We received your CTJ payment details - {{order_id}}
+
+Sonly Consulting
+The Critical Thinker's Journey
+
+We received the payment details you submitted for:
+
+{{product_name}}
+Amount: {{amount}}
+Order ID: {{order_id}}
+Payment method: {{payment_method}}
+
+Your order is now waiting for merchant-side payment verification.
+
+Submitting a transaction reference does not by itself confirm payment. Access is released after Sonly Consulting matches and verifies the transaction in the authorized merchant account.
+
+Keep your order ID for reference:
+{{order_id}}
+
+Support:
+sonlyconsulting@gmail.com

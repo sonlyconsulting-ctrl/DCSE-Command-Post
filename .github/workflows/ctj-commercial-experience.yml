@@ -1,0 +1,26 @@
+name: CTJ Commercial Experience Candidate
+
+on:
+  pull_request:
+    paths:
+      - "apps/ctj-commercial-experience-v1/**"
+      - ".github/workflows/ctj-commercial-experience.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Static governed validation
+        run: node apps/ctj-commercial-experience-v1/tests/static-validation.mjs
