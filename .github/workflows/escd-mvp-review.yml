@@ -45,7 +45,7 @@ jobs:
       - name: Run ESCD MVP contract tests
         run: python -m pytest -q apps/escd/tests
       - name: Run provider settings browser-script tests
-        run: node --test tests/escd-provider-settings.test.js
+        run: node --test tests/escd-provider-settings.test.js tests/escd-chat-openai-label.test.js
       - name: Run Playwright desktop and mobile acceptance checks
         run: |
           python -m http.server 4173 --directory apps/escd/web >/tmp/escd-http.log 2>&1 &
