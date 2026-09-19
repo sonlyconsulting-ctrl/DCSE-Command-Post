@@ -1,1 +1,296 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ESCD Secure Access</title><style>:root{--bg:#0a192f;--panel:#10233f;--line:#28486f;--text:#f4efe5;--muted:#9bb0ca;--gold:#d4af37;--bad:#ffb4a9}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;min-height:100vh}.box{width:min(420px,calc(100% - 28px));background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px}.brand{font-weight:800;color:var(--gold);letter-spacing:.08em;font-size:20px}.sub{color:var(--muted);font-size:12px;margin:6px 0 20px}label{display:block;color:var(--muted);font-size:12px;margin:10px 0 5px}input{width:100%;background:#0d1d35;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:11px}.btn{width:100%;margin-top:16px;border:1px solid var(--gold);background:var(--gold);color:#071427;border-radius:7px;padding:10px;font-weight:700;cursor:pointer}.btn:disabled{opacity:.55}.err{min-height:20px;color:var(--bad);font-size:12px;margin-top:10px}</style></head><body><main class="box"><div class="brand">ESCD</div><div class="sub">Authorized operator access</div><form id="login"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required><button id="submit" class="btn" type="submit">Sign in</button><div id="error" class="err" role="alert"></div></form></main><script>'use strict';if(sessionStorage.getItem('escd_access_token'))location.replace('/escd/app');document.getElementById('login').addEventListener('submit',async e=>{e.preventDefault();const b=document.getElementById('submit'),err=document.getElementById('error');b.disabled=true;err.textContent='';try{const r=await fetch('/api/mvp/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('email').value,password:document.getElementById('password').value})});const d=await r.json();if(!r.ok)throw new Error(d.error||'sign_in_failed');sessionStorage.setItem('escd_access_token',d.session.access_token);location.replace('/escd/app')}catch(x){err.textContent=x.message}finally{b.disabled=false}});</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ESCD Secure Access</title>
+  <style>
+    :root {
+      --bg: #071427;
+      --card-bg: rgba(16, 35, 63, 0.85);
+      --border: #28486f;
+      --cream: #f4efe5;
+      --muted: #9bb0ca;
+      --gold: #d4af37;
+      --bad: #ffb4a9;
+      --bad-bg: rgba(186, 26, 26, 0.2);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top right, #132a4e, var(--bg));
+      color: var(--cream);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .box {
+      width: min(420px, 100%);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--gold);
+      color: #071427;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 15px;
+    }
+    .brand {
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: .08em;
+      font-size: 20px;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 6px 0 20px;
+    }
+    .btn-google {
+      width: 100%;
+      background: #ffffff;
+      color: #1f1f1f;
+      border: 1px solid #dcdcdc;
+      border-radius: 8px;
+      padding: 11px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.15s ease, opacity 0.15s ease;
+    }
+    .btn-google:hover { background: #f5f5f5; }
+    .btn-google:disabled { opacity: 0.6; cursor: not-allowed; }
+    .google-icon { width: 18px; height: 18px; }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 12px 0 5px;
+    }
+    input {
+      width: 100%;
+      background: #0d1d35;
+      color: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 11px;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus { border-color: var(--gold); }
+    .btn-primary {
+      width: 100%;
+      margin-top: 18px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: #071427;
+      border-radius: 7px;
+      padding: 11px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
+    .err {
+      min-height: 20px;
+      color: var(--bad);
+      font-size: 12px;
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      background: var(--bad-bg);
+      border: 1px solid rgba(255,180,169,0.3);
+      display: none;
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <main class="box">
+    <div class="brand-row">
+      <div class="brand-badge">E</div>
+      <div class="brand">ESCD</div>
+    </div>
+    <div class="sub">Authorized operator access</div>
+
+    <!-- Google OAuth Button -->
+    <button id="googleBtn" class="btn-google" type="button">
+      <svg class="google-icon" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+      </svg>
+      Sign in with Google
+    </button>
+
+    <div class="divider">or operator credentials</div>
+
+    <!-- Email/Password Form -->
+    <form id="login">
+      <label for="email">Operator Email</label>
+      <input id="email" type="email" autocomplete="username" required placeholder="operator@sonlyconsulting.com">
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required placeholder="Enter password">
+      <button id="submit" class="btn-primary" type="submit">Sign in</button>
+      <div id="error" class="err" role="alert"></div>
+    </form>
+
+    <div class="footer">
+      Governed authentication mediated by Supabase Auth RLS.<br>
+      Access restricted to authorized DCS principals.
+    </div>
+  </main>
+
+  <script>
+    'use strict';
+    const FALLBACK_SUPABASE_URL = 'https://nevgdyfpxdaloacuutal.supabase.co';
+    let resolvedSupabaseUrl = FALLBACK_SUPABASE_URL;
+
+    const errBox = document.getElementById('error');
+    function showError(msg) {
+      if (!msg) {
+        errBox.style.display = 'none';
+        errBox.textContent = '';
+      } else {
+        errBox.style.display = 'block';
+        errBox.textContent = msg;
+      }
+    }
+
+    // 1. Process URL hash (from Google OAuth callback)
+    function handleOAuthHash() {
+      const hash = window.location.hash ? window.location.hash.substring(1) : '';
+      if (hash) {
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get('access_token');
+        const errorDesc = params.get('error_description') || params.get('error');
+        if (errorDesc) {
+          showError('Authentication error: ' + errorDesc.replace(/_/g, ' '));
+          window.history.replaceState(null, null, window.location.pathname);
+          return;
+        }
+        if (accessToken) {
+          sessionStorage.setItem('escd_access_token', accessToken);
+          window.history.replaceState(null, null, window.location.pathname);
+          window.location.replace('/escd/app');
+          return;
+        }
+      }
+    }
+
+    // 2. Fetch dynamic Supabase Auth config from API if available
+    async function loadAuthConfig() {
+      try {
+        const resp = await fetch('/api/mvp/auth-config');
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data && data.supabase_url) resolvedSupabaseUrl = data.supabase_url;
+        }
+      } catch (_) {}
+    }
+
+    // 3. Initiate Google OAuth
+    document.getElementById('googleBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('googleBtn');
+      btn.disabled = true;
+      btn.textContent = 'Connecting to Google...';
+      showError('');
+      try {
+        const redirectUrl = encodeURIComponent(window.location.origin + '/escd');
+        const target = `${resolvedSupabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${redirectUrl}`;
+        window.location.href = target;
+      } catch (err) {
+        showError('Google OAuth failed: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Sign in with Google';
+      }
+    });
+
+    // 4. Handle Email / Password submit
+    document.getElementById('login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const b = document.getElementById('submit');
+      b.disabled = true;
+      showError('');
+      try {
+        const r = await fetch('/api/mvp/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value
+          })
+        });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || 'sign_in_failed');
+        sessionStorage.setItem('escd_access_token', d.session.access_token);
+        window.location.replace('/escd/app');
+      } catch (x) {
+        showError(x.message === 'sign_in_failed' ? 'Invalid email or password' : x.message);
+      } finally {
+        b.disabled = false;
+      }
+    });
+
+    // Bootstrap
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlError = urlParams.get('error') || urlParams.get('error_description');
+    if (urlError) {
+      showError('Authentication notice: ' + urlError.replace(/_/g, ' '));
+    }
+
+    handleOAuthHash();
+
+    if (sessionStorage.getItem('escd_access_token')) {
+      window.location.replace('/escd/app');
+    }
+    loadAuthConfig();
+  </script>
+</body>
+</html>
