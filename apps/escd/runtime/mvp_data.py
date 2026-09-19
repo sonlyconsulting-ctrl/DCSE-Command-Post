@@ -16,7 +16,7 @@ class MVPServiceError(RuntimeError):
     pass
 
 
-PROVIDERS = ("openai", "anthropic", "gemini", "openrouter", "ollama")
+PROVIDERS = ("openai", "anthropic", "qwen", "gemini", "openrouter", "ollama")
 ANTHROPIC_VERSION = "2023-06-01"
 OLLAMA_DEFAULT_BASE_URL = "https://ollama.com"
 
@@ -138,6 +138,8 @@ def _env_secret(provider: str) -> str:
         return os.getenv("OPENAI_API_KEY") or ""
     if provider == "gemini":
         return os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or ""
+    if provider in ("qwen", "dashscope"):
+        return os.getenv("QWEN_API_KEY") or os.getenv("DASHSCOPE_API_KEY") or ""
     if provider == "openrouter":
         return os.getenv("OPENROUTER_API_KEY") or ""
     if provider == "ollama":
@@ -158,6 +160,12 @@ PROVIDER_CATALOG = {
         {"id": "claude-sonnet-5", "name": "Claude Sonnet 5 (Operative)", "tier": "flagship"},
         {"id": "claude-3-7-sonnet-20250219", "name": "Claude 3.7 Sonnet (Hybrid Reasoning)", "tier": "reasoning"},
         {"id": "claude-3-5-haiku-20241022", "name": "Claude 3.5 Haiku (Fast Triage)", "tier": "fast"},
+    ],
+    "qwen": [
+        {"id": "qwen-max", "name": "Qwen Max (Flagship)", "tier": "flagship"},
+        {"id": "qwen-plus", "name": "Qwen Plus (Balanced)", "tier": "balanced"},
+        {"id": "qwen-turbo", "name": "Qwen Turbo (Fast)", "tier": "fast"},
+        {"id": "qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B Instruct", "tier": "flagship"},
     ],
     "gemini": [
         {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash (Operative)", "tier": "fast"},
@@ -181,9 +189,10 @@ PROVIDER_CATALOG = {
 def _fallback_config(provider: str) -> dict:
     defaults = {
         "openai": {"provider": "openai", "enabled": True, "model": "gpt-5.6-sol", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+        "anthropic": {"provider": "anthropic", "enabled": True, "model": "claude-sonnet-5", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
+        "qwen": {"provider": "qwen", "enabled": True, "model": "qwen-max", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
         "gemini": {"provider": "gemini", "enabled": True, "model": "gemini-3.8-flash", "timeout_seconds": 25, "max_output_tokens": 768, "thinking_level": "low"},
         "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
-        "anthropic": {"provider": "anthropic", "enabled": True, "model": "claude-sonnet-5", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
         "ollama": {"provider": "ollama", "enabled": True, "model": "gpt-oss:120b", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
     }
     cfg = dict(defaults.get(provider) or {})
@@ -201,6 +210,8 @@ def provider_runtime(provider: str) -> dict:
         row = rows[0] if isinstance(rows, list) and rows else (rows if isinstance(rows, dict) else None)
     except Exception:
         raise MVPServiceError("Provider registry unavailable. Verify the Preview Supabase server bindings and Vault RPC access.") from None
+    if not row:
+        row = _fallback_config(provider)
     if not row:
         raise MVPServiceError("Provider registry entry is missing")
     cfg = dict(row)
@@ -278,7 +289,14 @@ def update_provider_config(provider: str, changes: dict) -> dict:
 
 
 def _provider_name(provider: str) -> str:
-    return {"openai": "OpenAI", "anthropic": "Claude", "openrouter": "OpenRouter"}.get(provider, provider.title())
+    return {
+        "openai": "OpenAI",
+        "anthropic": "Claude",
+        "qwen": "Qwen",
+        "gemini": "Gemini",
+        "openrouter": "OpenRouter",
+        "ollama": "Ollama",
+    }.get(provider, provider.title())
 
 
 def _provider_failure(provider: str, exc: Exception) -> MVPServiceError:
@@ -827,6 +845,16 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
             if not text:
                 raise MVPServiceError("OpenRouter returned an empty response")
+
+        elif provider in ("qwen", "dashscope"):
+            url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+            headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+            payload = {"model": model, "messages": clean, "max_tokens": max_tokens}
+            _, data = _http_json(url, method="POST", headers=headers, payload=payload, timeout=timeout)
+            choices = (data or {}).get("choices") or []
+            text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
+            if not text:
+                raise MVPServiceError("Qwen returned an empty response")
 
         elif provider == "anthropic":
             system_text = "\n".join(m["content"] for m in clean if m["role"] == "system").strip()
