@@ -249,3 +249,19 @@ If this doctrine file is missing or unreadable, follow the canonical error-catch
 2. LOG `ERR_MISSING_DOCTRINE` to `05_Tribunal_Inbox`.
 3. TRIGGER STOPGATE and alert the user.
 4. FALLBACK: If D18 is unavailable, D12 remains the sole authority for media production governance and methodology.
+
+---
+
+## 9. Brand/Logo Motion Ident Execution Profile
+
+**Governance parent:** D12 Addendum C controls the 6–8s brand/logo ident requirement, protected-lane boundaries, source-fidelity rules, exception to long-form narration and release gates. This section operationalizes the short ident through the existing four D18 phases. It does not independently promote D12 or authorize external publication.
+
+**Phase 1 / Retrieve, declare, storyboard:** Inventory exact approved logo and any existing approved brand video; resolve entity, parent/child identity, license, version/hash, video maker and intended placements. Prepare Video Build Declaration plus a one-sentence motion logic and three-to-four beat timing map totaling 6–8s. If original logo binary or its rights/access cannot be verified, mark SOURCE_ACCESS_REQUIRED or RIGHTS_PENDING, do not recreate it from memory. For a non-narrated 7s ident, **Origin > Logical Transformation > Resolve/Hold** replaces the 30–45s educational-body pacing and mandatory CTA; source authorization remains mandatory.
+
+**Phase 2 / Motion asset preparation:** Create motion from the approved source art or source-faithful composited geometry, maintaining consistent approved logotype, icon, color, hierarchy and text. Separate visual scene/style/motion/negative instructions (D12). Use a compositor-held original artwork on the final frame where AI text animation is unreliable. D19 applies to any newly created visual derivative; no symbol substitution or uncontrolled image re-generation.
+
+**Phase 3 / Edit and validate:** Assemble full-length master 6.0–8.0s, default exact 16:9, source-quality output; reserve final >=1.0s static readable brand hold (prefer 1.5s). Produce silent and, if licensed, sound-enabled variants, plus reduced-motion/static fallback. Verify exact text against approved source, geometry, typography, colors, centered/safe-area placement, absence of garbled words, strobing/flash risk, clipped emblem, audio/licensing violations, and playback on desktop/mobile. Record file probes, review stills, and all actual test results; do not treat conceptual prompt as rendered deliverable.
+
+**Phase 4 / Package and request approval:** Deliver (a) master MP4 and target-platform variants, (b) silent/no-audio version and reduced-motion/static alternative, (c) approved-source-to-render asset manifest with SHA-256 and rights/provenance, (d) prompt, timed storyboard and audio/SFX license receipt, (e) before/after frames and QA evidence and (f) DCS Level 0 final use/release decision request. Persist binaries only in authorized media storage; GitHub is the control/index surface, not proof of binary availability. Brand video remains PRODUCTION_PENDING until rendered, independently validated as required, retrievable by approved participants, and accepted by DCS.
+
+**CTJ Unified worked example:** An initial set of distinct labyrinth paths becomes legible; gold and silver paths converge into the central star/compass, which resolves to the exact DCS-approved CTJ Unified logo. A stationary final plate preserves the approved CTJ parent line and “The Unified Path” product line. The source image and exact editorial copy are controlling, not a model's retyped reconstruction. No new “Executive Suite” title, payment/commerce text or speculative claim.
