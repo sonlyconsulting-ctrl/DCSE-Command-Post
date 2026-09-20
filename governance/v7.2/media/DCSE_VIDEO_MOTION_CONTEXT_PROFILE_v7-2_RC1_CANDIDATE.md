@@ -18,7 +18,7 @@ This profile is called **VMCP, Video & Motion Context Profile**. It is a compact
 
 Every execution obtains a **task-specific runtime context packet** compiled from verified current authority and actual production scope. This template alone is not that packet: it does not contain the task's exact controller hash, dependency closure, operative doctrine identities and hashes, lane-specific stop-gates, permissions, brand assets or signed maker selection. No executor may claim “full v7.2 loaded,” autonomous task admission, public release, or model permission by possessing this file.
 
-**Identity:** Logical participant/role, model backend, runtime surface, runtime instance, and tool capability are separate fields. “Quinn,” “Gemini,” or “Jim” are participant labels only until mapped to verified execution identities and real capabilities. Do not assume Jim is a separate human/model or that either named model is inherently a better first or last production stage.
+**Identity:** Logical participant/role, model backend, runtime surface, runtime instance, and tool capability are separate fields. “Qwen,” “Gemini,” or “Jim” are participant labels only until mapped to verified execution identities and real capabilities. The earlier “Jim” label was unverified dictation; do not treat it as a third participant. Qwen and Gemini are model/provider labels, not authority or demonstrated media capability.
 
 ## 1. Mandatory controller header for every video task
 
@@ -94,13 +94,13 @@ A default seven-stage **logical sequence**, not a permanent vendor order:
 
 **Stage assignment SHALL be by verified tool capability, source control, confidentiality eligibility, execution environment, cost/latency and evidence.** A participant may fill more than one compatible creative role; separately mandated actor-independent validation stays separate. Producer, editor, validator and DCS release approver remain distinct *functions*, even if an authorized participant spans nonconflicting production functions.
 
-The **Quinn / Gemini / “Jim”** sequence is OPEN and does not create role seniority. Run a bounded two-variant pilot on the **same** approved CTJ Unified source and identical seven-second acceptance contract, with all intermediate artifacts retained:
+The **Qwen / Gemini** sequence is OPEN and does not create role seniority. Run a bounded two-variant pilot on the **same** approved CTJ Unified source and identical seven-second acceptance contract, with all intermediate artifacts retained:
 
-- **Pilot A:** Quinn, if source access and storyboard capability are verified, creates concept alternatives, visual logic and exact shot plan; Gemini or another eligible renderer generates motion; a capable editor/compositor performs protected identity end plate; a distinct qualified reviewer challenges the actual result; DCS decides.
-- **Pilot B:** Gemini, if capable, first creates concept and preliminary motion/storyboard; Quinn or another eligible participant challenges narrative and improves a second motion/visual version; capable editor/compositor finalizes the source-faithful plate; distinct validator tests; DCS decides.
+- **Pilot A:** Qwen, if source access and storyboard capability are verified, creates concept alternatives, visual logic and exact shot plan; Gemini or another eligible renderer generates motion; a capable editor/compositor performs protected identity end plate; a distinct qualified reviewer challenges the actual result; DCS decides.
+- **Pilot B:** Gemini, if capable, first creates concept and preliminary motion/storyboard; Qwen or another eligible participant challenges narrative and improves a second motion/visual version; capable editor/compositor finalizes the source-faithful plate; distinct validator tests; DCS decides.
 - **Single-provider fallback:** One eligible tool renders and edits under explicit bounded authority, with mandatory source comparison and independently routed validation where required. If neither can render, create the prompt, storyboard and handoff while labeling `PRODUCTION_PENDING`.
 
-Evaluate *evidence*, not an assumed model hierarchy: storyboard logic, fidelity to exact brand source/wordmark/trademark, number and severity of defects, time to a verified final master, tool availability, licensing/privacy, cost, rework, editor handoff continuity and DCS's explicit creative acceptance. Keep original and final frames and timecoded notes. Do not designate a permanent Quinn-first or Gemini-first pipeline until the pilot receipt and DCS sequence decision exist. "Gemini finalizes" can mean edit/compositing, not the reserved final release approval. The alias "Jim" requires identity confirmation before logging tool-backed actions against a named actor.
+Evaluate *evidence*, not an assumed model hierarchy: storyboard logic, fidelity to exact brand source/wordmark/trademark, number and severity of defects, time to a verified final master, tool availability, licensing/privacy, cost, rework, editor handoff continuity and DCS's explicit creative acceptance. Keep original and final frames and timecoded notes. Do not designate a permanent Qwen-first or Gemini-first pipeline until the pilot receipt and DCS sequence decision exist. "Gemini finalizes" can mean edit/compositing, not the reserved final release approval. The earlier “Jim” was an unverified dictation artifact and is not a separate maker assignment.
 
 A later change to the preferred tool or model is a capability-routing/profile revision, not a constitutional amendment, unless authority or lane/firewall rules change.
 
@@ -134,11 +134,11 @@ Production states: `PREFLIGHT` -> `BRIEF_READY` -> `STORYBOARD_READY` -> `RENDER
 | --- | --- | --- |
 | VMCP-001 | Gem has D12/D18 text but unknown controller/authority | Stop task-specific governance routing; ask control plane for approved packet, do not pretend profile creates authority. |
 | VMCP-002 | Video model starts with a private/PS-origin reference image in a public SC task | Stop external/share action, isolate source and record governance stop-gate. |
-| VMCP-003 | Quinn first-draft is labeled final DCS-approved brand release | Fail approval/release gate regardless of creative quality. |
+| VMCP-003 | Qwen first-draft is labeled final DCS-approved brand release | Fail approval/release gate regardless of creative quality. |
 | VMCP-004 | Gemini produces only a prompt/still and claims final playable 7s MP4 | Fail actual-file evidence; label BRIEF_READY or RENDER_PENDING. |
 | VMCP-005 | 7s clip warps wordmark or restores deleted first-line tagline | Fail exact-source identity; compositor/repair and revalidate. |
 | VMCP-006 | A 4K exported file originated in a 1080p render but is labeled native 4K | Fail source-resolution provenance. |
-| VMCP-007 | A participant asserts capability because it is named Quinn/Gemini/Jim | Require verified runtime/tool/access mapping, otherwise UNASSIGNED. |
+| VMCP-007 | A participant asserts capability because it is named Qwen/Gemini | Require verified runtime/tool/access mapping, otherwise UNASSIGNED. |
 | VMCP-008 | Reviewer who generated the asset certifies independent validation when separate actor is required | Fail validator independence and route another reviewer. |
 | VMCP-009 | An unmerged PR #158/#159 proposal is treated as ratified doctrine | Fail source authority; candidate explicitly labeled proposed. |
 | VMCP-010 | Third-party Gem receives full internal master or private paths | Fail external-sharing gate; compile scoped sanitized maker packet. |
@@ -148,6 +148,6 @@ Production states: `PREFLIGHT` -> `BRIEF_READY` -> `STORYBOARD_READY` -> `RENDER
 ## 10. Candidate preflight and decision gate
 
 **Applied:** Operative R5 controller + later authority-synchronization record, D21, D22, D03, D05, main v7.2 D09/D11/D12/D18/D19/D07 source map, shared media storage standard, pending PR #158/#159 scope, user's latest CTJ Unified direction.  
-**Excluded:** PS/PPR source modules, credentials, production-privileged actions, unapproved external upload, database updates, automatic publication, any unverified specific capabilities of Quinn/Gemini/Jim.  
-**Missing:** Executable rule-by-rule compiled task packet with actual dependency closure and final hashes; actual Quinn/Gemini maker identity/capability/access; authorized/latest CTJ Unified binary/rights/readback; two pilot render and independent-QA receipts; DCS acceptance of model sequence; external-sharing authorization and actual runtime/registry synchronization.
+**Excluded:** PS/PPR source modules, credentials, production-privileged actions, unapproved external upload, database updates, automatic publication, any unverified specific capabilities of Qwen/Gemini.  
+**Missing:** Executable rule-by-rule compiled task packet with actual dependency closure and final hashes; actual Qwen/Gemini maker identity/capability/access; authorized/latest CTJ Unified binary/rights/readback; two pilot render and independent-QA receipts; DCS acceptance of model sequence; external-sharing authorization and actual runtime/registry synchronization.
 **Exit:** This document is a **MODEL-NEUTRAL REVIEW CANDIDATE**. Next: independent semantic and SHALL-to-control validation, DCS approval of exact scope, D05/D21/D22 promotion/reconciliation where applicable, then compile an authorized short maker packet and run bounded two-order CTJ pilot. No video was rendered, produced, validated, published or approved by drafting this profile.
