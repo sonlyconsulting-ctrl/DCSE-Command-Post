@@ -267,8 +267,20 @@
             password: document.getElementById('password').value
           })
         });
-        const d = await r.json();
-        if (!r.ok) throw new Error(d.error || 'sign_in_failed');
+        let d = {};
+        try { d = await r.json(); } catch (_) { d = {}; }
+        if (!r.ok) {
+          if (r.status === 503 || r.status === 504 || d.error === 'auth_timeout' || d.error === 'auth_unreachable' || d.error === 'database_temporarily_unreachable') {
+            throw new Error('Database connection temporarily unreachable. Supabase may be paused or experiencing high latency. Please retry in a few moments.');
+          }
+          if (d.error === 'internal_error' || r.status === 500) {
+            throw new Error('Service temporarily unavailable. Please retry in a few moments.');
+          }
+          throw new Error(d.error || 'sign_in_failed');
+        }
+        if (!d.session || !d.session.access_token) {
+          throw new Error('sign_in_failed');
+        }
         sessionStorage.setItem('escd_access_token', d.session.access_token);
         window.location.replace('/escd/app');
       } catch (x) {
@@ -282,8 +294,15 @@
     const urlParams = new URLSearchParams(window.location.search);
     const urlError = urlParams.get('error') || urlParams.get('error_description');
     if (urlError) {
-      showError('Authentication notice: ' + urlError.replace(/_/g, ' '));
+      if (urlError === 'session_expired') {
+        showError('Session expired. Please sign in again.');
+      } else if (urlError === 'operator_not_authorized') {
+        showError('Access denied: Google account is authenticated, but not authorized in operator_accounts table.');
+      } else {
+        showError('Authentication notice: ' + urlError.replace(/_/g, ' '));
+      }
     }
+
 
     handleOAuthHash();
 

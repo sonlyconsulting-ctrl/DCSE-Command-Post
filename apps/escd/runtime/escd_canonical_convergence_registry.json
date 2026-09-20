@@ -1,17 +1,17 @@
 {
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
-    "total_source_occurrences": 189,
-    "total_candidates": 158,
+    "total_source_occurrences": 190,
+    "total_candidates": 161,
     "duplicates_merged": 31,
     "disposition_counts": {
-      "TASK": 54,
+      "TASK": 56,
       "HOLD": 25,
       "IDEA": 9,
       "SOURCE_ONLY": 3,
       "ASSET": 3,
       "DDNA": 40,
-      "KNOWLEDGE": 24
+      "KNOWLEDGE": 25
     },
     "governed_rules": [
       "Tasks: no historical task becomes active automatically (status=inactive)",
@@ -4340,6 +4340,90 @@
       "duplicate_merge_relationship": "Merged 1 occurrences",
       "disposition_rationale": "General knowledge record",
       "content": "Supabase URL: Extracted from local config, provides DB access."
+    },
+    {
+      "canonical_id": "CANON-159",
+      "content_hash": "42791d13c4f1",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-V73-LOCAL-CONSOLIDATION-20260919-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-055"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCSE_V73_LOCAL_CONSOLIDATION_RECEIPT_20260919.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "OPERATIONAL_TASK",
+      "confidence": 1.0,
+      "status": "completed",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "Governance/v7.3",
+        "PR #161",
+        "Local Consolidation"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Audit verification and local synchronization receipt for v7.3 candidate package",
+      "content": "Local synchronization and cryptographic verification of DCSE v7.3 Governance Development Package (DCSE-V73-LOCAL-CONSOLIDATION-20260919-01, PR #161, commit a8d588467c1ef4e38006326fbf7f37ee2716f3f4) to C:\\DS All Things\\DCSE_Command_Center\\v7.3\\governance. Status: CANDIDATE_ONLY | NOT OPERATIVE | REVIEW PENDING. 63 files verified."
+    },
+    {
+      "canonical_id": "CANON-160",
+      "content_hash": "3289ac0e4fef",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "DCSE-ESCD-INTERNAL-ERROR-REMEDIATION-20260920-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-056"
+        ],
+        "occurrence_count": 1,
+        "source_document": "implementation_plan.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "OPERATIONAL_TASK",
+      "confidence": 1.0,
+      "status": "completed",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ESCD/Resilience",
+        "CircuitBreaker",
+        "Vercel/Timeout"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Operational bug fix and resilience hardening for ESCD internal errors under Supabase latency",
+      "content": "Remediate ESCD Internal Error via Supabase Circuit Breaker, fail-fast 3s/4s/5s timeouts across _rpc, auth, and repository clients, unauthenticated /api/mvp/auth-config routing, structured 503/504 gateway error responses, and resilient UI degraded messaging."
+    },
+    {
+      "canonical_id": "CANON-161",
+      "content_hash": "1ebbacde4769",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-INCIDENT-20260920-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNOW-025"
+        ],
+        "occurrence_count": 1,
+        "source_document": "implementation_plan.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "ARCHITECTURAL_DECISION",
+      "confidence": 1.0,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ESCD/Architecture",
+        "Supabase/Incident",
+        "FailClosed/DegradedState"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Incident analysis and architectural design pattern for serverless edge degradation when backend database PostgREST layer is paused or latency-degraded",
+      "content": "Architectural Directive: When PostgREST or Supabase backend RPCs hang or exceed 3 seconds, the ESCD edge serverless layer must trip a 30s circuit breaker and return cached/fallback configuration in <100ms. Endpoints must never allow unhandled socket timeouts to produce generic 500 internal_error responses. The frontend must display actionable degraded-state messaging."
     }
   ]
 }

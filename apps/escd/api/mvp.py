@@ -4,6 +4,7 @@ from http.server import BaseHTTPRequestHandler
 import hashlib
 import json
 import os
+import socket
 import sys
 import types
 from pathlib import Path
@@ -117,15 +118,20 @@ class handler(BaseHTTPRequestHandler):
             method="POST",
         )
         try:
-            with request.urlopen(req, timeout=15) as response:
+            with request.urlopen(req, timeout=5) as response:
                 session = json.loads(response.read().decode("utf-8") or "{}")
         except error.HTTPError:
             raise AuthError("sign_in_failed") from None
+        except (TimeoutError, socket.timeout):
+            raise AuthError("auth_timeout") from None
+        except error.URLError:
+            raise AuthError("auth_unreachable") from None
         token = str(session.get("access_token") or "")
         if not token:
             raise AuthError("sign_in_failed")
         auth, _ = self._repo_for_token(token)
         return {"access_token": token, "expires_in": int(session.get("expires_in") or 3600), "user": {"email": auth.email}}
+
 
     def _resolve_item_id(self, repo: SupabaseRLSClient, item_id: str) -> str:
         """Canonical registry tasks and ideas are read-only; editing one adopts it into escd_items first."""
@@ -174,6 +180,11 @@ class handler(BaseHTTPRequestHandler):
         if path == "/api/mvp/health":
             self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.6.1", "providers": provider_status()})
             return
+        if path == "/api/mvp/auth-config":
+            url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or "https://nevgdyfpxdaloacuutal.supabase.co"
+            anon = os.getenv("NEXT_PUBLIC_SUPABASE_ANON_KEY") or os.getenv("SUPABASE_ANON_KEY") or ""
+            self._json(200, {"ok": True, "supabase_url": url.rstrip("/"), "anon_key": anon})
+            return
 
         try:
             repo = self._auth()
@@ -211,9 +222,18 @@ class handler(BaseHTTPRequestHandler):
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
-            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+            err_msg = str(exc)
+            if err_msg in ("auth_timeout", "auth_unreachable", "auth_service_temporarily_unreachable"):
+                self._json(503, {"error": "database_temporarily_unreachable"})
+            else:
+                self._json(401 if err_msg != "dcs_operator_not_authorized" else 403, {"error": err_msg})
         except (RepositoryError, MVPServiceError) as exc:
-            self._json(502, {"error": str(exc)})
+            err_msg = str(exc)
+            self._json(503 if "timeout" in err_msg or "unreachable" in err_msg else 502, {"error": err_msg})
+        except (TimeoutError, socket.timeout):
+            self._json(504, {"error": "gateway_timeout"})
+        except error.URLError as exc:
+            self._json(503, {"error": f"network_error: {exc.reason}"})
         except Exception:
             self._json(500, {"error": "internal_error"})
 
@@ -224,10 +244,19 @@ class handler(BaseHTTPRequestHandler):
             try:
                 self._json(200, {"ok": True, "session": self._login(payload)})
             except AuthError as exc:
-                self._json(401, {"error": str(exc)})
+                err_msg = str(exc)
+                if err_msg in ("auth_timeout", "auth_unreachable", "auth_service_temporarily_unreachable"):
+                    self._json(503, {"error": "Authentication service temporarily unreachable. Please retry in a few moments."})
+                else:
+                    self._json(401, {"error": err_msg})
+            except (TimeoutError, socket.timeout):
+                self._json(504, {"error": "Authentication request timed out. Please retry."})
+            except error.URLError as exc:
+                self._json(503, {"error": f"Authentication network error: {exc.reason}"})
             except Exception:
                 self._json(500, {"error": "internal_error"})
             return
+
         try:
             repo = self._auth()
             if path == "/api/mvp/items":
@@ -287,11 +316,21 @@ class handler(BaseHTTPRequestHandler):
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
-            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+            err_msg = str(exc)
+            if err_msg in ("auth_timeout", "auth_unreachable", "auth_service_temporarily_unreachable"):
+                self._json(503, {"error": "database_temporarily_unreachable"})
+            else:
+                self._json(401 if err_msg != "dcs_operator_not_authorized" else 403, {"error": err_msg})
         except (RepositoryError, MVPServiceError, ValueError) as exc:
-            self._json(502, {"error": str(exc)})
+            err_msg = str(exc)
+            self._json(503 if "timeout" in err_msg or "unreachable" in err_msg else 502, {"error": err_msg})
+        except (TimeoutError, socket.timeout):
+            self._json(504, {"error": "gateway_timeout"})
+        except error.URLError as exc:
+            self._json(503, {"error": f"network_error: {exc.reason}"})
         except Exception:
             self._json(500, {"error": "internal_error"})
+
 
     def do_PATCH(self):
         path = urlparse(self.path).path
@@ -327,9 +366,18 @@ class handler(BaseHTTPRequestHandler):
             update = {k: v for k, v in payload.items() if k in allowed}
             self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
         except AuthError as exc:
-            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+            err_msg = str(exc)
+            if err_msg in ("auth_timeout", "auth_unreachable", "auth_service_temporarily_unreachable"):
+                self._json(503, {"error": "database_temporarily_unreachable"})
+            else:
+                self._json(401 if err_msg != "dcs_operator_not_authorized" else 403, {"error": err_msg})
         except (RepositoryError, MVPServiceError, ValueError) as exc:
-            self._json(502, {"error": str(exc)})
+            err_msg = str(exc)
+            self._json(503 if "timeout" in err_msg or "unreachable" in err_msg else 502, {"error": err_msg})
+        except (TimeoutError, socket.timeout):
+            self._json(504, {"error": "gateway_timeout"})
+        except error.URLError as exc:
+            self._json(503, {"error": f"network_error: {exc.reason}"})
         except Exception:
             self._json(500, {"error": "internal_error"})
 
@@ -351,8 +399,18 @@ class handler(BaseHTTPRequestHandler):
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
-            self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
+            err_msg = str(exc)
+            if err_msg in ("auth_timeout", "auth_unreachable", "auth_service_temporarily_unreachable"):
+                self._json(503, {"error": "database_temporarily_unreachable"})
+            else:
+                self._json(401 if err_msg != "dcs_operator_not_authorized" else 403, {"error": err_msg})
         except (RepositoryError, MVPServiceError, ValueError) as exc:
-            self._json(502, {"error": str(exc)})
+            err_msg = str(exc)
+            self._json(503 if "timeout" in err_msg or "unreachable" in err_msg else 502, {"error": err_msg})
+        except (TimeoutError, socket.timeout):
+            self._json(504, {"error": "gateway_timeout"})
+        except error.URLError as exc:
+            self._json(503, {"error": f"network_error: {exc.reason}"})
         except Exception:
             self._json(500, {"error": "internal_error"})
+

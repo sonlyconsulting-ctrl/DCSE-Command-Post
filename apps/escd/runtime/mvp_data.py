@@ -121,16 +121,29 @@ def _postgrest_headers(key: str, schema: str) -> dict[str, str]:
     }
 
 
+import time
+
+_SUPABASE_RPC_FAIL_UNTIL = 0.0
+
+
 def _rpc(name: str, payload: dict):
+    global _SUPABASE_RPC_FAIL_UNTIL
+    if time.time() < _SUPABASE_RPC_FAIL_UNTIL:
+        raise MVPServiceError("Provider registry temporarily unreachable (upstream circuit breaker active)")
     url, key = _service_config()
-    _, data = _http_json(
-        f"{url}/rest/v1/rpc/{name}",
-        method="POST",
-        headers=_postgrest_headers(key, "dcse_cp"),
-        payload=payload,
-        timeout=12,
-    )
-    return data
+    try:
+        _, data = _http_json(
+            f"{url}/rest/v1/rpc/{name}",
+            method="POST",
+            headers=_postgrest_headers(key, "dcse_cp"),
+            payload=payload,
+            timeout=3,
+        )
+        return data
+    except Exception:
+        _SUPABASE_RPC_FAIL_UNTIL = time.time() + 30.0
+        raise
+
 
 
 def _env_secret(provider: str) -> str:
@@ -232,13 +245,36 @@ def provider_runtime(provider: str) -> dict:
 
 
 def provider_status() -> dict:
+    global _SUPABASE_RPC_FAIL_UNTIL
     result = {}
+    circuit_broken = time.time() < _SUPABASE_RPC_FAIL_UNTIL
+    outage_error = "Provider registry unavailable. Verify the Preview Supabase server bindings and Vault RPC access."
     for provider in PROVIDERS:
+        if circuit_broken:
+            result[provider] = {
+                "enabled": False,
+                "configured": False,
+                "registry_available": False,
+                "registry_error": outage_error,
+                "credential_source": "none",
+                "catalog": PROVIDER_CATALOG.get(provider, []),
+            }
+            continue
         try:
             cfg = provider_runtime(provider)
         except MVPServiceError as exc:
-            result[provider] = {"enabled": False, "configured": False, "registry_available": False, "registry_error": str(exc), "credential_source": "none"}
+            circuit_broken = True
+            _SUPABASE_RPC_FAIL_UNTIL = time.time() + 30.0
+            result[provider] = {
+                "enabled": False,
+                "configured": False,
+                "registry_available": False,
+                "registry_error": str(exc),
+                "credential_source": "none",
+                "catalog": PROVIDER_CATALOG.get(provider, []),
+            }
             continue
+
         result[provider] = {
             "enabled": bool(cfg.get("enabled")),
             "configured": bool(cfg.get("api_key")) or (provider == "ollama" and not _ollama_requires_key()),
@@ -252,6 +288,7 @@ def provider_status() -> dict:
             "catalog": PROVIDER_CATALOG.get(provider, []),
         }
     return result
+
 
 
 def set_provider_secret(provider: str, secret: str) -> dict:

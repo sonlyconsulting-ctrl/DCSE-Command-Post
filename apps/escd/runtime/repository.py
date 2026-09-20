@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import socket
 from typing import Any
 from urllib import request, error, parse
 
@@ -41,12 +42,17 @@ class SupabaseRLSClient:
             method=method,
         )
         try:
-            with request.urlopen(req, timeout=15) as response:
+            with request.urlopen(req, timeout=4) as response:
                 raw = response.read().decode("utf-8")
                 return json.loads(raw or "[]")
         except error.HTTPError as exc:
             exc.read()
             raise RepositoryError(f"postgrest_{exc.code}") from None
+        except (TimeoutError, socket.timeout):
+            raise RepositoryError("database_timeout") from None
+        except error.URLError as exc:
+            raise RepositoryError(f"database_unreachable: {exc.reason}") from None
+
 
     def operator_self(self) -> list[dict[str, Any]]:
         return self._call("GET", "operator_accounts?select=user_id,email,active,access_scope")

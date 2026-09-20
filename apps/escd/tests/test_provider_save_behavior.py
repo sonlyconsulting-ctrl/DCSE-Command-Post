@@ -66,3 +66,43 @@ def test_provider_save_rejects_unauthenticated_request_before_vault():
         request.do_POST()
         save.assert_not_called()
     assert result[0][0] == 401
+
+
+def test_auth_config_is_public_and_returns_supabase_url(monkeypatch):
+    monkeypatch.setenv("SUPABASE_URL", "https://nevgdyfpxdaloacuutal.supabase.co")
+    monkeypatch.setenv("NEXT_PUBLIC_SUPABASE_ANON_KEY", "test-anon-key")
+    request = object.__new__(handler)
+    request.path = "/api/mvp/auth-config"
+    request.headers = {}
+    result = []
+    request._json = lambda code, body: result.append((code, body))
+    request.do_GET()
+    assert result[0][0] == 200
+    assert result[0][1]["ok"] is True
+    assert result[0][1]["supabase_url"] == "https://nevgdyfpxdaloacuutal.supabase.co"
+    assert result[0][1]["anon_key"] == "test-anon-key"
+
+
+def test_provider_status_circuit_breaker_trips_and_fast_fails():
+    data._SUPABASE_RPC_FAIL_UNTIL = 0.0
+    with patch.object(data, "_rpc", side_effect=data.MVPServiceError("mock database timeout")) as mock_rpc:
+        status = data.provider_status()
+    assert mock_rpc.call_count == 1
+    assert data._SUPABASE_RPC_FAIL_UNTIL > 0.0
+    for p in data.PROVIDERS:
+        assert status[p]["registry_available"] is False
+
+
+def test_login_timeout_returns_503_service_unavailable():
+    from apps.escd.runtime.auth import AuthError
+    request = object.__new__(handler)
+    request.path = "/api/mvp/login"
+    request.headers = {"Content-Length": "10"}
+    request._read_json = lambda: {"email": "test@sonlyconsulting.com", "password": "pass"}
+    result = []
+    request._json = lambda code, body: result.append((code, body))
+    with patch.object(request, "_login", side_effect=AuthError("auth_timeout")):
+        request.do_POST()
+    assert result[0][0] == 503
+    assert "temporarily unreachable" in result[0][1]["error"]
+

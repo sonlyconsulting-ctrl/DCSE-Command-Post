@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import socket
 from typing import Any, Callable, Mapping
 from urllib import request, error
 
@@ -25,7 +26,7 @@ def extract_bearer(headers: Mapping[str, str]) -> str:
     return parts[1].strip()
 
 
-def _default_http_get(url: str, headers: dict[str, str], timeout: int = 10) -> tuple[int, dict[str, Any]]:
+def _default_http_get(url: str, headers: dict[str, str], timeout: int = 4) -> tuple[int, dict[str, Any]]:
     req = request.Request(url, headers=headers, method="GET")
     try:
         with request.urlopen(req, timeout=timeout) as response:
@@ -38,6 +39,10 @@ def _default_http_get(url: str, headers: dict[str, str], timeout: int = 10) -> t
         except json.JSONDecodeError:
             parsed = {"error": "auth_http_error"}
         return exc.code, parsed
+    except (TimeoutError, socket.timeout):
+        return 504, {"error": "auth_timeout"}
+    except error.URLError as exc:
+        return 503, {"error": f"auth_unreachable: {exc.reason}"}
 
 
 def verify_supabase_user(
@@ -52,10 +57,13 @@ def verify_supabase_user(
     status, payload = getter(
         supabase_url.rstrip("/") + "/auth/v1/user",
         {"Authorization": f"Bearer {access_token}", "apikey": anon_key},
-        10,
+        4,
     )
     if status != 200:
+        if status in (503, 504):
+            raise AuthError("auth_service_temporarily_unreachable")
         raise AuthError("invalid_or_expired_token")
+
     user_id = str(payload.get("id") or "").strip()
     if not user_id:
         raise AuthError("auth_user_id_missing")
