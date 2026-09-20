@@ -2,7 +2,7 @@
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
     "total_source_occurrences": 190,
-    "total_candidates": 161,
+    "total_candidates": 162,
     "duplicates_merged": 31,
     "disposition_counts": {
       "TASK": 56,
@@ -11,7 +11,7 @@
       "SOURCE_ONLY": 3,
       "ASSET": 3,
       "DDNA": 40,
-      "KNOWLEDGE": 25
+      "KNOWLEDGE": 26
     },
     "governed_rules": [
       "Tasks: no historical task becomes active automatically (status=inactive)",
@@ -4424,6 +4424,35 @@
       "duplicate_merge_relationship": "Merged 1 occurrences",
       "disposition_rationale": "Incident analysis and architectural design pattern for serverless edge degradation when backend database PostgREST layer is paused or latency-degraded",
       "content": "Architectural Directive: When PostgREST or Supabase backend RPCs hang or exceed 3 seconds, the ESCD edge serverless layer must trip a 30s circuit breaker and return cached/fallback configuration in <100ms. Endpoints must never allow unhandled socket timeouts to produce generic 500 internal_error responses. The frontend must display actionable degraded-state messaging."
+    },
+    {
+      "canonical_id": "CANON-162",
+      "content_hash": "4a821e90dc5f",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCSE-ESCD-GOLDEN-BASELINE-20260920-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNOW-026"
+        ],
+        "occurrence_count": 1,
+        "source_document": "apps/escd/docs/ESCD_DATABASE_IO_EXHAUSTION_AND_RECOVERY_RUNBOOK.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "OPERATIONAL_RUNBOOK",
+      "confidence": 1.0,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "ESCD/Operations",
+        "Supabase/DiskIO",
+        "RecoveryRunbook",
+        "GoldenBaseline"
+      ],
+      "duplicate_merge_relationship": "Merged 1 occurrences",
+      "disposition_rationale": "Comprehensive operational runbook and disaster recovery instructions for Supabase Disk I/O exhaustion, pg_cron table bloat, instance reboot, and reversion to golden baseline commit 1b9a101",
+      "content": "Operational Runbook & Golden Baseline: Procedures for resolving Supabase Disk I/O credit exhaustion and unindexed cron.job_run_details table bloat via fast compute restart, TRUNCATE TABLE cron.job_run_details, and idx_cron_job_run_details_status index creation. Establishes git tag baseline/escd-mvp-0.7.2-golden-working-20260920 (commit 1b9a101, deployment dpl_DDjdD7jiK2jhzh74U4viF1U39w4g) as verified working state for Google OAuth, multi-model selection (ChatGPT/Claude/Qwen/Gemini), and edge circuit breaker fallback."
     }
   ]
 }
