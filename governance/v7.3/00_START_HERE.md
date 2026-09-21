@@ -35,6 +35,8 @@ All agents and runtimes shall apply `DCSE_V7_3_AGENT_AUTHORITY_ADOPTION_AND_CORR
 
 Before any deployment-capable action, agents shall apply `DCSE_V7_3_EXPLICIT_DEPLOYMENT_AUTHORIZATION_AND_GIT_TRIGGER_SUPPRESSION_STANDARD_20260921.md`. Absent its complete deployment authorization packet, the mandatory state is `DEPLOYMENT_NOT_AUTHORIZED`.
 
+For authorized Vercel work, agents shall classify the change R0-R4 and apply `DCSE_V7_3_VERCEL_RISK_BASED_PREVIEW_TO_PRODUCTION_RELEASE_STANDARD_20260921.md`. Preview may be waived only for a fully qualified R0 editorial change; production always requires its own authorization packet.
+
 Required distinctions:
 
 - the constitutional front door is the operative designation; this file is navigation after authority resolution;

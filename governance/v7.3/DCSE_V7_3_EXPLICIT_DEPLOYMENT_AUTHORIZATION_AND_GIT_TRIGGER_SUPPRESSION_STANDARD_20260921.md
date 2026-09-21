@@ -107,7 +107,16 @@ If the instruction contains both source-governance verbs and deployment language
 
 There is no “reasonable interpretation” exception.
 
-## 8. Evidence
+## 8. Risk-based release routing
+
+Vercel preview and production decisions SHALL apply `DCSE_V7_3_VERCEL_RISK_BASED_PREVIEW_TO_PRODUCTION_RELEASE_STANDARD_20260921.md`.
+
+- R0 may waive preview only when every exclusion criterion passes and the production packet records the waiver.
+- R1-R4 require an authorized preview.
+- Preview authorization and production authorization are separate, single-use decisions.
+- The validated preview artifact shall normally be promoted without rebuilding.
+
+## 9. Evidence
 
 A deployment claim requires a deployment ID, target environment, exact deployed commit/artifact, successful platform state, live endpoint readback, and rollback reference. A GitHub merge or CI pass is never deployment evidence.
 
