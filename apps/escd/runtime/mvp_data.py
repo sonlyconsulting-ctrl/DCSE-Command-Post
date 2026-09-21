@@ -1055,6 +1055,12 @@ def list_saved_chats(limit: int = 50) -> list[dict]:
     return ConversationStore.list_saved_chats(limit)
 
 
+def governance_status() -> dict:
+    """Return the evidence-scoped V7.3 cross-system status contract."""
+    from apps.escd.runtime.governance_runtime import cross_system_status
+    return cross_system_status()
+
+
 def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default", model_override: str = None) -> dict:
     from apps.escd.runtime.continuity import (
         ConversationStore,
@@ -1097,7 +1103,9 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
     # Retrieve governed context (Rule 5 Layer C)
     retrieved = retrieve_governed_context(last_user, limit=4)
 
-    # Assemble governed context packet
+    # Assemble governed context packet and retain its quiet machine-readable attestation.
+    from apps.escd.runtime.governance_runtime import runtime_context
+    _, governance_attestation = runtime_context(state, last_user, turns)
     clean = assemble_context_packet(state, last_user, turns, retrieved)
     clean.insert(1 if clean and clean[0].get("role") == "system" else 0, {
         "role": "system",
@@ -1171,18 +1179,18 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
 
         elif provider == "anthropic":
             system_text = "\n".join(m["content"] for m in clean if m["role"] == "system").strip()
-            turns = []
+            anthropic_turns = []
             for m in clean:
                 if m["role"] == "system":
                     continue
                 role = "assistant" if m["role"] == "assistant" else "user"
-                if turns and turns[-1]["role"] == role:
-                    turns[-1]["content"] += "\n\n" + m["content"]
+                if anthropic_turns and anthropic_turns[-1]["role"] == role:
+                    anthropic_turns[-1]["content"] += "\n\n" + m["content"]
                 else:
-                    turns.append({"role": role, "content": m["content"]})
-            while turns and turns[0]["role"] != "user":
-                turns.pop(0)
-            payload = {"model": model, "max_tokens": max_tokens, "messages": turns}
+                    anthropic_turns.append({"role": role, "content": m["content"]})
+            while anthropic_turns and anthropic_turns[0]["role"] != "user":
+                anthropic_turns.pop(0)
+            payload = {"model": model, "max_tokens": max_tokens, "messages": anthropic_turns}
             if system_text:
                 payload["system"] = system_text
             _, data = _http_json(
@@ -1230,6 +1238,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             model=(data or {}).get("model") or model,
             entity_lane=state.active_entity_lane,
             retrieved_refs=retrieved,
+            governance_attestation=governance_attestation,
             created_at=datetime.now(timezone.utc).isoformat(),
         )
         ConversationStore.record_turn(state, turn)
@@ -1241,6 +1250,7 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
             "conversation_id": cid,
             "seq": new_seq,
             "state": state.to_dict(),
+            "governance": governance_attestation,
         }
 
     except Exception as exc:
