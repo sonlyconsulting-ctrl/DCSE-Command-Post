@@ -1,17 +1,17 @@
 dcse:
-  governance_version: "V7.2"
+  governance_version: "V7.3"
   package_status: "OPERATIVE"
-  activation_merge_commit: "b4303bdf9f703b468808711a9dedf746e9c17649"
+  activation_merge_commit: "PENDING_PROMOTION_MERGE_READBACK"
   principle: "Structure Precedes Scale."
-  front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
-  navigation_after_master: "governance/v7.2/00_START_HERE.md"
+  front_door: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
+  navigation_after_master: "governance/v7.3/00_START_HERE.md"
   participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
-  doctrine_root: "governance/v7.2/doctrines/"
-  complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
+  doctrine_root: "governance/v7.3/doctrines/"
+  complete_package_manifest: "governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json"
   compatibility_mirror: "governance/v7.2/source/"
-  constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
-  operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
-  governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
+  constitutional_entrypoint: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
+  operative_designation: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
+  governance_sync: "tribunal/v7/DCSE_V73_PROMOTION_AND_RECONCILIATION_RECEIPT_20260921.md"
   doctrine_index: "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   bounded_independent_authority: "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
@@ -26,7 +26,7 @@ dcse:
   baseline_checkpoint: "governance/v7.2/baselines/DCSE_V7_2_BASELINE_CHECKPOINT_A_20260911.md"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
   authority_state: "OPERATIVE"
-  compiled_doctrine_authority: "ENFORCED_THROUGH_OPERATIVE_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES_INCLUDING_DCS-DIR-20260911-001"
+  compiled_doctrine_authority: "V7_3_OPERATIVE_NAMING_CONTINUITY_INHERITING_R5_AND_LATER_PROMOTED_V7_2_DIRECTIVES"
   source_lifecycle_rule: "Historical source-state labels remain provenance; compiled authority is inherited from operative R5 or a registered/promoted DCS directive."
   manifest_role: "machine-readable routing index; not independent authority"
 
@@ -34,13 +34,13 @@ canonical:
   github:
     repository: "sonlyconsulting-ctrl/DCSE-Command-Post"
     authority_branch: "main"
-    governance_path: "governance/v7.2/"
+    governance_path: "governance/v7.3/"
     front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
     navigation_after_master: "governance/v7.2/00_START_HERE.md"
     participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
     doctrine_root: "governance/v7.2/doctrines/"
     complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"
-    controller_path: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
+    controller_path: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
     operative_designation: "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
     governance_sync: "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
     doctrine_index: "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
@@ -63,23 +63,18 @@ canonical:
       role: "operational state registry"
 
 mandatory_entry_sequence:
-  - "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
-  - "governance/v7.2/DCSE_V7_2_R5_OPERATIVE_DESIGNATION_20260808.md"
-  - "governance/v7.2/DCSE_Master_Profile_Authority_Synchronization_v7-2.md"
-  - "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"
-  - "governance/v7.2/00_START_HERE.md"
-  - "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
-  - "governance/v7.2/UNIVERSAL_AGENT_ONBOARDING_AND_ACCESS_STANDARD_v7-2.md"
-  - "governance/v7.2/dcs_express_directives.v7.2.json"
-  - "governance/v7.2/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"
-  - "governance/v7.2/doctrines/D21_Doctrine_Runtime_Engine_v7-2.md"
-  - "governance/v7.2/doctrines/D03_AI_Orchestration_v7-2.md when orchestration applies"
-  - "governance/v7.2/DCS_LEVEL_0_RESERVED_STOP_GATES_v7-2.md"
-  - "governance/v7.2/execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md as applicable"
-  - "task-routed doctrines selected by D21 and the operative controller"
+  - "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
+  - "governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json"
+  - "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md as inherited substantive controller"
+  - "governance/v7.3/00_START_HERE.md"
+  - "governance/v7.3/doctrines/D22_Source_Authority_Runtime_Distribution_v7-3_RC1_CANDIDATE.md"
+  - "governance/v7.3/doctrines/D21_Doctrine_Runtime_Engine_v7-3_RC1_CANDIDATE.md"
+  - "governance/v7.3/doctrines/D03_AI_Orchestration_v7-3_RC1_CANDIDATE.md when orchestration applies"
+  - "governance/v7.3/doctrines/D05_Baseline_Promotion_v7-3_RC1_CANDIDATE.md"
+  - "inherited v7.2 associated controls through governance/v7.3/reference/v7_2_mainline/ until normalized"
+  - "task-routed v7.3 doctrine projections"
   - "designated project repository and DCSE_PROJECT_MANIFEST.yaml"
   - "applicable task/work-order files and asset manifest"
-
 authority_routes:
   final_human_authority: "DCS Level 0"
   constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"
@@ -135,15 +130,15 @@ zones:
 startup_sequence:
   - verify_repository
   - verify_main_authority_branch
-  - load_v7_2_master_profile
-  - load_r5_operative_designation
-  - load_v7_2_governance_sync
+  - load_v7_3_operative_designation
+  - load_inherited_r5_substantive_controller
+  - load_v7_3_promotion_reconciliation
   - load_participant_navigation_and_project_bootstrap
-  - load_v7_2_doctrine_index
+  - load_v7_3_operative_manifest
   - load_express_dcs_directive_registry
   - load_task_traceability_and_navigable_closeout_directive
   - load_completion_evidence_collector_directive
-  - verify_source_authority_through_d22_v7_2
+  - verify_source_authority_through_d22_v7_3
   - classify_lane_entity_and_task
   - establish_task_id
   - produce_preflight_validation
@@ -221,7 +216,7 @@ runtime_task_contract:
   complete_claim_rule: "A substantive task may not be reported COMPLETE until the claimed final state backward-chains to direct evidence and affected dependent artifacts are reconciled or explicitly disclosed as unresolved."
   handoff_task_identity_rule: "Preserve the originating task ID; child tasks must record parent task ID and preserve authority and source lineage."
   goal_shift_rule: "A governing goal may not be silently reinterpreted; material goal shifts must be explicit, attributable, and carried into subsequent intake."
-  noncompliance_state: "BLOCKED_OR_PARTIAL_NOT_V7_2_COMPLIANT"
+  noncompliance_state: "BLOCKED_OR_PARTIAL_NOT_V7_3_COMPLIANT"
 
 model_harmony:
   authority_chain_required: true
