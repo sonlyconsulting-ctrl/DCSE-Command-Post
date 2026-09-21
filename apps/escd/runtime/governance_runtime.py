@@ -9,8 +9,11 @@ from typing import Any
 GOVERNANCE_VERSION = "V7.3"
 GOVERNANCE_STATUS = "OPERATIVE"
 AUTHORITY_STATE = "OPERATIVE"
-AUTHORITY_COMMIT = "fe804d6af1be3cdd32d7b58d21108ad4ad645057"
-ACTIVATION_COMMIT = "d24b4f64e7f464c22bbe8f2d5060c8521434a660"
+PROMOTION_COMMIT = "d24b4f64e7f464c22bbe8f2d5060c8521434a660"
+ACTIVATION_COMMIT = PROMOTION_COMMIT
+AUTHORITY_COMMIT = PROMOTION_COMMIT  # Compatibility field: authority means operative promotion.
+RECONCILIATION_COMMIT = "fe804d6af1be3cdd32d7b58d21108ad4ad645057"
+CONTEXTUAL_RUNTIME_MERGE = "5ea85c85d311743e9d02d6d26aebccc9968ecca5"
 CONTROLLER_SHA256 = "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
 OPERATIVE_DESIGNATION = "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
 OPERATIVE_MANIFEST = "governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json"
@@ -48,12 +51,17 @@ def governance_bootstrap() -> dict[str, Any]:
         "authority_state": AUTHORITY_STATE,
         "authority_commit": AUTHORITY_COMMIT,
         "activation_commit": ACTIVATION_COMMIT,
+        "promotion_commit": PROMOTION_COMMIT,
+        "reconciliation_commit": RECONCILIATION_COMMIT,
+        "contextual_runtime_merge": CONTEXTUAL_RUNTIME_MERGE,
+        "repository_head_rule": "dynamic_not_promotion_authority",
         "controller_sha256": CONTROLLER_SHA256,
         "operative_designation": OPERATIVE_DESIGNATION,
         "operative_manifest": OPERATIVE_MANIFEST,
         "runtime_profile": RUNTIME_PROFILE,
         "loaded_controls": list(LOADED_CONTROLS),
         "continuity_rule": "v7.3 is operative; v7.2 remains inherited substance, rollback, and source lineage.",
+        "evidence_language_rule": "Do not claim logged, deployed, promoted, or synchronized without a durable identifier and successful readback.",
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
     canonical["runtime_bundle_sha256"] = hashlib.sha256(encoded).hexdigest()
@@ -85,7 +93,7 @@ def cross_system_status() -> dict[str, Any]:
             "GitHub",
             "OPERATIVE",
             "VERIFIED_BUNDLED",
-            [f"authority_commit:{AUTHORITY_COMMIT}", f"activation_commit:{ACTIVATION_COMMIT}", OPERATIVE_MANIFEST],
+            [f"promotion_commit:{PROMOTION_COMMIT}", f"reconciliation_commit:{RECONCILIATION_COMMIT}", f"contextual_runtime_merge:{CONTEXTUAL_RUNTIME_MERGE}", OPERATIVE_MANIFEST],
         ),
         "escd": _surface(
             "ESCD",
@@ -167,6 +175,8 @@ def runtime_context(state: Any, current_turn: str, turns: list[Any]) -> tuple[st
         "authority_state": governance["authority_state"],
         "authority_commit": governance["authority_commit"],
         "activation_commit": governance["activation_commit"],
+        "promotion_commit": governance["promotion_commit"],
+        "reconciliation_commit": governance["reconciliation_commit"],
         "runtime_bundle_sha256": governance["runtime_bundle_sha256"],
         "loaded_controls": governance["loaded_controls"],
         "conversation_state": continuation["conversation_state"],
