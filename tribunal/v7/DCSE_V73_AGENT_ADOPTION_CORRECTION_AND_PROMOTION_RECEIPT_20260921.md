@@ -3,8 +3,9 @@
 **Task ID:** DCSE-V73-AGENT-ADOPTION-CORRECTION-20260921-01  
 **Authority:** DCS Level 0 explicit directive to modify, deploy, and promote  
 **Lane:** DCSE Governance / ESCD Runtime  
-**Promotion state:** AUTHORIZED; becomes canonical and independently discoverable upon merge to `main`  
-**Synchronization state:** Per-surface evidence required
+**Promotion state:** PROMOTED AND MERGED TO `main`  
+**Promotion merge:** `4eee263080614bd3f5d1c2bc7ed3ede2a7d4b391`  
+**Synchronization state:** GitHub synchronized; Vercel production blocked/stale; Supabase registry unverified
 
 ## Correction promoted
 
@@ -39,3 +40,31 @@
 This receipt is evidence only after its canonical path and merge commit are readable from `main`. It does not by itself prove Vercel, Supabase, ESCD production, or local runtime synchronization.
 
 Structure Precedes Scale.
+
+
+## Post-merge readback
+
+### GitHub
+
+- PR: #166
+- Merge commit: `4eee263080614bd3f5d1c2bc7ed3ede2a7d4b391`
+- V7.3 governance validation: PASS
+- ESCD Mainline Review Gate: PASS
+- Canonical artifact readback from `main`: VERIFIED
+
+### Vercel production
+
+- Project: `sc-command-post` (`prj_a9pbcrfvQczbmH2Cr1S2Q08p2975`)
+- Production deployment: `dpl_DAYNaPqNUBVNGrD5ZEncpSj3W1vD`
+- Production deployed commit: `fe804d6af1be3cdd32d7b58d21108ad4ad645057`
+- Live health response: HTTP 200, ESCD version `0.6.1`
+- Expected corrected source: merge `4eee263080614bd3f5d1c2bc7ed3ede2a7d4b391`, ESCD API `0.7.3`
+- Deployment action attempt: FAILED because the connected Vercel deployment action was unavailable.
+- Git deployment checks: FAILED due to Vercel account build-rate limit.
+- Classification: `DEPLOYMENT_BLOCKED_STALE`; production synchronization SHALL NOT be claimed.
+
+### Supabase
+
+- Existing provider registry connectivity is visible through the live health response.
+- No authorized V7.3 governance-registry write/readback was performed in this task.
+- Classification: `CONFIGURED_UNVERIFIED`; Supabase synchronization SHALL NOT be claimed.
