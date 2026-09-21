@@ -358,7 +358,7 @@ promotion_gate:
   controller_state: "OPERATIVE_R5"
   controller_designation_commit: "f72c3288f301d38dc8184d2bbd55c6ef17eae670"
   controller_sha256: "2d6afe04be2f65f8d56d6b4b26c81e254e04171e3c94a40023b56b9236de36ae"
-  current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"
+  current_package_state: "V7_3_OPERATIVE_NAMING_CONTINUITY_WITH_INHERITED_R5_AND_PROMOTED_CONTROLS"
 
 platform_governance_packages:
   github:
