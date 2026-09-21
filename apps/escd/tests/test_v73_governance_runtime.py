@@ -3,6 +3,9 @@ from dataclasses import dataclass
 from apps.escd.runtime.governance_runtime import (
     AUTHORITY_COMMIT,
     GOVERNANCE_VERSION,
+    PROMOTION_COMMIT,
+    RECONCILIATION_COMMIT,
+    CONTEXTUAL_RUNTIME_MERGE,
     conversation_continuation_packet,
     cross_system_status,
     governance_bootstrap,
@@ -27,7 +30,12 @@ def test_v73_governance_bootstrap_is_hash_attested():
     data = governance_bootstrap()
     assert data["governance_version"] == "V7.3"
     assert data["package_status"] == "OPERATIVE"
-    assert data["authority_commit"] == AUTHORITY_COMMIT
+    assert data["authority_commit"] == AUTHORITY_COMMIT == PROMOTION_COMMIT
+    assert data["activation_commit"] == PROMOTION_COMMIT
+    assert data["reconciliation_commit"] == RECONCILIATION_COMMIT
+    assert data["contextual_runtime_merge"] == CONTEXTUAL_RUNTIME_MERGE
+    assert data["repository_head_rule"] == "dynamic_not_promotion_authority"
+    assert "durable identifier" in data["evidence_language_rule"]
     assert len(data["runtime_bundle_sha256"]) == 64
     assert "D21-DOCTRINE-RUNTIME" in data["loaded_controls"]
     assert "D22-SOURCE-AUTHORITY" in data["loaded_controls"]
@@ -78,3 +86,13 @@ def test_runtime_context_contains_all_three_contracts():
     assert "CROSS-SYSTEM STATUS CONTRACT" in prompt
     assert attestation["governance_version"] == GOVERNANCE_VERSION
     assert attestation["conversation_state"] == "new"
+
+
+def test_github_evidence_preserves_commit_roles(monkeypatch):
+    monkeypatch.delenv("DCSE_RUNTIME_GOVERNANCE_VERSION", raising=False)
+    monkeypatch.delenv("DCSE_RUNTIME_AUTHORITY_COMMIT", raising=False)
+    status = cross_system_status()
+    evidence = " ".join(status["systems"]["github"]["evidence"])
+    assert f"promotion_commit:{PROMOTION_COMMIT}" in evidence
+    assert f"reconciliation_commit:{RECONCILIATION_COMMIT}" in evidence
+    assert f"contextual_runtime_merge:{CONTEXTUAL_RUNTIME_MERGE}" in evidence
