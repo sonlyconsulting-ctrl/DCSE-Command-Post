@@ -1,16 +1,45 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "git": {
+    "deploymentEnabled": false
+  },
   "ignoreCommand": "[ \"$VERCEL_PROJECT_ID\" = \"prj_3t9SKxOUuW0peitSq97OHWDWCQy9\" ]",
   "redirects": [
-    { "source": "/", "destination": "/escd", "permanent": false }
+    {
+      "source": "/",
+      "destination": "/escd",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/api/chat", "destination": "/api/chat" },
-    { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
-    { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
-    { "source": "/escd", "destination": "/apps/escd/web/login.html" },
-    { "source": "/login", "destination": "/apps/escd/web/login.html" },
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/(.*)", "destination": "/api" }
+    {
+      "source": "/api/chat",
+      "destination": "/api/chat"
+    },
+    {
+      "source": "/api/mvp/(.*)",
+      "destination": "/api/mvp?mvp_path=$1"
+    },
+    {
+      "source": "/escd/app",
+      "destination": "/apps/escd/web/mvp.html"
+    },
+    {
+      "source": "/escd",
+      "destination": "/apps/escd/web/login.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/apps/escd/web/login.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
   ]
 }
