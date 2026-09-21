@@ -69,7 +69,15 @@ GitHub, Supabase/DDNA, Tribunal, Vercel, ESCD, local mirrors, and model prompts 
 - Configuration is not request success.
 - A migration artifact is not live-schema proof.
 
-## 8. Agent corrective behavior
+## 8. Deployment authorization boundary
+
+Agents SHALL apply `DCSE_V7_3_EXPLICIT_DEPLOYMENT_AUTHORIZATION_AND_GIT_TRIGGER_SUPPRESSION_STANDARD_20260921.md`.
+
+Generic instructions—including `deploy the changes`, `complete the build`, `proceed`, `promote`, or `synchronize`—authorize no external deployment. Deployment requires the complete declarative authorization packet naming platform, account/team, project, environment, exact source/artifact, method, effects, verification target, rollback, and authority.
+
+Without that packet, the required state is `DEPLOYMENT_NOT_AUTHORIZED`. There is no conversational-interpretation exception.
+
+## 9. Agent corrective behavior
 
 When an agent discovers or is shown a governance error, it SHALL:
 
