@@ -27,7 +27,7 @@
 
 ## Outstanding synchronization evidence
 
-- GitHub promotion merge and mainline readback
+- GitHub promotion merge and mainline readback: VERIFIED through PR #162 and `d24b4f64e7f464c22bbe8f2d5060c8521434a660`
 - ESCD runtime version/manifest readback
 - Supabase governance-registry update and readback
 - Vercel runtime/configuration update and deployment readback
