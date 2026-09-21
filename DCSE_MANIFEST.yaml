@@ -12,6 +12,13 @@ dcse:
   constitutional_entrypoint: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
   operative_designation: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
   governance_sync: "tribunal/v7/DCSE_V73_PROMOTION_AND_RECONCILIATION_RECEIPT_20260921.md"
+  agent_authority_adoption: "governance/v7.3/DCSE_V7_3_AGENT_AUTHORITY_ADOPTION_AND_CORRECTION_STANDARD_20260921.md"
+  authority_commit_taxonomy:
+    foundation_merge: "c256f2e2a55eb90301c3441944ac810e4bb14a78"
+    operative_promotion_activation: "d24b4f64e7f464c22bbe8f2d5060c8521434a660"
+    canonical_route_reconciliation: "fe804d6af1be3cdd32d7b58d21108ad4ad645057"
+    escd_contextual_runtime_merge: "5ea85c85d311743e9d02d6d26aebccc9968ecca5"
+    repository_head_rule: "DYNAMIC_NOT_PROMOTION_AUTHORITY"
   doctrine_index: "governance/v7.2/registry/DCSE_Doctrine_Index_v7-2.md"
   express_directive_registry: "governance/v7.2/dcs_express_directives.v7.2.json"
   bounded_independent_authority: "governance/v7.2/DCSE_V7_2_BOUNDED_INDEPENDENT_AUTHORITY_RULE_FOUNDRY_DIRECTION_20260911.md"
