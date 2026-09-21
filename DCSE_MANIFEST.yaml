@@ -1,7 +1,7 @@
 dcse:
   governance_version: "V7.3"
   package_status: "OPERATIVE"
-  activation_merge_commit: "PENDING_PROMOTION_MERGE_READBACK"
+  activation_merge_commit: "d24b4f64e7f464c22bbe8f2d5060c8521434a660"
   principle: "Structure Precedes Scale."
   front_door: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
   navigation_after_master: "governance/v7.3/00_START_HERE.md"
