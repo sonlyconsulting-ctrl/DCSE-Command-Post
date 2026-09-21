@@ -37,7 +37,7 @@
 
 | Surface | Authority state | Synchronization state |
 |---|---|---|
-| GitHub governance | OPERATIVE after promotion merge | Verify by mainline readback |
+| GitHub governance | OPERATIVE | SYNCHRONIZED, mainline readback verified |
 | ESCD | v7.3 required | Pending runtime readback |
 | Supabase governance registry | v7.3 required | Pending authorized update/readback |
 | Vercel runtime/configuration | v7.3 required | Pending deployment/readback; build-rate limits do not negate authority |
