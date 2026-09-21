@@ -1,0 +1,866 @@
+{
+  "manifest_id": "DCSE-MANIFEST-SCHEMA-V73-20260921-01",
+  "version": "v7.3",
+  "status": "CANONICAL_OPERATIVE",
+  "authority": "DCS Level 0 Approval",
+  "effective_date": "2026-09-21",
+  "doctrine_governance": [
+    "D15_Database_Administration",
+    "D22_Source_Authority"
+  ],
+  "topology": {
+    "constitutional_registry": "DCSE-DDNA (Supabase)",
+    "operational_control": "SC-Command-Post (Supabase)",
+    "canonical_schema_repository": "GitHub: sonlyconsulting-ctrl/DCSE-Command-Post (branch: main)"
+  },
+  "schema_summary": {
+    "total_schemas": 4,
+    "schemas": [
+      "public",
+      "dcse_cp",
+      "v7_worker",
+      "family_vow_go"
+    ],
+    "total_enums": 6,
+    "total_models_public": 82,
+    "total_migration_tables": 21,
+    "total_cataloged_tables": 103
+  },
+  "enums": [
+    {
+      "name": "DcseRecordStatus",
+      "sql_name": "dcse_record_status",
+      "values_count": 9
+    },
+    {
+      "name": "DcseReviewStatus",
+      "sql_name": "dcse_review_status",
+      "values_count": 5
+    },
+    {
+      "name": "DcseVisibility",
+      "sql_name": "dcse_visibility",
+      "values_count": 4
+    },
+    {
+      "name": "DcseLifecycleStage",
+      "sql_name": "dcse_lifecycle_stage",
+      "values_count": 6
+    },
+    {
+      "name": "DcseConfidentiality",
+      "sql_name": "dcse_confidentiality",
+      "values_count": 4
+    },
+    {
+      "name": "DcseObjectType",
+      "sql_name": "dcse_object_type",
+      "values_count": 23
+    }
+  ],
+  "tables_by_schema": {
+    "public": [
+      {
+        "model_name": "User",
+        "table_name": "users",
+        "columns_count": 7,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Entity",
+        "table_name": "entities",
+        "columns_count": 14,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Tag",
+        "table_name": "tags",
+        "columns_count": 4,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "SourceDocument",
+        "table_name": "SourceDocument",
+        "columns_count": 14,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "IntakeBatch",
+        "table_name": "intake_batches",
+        "columns_count": 12,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "IntakeBatchSource",
+        "table_name": "intake_batch_sources",
+        "columns_count": 2,
+        "primary_keys": [
+          "batchId",
+          "sourceId"
+        ]
+      },
+      {
+        "model_name": "RawJsonArtifact",
+        "table_name": "raw_json_artifacts",
+        "columns_count": 6,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "ExtractionRun",
+        "table_name": "ExtractionRun",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "UnresolvedItem",
+        "table_name": "unresolved_items",
+        "columns_count": 7,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "AuditLog",
+        "table_name": "audit_log",
+        "columns_count": 8,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "StagingCandidateRecord",
+        "table_name": "StagingCandidateRecord",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "StagingRelationshipCandidate",
+        "table_name": "staging_relationship_candidates",
+        "columns_count": 7,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "StagingDuplicateCandidate",
+        "table_name": "staging_duplicate_candidates",
+        "columns_count": 6,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "RegistryRecord",
+        "table_name": "registry_records",
+        "columns_count": 28,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "RecordTag",
+        "table_name": "record_tags",
+        "columns_count": 2,
+        "primary_keys": [
+          "recordId",
+          "tagId"
+        ]
+      },
+      {
+        "model_name": "RecordSource",
+        "table_name": "record_sources",
+        "columns_count": 4,
+        "primary_keys": [
+          "recordId",
+          "sourceId"
+        ]
+      },
+      {
+        "model_name": "RecordRelationship",
+        "table_name": "record_relationships",
+        "columns_count": 5,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "RecordRevision",
+        "table_name": "RecordRevision",
+        "columns_count": 6,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Doctrine",
+        "table_name": "doctrines",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Persona",
+        "table_name": "personas",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Profile",
+        "table_name": "profiles",
+        "columns_count": 10,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Instruction",
+        "table_name": "instructions",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Product",
+        "table_name": "products",
+        "columns_count": 14,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Service",
+        "table_name": "services",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "OperationalAsset",
+        "table_name": "operational_assets",
+        "columns_count": 8,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "Workflow",
+        "table_name": "workflows",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "AppModule",
+        "table_name": "app_modules",
+        "columns_count": 15,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "BusinessStrategy",
+        "table_name": "business_strategies",
+        "columns_count": 8,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "SeoObject",
+        "table_name": "seo_objects",
+        "columns_count": 13,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "AeoObject",
+        "table_name": "aeo_objects",
+        "columns_count": 10,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "GeoObject",
+        "table_name": "geo_objects",
+        "columns_count": 10,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "ContentAsset",
+        "table_name": "content_assets",
+        "columns_count": 8,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "KnowledgeFile",
+        "table_name": "knowledge_files",
+        "columns_count": 7,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PromptAsset",
+        "table_name": "prompt_assets",
+        "columns_count": 8,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "ModelConfiguration",
+        "table_name": "model_configurations",
+        "columns_count": 12,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "UiComponent",
+        "table_name": "UiComponent",
+        "columns_count": 5,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "DistributionTarget",
+        "table_name": "distribution_targets",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "CreativitySystem",
+        "table_name": "creativity_systems",
+        "columns_count": 13,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "VoiceToneSystem",
+        "table_name": "voice_tone_systems",
+        "columns_count": 14,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "LayerModule",
+        "table_name": "layer_modules",
+        "columns_count": 16,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "DoctrineToEntity",
+        "table_name": "doctrine_to_entity",
+        "columns_count": 2,
+        "primary_keys": [
+          "doctrineRecordId",
+          "entityId"
+        ]
+      },
+      {
+        "model_name": "DoctrineToProduct",
+        "table_name": "doctrine_to_product",
+        "columns_count": 2,
+        "primary_keys": [
+          "doctrineRecordId",
+          "productRecordId"
+        ]
+      },
+      {
+        "model_name": "DoctrineToInstruction",
+        "table_name": "doctrine_to_instruction",
+        "columns_count": 2,
+        "primary_keys": [
+          "doctrineRecordId",
+          "instructionRecordId"
+        ]
+      },
+      {
+        "model_name": "ProfileToEntity",
+        "table_name": "profile_to_entity",
+        "columns_count": 2,
+        "primary_keys": [
+          "profileRecordId",
+          "entityId"
+        ]
+      },
+      {
+        "model_name": "ProfileToPersona",
+        "table_name": "profile_to_persona",
+        "columns_count": 2,
+        "primary_keys": [
+          "profileRecordId",
+          "personaRecordId"
+        ]
+      },
+      {
+        "model_name": "PersonaToProduct",
+        "table_name": "persona_to_product",
+        "columns_count": 2,
+        "primary_keys": [
+          "personaRecordId",
+          "productRecordId"
+        ]
+      },
+      {
+        "model_name": "ProductToService",
+        "table_name": "product_to_service",
+        "columns_count": 2,
+        "primary_keys": [
+          "productRecordId",
+          "serviceRecordId"
+        ]
+      },
+      {
+        "model_name": "ProductToApp",
+        "table_name": "product_to_app",
+        "columns_count": 2,
+        "primary_keys": [
+          "productRecordId",
+          "appRecordId"
+        ]
+      },
+      {
+        "model_name": "AppToComponent",
+        "table_name": "app_to_component",
+        "columns_count": 2,
+        "primary_keys": [
+          "appRecordId",
+          "componentRecordId"
+        ]
+      },
+      {
+        "model_name": "AssetToWorkflow",
+        "table_name": "asset_to_workflow",
+        "columns_count": 2,
+        "primary_keys": [
+          "assetRecordId",
+          "workflowRecordId"
+        ]
+      },
+      {
+        "model_name": "WorkflowToProduct",
+        "table_name": "workflow_to_product",
+        "columns_count": 2,
+        "primary_keys": [
+          "workflowRecordId",
+          "productRecordId"
+        ]
+      },
+      {
+        "model_name": "ContentToStrategy",
+        "table_name": "content_to_strategy",
+        "columns_count": 2,
+        "primary_keys": [
+          "contentRecordId",
+          "strategyRecordId"
+        ]
+      },
+      {
+        "model_name": "SeoToContent",
+        "table_name": "seo_to_content",
+        "columns_count": 2,
+        "primary_keys": [
+          "seoRecordId",
+          "contentRecordId"
+        ]
+      },
+      {
+        "model_name": "AeoToContent",
+        "table_name": "aeo_to_content",
+        "columns_count": 2,
+        "primary_keys": [
+          "aeoRecordId",
+          "contentRecordId"
+        ]
+      },
+      {
+        "model_name": "GeoToContent",
+        "table_name": "geo_to_content",
+        "columns_count": 2,
+        "primary_keys": [
+          "geoRecordId",
+          "contentRecordId"
+        ]
+      },
+      {
+        "model_name": "KnowledgeFileToModel",
+        "table_name": "knowledge_file_to_model",
+        "columns_count": 2,
+        "primary_keys": [
+          "knowledgeFileRecordId",
+          "modelConfigurationRecordId"
+        ]
+      },
+      {
+        "model_name": "PromptToModel",
+        "table_name": "prompt_to_model",
+        "columns_count": 2,
+        "primary_keys": [
+          "promptRecordId",
+          "modelConfigurationRecordId"
+        ]
+      },
+      {
+        "model_name": "PromptToProduct",
+        "table_name": "prompt_to_product",
+        "columns_count": 2,
+        "primary_keys": [
+          "promptRecordId",
+          "productRecordId"
+        ]
+      },
+      {
+        "model_name": "CreativityToEntity",
+        "table_name": "creativity_to_entity",
+        "columns_count": 2,
+        "primary_keys": [
+          "creativityRecordId",
+          "entityId"
+        ]
+      },
+      {
+        "model_name": "CreativityToProduct",
+        "table_name": "creativity_to_product",
+        "columns_count": 2,
+        "primary_keys": [
+          "creativityRecordId",
+          "productRecordId"
+        ]
+      },
+      {
+        "model_name": "VoiceToneToEntity",
+        "table_name": "voice_tone_to_entity",
+        "columns_count": 2,
+        "primary_keys": [
+          "voiceToneRecordId",
+          "entityId"
+        ]
+      },
+      {
+        "model_name": "VoiceToneToProfile",
+        "table_name": "voice_tone_to_profile",
+        "columns_count": 2,
+        "primary_keys": [
+          "voiceToneRecordId",
+          "profileRecordId"
+        ]
+      },
+      {
+        "model_name": "ModuleToApp",
+        "table_name": "module_to_app",
+        "columns_count": 2,
+        "primary_keys": [
+          "layerModuleRecordId",
+          "appRecordId"
+        ]
+      },
+      {
+        "model_name": "ModuleToWorkflow",
+        "table_name": "module_to_workflow",
+        "columns_count": 2,
+        "primary_keys": [
+          "layerModuleRecordId",
+          "workflowRecordId"
+        ]
+      },
+      {
+        "model_name": "ModuleToDistribution",
+        "table_name": "module_to_distribution",
+        "columns_count": 2,
+        "primary_keys": [
+          "layerModuleRecordId",
+          "distributionRecordId"
+        ]
+      },
+      {
+        "model_name": "StagingAsset",
+        "table_name": "assets",
+        "columns_count": 2,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "StagingContentItem",
+        "table_name": "content_items",
+        "columns_count": 2,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "RawRecord",
+        "table_name": "raw_records",
+        "columns_count": 2,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "StagingSource",
+        "table_name": "sources",
+        "columns_count": 2,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "CpLanes",
+        "table_name": "cp_lanes",
+        "columns_count": 5,
+        "primary_keys": [
+          "laneCode"
+        ]
+      },
+      {
+        "model_name": "CpEntities",
+        "table_name": "cp_entities",
+        "columns_count": 4,
+        "primary_keys": [
+          "entityCode"
+        ]
+      },
+      {
+        "model_name": "PmProjects",
+        "table_name": "pm_projects",
+        "columns_count": 18,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmWorkstreams",
+        "table_name": "pm_workstreams",
+        "columns_count": 12,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmTasks",
+        "table_name": "pm_tasks",
+        "columns_count": 23,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmCloseouts",
+        "table_name": "pm_closeouts",
+        "columns_count": 15,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmDecisions",
+        "table_name": "pm_decisions",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmBlockers",
+        "table_name": "pm_blockers",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmRisks",
+        "table_name": "pm_risks",
+        "columns_count": 13,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmArtifacts",
+        "table_name": "pm_artifacts",
+        "columns_count": 18,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmModelHandoffs",
+        "table_name": "pm_model_handoffs",
+        "columns_count": 13,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "PmActivityLog",
+        "table_name": "pm_activity_log",
+        "columns_count": 9,
+        "primary_keys": [
+          "id"
+        ]
+      },
+      {
+        "model_name": "GotimeIntakeQuarantine",
+        "table_name": "gotime_intake_quarantine",
+        "columns_count": 11,
+        "primary_keys": [
+          "id"
+        ]
+      }
+    ],
+    "dcse_cp": [
+      {
+        "schema": "dcse_cp",
+        "name": "agent_registry",
+        "description": "Worker identity and registration table"
+      },
+      {
+        "schema": "dcse_cp",
+        "name": "agent_tasks",
+        "description": "Command post task queue and assignments"
+      },
+      {
+        "schema": "dcse_cp",
+        "name": "agent_task_events",
+        "description": "State transition and audit log for tasks"
+      }
+    ],
+    "v7_worker": [
+      {
+        "schema": "v7_worker",
+        "name": "agent_identity",
+        "description": "Worker credential enrollment and validation"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "task_claim",
+        "description": "Active task execution leases and locks"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "heartbeat",
+        "description": "Worker daemon liveness telemetry"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "result_submission",
+        "description": "Worker output payload intake"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "bridge_receipt",
+        "description": "External bridge transaction receipts"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "queue_message",
+        "description": "Poller transport messaging queue"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "dead_letter",
+        "description": "Failed execution quarantine"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "cost_ledger",
+        "description": "LLM token and execution cost tracking"
+      },
+      {
+        "schema": "v7_worker",
+        "name": "stop_gate",
+        "description": "Runtime emergency halt and stop-gates"
+      }
+    ],
+    "family_vow_go": [
+      {
+        "schema": "family_vow_go",
+        "name": "wedding_settings",
+        "description": "Vow & Go application core configuration"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "wedding_events",
+        "description": "Vow & Go timeline and event schedules"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "guests",
+        "description": "Vow & Go RSVP and guest management"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "budget_items",
+        "description": "Vow & Go expense and budget ledger"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "vendors",
+        "description": "Vow & Go vendor directory and contracts"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "music_items",
+        "description": "Vow & Go playlist curation and selections"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "content_chapters",
+        "description": "Vow & Go multimedia narrative chapters"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "external_integrations",
+        "description": "Vow & Go third-party platform bindings"
+      },
+      {
+        "schema": "family_vow_go",
+        "name": "admin_feedback",
+        "description": "Vow & Go operator reviews and feedback"
+      }
+    ]
+  },
+  "integrity_and_advisor_debt_ledger": {
+    "unindexed_foreign_keys_count": 117,
+    "unused_indexes_count": 130,
+    "tables_lacking_primary_keys_count": 6,
+    "resolution_phase": "Class R4 Database Remediation Package (DCSE-SUPABASE-IO-HARDENING-20260917)"
+  }
+}
