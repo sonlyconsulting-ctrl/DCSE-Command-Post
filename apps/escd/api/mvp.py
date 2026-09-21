@@ -48,6 +48,7 @@ from apps.escd.runtime.mvp_data import (
     update_knowledge,
     get_canonical_convergence_items,
     get_conversation_state,
+    governance_status,
     list_assets,
     list_ddna_jobs,
     list_ddna_sources,
@@ -63,7 +64,7 @@ from apps.escd.runtime.mvp_data import (
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.6.1"
+    server_version = "ESCD-MVP/0.7.3"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -178,7 +179,7 @@ class handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.6.1", "providers": provider_status()})
+            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.7.3", "providers": provider_status(), "governance": governance_status()})
             return
 
         try:
@@ -208,6 +209,8 @@ class handler(BaseHTTPRequestHandler):
                 self._json(200, dict({"ok": True}, **orchestrator_threads(days)))
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
+            elif path == "/api/mvp/governance/status":
+                self._json(200, {"ok": True, "governance": governance_status()})
             elif path == "/api/mvp/conversation":
                 cid = str((query.get("conversation_id") or ["conv_default"])[0]).strip()
                 self._json(200, {"ok": True, "conversation": get_conversation_state(cid)})
