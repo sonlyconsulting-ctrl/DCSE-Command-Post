@@ -1,0 +1,27 @@
+# TEMPLATE ONLY — copy to a task-specific file before use.
+packet_type: SUPABASE_TRANSACTION_AUTHORIZATION
+state: TEMPLATE_NOT_AUTHORIZED
+task_id: ""
+project_name: ""
+project_ref: ""
+environment: ""
+schema_objects: []
+lane: ""
+data_classification: ""
+operation_class: ""
+authorized_migration_paths: []
+sql_sha256: ""
+forward_effect: ""
+rls_grant_auth_effect: ""
+data_effect: ""
+destructive_effect: "none"
+backup_checkpoint: ""
+verification_queries: []
+rollback: ""
+git_integration_apply_authorized: false
+live_mutation_authorized: false
+authorized_by: ""
+authority_reference: ""
+single_use: true
+consumed_by_commit: ""
+expires_at: ""
