@@ -1,4 +1,4 @@
-name: V7.2 governance validation
+name: V7.3 governance validation
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: v72-governance-${{ github.event.pull_request.number || github.ref }}
+  group: v73-governance-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate V7.2 authority, routing, and safety
+      - name: Validate V7.3 authority, inherited controls, routing, and safety
         shell: python
         run: |
           import json
@@ -29,6 +29,13 @@ jobs:
           errors = []
 
           required = [
+              Path('governance/v7.3/00_START_HERE.md'),
+              Path('governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md'),
+              Path('governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json'),
+              Path('governance/v7.3/doctrines/D05_Baseline_Promotion_v7-3_RC1_CANDIDATE.md'),
+              Path('governance/v7.3/doctrines/D21_Doctrine_Runtime_Engine_v7-3_RC1_CANDIDATE.md'),
+              Path('governance/v7.3/doctrines/D22_Source_Authority_Runtime_Distribution_v7-3_RC1_CANDIDATE.md'),
+              Path('tribunal/v7/DCSE_V73_PROMOTION_AND_RECONCILIATION_RECEIPT_20260921.md'),
               Path('governance/v7.2/00_START_HERE.md'),
               Path('governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md'),
               Path('governance/v7.2/templates/DCSE_PROJECT_MANIFEST_TEMPLATE.md'),
@@ -315,15 +322,15 @@ jobs:
           if manifest.is_file():
               manifest_text = read(manifest)
               required_manifest_values = [
-                  'front_door: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
-                  'navigation_after_master: "governance/v7.2/00_START_HERE.md"',
+                  'front_door: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"',
+                  'navigation_after_master: "governance/v7.3/00_START_HERE.md"',
                   'participant_navigation: "governance/v7.2/DCSE_PARTICIPANT_NAVIGATION_AND_PROJECT_BOOTSTRAP_STANDARD_v1.md"',
-                  'doctrine_root: "governance/v7.2/doctrines/"',
-                  'complete_package_manifest: "governance/v7.2/V7_2_CANONICAL_GOVERNANCE_PACKAGE_MANIFEST.json"',
-                  'constitutional_entrypoint: "governance/v7.2/DCSE_MASTER_PROFILE_v7_2_R5_FINAL.md"',
+                  'doctrine_root: "governance/v7.3/doctrines/"',
+                  'complete_package_manifest: "governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json"',
+                  'constitutional_entrypoint: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"',
                   'source_authority_and_reconciliation: "governance/v7.2/doctrines/D22_Source_Authority_Runtime_Distribution_v7-2.md"',
                   'task_traceability_and_navigable_closeout: "governance/v7.2/DCSE_Runtime_Harmony_Task_Traceability_and_Navigable_Closeout_v7-2.md"',
-                  'current_package_state: "OPERATIVE_R5_PLUS_PROMOTED_V7_2_GOVERNANCE_SYNC_AND_NAVIGABLE_CLOSEOUT"',
+                  'current_package_state: "V7_3_OPERATIVE_NAMING_CONTINUITY_WITH_INHERITED_R5_AND_PROMOTED_CONTROLS"',
               ]
               for value in required_manifest_values:
                   if value not in manifest_text:
@@ -336,7 +343,7 @@ jobs:
               'DATABASE_PASSWORD=',
               'JWT_SECRET=',
           ]
-          for root in [Path('governance/v7.2'), Path('tribunal/v7')]:
+          for root in [Path('governance/v7.3'), Path('governance/v7.2'), Path('tribunal/v7')]:
               if not root.exists():
                   continue
               for path in root.rglob('*'):
@@ -349,15 +356,15 @@ jobs:
 
           if errors:
               error_text = '\n'.join(f'ERROR: {error}' for error in errors)
-              Path('v72-validation-errors.txt').write_text(error_text + '\n', encoding='utf-8')
+              Path('v73-validation-errors.txt').write_text(error_text + '\n', encoding='utf-8')
               raise SystemExit(error_text)
 
-          print('V7.2 authority, routing, traceability, and safety validation passed.')
+          print('V7.3 authority, inherited controls, routing, traceability, and safety validation passed.')
 
       - name: Upload governance validation errors
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: v72-governance-validation-errors
-          path: v72-validation-errors.txt
+          name: v73-governance-validation-errors
+          path: v73-validation-errors.txt
           if-no-files-found: ignore
