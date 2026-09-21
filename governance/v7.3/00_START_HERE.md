@@ -29,6 +29,18 @@ The prior filename and embedded lifecycle wording are preserved provenance. The 
 7. Apply D05, stop-gates, lane controls, platform controls, and task-specific doctrine.
 8. Record Task ID, preflight, execution evidence, synchronization state, and closeout.
 
+## Agent adoption and correction control
+
+All agents and runtimes shall apply `DCSE_V7_3_AGENT_AUTHORITY_ADOPTION_AND_CORRECTION_STANDARD_20260921.md`.
+
+Required distinctions:
+
+- the constitutional front door is the operative designation; this file is navigation after authority resolution;
+- `d24b4f64e7f464c22bbe8f2d5060c8521434a660` is the operative promotion/activation merge;
+- later reconciliation, runtime, or repository-head commits do not replace the promotion identity;
+- V7.2 remains required inherited substance and lineage, not the current governance name;
+- no agent may claim an action was logged, deployed, promoted, or synchronized without a durable identifier and successful readback.
+
 ## Doctrine state
 
 The 20 non-PS files under `governance/v7.3/doctrines/` are operative carry-forward projections by the September 21 Level 0 designation. Their `RC1_CANDIDATE` filenames preserve build history and do not negate the later promotion.
