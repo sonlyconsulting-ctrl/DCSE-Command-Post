@@ -37,6 +37,10 @@ Before any deployment-capable action, agents shall apply `DCSE_V7_3_EXPLICIT_DEP
 
 For authorized Vercel work, agents shall classify the change R0-R4 and apply `DCSE_V7_3_VERCEL_RISK_BASED_PREVIEW_TO_PRODUCTION_RELEASE_STANDARD_20260921.md`. Preview may be waived only for a fully qualified R0 editorial change; production always requires its own authorization packet.
 
+## Canonical database schema baseline
+
+All database schema and DDL changes shall apply `governance/v7.3/schema/DCSE_V7_3_CANONICAL_SCHEMA_BASELINE_STANDARD_20260921.md`, verified against `supabase/schema/DCSE_V73_CANONICAL_DDL_BASELINE_20260921.sql` and `governance/v7.3/schema/DCSE_V73_CANONICAL_SCHEMA_INVENTORY_MANIFEST_20260921.json`. All schema mutations are Class R4 Critical under PR #169 and require explicit Level 0 authorization.
+
 Required distinctions:
 
 - the constitutional front door is the operative designation; this file is navigation after authority resolution;
