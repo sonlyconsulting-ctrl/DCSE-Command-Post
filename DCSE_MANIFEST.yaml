@@ -13,6 +13,8 @@ dcse:
   operative_designation: "governance/v7.3/DCSE_V7_3_OPERATIVE_CONTINUITY_DESIGNATION_20260921.md"
   governance_sync: "tribunal/v7/DCSE_V73_PROMOTION_AND_RECONCILIATION_RECEIPT_20260921.md"
   agent_authority_adoption: "governance/v7.3/DCSE_V7_3_AGENT_AUTHORITY_ADOPTION_AND_CORRECTION_STANDARD_20260921.md"
+  explicit_deployment_authorization: "governance/v7.3/DCSE_V7_3_EXPLICIT_DEPLOYMENT_AUTHORIZATION_AND_GIT_TRIGGER_SUPPRESSION_STANDARD_20260921.md"
+  automatic_git_deployments: "DISABLED_BY_REPOSITORY_CONFIGURATION"
   authority_commit_taxonomy:
     foundation_merge: "c256f2e2a55eb90301c3441944ac810e4bb14a78"
     operative_promotion_activation: "d24b4f64e7f464c22bbe8f2d5060c8521434a660"
