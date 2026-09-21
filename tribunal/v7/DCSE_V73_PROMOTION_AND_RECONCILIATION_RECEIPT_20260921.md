@@ -29,6 +29,9 @@
 - v7.3 foundation PR: #161
 - Foundation merge: `c256f2e2a55eb90301c3441944ac810e4bb14a78`
 - Promotion transaction branch: `promotion/v73-operative-continuity-20260921`
+- Operative promotion PR: #162
+- Operative promotion merge: `d24b4f64e7f464c22bbe8f2d5060c8521434a660`
+- Mainline readback: VERIFIED
 
 ## Runtime reconciliation states
 
