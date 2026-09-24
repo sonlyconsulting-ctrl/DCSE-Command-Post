@@ -1,0 +1,9 @@
+{
+  "task_id": "DCSE-SC-VERCEL-GIT-20260924-01",
+  "probe_id": "sc-agent-os-git-trigger-20260924-a",
+  "purpose": "Distinguish push-triggered preview creation from an explicitly manual preview",
+  "target_project_id": "prj_z6GCdh8IzcPnQ4PwgFmZ8V5YhNKM",
+  "expected_git_deployment_enabled": false,
+  "production_effect": "none",
+  "database_effect": "none"
+}
