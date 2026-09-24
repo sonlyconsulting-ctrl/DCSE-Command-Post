@@ -51,7 +51,7 @@ Required distinctions:
 
 ## Doctrine state
 
-The 20 non-PS files under `governance/v7.3/doctrines/` are operative carry-forward projections by the September 21 Level 0 designation. Their `RC1_CANDIDATE` filenames preserve build history and do not negate the later promotion.
+The 20 general-route doctrines resolve through `operative_path` in `V7_3_OPERATIVE_PACKAGE_MANIFEST.json`. Each operative projection retains the exact inherited v7.2 source body and identifies its historical `RC1_CANDIDATE` staging path. The development manifest and candidate files are provenance only. D13 and D14 remain protected-route-only.
 
 D13 and D14 remain protected-route-only and are not included in the general v7.3 doctrine tree.
 
