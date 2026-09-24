@@ -381,5 +381,7 @@
     "D14"
   ],
   "historical_v71_local_snapshots": "AG_HANDOFF_ONLY",
-  "validation_note": "Source blob SHAs recorded for 20 non-PS doctrines. Exact source-body equivalence per staged candidate and each reference snapshot, plus SHA256 copy readback, must be independently verified before promotion/local closeout. New v7.3 headers necessarily change candidate blob hashes. GitHub file existence does not create authority."
+  "validation_note": "Source blob SHAs recorded for 20 non-PS doctrines. Exact source-body equivalence per staged candidate and each reference snapshot, plus SHA256 copy readback, must be independently verified before promotion/local closeout. New v7.3 headers necessarily change candidate blob hashes. GitHub file existence does not create authority.",
+  "record_role": "HISTORICAL_20260919_DEVELOPMENT_SNAPSHOT_NOT_CURRENT_AUTHORITY",
+  "current_authority_manifest": "governance/v7.3/V7_3_OPERATIVE_PACKAGE_MANIFEST.json"
 }
