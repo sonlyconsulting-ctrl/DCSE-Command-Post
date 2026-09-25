@@ -3,7 +3,7 @@
 **Task ID:** SC-CTJ-CANONICALIZATION-20260925-01  
 **Lane / entity:** Sonly Consulting / The Critical Thinker's Journey  
 **Authority:** DCS Level 0 approval received September 25, 2026  
-**Status:** PARTIAL COMPLETE - source promotion complete; repository rename awaiting authenticated GitHub settings access  
+**Status:** COMPLETE - canonical source promotion, repository rename, branch preservation, and GitHub reference verification complete  
 **Handoff ID:** SC-CTJ-FAMILY-INTEGRATION-20260925-01
 
 ## Authorized decisions
@@ -38,6 +38,14 @@
 - Branch base: canonical SCA merge commit `7a70b28a54f83df9281f837d288f6a8c8fa691db`.
 - No deployment was triggered or authorized.
 
+### Repository rename
+
+- Renamed `sonlyconsulting-ctrl/CTJ-MVP-11252025` to `sonlyconsulting-ctrl/SC-CTJ`.
+- Stable repository ID remained `1104050729`.
+- Default branch remained `main`.
+- The former repository path resolves to `SC-CTJ`, verifying GitHub redirection.
+- PR #1, merged PR #2, and all three review branches resolve under the new repository name.
+
 ### Unified PR preservation and conflict control
 
 - PR #1 remains open and draft.
@@ -45,19 +53,18 @@
 - A control note was added to PR #1 as comment `5837189837`.
 - PR #1 must not be merged as-is. Its approved capstone changes are to be reconciled into the family integration branch while preserving the canonical SCA baseline.
 
-## Blocked action
+## Reference audit
 
-The GitHub connector does not expose repository renaming. The available browser session is not authenticated to GitHub, and no task-scoped `GITHUB_TOKEN`, `GH_TOKEN`, or `GITHUB_PAT` is available in the workspace. A secure sign-in attempt did not complete.
+GitHub code search found the former name in historical Command Post audit and checkpoint records. Those records accurately describe the repository name at their original timestamps and are preserved rather than rewritten. The canonicalization receipt now supplies the current-name crosswalk.
 
-The repository therefore remains named `CTJ-MVP-11252025` at receipt time. No credential was requested or exposed in chat, and no unsafe workaround was attempted.
+No active source file or GitHub workflow reference requiring an immediate rename correction was identified in the returned search results. Netlify project linkage, local Git remotes, and non-GitHub automation remain separate runtime checks because they are not visible through the GitHub repository connector.
 
-## Exit criteria
+## Next-gate exit criteria
 
-- Rename repository to `SC-CTJ` through authenticated GitHub settings.
-- Verify the stable repository ID remains `1104050729` after rename.
-- Verify PR #1, merged PR #2, `main`, and the integration branch resolve under the new repository name.
-- Inventory and update any Netlify binding, local Git remote, documentation link, or automation that does not follow the GitHub redirect.
-- Reconcile Unified changes into the integration branch and run the combined validation suite.
+- Reconcile approved Unified changes from PR #1 into `review/ctj-family-integration-20260925` while preserving the canonical SCA baseline.
+- Run the combined SCA, Unified, responsive, accessibility, and persistence validation suite.
+- Verify Netlify repository linkage and any local Git remotes against `sonlyconsulting-ctrl/SC-CTJ` before a review deployment.
+- Prepare the governed Claude Design package after the integrated branch passes.
 
 ## Release boundary
 
