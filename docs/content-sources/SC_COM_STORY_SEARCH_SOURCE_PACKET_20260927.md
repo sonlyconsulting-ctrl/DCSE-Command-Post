@@ -18,6 +18,8 @@ Claude shall load current mainline governance afresh, including D07, D08, D09, D
 
 **Evidence classes in this packet:** VERIFIED = inspected directly in current GitHub or supplied attachment; REPORTED = an execution claim in AG's supplied readback with underlying local receipts unavailable here; LIKELY = supported interpretation requiring source corroboration; UNKNOWN = unresolved.
 
+**Additional source review:** [Voice and history DDNA chunk review](DCSE_VOICE_HISTORY_DDNA_CHUNK_REVIEW_20260927.md) evaluates the later voice-calibration attachment and accompanying pasted matrix across seven attachment chunks, three conversation-source groups, five DDNA layers, and a contradiction register. Its 2024/2025 account-origin claims remain UNKNOWN without underlying logs. D17 defines DART as Discovery, Attack, Rebuttal, Trial. Claude must apply this later review when drafting.
+
 ## 2. Supplied materials and their limits
 
 1. The user supplied two identical copies of an external creator transcript about digital products. They were byte-identical in this session (SHA-256 `f542b7155c77160680e92d79a271d7d0f188ad11226987a79350179e16130c55`). Their model of specific problem, product, store, content, and next offer is inspiration, not evidence of DCSE outcomes. Their revenue, margin, timeline, and customer claims must not be transferred to SC.
