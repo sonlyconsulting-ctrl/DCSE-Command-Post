@@ -68,3 +68,10 @@ If this doctrine file is missing, unreadable, or not found by an executing agent
 2. **LOG** `ERR_MISSING_DOCTRINE` to `05_Tribunal_Inbox`.
 3. **TRIGGER** STOPGATE and alert the user.
 
+---
+
+## 4. Brand Logo -> Motion Ident Routing (2026-09-19 DCS Directive Candidate)
+
+Every DCS-approved brand/product-family primary logo is paired with a **6–8 second illustrative brand-motion ident** in the identity deliverables plan. The ident shall make the underlying brand/product concept legible through movement and resolve to the **exact approved static logo**, preserving its names, typography, color relationships and parent/child identity. An existing static logo is not thereby changed, and existing brands without an ident enter a bounded production backlog rather than being incorrectly labeled as video-complete. No automatic public release, derivative-rights assumption, new brand name or PS-to-public transfer follows from this requirement.
+
+**Authority / execution:** D12 Addendum C is the controlling video governance rule and scoped short-ident exception; D18 Section 9 implements the four-phase media-production procedure; D19 governs source-faithful visual derivatives; D09 remains the parent color/brand-term authority. DCS Level 0 controls final brand use, exceptions and release. Specific CTJ Unified source logo and ident brief are tracked in `_Tribunal_Inbox/ctj-brand-identity-20260919/03_CTJ_UNIFIED_7_SECOND_BRAND_VIDEO_BRIEF.md`. This amendment remains a proposal until the v7.2 D21/D05 route and independent validation/promotion gates have been satisfied.
