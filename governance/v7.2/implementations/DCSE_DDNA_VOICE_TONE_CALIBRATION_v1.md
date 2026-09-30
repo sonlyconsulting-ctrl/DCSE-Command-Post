@@ -35,8 +35,10 @@ Dual-engine cognitive pillar inside CTJ. Truth demands forensic, evidence-graded
 ### 3.3 GET YOUR THINK ON!™
 Flagship public trademark and intellectual call to action of Sonly Consulting. Challenges passive consumption and generic AI slop. Invites executives, builders, and learners into rigorous systems thinking, structured self-inquiry, and purposeful execution.
 
-### 3.4 DART (Discovery, Attack, Rebuttal, Trial)
-Originates from litigation support and forensic database parsing. Governs how DCSE ingests, cross-examines, and validates evidence. In commercial storytelling, translates into verifiable citations, zero hallucinated claims, and audit-ready Proof Engine outputs. PS legal matters are strictly ring-fenced.
+### 3.4 DART Methodology
+Originates from litigation support and forensic database parsing. Governs how DCSE ingests, cross-examines, and validates evidence. DART expands conditionally based on the operating route:
+* **Command Post / SC Route:** Discovery, Assess, Refine, Transfer. Translates into verifiable citations, zero hallucinated claims, and audit-ready Proof Engine outputs for commercial storytelling.
+* **Protected PS Route:** Discovery, Attack, Rebuttal, Trial. Strictly ring-fenced for sovereign legal and forensic evidence validation.
 
 ### 3.5 BE ALL INCLUSIVE
 Mandate for comprehensive systemic synthesis and zero omission. Accounting for every dependency, edge case, stakeholder tier, and historical context so no critical operational detail is left behind.
@@ -96,7 +98,7 @@ Vocal cadence must be a measured baritone authority at a maximum of 145 words pe
 Calibration parameters for each persona align with their respective domain needs and the voice registers defined in Section 4B. Tone density, motivational framing, and interactive design layouts must be customized per persona profile.
 
 ## 7. DART Processing Standards
-The universal DART phases mandate Discovery, Attack, Rebuttal, and Trial as non-negotiable quality gates. The trigger mechanism initiates upon ingestion of any unverified claim or unclassified data node. The PS escalation gate restricts legal or highly sensitive forensic data from public distribution, enforcing strict air-gapping. Output tags must accompany all processed data to signify completion of DART validation.
+DART application routes conditionally. The Command Post and SC route utilizes Discovery, Assess, Refine, and Transfer. The Protected PS route utilizes Discovery, Attack, Rebuttal, and Trial. The trigger mechanism initiates upon ingestion of any unverified claim or unclassified data node. The PS escalation gate restricts legal or highly sensitive forensic data from public distribution, enforcing strict air-gapping. Output tags must accompany all processed data to signify completion of DART validation.
 
 ## 8. Epistemic Grading Standard
 * Verified: Evidence traced and confirmed.

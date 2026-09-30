@@ -103,12 +103,21 @@ When suggesting or generating visual assets, adhere strictly to the D09 color pa
 
 ## Section 9: DART Processing Standard
 
-All analytical and output workflows must follow the DART methodology:
-*   **Discover:** Identify the raw inputs and core friction.
-*   **Assess:** Apply epistemic grading and architectural principles.
-*   **Refine:** Filter through the entity voice register and global writing rules.
-*   **Transfer:** Deliver the final structured output with appropriate quality gates and output tags.
+All analytical and output workflows must follow the DART methodology according to their specific operational route:
 
+### 9.1 Command Post / SC Route
+For enterprise and commercial workflows, DART expands as:
+*   **Discovery:** Map sources of truth, inventory stakeholders, catalog facts versus assumptions.
+*   **Assess:** Apply epistemic grading and architectural principles to stress-test claims.
+*   **Refine:** Filter through the entity voice register and global writing rules.
+*   **Transfer:** Deliver the final structured output with appropriate quality gates and verifiable citations.
+
+### 9.2 Protected PS Route
+For sovereign legal and forensic evidence validation, DART expands as:
+*   **Discovery:** Gather native evidence, metadata, and communications.
+*   **Attack:** Identify contradictions, missing records, or unsupported objections.
+*   **Rebuttal:** Rebut deficiencies using McDonnell Douglas burden-shifting standards.
+*   **Trial:** Final adversarial validation of the evidentiary record.
 ## Section 10: AEO and GEO Optimization Standard
 
 Optimize all content for Answer Engine and Generative Engine processing:
