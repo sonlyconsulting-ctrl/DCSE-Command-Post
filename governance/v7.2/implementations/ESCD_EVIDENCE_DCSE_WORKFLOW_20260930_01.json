@@ -1,0 +1,31 @@
+{
+  "receipt_id": "RECEIPT-DCSE-WORKFLOW-20260930-01",
+  "contract": {
+    "task_id": "DCSE-WORKFLOW-20260930-01",
+    "handoff_id": "DCSE-WORKFLOW-HO-20260930-04",
+    "entity": "DCSE Command Post / ESCD",
+    "execution_owner": "ESCD",
+    "authorizing_authority": "DCS",
+    "authorized_scope": "Live demonstration of ESCD dispatch and closeout under task DCSE-WORKFLOW-20260930-01",
+    "requested_scope": "Live demonstration of ESCD dispatch and closeout under task DCSE-WORKFLOW-20260930-01",
+    "lane": "operational",
+    "artifact_lifecycle_state": "CANDIDATE",
+    "applicable_dart_route": "Command Post / SC (Discovery, Assess, Refine, Transfer)",
+    "shared_protocol_revision": "DCSE-SPEC-SHARED-ACTION-PROTOCOL-v1",
+    "reserved_actions": [
+      "production_publication",
+      "external_live_deployment"
+    ],
+    "authorization_continuity_verified": true
+  },
+  "acceptance": {
+    "passed": true,
+    "returncode": 0,
+    "stdout": "[DCSE PROTOCOL CHECK] Inspected 1 file(s).\n[DCSE PROTOCOL CHECK PASSED] All acceptance rules and contract fields satisfied.",
+    "stderr": "",
+    "target_count": 1
+  },
+  "remote_commit_sha": "ef20e3ac3e1a848bcbcf7cae0b7de3b22f8ec0a3",
+  "evidence_type": "ESCD_SHARED_PROTOCOL_EVALUATION",
+  "status": "ACCEPTED"
+}
