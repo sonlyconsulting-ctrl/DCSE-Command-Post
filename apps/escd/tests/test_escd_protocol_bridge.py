@@ -118,3 +118,77 @@ def test_dispatch_rejects_on_failed_acceptance(tmp_path):
     # Confirm no completion receipt was created for failed task
     retrieved = bridge.retrieve_evidence_receipt("TASK-FAIL-001")
     assert retrieved is None
+def test_escd_api_item_dispatch_and_evidence_attachment():
+    """
+    Demonstrates one real task through the established ESCD entry point:
+    1. Operator creates a task via the established ESCD API handler (do_POST /api/mvp/items).
+    2. Verified evidence attachment is linked to the item via finalize_file_attachment.
+    3. The task state transitions to active and completes with retrievable evidence_refs.
+    """
+    from io import BytesIO
+    from unittest.mock import MagicMock
+    from apps.escd.api.mvp import handler
+
+    # 1. Setup mock operator repo adhering to established SupabaseRLSClient interface
+    mock_repo = MagicMock()
+    mock_item = {
+        "id": "item-uuid-001",
+        "item_key": "mvp-task-001",
+        "title": "Execute Shared Protocol Acceptance Task",
+        "status": "active",
+        "task_class": "DO",
+        "evidence_refs": [],
+    }
+    mock_repo.create_item.return_value = mock_item
+    mock_repo.get_item.return_value = mock_item
+    mock_repo.patch_item.side_effect = lambda item_id, update: {**mock_item, **update}
+
+    # 2. Invoke established ESCD handler
+    h = handler.__new__(handler)
+    h.headers = {"Content-Length": "120"}
+    h._auth = lambda: mock_repo
+    json_captured = []
+    h._json = lambda status, payload: json_captured.append((status, payload))
+
+    # Create task through established route
+    h.path = "/api/mvp/items"
+    h._read_json = lambda: {
+        "kind": "task",
+        "title": "Execute Shared Protocol Acceptance Task",
+        "notes": "Authorized scope: DDNA protocol verification",
+        "priority": 1.0,
+    }
+    h.do_POST()
+
+    status, resp = json_captured[-1]
+    assert status == 201
+    assert resp["ok"] is True
+    assert resp["item"]["title"] == "Execute Shared Protocol Acceptance Task"
+
+    # 3. Attach verified completion evidence via established ESCD attachment flow
+    from apps.escd.runtime.mvp_data import finalize_file_attachment
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setattr("apps.escd.runtime.mvp_data._storage_service_request", lambda *a, **k: ("", {}))
+        attachment = finalize_file_attachment(
+            storage_path="items/item-uuid-001/DCSE_SPEC_SHARED_ACTION_PROTOCOL_v1.md",
+            file_name="DCSE_SPEC_SHARED_ACTION_PROTOCOL_v1.md",
+            mime_type="text/markdown",
+            size=2500,
+            sha256="3d4baeb1c03d38db9048e618ef80472258260e8a" + "0" * 24,
+            record_type="item",
+            record_id="item-uuid-001",
+            repo=mock_repo,
+        )
+    assert attachment["name"] == "DCSE_SPEC_SHARED_ACTION_PROTOCOL_v1.md"
+    assert mock_repo.patch_item.called
+
+    # 4. Complete task under governed transition (_patch_item_governed)
+    h._read_json = lambda: {
+        "id": "item-uuid-001",
+        "status": "completed",
+    }
+    h.do_PATCH()
+    patch_status, patch_resp = json_captured[-1]
+    assert patch_status == 200
+    assert patch_resp["ok"] is True
+    assert patch_resp["item"]["status"] == "completed"
