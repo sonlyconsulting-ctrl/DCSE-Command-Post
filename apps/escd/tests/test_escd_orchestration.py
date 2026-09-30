@@ -136,11 +136,24 @@ def test_no_offline_simulation_or_in_memory_api_path():
 
 def test_worker_format_as_escd_document_normalizes_em_dashes():
     from apps.escd.runtime.ollama_worker import format_as_escd_document
-    raw = "Section 1\nThis text has an em dash \u2014 and an en dash \u2013 here."
+    raw = (
+        "Section 1\n"
+        "dcse://internal-route-to-exclude\n"
+        "task://task-id-to-exclude\n"
+        "This text has an em dash \u2014 and an en dash \u2013 here.\n"
+        "worker://worker-ref-to-exclude"
+    )
     formatted = format_as_escd_document(raw)
+    # Regression check: internal routing lines must remain excluded
+    assert "dcse://" not in formatted
+    assert "task://" not in formatted
+    assert "worker://" not in formatted
+    assert "internal-route-to-exclude" not in formatted
+    # Protocol check: em and en dashes must be normalized to standard hyphens
     assert "\u2014" not in formatted
     assert "\u2013" not in formatted
     assert "-" in formatted
+    assert "This text has an em dash - and an en dash - here." in formatted
 
 
 def test_worker_complete_distinguishes_execution_and_acceptance():

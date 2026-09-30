@@ -356,6 +356,7 @@ def format_as_escd_document(text: str) -> str:
     cleaned = cleaned.replace('`', '')
     cleaned = re.sub(r'\s*\([iI][dD]:\s*[0-9a-fA-F\-]{36}\)', '', cleaned)
     lines = [line for line in cleaned.splitlines() if not re.search(r'(?:dcse|worker|model|trace|task|file|schema|profile)://', line)]
+    cleaned = '\n'.join(lines)
     cleaned = re.sub(r'[\u2014\u2013]', '-', cleaned)
     cleaned = re.sub(r'\n{3,}', '\n\n', cleaned).strip()
     return cleaned
