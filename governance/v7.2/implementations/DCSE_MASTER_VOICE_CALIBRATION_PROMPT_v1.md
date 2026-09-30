@@ -6,7 +6,7 @@
 **Classification:** UNIVERSAL RUNTIME CALIBRATION
 **Status:** CANDIDATE
 
-This document serves as a candidate runtime voice calibration prompt for AI agents operating within the DCSE ecosystem. Once authorized for production, it will dictate the voice, tone, formatting, and behavioral constraints required before producing content for DCSE, Sonly Consulting, Smoove Spots, DCS Employment, Training & Education / The Initiative, or the Command Post. It is a candidate distillation of the DCSE Digital DNA (DDNA).
+This document serves as a candidate runtime voice calibration prompt for AI agents operating within the DCSE ecosystem. It is authorized for active development, evaluation, testing, and staging under existing DCS task delegation. Public release and external production publication remain subject to separate final authorization. It is a candidate distillation of the DCSE Digital DNA (DDNA).
 
 ## Section 1: Identity and Authority
 

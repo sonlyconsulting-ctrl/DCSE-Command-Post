@@ -1,4 +1,4 @@
-﻿# DCSE Consolidated Acceptance Checklist
+# DCSE Consolidated Acceptance Checklist
 
 **Document ID:** DCSE_CONSOLIDATED_ACCEPTANCE_CHECKLIST_TEMPLATE
 **Version:** 1.0
@@ -15,14 +15,14 @@
 *   [ ] Artifact state is separated from action authority (i.e., a commit does not confer publication approval).
 
 ## Section 3: Semantic Content Validation (Whole-Artifact)
-*   [ ] **Zero Absolute Outcome Promises:** Words like "guarantees" or "ensures [absolute outcome]" must be replaced with concrete mechanisms (e.g., "requires targeted state checkpoints").
-*   [ ] **Prohibited Punctuation:** Zero em dashes (—) or en dashes (–) anywhere in the document.
+*   [ ] **Zero Absolute Outcome Promises:** Absolute outcome claims must be replaced with concrete mechanisms (such as requires targeted state checkpoints).
+*   [ ] **Prohibited Punctuation:** Zero em dashes (Unicode U+2014) or en dashes (Unicode U+2013) anywhere in the document. Use standard periods, colons, or parentheses.
 *   [ ] **Voice Calibration:** Third-person solo-brand posture strictly maintained; no performative buzzwords (synergy, delve, unlock potential).
 
 ## Section 4: DART Routing and Legal Frameworks
 *   [ ] Command Post / SC Route explicitly defines: Discovery, Assess, Refine, Transfer.
 *   [ ] Protected PS Route explicitly defines: Discovery, Attack, Rebuttal, Trial.
-*   [ ] Specialized legal frameworks (e.g., McDonnell Douglas) are restricted entirely to the Protected PS adapter and do not bleed into universal documentation.
+*   [ ] Specialized legal frameworks (such as McDonnell Douglas) are restricted entirely to the Protected PS adapter and do not bleed into universal documentation.
 
 ## Section 5: Provenance and Evidence
 *   [ ] Timeline assertions include specific reference links or system IDs.

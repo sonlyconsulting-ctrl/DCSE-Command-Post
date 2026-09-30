@@ -89,8 +89,11 @@ Active execution controls:
 - `execution/DCSE_CONVERSATION_INTAKE_AND_CLOSEOUT_CONTRACT_v1.md`
 - `execution/DCSE_PLATFORM_EXECUTION_PROFILES_GITHUB_VERCEL_SUPABASE_v1.md`
 - `execution/DCSE_CROSS_SYSTEM_RECONCILIATION_AND_COMPLETION_EVIDENCE_CONTRACT_v1.md`
+- `implementations/DCSE_SPEC_SHARED_ACTION_PROTOCOL_v1.md`
+- `rule-foundry/DCSE_CONSOLIDATED_ACCEPTANCE_CHECKLIST_TEMPLATE.md`
+- `implementations/adapters/`
 
-These controls govern conversation/session start and closeout, effort/risk/authority classification, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
+These controls govern conversation/session start and closeout, effort/risk/authority classification, multi-agent protocol adherence, GitHub/Vercel/Supabase execution, and cross-system completion evidence. They are subordinate to R5 and routed doctrine.
 
 ## Rule Corpus Development
 

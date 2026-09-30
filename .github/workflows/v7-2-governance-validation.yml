@@ -344,6 +344,15 @@ jobs:
 
           print('V7.2 authority, routing, traceability, and safety validation passed.')
 
+      - name: Validate Shared Action Protocol and Candidate Acceptance Rules
+        shell: python
+        run: |
+          import subprocess
+          import sys
+          res = subprocess.run([sys.executable, 'scripts/check_shared_protocol.py'])
+          if res.returncode != 0:
+              sys.exit(res.returncode)
+
       - name: Upload governance validation errors
         if: failure()
         uses: actions/upload-artifact@v4
