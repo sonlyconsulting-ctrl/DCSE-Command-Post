@@ -3,13 +3,13 @@
 **Document Title:** DCSE DDNA Voice and Tone Calibration Master Document
 **Document ID:** DCSE_DDNA_VOICE_TONE_CALIBRATION_v1
 **Version:** 1.0 (Master Profile v7.2 R5)
-**Status:** Active Governance
+**Status:** CANDIDATE
 **Author:** DCSE Command Post Orchestration
 **Scope:** Universal Digital DNA Extraction and Calibration
 
 ## 1. DDNA Collection Provenance & Account Timeline
 
-Active account telemetry begins July 2024. This date is verified via infrastructure logs. Governed memory snapshots begin April 9, 2025, which is verified via the 2025-04-09 system ledger. Historical entity records trace Sonly Consulting to January 2021. Foundational career systems work traces to 1999.
+Active account telemetry begins July 2024. Governed memory snapshots begin April 9, 2025. Historical entity records trace Sonly Consulting to January 2021. Foundational career systems work traces to 1999. *(Provenance Note: Specific infrastructure logs, system ledgers, and conversational archives supporting these dates require external verification prior to final production release.)*
 
 Three chronological gaps exist within the systemic timeline. Gap 1 spans August 2024 to October 2024, functioning as the Infrastructure Incubation period. Gap 2 spans December 2024 to March 2025, representing the Media Tooling Transition. Gap 3 spans August 2025 to January 2026, designated as the Silent Consolidation Window.
 

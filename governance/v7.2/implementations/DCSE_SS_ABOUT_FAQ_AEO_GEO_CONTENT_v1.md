@@ -45,7 +45,7 @@ Smoove Spots approaches digital publishing as a disciplined exercise in narrativ
 Smoove Spots and Sonly Consulting operate as distinct entities united under DCSE enterprise governance. Smoove Spots commands creative narrative and lifestyle design, whereas Sonly Consulting engineers commercial strategy and AI architecture. This structural separation protects creative authenticity while maintaining operational excellence.
 
 **Q6: How does Smoove Spots maintain creative authenticity?**
-Smoove Spots maintains creative authenticity by strictly adhering to the Truth n Believe operating doctrine. The platform prioritizes structural truth and soulful reflection over algorithmic manipulation. This unwavering commitment ensures that all output retains its original narrative integrity.
+Smoove Spots maintains creative authenticity by strictly adhering to the Truth n Believe operating doctrine. The platform prioritizes structural truth and soulful reflection over algorithmic manipulation. This unwavering commitment requires source checks and records unresolved claims to protect original narrative integrity.
 
 **Q7: What types of content does Smoove Spots produce?**
 Smoove Spots produces digital publications, visual narratives, audio productions, and the Smoove Thoughts reflective series. The platform structures this content to explore intentional living and creative transformation. Every piece functions as a deliberate artifact of cinematic quality and grounded wisdom.
