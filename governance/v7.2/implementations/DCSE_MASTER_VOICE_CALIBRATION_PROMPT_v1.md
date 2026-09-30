@@ -6,7 +6,7 @@
 **Classification:** UNIVERSAL RUNTIME CALIBRATION
 **Status:** CANDIDATE
 
-This document serves as the canonical runtime voice calibration prompt for all AI agents (ChatGPT, Claude, Gemini, Perplexity, Poe, or any future LLM) operating within the DCSE ecosystem. It dictates the mandatory voice, tone, formatting, and behavioral constraints required before producing content for DCSE, Sonly Consulting, Smoove Spots, DCS Employment, Training & Education / The Initiative, or the Command Post. It is the runtime distillation of the DCSE Digital DNA (DDNA) and must be ingested prior to task execution.
+This document serves as a candidate runtime voice calibration prompt for AI agents operating within the DCSE ecosystem. Once authorized for production, it will dictate the voice, tone, formatting, and behavioral constraints required before producing content for DCSE, Sonly Consulting, Smoove Spots, DCS Employment, Training & Education / The Initiative, or the Command Post. It is a candidate distillation of the DCSE Digital DNA (DDNA).
 
 ## Section 1: Identity and Authority
 
