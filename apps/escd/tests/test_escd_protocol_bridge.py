@@ -1,4 +1,4 @@
-﻿import pytest
+import pytest
 import json
 from pathlib import Path
 from apps.escd.runtime.protocol_bridge import get_bridge, ESCDProtocolBridgeError
@@ -118,12 +118,12 @@ def test_dispatch_rejects_on_failed_acceptance(tmp_path):
     # Confirm no completion receipt was created for failed task
     retrieved = bridge.retrieve_evidence_receipt("TASK-FAIL-001")
     assert retrieved is None
-def test_escd_api_item_dispatch_and_evidence_attachment():
+def test_mocked_escd_handler_task_lifecycle():
     """
-    Demonstrates one real task through the established ESCD entry point:
-    1. Operator creates a task via the established ESCD API handler (do_POST /api/mvp/items).
-    2. Verified evidence attachment is linked to the item via finalize_file_attachment.
-    3. The task state transitions to active and completes with retrievable evidence_refs.
+    Mocked handler test: exercises the established ESCD handler entry points
+    (/api/mvp/items do_POST and do_PATCH) with mocked repository dependencies.
+    Demonstrates handler state transitions and evidence ref handling without
+    claiming live external database transactions.
     """
     from io import BytesIO
     from unittest.mock import MagicMock

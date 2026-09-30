@@ -49,7 +49,7 @@ def _http_json(url: str, *, method: str = "GET", headers: dict[str, str] | None 
                payload: Any = None, timeout: int = 60) -> Any:
     body = None if payload is None else json.dumps(payload).encode("utf-8")
     req = request.Request(url, data=body, headers=headers or {}, method=method)
-    for attempt in range(2):
+    for attempt in range(3):
         try:
             with request.urlopen(req, timeout=timeout) as response:
                 raw = response.read().decode("utf-8")
@@ -58,8 +58,8 @@ def _http_json(url: str, *, method: str = "GET", headers: dict[str, str] | None 
             detail = exc.read().decode("utf-8", errors="replace")
             raise WorkerError(f"http_{exc.code}:{detail[:300]}") from None
         except (error.URLError, TimeoutError, OSError) as exc:
-            if attempt == 0 and method == "GET":
-                time.sleep(1)
+            if attempt < 2:
+                time.sleep(1 + attempt)
                 continue
             raise WorkerError(f"connection_failed:{exc}") from None
 
@@ -606,6 +606,9 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
             "content": (
                 "You are ESCD, the executive co-founder and operational partner to DCS. "
                 "Produce an executive operational response for DCS using the supplied persisted context and rule evaluation. "
+                "Adhere to the DCSE Shared Action Protocol: "
+                "Do NOT use em dashes or en dashes; use standard punctuation only. "
+                "Do NOT make unsupported outcome guarantees (e.g. guarantees or ensures absolute outcomes); state concrete mechanisms. "
                 "Format your response as a clean, professional text document or briefing memo. "
                 "Do NOT use markdown heading hashes (no #### or #####). Use clean section titles on their own line. "
                 "Do NOT include '.md' file extensions in document names (e.g. write 'Production Profile' instead of '..._PROFILE_20260911.md'). "
@@ -661,6 +664,10 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         "rules_evaluated": rule_evidence.get("rule_count", 0),
         "rules_failed": rule_evidence.get("fail_count", 0),
         "rules_unknown": rule_evidence.get("unknown_count", 0),
+        "protocol_compliance": {
+            "has_em_dash": "\u2014" in content or "\u2013" in content,
+            "has_unsupported_guarantee": bool(re.search(r'\b(guarantees|guaranteeing)\b', content, re.I)),
+        },
     }
     _event(
         turn["id"], "AUDIT", "AUDIT", "AUDITOR",
