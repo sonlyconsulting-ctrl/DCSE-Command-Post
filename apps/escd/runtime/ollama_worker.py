@@ -49,7 +49,7 @@ def _http_json(url: str, *, method: str = "GET", headers: dict[str, str] | None 
                payload: Any = None, timeout: int = 60) -> Any:
     body = None if payload is None else json.dumps(payload).encode("utf-8")
     req = request.Request(url, data=body, headers=headers or {}, method=method)
-    for attempt in range(3):
+    for attempt in range(2):
         try:
             with request.urlopen(req, timeout=timeout) as response:
                 raw = response.read().decode("utf-8")
@@ -58,8 +58,8 @@ def _http_json(url: str, *, method: str = "GET", headers: dict[str, str] | None 
             detail = exc.read().decode("utf-8", errors="replace")
             raise WorkerError(f"http_{exc.code}:{detail[:300]}") from None
         except (error.URLError, TimeoutError, OSError) as exc:
-            if attempt < 2:
-                time.sleep(1 + attempt)
+            if attempt == 0 and method == "GET":
+                time.sleep(1)
                 continue
             raise WorkerError(f"connection_failed:{exc}") from None
 
@@ -356,13 +356,14 @@ def format_as_escd_document(text: str) -> str:
     cleaned = cleaned.replace('`', '')
     cleaned = re.sub(r'\s*\([iI][dD]:\s*[0-9a-fA-F\-]{36}\)', '', cleaned)
     lines = [line for line in cleaned.splitlines() if not re.search(r'(?:dcse|worker|model|trace|task|file|schema|profile)://', line)]
-    cleaned = '\n'.join(lines)
+    cleaned = re.sub(r'[\u2014\u2013]', '-', cleaned)
     cleaned = re.sub(r'\n{3,}', '\n\n', cleaned).strip()
     return cleaned
 
 
 def _complete(turn: dict[str, Any], content: str, *, evidence_refs: list[str],
-              usage: dict[str, Any], rule_evidence: dict[str, Any] | None = None) -> None:
+              usage: dict[str, Any], rule_evidence: dict[str, Any] | None = None,
+              acceptance_passed: bool = True) -> None:
     formatted_content = format_as_escd_document(content)
     _patch_turn(turn["id"], {
         "state": "RESPONDING",
@@ -378,11 +379,13 @@ def _complete(turn: dict[str, Any], content: str, *, evidence_refs: list[str],
         "evidence_refs": evidence_refs,
         "operation_turn_key": turn.get("turn_key"),
         "rule_evidence": rule_evidence or {},
+        "acceptance_status": "PASSED" if acceptance_passed else "FLAGGED",
     }
     assistant_turn = _append_assistant_turn(turn, formatted_content, metadata)
     final = {
         "content": formatted_content,
         "control": "COMPLETE",
+        "acceptance_status": "PASSED" if acceptance_passed else "FLAGGED",
         "provider": "ollama",
         "model": OLLAMA_MODEL,
         "worker": WORKER_KEY,
@@ -673,12 +676,14 @@ def _process_orchestrate(turn: dict[str, Any]) -> None:
         turn["id"], "AUDIT", "AUDIT", "AUDITOR",
         audit, evidence_refs=evidence_refs, actor_ref="dcse-independent-contract-audit",
     )
+    acceptance_passed = not audit["protocol_compliance"]["has_unsupported_guarantee"] and rule_evidence.get("fail_count", 0) == 0
     _complete(
         turn,
         content,
         evidence_refs=evidence_refs,
         usage=usage,
         rule_evidence=rule_evidence,
+        acceptance_passed=acceptance_passed,
     )
 
 

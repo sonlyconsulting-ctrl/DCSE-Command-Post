@@ -133,3 +133,49 @@ def test_no_offline_simulation_or_in_memory_api_path():
     assert "update_orchestration_turn_action(" not in api
     assert "repo.submit_operation_turn(" in api
     assert "repo.operation_turn_snapshot(" in api
+
+def test_worker_format_as_escd_document_normalizes_em_dashes():
+    from apps.escd.runtime.ollama_worker import format_as_escd_document
+    raw = "Section 1\nThis text has an em dash \u2014 and an en dash \u2013 here."
+    formatted = format_as_escd_document(raw)
+    assert "\u2014" not in formatted
+    assert "\u2013" not in formatted
+    assert "-" in formatted
+
+
+def test_worker_complete_distinguishes_execution_and_acceptance():
+    from unittest.mock import MagicMock, patch
+    from apps.escd.runtime.ollama_worker import _complete
+
+    mock_turn = {"id": "turn-test-1", "conversation_id": "conv-test-1", "turn_key": "TURN-TEST-01"}
+    
+    with patch("apps.escd.runtime.ollama_worker._patch_turn") as mock_patch_turn, \
+         patch("apps.escd.runtime.ollama_worker._append_assistant_turn", return_value={"id": "asst-1"}), \
+         patch("apps.escd.runtime.ollama_worker._event") as mock_event:
+        
+        # 1. Passed acceptance
+        _complete(
+            mock_turn,
+            "Clean response text.",
+            evidence_refs=["ref-1"],
+            usage={"total_tokens": 10},
+            rule_evidence={"fail_count": 0},
+            acceptance_passed=True,
+        )
+        assert mock_patch_turn.call_count == 2
+        final_call = mock_patch_turn.call_args_list[-1]
+        assert final_call[0][1]["state"] == "COMPLETE"
+        assert final_call[0][1]["final_response"]["acceptance_status"] == "PASSED"
+
+        # 2. Flagged acceptance (e.g. unverified guarantee detected)
+        _complete(
+            mock_turn,
+            "Response with unverified claims.",
+            evidence_refs=["ref-1"],
+            usage={"total_tokens": 10},
+            rule_evidence={"fail_count": 1},
+            acceptance_passed=False,
+        )
+        final_flagged = mock_patch_turn.call_args_list[-1]
+        assert final_flagged[0][1]["state"] == "COMPLETE"
+        assert final_flagged[0][1]["final_response"]["acceptance_status"] == "FLAGGED"
