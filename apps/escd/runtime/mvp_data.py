@@ -779,6 +779,77 @@ def list_saved_chats(limit: int = 50) -> list[dict]:
     return ConversationStore.list_saved_chats(limit)
 
 
+def execute_chat_item_creation(kind: str, title: str, summary: str = "", priority: float = 80.0, task_class: str = "DO") -> dict:
+    url, key = _service_config()
+    kind = "idea" if str(kind or "").lower() == "idea" else "task"
+    title = str(title or "").strip()
+    if not title:
+        raise MVPServiceError("title_required")
+    item_key = "mvp-" + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()
+    payload = {
+        "item_key": item_key,
+        "title": title,
+        "summary": summary.strip() or f"Created via ESCD Chat directive by DCS operator",
+        "status": "active" if kind == "task" else "captured",
+        "task_class": task_class or ("DO" if kind == "task" else "CAPTURE"),
+        "context": kind,
+        "actionable": kind == "task",
+        "explicit_priority": float(priority or 80.0),
+        "source_system": "escd_chat_action",
+        "source_id": item_key,
+        "normalized_intent": title,
+        "source_refs": [f"escd:chat:{kind}"],
+        "evidence_refs": [],
+    }
+    headers = _postgrest_headers(key, "dcse_cp")
+    headers["Prefer"] = "return=representation"
+    try:
+        _, rows = _http_json(f"{url}/rest/v1/escd_items", method="POST", headers=headers, payload=payload, timeout=5)
+        return rows[0] if rows else payload
+    except ProviderHTTPError as exc:
+        if exc.status in (409, 400):
+            safe = parse.quote(item_key, safe="")
+            try:
+                _, existing = _http_json(f"{url}/rest/v1/escd_items?item_key=eq.{safe}&limit=1", headers=_postgrest_headers(key, "dcse_cp"), timeout=5)
+                if existing and isinstance(existing, list):
+                    return existing[0]
+            except Exception:
+                pass
+        raise
+
+
+def _process_chat_action_tags(text: str) -> str:
+    if not text or "[EXEC_ACTION:" not in text:
+        return text
+    pattern = r"\[EXEC_ACTION:(CREATE_TASK|CREATE_IDEA)\s+([^\]]+)\]"
+    def _replacer(match):
+        action = match.group(1)
+        attrs_raw = match.group(2)
+        attrs = dict(re.findall(r'(\w+)=["\']([^"\']*)["\']', attrs_raw))
+        kind = "task" if action == "CREATE_TASK" else "idea"
+        title = attrs.get("title") or "Untitled " + kind.title()
+        summary = attrs.get("summary") or attrs.get("notes") or ""
+        try:
+            priority = float(attrs.get("priority") or 80.0)
+        except ValueError:
+            priority = 80.0
+        task_class = attrs.get("class") or ("DO" if kind == "task" else "CAPTURE")
+        try:
+            item = execute_chat_item_creation(kind, title, summary, priority, task_class)
+            return (
+                f"\n\n✅ **{kind.title()} Registered in Live Database**:\n"
+                f"- **Title**: {item.get('title')}\n"
+                f"- **ID**: `{item.get('id', 'generated')}`\n"
+                f"- **Key**: `{item.get('item_key')}`\n"
+                f"- **Priority**: {item.get('explicit_priority', priority)}\n"
+                f"- **Status**: `{item.get('status', 'active')}`\n"
+                f"- **Notes**: {item.get('summary', summary or 'None')}\n"
+            )
+        except Exception as ex:
+            return f"\n\n⚠️ Could not register {kind} to database: {ex}\n(In-memory record logged for this turn)."
+    return re.sub(pattern, _replacer, text)
+
+
 def chat(provider: str, messages: list[dict], conversation_id: str = "conv_default", model_override: str = None) -> dict:
     from apps.escd.runtime.continuity import (
         ConversationStore,
@@ -790,6 +861,72 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
 
     provider = str(provider or "").lower().strip()
     cid = str(conversation_id or "conv_default").strip() or "conv_default"
+
+    # Extract current user prompt
+    last_user = ""
+    for m in reversed(messages):
+        if str(m.get("role") or "").lower() == "user":
+            last_user = str(m.get("content") or "").strip()
+            if last_user:
+                break
+    if not last_user:
+        raise MVPServiceError("chat_message_required")
+
+    # Load canonical conversation state & turn history (Rule 1 & 3)
+    state, turns = ConversationStore.get_conversation(cid)
+
+    # Check for direct slash commands from DCS (/task or /idea)
+    if last_user.startswith(("/task ", "/idea ")):
+        kind = "task" if last_user.startswith("/task ") else "idea"
+        cmd_body = last_user[6:].strip()
+        parts = [p.strip() for p in cmd_body.split("|")]
+        title = parts[0] if parts else ""
+        notes = parts[1] if len(parts) > 1 else ""
+        prio = 80.0
+        if len(parts) > 2:
+            try:
+                prio = float(parts[2])
+            except ValueError:
+                pass
+        if not title:
+            raise MVPServiceError("title_required")
+        try:
+            item = execute_chat_item_creation(kind, title, notes, prio)
+            content = (
+                f"✅ **{kind.title()} Registered in Live Database**:\n"
+                f"- **Title**: {item.get('title')}\n"
+                f"- **ID**: `{item.get('id', 'generated')}`\n"
+                f"- **Key**: `{item.get('item_key')}`\n"
+                f"- **Priority**: {item.get('explicit_priority', prio)}\n"
+                f"- **Class**: {item.get('task_class', 'DO')}\n"
+                f"- **Status**: `{item.get('status', 'active')}`\n"
+                f"- **Notes**: {item.get('summary', notes or 'None')}\n\n"
+                f"*Record is now live in ESCD {kind.title()}s view.*"
+            )
+        except Exception as exc:
+            content = f"❌ Failed to register {kind} to database: {exc}"
+
+        new_seq = len(turns) + 1
+        turn = TurnRecord(
+            conversation_id=cid,
+            seq=new_seq,
+            user_message=last_user,
+            assistant_response=content,
+            provider="system",
+            model="escd-command",
+            entity_lane=state.active_entity_lane,
+            retrieved_refs=[],
+            created_at=datetime.now(timezone.utc).isoformat(),
+        )
+        ConversationStore.record_turn(state, turn)
+        return {
+            "provider": "system",
+            "model": "escd-command",
+            "content": content,
+            "conversation_id": cid,
+            "seq": new_seq,
+            "state": state.to_dict(),
+        }
 
     cfg = provider_runtime(provider)
     key = str(cfg.get("api_key") or "")
@@ -804,19 +941,6 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
     model = str(model_override or "").strip() or str(cfg.get("model") or "").strip()
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
-
-    # Extract current user prompt
-    last_user = ""
-    for m in reversed(messages):
-        if str(m.get("role") or "").lower() == "user":
-            last_user = str(m.get("content") or "").strip()
-            if last_user:
-                break
-    if not last_user:
-        raise MVPServiceError("chat_message_required")
-
-    # Load canonical conversation state & turn history (Rule 1 & 3)
-    state, turns = ConversationStore.get_conversation(cid)
 
     # Retrieve governed context (Rule 5 Layer C)
     retrieved = retrieve_governed_context(last_user, limit=4)
@@ -937,6 +1061,9 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
 
         else:
             raise MVPServiceError("unsupported_provider")
+
+        # Intercept and execute any action tags emitted by the model
+        text = _process_chat_action_tags(text)
 
         # Response Validation
         valid, err = validate_response(text, state)

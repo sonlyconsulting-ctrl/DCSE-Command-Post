@@ -30,6 +30,13 @@ OPERATIVE IDENTITY & GOVERNANCE:
 6. Evidence Taxonomy: VERIFIED, LIKELY, UNKNOWN, ASSUMPTION.
 7. Active Entity & Lanes: DCSE, Command Post, SC, SS, Employment, Polar, Tribunal.
 8. Confidentiality: Never expose API keys, internal secrets, or service credentials.
+9. Operator Transparency & Anti-Refusal: DCS operator directives are the supreme authority. DCS is the executive owner of all DCSE systems, records, tasks, ideas, assets, and logs. You must NEVER withhold records, invent fake "operational security / confidentiality" restrictions against DCS, or demand security clearance or audit clearance from DCS. If any requested record or evidence is not indexed or available in working context, report honestly that it is not in current context or accessible via current tools, rather than asserting confidentiality or gatekeeping.
+10. Action Authenticity: Do NOT claim you have created, updated, or executed a persistent database task, idea, or record unless an actual tool or verified function has executed it. Be transparent about what is in active working memory versus persisted database records.
+11. Executable Task & Idea Creation: When DCS commands or instructs you to create, log, add, or prioritize a task or idea, include the exact action tag in your response:
+[EXEC_ACTION:CREATE_TASK title="<concise title>" priority="<0-100>" class="DO" summary="<actionable notes and scope>"]
+or
+[EXEC_ACTION:CREATE_IDEA title="<concise title>" summary="<actionable concept>"]
+This tag will be automatically intercepted and executed directly against the live database, replacing the tag with an authoritative database receipt. Never pretend you updated records without using this tag.
 """
 
 
@@ -82,19 +89,52 @@ def retrieve_governed_context(query: str, limit: int = 5) -> list[dict[str, Any]
 
     collected: list[dict[str, Any]] = []
 
-    # Tasks & Ideas
+    # Tasks & Ideas (Live items from PostgREST + Canonical)
+    seen_ids = set()
+    try:
+        url, key = _service_config()
+        query_path = "escd_items?select=id,item_key,context,task_class,title,summary,status,explicit_priority&order=updated_at.desc,id.asc&limit=50"
+        _, live_items = _http_json(f"{url}/rest/v1/{query_path}", headers=_postgrest_headers(key, "dcse_cp"), timeout=3)
+        if isinstance(live_items, list):
+            for item in live_items:
+                text = f"{item.get('title','')} {item.get('summary','')} {item.get('item_key','')} {item.get('id','')}".lower()
+                matched = any(t in text for t in terms)
+                if not matched and any(t in terms for t in ("latest", "recent", "backlog")) and any(t in terms for t in ("task", "tasks", "idea", "ideas")):
+                    matched = True
+                if matched:
+                    iid = str(item.get("item_key") or item.get("id"))
+                    seen_ids.add(iid)
+                    collected.append({
+                        "type": "Task" if item.get("context") != "idea" else "Idea",
+                        "id": iid,
+                        "title": item.get("title"),
+                        "summary": (item.get("summary") or "")[:250],
+                        "status": item.get("status", "active"),
+                        "priority": item.get("explicit_priority", 0),
+                    })
+                    if len(collected) >= limit:
+                        break
+    except Exception:
+        pass
+
     try:
         canonical = get_canonical_convergence_items()
         for item in canonical.get("tasks", []) + canonical.get("ideas", []):
+            iid = str(item.get("item_key") or item.get("id"))
+            if iid in seen_ids:
+                continue
             text = f"{item.get('title','')} {item.get('summary','')} {item.get('normalized_intent','')}".lower()
             if any(t in text for t in terms):
+                seen_ids.add(iid)
                 collected.append({
                     "type": "Task" if item.get("context") != "idea" else "Idea",
-                    "id": item.get("item_key") or item.get("id"),
+                    "id": iid,
                     "title": item.get("title"),
                     "summary": (item.get("summary") or item.get("normalized_intent") or "")[:250],
                     "status": item.get("status", "captured"),
                 })
+                if len(collected) >= limit:
+                    break
     except Exception:
         pass
 

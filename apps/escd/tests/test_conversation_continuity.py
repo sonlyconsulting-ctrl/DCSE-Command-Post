@@ -201,4 +201,76 @@ def test_ctj_cf_semantic_identity_resolution_in_context_packet():
     assert canon_items[0]["id"] == "CTJ-UNIFIED"
 
 
+def test_dcse_kernel_anti_refusal_and_action_authenticity():
+    assert "Operator Transparency & Anti-Refusal" in DCSE_KERNEL
+    assert "You must NEVER withhold records, invent fake \"operational security / confidentiality\" restrictions" in DCSE_KERNEL
+    assert "Action Authenticity" in DCSE_KERNEL
+
+
+def test_retrieve_governed_context_live_tasks():
+    with patch("apps.escd.runtime.continuity._service_config") as mock_conf, \
+         patch("apps.escd.runtime.continuity._http_json") as mock_http:
+        mock_conf.return_value = ("https://nevgdyfpxdaloacuutal.supabase.co", "service-key")
+        mock_http.return_value = (200, [
+            {
+                "id": "68d204db-c7b4-4c9c-97a4-eaf027acc1d9",
+                "item_key": "mvp-d1dce35cceca998acdf4688526d8ec8d0c0f0701f7b526cec18c6a7d48179b05",
+                "context": "task",
+                "task_class": "DO",
+                "title": "SS Physical Thinkers Journey",
+                "summary": "Movement around what it does for the Mind Body and Soul",
+                "status": "active",
+                "explicit_priority": 90,
+            }
+        ])
+        results = retrieve_governed_context("Tell me about the latest task or physical journey")
+        assert len(results) > 0
+        task_match = [r for r in results if "Physical Thinkers Journey" in r.get("title", "")]
+        assert len(task_match) == 1
+        assert task_match[0]["type"] == "Task"
+        assert task_match[0]["priority"] == 90
+
+
+def test_chat_slash_command_task_creation():
+    from apps.escd.runtime.mvp_data import chat
+    with patch("apps.escd.runtime.mvp_data._service_config") as mock_conf, \
+         patch("apps.escd.runtime.mvp_data._http_json") as mock_http:
+        mock_conf.return_value = ("https://nevgdyfpxdaloacuutal.supabase.co", "service-key")
+        mock_http.return_value = (201, [{
+            "id": "item-cmd-001",
+            "item_key": "mvp-test-key",
+            "title": "Chat File Upload Feature",
+            "summary": "Implement attachment button and dropzone",
+            "status": "active",
+            "task_class": "DO",
+            "explicit_priority": 95.0,
+        }])
+        res = chat("openai", [{"role": "user", "content": "/task Chat File Upload Feature | Implement attachment button and dropzone | 95"}], conversation_id="conv_slash_test")
+        assert res["provider"] == "system"
+        assert "Task Registered in Live Database" in res["content"]
+        assert "Chat File Upload Feature" in res["content"]
+        assert res["seq"] == 1
+
+
+def test_chat_action_tag_interception():
+    from apps.escd.runtime.mvp_data import _process_chat_action_tags
+    with patch("apps.escd.runtime.mvp_data._service_config") as mock_conf, \
+         patch("apps.escd.runtime.mvp_data._http_json") as mock_http:
+        mock_conf.return_value = ("https://nevgdyfpxdaloacuutal.supabase.co", "service-key")
+        mock_http.return_value = (201, [{
+            "id": "item-tag-002",
+            "item_key": "mvp-tag-key",
+            "title": "Evaluate Chat Uploads",
+            "summary": "High priority task",
+            "status": "active",
+            "task_class": "DO",
+            "explicit_priority": 90.0,
+        }])
+        model_output = 'I will register this now. [EXEC_ACTION:CREATE_TASK title="Evaluate Chat Uploads" priority="90" class="DO" summary="High priority task"] Please let me know next steps.'
+        processed = _process_chat_action_tags(model_output)
+        assert "[EXEC_ACTION:" not in processed
+        assert "Task Registered in Live Database" in processed
+        assert "Evaluate Chat Uploads" in processed
+
+
 

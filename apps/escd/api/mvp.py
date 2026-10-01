@@ -78,7 +78,7 @@ class handler(BaseHTTPRequestHandler):
 
     def _read_json(self):
         size = int(self.headers.get("Content-Length") or 0)
-        if size < 1 or size > 1_000_000:
+        if size < 1 or size > 10_000_000:
             return {}
         try:
             return json.loads(self.rfile.read(size).decode("utf-8"))
