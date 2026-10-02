@@ -190,3 +190,48 @@ def test_chat_tells_the_engine_which_provider_and_model_answered():
         data.chat("openai", [{"role": "user", "content": "who answered?"}], conversation_id="conv_test_engine")
     sent = json.dumps(calls[0]["payload"])
     assert "Current execution engine for this reply: OpenAI (gpt-test)" in sent
+
+
+def test_authoritative_canonical_projects_loaded():
+    items = data.get_canonical_convergence_items()
+    assert "projects" in items
+    projects = items["projects"]
+    assert len(projects) >= 10
+    keys = {p["item_key"] for p in projects}
+    assert "PROJ-SC-CTJ" in keys
+    assert "PROJ-SS-PTJ" in keys
+    assert "PROJ-CTJ-COMM" in keys
+
+    # Verify project payload mapping
+    ctj = next(p for p in projects if p["item_key"] == "PROJ-SC-CTJ")
+    payload = data.canonical_item_payload(ctj)
+    assert payload["context"] == "project"
+    assert payload["task_class"] == "PLAN"
+    assert payload["actionable"] is True
+    assert payload["explicit_priority"] == 90
+
+
+def test_project_slash_command_creates_project_item():
+    with patch.object(data, "execute_chat_item_creation") as mock_create:
+        mock_create.return_value = {
+            "id": "proj-mock-123",
+            "item_key": "proj-mock",
+            "title": "Test Initiative",
+            "summary": "Notes for test",
+            "explicit_priority": 90.0,
+            "task_class": "PLAN",
+            "status": "active",
+        }
+        res = data.chat("openai", [{"role": "user", "content": "/project Test Initiative | Notes for test | 90 | SS"}], conversation_id="conv_test_proj")
+        mock_create.assert_called_once_with("project", "Test Initiative", "Notes for test", 90.0, lane="SS")
+        assert "Project Registered in Live Database" in res["content"]
+        assert "Test Initiative" in res["content"]
+
+
+def test_html_includes_projects_tab_and_schema():
+    assert "'projects'" in ROOT_HTML
+    assert "TAB_LABELS" in ROOT_HTML and "projects:'Projects'" in ROOT_HTML
+    assert 'section id="projects"' in ROOT_HTML
+    assert "loadProjects" in ROOT_HTML
+    assert "renderProjects" in ROOT_HTML
+    assert "ESCD-MVP-0.7.4" in ROOT_HTML

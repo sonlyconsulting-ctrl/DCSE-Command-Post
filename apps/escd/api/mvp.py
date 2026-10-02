@@ -195,8 +195,33 @@ class handler(BaseHTTPRequestHandler):
                 except Exception:
                     pass
                 canonical = get_canonical_convergence_items()
-                merged = merge_live_and_canonical(live_items, canonical.get("tasks", []) + canonical.get("ideas", []), ("item_key",))
+                merged = merge_live_and_canonical(live_items, canonical.get("tasks", []) + canonical.get("ideas", []) + canonical.get("projects", []), ("item_key",))
                 self._json(200, {"ok": True, "items": merged})
+            elif path == "/api/mvp/projects":
+                live_items = []
+                try:
+                    live_items = repo.list_items()
+                except Exception:
+                    pass
+                canonical = get_canonical_convergence_items()
+                all_merged = merge_live_and_canonical(live_items, canonical.get("tasks", []) + canonical.get("ideas", []) + canonical.get("projects", []), ("item_key",))
+                projects = [it for it in all_merged if str(it.get("context", "")).lower() == "project"]
+                tasks = [it for it in all_merged if str(it.get("context", "")).lower() == "task"]
+                for p in projects:
+                    pkey = str(p.get("item_key") or p.get("id") or "").lower()
+                    matched = [
+                        t for t in tasks
+                        if pkey in str(t.get("source_refs", "")).lower()
+                        or pkey in str(t.get("title", "")).lower()
+                        or pkey in str(t.get("summary", "")).lower()
+                    ]
+                    completed = [t for t in matched if str(t.get("status", "")).lower() in {"completed", "archived"}]
+                    p["rollup"] = {
+                        "total_tasks": len(matched),
+                        "completed_tasks": len(completed),
+                        "open_tasks": len(matched) - len(completed),
+                    }
+                self._json(200, {"ok": True, "projects": projects})
             elif path == "/api/mvp/assets":
                 self._json(200, {"ok": True, "assets": list_assets()})
             elif path == "/api/mvp/knowledge":
@@ -259,31 +284,39 @@ class handler(BaseHTTPRequestHandler):
 
         try:
             repo = self._auth()
-            if path == "/api/mvp/items":
-                kind = str(payload.get("kind") or "task").lower()
-                if kind not in {"task", "idea"}:
+            if path in ("/api/mvp/items", "/api/mvp/projects"):
+                kind = str(payload.get("kind") or ("project" if path == "/api/mvp/projects" else "task")).lower()
+                if kind not in {"task", "idea", "project"}:
                     self._json(400, {"error": "invalid_kind"}); return
                 title = str(payload.get("title") or "").strip()
                 if not title:
                     self._json(400, {"error": "title_required"}); return
-                key = "mvp-" + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()
+                prefix = "proj-" if kind == "project" else "mvp-"
+                key = prefix + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()[:16]
+                prio = float(payload.get("priority") or (90 if kind == "project" else 0))
+                default_status = "active" if kind != "idea" else "captured"
+                default_class = "PLAN" if kind == "project" else ("CAPTURE" if kind == "idea" else "DO")
+                lane = str(payload.get("lane") or "DCSE")
+                source_refs = payload.get("source_refs") or ["escd:mvp:" + kind]
+                if kind == "project" and f"lane:{lane}" not in source_refs:
+                    source_refs.append(f"lane:{lane}")
                 item = repo.create_item({
                     "item_key": key,
                     "title": title,
-                    "summary": payload.get("notes"),
-                    "status": "captured" if kind == "idea" else "active",
-                    "task_class": "CAPTURE" if kind == "idea" else "DO",
+                    "summary": payload.get("notes") or payload.get("summary"),
+                    "status": payload.get("status") or default_status,
+                    "task_class": payload.get("task_class") or default_class,
                     "context": kind,
-                    "actionable": kind == "task",
-                    "explicit_priority": float(payload.get("priority") or 0),
+                    "actionable": kind in {"task", "project"},
+                    "explicit_priority": prio,
                     "due_at": payload.get("due_at"),
                     "source_system": "escd_mvp",
                     "source_id": key,
                     "normalized_intent": title,
-                    "source_refs": ["escd:mvp:" + kind],
-                    "evidence_refs": [],
+                    "source_refs": source_refs,
+                    "evidence_refs": payload.get("evidence_refs") or [],
                 })
-                self._json(201, {"ok": True, "item": item})
+                self._json(201, {"ok": True, "item": item, "project": item})
             elif path == "/api/mvp/knowledge":
                 self._json(201, {"ok": True, "record": create_knowledge(repo, payload)})
             elif path == "/api/mvp/assets":
@@ -357,12 +390,12 @@ class handler(BaseHTTPRequestHandler):
                 allowed = {"file_name", "asset_type", "topic", "description", "storage_location", "semantic_version", "notes", "package", "entity_lane", "firewall_security_tag", "lifecycle_status", "sha256"}
                 self._json(200, {"ok": True, "asset": update_asset(asset_id, {k: v for k, v in payload.items() if k in allowed})})
                 return
-            if path != "/api/mvp/items":
+            if path not in ("/api/mvp/items", "/api/mvp/projects"):
                 self._json(404, {"error": "not_found"}); return
             item_id = str(payload.get("id") or "")
             if not item_id:
                 self._json(400, {"error": "id_required"}); return
-            allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class"}
+            allowed = {"title", "summary", "status", "due_at", "explicit_priority", "actionable", "context", "task_class", "source_refs", "evidence_refs"}
             update = {k: v for k, v in payload.items() if k in allowed}
             self._json(200, {"ok": True, "item": self._patch_item_governed(repo, item_id, update)})
         except AuthError as exc:
@@ -390,7 +423,7 @@ class handler(BaseHTTPRequestHandler):
             repo = self._auth()
             if not record_id:
                 self._json(400, {"error": "id_required"}); return
-            if path == "/api/mvp/items":
+            if path in ("/api/mvp/items", "/api/mvp/projects"):
                 self._json(200, {"ok": True, "archived": True, "item": self._patch_item_governed(repo, record_id, {"status": "archived"})})
             elif path == "/api/mvp/knowledge":
                 self._json(200, {"ok": True, "archived": True, "record": update_knowledge(repo, record_id, {"status": "archived"})})

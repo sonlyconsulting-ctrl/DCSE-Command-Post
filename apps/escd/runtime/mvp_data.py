@@ -428,7 +428,158 @@ def get_canonical_convergence_items() -> dict[str, list[dict]]:
                 "semantic_version": "1.0.0",
                 "lifecycle_status": it.get("status", "staged")
             })
-    return {"tasks": tasks, "ideas": ideas, "knowledge": knowledge, "ddna": ddna, "assets": assets}
+    return {
+        "tasks": tasks,
+        "ideas": ideas,
+        "knowledge": knowledge,
+        "ddna": ddna,
+        "assets": assets,
+        "projects": AUTHORITATIVE_CANONICAL_PROJECTS,
+    }
+
+
+AUTHORITATIVE_CANONICAL_PROJECTS = [
+    {
+        "id": "proj-sc-ctj-01",
+        "item_key": "PROJ-SC-CTJ",
+        "title": "SC-CTJ: Preproduction & Curriculum Verification",
+        "summary": "The Critical Thinker's Journey preproduction build, PR #4. Verified 270/270 fields, authentic Author's Note & Intro. Awaiting Claude Design styling and showroom implementation.",
+        "status": "active",
+        "context": "project",
+        "task_class": "PLAN",
+        "actionable": True,
+        "explicit_priority": 90,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SC", "owner:Claude Design", "repo:sonlyconsulting-ctrl/SC-CTJ", "pr:4", "state:In-Flight"],
+        "evidence_refs": ["governance/testing/AG_CTJ_CONTENT_FIDELITY_20261001.json"],
+    },
+    {
+        "id": "proj-ctj-comm-02",
+        "item_key": "PROJ-CTJ-COMM",
+        "title": "CTJ-COMM: Commercial Checkout & Entitlement Aftercare",
+        "summary": "Authoritative backend checkout, Stripe payment reconciliation, replay-safe webhook, signed download links, and versioned customer ZIP package.",
+        "status": "waiting",
+        "context": "project",
+        "task_class": "PLAN",
+        "actionable": False,
+        "explicit_priority": 90,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SC", "owner:Claude Code", "repo:sonlyconsulting-ctrl/SC-CTJ", "state:On Hold", "blocker:Awaiting Claude Code backend execution contract"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-ss-ptj-03",
+        "item_key": "PROJ-SS-PTJ",
+        "title": "SS-PTJ: Physical Thinkers Journey Movement Series",
+        "summary": "SportSociety physical health and movement cohort to SC-CTJ for adults 40+. Ground-to-stand, coordination, and agility series. Architectural spec locked in PR #186 and SC-CTJ PR #5.",
+        "status": "active",
+        "context": "project",
+        "task_class": "DO",
+        "actionable": True,
+        "explicit_priority": 75,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SS", "owner:AG / Creative", "repo:sonlyconsulting-ctrl/DCSE-Command-Post", "pr:186", "state:In-Flight"],
+        "evidence_refs": ["02_ARCHITECTURE/SS_PHYSICAL_THINKERS_JOURNEY_SPEC_v1.md"],
+    },
+    {
+        "id": "proj-escd-core-04",
+        "item_key": "PROJ-ESCD-CORE",
+        "title": "ESCD-CORE: Minimal Operable Assistant Runtime",
+        "summary": "Executive Secretary & Communications Director (ESCD) MVP 0.7.4. Multi-model routing (OpenAI, Claude, Qwen, Gemini), live PostgREST context, multimodal attachments, projects status board.",
+        "status": "active",
+        "context": "project",
+        "task_class": "DO",
+        "actionable": True,
+        "explicit_priority": 95,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:DCSE", "owner:AG / DCS", "endpoint:https://sc-command-post.vercel.app/escd/app", "state:Active"],
+        "evidence_refs": ["apps/escd/runtime/continuity.py"],
+    },
+    {
+        "id": "proj-sc-video-05",
+        "item_key": "PROJ-SC-VIDEO",
+        "title": "SC-VIDEO: MyMy Media Production & Intake Pipeline",
+        "summary": "Automated video asset intake, clip transcription, metadata generation, and video tool application. Active PR #3 on work/mymy-production-20261002.",
+        "status": "active",
+        "context": "project",
+        "task_class": "DO",
+        "actionable": True,
+        "explicit_priority": 70,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SC", "owner:Video Worker", "repo:sonlyconsulting-ctrl/SC-Video-Tool-App", "pr:3", "state:In-Flight"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-tsl-live-06",
+        "item_key": "PROJ-TSL-LIVE",
+        "title": "TSL-LIVE: Tedo's Sports Lounge v7.4 Board & Feeds",
+        "summary": "Tedo's Sports Lounge live sports feeds, ESPN adapter date-range fix, WNBA picks, favorite team persistence, and v7.4 controlled build promotion.",
+        "status": "completed",
+        "context": "project",
+        "task_class": "DO",
+        "actionable": True,
+        "explicit_priority": 70,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:TSL", "owner:TSL Agent", "repo:sonlyconsulting-ctrl/SC-TedoSportsLounge", "state:Active"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-sc-portal-07",
+        "item_key": "PROJ-SC-PORTAL",
+        "title": "SC-PORTAL: SonlyConsulting.com Story, About & FAQ",
+        "summary": "Public brand narrative, corporate story, About pages, FAQ structure, and search integration for SonlyConsulting.com in draft PR #185.",
+        "status": "approval",
+        "context": "project",
+        "task_class": "REVIEW",
+        "actionable": False,
+        "explicit_priority": 50,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SC", "owner:DCS / Review", "repo:sonlyconsulting-ctrl/DCSE-Command-Post", "pr:185", "state:Pending Review"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-dcse-v73-08",
+        "item_key": "PROJ-DCSE-V73",
+        "title": "DCSE-V73: Operative v7.3 Governance & Doctrine Reconciliation",
+        "summary": "Reconciliation of v7.3 operative doctrine filenames, multi-agent dispatch rules, and repo alignment in draft PR #183.",
+        "status": "approval",
+        "context": "project",
+        "task_class": "REVIEW",
+        "actionable": False,
+        "explicit_priority": 50,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:DCSE", "owner:DCS / AG", "repo:sonlyconsulting-ctrl/DCSE-Command-Post", "pr:183", "state:Pending Review"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-ps-suite-09",
+        "item_key": "PROJ-PS-SUITE",
+        "title": "PS-SUITE: Pro Se Litigation Suite v7.3 Rebuild",
+        "summary": "Pro Se (PS) litigation workflow suite, interactive trainers, command boards, and knowledge quizzes. Standalone repo secured; waiting for v7.3 portal linkage.",
+        "status": "waiting",
+        "context": "project",
+        "task_class": "PLAN",
+        "actionable": False,
+        "explicit_priority": 40,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:PS", "owner:PS Worker", "repo:sonlyconsulting-ctrl/DCSE-PS-Litigation-Suite", "state:On Hold", "blocker:Scheduled after CTJ commercial release"],
+        "evidence_refs": [],
+    },
+    {
+        "id": "proj-ctj-bonus-10",
+        "item_key": "PROJ-CTJ-BONUS",
+        "title": "CTJ-BONUS: Audio / Calendar / Companion Verification",
+        "summary": "Investigation of legacy bonus claims (30 narrated audio files, physical 30-day calendar, completion certificate, Master Companion).",
+        "status": "cancelled",
+        "context": "project",
+        "task_class": "REVIEW",
+        "actionable": False,
+        "explicit_priority": 60,
+        "source_system": "dcse_portfolio",
+        "source_refs": ["lane:SC", "owner:Editorial Gate", "state:On Hold (Excluded)", "blocker:Assets missing from disk; excluded from active sales offers"],
+        "evidence_refs": ["governance/testing/AG_CTJ_SOURCE_GAPS_20261001.md"],
+    },
+]
 
 
 UUID_RE = re.compile(r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
@@ -444,7 +595,7 @@ def is_uuid(value) -> bool:
 
 
 def canonical_record(kind: str, record_id: str) -> dict | None:
-    bucket = {"task": "tasks", "idea": "ideas", "knowledge": "knowledge", "asset": "assets"}.get(kind)
+    bucket = {"task": "tasks", "idea": "ideas", "knowledge": "knowledge", "asset": "assets", "project": "projects"}.get(kind)
     if not bucket:
         return None
     for item in get_canonical_convergence_items().get(bucket, []):
@@ -454,23 +605,23 @@ def canonical_record(kind: str, record_id: str) -> dict | None:
 
 
 def canonical_item_payload(item: dict) -> dict:
-    """escd_items payload for adopting a read-only canonical registry task or idea."""
-    kind = "idea" if item.get("context") == "idea" else "task"
+    """escd_items payload for adopting a read-only canonical registry task, idea, or project."""
+    kind = "project" if item.get("context") == "project" else ("idea" if item.get("context") == "idea" else "task")
     key = str(item.get("item_key") or item.get("id"))
     return {
         "item_key": key,
         "title": str(item.get("title") or key)[:500],
         "summary": item.get("summary"),
-        "status": "captured",
-        "task_class": "CAPTURE" if kind == "idea" else "DO",
+        "status": item.get("status", "active" if kind == "project" else "captured"),
+        "task_class": item.get("task_class") or ("PLAN" if kind == "project" else ("CAPTURE" if kind == "idea" else "DO")),
         "context": kind,
-        "actionable": False,
-        "explicit_priority": 0,
+        "actionable": kind in {"task", "project"},
+        "explicit_priority": item.get("explicit_priority", 90 if kind == "project" else 0),
         "source_system": "canonical_convergence",
         "source_id": key,
         "normalized_intent": str(item.get("title") or key)[:500],
-        "source_refs": ["escd:canonical:" + key],
-        "evidence_refs": [],
+        "source_refs": item.get("source_refs") or ["escd:canonical:" + key],
+        "evidence_refs": item.get("evidence_refs", []),
     }
 
 
@@ -779,26 +930,33 @@ def list_saved_chats(limit: int = 50) -> list[dict]:
     return ConversationStore.list_saved_chats(limit)
 
 
-def execute_chat_item_creation(kind: str, title: str, summary: str = "", priority: float = 80.0, task_class: str = "DO") -> dict:
+def execute_chat_item_creation(kind: str, title: str, summary: str = "", priority: float = 80.0, task_class: str = "DO", lane: str = "DCSE") -> dict:
     url, key = _service_config()
-    kind = "idea" if str(kind or "").lower() == "idea" else "task"
+    k_lower = str(kind or "").lower()
+    if k_lower == "project":
+        kind = "project"
+    elif k_lower == "idea":
+        kind = "idea"
+    else:
+        kind = "task"
     title = str(title or "").strip()
     if not title:
         raise MVPServiceError("title_required")
-    item_key = "mvp-" + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()
+    prefix = "proj-" if kind == "project" else "mvp-"
+    item_key = prefix + hashlib.sha256((kind + "\n" + title.lower()).encode()).hexdigest()[:16]
     payload = {
         "item_key": item_key,
         "title": title,
         "summary": summary.strip() or f"Created via ESCD Chat directive by DCS operator",
-        "status": "active" if kind == "task" else "captured",
-        "task_class": task_class or ("DO" if kind == "task" else "CAPTURE"),
+        "status": "active" if kind != "idea" else "captured",
+        "task_class": task_class or ("PLAN" if kind == "project" else ("DO" if kind == "task" else "CAPTURE")),
         "context": kind,
-        "actionable": kind == "task",
-        "explicit_priority": float(priority or 80.0),
+        "actionable": kind in {"task", "project"},
+        "explicit_priority": float(priority or (90.0 if kind == "project" else 80.0)),
         "source_system": "escd_chat_action",
         "source_id": item_key,
         "normalized_intent": title,
-        "source_refs": [f"escd:chat:{kind}"],
+        "source_refs": [f"escd:chat:{kind}", f"lane:{lane}"],
         "evidence_refs": [],
     }
     headers = _postgrest_headers(key, "dcse_cp")
@@ -821,21 +979,27 @@ def execute_chat_item_creation(kind: str, title: str, summary: str = "", priorit
 def _process_chat_action_tags(text: str) -> str:
     if not text or "[EXEC_ACTION:" not in text:
         return text
-    pattern = r"\[EXEC_ACTION:(CREATE_TASK|CREATE_IDEA)\s+([^\]]+)\]"
+    pattern = r"\[EXEC_ACTION:(CREATE_TASK|CREATE_IDEA|CREATE_PROJECT)\s+([^\]]+)\]"
     def _replacer(match):
         action = match.group(1)
         attrs_raw = match.group(2)
         attrs = dict(re.findall(r'(\w+)=["\']([^"\']*)["\']', attrs_raw))
-        kind = "task" if action == "CREATE_TASK" else "idea"
+        if action == "CREATE_PROJECT":
+            kind = "project"
+        elif action == "CREATE_TASK":
+            kind = "task"
+        else:
+            kind = "idea"
         title = attrs.get("title") or "Untitled " + kind.title()
         summary = attrs.get("summary") or attrs.get("notes") or ""
         try:
-            priority = float(attrs.get("priority") or 80.0)
+            priority = float(attrs.get("priority") or (90.0 if kind == "project" else 80.0))
         except ValueError:
-            priority = 80.0
-        task_class = attrs.get("class") or ("DO" if kind == "task" else "CAPTURE")
+            priority = 90.0 if kind == "project" else 80.0
+        task_class = attrs.get("class") or ("PLAN" if kind == "project" else ("DO" if kind == "task" else "CAPTURE"))
+        lane = attrs.get("lane") or "DCSE"
         try:
-            item = execute_chat_item_creation(kind, title, summary, priority, task_class)
+            item = execute_chat_item_creation(kind, title, summary, priority, task_class, lane=lane)
             return (
                 f"\n\n✅ **{kind.title()} Registered in Live Database**:\n"
                 f"- **Title**: {item.get('title')}\n"
@@ -875,30 +1039,38 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
     # Load canonical conversation state & turn history (Rule 1 & 3)
     state, turns = ConversationStore.get_conversation(cid)
 
-    # Check for direct slash commands from DCS (/task or /idea)
-    if last_user.startswith(("/task ", "/idea ")):
-        kind = "task" if last_user.startswith("/task ") else "idea"
-        cmd_body = last_user[6:].strip()
+    # Check for direct slash commands from DCS (/task, /idea, or /project)
+    if last_user.startswith(("/task ", "/idea ", "/project ")):
+        if last_user.startswith("/task "):
+            kind = "task"
+            cmd_body = last_user[6:].strip()
+        elif last_user.startswith("/idea "):
+            kind = "idea"
+            cmd_body = last_user[6:].strip()
+        else:
+            kind = "project"
+            cmd_body = last_user[9:].strip()
         parts = [p.strip() for p in cmd_body.split("|")]
         title = parts[0] if parts else ""
         notes = parts[1] if len(parts) > 1 else ""
-        prio = 80.0
+        prio = 90.0 if kind == "project" else 80.0
         if len(parts) > 2:
             try:
                 prio = float(parts[2])
             except ValueError:
                 pass
+        lane = parts[3] if len(parts) > 3 else "DCSE"
         if not title:
             raise MVPServiceError("title_required")
         try:
-            item = execute_chat_item_creation(kind, title, notes, prio)
+            item = execute_chat_item_creation(kind, title, notes, prio, lane=lane)
             content = (
                 f"✅ **{kind.title()} Registered in Live Database**:\n"
                 f"- **Title**: {item.get('title')}\n"
                 f"- **ID**: `{item.get('id', 'generated')}`\n"
                 f"- **Key**: `{item.get('item_key')}`\n"
                 f"- **Priority**: {item.get('explicit_priority', prio)}\n"
-                f"- **Class**: {item.get('task_class', 'DO')}\n"
+                f"- **Class**: {item.get('task_class', 'PLAN' if kind == 'project' else 'DO')}\n"
                 f"- **Status**: `{item.get('status', 'active')}`\n"
                 f"- **Notes**: {item.get('summary', notes or 'None')}\n\n"
                 f"*Record is now live in ESCD {kind.title()}s view.*"
