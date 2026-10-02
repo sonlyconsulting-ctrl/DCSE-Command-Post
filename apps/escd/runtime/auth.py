@@ -26,23 +26,37 @@ def extract_bearer(headers: Mapping[str, str]) -> str:
     return parts[1].strip()
 
 
-def _default_http_get(url: str, headers: dict[str, str], timeout: int = 4) -> tuple[int, dict[str, Any]]:
+import time
+
+_AUTH_CACHE: dict[str, tuple[float, AuthContext]] = {}
+_AUTH_CACHE_TTL = 60.0
+
+
+def _default_http_get(url: str, headers: dict[str, str], timeout: int = 8) -> tuple[int, dict[str, Any]]:
     req = request.Request(url, headers=headers, method="GET")
-    try:
-        with request.urlopen(req, timeout=timeout) as response:
-            body = response.read().decode("utf-8")
-            return response.status, json.loads(body or "{}")
-    except error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")
+    for attempt in range(2):
         try:
-            parsed = json.loads(body or "{}")
-        except json.JSONDecodeError:
-            parsed = {"error": "auth_http_error"}
-        return exc.code, parsed
-    except (TimeoutError, socket.timeout):
-        return 504, {"error": "auth_timeout"}
-    except error.URLError as exc:
-        return 503, {"error": f"auth_unreachable: {exc.reason}"}
+            with request.urlopen(req, timeout=timeout) as response:
+                body = response.read().decode("utf-8")
+                return response.status, json.loads(body or "{}")
+        except error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")
+            try:
+                parsed = json.loads(body or "{}")
+            except json.JSONDecodeError:
+                parsed = {"error": "auth_http_error"}
+            return exc.code, parsed
+        except (TimeoutError, socket.timeout):
+            if attempt == 0:
+                time.sleep(0.3)
+                continue
+            return 504, {"error": "auth_timeout"}
+        except error.URLError as exc:
+            if attempt == 0:
+                time.sleep(0.3)
+                continue
+            return 503, {"error": f"auth_unreachable: {exc.reason}"}
+    return 504, {"error": "auth_timeout"}
 
 
 def verify_supabase_user(
@@ -53,11 +67,17 @@ def verify_supabase_user(
 ) -> AuthContext:
     if not supabase_url or not anon_key:
         raise AuthError("auth_configuration_missing")
+    now = time.time()
+    # Fast in-memory cache to prevent redundant Supabase Auth round-trips on every request
+    if not http_get and access_token in _AUTH_CACHE:
+        cached_at, cached_ctx = _AUTH_CACHE[access_token]
+        if (now - cached_at) < _AUTH_CACHE_TTL:
+            return cached_ctx
     getter = http_get or _default_http_get
     status, payload = getter(
         supabase_url.rstrip("/") + "/auth/v1/user",
         {"Authorization": f"Bearer {access_token}", "apikey": anon_key},
-        4,
+        8,
     )
     if status != 200:
         if status in (503, 504):
@@ -68,7 +88,10 @@ def verify_supabase_user(
     if not user_id:
         raise AuthError("auth_user_id_missing")
     email = payload.get("email")
-    return AuthContext(user_id=user_id, email=str(email).lower() if email else None, access_token=access_token)
+    ctx = AuthContext(user_id=user_id, email=str(email).lower() if email else None, access_token=access_token)
+    if not http_get:
+        _AUTH_CACHE[access_token] = (now, ctx)
+    return ctx
 
 
 def authorize_operator(auth: AuthContext, operator_rows: list[dict[str, Any]]) -> dict[str, Any]:

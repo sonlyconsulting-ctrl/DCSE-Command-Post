@@ -34,6 +34,7 @@ class SupabaseRLSClient:
         return headers
 
     def _call(self, method: str, path: str, payload: Any = None) -> Any:
+        import time
         body = None if payload is None else json.dumps(payload).encode("utf-8")
         req = request.Request(
             self.base + "/" + path.lstrip("/"),
@@ -41,17 +42,24 @@ class SupabaseRLSClient:
             headers=self._headers(write=method != "GET"),
             method=method,
         )
-        try:
-            with request.urlopen(req, timeout=4) as response:
-                raw = response.read().decode("utf-8")
-                return json.loads(raw or "[]")
-        except error.HTTPError as exc:
-            exc.read()
-            raise RepositoryError(f"postgrest_{exc.code}") from None
-        except (TimeoutError, socket.timeout):
-            raise RepositoryError("database_timeout") from None
-        except error.URLError as exc:
-            raise RepositoryError(f"database_unreachable: {exc.reason}") from None
+        for attempt in range(2):
+            try:
+                with request.urlopen(req, timeout=8) as response:
+                    raw = response.read().decode("utf-8")
+                    return json.loads(raw or "[]")
+            except error.HTTPError as exc:
+                exc.read()
+                raise RepositoryError(f"postgrest_{exc.code}") from None
+            except (TimeoutError, socket.timeout):
+                if attempt == 0 and method == "GET":
+                    time.sleep(0.3)
+                    continue
+                raise RepositoryError("database_timeout") from None
+            except error.URLError as exc:
+                if attempt == 0 and method == "GET":
+                    time.sleep(0.3)
+                    continue
+                raise RepositoryError(f"database_unreachable: {exc.reason}") from None
 
 
     def operator_self(self) -> list[dict[str, Any]]:
