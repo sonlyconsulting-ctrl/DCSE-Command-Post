@@ -5,7 +5,7 @@
 **Task ID:** DCSE-PORTFOLIO-STATUS-RECONCILIATION-20261002-01  
 **Handoff ID:** DCSE-PORTFOLIO-STATUS-RECONCILIATION-20261002-01-H01  
 **Lane:** DCSE / Command Post, with project-lane references  
-**Classification:** Internal portfolio coordination; no secrets or protected PS content  
+**Classification:** Public-safe portfolio coordination summary; no secrets or protected PS content  
 **Authority:** DCSE v7.3 operative designation verified on GitHub main.  
 **Review basis:** User-provided Gemini briefing, Claude status briefing, Antigravity estate report, ChatGPT snapshot, and current GitHub repository/PR readbacks.
 
