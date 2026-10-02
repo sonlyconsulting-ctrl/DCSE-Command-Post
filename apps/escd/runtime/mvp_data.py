@@ -128,21 +128,34 @@ _SUPABASE_RPC_FAIL_UNTIL = 0.0
 
 def _rpc(name: str, payload: dict):
     global _SUPABASE_RPC_FAIL_UNTIL
-    if time.time() < _SUPABASE_RPC_FAIL_UNTIL:
+    is_provider_check = name.startswith("get_escd_provider")
+    if is_provider_check and time.time() < _SUPABASE_RPC_FAIL_UNTIL:
         raise MVPServiceError("Provider registry temporarily unreachable (upstream circuit breaker active)")
     url, key = _service_config()
-    try:
-        _, data = _http_json(
-            f"{url}/rest/v1/rpc/{name}",
-            method="POST",
-            headers=_postgrest_headers(key, "dcse_cp"),
-            payload=payload,
-            timeout=3,
-        )
-        return data
-    except Exception:
-        _SUPABASE_RPC_FAIL_UNTIL = time.time() + 30.0
-        raise
+    last_exc = None
+    timeout = 8 if name in ("send_agent_message", "read_agent_messages") else 3
+    max_attempts = 2 if name in ("send_agent_message", "read_agent_messages") else 1
+    for attempt in range(max_attempts):
+        try:
+            _, data = _http_json(
+                f"{url}/rest/v1/rpc/{name}",
+                method="POST",
+                headers=_postgrest_headers(key, "dcse_cp"),
+                payload=payload,
+                timeout=timeout,
+            )
+            return data
+        except ProviderHTTPError:
+            raise
+        except Exception as exc:
+            last_exc = exc
+            if is_provider_check:
+                _SUPABASE_RPC_FAIL_UNTIL = time.time() + 5.0
+            if attempt == 0 and max_attempts > 1:
+                time.sleep(0.3)
+                continue
+    if last_exc:
+        raise last_exc
 
 
 
