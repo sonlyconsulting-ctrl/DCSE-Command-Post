@@ -64,7 +64,7 @@ from apps.escd.runtime.mvp_data import (
 
 
 class handler(BaseHTTPRequestHandler):
-    server_version = "ESCD-MVP/0.6.1"
+    server_version = "ESCD-MVP/0.7.4"
 
     def _json(self, status: int, payload: dict):
         raw = json.dumps(payload, separators=(",", ":"), default=str).encode("utf-8")
@@ -178,7 +178,19 @@ class handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         query = parse_qs(urlparse(self.path).query)
         if path == "/api/mvp/health":
-            self._json(200, {"ok": True, "service": "escd-mvp", "version": "0.6.1", "providers": provider_status()})
+            git_commit = (os.getenv("VERCEL_GIT_COMMIT_SHA") or "")[:7] or "latest"
+            git_branch = os.getenv("VERCEL_GIT_COMMIT_REF") or "feature/ss-ptj-and-escd-mvp-073"
+            env_name = os.getenv("VERCEL_ENV") or "production"
+            self._json(200, {
+                "ok": True,
+                "service": "escd-mvp",
+                "version": "0.7.4",
+                "authority": "v7.3 operative",
+                "commit": git_commit,
+                "branch": git_branch,
+                "env": env_name,
+                "providers": provider_status(),
+            })
             return
         if path == "/api/mvp/auth-config":
             url = os.getenv("SUPABASE_URL") or os.getenv("NEXT_PUBLIC_SUPABASE_URL") or "https://nevgdyfpxdaloacuutal.supabase.co"
