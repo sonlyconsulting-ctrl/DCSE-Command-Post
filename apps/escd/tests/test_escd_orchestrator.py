@@ -135,3 +135,25 @@ def test_orchestrator_routes_require_authentication(method, path):
         code, _ = _request(method, path, {"recipients": ["chatgpt"], "subject": "s", "body": "b"})
         s.assert_not_called(); r.assert_not_called(); t.assert_not_called()
     assert code == 401
+
+
+def test_send_and_reply_with_attachments():
+    calls = []
+    atts = [{"name": "screenshot.png", "type": "image/png", "size": 1024, "data": "data:image/png;base64,iVBORw0KGgo"}]
+    with patch.object(data, "orchestrator_agents", return_value=[{"agent_key": "antigravity"}]), \
+         patch.object(data, "_rpc", side_effect=lambda name, p: calls.append((name, p)) or U1):
+        out = data.orchestrator_send(["antigravity"], "Image Test", "See attached screenshot", attachments=atts)
+    assert len(calls) == 1 and out["sent"][0]["recipient"] == "antigravity"
+    p = calls[0][1]
+    assert p["p_metadata"]["attachments"][0]["name"] == "screenshot.png"
+    assert p["p_metadata"]["attachments"][0]["type"] == "image/png"
+
+    # Test reply with attachments
+    reply_calls = []
+    orig = [{"id": U2, "sender": "antigravity", "recipient_agent_key": "dcs_authority", "subject": "Status", "correlation_id": C1}]
+    with patch.object(data, "_http_json", return_value=(200, orig)), \
+         patch.object(data, "_rpc", side_effect=lambda name, p: reply_calls.append((name, p)) or U1):
+        data.orchestrator_reply(U2, "Here is the file", attachments=atts)
+    assert len(reply_calls) == 1
+    rp = reply_calls[0][1]
+    assert rp["p_metadata"]["attachments"][0]["name"] == "screenshot.png"

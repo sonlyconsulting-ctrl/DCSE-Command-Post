@@ -267,15 +267,33 @@ function Invoke-MessagePump() {
     try {
       $stamp = (Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')
       $file = Join-Path $inboxDir ("{0}_{1}.json" -f $stamp, $m.id)
+      $atts = if ($m.metadata -and $m.metadata.attachments) { $m.metadata.attachments } else { @() }
       $record = [ordered]@{
         message_id = $m.id; correlation_id = $m.correlation_id; reply_to = $m.reply_to
         sender = $m.sender; recipient_agent_key = $m.recipient_agent_key
         subject = $m.subject; body = $m.body; message_class = $m.message_class
         lane = $m.lane; execution_authorized = $false; dcs_decision_ref = $m.dcs_decision_ref
         expires_at = $m.expires_at; delivered_at = (Get-Date).ToUniversalTime().ToString('o')
+        attachments = $atts
         how_to_reply = "scripts\dcse_msg.ps1 -Reply $($m.id) -From $AgentKey -Body '<text>'"
       }
       $record | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $file -Encoding UTF8
+      if ($atts) {
+        foreach ($att in $atts) {
+          try {
+            if ($att.data -match '^data:[^;]+;base64,(.+)$') {
+              $bytes = [Convert]::FromBase64String($Matches[1])
+              $safeName = ($att.name -replace '[^A-Za-z0-9_.-]', '_')
+              $shortId = if ($m.id.Length -ge 8) { $m.id.Substring(0,8) } else { $m.id }
+              $attFile = Join-Path $inboxDir ("{0}_{1}_{2}" -f $stamp, $shortId, $safeName)
+              [IO.File]::WriteAllBytes($attFile, $bytes)
+              Write-Log "ATTACHMENT_SAVED path=$attFile size=$($bytes.Length)"
+            }
+          } catch {
+            Write-Log "ATTACHMENT_EXTRACT_WARN name=$($att.name) error=$($_.Exception.Message)"
+          }
+        }
+      }
       $sha = (Get-FileHash -Algorithm SHA256 -LiteralPath $file).Hash.ToLowerInvariant()
       if ($null -eq $cliVersion) {
         try { $cliVersion = (Get-CliInfo).version } catch { $cliVersion = "unavailable: $($_.Exception.Message)" }

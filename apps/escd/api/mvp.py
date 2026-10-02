@@ -324,10 +324,22 @@ class handler(BaseHTTPRequestHandler):
                 self._json(201, {"ok": True, "asset": create_asset(payload)})
             elif path == "/api/mvp/orchestrator/send":
                 record = payload.get("record") if isinstance(payload.get("record"), dict) else None
-                result = orchestrator_send(payload.get("recipients") or [], payload.get("subject"), payload.get("body"), record, getattr(self, "_operator_email", ""))
+                result = orchestrator_send(
+                    payload.get("recipients") or [],
+                    payload.get("subject"),
+                    payload.get("body"),
+                    record,
+                    getattr(self, "_operator_email", ""),
+                    attachments=payload.get("attachments"),
+                )
                 self._json(201, dict({"ok": True}, **result))
             elif path == "/api/mvp/orchestrator/reply":
-                result = orchestrator_reply(str(payload.get("message_id") or ""), payload.get("body"), getattr(self, "_operator_email", ""))
+                result = orchestrator_reply(
+                    str(payload.get("message_id") or ""),
+                    payload.get("body"),
+                    getattr(self, "_operator_email", ""),
+                    attachments=payload.get("attachments"),
+                )
                 self._json(201, dict({"ok": True}, **result))
             elif path == "/api/mvp/chat":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()

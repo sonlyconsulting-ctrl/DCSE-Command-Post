@@ -1732,7 +1732,33 @@ def _orch_clean_text(value, field: str, limit: int) -> str:
     return text
 
 
-def orchestrator_send(recipients, subject, body, record=None, operator_email: str = "") -> dict:
+def _orch_clean_attachments(attachments: list | None) -> list:
+    if not isinstance(attachments, list):
+        return []
+    cleaned = []
+    total_bytes = 0
+    for a in attachments[:3]:
+        if not isinstance(a, dict):
+            continue
+        name = str(a.get("name") or "attachment")[:120].strip()
+        mime_type = str(a.get("type") or "application/octet-stream")[:100].strip()
+        data = str(a.get("data") or "")
+        size = int(a.get("size") or len(data))
+        if size > 3 * 1024 * 1024 or len(data) > 4 * 1024 * 1024:
+            continue
+        total_bytes += size
+        if total_bytes > 5 * 1024 * 1024:
+            break
+        cleaned.append({
+            "name": name,
+            "type": mime_type,
+            "size": size,
+            "data": data,
+        })
+    return cleaned
+
+
+def orchestrator_send(recipients, subject, body, record=None, operator_email: str = "", attachments: list | None = None) -> dict:
     if isinstance(recipients, str):
         recipients = [recipients]
     wanted = []
@@ -1759,6 +1785,9 @@ def orchestrator_send(recipients, subject, body, record=None, operator_email: st
             "id": str(record.get("id"))[:120],
             "title": str(record.get("title") or "")[:300],
         }
+    cleaned_atts = _orch_clean_attachments(attachments)
+    if cleaned_atts:
+        metadata["attachments"] = cleaned_atts
     import uuid as _uuid
     correlation = str(_uuid.uuid4())
     sent = []
@@ -1812,6 +1841,7 @@ def orchestrator_threads(days: int = 7) -> dict:
         msg["delivery_health"] = (health.get(str(r.get("id"))) or {}).get("delivery_health")
         msg["recipient_last_heartbeat"] = (health.get(str(r.get("id"))) or {}).get("recipient_last_heartbeat")
         msg["record"] = (r.get("metadata") or {}).get("record")
+        msg["attachments"] = (r.get("metadata") or {}).get("attachments") or []
         msg["incoming"] = r.get("recipient_agent_key") == ORCH_IDENTITY
         cid = str(r.get("correlation_id") or r.get("id"))
         t = threads.setdefault(cid, {"correlation_id": cid, "subject": r.get("subject"), "participants": [], "messages": [], "record": None})
@@ -1831,7 +1861,7 @@ def orchestrator_threads(days: int = 7) -> dict:
     return {"threads": out, "new_count": len(new_ids), "identity": ORCH_IDENTITY}
 
 
-def orchestrator_reply(message_id: str, body: str, operator_email: str = "") -> dict:
+def orchestrator_reply(message_id: str, body: str, operator_email: str = "", attachments: list | None = None) -> dict:
     if not is_uuid(message_id):
         raise MVPServiceError("invalid_message_id")
     body = _orch_clean_text(body, "body", 20000)
@@ -1850,6 +1880,9 @@ def orchestrator_reply(message_id: str, body: str, operator_email: str = "") -> 
     metadata = {"origin": "escd_console", "expects_reply": True}
     if operator_email:
         metadata["operator"] = str(operator_email)[:200]
+    cleaned_atts = _orch_clean_attachments(attachments)
+    if cleaned_atts:
+        metadata["attachments"] = cleaned_atts
     payload = {
         "p_sender": ORCH_IDENTITY,
         "p_recipient_agent_key": to,
