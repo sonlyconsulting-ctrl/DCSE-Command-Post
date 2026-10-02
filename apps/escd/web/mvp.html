@@ -10,7 +10,7 @@
 @media(max-width:520px){.top{padding:0 10px}.content{padding:10px}.form,.provider-grid{grid-template-columns:1fr}.form textarea,.form .wide,.provider-grid .wide{grid-column:auto}.row{grid-template-columns:1fr}.composer{grid-template-columns:1fr}.composer .btn{width:100%}.view h1{font-size:21px}}
 dialog{width:min(760px,calc(100% - 24px));max-height:85vh;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:0;box-shadow:0 16px 48px rgba(0,0,0,.75)}dialog::backdrop{background:rgba(0,0,0,.75);backdrop-filter:blur(2px)}.dialog-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);background:var(--panel2)}.dialog-body{padding:18px;overflow:auto;max-height:72vh;display:grid;gap:12px}.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.detail-item{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px}.detail-item strong{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:2px}.detail-item span{font-size:12px;word-break:break-all}.code-box{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px;font-family:monospace;font-size:11px;overflow-x:auto;white-space:pre-wrap;max-height:280px;color:var(--muted)}
 .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.edit-grid label{font-size:11px;color:var(--muted);display:grid;gap:4px}.edit-grid .wide{grid-column:1/-1}.edit-grid input,.edit-grid select,.edit-grid textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:9px;width:100%}.edit-grid textarea{min-height:110px;resize:vertical}.row h3.open{cursor:pointer}.row h3.open:hover{color:var(--gold)}.origin{font-size:10px;color:var(--gold);border:1px solid var(--line);border-radius:10px;padding:1px 7px;margin-left:6px;vertical-align:middle}dialog[open]{display:flex;flex-direction:column}dialog[open] .dialog-body{flex:1 1 auto;min-height:0;max-height:none}#modalFoot{border-bottom:0;border-top:1px solid var(--line);flex:0 0 auto}#modalFoot>div{flex:1;min-width:0}#modalFoot .status{align-self:center}details.raw summary{cursor:pointer;color:var(--muted);font-size:12px}@media(max-width:520px){.edit-grid{grid-template-columns:1fr}.edit-grid .wide{grid-column:auto}}
-.agent-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.agent-chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:18px;padding:5px 10px;background:var(--panel2);font-size:12px;cursor:pointer}.agent-chip small{color:var(--muted);font-size:10px}.agent-chip:has(input:checked){border-color:var(--gold)}.orch-form{display:grid;gap:8px}.orch-form input,.orch-form textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:9px;width:100%}.orch-form textarea{min-height:90px;resize:vertical}.linked{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--gold)}.thread{grid-template-columns:1fr auto}.conv{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px}.conv .msg{max-width:88%}.dstat{margin-top:4px}.dstat.ok{color:var(--ok)}.dstat.bad{color:var(--bad)}.dstat.wait{color:var(--gold)}
+.agent-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}.agent-chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:18px;padding:5px 10px;background:var(--panel2);font-size:12px;cursor:pointer}.agent-chip small{color:var(--muted);font-size:10px}.agent-chip:has(input:checked){border-color:var(--gold)}.orch-form{display:grid;gap:8px}.orch-form input,.orch-form textarea{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:7px;padding:9px;width:100%}.orch-form textarea{min-height:90px;resize:vertical}.linked{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--gold)}.thread{grid-template-columns:1fr auto}.conv{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px}.conv .msg{max-width:88%}.dstat{margin-top:4px}.dstat.ok{color:var(--ok)}.dstat.bad{color:var(--bad)}.dstat.wait{color:var(--gold)}.resource-tray{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.resource-link{display:inline-flex;align-items:center;gap:5px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--text);text-decoration:none}.resource-link:hover{border-color:var(--gold);color:var(--gold)}.cockpit-blocker{background:rgba(255,180,169,.1);border:1px solid var(--bad);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--bad);margin:8px 0}.cockpit-tasks{display:grid;gap:8px;margin-top:10px}.cockpit-task{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
 </style>
 </head>
 <body>
@@ -63,7 +63,276 @@ async function showSavedChats(){try{const d=await api('/saved-chats');const list
 function updateNavCounts(){const counts={projects:projects.filter(x=>String(x.status)!=='archived').length||items.filter(x=>kindOf(x)==='project'&&String(x.status)!=='archived').length,tasks:items.filter(x=>kindOf(x)==='task'&&String(x.status)!=='archived').length,ideas:items.filter(x=>kindOf(x)==='idea'&&String(x.status)!=='archived').length,knowledge:knowledge.filter(x=>String(x.status)!=='archived').length,assets:assets.filter(x=>x.lifecycle_status!=='Retired').length,ddna:ddna.length,orchestrator:orchNew};document.querySelectorAll('[data-tab]').forEach(b=>{const t=b.dataset.tab,label=b.closest('#mobileNav')&&t==='orchestrator'?'Orch':TAB_LABELS[t];if(counts[t]!=null&&counts[t]>0){b.textContent=label+' ('+counts[t]+')';}else{b.textContent=label;}});}
 async function checkHealth(){try{const r=await fetch(API+'/health'),d=await r.json(),provs=d.providers||{},configured=Object.values(provs).filter(p=>p.configured&&p.enabled).length,badge=$('healthBadge');if(!badge)return;if(d.ok&&configured>0){badge.textContent='Ready';badge.className='status ok';badge.style.color='';}else if(d.ok){badge.textContent='Degraded';badge.className='status';badge.style.color='var(--gold)';}else{badge.textContent='Unavailable';badge.className='status';badge.style.color='var(--bad)';}}catch(_){const badge=$('healthBadge');if(badge){badge.textContent='Unavailable';badge.className='status';badge.style.color='var(--bad)';}}}
 async function loadProjects(){state($('projectList'),'Loading projects...');try{const d=await api('/projects');projects=d.projects||[];renderProjects();updateNavCounts();}catch(e){state($('projectList'),e.message,'error')}}
-function renderProjects(){const box=$('projectList'),q=($('projectSearch')?.value||'').toLowerCase(),laneFilter=$('projectLaneFilter')?.value||'all',scope=$('projectScope')?.value||'current';box.replaceChildren();const rows=projects.filter(p=>{const isArchived=String(p.status)==='archived'||String(p.status)==='completed';if(scope==='current'&&isArchived)return false;if(scope==='archived'&&!isArchived)return false;if(laneFilter!=='all'){const laneRef=(p.source_refs||[]).find(r=>String(r).startsWith('lane:'));const pLane=laneRef?laneRef.slice(5):'DCSE';if(pLane.toLowerCase()!==laneFilter.toLowerCase())return false;}if(q&&!JSON.stringify(p).toLowerCase().includes(q))return false;return true;});if(!rows.length){box.append(el('div','No project records matching filter.','empty'));return}rows.forEach(p=>{const card=el('article',null,'row'),left=el('div'),acts=el('div',null,'actions');const h=el('h3',p.title||'Untitled Project','open');h.tabIndex=0;h.onclick=()=>openEditor('project',p);h.onkeydown=e=>{if(e.key==='Enter')openEditor('project',p)};if(isCanonical(p))h.append(el('span','registry','origin'));const pkey=p.item_key||p.id;if(pkey){const badge=el('span',pkey,'origin');badge.style.borderColor='var(--gold)';badge.style.color='var(--gold)';h.append(badge);}left.append(h);const laneTag=(p.source_refs||[]).find(r=>String(r).startsWith('lane:'));const ownerTag=(p.source_refs||[]).find(r=>String(r).startsWith('owner:'));const stateTag=(p.source_refs||[]).find(r=>String(r).startsWith('state:'));const blockerTag=(p.source_refs||[]).find(r=>String(r).startsWith('blocker:'));const laneStr=laneTag?laneTag.slice(5):'DCSE';const ownerStr=ownerTag?ownerTag.slice(6):'DCSE';const rollup=p.rollup||{total_tasks:0,completed_tasks:0,open_tasks:0};const metaParts=['Status: '+(p.status||'active'),'Priority: '+(p.explicit_priority!=null?p.explicit_priority:90),'Lane: '+laneStr,'Owner: '+ownerStr,'Tasks: '+rollup.total_tasks+' ('+rollup.completed_tasks+' done, '+rollup.open_tasks+' open)'];if(stateTag)metaParts.push(stateTag.slice(6));left.append(el('div',metaParts.join(' · '),'meta'));if(p.summary){const sum=el('div',p.summary);sum.style.fontSize='12px';sum.style.color='var(--muted)';sum.style.marginTop='6px';sum.style.lineHeight='1.4';left.append(sum);}if(blockerTag){const blk=el('div','Blocker: '+blockerTag.slice(8));blk.style.fontSize='11px';blk.style.color='var(--bad)';blk.style.marginTop='4px';blk.style.fontWeight='600';left.append(blk);}const openBtn=el('button','Open','btn');openBtn.onclick=()=>openEditor('project',p);acts.append(openBtn);const viewTasksBtn=el('button','View tasks','btn');viewTasksBtn.title='Filter Tasks tab for this project';viewTasksBtn.onclick=()=>{show('tasks');$('taskSearch').value=pkey;renderItems('task');};acts.append(viewTasksBtn);if(String(p.status)!=='completed'&&String(p.status)!=='archived'){const compBtn=el('button','Complete','btn');compBtn.onclick=()=>patchItem(p.id,{status:'completed'});acts.append(compBtn);}card.append(left,acts);box.append(card);});}
+function openProjectCockpit(p){
+const pkey=p.item_key||p.id;
+$('modalTitle').textContent='Cockpit: ['+pkey+'] '+(p.title||'Untitled Project');
+const body=$('modalBody');body.replaceChildren();
+const laneTag=(p.source_refs||[]).find(r=>String(r).startsWith('lane:'));
+const ownerTag=(p.source_refs||[]).find(r=>String(r).startsWith('owner:'));
+const laneStr=p.lane||(laneTag?laneTag.slice(5):'DCSE');
+const ownerStr=p.owner||(ownerTag?ownerTag.slice(6):'DCSE');
+const grid=el('div',null,'detail-grid');
+const addDetail=(k,v)=>{const it=el('div',null,'detail-item');it.append(el('strong',k));it.append(el('span',String(v)));grid.append(it);};
+addDetail('Lane',laneStr);
+addDetail('Status',p.status||'active');
+addDetail('Priority',p.explicit_priority!=null?p.explicit_priority:90);
+addDetail('Lead / Owner',ownerStr);
+if(p.due_at)addDetail('Target Delivery',fmt(p.due_at));
+body.append(grid);
+
+const resourceTray=el('div',null,'resource-tray');
+if(p.github_url){
+const ghLink=document.createElement('a');
+ghLink.className='resource-link';
+ghLink.href=p.github_url;
+ghLink.target='_blank';
+ghLink.rel='noopener noreferrer';
+ghLink.textContent='🔗 GitHub: '+(p.github_url.split('/').slice(-2).join('/')||p.github_url);
+ghLink.title=p.github_url;
+resourceTray.append(ghLink);
+}
+(p.docs_links||[]).forEach(dl=>{
+const dLink=document.createElement('a');
+dLink.className='resource-link';
+const isHttp=String(dl.url||'').startsWith('http');
+dLink.href=isHttp?dl.url:('https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/blob/main/'+dl.url);
+dLink.target='_blank';
+dLink.rel='noopener noreferrer';
+dLink.textContent='📄 '+(dl.name||dl.url);
+dLink.title=dl.url;
+resourceTray.append(dLink);
+});
+(p.evidence_refs||[]).forEach(er=>{
+const evLink=document.createElement('a');
+evLink.className='resource-link';
+evLink.href='https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/blob/main/'+er;
+evLink.target='_blank';
+evLink.rel='noopener noreferrer';
+evLink.textContent='📑 Evidence: '+er.split('/').pop();
+evLink.title=er;
+resourceTray.append(evLink);
+});
+if(resourceTray.children.length){
+const linkHead=el('strong','Direct Links & Documents');
+linkHead.style.fontSize='11px';linkHead.style.color='var(--gold)';linkHead.style.display='block';linkHead.style.marginTop='6px';
+body.append(linkHead,resourceTray);
+}
+
+const blockerTag=(p.source_refs||[]).find(r=>String(r).startsWith('blocker:'));
+const allBlockers=[...(p.blockers||[])];
+if(blockerTag&&!allBlockers.includes(blockerTag.slice(8)))allBlockers.push(blockerTag.slice(8));
+if(allBlockers.length){
+const blkBox=el('div',null,'cockpit-blocker');
+blkBox.append(el('strong','⚠️ Active Stop-Gates & Blockers: '));
+blkBox.append(document.createTextNode(allBlockers.join(' | ')));
+body.append(blkBox);
+}
+
+if(p.summary){
+const scopeBox=el('div');
+const scopeHead=el('strong','Scope & Objectives');
+scopeHead.style.fontSize='11px';scopeHead.style.color='var(--muted)';scopeHead.style.display='block';scopeHead.style.marginBottom='4px';scopeHead.style.marginTop='6px';
+const scopeText=el('div',p.summary);
+scopeText.style.fontSize='12px';scopeText.style.background='var(--panel2)';scopeText.style.border='1px solid var(--line)';scopeText.style.borderRadius='7px';scopeText.style.padding='9px';scopeText.style.lineHeight='1.5';
+scopeBox.append(scopeHead,scopeText);
+body.append(scopeBox);
+}
+
+const pkeyLower=pkey.toLowerCase();
+const childTasks=(p.tasks&&p.tasks.length)?p.tasks:items.filter(t=>kindOf(t)==='task'&&(pkeyLower&&(JSON.stringify(t).toLowerCase().includes(pkeyLower))));
+const doneCount=childTasks.filter(t=>['completed','archived'].includes(String(t.status||'').toLowerCase())).length;
+const taskHead=el('div');
+taskHead.style.display='flex';taskHead.style.justifyContent='space-between';taskHead.style.alignItems='center';taskHead.style.marginTop='12px';
+taskHead.append(el('strong','Project Tasks ('+childTasks.length+' total · '+doneCount+' done · '+(childTasks.length-doneCount)+' open)'));
+body.append(taskHead);
+
+if(!childTasks.length){
+body.append(el('div','No tasks linked to this project yet. Use the form below to add one.','empty'));
+}else{
+const listDiv=el('div',null,'cockpit-tasks');
+childTasks.forEach(ct=>{
+const trow=el('div',null,'cockpit-task');
+const tleft=el('div');
+const th=el('div',ct.title||'Untitled Task');
+th.style.fontSize='13px';th.style.fontWeight='600';
+if(String(ct.status)==='completed'){th.style.textDecoration='line-through';th.style.color='var(--muted)';}
+tleft.append(th);
+const ctOwner=(ct.source_refs||[]).find(r=>String(r).startsWith('owner:'));
+const ctOwnerStr=ctOwner?ctOwner.slice(6):(ct.assigned_agent||'');
+const tmetaParts=['Status: '+(ct.status||'active'),'Priority: '+(ct.explicit_priority!=null?ct.explicit_priority:0)];
+if(ctOwnerStr)tmetaParts.push('Assigned: '+ctOwnerStr);
+if(ct.summary)tmetaParts.push(ct.summary.slice(0,100));
+tleft.append(el('div',tmetaParts.join(' · '),'meta'));
+trow.append(tleft);
+
+const tacts=el('div',null,'actions');
+if(String(ct.status)!=='completed'&&String(ct.status)!=='archived'){
+const comp=el('button','✓ Complete','btn');
+comp.onclick=async()=>{
+comp.disabled=true;
+try{
+await patchItem(ct.id,{status:'completed'});
+ct.status='completed';
+openProjectCockpit(p);
+}catch(e){alert('Failed: '+e.message);}
+};
+tacts.append(comp);
+}
+const openT=el('button','Inspect','btn');
+openT.onclick=()=>openEditor('task',ct);
+tacts.append(openT);
+trow.append(tacts);
+listDiv.append(trow);
+});
+body.append(listDiv);
+}
+
+const addBox=el('div',null,'card');
+addBox.style.marginTop='12px';addBox.style.padding='10px';
+addBox.append(el('strong','+ Add Task to '+pkey));
+const addForm=el('div',null,'form');
+addForm.style.marginTop='6px';
+const ntTitle=document.createElement('input');ntTitle.placeholder='Task title for this project';ntTitle.className='wide';
+const ntNotes=document.createElement('textarea');ntNotes.placeholder='Task description / scope';ntNotes.style.minHeight='48px';
+const ntAgent=document.createElement('input');ntAgent.placeholder='Assigned worker (e.g. AG, Claude Design)';
+const ntPrio=document.createElement('select');
+[{v:90,l:'Critical (90)'},{v:60,l:'High (60)'},{v:0,l:'Normal (0)'}].forEach(o=>{const op=el('option',o.l);op.value=o.v;ntPrio.append(op);});
+addForm.append(ntTitle,ntAgent,ntPrio,ntNotes);
+const addBtn=el('button','Add task to project','btn primary');
+addBtn.onclick=async()=>{
+const tval=ntTitle.value.trim();if(!tval)return;
+addBtn.disabled=true;
+try{
+const payload={
+kind:'task',
+title:tval,
+notes:ntNotes.value.trim(),
+priority:Number(ntPrio.value),
+source_refs:['project:'+pkey,'lane:'+laneStr,'owner:'+(ntAgent.value.trim()||ownerStr)]
+};
+await api('/items',{method:'POST',body:JSON.stringify(payload)});
+await loadItems();
+await loadProjects();
+const updatedP=projects.find(x=>(x.item_key||x.id)===pkey)||p;
+openProjectCockpit(updatedP);
+}catch(e){alert('Create failed: '+e.message);addBtn.disabled=false;}
+};
+addBox.append(addForm,addBtn);
+body.append(addBox);
+
+const foot=$('modalFoot');
+foot.replaceChildren();
+foot.hidden=false;
+const leftFoot=el('div');leftFoot.style.display='flex';leftFoot.style.gap='8px';leftFoot.style.flexWrap='wrap';
+const msgAgent=el('button','Message agent about project','btn');
+msgAgent.onclick=()=>{closeModal();messageAgentAbout('project',p);};
+leftFoot.append(msgAgent);
+const editMeta=el('button','Edit project settings','btn');
+editMeta.onclick=()=>{closeModal();openEditor('project',p);};
+leftFoot.append(editMeta);
+foot.append(leftFoot);
+
+const dlg=$('detailModal');
+if(!dlg.open){if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');}
+}
+
+function renderProjects(){
+const box=$('projectList'),q=($('projectSearch')?.value||'').toLowerCase(),laneFilter=$('projectLaneFilter')?.value||'all',scope=$('projectScope')?.value||'current';
+box.replaceChildren();
+const rows=projects.filter(p=>{
+const isArchived=String(p.status)==='archived'||String(p.status)==='completed';
+if(scope==='current'&&isArchived)return false;
+if(scope==='archived'&&!isArchived)return false;
+if(laneFilter!=='all'){
+const laneRef=(p.source_refs||[]).find(r=>String(r).startsWith('lane:'));
+const pLane=p.lane||(laneRef?laneRef.slice(5):'DCSE');
+if(pLane.toLowerCase()!==laneFilter.toLowerCase())return false;
+}
+if(q&&!JSON.stringify(p).toLowerCase().includes(q))return false;
+return true;
+});
+if(!rows.length){box.append(el('div','No project records matching filter.','empty'));return}
+rows.forEach(p=>{
+const card=el('article',null,'row'),left=el('div'),acts=el('div',null,'actions');
+const h=el('h3',p.title||'Untitled Project','open');
+h.tabIndex=0;
+h.onclick=()=>openProjectCockpit(p);
+h.onkeydown=e=>{if(e.key==='Enter')openProjectCockpit(p)};
+if(isCanonical(p))h.append(el('span','registry','origin'));
+const pkey=p.item_key||p.id;
+if(pkey){
+const badge=el('span',pkey,'origin');
+badge.style.borderColor='var(--gold)';
+badge.style.color='var(--gold)';
+h.append(badge);
+}
+left.append(h);
+const laneTag=(p.source_refs||[]).find(r=>String(r).startsWith('lane:'));
+const ownerTag=(p.source_refs||[]).find(r=>String(r).startsWith('owner:'));
+const blockerTag=(p.source_refs||[]).find(r=>String(r).startsWith('blocker:'));
+const laneStr=p.lane||(laneTag?laneTag.slice(5):'DCSE');
+const ownerStr=p.owner||(ownerTag?ownerTag.slice(6):'DCSE');
+const rollup=p.rollup||{total_tasks:(p.tasks||[]).length,completed_tasks:0,open_tasks:0};
+const metaParts=['Status: '+(p.status||'active'),'Priority: '+(p.explicit_priority!=null?p.explicit_priority:90),'Lane: '+laneStr,'Owner: '+ownerStr,'Tasks: '+rollup.total_tasks+' ('+rollup.completed_tasks+' done, '+rollup.open_tasks+' open)'];
+left.append(el('div',metaParts.join(' · '),'meta'));
+if(p.summary){
+const sum=el('div',p.summary);
+sum.style.fontSize='12px';
+sum.style.color='var(--muted)';
+sum.style.marginTop='6px';
+sum.style.lineHeight='1.4';
+left.append(sum);
+}
+
+const linkTray=el('div',null,'resource-tray');
+if(p.github_url){
+const gh=document.createElement('a');
+gh.className='resource-link';
+gh.href=p.github_url;
+gh.target='_blank';
+gh.rel='noopener noreferrer';
+gh.textContent='🔗 GitHub ↗';
+gh.onclick=e=>e.stopPropagation();
+linkTray.append(gh);
+}
+if(p.docs_links&&p.docs_links.length){
+const d0=p.docs_links[0];
+const dl=document.createElement('a');
+dl.className='resource-link';
+const isHttp=String(d0.url||'').startsWith('http');
+dl.href=isHttp?d0.url:('https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/blob/main/'+d0.url);
+dl.target='_blank';
+dl.rel='noopener noreferrer';
+dl.textContent='📄 '+(d0.name||'Doc')+' ↗';
+dl.onclick=e=>e.stopPropagation();
+linkTray.append(dl);
+}
+if(linkTray.children.length)left.append(linkTray);
+
+const allBlockers=[...(p.blockers||[])];
+if(blockerTag&&!allBlockers.includes(blockerTag.slice(8)))allBlockers.push(blockerTag.slice(8));
+if(allBlockers.length){
+const blk=el('div','⚠️ Blocker: '+allBlockers.join(' | '));
+blk.style.fontSize='11px';
+blk.style.color='var(--bad)';
+blk.style.marginTop='4px';
+blk.style.fontWeight='600';
+left.append(blk);
+}
+
+const cockpitBtn=el('button','Cockpit & Tasks','btn primary');
+cockpitBtn.onclick=()=>openProjectCockpit(p);
+acts.append(cockpitBtn);
+
+if(String(p.status)!=='completed'&&String(p.status)!=='archived'){
+const compBtn=el('button','Complete','btn');
+compBtn.onclick=()=>patchItem(p.id,{status:'completed'});
+acts.append(compBtn);
+}
+card.append(left,acts);
+box.append(card);
+});
+}
 async function loadItems(){state($('taskList'),'Loading tasks...');state($('ideaList'),'Loading ideas...');try{items=(await api('/items')).items||[];renderItems('task');renderItems('idea');updateNavCounts();}catch(e){state($('taskList'),e.message,'error');state($('ideaList'),e.message,'error')}}function kindOf(x){const c=String(x.context||'').toLowerCase();return c==='project'?'project':(c==='idea'?'idea':'task')}function renderItems(kind){const box=$(kind==='task'?'taskList':'ideaList'),q=$(kind==='task'?'taskSearch':'ideaSearch').value.toLowerCase(),scope=kind==='task'?'taskScope':'ideaScope';box.replaceChildren();const rows=items.filter(x=>kindOf(x)===kind&&inScope(scope,String(x.status)==='archived')&&(!q||JSON.stringify(x).toLowerCase().includes(q)));if(!rows.length){box.append(el('div','No '+kind+' records.','empty'));return}rows.forEach(x=>{const extra=[];if(kind==='task'&&!['completed','archived','cancelled'].includes(String(x.status))){const done=el('button','Complete','btn');done.onclick=()=>patchItem(x.id,{status:'completed'});extra.push(done)}else if(kind==='idea'&&String(x.status)!=='archived'){const promote=el('button','Promote to task','btn');promote.onclick=()=>patchItem(x.id,{context:'task',task_class:'DO',actionable:true,status:'active'});extra.push(promote)}const summary=String(x.summary||'');box.append(recordRow(kind,x,x.title||'Untitled',[x.status,x.due_at?'due '+fmt(x.due_at):'',summary.length>160?summary.slice(0,160)+'…':summary].filter(Boolean).join(' · '),extra))})}async function patchItem(id,update){try{await api('/items',{method:'PATCH',body:JSON.stringify(Object.assign({id},update))});await loadItems();await loadProjects();}catch(e){alert('Update failed: '+e.message)}}async function add(kind){const titleField=kind==='project'?'projectTitle':(kind==='task'?'taskTitle':'ideaTitle');const notesField=kind==='project'?'projectNotes':(kind==='task'?'taskNotes':'ideaNotes');const title=$(titleField).value.trim();if(!title)return;const notes=$(notesField).value.trim();const payload={kind,title,notes};if(kind==='project'){payload.priority=Number($('projectPriority').value);payload.status=$('projectStatus').value;payload.lane=$('projectLane').value;payload.task_class='PLAN';}else if(kind==='task'){payload.priority=Number($('taskPriority').value);const due=$('taskDue').value;if(due)payload.due_at=new Date(due).toISOString();}try{await api(kind==='project'?'/projects':'/items',{method:'POST',body:JSON.stringify(payload)});$(titleField).value='';$(notesField).value='';if(kind==='project')await loadProjects();else await loadItems();}catch(e){alert('Create failed: '+e.message);}}
 const ITEM_STATUSES=['captured','triaged','planned','active','waiting','watch','approval','completed','cancelled','archived'],TASK_CLASSES=['DO','MAKE','FIX','PLAN','DECIDE','APPROVE','COMMUNICATE','RESEARCH','REVIEW','MONITOR','ROUTINE','RELEASE','TRIAGE','CAPTURE','DCSE','ARCHIVE'],K_STATUSES=['staged','active','superseded','archived'],K_AUTH=['OBSERVED','VERIFIED','LIKELY','UNKNOWN','DCS_DIRECTION','DERIVED'],A_LIFE=['Draft','Review','Active','Deprecated','Retired'],A_LANES=['DCSE','DCS','SC','SS','TI','TSL','FAMILY'],A_TAGS=['DCSE-Confidential','SC-Internal','SS-Internal','TI-Internal','PPR-Protected','Public'];
 const SCHEMAS={

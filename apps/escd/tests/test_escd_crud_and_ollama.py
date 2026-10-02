@@ -234,4 +234,28 @@ def test_html_includes_projects_tab_and_schema():
     assert 'section id="projects"' in ROOT_HTML
     assert "loadProjects" in ROOT_HTML
     assert "renderProjects" in ROOT_HTML
+    assert "openProjectCockpit" in ROOT_HTML
     assert "ESCD-MVP-0.7.4" in ROOT_HTML
+
+
+def test_canonical_projects_have_github_urls_docs_and_child_tasks():
+    items = data.get_canonical_convergence_items()
+    projects = items["projects"]
+    tasks = items["tasks"]
+
+    # Verify SC-CTJ details
+    ctj = next(p for p in projects if p["item_key"] == "PROJ-SC-CTJ")
+    assert ctj["github_url"] == "https://github.com/sonlyconsulting-ctrl/SC-CTJ/pull/4"
+    assert len(ctj["docs_links"]) >= 2
+    assert len(ctj["blockers"]) >= 1
+
+    # Verify SS-PTJ details
+    ssptj = next(p for p in projects if p["item_key"] == "PROJ-SS-PTJ")
+    assert ssptj["lane"] == "SS"
+    assert "SC-CTJ/pull/5" in ssptj["docs_links"][1]["url"]
+
+    # Verify tasks match projects
+    ctj_tasks = [t for t in tasks if "PROJ-SC-CTJ".lower() in str(t.get("source_refs", "")).lower()]
+    assert len(ctj_tasks) >= 3
+    assert any(t["status"] == "completed" for t in ctj_tasks)
+    assert any("Claude Design" in str(t.get("source_refs", "")) for t in ctj_tasks)

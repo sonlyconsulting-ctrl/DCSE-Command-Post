@@ -221,6 +221,7 @@ class handler(BaseHTTPRequestHandler):
                         "completed_tasks": len(completed),
                         "open_tasks": len(matched) - len(completed),
                     }
+                    p["tasks"] = matched
                 self._json(200, {"ok": True, "projects": projects})
             elif path == "/api/mvp/assets":
                 self._json(200, {"ok": True, "assets": list_assets()})
