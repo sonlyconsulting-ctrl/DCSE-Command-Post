@@ -1,0 +1,8 @@
+# DDNA historical recovery extraction receipt 2026-10-11
+Task DCSE-DDNA-RECOVERY-20261011-01 | V7.3 operative | PARTIAL
+
+Actual local processing: uploaded 2026-10-11 recovery report SHA256 44a258a575a6cb0a5b515176cffadfc45a1d51608c2537cd2d7e66a614a55c94 and May 21 registry SHA256 f98e1d803d17bc3c284c94b445a7104d2e8f7fd1ff932187df0dc0638222a0fd. Extracted 33 candidate records: 21 historical signals, 10 report-attributed quote fragments, 2 AI summary references. Five-layer totals: sentiment 15, logic 5, design 4, product 4, technical 5. 33 distinct text SHA256 values; no database-level duplicate comparison performed. Local candidate JSONL SHA256 170a5a4ca17251e66a9d909bb4d599079dadf92ba7d2e69dd1c895f36706925c.
+
+Critical evidence boundaries: Original SS archetype interview transcripts and Clarify Self Revelation full transcript NOT recovered. Google Drive primary source of CTJ quote fragments not independently read back; report excerpts remain attributed to secondary report. Qwen/Gemini/Claude claims of exact local paths, layer splits and completed recovery are unverified without direct readback. The 2026-09-09 GitHub physical transfer receipt records 129 queue + 40 job copies and 169 provenance links to dedicated legacy tables; do not count copies as novel. Dedicated database SQL timeout cause unverified.
+
+No Supabase insert, GitHub promotion, migration, secret access, PS ingestion, deployment or destructive action. Next gates: direct source readback; legacy/dedicated candidate matching; idempotent insert proposal with DCS authorization; independent validation. Status PARTIAL.
