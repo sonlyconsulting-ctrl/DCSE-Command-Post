@@ -1,0 +1,51 @@
+{
+  "event_id": "SC-CTJ-VOTER-EDITION-APPROVAL-20261010",
+  "lane": "SC",
+  "project": "CTJ-Voter-Edition",
+  "event_type": "decision",
+  "status": "Approved — Build Not Started",
+  "timestamp": "2026-10-10T00:00:00Z",
+  "decision": {
+    "type": "product_approval",
+    "approved_by": "DCS",
+    "approved_on": "2026-10-10",
+    "product_family": "CaaS/CTJ",
+    "target_lane": "SC-CTJ"
+  },
+  "deliverables": {
+    "urls": [],
+    "artifacts": [
+      "memory/project_ctj_voter_edition.md",
+      "tribunal/SC-CTJ-VOTER-EDITION-APPROVAL-MANIFEST-20261010.json",
+      "tribunal/SC-CTJ-VOTER-EDITION-APPROVAL-RECEIPT-20261010.json",
+      "tribunal/SC-CTJ-VOTER-EDITION-APPROVAL-SUMMARY-20261010.md"
+    ]
+  },
+  "product_spec": {
+    "name": "CTJ: Voter Edition",
+    "type": "module",
+    "description": "Nonpartisan 7-step critical-thinking-for-voters journey module",
+    "steps": 7,
+    "duration_minutes": 15,
+    "lead_magnet": "Clarity Card (printable, mobile-first)",
+    "traffic_strategy": ["AEO/GEO", "Clarity Card email capture", "Short-form series", "Civic partnerships", "Rapid-response page"],
+    "format": "Single mobile-first HTML module + shareable Clarity Card",
+    "guardrails": ["nonpartisan", "no candidate/party/issue positions", "generic example claims only", "no PS material", "no governance language on public page"]
+  },
+  "verification": {
+    "passed": false,
+    "note": "Approval only — no build to verify yet"
+  },
+  "approvals": {
+    "dcs_required": true,
+    "dcs_approved": true,
+    "build_authorized": false,
+    "build_requires": "separate DCS build authorization"
+  },
+  "compliance_violations": {
+    "recorded": true,
+    "violation": "Agent failed to execute operative workflow at time of approval recording. Only memory files were written. GitHub commit, Supabase insert, and poller injection were omitted.",
+    "root_cause": "Agent miscategorized a product approval as a simple memory-save task rather than a decision event triggering the operative workflow.",
+    "remediation": "Full 5-step workflow executed retroactively on 2026-10-10 per DCS direction."
+  }
+}
