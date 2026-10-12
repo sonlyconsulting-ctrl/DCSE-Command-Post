@@ -1,0 +1,827 @@
+{
+  "_meta": {
+    "artifact_type": "CTJ_VOTER_EDITION_REGISTRY",
+    "registry_id": "CTJ_VOTER_V1",
+    "canonical_id": "CANON-162",
+    "version": "1.0.0",
+    "source_authority": "DCSE Master Profile v7.3",
+    "parent_product": "sc-services.json#CTJ",
+    "status": "ACTIVE",
+    "created_at": "2026-10-12T00:00:00Z",
+    "brand_posture": "Third-Person Solo-Brand. No first-person pronouns. No em-dashes. No internal governance terms in public copy.",
+    "framework_name": "7-Step Nonpartisan Civic Clarity Framework"
+  },
+  "product": {
+    "code": "CTJ-VOTER",
+    "name": "Critical Thinker's Journey: Voter Edition",
+    "parent_brand": "Sonly Consulting",
+    "motto": "NONPARTISAN CIVIC CLARITY ENGINE",
+    "hero": "Structured Nonpartisan Civic Analysis & Ballot Decision Matrix",
+    "tagline": "The methodology for citizens who demand verified evidence over campaign rhetoric.",
+    "description": "Critical Thinker's Journey: Voter Edition provides a structured, nonpartisan 7-step reasoning engine for evaluating candidates, legislative proposals, and ballot referendums. The methodology eliminates partisan emotionalism and replaces campaign soundbites with verified roll call voting records, second-order fiscal modeling, and deterministic civic clarity.",
+    "brand_color_primary": "#D4AF37",
+    "brand_color_secondary": "#0A192F",
+    "cta_primary": "Launch Civic Framework",
+    "cta_secondary": "Generate Clarity Card"
+  },
+  "framework_steps": [
+    {
+      "step_number": 1,
+      "id": "STEP-01-VALUES",
+      "name": "Core Values Baseline",
+      "short_title": "Core Values",
+      "subtitle": "Rank Top Constitutional and Governance Imperatives",
+      "description": "Establish the voter's foundational civic principles before evaluating candidates or proposals. By defining prioritized principles first, subsequent candidate evaluations remain grounded in consistent governance standards rather than campaign charisma or media narratives.",
+      "input_type": "Priority Weighting (1-10 Scale)",
+      "output_type": "Normalized Civic Priority Vector",
+      "imperatives": [
+        {
+          "id": "VAL-01",
+          "code": "CONST_LIBERTY",
+          "name": "Constitutional Originalism & Civil Liberties",
+          "category": "Governance",
+          "description": "Strict adherence to enumerated constitutional powers, robust defense of Bill of Rights protections, due process of law, and personal privacy against unwarranted state surveillance.",
+          "default_weight": 9,
+          "benchmarks": [
+            "Protection of First and Fourth Amendment guarantees",
+            "Limitation of federal agencies to statutory mandates",
+            "Preservation of habeas corpus and procedural due process"
+          ]
+        },
+        {
+          "id": "VAL-02",
+          "code": "FISCAL_DISCIPLINE",
+          "name": "Fiscal Discipline & Debt Containment",
+          "category": "Economy",
+          "description": "Structural reduction of federal deficits, disciplined budget ceilings, elimination of baseline budgeting expansion, and rigorous auditing of public expenditures.",
+          "default_weight": 8,
+          "benchmarks": [
+            "Enforcement of statutory debt ceilings",
+            "Audit of defense and discretionary program expenditures",
+            "Prevention of unfunded federal entitlement growth"
+          ]
+        },
+        {
+          "id": "VAL-03",
+          "code": "SOVEREIGNTY_DEFENSE",
+          "name": "National Sovereignty & Border Integrity",
+          "category": "Security",
+          "description": "Orderly border enforcement, rule of law in immigration administration, targeted national defense posture, and foreign policy prioritizing domestic stability.",
+          "default_weight": 8,
+          "benchmarks": [
+            "Operational border enforcement and visa verification",
+            "Defense spending tied to strategic readiness rather than contractors",
+            "Prudent military engagement authorized by legislative declarations"
+          ]
+        },
+        {
+          "id": "VAL-04",
+          "code": "FREE_ENTERPRISE",
+          "name": "Free Enterprise & Regulatory Restraint",
+          "category": "Economy",
+          "description": "Protection of voluntary commerce, reduction of administrative compliance burdens on small business, competitive domestic tax rates, and property rights security.",
+          "default_weight": 7,
+          "benchmarks": [
+            "Cost-benefit thresholds on administrative rulemaking",
+            "Dismantling of anti-competitive licensing barriers",
+            "Equitable tax structure that avoids capital misallocation"
+          ]
+        },
+        {
+          "id": "VAL-05",
+          "code": "FEDERALISM_LOCALISM",
+          "name": "Federalism & Decentralized Governance",
+          "category": "Governance",
+          "description": "Reinvigoration of the Tenth Amendment, devolving policy decisions to States and local municipalities where citizens exercise greater oversight.",
+          "default_weight": 7,
+          "benchmarks": [
+            "Reduction of conditional federal grants that bypass State legislatures",
+            "Local educational and municipal zoning autonomy",
+            "State-level regulatory experimentation"
+          ]
+        },
+        {
+          "id": "VAL-06",
+          "code": "RULE_OF_LAW",
+          "name": "Rule of Law & Equal Protection",
+          "category": "Legal",
+          "description": "Impartial administration of justice without selective prosecution, uniform enforcement of statutory criminal laws, and insulation of judiciary from political pressure.",
+          "default_weight": 8,
+          "benchmarks": [
+            "Uniform application of criminal statutes regardless of status",
+            "Protection of jury trial rights and appellate review",
+            "Separation between investigative agencies and political campaigns"
+          ]
+        },
+        {
+          "id": "VAL-07",
+          "code": "PUBLIC_TRANSPARENCY",
+          "name": "Public Transparency & Institutional Ethics",
+          "category": "Integrity",
+          "description": "Expedited FOIA compliance, ban on congressional insider trading, real-time disclosure of campaign contributions, and elimination of closed-door omnibus legislation.",
+          "default_weight": 9,
+          "benchmarks": [
+            "Single-subject legislative bill requirements",
+            "Public access to legislative text 72 hours before floor votes",
+            "Mandatory disclosure of executive regulatory lobbying contacts"
+          ]
+        },
+        {
+          "id": "VAL-08",
+          "code": "CRITICAL_INFRASTRUCTURE",
+          "name": "Resilient Infrastructure & Energy Independence",
+          "category": "Infrastructure",
+          "description": "Strategic development of reliable baseload power, grid security against electromagnetic threats, modern freight transport, and domestic technological capability.",
+          "default_weight": 6,
+          "benchmarks": [
+            "Electrical grid hardened against disruption and cyber intrusion",
+            "Diversified domestic energy production ensuring price stability",
+            "Maintenance of waterways, freight rail, and interstate corridors"
+          ]
+        }
+      ]
+    },
+    {
+      "step_number": 2,
+      "id": "STEP-02-SIGNAL_FILTER",
+      "name": "Signal vs Noise Filter",
+      "short_title": "Signal vs Noise",
+      "subtitle": "Distinguish Campaign Rhetoric from Verified Action",
+      "description": "Filter campaign soundbites, press releases, and attack advertisements against verifiable legislative votes, committee actions, roll calls, and executive appointments. The filter assigns higher evidentiary weight to binding actions while penalizing unsubstantiated political declarations.",
+      "filter_categories": [
+        {
+          "type": "SIGNAL",
+          "tier": "Tier 1: High Fidelity",
+          "weight_multiplier": 1.0,
+          "sources": [
+            "Binding Roll Call Floor Votes",
+            "Committee Amendments & Markup Text",
+            "Signed Executive Orders & Directives",
+            "Statutory Enactments & Legislative Codification",
+            "Official Sworn Testimony & Depositions"
+          ]
+        },
+        {
+          "type": "NOISE",
+          "tier": "Tier 3: Low Fidelity / Speculative",
+          "weight_multiplier": 0.15,
+          "sources": [
+            "Campaign Rally Speeches & Soundbites",
+            "Super PAC Paid Advertisements",
+            "Non-binding Sense-of-Congress Resolutions",
+            "Unverified Social Media Declarations",
+            "Partisan Talking Points & Talking Head Commentary"
+          ]
+        }
+      ],
+      "filter_test_cases": [
+        {
+          "id": "CASE-01",
+          "domain": "Fiscal Responsibility",
+          "issue": "Federal Budget Expansion & Deficit Control",
+          "claimed_rhetoric": "Pledged complete fiscal conservatism and spending reduction in television ads.",
+          "verified_record": "Voted AYE on $1.7T omnibus spending bill containing 4,200 earmarks (Roll Call #412).",
+          "rhetoric_score": 90,
+          "record_score": 25,
+          "divergence_penalty": 65,
+          "signal_reliability": "POOR",
+          "evidence_citation": "Congressional Record Vol. 169, Roll Call Vote 412"
+        },
+        {
+          "id": "CASE-02",
+          "domain": "Digital Privacy",
+          "issue": "Warrantless Surveillance & Fourth Amendment Protections",
+          "claimed_rhetoric": "Condemned government surveillance abuse at national campaign town hall.",
+          "verified_record": "Voted NAY on amendment requiring judicial warrants for domestic communications searches under Section 702 (Roll Call #119).",
+          "rhetoric_score": 85,
+          "record_score": 15,
+          "divergence_penalty": 70,
+          "signal_reliability": "CRITICAL_MISMATCH",
+          "evidence_citation": "House Roll Call #119, Reauthorization Amendment"
+        },
+        {
+          "id": "CASE-03",
+          "domain": "Healthcare Transparency",
+          "issue": "Mandatory Hospital Price Disclosure",
+          "claimed_rhetoric": "Advocated for healthcare cost transparency and patient choice in policy white paper.",
+          "verified_record": "Co-sponsored and voted AYE on Fair Price Transparency Act requiring upfront procedure cost disclosure (Roll Call #284).",
+          "rhetoric_score": 80,
+          "record_score": 85,
+          "divergence_penalty": 0,
+          "signal_reliability": "VERIFIED_HIGH",
+          "evidence_citation": "Statutory Enactment Public Law 118-42"
+        },
+        {
+          "id": "CASE-04",
+          "domain": "Regulatory Reform",
+          "issue": "Small Business Compliance Relief",
+          "claimed_rhetoric": "Pledged aggressive deregulation to stimulate local small business hiring.",
+          "verified_record": "Introduced REINS Act companion bill requiring congressional approval for major agency rules exceeding $100M economic cost.",
+          "rhetoric_score": 75,
+          "record_score": 80,
+          "divergence_penalty": 0,
+          "signal_reliability": "VERIFIED_HIGH",
+          "evidence_citation": "Bill Sponsorship S. 184 / Congressional Record"
+        }
+      ]
+    },
+    {
+      "step_number": 3,
+      "id": "STEP-03-OUTCOME_MODEL",
+      "name": "Second-Order Outcome Modeling",
+      "short_title": "Second-Order Modeling",
+      "subtitle": "Project 5-Year Budgetary and Legal Horizons",
+      "description": "Model proposed policies beyond immediate popular intent by calculating downstream consequences across fiscal appropriations, structural deficits, constitutional scrutiny, and compliance burdens over a five-year horizon.",
+      "horizon_years": [1, 2, 3, 4, 5],
+      "modeling_dimensions": [
+        {
+          "dimension": "BUDGET_IMPACT",
+          "label": "Fiscal Trajectory & Outlays",
+          "unit": "Fiscal Drag Index (0-100)",
+          "description": "Downstream costs including interest service, pension adjustments, and expansion of program beneficiaries."
+        },
+        {
+          "dimension": "LEGAL_EXPOSURE",
+          "label": "Constitutional & Litigation Risk",
+          "unit": "Litigation Exposure Rating (Low/Med/High)",
+          "description": "Exposure to federal preemption challenges, dormant Commerce Clause litigation, or civil rights injunctions."
+        },
+        {
+          "dimension": "COMPLIANCE_BURDEN",
+          "label": "Regulatory Overhead for Small Entities",
+          "unit": "Administrative Hours / Cost Index",
+          "description": "Administrative friction imposed on private actors and local municipal agencies."
+        },
+        {
+          "dimension": "CAPITAL_DISTORTION",
+          "label": "Secondary Market Distortions",
+          "unit": "Market Efficiency Impact Score",
+          "description": "Unintended price distortions, subsidy dependencies, or supply contraction."
+        }
+      ],
+      "proposals": [
+        {
+          "id": "PROP-MODEL-01",
+          "title": "Statewide Commercial Rent Control Act",
+          "first_order_intent": "Intended to reduce commercial lease prices for urban small merchants.",
+          "projections": [
+            {
+              "year": 1,
+              "budget_drag": 20,
+              "litigation_risk": "High",
+              "compliance_burden": 45,
+              "capital_distortion": 30,
+              "key_event": "Commercial lease freeze begins; initial federal constitutional challenges filed by property trusts."
+            },
+            {
+              "year": 2,
+              "budget_drag": 35,
+              "litigation_risk": "High",
+              "compliance_burden": 60,
+              "capital_distortion": 50,
+              "key_event": "Commercial building maintenance deferrals surface; legal defense fund drawn from municipal budget."
+            },
+            {
+              "year": 3,
+              "budget_drag": 55,
+              "litigation_risk": "Medium",
+              "compliance_burden": 75,
+              "capital_distortion": 72,
+              "key_event": "Commercial building starts fall 34%; capital migrates to neighboring jurisdictions."
+            },
+            {
+              "year": 4,
+              "budget_drag": 70,
+              "litigation_risk": "Low",
+              "compliance_burden": 85,
+              "capital_distortion": 84,
+              "key_event": "Municipal commercial property tax receipts drop $140M; retail space vacancy in prime corridors."
+            },
+            {
+              "year": 5,
+              "budget_drag": 82,
+              "litigation_risk": "Low",
+              "compliance_burden": 90,
+              "capital_distortion": 91,
+              "key_event": "Legislature forced to consider emergency commercial property tax hike or repeal rent controls."
+            }
+          ]
+        },
+        {
+          "id": "PROP-MODEL-02",
+          "title": "Clean Energy Grid Transition Mandate",
+          "first_order_intent": "Mandate 100% renewable generation within 6 years to curb emissions.",
+          "projections": [
+            {
+              "year": 1,
+              "budget_drag": 30,
+              "litigation_risk": "Medium",
+              "compliance_burden": 40,
+              "capital_distortion": 25,
+              "key_event": "Initial bond issuance for transmission lines; utility rate case filings requesting 8% hike."
+            },
+            {
+              "year": 2,
+              "budget_drag": 48,
+              "litigation_risk": "Medium",
+              "compliance_burden": 55,
+              "capital_distortion": 42,
+              "key_event": "Early retirement of natural gas peaker plants; reserve generation margins shrink to 4%."
+            },
+            {
+              "year": 3,
+              "budget_drag": 64,
+              "litigation_risk": "Low",
+              "compliance_burden": 70,
+              "capital_distortion": 65,
+              "key_event": "Summer peak electricity prices surge 42%; industrial manufacturers curtail peak operations."
+            },
+            {
+              "year": 4,
+              "budget_drag": 75,
+              "litigation_risk": "High",
+              "compliance_burden": 80,
+              "capital_distortion": 78,
+              "key_event": "Battery storage supply bottlenecks trigger rolling brownout warnings; emergency fossil imports contracted."
+            },
+            {
+              "year": 5,
+              "budget_drag": 85,
+              "litigation_risk": "Medium",
+              "compliance_burden": 88,
+              "capital_distortion": 82,
+              "key_event": "Cumulative retail utility rates 68% higher than baseline; taxpayer subsidies required to backstop utility credit rating."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step_number": 4,
+      "id": "STEP-04-CANDIDATE_COMPARATOR",
+      "name": "Candidate Stance Comparator",
+      "short_title": "Candidate Comparator",
+      "subtitle": "Calculate Weighted Alignment Scores Across Candidates",
+      "description": "Evaluate candidates through deterministic weighted scoring. Each candidate's verified position across key civic domains is multiplied by the voter's core value weights from Step 1, producing an objective alignment percentage that reveals substantive compatibility without partisan spin.",
+      "scoring_formula": "AlignmentScore = SUM(ValueWeight_i * CandidateStance_i) / (10 * SUM(ValueWeight_i)) * 100",
+      "candidates": [
+        {
+          "id": "CAND-01",
+          "name": "Candidate A: Marcus Vance",
+          "title": "Constitutional Conservative & Fiscal Realist",
+          "profile_summary": "Prioritizes spending caps, statutory deregulation, strict constructionist judicial philosophy, and decentralized municipal control.",
+          "verified_record_rating": "HIGH_VERIFIED",
+          "stances": [
+            {
+              "value_code": "CONST_LIBERTY",
+              "stance_score": 9.2,
+              "rationale": "Consistent record defending First Amendment association rights and Fourth Amendment warrant standards.",
+              "verification_source": "Roll Call Votes 2021-2025; Judiciary Committee Record"
+            },
+            {
+              "value_code": "FISCAL_DISCIPLINE",
+              "stance_score": 8.8,
+              "rationale": "Voted against continuing resolutions without offsetting budget rescissions; authored zero-baseline review amendment.",
+              "verification_source": "Budget Committee Roll Call Record"
+            },
+            {
+              "value_code": "SOVEREIGNTY_DEFENSE",
+              "stance_score": 8.5,
+              "rationale": "Supported border physical barrier funding and mandatory employer E-Verify enforcement.",
+              "verification_source": "Homeland Security Committee Votes"
+            },
+            {
+              "value_code": "FREE_ENTERPRISE",
+              "stance_score": 8.9,
+              "rationale": "Sponsored legislation eliminating occupational licensing reciprocity restrictions.",
+              "verification_source": "Commerce Committee Record"
+            },
+            {
+              "value_code": "FEDERALISM_LOCALISM",
+              "stance_score": 9.0,
+              "rationale": "Advocates block-granting federal welfare programs to State administration with zero federal mandates.",
+              "verification_source": "Legislative Sponsorship S. 412"
+            },
+            {
+              "value_code": "RULE_OF_LAW",
+              "stance_score": 8.4,
+              "rationale": "Supported mandatory minimums for violent felonies and qualified immunity protections for peace officers.",
+              "verification_source": "Judiciary Floor Votes"
+            },
+            {
+              "value_code": "PUBLIC_TRANSPARENCY",
+              "stance_score": 7.8,
+              "rationale": "Co-sponsored 72-hour bill inspection rule; moderate disclosures on campaign finance.",
+              "verification_source": "Rules Committee Markup"
+            },
+            {
+              "value_code": "CRITICAL_INFRASTRUCTURE",
+              "stance_score": 6.5,
+              "rationale": "Favors private concession models and expedited NEPA permitting over direct federal grant outlays.",
+              "verification_source": "Public Works & Transportation Votes"
+            }
+          ]
+        },
+        {
+          "id": "CAND-02",
+          "name": "Candidate B: Elena Rostova",
+          "title": "Technocratic Institutionalist & Infrastructure Advocate",
+          "profile_summary": "Prioritizes public capital modernization, institutional regulatory oversight, green energy subsidies, and multilateral alliances.",
+          "verified_record_rating": "MEDIUM_MIXED",
+          "stances": [
+            {
+              "value_code": "CONST_LIBERTY",
+              "stance_score": 5.4,
+              "rationale": "Supports federal hate speech guidelines and firearms background licensing expansion.",
+              "verification_source": "Legislative Record & Public Hearings"
+            },
+            {
+              "value_code": "FISCAL_DISCIPLINE",
+              "stance_score": 3.8,
+              "rationale": "Voted for all supplemental appropriations bills; advocates raising corporate tax brackets to fund deficits.",
+              "verification_source": "Ways & Means Committee Votes"
+            },
+            {
+              "value_code": "SOVEREIGNTY_DEFENSE",
+              "stance_score": 5.2,
+              "rationale": "Favors international treaty structures and targeted refugee processing expansions.",
+              "verification_source": "Foreign Affairs Record"
+            },
+            {
+              "value_code": "FREE_ENTERPRISE",
+              "stance_score": 4.5,
+              "rationale": "Supports mandatory ESG disclosures for publicly traded firms and prevailing wage covenants.",
+              "verification_source": "Securities Oversight Hearings"
+            },
+            {
+              "value_code": "FEDERALISM_LOCALISM",
+              "stance_score": 4.0,
+              "rationale": "Backs national educational curriculum standards and federal zoning preemption for housing.",
+              "verification_source": "Education & Workforce Votes"
+            },
+            {
+              "value_code": "RULE_OF_LAW",
+              "stance_score": 6.8,
+              "rationale": "Emphasizes restorative justice sentencing reform while maintaining federal civil rights enforcement.",
+              "verification_source": "Judiciary Committee Record"
+            },
+            {
+              "value_code": "PUBLIC_TRANSPARENCY",
+              "stance_score": 7.2,
+              "rationale": "Pioneered agency open-data portal; supported lobbying registry enhancements.",
+              "verification_source": "Oversight Committee Reports"
+            },
+            {
+              "value_code": "CRITICAL_INFRASTRUCTURE",
+              "stance_score": 9.1,
+              "rationale": "Authored $85B regional passenger rail bond and public water filtration recapitalization act.",
+              "verification_source": "Transportation Committee Primary Sponsor"
+            }
+          ]
+        },
+        {
+          "id": "CAND-03",
+          "name": "Candidate C: Dominic Thorne",
+          "title": "Decentralist Reformer & Digital Privacy Champion",
+          "profile_summary": "Prioritizes digital civil liberties, sound money, elimination of federal surveillance programs, and aggressive judicial restraint.",
+          "verified_record_rating": "HIGH_VERIFIED",
+          "stances": [
+            {
+              "value_code": "CONST_LIBERTY",
+              "stance_score": 9.6,
+              "rationale": "Uncompromising defense of end-to-end encryption, digital privacy rights, and Second Amendment protections.",
+              "verification_source": "Roll Call Record on FISA Reauthorization"
+            },
+            {
+              "value_code": "FISCAL_DISCIPLINE",
+              "stance_score": 8.5,
+              "rationale": "Voted against every omnibus spending package; introduced bill prohibiting Federal Reserve digital currency.",
+              "verification_source": "Financial Services Committee"
+            },
+            {
+              "value_code": "SOVEREIGNTY_DEFENSE",
+              "stance_score": 7.2,
+              "rationale": "Strictly non-interventionist foreign policy; supports constitutional declarations before military deployment.",
+              "verification_source": "Armed Services Votes"
+            },
+            {
+              "value_code": "FREE_ENTERPRISE",
+              "stance_score": 8.7,
+              "rationale": "Advocates complete tax exemptions for capital gains on domestic manufacturing and software.",
+              "verification_source": "Ways & Means Amendments"
+            },
+            {
+              "value_code": "FEDERALISM_LOCALISM",
+              "stance_score": 9.4,
+              "rationale": "Authored legislation abolishing federal department grant conditions and restoring state primacy.",
+              "verification_source": "Sponsorship Record H.R. 520"
+            },
+            {
+              "value_code": "RULE_OF_LAW",
+              "stance_score": 8.0,
+              "rationale": "Advocates strict limits on civil asset forfeiture and elimination of non-statutory federal crimes.",
+              "verification_source": "Criminal Justice Reform Package"
+            },
+            {
+              "value_code": "PUBLIC_TRANSPARENCY",
+              "stance_score": 9.5,
+              "rationale": "Introduced legislation mandating complete public disclosure of all unclassified federal grant audits.",
+              "verification_source": "Government Reform Sub-Committee"
+            },
+            {
+              "value_code": "CRITICAL_INFRASTRUCTURE",
+              "stance_score": 5.8,
+              "rationale": "Favors private utility deregulation and nuclear microreactor licensing over public trust bonds.",
+              "verification_source": "Energy & Commerce Votes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step_number": 5,
+      "id": "STEP-05-REFERENDUM_STRESS",
+      "name": "Ballot Referendum Stress Test",
+      "short_title": "Referendum Stress Test",
+      "subtitle": "Test Propositions Against the 5-Pillar Vulnerability Matrix",
+      "description": "Subject proposed citizen initiatives, bonds, and constitutional amendments to rigorous structural scrutiny. The 5-pillar stress test flags hidden fiscal liabilities, litigation risk, and open-ended administrative discretion before voting.",
+      "stress_pillars": [
+        {
+          "code": "PIL-01",
+          "name": "Constitutional & Statutory Authority",
+          "fail_condition": "Exceeds municipal or state police powers, triggering immediate federal court injunctions."
+        },
+        {
+          "code": "PIL-02",
+          "name": "Dedicated Revenue vs Unfunded Mandate",
+          "fail_condition": "Appropriates mandatory outlays without dedicated, verified revenue offsets."
+        },
+        {
+          "code": "PIL-03",
+          "name": "Secondary Market Disruption",
+          "fail_condition": "Induces housing shortages, supply friction, or flight of private productive capital."
+        },
+        {
+          "code": "PIL-04",
+          "name": "Bureaucratic Rulemaking Discretion",
+          "fail_condition": "Delegates unconstrained regulatory discretion to unelected advisory boards."
+        },
+        {
+          "code": "PIL-05",
+          "name": "Sunset Clause & Mandatory Audit",
+          "fail_condition": "Lacks automatic expiration (5-7 years) and mandatory independent legislative audit."
+        }
+      ],
+      "propositions": [
+        {
+          "id": "PROP-201",
+          "title": "Proposition 201: Regional Rapid Transit Bond ($4.8 Billion)",
+          "ballot_summary": "Authorizes the issuance of $4.8 billion in general obligation bonds for light rail expansion, funded by a 0.5% county sales tax surcharge.",
+          "pillar_evaluations": [
+            {
+              "pillar_code": "PIL-01",
+              "status": "PASS",
+              "notes": "Clearly falls within municipal bonding and transport authority."
+            },
+            {
+              "pillar_code": "PIL-02",
+              "status": "WARN",
+              "notes": "Sales tax revenues assume 3.5% ongoing economic expansion; downturn creates general fund debt burden."
+            },
+            {
+              "pillar_code": "PIL-03",
+              "status": "WARN",
+              "notes": "Sales tax increase disproportionately increases consumer goods friction on lower-income households."
+            },
+            {
+              "pillar_code": "PIL-04",
+              "status": "PASS",
+              "notes": "Construction oversight assigned to existing transportation authority with statutory procurement rules."
+            },
+            {
+              "pillar_code": "PIL-05",
+              "status": "FAIL",
+              "notes": "Tax surcharge remains permanent even after bond retirement; lacks required 10-year sunset clause."
+            }
+          ],
+          "vulnerability_score": 45,
+          "verdict": "CONDITIONAL_WARN",
+          "verdict_label": "High Secondary Debt Exposure"
+        },
+        {
+          "id": "PROP-202",
+          "title": "Proposition 202: Parental Educational Choice Accounts",
+          "ballot_summary": "Permits state per-pupil education funds ($7,800/student) to follow enrolled students to accredited private, parochial, or homeschooling programs.",
+          "pillar_evaluations": [
+            {
+              "pillar_code": "PIL-01",
+              "status": "PASS",
+              "notes": "Conforms with state supreme court precedent and First Amendment freedom of association."
+            },
+            {
+              "pillar_code": "PIL-02",
+              "status": "PASS",
+              "notes": "Revenue neutral; funding redirects existing formula funds without net state tax increases."
+            },
+            {
+              "pillar_code": "PIL-03",
+              "status": "PASS",
+              "notes": "Fosters competitive dynamics among educational providers without supply restriction."
+            },
+            {
+              "pillar_code": "PIL-04",
+              "status": "WARN",
+              "notes": "State education board may attempt regulatory curriculum controls on independent academies."
+            },
+            {
+              "pillar_code": "PIL-05",
+              "status": "PASS",
+              "notes": "Mandates annual state auditor general review and 6-year legislative performance reauthorization."
+            }
+          ],
+          "vulnerability_score": 15,
+          "verdict": "VERIFIED_PASS",
+          "verdict_label": "Robust Structural Integrity"
+        },
+        {
+          "id": "PROP-203",
+          "title": "Proposition 203: Municipal Energy Authority Eminent Domain",
+          "ballot_summary": "Authorizes municipal government to condemn and seize investor-owned electric utility assets to establish a city-managed power authority.",
+          "pillar_evaluations": [
+            {
+              "pillar_code": "PIL-01",
+              "status": "FAIL",
+              "notes": "Invites immediate federal Fifth Amendment Takings Clause litigation and bond covenant defaults."
+            },
+            {
+              "pillar_code": "PIL-02",
+              "status": "FAIL",
+              "notes": "Understates condemnation valuation by an estimated $1.2B, creating unfunded municipal debt liability."
+            },
+            {
+              "pillar_code": "PIL-03",
+              "status": "FAIL",
+              "notes": "Triggers immediate municipal bond rating downgrades and utility investment departure."
+            },
+            {
+              "pillar_code": "PIL-04",
+              "status": "FAIL",
+              "notes": "Grants unelected municipal power commissioners unchecked rate-setting power without judicial review."
+            },
+            {
+              "pillar_code": "PIL-05",
+              "status": "FAIL",
+              "notes": "Contains zero audit provisions or sunset mechanisms."
+            }
+          ],
+          "vulnerability_score": 92,
+          "verdict": "CRITICAL_FAIL",
+          "verdict_label": "Severe Fiscal & Legal Hazard"
+        }
+      ]
+    },
+    {
+      "step_number": 6,
+      "id": "STEP-06-TRADEOFF_EQUILIBRIUM",
+      "name": "Trade-off Equilibrium Calculator",
+      "short_title": "Trade-off Calculator",
+      "subtitle": "Calculate Civic Equilibrium and Detect Cognitive Dissonance",
+      "description": "Evaluate non-zero-sum and zero-sum trade-offs across four governing tensions. The calculator maps personal trade-off positions and alerts the citizen when stated policy desires are mathematically incompatible with fiscal or constitutional limits.",
+      "tradeoff_dilemmas": [
+        {
+          "id": "TRADEOFF-01",
+          "title": "Individual Liberty vs Public Security",
+          "axis_left": "Maximized Procedural Liberty",
+          "axis_right": "Aggressive Public Security",
+          "description_left": "Strict warrant limits, encrypted communications, absolute Fourth Amendment protections, minimal administrative enforcement.",
+          "description_right": "Expanded police authority, automated public surveillance, expedited administrative detention, enhanced border interdiction.",
+          "default_balance": -25
+        },
+        {
+          "id": "TRADEOFF-02",
+          "title": "Fiscal Austerity vs Public Capital Outlays",
+          "axis_left": "Fiscal Austerity & Low Taxes",
+          "axis_right": "Public Capital & Infrastructure",
+          "description_left": "Zero debt expansion, restricted public borrowing, lower corporate and personal tax rates, privatization of public works.",
+          "description_right": "Large-scale public transit bonds, subsidized clean energy projects, expanded public research facilities, higher progressive tax rates.",
+          "default_balance": -35
+        },
+        {
+          "id": "TRADEOFF-03",
+          "title": "Market Deregulation vs Precautionary Standards",
+          "axis_left": "Free Market Agility",
+          "axis_right": "Precautionary Regulation",
+          "description_left": "Rapid business formation, minimal environmental permitting delays, market-driven wage clearing, unrestricted technological deployment.",
+          "description_right": "Stringent carbon mandates, strict zoning oversight, mandatory corporate compliance disclosures, aggressive consumer safety vetting.",
+          "default_balance": -20
+        },
+        {
+          "id": "TRADEOFF-04",
+          "title": "Decentralized Federalism vs Standardized Uniformity",
+          "axis_left": "State & Local Primacy",
+          "axis_right": "National Regulatory Uniformity",
+          "description_left": "Policy experimentation by States, localized school governance, regional zoning sovereignty, elimination of federal strings.",
+          "description_right": "Uniform national commerce standards, centralized educational baselines, federal energy transmission rules, nationwide statutory codes.",
+          "default_balance": -30
+        }
+      ],
+      "dissonance_rules": [
+        {
+          "rule_id": "DISSONANCE-01",
+          "trigger_condition": "High Fiscal Discipline Priority in Step 1 (weight >= 8) combined with high Public Capital Outlays in Step 6 (slider > +20)",
+          "severity": "CRITICAL_DISSONANCE",
+          "alert_title": "Fiscal Discipline vs Outlays Dissonance",
+          "alert_message": "Voter established high priority on Fiscal Discipline & Debt Containment in Step 1, but favored aggressive Public Capital Outlays in Step 6. Public capital investments require debt issuance or tax increases that contradict debt containment objectives."
+        },
+        {
+          "rule_id": "DISSONANCE-02",
+          "trigger_condition": "High Constitutional Liberty Priority in Step 1 (weight >= 8) combined with high Public Security in Step 6 (slider > +20)",
+          "severity": "EVIDENTIARY_FRICTION",
+          "alert_title": "Civil Liberty vs Surveillance Friction",
+          "alert_message": "Voter ranked Civil Liberties as an apex priority in Step 1, but selected aggressive Public Security measures in Step 6. Expansion of state surveillance and expedited detention inherently constrains Fourth Amendment protections."
+        }
+      ]
+    },
+    {
+      "step_number": 7,
+      "id": "STEP-07-CLARITY_CARD",
+      "name": "Deterministic Civic Clarity Card",
+      "short_title": "Civic Clarity Card",
+      "subtitle": "Deterministic Ballot Digest and Print Preview",
+      "description": "Generate an auditable, deterministic ballot decision digest. The Civic Clarity Card summarizes prioritized values, verified candidate alignment scores, referendum stress test verdicts, and trade-off equilibrium indices in a high-density, printable layout.",
+      "export_features": [
+        "Cryptographically reproducible evaluation hash",
+        "Deterministic Civic Coherence Index (CCI: 0-100)",
+        "Candidate Weighted Alignment Digest",
+        "Referendum Structural Integrity Verdicts",
+        "Print-optimized 1-page high-contrast ballot format",
+        "JSON data export for permanent citizen records"
+      ]
+    }
+  ],
+  "testing_presets": [
+    {
+      "preset_id": "PRESET-01",
+      "name": "Constitutional Conservative / Fiscal Realist",
+      "description": "Prioritizes enumerated powers, spending caps, border integrity, and local self-governance.",
+      "weights": {
+        "CONST_LIBERTY": 10,
+        "FISCAL_DISCIPLINE": 9,
+        "SOVEREIGNTY_DEFENSE": 9,
+        "FREE_ENTERPRISE": 8,
+        "FEDERALISM_LOCALISM": 8,
+        "RULE_OF_LAW": 8,
+        "PUBLIC_TRANSPARENCY": 7,
+        "CRITICAL_INFRASTRUCTURE": 5
+      },
+      "tradeoffs": {
+        "TRADEOFF-01": -30,
+        "TRADEOFF-02": -40,
+        "TRADEOFF-03": -35,
+        "TRADEOFF-04": -40
+      }
+    },
+    {
+      "preset_id": "PRESET-02",
+      "name": "Civil Libertarian / Tech Reformer",
+      "description": "Prioritizes Fourth Amendment digital privacy, institutional transparency, criminal justice reform, and sound money.",
+      "weights": {
+        "CONST_LIBERTY": 10,
+        "FISCAL_DISCIPLINE": 8,
+        "SOVEREIGNTY_DEFENSE": 6,
+        "FREE_ENTERPRISE": 8,
+        "FEDERALISM_LOCALISM": 9,
+        "RULE_OF_LAW": 8,
+        "PUBLIC_TRANSPARENCY": 10,
+        "CRITICAL_INFRASTRUCTURE": 5
+      },
+      "tradeoffs": {
+        "TRADEOFF-01": -45,
+        "TRADEOFF-02": -25,
+        "TRADEOFF-03": -25,
+        "TRADEOFF-04": -35
+      }
+    },
+    {
+      "preset_id": "PRESET-03",
+      "name": "Pragmatic Institutionalist / Infrastructure Realist",
+      "description": "Prioritizes transparent public works, energy independence, clean government, and rule of law.",
+      "weights": {
+        "CONST_LIBERTY": 7,
+        "FISCAL_DISCIPLINE": 6,
+        "SOVEREIGNTY_DEFENSE": 6,
+        "FREE_ENTERPRISE": 6,
+        "FEDERALISM_LOCALISM": 5,
+        "RULE_OF_LAW": 9,
+        "PUBLIC_TRANSPARENCY": 9,
+        "CRITICAL_INFRASTRUCTURE": 10
+      },
+      "tradeoffs": {
+        "TRADEOFF-01": 5,
+        "TRADEOFF-02": 25,
+        "TRADEOFF-03": 10,
+        "TRADEOFF-04": 15
+      }
+    }
+  ]
+}

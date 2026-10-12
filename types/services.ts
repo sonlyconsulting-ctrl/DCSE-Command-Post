@@ -11,6 +11,8 @@ export interface ServicesRegistryMeta {
   extraction_sources: string[];
   status: string;
   created_at: string;
+  updated_at?: string;
+  changelog?: string;
   pricing_note: string;
 }
 
@@ -88,6 +90,68 @@ export interface ServiceCoinEconomy {
   membership_multiplier: number | 'TBD';
 }
 
+export type SportCategory =
+  | 'NFL'
+  | 'NBA'
+  | 'MLB'
+  | 'NHL'
+  | 'NCAA'
+  | 'High School Football'
+  | 'High School Basketball';
+
+export interface FavoriteTeam {
+  id: string;
+  name: string;
+  shortName: string;
+  sport: SportCategory;
+  leagueOrConference: string;
+  region: string;
+  color?: string;
+  seedOrRank?: string;
+}
+
+export interface TeamScoreOutcome {
+  gameId: string;
+  opponent: string;
+  teamScore: number;
+  opponentScore: number;
+  date: string;
+  outcome: 'W' | 'L' | 'T';
+  detail?: string;
+}
+
+export interface TeamScheduledGame {
+  gameId: string;
+  opponent: string;
+  gameTime: string;
+  date: string;
+  venue: string;
+  broadcast?: string;
+  isHome: boolean;
+}
+
+export interface TeamActivityAlert {
+  id: string;
+  timestamp: string;
+  headline: string;
+  detail: string;
+  badge: 'SCORE' | 'SCHEDULE' | 'ROSTER' | 'RADIUS_ALERT';
+}
+
+export interface TeamTrackerRecord {
+  team: FavoriteTeam;
+  recentScore: TeamScoreOutcome;
+  upcomingGame: TeamScheduledGame;
+  activityUpdate: TeamActivityAlert;
+}
+
+export interface ServiceFavoriteTeamsConfig {
+  max_selections: number;
+  supported_sports: SportCategory[];
+  activity_tracking_fields: string[];
+  selection_rule: string;
+}
+
 export interface ServiceProduct {
   code: ServiceProductCode;
   name: string;
@@ -95,6 +159,7 @@ export interface ServiceProduct {
   motto: string;
   hero: string;
   description: string;
+  description_short?: string;
   capabilities: ServiceCapability[];
   unique_section: ServiceUniqueSection;
   sections: string[];
@@ -103,6 +168,7 @@ export interface ServiceProduct {
   programs?: ServiceProgram[];
   individual_products?: ServiceIndividualProducts;
   coin_economy?: ServiceCoinEconomy;
+  favorite_teams_config?: ServiceFavoriteTeamsConfig;
 }
 
 export interface ServiceKnownPrices {

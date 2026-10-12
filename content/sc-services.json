@@ -2,7 +2,7 @@
   "_meta": {
     "artifact_type": "SC_SERVICES_REGISTRY",
     "registry_id": "SC_SERVICES_V1",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "source_authority": "DCSE Master Profile v7.2 R5",
     "extraction_sources": [
       "DCSE_CP_Project/Inbox_From_Downloads/SC_DCSE v72 R5 SC website LMareana build prompt.txt",
@@ -10,6 +10,8 @@
     ],
     "status": "EXTRACTED_FROM_V72_R5",
     "created_at": "2026-10-12T00:00:00Z",
+    "updated_at": "2026-10-12T15:15:00Z",
+    "changelog": "v1.2.0: Added TSL multi-sport favorite teams selection (up to 5 teams across NFL, NBA, MLB, NHL, NCAA, High School Football/Basketball) and activity tracker specification per DCS Executive Directive.",
     "pricing_note": "Prices marked DRAFT are pending DCS review and authorization"
   },
   "brand": {
@@ -41,22 +43,26 @@
       "parent_brand": "Sonly Consulting",
       "motto": "GET YOUR THINK ON!™",
       "hero": "Enterprise AI & PostgreSQL Migration",
-      "description": "Enterprise-grade AI orchestration, legacy system migration, and structured reasoning consulting.",
+      "description": "Sonly Consulting converts organizational complexity into structured, governed outcomes. The methodology spans enterprise AI orchestration, PostgreSQL migration, and systems architecture. Every deliverable is evidence-backed. Every handoff is verified.",
+      "description_short": "Enterprise AI orchestration, database migration, and systems architecture. Every engagement is evidence-backed and built to produce verifiable results.",
       "capabilities": [
         {
           "title": "Legacy System Migration",
+          "description": "Organizations accumulate technical debt that compounds over time. Sonly Consulting audits the full schema landscape, maps the migration pathway, and delivers a governed PostgreSQL architecture that replaces the legacy burden with a structured, auditable foundation.",
           "input": "Legacy Debt / Unaudited Database Schemas",
           "output": "Audited Snapshot Tables / Governed PostgreSQL Schema",
           "domain": "Enterprise AI & Database"
         },
         {
           "title": "AI Orchestration Pipeline",
+          "description": "Uncoordinated agent workflows produce unpredictable, unverifiable outputs. Sonly Consulting designs and governs AI pipelines that compile context correctly, execute in sequence, and deliver results that can be traced back to source.",
           "input": "Unstructured Workflows / Disparate Agent Processes",
           "output": "Governed AI Pipeline / Context-Compiled Execution Stack",
           "domain": "AI Systems"
         },
         {
           "title": "Systems Audit & Architecture",
+          "description": "Technical complexity often obscures the actual state of a system. The Sonly Consulting audit surfaces that state without assumption, then produces an evidence-backed decision framework that the organization can act on with confidence.",
           "input": "Complex Organizational Structure / Technical Debt",
           "output": "Structured Decision Framework / Evidence-Backed Remediation Plan",
           "domain": "Architecture Review"
@@ -64,6 +70,7 @@
       ],
       "unique_section": {
         "type": "System Proof Terminal #2",
+        "description": "A live view into the active engagement pipeline. Status indicators for running migrations, verification checkpoints, and governance firewall state are visible in real time.",
         "features": [
           "Active pipeline status",
           "Evidence verification metrics",
@@ -79,6 +86,7 @@
           "badge": "Free Brief / Pass",
           "price": "FREE",
           "confidence": "DRAFT",
+          "description": "A no-cost entry point that delivers an initial diagnostic snapshot. Organizations receive a structured discovery brief covering system state, identified gaps, and a prioritized remediation overview. No commitment required.",
           "features": [
             "Initial discovery brief",
             "System snapshot overview",
@@ -91,6 +99,7 @@
           "badge": "Pro Blueprint / Pass",
           "price": "TBD",
           "confidence": "DRAFT",
+          "description": "A full-scope architectural engagement. Sonly Consulting produces a governed migration roadmap, a systems blueprint, and a pro advisory session that sets the execution parameters for the work ahead.",
           "features": [
             "Full architectural blueprint",
             "Migration roadmap",
@@ -103,6 +112,7 @@
           "badge": "Executive / VIP Advisory",
           "price": "per-engagement",
           "confidence": "CONFIRMED",
+          "description": "A bespoke, per-engagement consulting relationship. Sonly Consulting embeds directly into the strategic layer of the organization to govern complex initiatives from intake through final verified handoff.",
           "features": [
             "Custom consulting engagement",
             "Strategic advisory sessions",
@@ -114,24 +124,28 @@
         {
           "name": "GYTO Assessment",
           "tagline": "Get Your Think On! Self-Assessment",
+          "description": "A structured self-diagnostic that maps an individual's current thinking patterns against the CTJ reasoning tiers. Returns a scored profile with recommended next steps for structured reasoning development.",
           "price_range": "$19 - $49",
           "confidence": "CONFIRMED"
         },
         {
           "name": "GYTO Foundations",
           "tagline": "CTJ Workbook + Community Access",
+          "description": "The foundational program. Includes the full CTJ workbook, a curated case study library, and community access. Built for professionals ready to apply structured reasoning methodology to active decisions.",
           "price": "$297",
           "confidence": "CONFIRMED"
         },
         {
           "name": "GYTO Strategic Analyst",
           "tagline": "Advanced structured reasoning program",
+          "description": "The advanced practitioner track. Covers the full 4-Tier Reasoning Matrix, the 6-Chamber Ascent Engine, and the assumption audit framework through direct application sessions with structured feedback.",
           "price": "$697",
           "confidence": "CONFIRMED"
         },
         {
           "name": "Custom Consulting",
           "tagline": "Bespoke enterprise engagements",
+          "description": "Bespoke enterprise engagements scoped to organizational need. Covers AI orchestration, migration architecture, systems audits, and strategic advisory at the executive level. Contact Sonly Consulting to define scope.",
           "price": "per-engagement",
           "confidence": "CONFIRMED"
         }
@@ -143,10 +157,12 @@
       "parent_brand": "Smoove Spots",
       "motto": "SPOTS MOOVED RIGHT!™",
       "hero": "Verified Local Spot Curation",
-      "description": "Curated local spot discovery and regional lifestyle platform.",
+      "description": "Smoove Spots surfaces the best verified local venues, events, and experiences in any region. The platform replaces unreliable word-of-mouth with a curated, structured discovery layer built for discerning local explorers and community-focused audiences.",
+      "description_short": "Curated local spot discovery. Verified listings, regional filtering, and merchant access in one platform.",
       "capabilities": [
         {
           "title": "Live Regional Spot Curation Map",
+          "description": "Raw venue data is noisy, unverified, and scattered. Smoove Spots runs a curation layer that validates, categorizes, and maps every spot so explorers can trust what they find before they arrive.",
           "input": "Raw Local Venue Data / Merchant Submissions",
           "output": "Verified Curated Spot Listings / Regional Map Layer",
           "domain": "Local Discovery"
@@ -154,6 +170,7 @@
       ],
       "unique_section": {
         "type": "Live Regional Spot Curation Map",
+        "description": "An interactive map showing verified spots in the user's radius, updated in real time as new merchants and venues are curated onto the platform.",
         "features": [
           "Real-time spot availability",
           "Regional filtering",
@@ -166,22 +183,41 @@
           "tier": 1,
           "name": "Free Explorer",
           "price": "FREE",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "Full access to the curated spot map, verified listings, and local event feed at no cost. The Free Explorer tier is the starting point for anyone discovering the Smoove Spots platform.",
+          "features": [
+            "Full curated spot map access",
+            "Verified listing browsing",
+            "Local event feed"
+          ]
         },
         {
           "tier": 2,
           "name": "Spot Pass",
           "price": "TBD",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "An elevated access tier with priority discovery features, exclusive spot releases, and early access to new regional maps as they go live. Pricing pending DCS authorization.",
+          "features": [
+            "Priority spot discovery",
+            "Exclusive releases",
+            "Early regional map access"
+          ]
         },
         {
           "tier": 3,
           "name": "Merchant VIP",
           "price": "TBD",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "The merchant-facing tier. Provides business owners with a managed listing, promotional tools, and direct access to the Smoove Spots curation layer for maximum platform visibility. Pricing pending DCS authorization.",
+          "features": [
+            "Managed merchant listing",
+            "Promotional placement tools",
+            "Direct curation access"
+          ]
         }
       ],
       "individual_products": {
+        "description": "Smoove Spots publishes standalone digital products including aesthetic guides, curated e-products, and lifestyle resources. Most are free or low-cost, making the Smoove Spots catalog accessible to the full community.",
         "price_range": "$19 - $99",
         "examples": ["Aesthetic guides", "e-products"],
         "note": "Many SS offerings are free or low-cost",
@@ -194,25 +230,56 @@
       "parent_brand": "Smoove Spots",
       "motto": "REGIONAL ATHLETICS RADIUS",
       "hero": "Local Athletic Radius & Lounge Feeds",
-      "description": "High school and local athletics tracking, game picks, and community sports engagement.",
+      "description": "Tedo's Sports Lounge tracks the regional athletic pulse that national platforms ignore. From high school rosters to local game picks, TSL gives fans, athletes, and communities a dedicated home court for the sports that matter most in their radius.",
+      "description_short": "High school and local athletics tracking, game picks, and community sports engagement. Built for the radius, not the national feed.",
       "capabilities": [
         {
           "title": "High School & Local Athletics Roster Board",
+          "description": "National sports platforms do not cover the local and high school athletic landscape. TSL fills that gap with a structured roster board, game schedule feed, and pick submission system built specifically for regional athletic communities.",
           "input": "Regional Athletic Schedules / Team Rosters",
           "output": "Live Radius Tracker / Organized Game Feed / Pick Results",
+          "domain": "Sports Intelligence"
+        },
+        {
+          "title": "Multi-Sport Favorite Teams Selection & Activity Tracker",
+          "description": "Enables members to select and track up to 5 favorite teams across any supported sport, including NFL, NBA, MLB, NHL, NCAA, High School Football, and High School Basketball. Delivers an interactive 5-team activity dashboard displaying recent scores, upcoming game times, and radius community updates.",
+          "input": "Member Multi-Sport Selections (Up to 5 Teams Across Supported Sports)",
+          "output": "Interactive 5-Team Activity Dashboard / Recent Scores & Schedule Stream",
           "domain": "Sports Intelligence"
         }
       ],
       "unique_section": {
-        "type": "High School & Local Athletics Roster Board",
+        "type": "High School & Multi-Sport Athletics Board",
+        "description": "A structured board displaying active rosters, upcoming games, favorite team activity feeds, and pick results for teams within the member's defined athletic radius and preferences. Updated as schedules and results are confirmed.",
         "features": [
           "Radius-based game discovery",
           "Team roster tracking",
-          "Pick submission system"
+          "Pick submission system",
+          "Multi-sport 5-team favorite selection",
+          "Recent scores and game time tracking"
         ]
       },
-      "sections": ["Radius Tracker", "Team Rosters", "Game Highlights"],
+      "favorite_teams_config": {
+        "max_selections": 5,
+        "supported_sports": [
+          "NFL",
+          "NBA",
+          "MLB",
+          "NHL",
+          "NCAA",
+          "High School Football",
+          "High School Basketball"
+        ],
+        "activity_tracking_fields": [
+          "Recent Scores",
+          "Upcoming Game Times",
+          "Radius Activity Updates"
+        ],
+        "selection_rule": "Members can select up to 5 favorite teams across any combination of supported sports."
+      },
+      "sections": ["Radius Tracker", "Team Rosters", "Favorite Teams Tracker", "Game Highlights"],
       "coin_economy": {
+        "description": "The Smoove Coins system rewards engagement. Correct game picks, daily logins, and weekly streaks all earn coins that accumulate in the user's lounge account.",
         "pick_correct": 10,
         "pick_incorrect": 0,
         "daily_login": 2,
@@ -225,21 +292,42 @@
           "tier": 1,
           "name": "Free Fan",
           "price": "FREE",
-          "confidence": "CONFIRMED"
+          "confidence": "CONFIRMED",
+          "description": "Full access to the TSL game feed, roster boards, and pick system at no cost. Every fan starts as a Free Fan with access to the complete Lounge experience.",
+          "features": [
+            "Full game feed access",
+            "Roster board browsing",
+            "Game pick submissions",
+            "Smoove Coins earning"
+          ]
         },
         {
           "tier": 2,
           "name": "Lounge VIP",
           "price": "$9.99/mo",
           "confidence": "CONFIRMED",
-          "billing": "Wix billing"
+          "billing": "Wix billing",
+          "description": "The premium Lounge membership. VIP members receive elevated Smoove Coins multipliers, early pick access, and exclusive lounge content not available on the free tier.",
+          "features": [
+            "Elevated Smoove Coins multipliers",
+            "Early game pick access",
+            "Exclusive lounge content",
+            "VIP member badge"
+          ]
         },
         {
           "tier": 3,
           "name": "Athlete Access",
           "price": "TBD",
           "confidence": "DRAFT",
-          "note": "May bundle coin multipliers"
+          "note": "May bundle coin multipliers",
+          "description": "A dedicated tier for student athletes, coaches, and team staff. Provides roster management tools, game result tracking, and athlete profile features. Pricing and exact feature set pending DCS authorization.",
+          "features": [
+            "Athlete profile creation",
+            "Roster management tools",
+            "Game result tracking",
+            "Coin multiplier bundle (TBD)"
+          ]
         }
       ]
     },
@@ -249,16 +337,19 @@
       "parent_brand": "Sonly Consulting",
       "motto": "STRUCTURED REASONING ENGINE",
       "hero": "Structured Decision Engine & AI Audit",
-      "description": "4-tier reasoning framework and structured decision methodology for executives and analysts.",
+      "description": "Critical Thinker's Journey is a structured reasoning system for professionals who need to audit their assumptions, classify their decisions, and build verifiable cognitive frameworks. The methodology is not a mindset program. It is an execution engine for thought.",
+      "description_short": "4-tier reasoning framework and structured decision methodology for executives, analysts, and professionals who need to think with precision.",
       "capabilities": [
         {
           "title": "4-Tier Reasoning Matrix",
+          "description": "Unstructured decision-making produces inconsistent, unverifiable outcomes. The 4-Tier Reasoning Matrix classifies every decision scenario by type, applies the correct reasoning protocol, and produces a documented decision trail that can be audited and refined.",
           "input": "Unstructured Decision Scenarios / Ambiguous Problems",
           "output": "Tier-Classified Decision Framework / Assumption Audit Report",
           "domain": "Structured Reasoning"
         },
         {
           "title": "6-Chamber Ascent Engine",
+          "description": "Cognitive progress requires more than motivation. The 6-Chamber Ascent Engine maps the practitioner's current cognitive state, identifies the specific chamber blocking upward movement, and provides a structured pathway through each level of the ascent.",
           "input": "Raw Cognitive State / Unexamined Assumptions",
           "output": "Ascent Pathway / Verified Reasoning Stack",
           "domain": "Cognitive Development"
@@ -266,6 +357,7 @@
       ],
       "unique_section": {
         "type": "4-Tier Reasoning Matrix & 6-Chamber Ascent Engine",
+        "description": "An interactive diagnostic interface that places the practitioner inside the CTJ methodology. The matrix displays the current tier classification, the open assumption audit, and the next prescribed diagnostic step.",
         "features": [
           "Assumption audit",
           "Diagnostic loop",
@@ -278,21 +370,41 @@
           "tier": 1,
           "name": "Free Framework",
           "price": "FREE",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "A zero-cost introduction to the CTJ reasoning methodology. Includes the core framework overview, the public assumption audit primer, and access to the introductory tier of the 4-Tier Reasoning Matrix.",
+          "features": [
+            "Core framework overview",
+            "Public assumption audit primer",
+            "Introductory tier access"
+          ]
         },
         {
           "tier": 2,
           "name": "Case Library",
           "price": "$297",
           "note": "GYTO Foundations tier",
-          "confidence": "CONFIRMED"
+          "confidence": "CONFIRMED",
+          "description": "The GYTO Foundations package. Includes the full CTJ workbook, a structured case library with applied reasoning examples, and access to the practitioner community. The entry point for professionals applying the methodology to real decisions.",
+          "features": [
+            "Full CTJ workbook",
+            "Structured case library",
+            "Practitioner community access",
+            "Applied reasoning examples"
+          ]
         },
         {
           "tier": 3,
           "name": "Master Class",
           "price": "$697+",
           "note": "GYTO Strategic Analyst and above",
-          "confidence": "CONFIRMED"
+          "confidence": "CONFIRMED",
+          "description": "The GYTO Strategic Analyst track. Full access to the advanced reasoning curriculum, live diagnostic sessions, and the complete 6-Chamber Ascent Engine methodology applied to real professional scenarios.",
+          "features": [
+            "Advanced reasoning curriculum",
+            "Live diagnostic sessions",
+            "Complete 6-Chamber Ascent Engine",
+            "Strategic analyst certification pathway"
+          ]
         }
       ]
     },
@@ -302,16 +414,19 @@
       "parent_brand": "Sonly Consulting",
       "motto": "HUMAN COGNITIVE GOVERNANCE",
       "hero": "Cognitive Governance & Leadership",
-      "description": "Executive mindset development, board-level alignment, and human cognitive governance for leaders.",
+      "description": "Mental Ingenuity addresses the cognitive architecture of leadership itself. The platform equips executives and boards with the frameworks, tools, and language to govern their own thinking, align decision-making across levels, and produce measurable leadership outcomes.",
+      "description_short": "Executive mindset development and board-level alignment for leaders who govern organizations and need to govern their thinking with equal rigor.",
       "capabilities": [
         {
           "title": "Executive Mindset Engine",
+          "description": "Leadership gaps most often originate in unexamined cognitive patterns rather than strategic failures. The Executive Mindset Engine identifies those patterns, maps them against proven leadership frameworks, and produces a calibration report with a structured alignment plan.",
           "input": "Leadership Gaps / Unaligned Executive Teams",
           "output": "Mindset Calibration Report / Structured Alignment Plan",
           "domain": "Executive Leadership"
         },
         {
           "title": "Board Alignment Engine",
+          "description": "Strategic misalignment at the board level produces compounding downstream failures. The Board Alignment Engine surfaces governance disconnects, applies a structured context compiler framework, and delivers a protocol that restores alignment without dismantling existing structures.",
           "input": "Governance Disconnects / Strategic Misalignment",
           "output": "Board Alignment Protocol / Context Compiler Framework",
           "domain": "Corporate Governance"
@@ -319,6 +434,7 @@
       ],
       "unique_section": {
         "type": "Executive Mindset Engine & Board Alignment",
+        "description": "An integrated dashboard that surfaces the active mindset audit state for an executive or board cohort. Displays open alignment gaps, prescribed framework applications, and governance model status.",
         "features": [
           "Leadership audit",
           "Context compiler framework",
@@ -331,19 +447,39 @@
           "tier": 1,
           "name": "Free Audit",
           "price": "FREE",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "A no-cost leadership self-audit that identifies surface-level alignment gaps and cognitive pattern flags. Returns a summary report with recommended next-tier engagement areas.",
+          "features": [
+            "Leadership self-audit",
+            "Alignment gap summary",
+            "Cognitive pattern flag report"
+          ]
         },
         {
           "tier": 2,
           "name": "Exec Suite",
           "price": "TBD",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "A structured engagement for individual executives. Covers the full mindset calibration protocol, one-on-one advisory sessions, and a governed alignment plan built for sustained leadership performance. Pricing pending DCS authorization.",
+          "features": [
+            "Full mindset calibration protocol",
+            "One-on-one advisory sessions",
+            "Governed alignment plan",
+            "Progress tracking dashboard"
+          ]
         },
         {
           "tier": 3,
           "name": "Board Direct",
           "price": "TBD",
-          "confidence": "DRAFT"
+          "confidence": "DRAFT",
+          "description": "A board-level cognitive governance engagement. Mental Ingenuity works directly with the board to apply the context compiler framework, resolve strategic misalignment, and establish a durable governance model for collective decision-making. Pricing pending DCS authorization.",
+          "features": [
+            "Board-level engagement",
+            "Context compiler framework deployment",
+            "Strategic misalignment resolution",
+            "Collective decision governance model"
+          ]
         }
       ]
     }
