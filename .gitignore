@@ -6,6 +6,14 @@
 .env
 .env.local
 *.env.*
+_MCP_Secure/private/
+_MCP_Secure/receipts/
+_MCP_Secure/*.active.json
+_MCP_Secure/*.local.json
+_MCP_Secure/.env*
+*.clixml
+.qwen/
+dcse.cmd
 
 # Logs and temporary files
 *.log
@@ -71,3 +79,7 @@ htmlcov/
 *.tar.bz2
 *.tar.xz
 *.tar.zst
+# DCSE-SECRET-HYGIENE-001: never commit local credential files
+.mcp.json
+.temp_sc_cp_env.env
+
