@@ -1,0 +1,366 @@
+{
+  "_meta": {
+    "artifact_type": "SC_SERVICES_REGISTRY",
+    "registry_id": "SC_SERVICES_V1",
+    "version": "1.0.0",
+    "source_authority": "DCSE Master Profile v7.2 R5",
+    "extraction_sources": [
+      "DCSE_CP_Project/Inbox_From_Downloads/SC_DCSE v72 R5 SC website LMareana build prompt.txt",
+      "_Tribunal_Inbox/DCSE_5PRODUCT_PRICING_MATRIX.json"
+    ],
+    "status": "EXTRACTED_FROM_V72_R5",
+    "created_at": "2026-10-12T00:00:00Z",
+    "pricing_note": "Prices marked DRAFT are pending DCS review and authorization"
+  },
+  "brand": {
+    "name": "Sonly Consulting",
+    "code": "SC",
+    "tagline": "GET YOUR THINK ON!™",
+    "posture": "Third-Person Solo-Brand",
+    "public_brand_rule": "Never display DCSE or DCSE Command Post in public-facing copy. DCSE is an internal governing backbone.",
+    "palette": {
+      "deep_navy": "#0A192F",
+      "gold": "#D4AF37",
+      "electric_green": "#00875A",
+      "silver": "#C0C0C0"
+    },
+    "logo": {
+      "type": "3D typography",
+      "description": "Gold text with white/silver 3D drop-shadows on Deep Navy #0A192F background",
+      "animation": "slow-motion Y-axis 360-degree rotation"
+    },
+    "cta_primary": "Explore Dossiers",
+    "cta_secondary": "Initiate Intake",
+    "prohibited_pronouns": ["I", "we", "our", "us"],
+    "prohibited_punctuation": ["em-dash"]
+  },
+  "products": [
+    {
+      "code": "SC",
+      "name": "Sonly Consulting",
+      "parent_brand": "Sonly Consulting",
+      "motto": "GET YOUR THINK ON!™",
+      "hero": "Enterprise AI & PostgreSQL Migration",
+      "description": "Enterprise-grade AI orchestration, legacy system migration, and structured reasoning consulting.",
+      "capabilities": [
+        {
+          "title": "Legacy System Migration",
+          "input": "Legacy Debt / Unaudited Database Schemas",
+          "output": "Audited Snapshot Tables / Governed PostgreSQL Schema",
+          "domain": "Enterprise AI & Database"
+        },
+        {
+          "title": "AI Orchestration Pipeline",
+          "input": "Unstructured Workflows / Disparate Agent Processes",
+          "output": "Governed AI Pipeline / Context-Compiled Execution Stack",
+          "domain": "AI Systems"
+        },
+        {
+          "title": "Systems Audit & Architecture",
+          "input": "Complex Organizational Structure / Technical Debt",
+          "output": "Structured Decision Framework / Evidence-Backed Remediation Plan",
+          "domain": "Architecture Review"
+        }
+      ],
+      "unique_section": {
+        "type": "System Proof Terminal #2",
+        "features": [
+          "Active pipeline status",
+          "Evidence verification metrics",
+          "Firewall compliance indicators"
+        ]
+      },
+      "personas": ["Persona Alpha", "Persona Beta", "Persona Gamma"],
+      "sections": ["Terminal #2", "Product Families", "System Intake"],
+      "pricing_tiers": [
+        {
+          "tier": 1,
+          "name": "Free Brief",
+          "badge": "Free Brief / Pass",
+          "price": "FREE",
+          "confidence": "DRAFT",
+          "features": [
+            "Initial discovery brief",
+            "System snapshot overview",
+            "Access to public dossiers"
+          ]
+        },
+        {
+          "tier": 2,
+          "name": "Blueprint",
+          "badge": "Pro Blueprint / Pass",
+          "price": "TBD",
+          "confidence": "DRAFT",
+          "features": [
+            "Full architectural blueprint",
+            "Migration roadmap",
+            "Pro advisory session"
+          ]
+        },
+        {
+          "tier": 3,
+          "name": "Advisory",
+          "badge": "Executive / VIP Advisory",
+          "price": "per-engagement",
+          "confidence": "CONFIRMED",
+          "features": [
+            "Custom consulting engagement",
+            "Strategic advisory sessions",
+            "End-to-end project governance"
+          ]
+        }
+      ],
+      "programs": [
+        {
+          "name": "GYTO Assessment",
+          "tagline": "Get Your Think On! Self-Assessment",
+          "price_range": "$19 - $49",
+          "confidence": "CONFIRMED"
+        },
+        {
+          "name": "GYTO Foundations",
+          "tagline": "CTJ Workbook + Community Access",
+          "price": "$297",
+          "confidence": "CONFIRMED"
+        },
+        {
+          "name": "GYTO Strategic Analyst",
+          "tagline": "Advanced structured reasoning program",
+          "price": "$697",
+          "confidence": "CONFIRMED"
+        },
+        {
+          "name": "Custom Consulting",
+          "tagline": "Bespoke enterprise engagements",
+          "price": "per-engagement",
+          "confidence": "CONFIRMED"
+        }
+      ]
+    },
+    {
+      "code": "SS",
+      "name": "Smoove Spots",
+      "parent_brand": "Smoove Spots",
+      "motto": "SPOTS MOOVED RIGHT!™",
+      "hero": "Verified Local Spot Curation",
+      "description": "Curated local spot discovery and regional lifestyle platform.",
+      "capabilities": [
+        {
+          "title": "Live Regional Spot Curation Map",
+          "input": "Raw Local Venue Data / Merchant Submissions",
+          "output": "Verified Curated Spot Listings / Regional Map Layer",
+          "domain": "Local Discovery"
+        }
+      ],
+      "unique_section": {
+        "type": "Live Regional Spot Curation Map",
+        "features": [
+          "Real-time spot availability",
+          "Regional filtering",
+          "Merchant portal integration"
+        ]
+      },
+      "sections": ["Live Spot Map", "Merchant Portal", "Local Events"],
+      "pricing_tiers": [
+        {
+          "tier": 1,
+          "name": "Free Explorer",
+          "price": "FREE",
+          "confidence": "DRAFT"
+        },
+        {
+          "tier": 2,
+          "name": "Spot Pass",
+          "price": "TBD",
+          "confidence": "DRAFT"
+        },
+        {
+          "tier": 3,
+          "name": "Merchant VIP",
+          "price": "TBD",
+          "confidence": "DRAFT"
+        }
+      ],
+      "individual_products": {
+        "price_range": "$19 - $99",
+        "examples": ["Aesthetic guides", "e-products"],
+        "note": "Many SS offerings are free or low-cost",
+        "confidence": "CONFIRMED"
+      }
+    },
+    {
+      "code": "TSL",
+      "name": "Tedo's Sports Lounge",
+      "parent_brand": "Smoove Spots",
+      "motto": "REGIONAL ATHLETICS RADIUS",
+      "hero": "Local Athletic Radius & Lounge Feeds",
+      "description": "High school and local athletics tracking, game picks, and community sports engagement.",
+      "capabilities": [
+        {
+          "title": "High School & Local Athletics Roster Board",
+          "input": "Regional Athletic Schedules / Team Rosters",
+          "output": "Live Radius Tracker / Organized Game Feed / Pick Results",
+          "domain": "Sports Intelligence"
+        }
+      ],
+      "unique_section": {
+        "type": "High School & Local Athletics Roster Board",
+        "features": [
+          "Radius-based game discovery",
+          "Team roster tracking",
+          "Pick submission system"
+        ]
+      },
+      "sections": ["Radius Tracker", "Team Rosters", "Game Highlights"],
+      "coin_economy": {
+        "pick_correct": 10,
+        "pick_incorrect": 0,
+        "daily_login": 2,
+        "weekly_streak": 25,
+        "signup_bonus": "TBD",
+        "membership_multiplier": "TBD"
+      },
+      "pricing_tiers": [
+        {
+          "tier": 1,
+          "name": "Free Fan",
+          "price": "FREE",
+          "confidence": "CONFIRMED"
+        },
+        {
+          "tier": 2,
+          "name": "Lounge VIP",
+          "price": "$9.99/mo",
+          "confidence": "CONFIRMED",
+          "billing": "Wix billing"
+        },
+        {
+          "tier": 3,
+          "name": "Athlete Access",
+          "price": "TBD",
+          "confidence": "DRAFT",
+          "note": "May bundle coin multipliers"
+        }
+      ]
+    },
+    {
+      "code": "CTJ",
+      "name": "Critical Thinker's Journey",
+      "parent_brand": "Sonly Consulting",
+      "motto": "STRUCTURED REASONING ENGINE",
+      "hero": "Structured Decision Engine & AI Audit",
+      "description": "4-tier reasoning framework and structured decision methodology for executives and analysts.",
+      "capabilities": [
+        {
+          "title": "4-Tier Reasoning Matrix",
+          "input": "Unstructured Decision Scenarios / Ambiguous Problems",
+          "output": "Tier-Classified Decision Framework / Assumption Audit Report",
+          "domain": "Structured Reasoning"
+        },
+        {
+          "title": "6-Chamber Ascent Engine",
+          "input": "Raw Cognitive State / Unexamined Assumptions",
+          "output": "Ascent Pathway / Verified Reasoning Stack",
+          "domain": "Cognitive Development"
+        }
+      ],
+      "unique_section": {
+        "type": "4-Tier Reasoning Matrix & 6-Chamber Ascent Engine",
+        "features": [
+          "Assumption audit",
+          "Diagnostic loop",
+          "Structured decision scaffolding"
+        ]
+      },
+      "sections": ["Reasoning Matrix", "Assumption Audit", "Diagnostic Loop"],
+      "pricing_tiers": [
+        {
+          "tier": 1,
+          "name": "Free Framework",
+          "price": "FREE",
+          "confidence": "DRAFT"
+        },
+        {
+          "tier": 2,
+          "name": "Case Library",
+          "price": "$297",
+          "note": "GYTO Foundations tier",
+          "confidence": "CONFIRMED"
+        },
+        {
+          "tier": 3,
+          "name": "Master Class",
+          "price": "$697+",
+          "note": "GYTO Strategic Analyst and above",
+          "confidence": "CONFIRMED"
+        }
+      ]
+    },
+    {
+      "code": "MI",
+      "name": "Mental Ingenuity",
+      "parent_brand": "Sonly Consulting",
+      "motto": "HUMAN COGNITIVE GOVERNANCE",
+      "hero": "Cognitive Governance & Leadership",
+      "description": "Executive mindset development, board-level alignment, and human cognitive governance for leaders.",
+      "capabilities": [
+        {
+          "title": "Executive Mindset Engine",
+          "input": "Leadership Gaps / Unaligned Executive Teams",
+          "output": "Mindset Calibration Report / Structured Alignment Plan",
+          "domain": "Executive Leadership"
+        },
+        {
+          "title": "Board Alignment Engine",
+          "input": "Governance Disconnects / Strategic Misalignment",
+          "output": "Board Alignment Protocol / Context Compiler Framework",
+          "domain": "Corporate Governance"
+        }
+      ],
+      "unique_section": {
+        "type": "Executive Mindset Engine & Board Alignment",
+        "features": [
+          "Leadership audit",
+          "Context compiler framework",
+          "Mindset governance model"
+        ]
+      },
+      "sections": ["Mindset Engine", "Leadership Audit", "Context Compiler"],
+      "pricing_tiers": [
+        {
+          "tier": 1,
+          "name": "Free Audit",
+          "price": "FREE",
+          "confidence": "DRAFT"
+        },
+        {
+          "tier": 2,
+          "name": "Exec Suite",
+          "price": "TBD",
+          "confidence": "DRAFT"
+        },
+        {
+          "tier": 3,
+          "name": "Board Direct",
+          "price": "TBD",
+          "confidence": "DRAFT"
+        }
+      ]
+    }
+  ],
+  "known_prices": {
+    "tsl_lounge_vip_monthly": "$9.99/mo",
+    "gyto_assessment": "$19 - $49",
+    "gyto_foundations_ctj": "$297",
+    "gyto_strategic_analyst": "$697",
+    "ss_individual_products": "$19 - $99"
+  },
+  "open_decisions": [
+    "SC Tier 2 (Blueprint) and Tier 3 (Advisory) exact pricing",
+    "SS Tier 2 (Spot Pass) and Tier 3 (Merchant VIP) pricing",
+    "TSL Tier 3 (Athlete Access) pricing and coin multiplier values",
+    "MI all paid tier pricing",
+    "Annual vs monthly pricing options",
+    "Bundle pricing across products (e.g., SC + CTJ)"
+  ]
+}
