@@ -646,6 +646,17 @@ def search_knowledge(query: str, limit: int = 200, repo=None) -> list[dict]:
         or q in it.get("id", "").lower()
         or q in it.get("authority_classification", "").lower()
     ]
+def list_products() -> dict:
+    for candidate in (
+        Path(__file__).resolve().parent / "escd-products-catalog.json",
+        Path(__file__).resolve().parents[2] / "content" / "escd-products-catalog.json",
+    ):
+        if candidate.exists():
+            try:
+                return json.loads(candidate.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+    return {"_meta": {"total_products": 0}, "categories": [], "products": []}
 
 
 def _asset_is_ps(row: dict) -> bool:
