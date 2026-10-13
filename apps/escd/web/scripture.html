@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inner & Outer Wisdom | Smoove Spots Comparative Scripture & Wisdom Platform</title>
+    <!-- 
+      DCSE SS Scripture Selector vs1.html | Module: SS-WISDOM-001
+      Product: Smoove Spots (SS) | Inner & Outer Wisdom
+      Architecture: Comparative Exegesis, Original Languages Studio, Esoteric & Symbolic Traditions, and The Critical Thinker's Journey (CTJ)
+      Entity: Sonly Consulting / DCSE Estate Governance
+    -->
+    <style>
+        :root {
+            --bg-deep: #080c14;
+            --bg-surface: #101622;
+            --bg-card: rgba(18, 25, 38, 0.92);
+            --bg-card-hover: rgba(26, 36, 54, 0.96);
+            --border-gold: rgba(212, 175, 55, 0.28);
+            --border-gold-bright: rgba(212, 175, 55, 0.7);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --gold: #d4af37;
+            --gold-light: #f7e7b4;
+            --gold-dark: #997a1e;
+            --gold-glow: rgba(212, 175, 55, 0.18);
+            --emerald: #1e4a38;
+            --emerald-light: #2e8b57;
+            --text-main: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --font-serif: "Georgia", "Cambria", "Times New Roman", serif;
+            --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-gold: 0 0 25px rgba(212, 175, 55, 0.25);
+            --verse-font-size: 1.45rem;
+        }
+
+        [data-theme="parchment"] {
+            --bg-deep: #f5f0e6;
+            --bg-surface: #fffdf9;
+            --bg-card: rgba(255, 253, 248, 0.96);
+            --bg-card-hover: #ffffff;
+            --border-gold: rgba(158, 120, 30, 0.35);
+            --border-gold-bright: rgba(158, 120, 30, 0.85);
+            --border-subtle: rgba(0, 0, 0, 0.08);
+            --gold: #9e781e;
+            --gold-light: #523b09;
+            --gold-dark: #664c0e;
+            --gold-glow: rgba(158, 120, 30, 0.15);
+            --emerald: #1c3b29;
+            --text-main: #242018;
+            --text-secondary: #5e5344;
+            --text-muted: #8c7d6b;
+            --shadow-card: 0 8px 24px rgba(70, 50, 20, 0.08);
+            --shadow-gold: 0 0 20px rgba(158, 120, 30, 0.18);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            line-height: 1.65;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .app-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 1.5rem 1.25rem 4rem;
+            flex: 1;
+            transition: max-width 0.3s ease;
+        }
+
+        /* Device Mode Enforcements */
+        body[data-device="mobile"] .app-container {
+            max-width: 440px;
+            border-left: 1px solid var(--border-gold);
+            border-right: 1px solid var(--border-gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        body[data-device="tablet"] .app-container {
+            max-width: 820px;
+            border-left: 1px solid var(--border-gold);
+            border-right: 1px solid var(--border-gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        /* TOP NAVIGATION & BRANDING */
+        header.platform-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            padding-bottom: 1.6rem;
+            border-bottom: 1px solid var(--border-gold);
+            margin-bottom: 2rem;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+        }
+
+        .brand-monogram {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-md);
+            background: radial-gradient(circle at 30% 30%, #f7e7b4 0%, var(--gold) 60%, var(--gold-dark) 100%);
+            display: grid;
+            place-items: center;
+            color: #080c14;
+            font-weight: 900;
+            font-size: 1.45rem;
+            letter-spacing: -0.5px;
+            box-shadow: var(--shadow-gold);
+            user-select: none;
+        }
+
+        .brand-titles h1 {
+            font-family: var(--font-serif);
+            font-size: 1.85rem;
+            color: var(--gold-light);
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+            font-weight: 700;
+        }
+
+        .brand-titles p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+        }
+
+        .controls-cluster {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-tool {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            padding: 0.45rem 0.85rem;
+            cursor: pointer;
+            font-size: 0.84rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-tool:hover, .btn-tool.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.12);
+        }
+
+        .device-selector {
+            display: inline-flex;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .device-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.45rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .device-btn.active {
+            background: var(--gold);
+            color: #080c14;
+            font-weight: 700;
+        }
+
+        /* EXPLORATION INQUIRY BAR */
+        .inquiry-bar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(12px);
+        }
+
+        .inquiry-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .inquiry-input-wrapper {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .inquiry-input {
+            flex: 1;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1.2rem;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .inquiry-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold-glow);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: #080c14;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1.6rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-gold);
+            transition: transform 0.15s, box-shadow 0.15s;
+            white-space: nowrap;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.45);
+        }
+
+        /* MAIN TWO-COLUMN WORKBENCH */
+        .workbench-grid {
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 1.75rem;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .workbench-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* SIDEBAR TOPICS & CANON NAVIGATOR */
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 1.4rem;
+            box-shadow: var(--shadow-card);
+        }
+
+        .sub-header {
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--gold);
+            font-weight: 700;
+            margin: 1.2rem 0 0.6rem;
+            display: block;
+        }
+        .sub-header:first-child { margin-top: 0; }
+
+        .topics-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .topic-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.7rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            text-align: left;
+            background: none;
+            width: 100%;
+        }
+
+        .topic-btn:hover {
+            background: rgba(212, 175, 55, 0.09);
+            color: var(--text-main);
+        }
+
+        .topic-btn.active {
+            background: rgba(212, 175, 55, 0.16);
+            border-color: var(--gold);
+            color: var(--gold-light);
+            font-weight: 700;
+        }
+
+        .badge-ref {
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-family: var(--font-serif);
+        }
+
+        /* VOICE AUDIO CONTROL CARD */
+        .audio-suite-card {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-gold);
+        }
+
+        .select-voice {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-sm);
+            padding: 0.55rem 0.75rem;
+            color: var(--text-main);
+            font-size: 0.82rem;
+            outline: none;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+        }
+
+        .audio-buttons-row {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        /* CORE READING CARD */
+        .reader-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem 2.2rem 2.5rem;
+            box-shadow: var(--shadow-card), var(--shadow-gold);
+            position: relative;
+            backdrop-filter: blur(14px);
+            margin-bottom: 1.75rem;
+        }
+
+        .reader-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .context-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--border-gold);
+            color: var(--gold);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .passage-text {
+            font-family: var(--font-serif);
+            font-size: var(--verse-font-size);
+            color: var(--text-main);
+            line-height: 1.75;
+            letter-spacing: 0.2px;
+            margin-bottom: 1.5rem;
+            font-style: normal;
+        }
+
+        .passage-meta-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-top: 1px solid var(--border-gold);
+            padding-top: 1.25rem;
+        }
+
+        .passage-citation {
+            font-family: var(--font-serif);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .translation-tag {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        /* 6-LAYER MULTI-LENS TAB SYSTEM */
+        .lenses-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 1.8rem;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 1.75rem;
+        }
+
+        .lenses-nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 1rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .lens-tab {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            color: var(--text-secondary);
+            border-radius: var(--radius-sm);
+            padding: 0.55rem 1rem;
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .lens-tab:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+
+        .lens-tab.active {
+            background: var(--gold);
+            color: #080c14;
+            border-color: var(--gold);
+            font-weight: 700;
+        }
+
+        .lens-content {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .lens-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* LENS SPECIFIC STYLES */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .lang-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+        }
+
+        .lang-title {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .ancient-text {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            color: var(--gold-light);
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .transliteration {
+            font-style: italic;
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .lexical-notes {
+            font-size: 0.84rem;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        /* EVIDENCE & UNCERTAINTY REGISTER TABLE */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-gold);
+        }
+
+        .evidence-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            text-align: left;
+        }
+
+        .evidence-table th {
+            background: var(--bg-surface);
+            color: var(--gold);
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-gold);
+            text-transform: uppercase;
+            font-size: 0.74rem;
+            letter-spacing: 1px;
+        }
+
+        .evidence-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-main);
+        }
+
+        .evidence-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tag-class {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .tag-scripture { background: rgba(46, 160, 67, 0.2); color: #3fb950; border: 1px solid rgba(46, 160, 67, 0.4); }
+        .tag-linguistic { background: rgba(88, 166, 255, 0.2); color: #58a6ff; border: 1px solid rgba(88, 166, 255, 0.4); }
+        .tag-tradition { background: rgba(212, 175, 55, 0.2); color: var(--gold); border: 1px solid var(--border-gold); }
+        .tag-history { background: rgba(210, 153, 34, 0.2); color: #d29922; border: 1px solid rgba(210, 153, 34, 0.4); }
+        .tag-theology { background: rgba(187, 128, 179, 0.2); color: #d2a8ff; border: 1px solid rgba(187, 128, 179, 0.4); }
+
+        /* LIVING REFLECTION / CTJ THOUGHT PATH */
+        .reflection-card {
+            background: rgba(30, 74, 56, 0.15);
+            border-left: 4px solid var(--gold);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .inquiry-step {
+            margin-bottom: 1.25rem;
+        }
+
+        .inquiry-step h4 {
+            font-size: 0.98rem;
+            color: var(--gold-light);
+            margin-bottom: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .inquiry-step p {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .ctj-textarea {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-sm);
+            padding: 0.7rem;
+            color: var(--text-main);
+            font-size: 0.88rem;
+            resize: vertical;
+            min-height: 65px;
+            outline: none;
+        }
+
+        .ctj-textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* TOAST */
+        .toast-popup {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-surface);
+            color: var(--gold-light);
+            padding: 0.85rem 1.4rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            font-size: 0.88rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .toast-popup.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* FOOTER */
+        footer.platform-footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-gold);
+            color: var(--text-muted);
+            font-size: 0.84rem;
+        }
+
+        footer.platform-footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body data-theme="dark" data-device="responsive">
+
+    <div class="app-container">
+        <!-- TOP BRAND HEADER -->
+        <header class="platform-header">
+            <div class="brand-cluster">
+                <div class="brand-monogram">IW</div>
+                <div class="brand-titles">
+                    <h1>Inner &amp; Outer Wisdom</h1>
+                    <p>Ancient words &bull; Many perspectives &bull; A deeper journey of understanding</p>
+                </div>
+            </div>
+
+            <div class="controls-cluster">
+                <!-- Device Viewport Toggle -->
+                <div class="device-selector" title="Simulate Target Viewport">
+                    <button class="device-btn active" onclick="setDeviceView('responsive')">Auto</button>
+                    <button class="device-btn" onclick="setDeviceView('tablet')">Tablet</button>
+                    <button class="device-btn" onclick="setDeviceView('mobile')">Phone</button>
+                </div>
+
+                <!-- Font Scaler -->
+                <button class="btn-tool" onclick="adjustTextSize(-1)" title="Decrease Passage Font Size">A-</button>
+                <button class="btn-tool" onclick="adjustTextSize(1)" title="Increase Passage Font Size">A+</button>
+
+                <!-- Theme Mode -->
+                <button class="btn-tool" id="theme-btn" onclick="togglePlatformTheme()" title="Switch Light/Dark Theme">
+                    <span id="theme-icon">&#9728;</span> Theme
+                </button>
+            </div>
+        </header>
+
+        <!-- TOPICAL INQUIRY BAR -->
+        <section class="inquiry-bar-card">
+            <div class="inquiry-label">
+                <span>&#128065;</span> What is on your mind? (Explore by Theme, Question, or Passage)
+            </div>
+            <div class="inquiry-input-wrapper">
+                <input type="text" id="inquiry-input" class="inquiry-input" placeholder="e.g. Renewing the mind, Peace, Logos, Testing spirits, Justice vs mercy..." oninput="handleInquirySearch()">
+                <button class="btn-gold" onclick="drawWisdomPassage()">
+                    <span>&#9864;</span> Draw from Vault
+                </button>
+            </div>
+        </section>
+
+        <!-- WORKBENCH LAYOUT -->
+        <main class="workbench-grid">
+            <!-- SIDEBAR: TOPIC PATHS & AUDIO SUITE -->
+            <aside class="sidebar-card">
+                <span class="sub-header">Wisdom Trails &amp; Topics</span>
+                <ul class="topics-menu" id="topics-list">
+                    <!-- Populated dynamically -->
+                </ul>
+
+                <!-- VOICE AUDIO SUITE -->
+                <div class="audio-suite-card">
+                    <span class="sub-header">Spoken Reflection &amp; Voice</span>
+                    <label style="font-size:0.75rem; color:var(--text-muted); display:block; margin-bottom:0.3rem;">Reader Voice Selection:</label>
+                    <select id="voice-select" class="select-voice" onchange="changeReaderVoice()">
+                        <option value="">System Default Voice</option>
+                    </select>
+
+                    <div class="audio-buttons-row">
+                        <button class="btn-tool" style="flex:1;" onclick="playVoiceReader()" id="play-btn">
+                            &#9658; Listen
+                        </button>
+                        <button class="btn-tool" onclick="pauseVoiceReader()">&#10074;&#10074;</button>
+                        <button class="btn-tool" onclick="stopVoiceReader()">&#9632;</button>
+                        <button class="btn-tool" id="ambient-btn" onclick="toggleAmbientHarmonic()" title="432Hz Scriptorium Ambient Tone">
+                            &#9835; Ambiance
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN PASSAGE & MULTI-LENS EXPLORATION -->
+            <section>
+                <!-- PRIMARY SCRIPTURE CARD -->
+                <article class="reader-card" id="main-reader-card">
+                    <div class="reader-topbar">
+                        <span class="context-pill" id="current-category">Discernment &amp; Mind</span>
+                        <div class="controls-cluster">
+                            <button class="btn-tool" onclick="copyPassageCitation()" title="Copy Formatted Citation">
+                                &#128203; Copy
+                            </button>
+                            <button class="btn-tool" id="fav-status-btn" onclick="toggleSaveToVault()" title="Bookmark to Personal Vault">
+                                &#9734; Save
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="passage-text" id="current-text">
+                        "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God."
+                    </div>
+
+                    <div class="passage-meta-footer">
+                        <div>
+                            <div class="passage-citation" id="current-reference">Romans 12:2</div>
+                            <div class="translation-tag" id="current-translation">King James Version (1611 Tradition) &bull; Public Domain</div>
+                        </div>
+                        <div style="font-size:0.84rem; color:var(--gold); font-style:italic;" id="current-headline">
+                            Transformation grounded in active discernment over outward conformity.
+                        </div>
+                    </div>
+                </article>
+
+                <!-- THE SIX LAYERS OF UNDERSTANDING -->
+                <div class="lenses-container">
+                    <div class="lenses-nav">
+                        <button class="lens-tab active" onclick="activateLens('traditional')">1. The Word</button>
+                        <button class="lens-tab" onclick="activateLens('language')">2. The Language</button>
+                        <button class="lens-tab" onclick="activateLens('tradition')">3. The Tradition</button>
+                        <button class="lens-tab" onclick="activateLens('symbolic')">4. Hidden &amp; Symbolic</button>
+                        <button class="lens-tab" onclick="activateLens('history')">5. Historical World</button>
+                        <button class="lens-tab" onclick="activateLens('reflection')">6. CTJ Reflection</button>
+                        <button class="lens-tab" onclick="activateLens('evidence')">7. Evidence Register</button>
+                    </div>
+
+                    <!-- 1. THE WORD / PARALLEL TRANSLATIONS -->
+                    <div class="lens-content active" id="lens-traditional">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.75rem; font-family:var(--font-serif);">The Canonical Passage &amp; Context</h3>
+                        <div style="display:grid; gap:1rem;" id="parallel-translations">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 2. THE LANGUAGE (GREEK, HEBREW, LATIN) -->
+                    <div class="lens-content" id="lens-language">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.5rem; font-family:var(--font-serif);">Original Language Studio</h3>
+                        <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:1rem;">
+                            The original manuscripts are distinct historical witnesses, not modern translations. Examining the lexical morphology reveals precise shades of meaning.
+                        </p>
+                        <div class="language-grid" id="original-languages-container">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 3. THE TRADITION -->
+                    <div class="lens-content" id="lens-tradition">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.75rem; font-family:var(--font-serif);">Interpretive Traditions</h3>
+                        <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:1rem;">
+                            How major historic communities of faith interpret this passage across eras.
+                        </p>
+                        <div style="display:grid; gap:1rem;" id="traditions-container">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 4. HIDDEN & SYMBOLIC (ESOTERIC / BÖHME) -->
+                    <div class="lens-content" id="lens-symbolic">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                            <h3 style="color:var(--gold-light); font-family:var(--font-serif);">The Hidden &amp; Symbolic Reading</h3>
+                            <span style="font-size:0.72rem; padding:0.2rem 0.6rem; border-radius:999px; background:rgba(212,175,55,0.15); color:var(--gold); border:1px solid var(--border-gold);">
+                                Symbolic Exegesis &bull; Not Grammatical Meaning
+                            </span>
+                        </div>
+                        <div id="symbolic-container">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 5. HISTORICAL WORLD -->
+                    <div class="lens-content" id="lens-history">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.75rem; font-family:var(--font-serif);">The First-Century Historical World</h3>
+                        <div id="historical-container">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 6. CTJ LIVING REFLECTION -->
+                    <div class="lens-content" id="lens-reflection">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.5rem; font-family:var(--font-serif);">The CTJ Thought Path &bull; Living Reflection</h3>
+                        <p style="font-size:0.86rem; color:var(--text-secondary);">
+                            Wisdom is not merely holding information; it is testing your assumptions and seeing how discernment becomes visible in conduct.
+                        </p>
+                        <div class="reflection-card" id="ctj-inquiry-box">
+                            <!-- Populated -->
+                        </div>
+                    </div>
+
+                    <!-- 7. EVIDENCE & UNCERTAINTY REGISTER -->
+                    <div class="lens-content" id="lens-evidence">
+                        <h3 style="color:var(--gold-light); margin-bottom:0.5rem; font-family:var(--font-serif);">Evidence &amp; Uncertainty Register</h3>
+                        <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:1rem;">
+                            Transparent separation between raw biblical text, lexical linguistic facts, historical reconstructions, theological traditions, and subjective reflections.
+                        </p>
+                        <div class="table-wrapper">
+                            <table class="evidence-table">
+                                <thead>
+                                    <tr>
+                                        <th>Claim or Element</th>
+                                        <th>Classification</th>
+                                        <th>Confidence / Limitation Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="evidence-table-body">
+                                    <!-- Populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="platform-footer">
+            <p><strong>Smoove Spots &bull; Inner &amp; Outer Wisdom</strong> &mdash; Asset Classification: SS-WISDOM-001</p>
+            <p style="margin-top:0.3rem;">A production of Sonly Consulting &bull; The Critical Thinker's Journey Method &bull; All Rights Reserved 2026</p>
+        </footer>
+    </div>
+
+    <!-- TOAST POPUP -->
+    <div id="toast-popup" class="toast-popup">
+        <span id="toast-msg">Copied citation</span>
+    </div>
+
+    <script>
+        /* =========================================================================
+           TOPIC & MULTI-LENS KNOWLEDGE REPOSITORY (SS-WISDOM-001 DATA BASELINE)
+           ========================================================================= */
+        const WISDOM_DATABASE = [
+            {
+                id: "rom-12-2",
+                topic: "Renewing the Mind",
+                reference: "Romans 12:2",
+                category: "Discernment & Mind",
+                headline: "Transformation grounded in active discernment over outward conformity.",
+                traditionalText: "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.",
+                parallels: [
+                    { translation: "World English Bible (WEB)", text: "Don’t be conformed to this world, but be transformed by the renewing of your mind, so that you may prove what is the good, well-pleasing, and perfect will of God." },
+                    { translation: "Young's Literal Translation (YLT)", text: "And be not conformed to this age, but be transformed by the renewing of your mind, that ye may prove what is the will of God -- the good, and acceptable, and perfect." }
+                ],
+                originalLanguages: [
+                    {
+                        language: "Greek (Koine) Root",
+                        ancient: "μεταμορφοῦσθε (metamorphousthe)",
+                        translit: "met-am-or-fo'-o (Strong's G3339)",
+                        notes: "From meta (change of after) and morphoo (form/nature). Denotes an intrinsic, inward structural transformation, not superficial surface compliance."
+                    },
+                    {
+                        language: "Greek Lexical Contrast",
+                        ancient: "ἀνακαίνωσις (anakainōsis)",
+                        translit: "an-ak-ah'-ee-no-sis (Strong's G342)",
+                        notes: "A complete qualitative renewal; renewing from within so that judgment and sight become clear and unpolluted."
+                    },
+                    {
+                        language: "Latin Vulgate",
+                        ancient: "reformamini in novitate sensus vestri",
+                        translit: "re-formamini in novitate",
+                        notes: "Re-formation in the newness of your interior sense and judgment. Preserved throughout early Christian philosophy."
+                    }
+                ],
+                traditions: [
+                    {
+                        tradition: "Protestant Reformation",
+                        summary: "Renewal as the inward work of the Holy Spirit through Word and prayer, restoring fallen human faculties to recognize God's moral will."
+                    },
+                    {
+                        tradition: "Catholic Spiritual Theology",
+                        summary: "Ongoing ascetic formation, growth in the theological virtues, and the active purification of conscience through grace."
+                    },
+                    {
+                        tradition: "Eastern Orthodox (Theosis)",
+                        summary: "Purification (catharsis) leading to illumination of the nous (spiritual intellect) and direct participation in divine energies."
+                    }
+                ],
+                symbolicReading: {
+                    school: "Jakob Böhme (De Signatura Rerum) & Inner Wisdom",
+                    analysis: "The outer world imprints its 'signature' of distraction, urgency, and conflict upon the senses. Inner renewal is the turning inward to the divine light-matrix, where the soul discovers its uncorrupted signature and ceases to mirror temporal illusion."
+                },
+                historicalContext: {
+                    era: "c. 57 CE &bull; Corinth to Roman House Churches",
+                    details: "Written to a mixed community of Jewish and Gentile believers living in the heart of imperial Rome. 'This age' (aiōn) carried direct political and cultural weight—urging believers not to take their cues from imperial status games."
+                },
+                ctjInquiry: {
+                    question: "Is my understanding merely changing what I think, or is it changing how I recognize what matters and treat others?",
+                    steps: [
+                        { step: "1. Identify the Conformity Pattern", prompt: "What external pressure, fear, or status anxiety is driving my knee-jerk reaction right now?" },
+                        { step: "2. Challenge the Operating Assumption", prompt: "What untested assumption am I treating as absolute truth?" },
+                        { step: "3. Choose the Discerned Action", prompt: "What decision expresses grounded humility, dignity, and calm courage?" }
+                    ]
+                },
+                evidenceRegister: [
+                    { claim: "Romans 12:2 links transformation with mental renewal", classification: "Scripture", note: "High confidence; direct textual statement." },
+                    { claim: "Greek term 'aiōn' refers to an age or era", classification: "Linguistic Evidence", note: "High confidence; standard lexical consensus." },
+                    { claim: "Composed in late 50s CE from Corinth", classification: "Historical Reconstruction", note: "Strong scholarly consensus based on internal Roman epistle cues." },
+                    { claim: "Renewal is a continuous progressive process", classification: "Interpretive Tradition", note: "Grammatically supported by present imperative; traditionally emphasized." },
+                    { claim: "Renewing the mind directly elevates psychological wellbeing", classification: "Empirical Proposition", note: "Not established by Romans 12:2 text; requires modern psychological study." }
+                ]
+            },
+            {
+                id: "john-1-1",
+                topic: "The Logos & Creation",
+                reference: "John 1:1-3",
+                category: "Wisdom & Creation",
+                headline: "The Divine Reason that structures the cosmos and brings understanding.",
+                traditionalText: "In the beginning was the Word, and the Word was with God, and the Word was God. The same was in the beginning with God. All things were made by him; and without him was not any thing made that was made.",
+                parallels: [
+                    { translation: "World English Bible (WEB)", text: "In the beginning was the Word, and the Word was with God, and the Word was God. The same was in the beginning with God." },
+                    { translation: "Young's Literal Translation (YLT)", text: "In the beginning was the Word, and the Word was with God, and the Word was God; this one was in the beginning with God." }
+                ],
+                originalLanguages: [
+                    {
+                        language: "Greek (Koine) Root",
+                        ancient: "Ἐν ἀρχῇ ἦν ὁ λόγος (En archē ēn ho Logos)",
+                        translit: "Logos (Strong's G3056)",
+                        notes: "Logos encapsulates divine cosmic rationality, governing order, logic, and creative expression. Intersects directly with Stoic philosophy and Philo."
+                    },
+                    {
+                        language: "Hebrew Conceptual Root",
+                        ancient: "דָּבָר (Davar) / מֵימְרָא (Memra)",
+                        translit: "Davar / Memra (Targumic)",
+                        notes: "The dynamic, acting Word of Yahweh that speaks creation into existence and reveals prophetic insight."
+                    },
+                    {
+                        language: "Latin Vulgate",
+                        ancient: "In principio erat Verbum",
+                        translit: "Verbum",
+                        notes: "Verbum conveys the articulate utterance and communicative nature of the Godhead."
+                    }
+                ],
+                traditions: [
+                    { tradition: "Patristic Exegesis", summary: "The Logos is the uncreated Son, eternally coexistent with the Father, through whom the universe is sustained." },
+                    { tradition: "Rabbinic Parallels", summary: "Torah as the pre-existent blueprint through which the Holy One created the worlds (Proverbs 8)." },
+                    { tradition: "Alexandrian Philosophy", summary: "Philo's understanding of Logos as the chief mediator and cosmic mind between transcendence and physical matter." }
+                ],
+                symbolicReading: {
+                    school: "Esoteric Hermetics & Böhme",
+                    analysis: "The Logos is the self-manifesting sound-signature of the divine essence. In every human soul, the Logos resides as the inner light that comprehends darkness."
+                },
+                historicalContext: {
+                    era: "c. 90 CE &bull; Ephesus",
+                    details: "Composed in a highly Hellenistic and cosmopolitan atmosphere, intentionally dialoguing with both Hebrew wisdom literature and Greek philosophical enquiry."
+                },
+                ctjInquiry: {
+                    question: "Is my personal speech and reasoning aligned with reality, or am I creating verbal confusion?",
+                    steps: [
+                        { step: "1. The Order Principle", prompt: "Am I speaking to clarify reality or to manipulate a narrative?" },
+                        { step: "2. The Creative Effect", prompt: "What environments and expectations am I speaking into existence around me?" }
+                    ]
+                },
+                evidenceRegister: [
+                    { claim: "John 1:1 identifies the Logos as divine", classification: "Scripture", note: "Explicit textual assertion." },
+                    { claim: "Logos had established meaning in Heraclitus and Stoicism", classification: "Linguistic / Historical Evidence", note: "Historically verifiable philosophical record." },
+                    { claim: "John intended a direct dialogue with Greek philosophers", classification: "Scholarly Hypothesis", note: "Probable and widely held, but debated against pure Jewish wisdom background." }
+                ]
+            },
+            {
+                id: "ps-23-1",
+                topic: "The Shepherd & Peace",
+                reference: "Psalm 23:1-3",
+                category: "Peace & Deliverance",
+                headline: "Unshakable wholeness and stillness beside the waters of restoration.",
+                traditionalText: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake.",
+                parallels: [
+                    { translation: "World English Bible (WEB)", text: "Yahweh is my shepherd: I shall lack nothing. He makes me lie down in green pastures. He leads me beside still waters. He restores my soul." },
+                    { translation: "Young's Literal Translation (YLT)", text: "Jehovah is my shepherd, I do not lack. In pastures of tender grass He causeth me to lie down, By quiet waters He doth lead me." }
+                ],
+                originalLanguages: [
+                    {
+                        language: "Hebrew Root",
+                        ancient: "יְהוָה רֹעִי (Yahweh Ro'i)",
+                        translit: "Ro'eh (Strong's H7462)",
+                        notes: "Ro'eh signifies a personal shepherd, companion, and protector who feeds and tends with continuous vigilance."
+                    },
+                    {
+                        language: "Hebrew Word Study",
+                        ancient: "מֵי מְנֻחוֹת (Mei Menuchot)",
+                        translit: "Waters of restful stillness (H4496)",
+                        notes: "Waters of tranquil Sabbath repose; places where anxious thirst gives way to deep satisfaction."
+                    },
+                    {
+                        language: "Latin Vulgate",
+                        ancient: "Dominus regit me, et nihil mihi deerit",
+                        translit: "Dominus regit me",
+                        notes: "The Lord rules/shepherds me, and nothing shall be lacking unto me."
+                    }
+                ],
+                traditions: [
+                    { tradition: "Judaism", summary: "Sung at the third Shabbat meal (Seudah Shelishit), celebrating absolute trust and peace as Sabbath departs." },
+                    { tradition: "Christian Pastoral Liturgy", summary: "Sung in baptismal and funeral settings, symbolizing guidance from earthly valley to eternal banqueting." }
+                ],
+                symbolicReading: {
+                    school: "Metaphysical & Inner Wisdom",
+                    analysis: "The Shepherd is the Divine I AM consciousness within. When the ego surrenders its panic and stops grazing on scarcity, it enters the pasture of abundance."
+                },
+                historicalContext: {
+                    era: "Ancient Judah &bull; Pastoral Monarchy",
+                    details: "Shepherding in the Judean hill country was dangerous work with deep wadis and predators; a flock's peace depended entirely on trust in the shepherd's skill."
+                },
+                ctjInquiry: {
+                    question: "Am I operating from scarcity panic, or from centered sufficiency?",
+                    steps: [
+                        { step: "1. Locate the 'Want'", prompt: "Where am I telling myself that I lack what is essential right now?" },
+                        { step: "2. The Still Waters Test", prompt: "Can I pause long enough for my turbulent thoughts to settle into clarity?" }
+                    ]
+                },
+                evidenceRegister: [
+                    { claim: "Davidic authorship of Psalm 23", classification: "Interpretive Tradition", note: "Traditional superscription; debated in modern critical scholarship." },
+                    { claim: "Hebrew 'menuchot' relates to Sabbath rest", classification: "Linguistic Evidence", note: "Solid lexical etymology." }
+                ]
+            },
+            {
+                id: "1john-4-1",
+                topic: "Discernment & Testing Spirits",
+                reference: "1 John 4:1-3",
+                category: "Discernment & Mind",
+                headline: "Disciplined testing of claims, charismatic voices, and unexamined impulses.",
+                traditionalText: "Beloved, believe not every spirit, but try the spirits whether they are of God: because many false prophets are gone out into the world.",
+                parallels: [
+                    { translation: "World English Bible (WEB)", text: "Beloved, don’t believe every spirit, but test the spirits, whether they are of God, because many false prophets have gone out into the world." },
+                    { translation: "Young's Literal Translation (YLT)", text: "Beloved, not to every spirit believe ye, but prove the spirits, if of God they are." }
+                ],
+                originalLanguages: [
+                    {
+                        language: "Greek (Koine) Root",
+                        ancient: "δοκιμάζετε (dokimazete)",
+                        translit: "dok-im-ad'-zo (Strong's G1381)",
+                        notes: "Technical metallurgy term for assaying metals in a furnace to prove authenticity. Refers to deliberate testing, not gullible credulity."
+                    },
+                    {
+                        language: "Greek Concept",
+                        ancient: "πνεῦμα (pneuma)",
+                        translit: "pnyoo'-mah (Strong's G4151)",
+                        notes: "Spirit, breath, animating drive, or influential underlying impulse."
+                    }
+                ],
+                traditions: [
+                    { tradition: "Ignatian Discernment", summary: "Rules for the discernment of spirits: distinguishing between consolation and desolation, and examining the ultimate fruit of an inspiration." },
+                    { tradition: "Reformed Theology", summary: "Evaluating all claims against the canon of Scripture with sober critical examination." }
+                ],
+                symbolicReading: {
+                    school: "Esoteric & Moral Psychology",
+                    analysis: "The 'spirits' represent invisible emotional currents, psychological projections, and societal hysteria. The discerning mind tests their essence before allowing them to take root."
+                },
+                historicalContext: {
+                    era: "c. 95–110 CE &bull; Asia Minor",
+                    details: "Early Christian communities grappling with proto-Gnostic teachers who claimed exclusive charismatic revelations."
+                },
+                ctjInquiry: {
+                    question: "Am I accepting a narrative simply because it sounds charismatic or flatters my bias?",
+                    steps: [
+                        { step: "1. The Assay Test", prompt: "What claims am I accepting without verifying their actual substance?" },
+                        { step: "2. The Fruit Test", prompt: "Does this guidance produce genuine humility and love, or self-righteous division?" }
+                    ]
+                },
+                evidenceRegister: [
+                    { claim: "1 John 4:1 commands critical testing of claims", classification: "Scripture", note: "Explicit imperative command." },
+                    { claim: "dokimazō is a metallurgical assay term", classification: "Linguistic Evidence", note: "Solid Hellenistic Greek lexical fact." }
+                ]
+            }
+        ];
+
+        /* =========================================================================
+           APPLICATION STATE & CONTROLS
+           ========================================================================= */
+        let activeItem = WISDOM_DATABASE[0];
+        let savedVaultIds = JSON.parse(localStorage.getItem("ss_inner_outer_favs") || "[]");
+        let availableVoices = [];
+        let selectedVoiceURI = "";
+        let audioContext = null;
+        let ambientOsc = null;
+        let isAmbientPlaying = false;
+        let currentScale = 1.45;
+
+        // Init
+        window.addEventListener("DOMContentLoaded", () => {
+            renderTopicMenu();
+            loadPassage(activeItem.id);
+            initVoiceSynthesis();
+        });
+
+        /* Viewport Simulator */
+        function setDeviceView(mode) {
+            document.body.setAttribute("data-device", mode);
+            document.querySelectorAll(".device-btn").forEach(b => b.classList.remove("active"));
+            event.target.classList.add("active");
+            showToast(`Viewport mode: ${mode.toUpperCase()}`);
+        }
+
+        /* Theme Toggle */
+        function togglePlatformTheme() {
+            const current = document.body.getAttribute("data-theme");
+            const target = current === "dark" ? "parchment" : "dark";
+            document.body.setAttribute("data-theme", target);
+            document.getElementById("theme-icon").textContent = target === "dark" ? "☼" : "☾";
+            showToast(`Theme: ${target.toUpperCase()}`);
+        }
+
+        /* Font Scaling */
+        function adjustTextSize(delta) {
+            currentScale = Math.max(1.1, Math.min(2.3, currentScale + (delta * 0.15)));
+            document.documentElement.style.setProperty("--verse-font-size", `${currentScale}rem`);
+        }
+
+        /* Render Topic Navigation */
+        function renderTopicMenu(filteredList = null) {
+            const list = filteredList || WISDOM_DATABASE;
+            const container = document.getElementById("topics-list");
+            container.innerHTML = list.map(item => `
+                <li>
+                    <button class="topic-btn ${item.id === activeItem.id ? 'active' : ''}" onclick="loadPassage('${item.id}')">
+                        <div>
+                            <div>${item.topic}</div>
+                            <span class="badge-ref">${item.reference}</span>
+                        </div>
+                        <span style="font-size:0.75rem; color:var(--text-muted);">&rarr;</span>
+                    </button>
+                </li>
+            `).join("");
+        }
+
+        /* Load Specific Passage */
+        function loadPassage(id) {
+            const item = WISDOM_DATABASE.find(x => x.id === id);
+            if (!item) return;
+            activeItem = item;
+
+            // Update main card
+            document.getElementById("current-category").textContent = item.category;
+            document.getElementById("current-text").textContent = `"${item.traditionalText}"`;
+            document.getElementById("current-reference").textContent = item.reference;
+            document.getElementById("current-headline").textContent = item.headline;
+
+            // Update Save Button status
+            updateSaveButton();
+
+            // Populate Layer 1: Parallels
+            document.getElementById("parallel-translations").innerHTML = `
+                <div style="background:var(--bg-surface); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-gold);">
+                    <strong style="color:var(--gold); font-size:0.86rem; display:block; margin-bottom:0.3rem;">King James Version (KJV 1611)</strong>
+                    <p style="font-family:var(--font-serif); font-size:1.05rem;">"${item.traditionalText}"</p>
+                </div>
+            ` + item.parallels.map(p => `
+                <div style="background:var(--bg-surface); padding:1rem; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+                    <strong style="color:var(--gold); font-size:0.86rem; display:block; margin-bottom:0.3rem;">${p.translation}</strong>
+                    <p style="font-family:var(--font-serif); font-size:1.05rem;">"${p.text}"</p>
+                </div>
+            `).join("");
+
+            // Populate Layer 2: Original Languages
+            document.getElementById("original-languages-container").innerHTML = item.originalLanguages.map(l => `
+                <div class="lang-card">
+                    <div class="lang-title">${l.language}</div>
+                    <div class="ancient-text">${l.ancient}</div>
+                    <div class="transliteration">${l.translit}</div>
+                    <div class="lexical-notes">${l.notes}</div>
+                </div>
+            `).join("");
+
+            // Populate Layer 3: Traditions
+            document.getElementById("traditions-container").innerHTML = item.traditions.map(t => `
+                <div style="background:var(--bg-surface); padding:1.2rem; border-radius:var(--radius-md); border-left:4px solid var(--gold);">
+                    <h4 style="color:var(--gold-light); margin-bottom:0.4rem;">${t.tradition}</h4>
+                    <p style="font-size:0.9rem; color:var(--text-main);">${t.summary}</p>
+                </div>
+            `).join("");
+
+            // Populate Layer 4: Symbolic / Esoteric
+            document.getElementById("symbolic-container").innerHTML = `
+                <div style="background:var(--bg-surface); padding:1.4rem; border-radius:var(--radius-md); border:1px solid var(--border-gold);">
+                    <h4 style="color:var(--gold); margin-bottom:0.5rem; font-family:var(--font-serif);">${item.symbolicReading.school}</h4>
+                    <p style="font-size:0.94rem; line-height:1.65; color:var(--text-main);">${item.symbolicReading.analysis}</p>
+                </div>
+            `;
+
+            // Populate Layer 5: Historical World
+            document.getElementById("historical-container").innerHTML = `
+                <div style="background:var(--bg-surface); padding:1.4rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle);">
+                    <div style="font-size:0.8rem; text-transform:uppercase; color:var(--gold); margin-bottom:0.4rem; font-weight:700;">Setting: ${item.historicalContext.era}</div>
+                    <p style="font-size:0.94rem; line-height:1.6; color:var(--text-main);">${item.historicalContext.details}</p>
+                </div>
+            `;
+
+            // Populate Layer 6: CTJ Reflection
+            document.getElementById("ctj-inquiry-box").innerHTML = `
+                <div style="font-size:1.05rem; font-weight:700; color:var(--gold-light); margin-bottom:1.2rem; font-family:var(--font-serif);">
+                    Central Inquiry: ${item.ctjInquiry.question}
+                </div>
+            ` + item.ctjInquiry.steps.map(s => `
+                <div class="inquiry-step">
+                    <h4><span>&bull;</span> ${s.step}</h4>
+                    <p>${s.prompt}</p>
+                    <textarea class="ctj-textarea" placeholder="Your thoughtful notes (saved locally on your device)..."></textarea>
+                </div>
+            `).join("");
+
+            // Populate Layer 7: Evidence Register
+            document.getElementById("evidence-table-body").innerHTML = item.evidenceRegister.map(row => {
+                let badgeClass = "tag-tradition";
+                if (row.classification.includes("Scripture")) badgeClass = "tag-scripture";
+                if (row.classification.includes("Linguistic")) badgeClass = "tag-linguistic";
+                if (row.classification.includes("Historical")) badgeClass = "tag-history";
+                if (row.classification.includes("Empirical")) badgeClass = "tag-theology";
+                return `
+                    <tr>
+                        <td><strong>${row.claim}</strong></td>
+                        <td><span class="tag-class ${badgeClass}">${row.classification}</span></td>
+                        <td>${row.note}</td>
+                    </tr>
+                `;
+            }).join("");
+
+            renderTopicMenu();
+        }
+
+        /* Lens Tab Navigation */
+        function activateLens(lensId) {
+            document.querySelectorAll(".lens-tab").forEach(tab => tab.classList.remove("active"));
+            document.querySelectorAll(".lens-content").forEach(c => c.classList.remove("active"));
+            event.target.classList.add("active");
+            document.getElementById(`lens-${lensId}`).classList.add("active");
+        }
+
+        /* Search & Filter Inquiry */
+        function handleInquirySearch() {
+            const query = document.getElementById("inquiry-input").value.trim().toLowerCase();
+            if (!query) {
+                renderTopicMenu();
+                return;
+            }
+            const filtered = WISDOM_DATABASE.filter(item => 
+                item.topic.toLowerCase().includes(query) ||
+                item.reference.toLowerCase().includes(query) ||
+                item.traditionalText.toLowerCase().includes(query) ||
+                item.category.toLowerCase().includes(query)
+            );
+            renderTopicMenu(filtered);
+            if (filtered.length > 0 && filtered[0].id !== activeItem.id) {
+                loadPassage(filtered[0].id);
+            }
+        }
+
+        function drawWisdomPassage() {
+            const rand = WISDOM_DATABASE[Math.floor(Math.random() * WISDOM_DATABASE.length)];
+            loadPassage(rand.id);
+            showToast(`Drawn: ${rand.reference} &bull; ${rand.topic}`);
+        }
+
+        /* SPEECH SYNTHESIS & VOICE SELECTION */
+        function initVoiceSynthesis() {
+            if (!window.speechSynthesis) return;
+            const populate = () => {
+                availableVoices = window.speechSynthesis.getVoices();
+                const sel = document.getElementById("voice-select");
+                sel.innerHTML = `<option value="">System Default Voice</option>` + 
+                    availableVoices.map((v, i) => `
+                        <option value="${v.voiceURI}">${v.name} (${v.lang})</option>
+                    `).join("");
+            };
+            populate();
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = populate;
+            }
+        }
+
+        function changeReaderVoice() {
+            selectedVoiceURI = document.getElementById("voice-select").value;
+            showToast("Voice updated");
+        }
+
+        function playVoiceReader() {
+            if (!window.speechSynthesis) {
+                showToast("Speech synthesis not supported in this browser");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const textToRead = `${activeItem.reference}. ${activeItem.traditionalText}. Headline: ${activeItem.headline}. Central inquiry: ${activeItem.ctjInquiry.question}`;
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.rate = 0.88;
+            utterance.pitch = 1.0;
+
+            if (selectedVoiceURI) {
+                const voice = availableVoices.find(v => v.voiceURI === selectedVoiceURI);
+                if (voice) utterance.voice = voice;
+            }
+
+            utterance.onend = () => { document.getElementById("play-btn").textContent = "► Listen"; };
+            utterance.onerror = () => { document.getElementById("play-btn").textContent = "► Listen"; };
+            window.speechSynthesis.speak(utterance);
+            document.getElementById("play-btn").textContent = "▶ Playing...";
+            showToast("Reading aloud...");
+        }
+
+        function pauseVoiceReader() {
+            if (window.speechSynthesis) window.speechSynthesis.pause();
+        }
+
+        function stopVoiceReader() {
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+            document.getElementById("play-btn").textContent = "► Listen";
+        }
+
+        /* 432HZ SCRIPTORIUM AMBIENT HARMONIC (Pure Web Audio API) */
+        function toggleAmbientHarmonic() {
+            if (isAmbientPlaying) {
+                if (ambientOsc) {
+                    ambientOsc.stop();
+                    ambientOsc.disconnect();
+                }
+                isAmbientPlaying = false;
+                document.getElementById("ambient-btn").classList.remove("active");
+                showToast("Ambiance off");
+            } else {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    ambientOsc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    ambientOsc.type = "sine";
+                    ambientOsc.frequency.setValueAtTime(432, audioContext.currentTime); // 432 Hz gentle harmonic
+                    gain.gain.setValueAtTime(0.04, audioContext.currentTime);
+                    ambientOsc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    ambientOsc.start();
+                    isAmbientPlaying = true;
+                    document.getElementById("ambient-btn").classList.add("active");
+                    showToast("432Hz Scriptorium ambiance on");
+                } catch(e) {
+                    showToast("Audio context unavailable");
+                }
+            }
+        }
+
+        /* BOOKMARK & VAULT SAVING */
+        function toggleSaveToVault() {
+            const idx = savedVaultIds.indexOf(activeItem.id);
+            if (idx >= 0) {
+                savedVaultIds.splice(idx, 1);
+                showToast("Removed from Personal Vault");
+            } else {
+                savedVaultIds.push(activeItem.id);
+                showToast("Saved to Personal Vault");
+            }
+            localStorage.setItem("ss_inner_outer_favs", JSON.stringify(savedVaultIds));
+            updateSaveButton();
+        }
+
+        function updateSaveButton() {
+            const btn = document.getElementById("fav-status-btn");
+            if (savedVaultIds.includes(activeItem.id)) {
+                btn.innerHTML = "&#9733; Saved";
+                btn.classList.add("active");
+            } else {
+                btn.innerHTML = "&#9734; Save";
+                btn.classList.remove("active");
+            }
+        }
+
+        /* COPY PASSAGE & CITATION */
+        function copyPassageCitation() {
+            const text = `"${activeItem.traditionalText}"\n— ${activeItem.reference} (KJV)\n[Smoove Spots | Inner & Outer Wisdom • CTJ Reflection Matrix]`;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Passage and citation copied!");
+            }).catch(() => {
+                showToast("Copy failed");
+            });
+        }
+
+        /* TOAST NOTIFICATION */
+        function showToast(msg) {
+            const t = document.getElementById("toast-popup");
+            document.getElementById("toast-msg").innerHTML = msg;
+            t.classList.add("visible");
+            setTimeout(() => {
+                t.classList.remove("visible");
+            }, 2400);
+        }
+    </script>
+</body>
+</html>

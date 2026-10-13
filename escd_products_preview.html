@@ -367,16 +367,45 @@ button { cursor: pointer; }
             </div>
 
             <!-- Workspace Sub-tabs -->
-            <div class="flex items-center gap-2">
-              <button class="canvas-tab-btn active" id="canvasTabWorkspace" onclick="switchCanvasTab('workspace')">⚡ Live Workspace</button>
-              <button class="canvas-tab-btn" id="canvasTabDossier" onclick="switchCanvasTab('dossier')">📋 Specifications & Dossier</button>
-              <button class="canvas-tab-btn" id="canvasTabGov" onclick="switchCanvasTab('gov')">🏛️ Governance & Provenance</button>
+            <div class="flex items-center gap-2 flex-wrap">
+              <a id="canvasExternalLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn" style="border-color:var(--gold);color:var(--gold);text-decoration:none;display:none">🌐 Live App ↗</a>
+              <button class="canvas-tab-btn active" id="canvasTabLiveApp" onclick="switchCanvasTab('live_app')">🖥️ Live App</button>
+              <button class="canvas-tab-btn" id="canvasTabWorkspace" onclick="switchCanvasTab('workspace')">⚡ Controls & Telemetry</button>
+              <button class="canvas-tab-btn" id="canvasTabFiles" onclick="switchCanvasTab('files')">📦 Workbooks & Files</button>
+              <button class="canvas-tab-btn" id="canvasTabDossier" onclick="switchCanvasTab('dossier')">📋 Specs & Dossier</button>
+              <button class="canvas-tab-btn" id="canvasTabGov" onclick="switchCanvasTab('gov')">🏛️ Governance</button>
               <button class="btn" onclick="openProductPopout()" title="Open standalone window">⤢ Pop-out</button>
             </div>
           </div>
 
+          <!-- Sub-Tab 0: Embedded Live Interactive Application -->
+          <div id="canvasSubTabLiveApp">
+            <div class="card p-3 mb-3 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="badge-emerald">● Live Embedded Runtime</span>
+                <span id="canvasLiveAppUrl" style="color:var(--ok);font-size:12px;font-family:monospace"></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <select id="ctjEditionSelector" onchange="switchCtjEdition(this.value)" style="display:none;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:4px;padding:4px 8px;font-size:11px">
+                  <option value="https://sc-ctj.vercel.app">CTJ Unified Home</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-1">Part 1: Clarity & Confidence</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-2">Part 2: Ideas & Moves</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-3">Part 3: Meaning & Balance</option>
+                  <option value="https://sc-ctj.vercel.app/#/unified">Unified Path Engine</option>
+                  <option value="https://sc-ctj.vercel.app/#/sca">Strategic Clarity Assessment (SCA)</option>
+                </select>
+                <button class="btn" onclick="reloadLiveFrame()">↺ Reload</button>
+                <button class="btn" onclick="toggleLiveFrameFullscreen()">⤢ Fullscreen</button>
+                <a id="canvasLiveAppOpenTab" href="#" target="_blank" rel="noopener noreferrer" class="btn primary" style="text-decoration:none">🌐 Open in New Tab ↗</a>
+              </div>
+            </div>
+            <div id="liveFrameContainer" style="position:relative;background:#030712;border:1px solid var(--gold);border-radius:8px;overflow:hidden">
+              <iframe id="canvasLiveIframe" src="about:blank" style="width:100%;height:750px;border:none;display:block"></iframe>
+            </div>
+          </div>
+
           <!-- Sub-Tab Content 1: Live Interactive Workspace Modules -->
-          <div id="canvasSubTabWorkspace">
+          <div id="canvasSubTabWorkspace" style="display:none">
             
             <!-- MODULE: CTJ (VOTER & CIVIC CLARITY MATRIX) -->
             <div id="module-ctj" class="canvas-module" style="display:none">
@@ -896,6 +925,20 @@ button { cursor: pointer; }
 
           </div>
 
+          <!-- Sub-Tab Content: Workbooks, Deliverables & Local Files -->
+          <div id="canvasSubTabFiles" style="display:none">
+            <div class="card">
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                <div>
+                  <strong style="color:var(--gold);font-size:15px" id="filesTabTitle">Product Deliverables, Workbooks & Archives</strong>
+                  <div class="text-[#9bb0ca] text-xs" id="filesTabMeta">Authoritative assets on Primary (LAPTOP-74UF76GB) & Remote (DESKTOP-PG1JATE) Nodes</div>
+                </div>
+                <span class="badge-emerald" id="filesCountBadge">0 Files Available</span>
+              </div>
+              <div id="filesListContainer" class="space-y-2"></div>
+            </div>
+          </div>
+
           <!-- Sub-Tab Content 2: Technical Specifications & Dossier -->
           <div id="canvasSubTabDossier" style="display:none">
             <div class="card">
@@ -964,176 +1007,430 @@ const $ = id => document.getElementById(id);
 // 8 Canonical Products Dataset
 const PRODUCTS = [
   {
-    id: "ctj",
-    code: "CTJ",
-    name: "The Critical Thinker's Journey",
-    parent_brand: "Sonly Consulting",
-    motto: "STRUCTURED REASONING ENGINE",
-    tagline: "Clarity Before Decision",
-    category: "wisdom_civic",
-    is_flagship: true,
-    badge: "Interactive Canvas",
-    hero: "Structured Decision Engine & Civic Clarity Matrix",
-    description: "4-Tier Reasoning Matrix, 6-Chamber Ascent Engine, and 7-Step Voter & Civic Clarity Evaluation Engine for executives, analysts, and citizens seeking verified cognitive frameworks.",
-    capabilities: [
+    "id": "ctj",
+    "code": "CTJ",
+    "name": "The Critical Thinker's Journey",
+    "parent_brand": "Sonly Consulting",
+    "motto": "STRUCTURED REASONING ENGINE",
+    "tagline": "Clarity Before Decision",
+    "category": "wisdom_civic",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.4.0",
+    "hero": "Structured Decision Engine & Civic Clarity Matrix",
+    "description": "Critical Thinker's Journey is a structured reasoning framework for executives, analysts, and citizens who require verified cognitive workflows. The system replaces unexamined assumptions with an auditable 4-Tier Reasoning Matrix, 6-Chamber Ascent Engine, and the 7-Step Voter & Civic Clarity Evaluation Engine.",
+    "capabilities": [
       "4-Tier Reasoning Matrix",
       "6-Chamber Ascent Engine",
-      "7-Step Civic Clarity Matrix",
+      "7-Step Civic Clarity Evaluation",
       "Candidate Epistemic Scoring",
       "Printable Civic Clarity Card"
     ],
-    pricing: "Free Framework · $297 Case Library · $697+ Master Class",
-    actions: { module: "ctj" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "ctj_voter_matrix",
+      "external_preview": "sc_homepage_preview.html#view-track3",
+      "dossier_available": true,
+      "live_url": "https://sc-ctj.vercel.app",
+      "local_source": "c:/DS All Things/SC-CTJ",
+      "deliverables": [
+        {
+          "name": "CTJ Collection Complete Bundle",
+          "file": "CTJ_Collection_v1.1.zip",
+          "size": "4.93 MB",
+          "type": "zip",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1.zip"
+        },
+        {
+          "name": "CTJ Part 1 Workbook",
+          "file": "CTJ_Part_1_Workbook.pdf",
+          "size": "3.12 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_1_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Part 2 Workbook",
+          "file": "CTJ_Part_2_Workbook.pdf",
+          "size": "3.12 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_2_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Part 3 Workbook",
+          "file": "CTJ_Part_3_Workbook.pdf",
+          "size": "3.11 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_3_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Unified Path Workbook",
+          "file": "CTJ_Unified_Path_Workbook.pdf",
+          "size": "4.06 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Unified_Path_Workbook.pdf"
+        },
+        {
+          "name": "The Unified Path Offline Runner",
+          "file": "CTJ_Unified_Path.html",
+          "size": "5.41 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Unified_Path.html"
+        },
+        {
+          "name": "Part 1 Offline Runner",
+          "file": "CTJ_Part_1.html",
+          "size": "4.09 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Part_1.html"
+        },
+        {
+          "name": "4-in-1 Offline App (Start Here)",
+          "file": "START_HERE.html",
+          "size": "5.36 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/START_HERE.html"
+        }
+      ]
+    },
+    "tags": [
+      "Reasoning",
+      "Civic Clarity",
+      "Voter Module",
+      "Cognitive Audit"
+    ]
   },
   {
-    id: "tsl",
-    code: "TSL",
-    name: "Tedo's Sports Lounge",
-    parent_brand: "Smoove Spots",
-    motto: "REGIONAL ATHLETICS RADIUS",
-    tagline: "The Sovereign Sports Intelligence & Fan Hub",
-    category: "sports_culture",
-    is_flagship: true,
-    badge: "Interactive Canvas",
-    hero: "Local Athletic Radius & 5-Team Activity Tracker",
-    description: "High school and regional athletics tracking, multi-sport 5-team selection, game schedules, score updates, and local sports community lounge engagement.",
-    capabilities: [
+    "id": "tsl",
+    "code": "TSL",
+    "name": "Tedo's Sports Lounge",
+    "parent_brand": "Smoove Spots",
+    "motto": "REGIONAL ATHLETICS RADIUS",
+    "tagline": "The Sovereign Sports Intelligence & Fan Hub",
+    "category": "sports_culture",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.2.0",
+    "hero": "Local Athletic Radius & 5-Team Activity Tracker",
+    "description": "Tedo's Sports Lounge tracks the regional athletic pulse that national platforms overlook. Covering high school athletics, collegiate programs, and professional leagues, TSL delivers multi-sport 5-team selection, real-time activity tracking, pick analytics, and community lounge engagement.",
+    "capabilities": [
       "Multi-Sport 5-Team Tracker (NFL, NBA, MLB, NHL, NCAA, HS)",
       "High School Athletic Roster Boards",
       "Live Score & Schedule Feed",
       "Pick Submission & Coin Economy",
       "Regional Sports Community Lounge"
     ],
-    pricing: "Free Explorer · TBD Lounge Pass",
-    actions: { module: "tsl" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "tsl_team_tracker",
+      "external_preview": "sc_homepage_preview.html#view-track2",
+      "dossier_available": true,
+      "live_url": "https://tedos-sports-lounge.vercel.app/",
+      "local_source": "c:/DS All Things/SC-TedoSportsLounge",
+      "deliverables": [
+        {
+          "name": "TSL Production Readiness Plan",
+          "file": "TSL_PRODUCTION_READINESS_PLAN.md",
+          "type": "doc",
+          "path": "c:/DS All Things/SC-TedoSportsLounge/TSL_PRODUCTION_READINESS_PLAN.md"
+        },
+        {
+          "name": "TSL Closeout Receipt",
+          "file": "TSL_CLOSEOUT_RECEIPT.md",
+          "type": "doc",
+          "path": "c:/DS All Things/SC-TedoSportsLounge/TSL_CLOSEOUT_RECEIPT.md"
+        }
+      ]
+    },
+    "tags": [
+      "Sports",
+      "High School Athletics",
+      "5-Team Tracker",
+      "Fan Lounge"
+    ]
   },
   {
-    id: "mymy",
-    code: "MyMy",
-    name: "SC-MyMy Flagship Media & Personal OS",
-    parent_brand: "Sonly Consulting",
-    motto: "HIGH-DEFINITION MOTION & IDENTITY",
-    tagline: "Creative Motion Capture & Media Pipeline",
-    category: "media_studio",
-    is_flagship: true,
-    badge: "Interactive Canvas",
-    hero: "Video Motion Context Profiler & Sovereign Studio",
-    description: "Sovereign media creation suite, video motion context profiling with Quinn/Gemini vision pipelines, digital collectibles and NFT gallery, and executive personal operating system.",
-    capabilities: [
+    "id": "mymy",
+    "code": "MyMy",
+    "name": "SC-MyMy Flagship Media & Personal OS",
+    "parent_brand": "Sonly Consulting",
+    "motto": "HIGH-DEFINITION MOTION & SOVEREIGN IDENTITY",
+    "tagline": "Creative Motion Capture & Media Pipeline",
+    "category": "media_studio",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v2.0.0",
+    "hero": "Video Motion Context Profiler & Sovereign Studio",
+    "description": "SC-MyMy unifies sovereign media creation, high-definition motion profiling, and personal operating system capabilities. Features Quinn and Gemini vision analysis pipelines, digital collectible galleries, motion posture presets, and creative asset staging.",
+    "capabilities": [
       "Video Motion Context Profiler",
       "Somya Defensive Posture Analysis",
       "Digital Collectibles & NFT Gallery",
       "Motion Capture Timeline Studio",
       "Prompt & Script Generator"
     ],
-    pricing: "Private Staging · Asset Genesis Ready",
-    actions: { module: "mymy" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "mymy_media_studio",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime",
+      "deliverables": [
+        {
+          "name": "Quinn Motion Pipeline Spec",
+          "file": "quinn_motion_spec.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/quinn_motion_spec.json"
+        },
+        {
+          "name": "Somya Posture Registry",
+          "file": "somya_posture_v2.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/somya_posture_v2.json"
+        }
+      ]
+    },
+    "tags": [
+      "Media",
+      "Motion Analysis",
+      "NFT Gallery",
+      "Personal OS"
+    ]
   },
   {
-    id: "scripture",
-    code: "SS-WISDOM",
-    name: "Inner & Outer Wisdom",
-    parent_brand: "Smoove Spots",
-    motto: "SACRED TRUTH & COMPARATIVE EXEGESIS",
-    tagline: "Comparative Scripture & Contemplative Studio",
-    category: "wisdom_civic",
-    is_flagship: true,
-    badge: "Interactive Canvas",
-    hero: "6-Layer Exegesis & Original Language Studio",
-    description: "Comparative scripture analysis across Greek Koine, Hebrew Ivrit, and Latin Vulgate traditions, with contemplative audio, 432 Hz Scriptorium tone, and CTJ reflective inquiries.",
-    capabilities: [
+    "id": "scripture",
+    "code": "SS-WISDOM",
+    "name": "Inner & Outer Wisdom",
+    "parent_brand": "Smoove Spots",
+    "motto": "SACRED TRUTH & COMPARATIVE EXEGESIS",
+    "tagline": "Comparative Scripture & Contemplative Studio",
+    "category": "wisdom_civic",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.1.0",
+    "hero": "6-Layer Exegesis & Original Language Studio",
+    "description": "Smoove Spots Inner & Outer Wisdom delivers comparative scripture analysis across Greek Koine, Hebrew Ivrit, and Latin Vulgate traditions. Incorporates contemplative audio with 432 Hz harmonic tone synthesis, multi-lens hermeneutics, and CTJ reflective inquiries.",
+    "capabilities": [
       "6-Layer Multi-Lens Exegesis",
       "Original Languages Studio (Greek, Hebrew, Latin)",
       "Contemplative Audio with 432 Hz Synthesis",
       "Epistemic Evidence & Dogma Register",
       "Dual Theme Engine (Sanctum Dark & Ancient Parchment)"
     ],
-    pricing: "Open Contemplative Archive · Free",
-    actions: { module: "scripture" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "scripture_selector",
+      "external_preview": "DCSE SS Scripture Selector vs1.html",
+      "dossier_available": true,
+      "live_url": "/scripture",
+      "preview_url": "scripture.html",
+      "local_source": "c:/DS All Things/ss-inner-outer-wisdom",
+      "deliverables": [
+        {
+          "name": "Inner & Outer Wisdom Standalone App",
+          "file": "index.html",
+          "size": "66.2 KB",
+          "type": "html",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/index.html"
+        },
+        {
+          "name": "DCSE SS Scripture Selector vs1",
+          "file": "DCSE SS Scripture Selector vs1.html",
+          "size": "66.2 KB",
+          "type": "html",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/DCSE SS Scripture Selector vs1.html"
+        },
+        {
+          "name": "Asset Record SS-WISDOM-001",
+          "file": "SS-WISDOM-001_ASSET_RECORD.json",
+          "type": "json",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/SS-WISDOM-001_ASSET_RECORD.json"
+        }
+      ]
+    },
+    "tags": [
+      "Wisdom",
+      "Comparative Scripture",
+      "Original Languages",
+      "Contemplation"
+    ]
   },
   {
-    id: "sc_enterprise",
-    code: "SC",
-    name: "Sonly Consulting Enterprise",
-    parent_brand: "Sonly Consulting",
-    motto: "GET YOUR THINK ON!™",
-    tagline: "Enterprise AI & PostgreSQL Migration",
-    category: "enterprise",
-    is_flagship: true,
-    badge: "System Proof Ready",
-    hero: "Enterprise AI Orchestration & Database Modernization",
-    description: "Converts complex organizational technical debt into structured, auditable PostgreSQL architectures and governed AI agent pipelines.",
-    capabilities: [
+    "id": "sc_enterprise",
+    "code": "SC",
+    "name": "Sonly Consulting Enterprise",
+    "parent_brand": "Sonly Consulting",
+    "motto": "GET YOUR THINK ON!\u2122",
+    "tagline": "Enterprise AI & PostgreSQL Migration",
+    "category": "enterprise",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "System Proof Ready",
+    "version": "v1.2.0",
+    "hero": "Enterprise AI Orchestration & Database Modernization",
+    "description": "Sonly Consulting converts complex organizational technical debt into structured, auditable PostgreSQL architectures and governed AI agent pipelines. Delivers snapshot verification tables, evidence-backed decision frameworks, and live proof terminals.",
+    "capabilities": [
       "System Proof Terminal #2",
       "Legacy Database Audit & Migration Pipeline",
       "Governed AI Agent Orchestration",
       "Evidence Firewall & Checkpoint Verifier"
     ],
-    pricing: "Free Brief · TBD Blueprint · Custom Engagement",
-    actions: { module: "sc_enterprise" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "sc_migration_terminal",
+      "external_preview": "sc_homepage_preview.html#view-track1",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center",
+      "deliverables": [
+        {
+          "name": "Canonical Convergence Registry",
+          "file": "escd_canonical_convergence_registry.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/escd_canonical_convergence_registry.json"
+        },
+        {
+          "name": "Master Profile v7.3",
+          "file": "Master-Profile-v7.3.md",
+          "type": "doc",
+          "path": "c:/DS All Things/DCSE_Command_Center/governance/Master-Profile-v7.3.md"
+        }
+      ]
+    },
+    "tags": [
+      "Enterprise",
+      "Database Migration",
+      "AI Pipeline",
+      "Proof Terminal"
+    ]
   },
   {
-    id: "smoove_spots",
-    code: "SS",
-    name: "Smoove Spots Discovery Engine",
-    parent_brand: "Smoove Spots",
-    motto: "SPOTS MOOVED RIGHT!™",
-    tagline: "Verified Local Spot Curation",
-    category: "sports_culture",
-    is_flagship: false,
-    badge: "Discovery Ready",
-    hero: "Curated Local Venues & Neighborhood Vibe Index",
-    description: "Surfaces verified local venues, cultural hubs, culinary destinations, and community events across targeted metropolitan regions with neighborhood vibe scoring.",
-    capabilities: [
+    "id": "smoove_spots",
+    "code": "SS",
+    "name": "Smoove Spots Discovery Engine",
+    "parent_brand": "Smoove Spots",
+    "motto": "SPOTS MOOVED RIGHT!\u2122",
+    "tagline": "Verified Local Spot Curation",
+    "category": "sports_culture",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Discovery Ready",
+    "version": "v1.2.0",
+    "hero": "Curated Local Venues & Neighborhood Vibe Index",
+    "description": "Smoove Spots surfaces verified local venues, cultural hubs, culinary destinations, and community events across targeted metropolitan regions. Replaces noisy reviews with curated neighborhood vibe indexes and merchant portals.",
+    "capabilities": [
       "Live Regional Spot Curation Map",
       "Neighborhood Vibe Scoring",
       "Merchant Verification Portal",
       "Local Event & Culture Feed"
     ],
-    pricing: "Free Explorer · TBD Spot Pass · TBD Merchant VIP",
-    actions: { module: "smoove_spots" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "ss_spots_curation",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/dcse-sc-sportsociety",
+      "deliverables": [
+        {
+          "name": "Sports Society Final Screen Map",
+          "file": "sc_sports_society_final_combined_screen_map.md",
+          "type": "doc",
+          "path": "c:/DS All Things/dcse-sc-sportsociety/sc_sports_society_final_combined_screen_map.md"
+        }
+      ]
+    },
+    "tags": [
+      "Culture",
+      "Local Discovery",
+      "Venues",
+      "Curation"
+    ]
   },
   {
-    id: "mental_ingenuity",
-    code: "MI",
-    name: "Mental Ingenuity",
-    parent_brand: "Sonly Consulting",
-    motto: "STRUCTURE PRECEDES SCALE",
-    tagline: "Human Cognitive Governance & Strategy",
-    category: "enterprise",
-    is_flagship: false,
-    badge: "Framework Ready",
-    hero: "Cognitive Architecture & Board Alignment",
-    description: "Equips executives and boards with structured frameworks to audit assumptions, align governance, and resolve strategic disconnects using context compilers.",
-    capabilities: [
+    "id": "mental_ingenuity",
+    "code": "MI",
+    "name": "Mental Ingenuity",
+    "parent_brand": "Sonly Consulting",
+    "motto": "STRUCTURE PRECEDES SCALE",
+    "tagline": "Human Cognitive Governance & Strategy",
+    "category": "enterprise",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Framework Ready",
+    "version": "v1.1.0",
+    "hero": "Cognitive Architecture & Board Alignment",
+    "description": "Mental Ingenuity addresses the cognitive architecture of leadership. Equips executives and boards with structured frameworks to audit assumptions, align governance, and resolve strategic disconnects using context compilers.",
+    "capabilities": [
       "Executive Mindset Calibration Engine",
       "Board Alignment Protocol",
       "First-Principles Decision Tree Matrix",
       "Strategic Stress-Testing Canvas"
     ],
-    pricing: "Free Audit · TBD Exec Suite",
-    actions: { module: "mental_ingenuity" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "mi_cognitive_canvas",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center/docs",
+      "deliverables": [
+        {
+          "name": "Cognitive Architecture Doctrine",
+          "file": "DCSE_GITHUB_REORGANIZATION_DOSSIER_20261010.md",
+          "type": "doc",
+          "path": "c:/DS All Things/DCSE_Command_Center/docs/DCSE_GITHUB_REORGANIZATION_DOSSIER_20261010.md"
+        }
+      ]
+    },
+    "tags": [
+      "Leadership",
+      "Cognitive Architecture",
+      "Board Governance",
+      "Mental Models"
+    ]
   },
   {
-    id: "sjl_b4life",
-    code: "SJL-B4Life",
-    name: "SJL Baller4Life™ Platform",
-    parent_brand: "Smoove Spots",
-    motto: "RESPONSIBILITY FUELS INDEPENDENCE",
-    tagline: "Generational Foundation & Young Adult Transition",
-    category: "wisdom_civic",
-    is_flagship: false,
-    badge: "Blueprint Ready",
-    hero: "Youth Character Development & Stewardship Blueprint",
-    description: "Equips young adults with discipline, financial stewardship, driver responsibility, and athletic leadership. Anchored in Ephesians 3 character pillars.",
-    capabilities: [
+    "id": "sjl_b4life",
+    "code": "SJL-B4Life",
+    "name": "SJL Baller4Life\u2122 Platform",
+    "parent_brand": "Smoove Spots",
+    "motto": "RESPONSIBILITY FUELS INDEPENDENCE",
+    "tagline": "Generational Foundation & Young Adult Transition",
+    "category": "wisdom_civic",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Blueprint Ready",
+    "version": "v1.0.0",
+    "hero": "Youth Character Development & Stewardship Blueprint",
+    "description": "SJL Persona and Baller4Life Framework equips young adults with discipline, financial stewardship, driver responsibility, and athletic leadership. Anchored in foundational character principles and WIN WIN WIN methodologies.",
+    "capabilities": [
       "Young Adult Transition Milestones",
       "Ephesians 3 Wisdom & Character Pillars",
       "Driver Responsibility & Independence Checklist",
       "Athletic Leadership & Mentorship Pipeline"
     ],
-    pricing: "Community Foundation · Mentorship Program",
-    actions: { module: "sjl_b4life" }
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "sjl_blueprint_canvas",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/ss-inner-outer-wisdom/docs",
+      "deliverables": [
+        {
+          "name": "Ephesians 3 Character Doctrine",
+          "file": "README.md",
+          "type": "doc",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/README.md"
+        }
+      ]
+    },
+    "tags": [
+      "Youth Development",
+      "Stewardship",
+      "Mentorship",
+      "Character"
+    ]
   }
 ];
 
@@ -1185,10 +1482,11 @@ function renderProductGrid(filter = 'all', searchQuery = '') {
         ${p.capabilities.slice(0, 3).map(c => `<div class="text-[11px] text-[#f4efe5] flex items-center gap-1.5"><span class="text-[#d4af37]">✓</span> ${c}</div>`).join('')}
       </div>
 
-      <div class="flex items-center gap-2 pt-2 border-t border-[#28486f]">
+      <div class="flex items-center gap-2 pt-2 border-t border-[#28486f] flex-wrap">
         <button class="btn primary flex-1 justify-center" onclick="launchEmbeddedCanvas('${p.id}')">
           ⚡ Launch Canvas
         </button>
+        ${p.actions?.live_url ? `<a href="${p.actions.live_url}" target="_blank" rel="noopener noreferrer" class="btn" style="border-color:var(--gold);color:var(--gold);text-decoration:none" title="Open Live Web Application">🌐 Live App ↗</a>` : ''}
         <button class="btn" onclick="openProductDossierModal('${p.id}')" title="Inspect Specifications">
           📋 Specs
         </button>
@@ -1209,6 +1507,36 @@ function searchCatalog(query) {
   renderProductGrid(activeFilter, query);
 }
 
+// Render Deliverables, Workbooks & Local Files
+function renderProductFiles(prod) {
+  const container = $('filesListContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  const deliverables = prod.actions?.deliverables || [];
+  if ($('filesCountBadge')) $('filesCountBadge').textContent = deliverables.length + ' Deliverable' + (deliverables.length === 1 ? '' : 's');
+  if ($('filesTabTitle')) $('filesTabTitle').textContent = prod.name + ' · Deliverables & Local Files';
+  
+  if (!deliverables.length) {
+    container.innerHTML = '<div class="p-6 text-center text-[#9bb0ca] border border-dashed border-[#28486f] rounded">No offline deliverables registered for this product.</div>';
+    return;
+  }
+
+  deliverables.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'p-3 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between gap-3';
+    card.innerHTML = `
+      <div>
+        <strong style="color:var(--gold);font-size:13px">${d.name}</strong>
+        <div class="text-[11px] text-[#9bb0ca] mt-0.5">${d.file} ${d.size ? '· ' + d.size : ''} ${d.type ? '· ' + d.type.toUpperCase() : ''}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        ${d.path ? `<a href="${d.path.startsWith('http') ? d.path : 'file:///' + d.path}" target="_blank" rel="noopener noreferrer" class="btn text-xs" style="text-decoration:none">Open / Path ↗</a>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
 // Full Embedded Canvas Switching Logic
 function launchEmbeddedCanvas(productId) {
   const prod = PRODUCTS.find(p => p.id === productId);
@@ -1224,6 +1552,34 @@ function launchEmbeddedCanvas(productId) {
   $('canvasProductTitle').textContent = prod.name;
   $('canvasProductBadge').textContent = prod.code + ' · ' + prod.badge;
   $('canvasProductMotto').textContent = prod.parent_brand + ' · ' + prod.motto;
+
+  // Setup Live App Iframe
+  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'scripture.html' : null);
+  const extBtn = $('canvasExternalLinkBtn');
+  const iframe = $('canvasLiveIframe');
+  const liveTabBtn = $('canvasTabLiveApp');
+  const liveUrlSpan = $('canvasLiveAppUrl');
+  const openTabBtn = $('canvasLiveAppOpenTab');
+  const ctjSelect = $('ctjEditionSelector');
+
+  if (liveUrl) {
+    liveTabBtn.style.display = 'inline-block';
+    iframe.src = liveUrl;
+    if (liveUrlSpan) liveUrlSpan.textContent = liveUrl;
+    if (openTabBtn) openTabBtn.href = liveUrl;
+    if (extBtn) { extBtn.href = liveUrl; extBtn.style.display = 'inline-block'; }
+    if (ctjSelect) ctjSelect.style.display = prod.id === 'ctj' ? 'inline-block' : 'none';
+    switchCanvasTab('live_app');
+  } else {
+    liveTabBtn.style.display = 'none';
+    iframe.src = 'about:blank';
+    if (extBtn) extBtn.style.display = 'none';
+    if (ctjSelect) ctjSelect.style.display = 'none';
+    switchCanvasTab('workspace');
+  }
+
+  // Populate Files Sub-Tab
+  renderProductFiles(prod);
 
   // Hide all modules, show selected module
   document.querySelectorAll('.canvas-module').forEach(m => m.style.display = 'none');
@@ -1250,8 +1606,6 @@ function launchEmbeddedCanvas(productId) {
     </div>
   `;
 
-  // Default to workspace tab
-  switchCanvasTab('workspace');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1264,13 +1618,36 @@ function closeCanvasAndReturnToCatalog() {
 }
 
 function switchCanvasTab(tab) {
+  $('canvasTabLiveApp').classList.toggle('active', tab === 'live_app');
   $('canvasTabWorkspace').classList.toggle('active', tab === 'workspace');
+  $('canvasTabFiles').classList.toggle('active', tab === 'files');
   $('canvasTabDossier').classList.toggle('active', tab === 'dossier');
   $('canvasTabGov').classList.toggle('active', tab === 'gov');
 
+  $('canvasSubTabLiveApp').style.display = tab === 'live_app' ? 'block' : 'none';
   $('canvasSubTabWorkspace').style.display = tab === 'workspace' ? 'block' : 'none';
+  $('canvasSubTabFiles').style.display = tab === 'files' ? 'block' : 'none';
   $('canvasSubTabDossier').style.display = tab === 'dossier' ? 'block' : 'none';
   $('canvasSubTabGov').style.display = tab === 'gov' ? 'block' : 'none';
+}
+
+function reloadLiveFrame() {
+  const f = $('canvasLiveIframe');
+  if (f && f.src) f.src = f.src;
+}
+
+function toggleLiveFrameFullscreen() {
+  const c = $('liveFrameContainer');
+  if (!c) return;
+  if (!document.fullscreenElement) c.requestFullscreen?.().catch(()=>{});
+  else document.exitFullscreen?.().catch(()=>{});
+}
+
+function switchCtjEdition(url) {
+  const f = $('canvasLiveIframe');
+  if (f) f.src = url;
+  if ($('canvasLiveAppUrl')) $('canvasLiveAppUrl').textContent = url;
+  if ($('canvasLiveAppOpenTab')) $('canvasLiveAppOpenTab').href = url;
 }
 
 function openProductPopout() {
