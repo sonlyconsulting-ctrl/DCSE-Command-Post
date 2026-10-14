@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Critical Thinker's Journey™ (CTJ) · Master Product Suite & Review Environment</title>
+<style>
+:root {
+  --bg-primary: #070e17;
+  --bg-secondary: #0d1927;
+  --bg-card: #122133;
+  --bg-elevated: #172a42;
+  --text-main: #f0f4f8;
+  --text-muted: #96a9bd;
+  --gold-primary: #e2c779;
+  --gold-glow: #ffd978;
+  --gold-dark: #b89c4d;
+  --border-subtle: rgba(226, 199, 121, 0.22);
+  --border-strong: rgba(226, 199, 121, 0.45);
+  --accent-cyan: #4ecdc4;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --font-serif: "Georgia", "Cambria", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--gold-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+a:hover {
+  color: var(--gold-glow);
+}
+
+/* ==========================================================================
+   TOP BAR / CROSS-APP CONTINUITY BAR
+   ========================================================================== */
+.continuity-bar {
+  background: #050b12;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.continuity-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(226, 199, 121, 0.12);
+  color: var(--gold-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.return-btn:hover {
+  background: rgba(226, 199, 121, 0.22);
+  border-color: var(--gold-primary);
+  color: #fff;
+}
+.continuity-env {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7d90a6;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   SOLIDIFIED MASTER SUITE HEADER
+   ========================================================================== */
+.master-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.brand-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+  color: inherit;
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 0 12px rgba(226, 199, 121, 0.2);
+}
+.brand-titles h1 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+.brand-titles h1 span {
+  color: var(--gold-primary);
+}
+.brand-titles p {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+/* Suite Navigation Tabs */
+.suite-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.nav-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.nav-tab:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+.nav-tab.active {
+  color: var(--bg-primary);
+  background: var(--gold-primary);
+  border-color: var(--gold-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(226, 199, 121, 0.3);
+}
+
+/* Header Utilities */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-author-intro {
+  background: rgba(226, 199, 121, 0.12);
+  border: 1px solid var(--border-subtle);
+  color: var(--gold-primary);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.btn-author-intro:hover {
+  background: var(--gold-primary);
+  color: var(--bg-primary);
+}
+
+/* ==========================================================================
+   MAIN WORKSPACE AREA
+   ========================================================================== */
+.workspace-wrapper {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+/* ==========================================================================
+   PART 2 DRAMATIC & SOULFUL COVER PAGE
+   ========================================================================== */
+.cover-hero {
+  position: relative;
+  background: linear-gradient(145deg, #0d1b2a 0%, #08111d 60%, #152233 100%);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 56px 48px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(226, 199, 121, 0.2);
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+.cover-hero::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(226, 199, 121, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.cover-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  background: rgba(226, 199, 121, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 22px;
+  font-weight: 600;
+}
+
+.cover-title {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 4.5vw, 48px);
+  color: #ffffff;
+  line-height: 1.18;
+  margin-bottom: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.cover-title span {
+  color: var(--gold-primary);
+  font-style: italic;
+}
+
+.cover-subtitle {
+  font-size: 20px;
+  color: var(--gold-primary);
+  margin-bottom: 24px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.cover-manifesto {
+  font-size: 16px;
+  color: #c4d3e2;
+  line-height: 1.8;
+  max-width: 860px;
+  margin-bottom: 32px;
+  border-left: 3px solid var(--gold-primary);
+  padding-left: 20px;
+  background: rgba(0, 0, 0, 0.18);
+  padding: 16px 20px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+.cover-manifesto p + p {
+  margin-top: 12px;
+}
+
+.cover-action-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-primary-action {
+  background: linear-gradient(180deg, #ecd693 0%, #caa452 100%);
+  color: #070e17;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 28px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 16px rgba(226, 199, 121, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(226, 199, 121, 0.5);
+}
+.btn-secondary-action {
+  background: transparent;
+  color: #c4d3e2;
+  border: 1px solid var(--border-subtle);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-secondary-action:hover {
+  color: #ffffff;
+  border-color: var(--gold-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ==========================================================================
+   CURRICULUM BUILDER WORKSPACE (SCREENSHOT 2 DESIGN)
+   ========================================================================== */
+.builder-view {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.builder-subbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+.builder-progress-pill {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.builder-progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--gold-primary);
+}
+.progress-track {
+  width: 140px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold-primary);
+  width: 10%;
+  transition: width 0.3s ease;
+}
+
+/* Day selector tabs */
+.day-selector-track {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.day-btn {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.day-btn:hover {
+  color: #fff;
+  border-color: var(--border-subtle);
+}
+.day-btn.active {
+  background: var(--gold-primary);
+  color: #070e17;
+  border-color: var(--gold-primary);
+  box-shadow: 0 2px 8px rgba(226, 199, 121, 0.25);
+}
+
+/* Active Day Card */
+.day-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  margin-bottom: 28px;
+}
+.day-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.day-title {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.day-theme {
+  font-size: 15px;
+  color: #c4d3e2;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Cards grid: Mini-framework & Action tip */
+.framework-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 768px) {
+  .framework-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.framework-card {
+  background: rgba(14, 27, 43, 0.85);
+  border: 1px solid rgba(226, 199, 121, 0.18);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+}
+.framework-card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.framework-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+.framework-desc {
+  font-size: 13px;
+  color: #b0c2d4;
+  line-height: 1.5;
+}
+
+.tip-card {
+  background: rgba(30, 24, 12, 0.45);
+  border: 1px solid rgba(226, 199, 121, 0.28);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+}
+.tip-card-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-primary);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.tip-desc {
+  font-size: 14px;
+  color: #e6dfc8;
+  line-height: 1.5;
+}
+
+.local-save-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #7d96b0;
+  margin-bottom: 20px;
+}
+.local-save-indicator svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Core Session & Interactive Fields */
+.session-header {
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.session-lede {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.prompt-block {
+  background: rgba(7, 14, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.prompt-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 12px;
+  display: block;
+}
+.prompt-textarea {
+  width: 100%;
+  min-height: 110px;
+  background: #091320;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: #f0f4f8;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+.prompt-textarea:focus {
+  outline: none;
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 8px rgba(226, 199, 121, 0.2);
+}
+
+/* ==========================================================================
+   SOLIDIFIED CTJ FOOTER (MATCHING USER SCREENSHOT EXACTLY)
+   ========================================================================== */
+.master-footer {
+  background: #04080e;
+  border-top: 1px solid rgba(226, 199, 121, 0.25);
+  padding: 40px 24px 32px;
+  color: #c4d3e2;
+  font-size: 14px;
+  margin-top: auto;
+}
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.footer-primary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+.footer-brand {
+  max-width: 380px;
+}
+.footer-brand-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+.footer-brand-title span {
+  color: var(--gold-primary);
+}
+.footer-powered-by {
+  font-size: 13px;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+.footer-powered-by a {
+  color: var(--gold-primary);
+  font-weight: 600;
+}
+
+.footer-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-link-btn {
+  background: transparent;
+  border: none;
+  color: #c4d3e2;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+.footer-link-btn:hover {
+  color: var(--gold-primary);
+}
+
+.footer-advisory {
+  font-size: 13px;
+  color: #8397ad;
+  line-height: 1.6;
+  max-width: 900px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ==========================================================================
+   DOCUMENT MODAL & DRAWER SYSTEM
+   ========================================================================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 13, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.modal-overlay.active {
+  display: flex;
+}
+.modal-content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 820px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+.modal-header {
+  background: #091320;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--gold-primary);
+  font-weight: 700;
+}
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+.modal-close-btn:hover {
+  color: #fff;
+}
+.modal-body {
+  padding: 28px;
+  overflow-y: auto;
+  font-size: 15px;
+  color: #c4d3e2;
+  line-height: 1.7;
+}
+.modal-body h2 {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 20px 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 6px;
+}
+.modal-body h2:first-of-type {
+  margin-top: 0;
+}
+.modal-body ul {
+  margin: 10px 0 16px 24px;
+}
+.modal-body li {
+  margin-bottom: 6px;
+}
+.modal-footer {
+  background: #091320;
+  padding: 16px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-close-modal {
+  background: var(--gold-primary);
+  color: #070e17;
+  border: none;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+/* Notification Pill */
+.toast-msg {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--gold-primary);
+  color: #070e17;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 2000;
+}
+</style>
+</head>
+<body>
+
+<!-- 1. CONTINUITY BAR / CROSS-APP RETURN NAVIGATION -->
+<aside class="continuity-bar" aria-label="Suite continuity navigation">
+  <div class="continuity-left">
+    <button class="return-btn" id="returnBtn" onclick="handleCrossAppReturn()">
+      ← Return to Previous App / Workspace
+    </button>
+    <span id="returnSourceDesc" style="font-size: 12px; color: #7f95ac;"></span>
+  </div>
+  <div class="continuity-env">
+    Sovereign Production Direction · Zero Watermark Verified
+  </div>
+</aside>
+
+<!-- 2. SOLIDIFIED SUITE HEADER -->
+<header class="master-header">
+  <div class="header-container">
+    <button class="brand-identity" onclick="switchSuiteTab('part-1')">
+      <img class="brand-logo" src="data:image/webp;base64,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" alt="CTJ Sovereign Mark">
+      <div class="brand-titles">
+        <h1>The Critical Thinker's Journey™ <span>(CTJ)</span></h1>
+        <p>A Sonly Consulting Master Curriculum • Edition 1.1</p>
+      </div>
+    </button>
+
+    <nav class="suite-nav" aria-label="CTJ Suite Tabs">
+      <button class="nav-tab active" id="tab-p1" onclick="switchSuiteTab('part-1')">Part 1: Clarity</button>
+      <button class="nav-tab" id="tab-p2" onclick="switchSuiteTab('part-2')">Part 2: Movement</button>
+      <button class="nav-tab" id="tab-p3" onclick="switchSuiteTab('part-3')">Part 3: Balance</button>
+      <button class="nav-tab" id="tab-unified" onclick="switchSuiteTab('unified')">The Unified Path</button>
+      <button class="nav-tab" id="tab-sca" onclick="switchSuiteTab('sca')">Assessment (SCA)</button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn-author-intro" onclick="openDocumentModal('author-intro')">
+        📖 Author & Intro
+      </button>
+      <button class="btn-author-intro" style="background: transparent; color: #c4d3e2;" onclick="openDocumentModal('terms')">
+        ⚖ Legal & Policies
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- 3. MAIN WORKSPACE CONTENT -->
+<main class="workspace-wrapper" id="mainWorkspace">
+
+  <!-- ====================================================================
+       VIEW: PART 2 COVER & BUILDER EXPERIENCE
+       ==================================================================== -->
+  <div id="view-part-2" style="display: none;">
+    <!-- SOULFUL, DRAMATIC COVER PAGE FOR PART 2 -->
+    <section class="cover-hero" id="part2CoverPage">
+      <div class="cover-badge">CTJ · PART 2 · TRANSITION FROM OBSERVER TO ARCHITECT</div>
+      <h1 class="cover-title">Exploring Ideas and <span>Making Moves</span></h1>
+      <p class="cover-subtitle">The Arena of Action • Testing Reality Against Reason</p>
+
+      <div class="cover-manifesto">
+        <p><strong>You have stilled the initial noise.</strong> In Part 1, you learned to separate verified facts from inherited assumptions, audit cognitive blind spots, and map the architecture of your thinking from the quiet vantage of an observer.</p>
+        <p><strong>Part 2 leaves the observer's chair behind.</strong> Reasoning in isolation is merely rehearsal; sovereign mastery is forged when ideas collide with the friction, unpredictability, and resistance of the real world. In these 10 Builders, you do not construct rigid defenses or cling to comfortable dogmas. You enter the arena as an experimental architect.</p>
+        <p>You will state hypotheses boldly, treat every argument as a probe to test rather than personal armor, and extract raw diagnostic intelligence from every setback. <em>Step forward. Prepare to move.</em></p>
+      </div>
+
+      <div class="cover-action-row">
+        <button class="btn-primary-action" onclick="scrollToPart2Builders()">
+          Enter Day 1: Testing Arguments →
+        </button>
+        <button class="btn-secondary-action" onclick="openDocumentModal('author-intro')">
+          Read Founder's Note
+        </button>
+      </div>
+    </section>
+
+    <!-- PART 2 BUILDERS INTERACTIVE VIEW (MATCHING USER SCREENSHOT 2) -->
+    <section class="builder-view" id="part2BuilderSection">
+      <div class="builder-subbar">
+        <div>
+          <span class="builder-progress-pill" id="p2DayPill">WEEK 1 · DAY 1 OF 10</span>
+          <h2 style="font-size: 20px; color: #fff; margin-top: 4px;">Part 2: Exploring Ideas and Making Moves</h2>
+        </div>
+        <div class="builder-progress-bar-container">
+          <span id="p2ProgressPercent">10% THROUGH PART 2</span>
+          <div class="progress-track">
+            <div class="progress-fill" id="p2ProgressFill" style="width: 10%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Builder Selector Nav -->
+      <nav class="day-selector-track" id="p2DaySelector" aria-label="Part 2 Days"></nav>
+
+      <!-- Active Day Card Container -->
+      <div id="p2DayCardContainer"></div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: PART 1 EXPERIENCE (THE CREATED ctj-part1-review-20260912 APP)
+       ==================================================================== -->
+  <div id="view-part-1">
+    <section class="cover-hero" style="border-color: rgba(78, 205, 196, 0.4);">
+      <div class="cover-badge" style="color: var(--accent-cyan); border-color: rgba(78, 205, 196, 0.3); background: rgba(78, 205, 196, 0.08);">
+        CTJ · PART 1 · FOUNDATIONAL ARCHITECTURE
+      </div>
+      <h1 class="cover-title">Building Clarity and <span>Confidence</span></h1>
+      <p class="cover-subtitle">Clear the Cognitive Fog • Strip Away Inherited Assumptions</p>
+
+      <div class="cover-manifesto">
+        <p><strong>Mastery is intentional.</strong> When enterprise discipline meets deep intellectual clarity, technology stops being noise and becomes a multiplier. In Part 1, you build the bedrock of logical rigor.</p>
+        <p>Over 10 deliberate Builders, you will systematically distinguish fact from opinion, isolate hidden fallacies, expose cognitive distortions, and construct arguments that endure rigorous scrutiny.</p>
+      </div>
+
+      <div class="cover-action-row">
+        <button class="btn-primary-action" onclick="scrollToPart1Builders()">
+          Open Part 1 Builders (Days 1–10) →
+        </button>
+        <button class="btn-secondary-action" onclick="openDocumentModal('author-intro')">
+          Executive Intro
+        </button>
+      </div>
+    </section>
+
+    <section class="builder-view" id="part1BuilderSection">
+      <div class="builder-subbar">
+        <div>
+          <span class="builder-progress-pill" id="p1DayPill">WEEK 1 · DAY 1 OF 10</span>
+          <h2 style="font-size: 20px; color: #fff; margin-top: 4px;">Part 1: Building Clarity and Confidence</h2>
+        </div>
+        <div class="builder-progress-bar-container">
+          <span id="p1ProgressPercent">10% THROUGH PART 1</span>
+          <div class="progress-track">
+            <div class="progress-fill" id="p1ProgressFill" style="width: 10%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="day-selector-track" id="p1DaySelector" aria-label="Part 1 Days"></nav>
+      <div id="p1DayCardContainer"></div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: PART 3 EXPERIENCE
+       ==================================================================== -->
+  <div id="view-part-3" style="display: none;">
+    <section class="cover-hero" style="border-color: rgba(226, 199, 121, 0.4);">
+      <div class="cover-badge">CTJ · PART 3 · INTEGRATION & PURPOSE</div>
+      <h1 class="cover-title">Finding Meaning and <span>Balance</span></h1>
+      <p class="cover-subtitle">Anchor Strategic Rigor in Long-Term Sovereign Equilibrium</p>
+
+      <div class="cover-manifesto">
+        <p>Building on the foundations of clarity (Part 1) and decisive action (Part 2), Part 3 addresses the inner landscape of the thinker: metacognition, values alignment, sustainable cognitive stamina, and purpose.</p>
+      </div>
+
+      <div class="builder-view">
+        <div class="builder-subbar">
+          <div>
+            <span class="builder-progress-pill" id="p3DayPill">WEEK 1 · DAY 1 OF 10</span>
+            <h2 style="font-size: 20px; color: #fff; margin-top: 4px;">Part 3: Finding Meaning and Balance</h2>
+          </div>
+          <div class="builder-progress-bar-container">
+            <span id="p3ProgressPercent">10% THROUGH PART 3</span>
+            <div class="progress-track"><div class="progress-fill" id="p3ProgressFill" style="width: 10%;"></div></div>
+          </div>
+        </div>
+        <nav class="day-selector-track" id="p3DaySelector" aria-label="Part 3 Days"></nav>
+        <div id="p3DayCardContainer"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: THE UNIFIED PATH (FLAGSHIP)
+       ==================================================================== -->
+  <div id="view-unified" style="display: none;">
+    <section class="cover-hero">
+      <div class="cover-badge">FLAGSHIP MASTER ENVIRONMENT</div>
+      <h1 class="cover-title">The Unified <span>Path</span></h1>
+      <p class="cover-subtitle">The Complete Architectural Reasoning System</p>
+      <div class="cover-manifesto">
+        <p>The Unified Path consolidates Decision Brief, Daily Thought Exercise, Integrated Capstone (4 scenarios & 7 CTJ lenses), and deterministic Logic Map into a single continuous master workspace.</p>
+      </div>
+      <div style="background: var(--bg-card); padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+        <h3 style="color: var(--gold-primary); margin-bottom: 12px;">Live Decision Brief Active</h3>
+        <p style="color: #c4d3e2; margin-bottom: 20px;">Examine a live strategic fork across 7 sovereign lenses: Analytical, Creative, Systems, Empathetic, Strategic, Ethical, and Reversibility.</p>
+        <button class="btn-primary-action" onclick="alert('Unified Reasoning Engine active in review mode.')">Run Unified Reasoning Cycle</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ====================================================================
+       VIEW: STRATEGIC CLARITY ASSESSMENT (SCA)
+       ==================================================================== -->
+  <div id="view-sca" style="display: none;">
+    <section class="cover-hero">
+      <div class="cover-badge">DIAGNOSTIC ENTRY POINT</div>
+      <h1 class="cover-title">Strategic Clarity <span>Assessment</span></h1>
+      <p class="cover-subtitle">31 Deterministic Questions Across 3 Core Pillars</p>
+      <div class="cover-manifesto">
+        <p>A private assessment measuring Analytical Precision, Creative Innovation, and Systems Thinking to pinpoint your optimal CTJ trajectory.</p>
+      </div>
+      <div style="background: var(--bg-card); padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+        <h3 style="color: var(--gold-primary); margin-bottom: 12px;">Assessment Diagnostic Ready</h3>
+        <p style="color: #c4d3e2; margin-bottom: 20px;">Questions evaluate cognitive habits, assumption auditing, and decision elasticity under pressure.</p>
+        <button class="btn-primary-action" onclick="alert('SCA 31-Question Diagnostic Ready.')">Start Assessment</button>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<!-- 4. SOLIDIFIED SUITE FOOTER (MATCHING USER SCREENSHOT EXACTLY) -->
+<footer class="master-footer">
+  <div class="footer-container">
+    <div class="footer-primary-row">
+      <div class="footer-brand">
+        <p class="footer-brand-title">The Critical Thinker's Journey <span>• Unified Edition</span></p>
+        <p class="footer-powered-by">Powered by <a href="https://www.sonlyconsulting.com" target="_blank" rel="noopener noreferrer">Sonly Consulting</a></p>
+      </div>
+
+      <nav class="footer-nav-links" aria-label="Footer Legal Links">
+        <button class="footer-link-btn" onclick="openDocumentModal('terms')">Terms of Use</button>
+        <button class="footer-link-btn" onclick="openDocumentModal('privacy')">Privacy Notice</button>
+        <button class="footer-link-btn" onclick="openDocumentModal('refund')">Digital Product / Refund Policy</button>
+        <button class="footer-link-btn" onclick="openDocumentModal('accessibility')">Accessibility Statement</button>
+        <button class="footer-link-btn" onclick="openDocumentModal('support')">Support</button>
+        <button class="footer-link-btn" onclick="openDocumentModal('author-intro')">Author & Intro</button>
+      </nav>
+    </div>
+
+    <div class="footer-advisory">
+      Educational and reflective. Not medical, therapeutic, psychological, legal, or financial advice. All policy and governance documents are verified, authoritative, and accessible on demand across the entire CTJ Product Suite.
+    </div>
+  </div>
+</footer>
+
+<!-- 5. COMPREHENSIVE DOCUMENT MODAL (NO MORE CONTENT SOURCE REQUIRED!) -->
+<div class="modal-overlay" id="documentModal" onclick="closeModalOnBackdrop(event)">
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">Document Viewer</h2>
+      <button class="modal-close-btn" onclick="closeDocumentModal()" aria-label="Close dialog">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Dynamic Document Text Injected Here -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-close-modal" onclick="closeDocumentModal()">Close Document</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-msg" id="toastMsg">Responses saved locally to your device</div>
+
+<script>
+// Curriculum data
+const CURRICULUM = [{"id": "part-1", "partNumber": 1, "title": "Building Clarity and Confidence", "days": [{"day": 1, "title": "What Is Logic?", "rawTitle": "Day 1 | What Is Logic?", "theme": "Logic is the structured framework that separates fact from opinion and belief from proof, improving decision-making in daily life.", "framework": {"name": "IF-THEN Statements", "description": "Break situations into cause-and-effect relationships."}, "tip": "Logic isn\u2019t about being right; it\u2019s about being consistent and clear. Example: \u201cIF I wake early, THEN I\u2019m more productive.\u201d", "visualAidPrompt": "Describe a real-life situation where you could apply an IF-THEN flowchart. This could be a personal decision, a simple work process, or even how you troubleshoot a common issue. Outline the 'IF (condition)' and 'THEN (outcome)' steps in plain language. Reflect on how breaking it down like this helps clarify the situation.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write your belief about what logic means to you personally."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 75\u2013100 words", "text": "Prompt 2: Using IF-THEN Statements, outline a recent decision. Identify conditions (IF) and outcomes (THEN). What evidence supported these connections?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: For a complex situation you face, how would you use IF-THEN to clarify elements or solutions?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cThe unexamined life is not worth living.\u201d \u2014Socrates. How does this relate to logic?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain logic to a 10-year-old using a daily example."}], "checkpoint": null}, {"day": 2, "title": "Thinking in Statements", "rawTitle": "Day 2 | Thinking in Statements", "theme": "Thoughts are often unspoken statements. Converting them to clear, testable statements refines reasoning.", "framework": {"name": "Declarative Sentences", "description": "Use \u201cI think... because...\u201d to structure reasoning."}, "tip": "Every belief can be a statement; every statement can be tested.", "visualAidPrompt": "Describe a belief you hold about a daily situation (e.g., a relationship, a work task, a personal habit). Outline the 'I think... because...' structure of your reasoning. Reflect on how articulating this helps clarify the belief and its foundations.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a strong belief about work, relationships, or life."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Declarative Sentences, convert your belief into a statement. What experiences or data support it? What counter-arguments could weaken it?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might personal experiences or biases influence your statement\u2019s framing or evidence?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Syllogism + 100-word explanation", "text": "Bonus: Convert your belief into a syllogism (e.g., All A are B; C is A; C is B)."}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Diagram your thought process using boxes and arrows."}], "checkpoint": null}, {"day": 3, "title": "Truth vs Belief", "rawTitle": "Day 3 | Truth vs Belief", "theme": "Truth exists independently; belief is what we think exists. This distinction sharpens reasoning.", "framework": {"name": "Logic Ladder", "description": "Start with a fact, add assumptions, then conclusions. Example: \u201cFact: It\u2019s raining. Assumption: I\u2019ll get wet. Conclusion: Take an umbrella.\u201d"}, "tip": "Ask: \u201cDo I believe this because it\u2019s true, or think it\u2019s true because I believe it?\u201d", "visualAidPrompt": "Choose a personal belief or a common assumption you encounter. Outline the 'Logic Ladder' for it: identify a foundational 'Fact', the 'Assumption(s)' built upon it, and the resulting 'Conclusion'. Reflect on how clearly separating these elements impacts your understanding.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a strong belief you can\u2019t prove with certainty."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using the Logic Ladder, identify facts or assumptions leading to your belief\u2019s conclusion. What evidence supports each step?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might distinguishing truth from belief have changed a past decision?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cBelief does not make truth.\u201d \u2014Voltaire. How does this relate to truth vs belief?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your view today with a year ago on this topic."}], "checkpoint": null}, {"day": 4, "title": "Deductive & Inductive Reasoning", "rawTitle": "Day 4 | Deductive & Inductive Reasoning", "theme": "Deductive reasoning moves from general principles to specific conclusions; inductive reasoning builds principles from observations. Both are key to logical thinking.", "framework": {"name": "Reasoning Type Identifier", "description": "Determine if your reasoning is inductive (observations \u2192 pattern) or deductive (principle \u2192 conclusion)."}, "tip": "Deductive reasoning ensures certainty if premises are true; inductive reasoning offers probability.", "visualAidPrompt": "Describe a situation where you used either inductive or deductive reasoning. If inductive, list the specific 'Observations' that led to a 'Pattern'. If deductive, state the general 'Principle' and the 'Conclusion' derived from it. Reflect on how identifying the type of reasoning helps evaluate its strength.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a pattern you\u2019ve noticed in life or work."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using the Reasoning Type Identifier, is your pattern inductive (list observations) or deductive (state principle)?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might biases influence your interpretation of observations or principles?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Prediction + 100-word explanation", "text": "Bonus: Predict an outcome based on your pattern. Explain your reasoning."}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Ask someone\u2019s opinion on your pattern and why."}], "checkpoint": null}, {"day": 5, "title": "The Power of a Premise", "rawTitle": "Day 5 | The Power of a Premise", "theme": "Premises are the starting points of reasoning. Weak premises lead to flawed conclusions, no matter how logical the process.", "framework": {"name": "Point-Evidence-Reason (PER Method)", "description": "Make a claim, support with data, explain why it matters."}, "tip": "Question your premises; conclusions are only as strong as the weakest link.", "visualAidPrompt": "Think of a recent confident decision you made. Describe it using the Point-Evidence-Reason (PER) method: state your 'Point' (decision), the 'Evidence' that supported it, and the underlying 'Reason' (premise). Reflect on how clearly defining your premises strengthens your decision-making.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a recent confident decision."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using PER, state your decision (Point), evidence, and premise (Reason)."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: If a premise proved false, how would your reasoning change? What new premises might you explore?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Premise + 100-word explanation", "text": "Bonus: Challenge one premise. How does it alter your conclusion?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Connect premises to a current news event."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 1 CHECKPOINT", "prompt": "Reflect on your progress in building logical foundations. Which mini-framework was most helpful, and why? How has your understanding of logic evolved? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words"}}, {"day": 6, "title": "What Is Bias?", "rawTitle": "Day 6 | What Is Bias?", "theme": "Bias is the unconscious tendency to favor certain perspectives, clouding judgment. Recognizing biases is key to clearer thinking.", "framework": {"name": "What if... So what... Now what?", "description": "Explore implications, consequences, actions."}, "tip": "Don\u2019t eliminate bias; recognize when it affects your judgment.", "visualAidPrompt": "Describe a situation where you suspect bias might have influenced your perception or a decision. Outline what you initially 'Believed' (biased side) versus the broader 'Facts' that might offer a different perspective. Reflect on how recognizing this potential imbalance helps you seek a more objective view.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a time you realized you were wrong about something important."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: What if you realized earlier? What consequences or actions would change? What facts led to your shift?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: Where did preconceptions shape your interpretation of facts?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cWe see the world not as it is, but as we are.\u201d \u2014Ana\u00efs Nin. How does this relate to bias?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain your realization to invite discussion."}], "checkpoint": null}, {"day": 7, "title": "Confirmation Bias", "rawTitle": "Day 7 | Confirmation Bias", "theme": "Confirmation bias favors information that supports existing beliefs, ignoring contradictions. It\u2019s a common thinking trap.", "framework": {"name": "Seek Disconfirming Evidence", "description": "Actively challenge your opinions."}, "tip": "Strong arguments withstand scrutiny; seek counter-evidence.", "visualAidPrompt": "Recall a strong opinion you hold. Describe the type of 'Counter-Evidence' you would actively seek to challenge it. Reflect on how deliberately searching for disconfirming information strengthens (or modifies) your understanding, rather than just confirming existing views.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a strong opinion on politics, religion, or social issues."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words]", "text": "Prompt 2: List reasons and sources supporting your opinion. Identify weaknesses or counter-arguments."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How would you seek disconfirming evidence before forming this opinion?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cThe beginning of wisdom is calling things by their right names.\u201d \u2014Confucius. How does precision affect conclusions?"}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Describe your thought process with imagery or metaphors."}], "checkpoint": null}, {"day": 8, "title": "Availability Heuristic", "rawTitle": "Day 8 | Availability Heuristic", "theme": "The availability heuristic overestimates likelihood based on easily recalled examples, skewing perception of probability.", "framework": {"name": "Evidence Balancer", "description": "List evidence for and against your fear/concern."}, "tip": "Easy-to-remember events aren\u2019t necessarily more likely.", "visualAidPrompt": "Think of a fear or concern that feels very real to you due to easily recalled examples (e.g., news stories, personal anecdotes). Outline the 'Memories' that make it feel prominent versus the broader 'Facts' or statistics that might offer a different perspective. Reflect on how the availability of information can skew your perception of probability.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a fear or concern that feels very real now."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Evidence Balancer, list evidence supporting and countering your fear."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might recent experiences exaggerate this concern?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "IF-THEN statement + 100-word explanation", "text": "Bonus: Convert your fear into an IF-THEN statement and test its logic."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your view today with a year ago."}], "checkpoint": null}, {"day": 9, "title": "Ad Hominem & Straw Man", "rawTitle": "Day 9 | Ad Hominem & Straw Man", "theme": "Ad hominem attacks the person, not the argument; straw man misrepresents positions. Both derail reasoning.", "framework": {"name": "Argument Focus", "description": "Concentrate on ideas, not people, and represent views fairly."}, "tip": "Attack ideas, not people; fairly challenge opposing views.", "visualAidPrompt": "Describe a heated discussion you've witnessed or participated in. Outline how you would reframe the conversation to focus solely on the 'Idea' or argument, rather than attacking the 'Person' or misrepresenting their 'Position'. Reflect on how this shift promotes more constructive dialogue.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a heated disagreement."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Argument Focus, identify key ideas. Did anyone attack the person or misrepresent positions?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: What\u2019s the first logical step to clarify the disagreement? How might this change your perspective?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cTo understand is to forgive, even oneself.\u201d \u2014Alexander Chase. How does this relate to avoiding personal attacks?"}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Ask someone\u2019s opinion on the disagreement and why."}], "checkpoint": null}, {"day": 10, "title": "False Dilemmas & Red Herrings", "rawTitle": "Day 10 | False Dilemmas & Red Herrings", "theme": "False dilemmas present only two options when more exist; red herrings distract with irrelevant information. Both limit clear thinking.", "framework": {"name": "Declarative Sentences", "description": "State your \u201ctwo-option\u201d choice as \u201cI think X because...\u201d. Identify a third option or red herring."}, "tip": "Look for unmentioned third options when told \u201ceither-or.\u201d", "visualAidPrompt": "Recall a situation where you felt presented with only 'Option 1' or 'Option 2'. Describe these two options and then brainstorm a viable 'Alternative' or a 'Red Herring' that might have distracted from other possibilities. Reflect on how identifying false dilemmas opens up new solutions.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a choice with seemingly only two options."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: State your reasoning for the two options. Imagine a third option or scenario where neither applies. What evidence supports or weakens the two-option view?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: Does your background make you favor one option unconsciously?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Third option + 100-word explanation", "text": "Bonus: Identify a third option and explain its viability."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Connect this theme to a news event."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 2 CHECKPOINT", "prompt": "Reflect on spotting biases and fallacies. Which mini-framework helped most? What biases surprised you? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words", "finalReflection": {"title": "FINAL REFLECTION", "questions": ["What\u2019s your biggest insight?", "How will you apply these tools?", "Who can you help with your skills?"], "prompt": "You have crafted a conscious foundation! Review your journey and reflect on your biggest insights.", "guide": "Response Area: Between 100\u2013150 words"}}}]}, {"id": "part-2", "partNumber": 2, "title": "Exploring Ideas and Making Moves", "days": [{"day": 1, "title": "Testing Arguments", "rawTitle": "Day 1 | Testing Arguments", "theme": "Strong arguments need testing. Experimenting with evidence validates or refines your reasoning.", "framework": {"name": "Tiny Experiment", "description": "Design a small test for an argument (hypothesis, action, outcome)."}, "tip": "Treat every argument as a hypothesis to test, not a truth to defend.", "visualAidPrompt": "Outline a 'Tiny Experiment' you could run in an everyday context, whether it's improving a personal habit, testing a new creative technique, or understanding a social dynamic. Clearly state your Hypothesis, the Action you would take, and the Outcome you would measure. Reflect on what you hope to learn from this experimental cycle.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write an argument you want to test in real life."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design a Tiny Experiment: State your hypothesis, action, and expected outcome. What evidence will you collect?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might confirmation bias affect your experiment\u2019s design or interpretation?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cFailure is simply the opportunity to begin again.\u201d \u2014Henry Ford. How does this relate to testing arguments?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain testing arguments to a colleague using a workplace example."}], "checkpoint": null}, {"day": 2, "title": "Evidence in Action", "rawTitle": "Day 2 | Evidence in Action", "theme": "Evidence drives effective experiments. Evaluating sources ensures your actions are grounded in reliable data.", "framework": {"name": "Source Experiment", "description": "Test a source\u2019s credibility by acting on its advice and observing results."}, "tip": "Act on evidence, but verify its source first.", "visualAidPrompt": "Choose a piece of information (e.g., from an article, a friend's advice, a social media post) that influenced a recent decision. Describe how you would evaluate its source using a checklist approach: considering the source's 'Expertise', potential 'Bias', and the 'Verifiability' of the information. Reflect on how this critical evaluation impacts your trust and subsequent actions.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a source (e.g., article, advice) shaping a recent decision."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design a Source Experiment: Act on the source\u2019s advice. How will you measure results? Assess expertise, bias, and verifiability."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might you adjust your action if the source proves unreliable?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cKnowledge is power.\u201d \u2014Francis Bacon. How does source reliability impact action?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your source evaluation today with a year ago."}], "checkpoint": null}, {"day": 3, "title": "Correlation vs Causation", "rawTitle": "Day 3 | Correlation vs Causation", "theme": "Acting on correlations without testing causation can lead to flawed outcomes. Experiments clarify true causes.", "framework": {"name": "Causal Experiment", "description": "Test if one event causes another (action, measure, analyze)."}, "tip": "Correlation isn\u2019t causation\u2014test before acting.", "visualAidPrompt": "Describe a pattern you've observed in your daily life or work where you might have assumed one thing caused another (e.g., 'Every time I do X, Y happens'). Outline the two 'Correlated Trends' and then explain how you would design a simple 'Causal Experiment' to test if one truly causes the other. Reflect on the importance of testing assumptions before acting.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a pattern where you assumed one thing caused another."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design a Causal Experiment: Describe your action, measurement, and analysis to test causation."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might overlooking alternative causes skew your experiment?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Experiment + 100-word explanation", "text": "Bonus: Propose a follow-up experiment to confirm your findings."}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Ask someone\u2019s opinion on your pattern and why."}], "checkpoint": null}, {"day": 4, "title": "Overcoming Decision Paralysis", "rawTitle": "Day 4 | Overcoming Decision Paralysis", "theme": "Decision paralysis stalls action. Small experiments break the cycle by testing options quickly.", "framework": {"name": "Triple Check (Head, Heart, Hand)", "description": "Analyze (logic), feel (intuition), act (experiment)."}, "tip": "Start small to build momentum; indecision is worse than a wrong move.", "visualAidPrompt": "Recall a decision you're currently stuck on. Describe how you would apply the 'Triple Check' framework: what does your 'Head' (logic/analysis) tell you, what does your 'Heart' (intuition/emotion) feel, and what small 'Hand' (action/experiment) could you take to move forward? Reflect on how aligning these three aspects helps overcome indecision.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a decision you\u2019re stuck on."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Triple Check, analyze logically, check your intuition, and propose a small action to test."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: What fears or biases might be stalling your action?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cAction is the antidote to despair.\u201d \u2014Joan Baez. How does this relate to decision paralysis?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain decision paralysis to a friend using a relatable example."}], "checkpoint": null}, {"day": 5, "title": "Learning from Failure", "rawTitle": "Day 5 | Learning from Failure", "theme": "Failures are data points for growth. Experiments turn setbacks into insights.", "framework": {"name": "Failure Analysis", "description": "Describe failure, identify causes, propose next steps."}, "tip": "Every failure teaches something\u2014don\u2019t waste the lesson.", "visualAidPrompt": "Describe a recent setback or 'failure' in a personal or professional endeavor. Outline the 'Failure Analysis' cycle: what was the 'Action', what was the 'Failure', what 'Insight' did you gain, and what 'Next Action' will you take based on that learning? Reflect on how viewing failures as data points fuels growth.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent failure or setback."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Failure Analysis, describe the failure, its causes, and one actionable insight."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can you design a new experiment based on this insight?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cI have not failed. I\u2019ve just found 10,000 ways that won\u2019t work.\u201d \u2014Thomas Edison. How does this relate to failure?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Share your failure insight with a colleague to spark discussion."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 1 CHECKPOINT", "prompt": "Reflect on your progress in experimenting with evidence. Which mini-framework drove the most action? What failure surprised you? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words"}}, {"day": 6, "title": "Creative Experiments", "rawTitle": "Day 6 | Creative Experiments", "theme": "Creativity fuels innovative experiments. Combining logic with imagination sparks actionable solutions.", "framework": {"name": "Tiny Experiment", "description": "Test a creative idea through a small, measurable action."}, "tip": "Creativity thrives when you act, measure, and adapt.", "visualAidPrompt": "Describe a creative idea you have for solving a problem, no matter how small. Outline a 'Tiny Experiment' to test this idea: what is the 'Idea', what 'Action' will you take, and how will you measure the 'Results'? Reflect on how acting on creative ideas, even in small ways, can spark innovation.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a creative idea for solving a problem."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design a Tiny Experiment: State your idea, action, and success metric."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might routine thinking limit your creative experiment?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Experiment + 100-word explanation", "text": "Bonus: Propose a hybrid logic-creativity experiment. Explain its potential."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Pitch your idea as a proposal to a client."}], "checkpoint": null}, {"day": 7, "title": "Lateral Action", "rawTitle": "Day 7 | Lateral Action", "theme": "Lateral thinking tests unconventional approaches through action, breaking from routine solutions.", "framework": {"name": "IF-THEN Experiment", "description": "Test an unconventional \u201cif\u201d to a \u201cthen\u201d outcome."}, "tip": "Ask: \u201cWhat if the opposite were true?\u201d to spark new actions.", "visualAidPrompt": "Think of a problem you've approached conventionally. Describe an 'unconventional' or 'lateral' action you could take that challenges the norm. Outline the 'IF-THEN Experiment' for this: 'IF' you take this unconventional action, 'THEN' what unexpected outcome might occur? Reflect on how breaking from routine can lead to breakthroughs.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about an unconventional solution you\u2019ve considered."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design an IF-THEN Experiment: What unconventional action will you test? What outcome do you expect?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might you overcome resistance to unconventional actions?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Solution + 100-word explanation", "text": "Bonus: Test a lateral solution on a current problem. Explain its potential."}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Diagram your lateral action as a flowchart with detours."}], "checkpoint": null}, {"day": 8, "title": "Adaptive Mental Models", "rawTitle": "Day 8 | Adaptive Mental Models", "theme": "Mental models guide action, but they must adapt to new evidence. Experimenting refines them.", "framework": {"name": "Model Experiment", "description": "Act on a mental model, observe results, update."}, "tip": "Update models when reality doesn\u2019t match.", "visualAidPrompt": "Describe a 'mental model' or assumption you use to navigate a particular situation (e.g., how people behave in meetings, how a certain task always unfolds). Outline a 'Model Experiment': what 'Action' would you take based on your current model, what 'Results' would you observe, and how would you 'Update' your model if reality didn't match? Reflect on the importance of adapting your internal maps to new evidence.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write a mental model you use for decisions or actions."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design a Model Experiment: Act on your model and observe results. Where might reality challenge it?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can you stay open to updating your model?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Updated model + 100-word explanation", "text": "Bonus: Update your model based on a recent action\u2019s outcome."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your model with one from a year ago."}], "checkpoint": null}, {"day": 9, "title": "Actionable Analogies", "rawTitle": "Day 9 | Actionable Analogies", "theme": "Analogies clarify ideas for action. Testing them ensures they guide effective experiments.", "framework": {"name": "Analogy Experiment", "description": "Act on an analogy and evaluate its fit."}, "tip": "Good analogies clarify; test them to avoid oversimplification.", "visualAidPrompt": "Formulate an analogy for a complex idea or problem you're facing (e.g., 'My team is like an orchestra...'). Describe an 'Analogy Experiment': how would you 'Act' based on this analogy, and where might it 'Hold' true or 'Mislead' you? Reflect on how testing analogies ensures they truly clarify and guide effective action.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write an analogy for a complex idea you want to act on."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design an Analogy Experiment: Act on the analogy. Does it hold? Where might it mislead?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might your analogy limit or enhance your action?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Dialogue + 100-word explanation", "text": "Bonus: Write a dialogue using your analogy to plan an action."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Create an analogy for a current news topic to guide action."}], "checkpoint": null}, {"day": 10, "title": "Breakthrough Experiments", "rawTitle": "Day 10 | Breakthrough Experiments", "theme": "Breakthroughs come from bold experiments that challenge assumptions and connect ideas in new ways.", "framework": {"name": "Opposite Experiment", "description": "Act on a flipped assumption and observe results."}, "tip": "Ask \u201cWhy not?\u201d to spark breakthroughs.", "visualAidPrompt": "Identify a deeply held assumption about a problem or situation. Describe an 'Opposite Experiment': what 'Bold Action' would you take if you completely 'Flipped' that assumption? Outline the expected 'Results' and reflect on how challenging core assumptions can lead to unexpected breakthroughs.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a bold idea for action that challenges norms."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Design an Opposite Experiment: Flip an assumption, act, and measure results."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might this bold action reshape your approach to problems?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cThe real voyage of discovery consists not in seeking new landscapes, but in having new eyes.\u201d \u2014Marcel Proust. How does this relate to breakthroughs?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Describe a historical breakthrough driven by bold action."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 2 CHECKPOINT", "prompt": "Reflect on your creative and adaptive actions. Which mini-framework sparked the most innovation? How has experimentation changed your thinking? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words", "finalReflection": {"title": "FINAL REFLECTION", "questions": ["What\u2019s your biggest action-oriented insight?", "How will you keep experimenting?", "Who can you inspire with your approach?"], "prompt": "You have crafted a conscious foundation! Review your journey and reflect on your biggest insights.", "guide": "Response Area: Between 100\u2013150 words"}}}]}, {"id": "part-3", "partNumber": 3, "title": "Finding Meaning and Balance", "days": [{"day": 1, "title": "Understanding Mindsets", "rawTitle": "Day 1 | Understanding Mindsets", "theme": "Mindsets shape how you perceive and act. Identifying subconscious mindsets (e.g., cynical, perfectionist) enables conscious change.", "framework": {"name": "Mindset Audit", "description": "Identify your mindset, its impact, and an alternative."}, "tip": "Your mindset isn\u2019t fixed; you can choose a new lens.", "visualAidPrompt": "Describe a 'mindset' (e.g., cynical, perfectionist, growth-oriented) that often shapes your decisions in a particular area of your life. Outline its 'Impact' on your actions and propose an 'Alternative Mindset' you'd like to adopt. Reflect on how consciously choosing a new 'lens' can transform your approach.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a mindset (e.g., cynical, optimistic) that shapes your decisions."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Mindset Audit, describe how this mindset affects your actions. Propose an alternative mindset."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How might this mindset stem from past experiences or fears?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cThe mind is everything. What you think, you become.\u201d \u2014Buddha. How does this relate to mindsets?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain your mindset to a friend to spark discussion."}], "checkpoint": null}, {"day": 2, "title": "Affective Labeling", "rawTitle": "Day 2 | Affective Labeling", "theme": "Naming emotions (affective labeling) clarifies feelings, enabling rational decisions.", "framework": {"name": "Emotion Map", "description": "Name your emotion, describe its trigger, and assess its impact."}, "tip": "Labeling emotions reduces their control over your choices.", "visualAidPrompt": "Recall a recent situation where a strong emotion influenced a decision. Describe your 'Emotion Map': name the 'Emotion', identify its 'Trigger', and assess its 'Impact' on your thinking. Reflect on how simply labeling emotions can reduce their control and lead to more rational choices.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent strong emotion that influenced a decision."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Emotion Map, name the emotion, its trigger, and its impact on your thinking."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can labeling this emotion improve your future decisions?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Labeling + 100-word explanation", "text": "Bonus: Practice affective labeling for a current situation. Explain its effect."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain affective labeling to a 10-year-old using a story."}], "checkpoint": null}, {"day": 3, "title": "Cognitive Scripts", "rawTitle": "Day 3 | Cognitive Scripts", "theme": "Cognitive scripts (e.g., sequel, crowd-pleaser) are unconscious patterns driving decisions. Recognizing them fosters conscious choice.", "framework": {"name": "Script Analysis", "description": "Identify your script, its origin, and a new script."}, "tip": "Scripts aren\u2019t destiny; rewrite them for empowerment.", "visualAidPrompt": "Identify a 'recurring decision pattern' in your life that feels like an unconscious 'Cognitive Script' (e.g., always saying yes, procrastinating). Describe its 'Origin' (where it might have come from) and then 'Rewrite' a new, empowering 'Script' for a specific situation. Reflect on how consciously rewriting these patterns fosters intentional choice.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recurring decision pattern in your life."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Script Analysis, identify the script\u2019s origin and propose a new script."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How does this script limit or empower your choices?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "New script + 100-word explanation", "text": "Bonus: Rewrite your script for a specific decision. Explain its potential."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your script with one from a year ago."}], "checkpoint": null}, {"day": 4, "title": "Decision Clarity", "rawTitle": "Day 4 | Decision Clarity", "theme": "Conscious decisions balance logic, emotion, and purpose. Clarity comes from aligning choices with values.", "framework": {"name": "Head-Heart-Hand", "description": "Check logic (head), emotion (heart), and action (hand)."}, "tip": "Misaligned decisions create inner conflict; align them with purpose.", "visualAidPrompt": "Think of a recent decision you're unsure about. Describe how you would apply the 'Head-Heart-Hand' framework: what does your 'Head' (logic) suggest, what does your 'Heart' (emotion/intuition) feel, and what 'Action' (hand) aligns with your purpose? Reflect on how aligning these three aspects brings clarity and reduces inner conflict.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent decision you\u2019re unsure about."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Head-Heart-Hand, analyze logic, emotion, and action. Are they aligned?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can you align this decision with your core values?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cThe heart has its reasons which reason knows not.\u201d \u2014Pascal. How does this relate to decision clarity?"}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain decision clarity to a colleague using a workplace example."}], "checkpoint": null}, {"day": 5, "title": "Self-Anthropology", "rawTitle": "Day 5 | Self-Anthropology", "theme": "Self-anthropology is observing your energy, emotions, and executive function to understand your inner world.", "framework": {"name": "Observation Log", "description": "Track your energy, emotions, and decisions daily."}, "tip": "Observing yourself like an anthropologist reveals hidden patterns.", "visualAidPrompt": "Describe a typical day, focusing on your 'Observation Log': track your fluctuating 'Energy' levels, the 'Emotions' you experience, and key 'Decisions' you make. Reflect on what patterns emerge and how observing yourself like an anthropologist can reveal hidden insights for better decision-making.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent day when your energy or emotions shifted noticeably."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Observation Log, track energy, emotions, and decisions for that day. What patterns emerge?"}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can self-observation improve your decision-making?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Log + 100-word explanation", "text": "Bonus: Log a current day\u2019s energy and emotions. Explain insights."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Share your self-observation insights with a trusted friend."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 1 CHECKPOINT", "prompt": "Reflect on your progress in mindset and emotional clarity. Which mini-framework deepened your awareness most? What surprised you about your inner world? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words"}}, {"day": 6, "title": "Aligning with Purpose", "rawTitle": "Day 6 | Aligning with Purpose", "theme": "Purposeful living aligns actions with core values, creating meaningful decisions.", "framework": {"name": "Purpose Map", "description": "Identify values, actions, and alignment gaps."}, "tip": "Actions not tied to purpose feel empty; align them consciously.", "visualAidPrompt": "Identify a core 'Value' that drives you. Describe your 'Purpose Map': list specific 'Actions' you take that reflect this value, and identify any 'Gaps' where your actions might not align. Reflect on how consciously aligning your daily actions with your core values creates a more meaningful life.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a core value that drives you."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Purpose Map, list actions reflecting this value. Identify gaps."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can you close one alignment gap?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Action + 100-word explanation", "text": "Bonus: Propose a purposeful action tied to your value. Explain its impact."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain purposeful living to a 10-year-old using a story."}], "checkpoint": null}, {"day": 7, "title": "Managing Emotional Triggers", "rawTitle": "Day 7 | Managing Emotional Triggers", "theme": "Emotional triggers can derail purposeful decisions. Managing them fosters clarity.", "framework": {"name": "Trigger Response", "description": "Identify trigger, emotion, and conscious response."}, "tip": "Pause and respond, don\u2019t react, to triggers.", "visualAidPrompt": "Recall a recent 'Emotional Trigger' you experienced. Describe your 'Trigger Response': identify the 'Trigger' itself, the 'Emotion' it evoked, and a 'Conscious Response' you could choose instead of a reactive one. Reflect on how pausing before responding to triggers fosters greater clarity and control.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent emotional trigger."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Trigger Response, identify the trigger, emotion, and a conscious response."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How can you prepare for this trigger in the future?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "10-word summary + 100-word explanation", "text": "Bonus: Reflect on: \u201cYou can\u2019t control the wind, but you can adjust your sails.\u201d \u2014Unknown. How does this relate to triggers?"}, {"label": "Today\u2019s Challenge:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Diagram your trigger response as a flowchart."}], "checkpoint": null}, {"day": 8, "title": "Complex Life Scenarios", "rawTitle": "Day 8 | Complex Life Scenarios", "theme": "Complex life scenarios require balancing purpose, emotion, and logic. Breaking them down consciously clarifies paths.", "framework": {"name": "Scenario Breakdown", "description": "List factors, emotions, and purpose-driven solutions."}, "tip": "Complexity is manageable when aligned with purpose.", "visualAidPrompt": "Describe a 'Complex Life Scenario' you're currently navigating that has no easy answers. Outline a 'Scenario Breakdown': identify the key 'Factors' involved, the 'Emotions' it evokes, and potential 'Purpose-Driven Solutions'. Reflect on how breaking down complexity with purpose as your guide clarifies your path forward.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a complex life scenario with no easy answers."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Scenario Breakdown, list factors, emotions, and a purpose-driven solution."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How does your purpose guide your approach to this scenario?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Map description + 100-word explanation", "text": "Bonus: Create a visual map of the scenario with purpose as the center."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Compare your approach with someone you admire."}], "checkpoint": null}, {"day": 9, "title": "Mapping a Conscious Life", "rawTitle": "Day 9 | Mapping a Conscious Life", "theme": "Mapping your thoughts, emotions, and values creates a blueprint for intentional living.", "framework": {"name": "Life Blueprint", "description": "Outline thoughts, emotions, and values for a decision."}, "tip": "A conscious life is designed, not drifted into.", "visualAidPrompt": "Think about a significant decision shaping your life's direction. Describe your 'Life Blueprint': outline the 'Thoughts', 'Emotions', and core 'Values' that underpin this decision. Reflect on how consciously mapping these elements creates a clear blueprint for intentional living.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about a recent decision shaping your life\u2019s direction."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Life Blueprint, outline thoughts, emotions, and values for this decision."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: Where might misalignment with values affect this decision?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Blueprint + 100-word explanation", "text": "Bonus: Create a blueprint for a community project tied to your values."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Explain the value of conscious living to a community group."}], "checkpoint": null}, {"day": 10, "title": "Living with Intention", "rawTitle": "Day 10 | Living with Intention", "theme": "Intentional living means every choice reflects your purpose, creating a fulfilling life.", "framework": {"name": "Before & After", "description": "Compare past and purposeful decision-making."}, "tip": "Intention turns actions into steps toward purpose.", "visualAidPrompt": "Recall your most meaningful life choice and a less intentional one. Describe your 'Before & After' comparison: outline the 'Past Choice' and the 'Purposeful Choice', highlighting how intention transformed the latter. Reflect on how every choice can become a step towards a more fulfilling, purpose-driven life.", "prompts": [{"label": "Prompt 1:", "type": "short-response", "maxWords": 25, "guide": "Up to 25 words", "text": "Prompt 1: Write about your most meaningful life choice."}, {"label": "Prompt 2:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u201375 words", "text": "Prompt 2: Using Before & After, compare this choice with a less intentional one."}, {"label": "Prompt 3:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Prompt 3: How will you make future choices more intentional?"}, {"label": "Bonus:", "type": "bonus-response", "maxWords": 110, "guide": "Letter + 100-word explanation", "text": "Bonus: Write a letter to your future self about living intentionally."}, {"label": "Dig Deeper:", "type": "long-response", "maxWords": 100, "guide": "Between 50\u2013100 words", "text": "Share your biggest insight on intentional living."}], "checkpoint": {"type": "week-checkpoint", "title": "WEEK 2 CHECKPOINT", "prompt": "Reflect on purposeful living. Which mini-framework aligned your actions most? How has your sense of purpose evolved? Response Area: Between 100\u2013150 words", "guide": "Response Area: Between 100\u2013150 words", "finalReflection": {"title": "FINAL REFLECTION", "questions": ["What\u2019s your biggest insight on purpose and emotion?", "How will you live intentionally?", "Who can you inspire with your clarity?"], "prompt": "You have crafted a conscious foundation! Review your journey and reflect on your biggest insights.", "guide": "Response Area: Between 100\u2013150 words"}}}]}];
+const INTRODUCTIONS = {"part-1": {"welcome": ["This workbook begins your journey to sharpen your thinking with precision and clarity. You\u2019ll build a foundation in logical reasoning, identify biases that cloud judgment, and learn to structure arguments effectively. Designed for classrooms, boardrooms, or personal growth, this 10-Builder journey strengthens your mind like an athlete trains their body, through deliberate, structured practice.", "Use this digital workbook to type in the fields. Each Builder offers a theme, mini-framework, logic tip, and prompts to guide your thinking. Stay consistent, be honest, and GET YOUR THINK ON!"], "framework": "Each Builder includes a Mini-Framework, a tool to structure your thinking. Drawn from logic and argumentation, they build mental clarity. Use them as guides, revisit favorites, and don\u2019t worry if one doesn\u2019t click immediately, your mind is growing stronger."}, "part-2": {"welcome": ["Building on Part 1\u2019s logical foundations, this workbook turns theory into action. You\u2019ll design experiments to test ideas, overcome decision paralysis, and embrace uncertainty as a path to growth. Across 10 Builders, you\u2019ll learn to view failures as data points and adapt iteratively, making your thinking dynamic and resilient.", "Use this digital workbook to type in digital fields. Each Builder offers a theme, mini-framework, tip, and prompts. Stay curious, act boldly, and GET YOUR THINK ON!"], "framework": "Mini-Frameworks guide your experiments, drawn from evidence analysis, creativity, and iterative learning. They encourage action and adaptation. Use them flexibly and revisit what works."}, "part-3": {"welcome": ["This workbook deepens your journey by exploring your inner landscape. Building on Parts 1 and 2, you\u2019ll reflect on mindsets, manage emotions, and align actions with purpose. Across 10 Builders, you\u2019ll practice metacognition and emotional intelligence to live intentionally.", "Use this digital workbook to type in digital fields. Each Builder offers a theme, mini-framework, tip, and prompts. Stay reflective, stay purposeful, and GET YOUR THINK ON!"], "framework": "Mini-Frameworks guide your self-reflection, drawn from metacognition, emotional intelligence, and purpose. They foster awareness and alignment. Use them flexibly and revisit what resonates."}};
+
+// Active states
+let currentPartId = 'part-1';
+let activeDays = {
+  'part-1': 1,
+  'part-2': 1,
+  'part-3': 1
+};
+
+// Setup return navigation
+function initReturnNavigation() {
+  const params = new URLSearchParams(window.location.search);
+  const returnTo = params.get('returnTo') || document.referrer;
+  const returnBtn = document.getElementById('returnBtn');
+  const desc = document.getElementById('returnSourceDesc');
+
+  if (returnTo && returnTo.startsWith('http')) {
+    try {
+      const url = new URL(returnTo);
+      desc.textContent = `Destination: ${url.hostname}`;
+      window.__CTJ_RETURN_URL__ = returnTo;
+    } catch (e) {
+      desc.textContent = "Return to Suite Hub";
+    }
+  } else {
+    desc.textContent = "Return to Sonly Consulting Product Hub";
+    window.__CTJ_RETURN_URL__ = "https://sc-product-showroom-preview.sonlysc.chatgpt.site";
+  }
+}
+
+function handleCrossAppReturn() {
+  if (window.__CTJ_RETURN_URL__) {
+    window.location.href = window.__CTJ_RETURN_URL__;
+  } else {
+    window.location.href = "https://sc-product-showroom-preview.sonlysc.chatgpt.site";
+  }
+}
+
+// Tab switcher
+function switchSuiteTab(partId) {
+  currentPartId = partId;
+  const tabs = ['part-1', 'part-2', 'part-3', 'unified', 'sca'];
+  tabs.forEach(t => {
+    const el = document.getElementById('view-' + t);
+    const tabBtn = document.getElementById('tab-' + (t === 'part-1' ? 'p1' : t === 'part-2' ? 'p2' : t === 'part-3' ? 'p3' : t));
+    if (el) el.style.display = (t === partId) ? 'block' : 'none';
+    if (tabBtn) {
+      if (t === partId) tabBtn.classList.add('active');
+      else tabBtn.classList.remove('active');
+    }
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToPart2Builders() {
+  document.getElementById('part2BuilderSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function scrollToPart1Builders() {
+  document.getElementById('part1BuilderSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Render Builders for Part
+function renderBuildersForPart(partId, partIndex) {
+  const partData = CURRICULUM[partIndex];
+  if (!partData) return;
+
+  const prefix = partId === 'part-1' ? 'p1' : partId === 'part-2' ? 'p2' : 'p3';
+  const navEl = document.getElementById(prefix + 'DaySelector');
+  const cardContainer = document.getElementById(prefix + 'DayCardContainer');
+  if (!navEl || !cardContainer) return;
+
+  navEl.innerHTML = '';
+  partData.days.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'day-btn' + (d.day === activeDays[partId] ? ' active' : '');
+    btn.textContent = `Day ${d.day} · ${d.title.split(' ').slice(0, 3).join(' ')}`;
+    btn.onclick = () => selectDay(partId, d.day);
+    navEl.appendChild(btn);
+  });
+
+  const activeDayData = partData.days.find(d => d.day === activeDays[partId]) || partData.days[0];
+  
+  // Update progress
+  const percent = activeDayData.day * 10;
+  const pill = document.getElementById(prefix + 'DayPill');
+  const percentText = document.getElementById(prefix + 'ProgressPercent');
+  const fill = document.getElementById(prefix + 'ProgressFill');
+  if (pill) pill.textContent = `WEEK ${Math.ceil(activeDayData.day / 5)} · DAY ${activeDayData.day} OF 10`;
+  if (percentText) percentText.textContent = `${percent}% THROUGH PART ${partIndex + 1}`;
+  if (fill) fill.style.width = `${percent}%`;
+
+  // Render card
+  let promptsHtml = '';
+  if (activeDayData.prompts && activeDayData.prompts.length > 0) {
+    promptsHtml = activeDayData.prompts.map((p, idx) => {
+      const storageKey = `ctj.${partId}.day-${activeDayData.day}.p${idx}`;
+      const savedVal = localStorage.getItem(storageKey) || '';
+      return `
+        <div class="prompt-block">
+          <label class="prompt-label" for="${storageKey}">
+            Prompt ${idx + 1}: ${p.text || p.label || p}
+          </label>
+          <textarea 
+            class="prompt-textarea" 
+            id="${storageKey}" 
+            placeholder="Type your reflection or response here..."
+            oninput="handlePromptInput('${storageKey}', this.value)"
+          >${savedVal}</textarea>
+        </div>
+      `;
+    }).join('');
+  }
+
+  cardContainer.innerHTML = `
+    <article class="day-card">
+      <p class="day-eyebrow">DAY ${activeDayData.day}</p>
+      <h3 class="day-title">${activeDayData.title}</h3>
+      <p class="day-theme">${activeDayData.theme || ''}</p>
+
+      <div class="framework-grid">
+        <div class="framework-card">
+          <p class="framework-card-title">MINI-FRAMEWORK</p>
+          <p class="framework-name">${activeDayData.framework ? activeDayData.framework.name : 'Structured Reflection'}</p>
+          <p class="framework-desc">${activeDayData.framework ? activeDayData.framework.description : 'Examine the logical flow of this decision point.'}</p>
+        </div>
+        <div class="tip-card">
+          <p class="tip-card-title">💡 ACTION TIP</p>
+          <p class="tip-desc">${activeDayData.tip || 'Treat an argument as a hypothesis to test, not a position to defend.'}</p>
+        </div>
+      </div>
+
+      <div class="local-save-indicator">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-7 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+        <span>Responses saved locally to your device browser</span>
+      </div>
+
+      <div class="session-header">Core Session</div>
+      <p class="session-lede">Complete the core prompts. Deeper reflection remains available but is not required to advance.</p>
+
+      ${promptsHtml}
+    </article>
+  `;
+}
+
+function selectDay(partId, day) {
+  activeDays[partId] = day;
+  const partIndex = partId === 'part-1' ? 0 : partId === 'part-2' ? 1 : 2;
+  renderBuildersForPart(partId, partIndex);
+}
+
+function handlePromptInput(key, val) {
+  try {
+    localStorage.setItem(key, val);
+    showToast();
+  } catch(e) {}
+}
+
+let toastTimer = null;
+function showToast() {
+  const toast = document.getElementById('toastMsg');
+  if (!toast) return;
+  toast.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.style.display = 'none';
+  }, 1500);
+}
+
+// ==========================================================================
+// COMPLETE LEGAL & GOVERNANCE DOCUMENTS REPOSITORY
+// ==========================================================================
+const DOCUMENTS = {
+  'terms': {
+    title: "Terms of Use · The Critical Thinker's Journey™",
+    body: `
+      <h2>1. Educational and Reflective Scope</h2>
+      <p>The Critical Thinker's Journey™ (CTJ), including all related modules, digital workbooks, assessments, and companion experiences, is published by Sonly Consulting strictly for educational, personal reflection, and strategic self-evaluation purposes. CTJ does not provide medical, therapeutic, psychiatric, legal, or financial advice. Completion of cognitive drills and self-assessments does not establish a clinical or licensed fiduciary relationship.</p>
+
+      <h2>2. Sovereign Intellectual Property</h2>
+      <p>All curriculum architecture, proprietary Mini-Frameworks, exercises, scenarios, and trade names (including The Critical Thinker's Journey™, Get Your Think On!™, and Sonly Consulting) are the exclusive intellectual property of Sonly Consulting. Single-user digital purchases grant a non-exclusive, non-transferable, revocable license for personal, single-seat use. Public redistribution, enterprise reproduction without an active enterprise license, and unauthorized digital mirroring are strictly prohibited.</p>
+
+      <h2>3. Digital Product Delivery & Verification</h2>
+      <p>Access to offline workbooks and digital buyer editions is fulfilled digitally upon verification of entitlement (via Stripe checkout session reference or approved platform key). Users are solely responsible for exporting and backing up their written responses.</p>
+    `
+  },
+  'privacy': {
+    title: "Privacy Notice · Thinking Records Restraint",
+    body: `
+      <h2>1. Sovereign Thinking Privacy</h2>
+      <p>At Sonly Consulting, we recognize that your written reflections, internal doubts, and strategic decisions require absolute privacy. CTJ is engineered with a strict <strong>Zero-Surveillance Architecture</strong>.</p>
+
+      <h2>2. Client-Side Local Persistence</h2>
+      <p>All responses typed into CTJ Builders, Decision Briefs, and the Strategic Clarity Assessment (SCA) are saved strictly to your local browser storage (<code>localStorage</code>) on your current device. No reflections are transmitted to external servers, cloud analytics engines, or large language models for scraping or training.</p>
+
+      <h2>3. Data Ownership and Export</h2>
+      <p>You retain 100% ownership of every word you write. You can export your responses at any time as JSON or printable text. Clearing your browser cache or switching devices will reset local entries unless an export is saved beforehand.</p>
+    `
+  },
+  'refund': {
+    title: "Digital Product & Refund Policy",
+    body: `
+      <h2>1. Digital Download Nature</h2>
+      <p>Due to the immediate digital delivery of CTJ interactive web apps, standalone offline bundles (Edition 1.1 ZIP), and printable fillable PDF workbooks, purchases are generally final once access keys or downloads are initiated.</p>
+
+      <h2>2. 14-Day Sovereign Satisfaction Guarantee</h2>
+      <p>We stand resolutely behind the transformative quality of our frameworks. If you complete Part 1 or Part 2 in good faith and find that the frameworks provided no measurable clarity or strategic insight, contact <code>support@sonlyconsulting.com</code> within 14 days of purchase with your Stripe receipt reference for a prompt refund or module exchange.</p>
+
+      <h2>3. Link Refresh & Access Recovery</h2>
+      <p>If your digital download link expires or you change hardware, use the CTJ Delivery verification portal with your original <code>cs_live_...</code> Stripe reference to instantly generate a fresh secure link.</p>
+    `
+  },
+  'accessibility': {
+    title: "Accessibility Statement",
+    body: `
+      <h2>1. Universal Intellectual Access</h2>
+      <p>Critical thinking belongs to everyone. The Critical Thinker's Journey™ is built to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA standards.</p>
+
+      <h2>2. Accessibility Features Built-In</h2>
+      <ul>
+        <li><strong>Keyboard Navigation:</strong> All tabs, builder prompts, modals, and export buttons are fully navigable via standard keyboard focus (Tab, Enter, Escape).</li>
+        <li><strong>High Contrast & Typographic Restraint:</strong> Color palettes meet or exceed 4.5:1 contrast ratios between slate backgrounds and gold/white typography.</li>
+        <li><strong>Semantic HTML Landmarks:</strong> Screen readers benefit from strict semantic structuring (header, main, nav, article, footer).</li>
+        <li><strong>Reduced Motion Support:</strong> CSS transitions respect the user's <code>prefers-reduced-motion</code> operating system settings.</li>
+      </ul>
+      <p>For accessibility inquiries or feedback, email <code>accessibility@sonlyconsulting.com</code>.</p>
+    `
+  },
+  'support': {
+    title: "Support & Purchase Recovery",
+    body: `
+      <h2>1. Customer Support Channel</h2>
+      <p>For questions regarding purchase verification, accessing workbooks, or enterprise licensing, our dedicated human support team is available at <strong>support@sonlyconsulting.com</strong>.</p>
+
+      <h2>2. Fast Self-Service Recovery</h2>
+      <p>To restore your digital access: locate your Stripe purchase confirmation email, copy your checkout session ID (starts with <code>cs_live_...</code>), and paste it into the Delivery Recovery portal on the Unified review site.</p>
+
+      <h2>3. Browser Migration Assistance</h2>
+      <p>Because your entries are stored securely on your current device, remember to click 'Export Response Record' before clearing browser cookies or transitioning to a new computer.</p>
+    `
+  },
+  'author-intro': {
+    title: "Author's Note & Executive Introduction",
+    body: `
+      <h2>Author's Note</h2>
+      <p>This is more than a journal. It is an invitation to awaken the thinker within you and discover the profound power of how you think. In a world spinning with constant change, algorithmic noise, and perpetual crisis, the ability to pause, breathe deeply, and approach decisions with crystalline clarity is life-changing magic.</p>
+      <p>The Critical Thinker's Journey™ is woven from the very fabric of real life: unexpected setbacks that steal your breath, sudden opportunities that accelerate your pulse, and hard decisions that test your core. Structure becomes your sanctuary because it gives sacred shape to your experiences. It helps you see intricate patterns instead of bewildering chaos, boundless possibilities instead of towering walls, and clear steps forward instead of paralyzing standstills.</p>
+      
+      <h2>About Sonly Consulting</h2>
+      <p>Sonly Consulting walks alongside you in that process through carefully engineered curriculum, strategic frameworks, and reflective tools. Mastery is intentional. When enterprise discipline meets deep intellectual clarity, technology stops being noise and becomes a multiplier.</p>
+      <p>This journey is not meant to be finished and kicked to the curb. It is meant to be lived with passion, revisited with wonder, and carried forward with purpose.</p>
+      <p style="margin-top: 16px;"><strong>Mindfully Crafted,</strong><br>Sonly Consulting</p>
+    `
+  }
+};
+
+function openDocumentModal(docKey) {
+  const doc = DOCUMENTS[docKey];
+  if (!doc) return;
+  document.getElementById('modalTitle').textContent = doc.title;
+  document.getElementById('modalBody').innerHTML = doc.body;
+  document.getElementById('documentModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDocumentModal() {
+  document.getElementById('documentModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeModalOnBackdrop(e) {
+  if (e.target.id === 'documentModal') closeDocumentModal();
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  initReturnNavigation();
+  renderBuildersForPart('part-1', 0);
+  renderBuildersForPart('part-2', 1);
+  renderBuildersForPart('part-3', 2);
+});
+</script>
+</body>
+</html>
