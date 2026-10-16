@@ -1,0 +1,42 @@
+{
+  "record_id": "TRIB-REC-20261016-AG-SACRED-STUDY-V5-DEPLOY-ALIGNMENT",
+  "date": "2026-10-16",
+  "actor": "Antigravity (AG)",
+  "principal": "DCS (Donald C. Seals Jr.)",
+  "directive": "Sacred Study v5 Deployment, Ambiance, Male/Female Voice Selection, Full Chapter Reader, and Vercel Routing Resolution",
+  "status": "RATIFIED_AND_DEPLOYED",
+  "github": {
+    "repository": "DCSE-Command-Post",
+    "branch": "feat/sc-components-20261012-01-contracts",
+    "pull_request": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/pull/192",
+    "pr_state": "MERGED",
+    "merge_commit": "374d68c"
+  },
+  "deliverables": {
+    "live_urls": [
+      "https://sc-escd.vercel.app/scripture",
+      "https://sc-escd.vercel.app/escd/app"
+    ],
+    "preview_artifacts": [
+      "sc_sacred_study_v5_preview.html",
+      "apps/escd/web/sc_sacred_study_v5_preview.html"
+    ],
+    "canonical_files": [
+      "apps/escd/web/scripture.html",
+      "apps/escd/web/index.html",
+      "scripture.html",
+      "vercel.json",
+      "apps/escd/vercel.json",
+      "apps/escd/runtime/escd-products-catalog.json",
+      "content/escd-products-catalog.json"
+    ]
+  },
+  "verifications": {
+    "full_chapter_display": "All 29 verses of 2 Samuel 7 and 24 verses of Psalm 139 pre-seeded and rendered without truncation",
+    "audio_ambiance": "432 Hz Scriptorium contemplative harmonic Web Audio oscillator active",
+    "voice_selection": "Female Voice and Male Voice selection active with browser synthesis matching",
+    "tts_chapter_reading": "Sequential verse-by-verse chapter reading with dynamic visual highlighting",
+    "routing_navigation": "Root / and /scripture route directly to scripture app without operator login screen",
+    "regression_tests": "11/11 tests passed in apps/escd/tests/test_mvp_contract.py"
+  }
+}

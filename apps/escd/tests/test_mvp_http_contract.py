@@ -27,13 +27,17 @@ def live_server():
         thread.join(timeout=5)
 
 
+from apps.escd.runtime.mvp_data import get_canonical_convergence_items
+
+
 def test_http_knowledge_contract():
+    expected_count = len(get_canonical_convergence_items().get("knowledge", []))
     with live_server() as base:
         with request.urlopen(base + "/api/mvp/knowledge", timeout=5) as resp:
             body = json.loads(resp.read().decode("utf-8"))
             assert resp.status == 200
             assert body["ok"] is True
-            assert len(body["knowledge"]) == 24
+            assert len(body["knowledge"]) == expected_count
 
 
 def test_http_malformed_json_returns_400():
