@@ -1,0 +1,1829 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ESCD - Sovereign Products & Interactive Canvas (v7.3 Operative)</title>
+<script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+<style>
+:root {
+  --bg: #0a192f;
+  --panel: #10233f;
+  --panel2: #0d1d35;
+  --line: #28486f;
+  --text: #f4efe5;
+  --muted: #9bb0ca;
+  --gold: #d4af37;
+  --gold-glow: rgba(212, 175, 55, 0.25);
+  --ok: #8fd3a7;
+  --bad: #ffb4a9;
+  --accent: #00875a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+}
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 210px 1fr;
+}
+.side {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+  padding: 18px 12px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: #071427;
+}
+.brand {
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: .08em;
+  margin: 3px 8px 18px;
+}
+.brand small {
+  display: block;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.nav { display: grid; gap: 5px; }
+.nav button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s ease;
+}
+.nav button.active, .nav button:hover {
+  background: var(--panel);
+  color: var(--text);
+}
+.nav button.active {
+  color: var(--gold);
+  border-left: 3px solid var(--gold);
+  background: rgba(212, 175, 55, 0.08);
+}
+.main { min-width: 0; }
+.top {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 25, 47, .96);
+  backdrop-filter: blur(8px);
+  z-index: 20;
+}
+.status { font-size: 11px; color: var(--muted); }
+.status.ok { color: var(--ok); }
+.content {
+  padding: 22px;
+  max-width: 1320px;
+  margin: auto;
+}
+.view { display: none; }
+.view.active { display: block; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.btn {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  border-radius: 7px;
+  padding: 8px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn.primary {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: #071427;
+}
+.btn.primary:hover {
+  background: #e5be42;
+  box-shadow: 0 0 15px var(--gold-glow);
+}
+.btn.emerald {
+  border-color: #00875a;
+  background: #00875a;
+  color: #ffffff;
+}
+.btn.emerald:hover {
+  background: #00a36d;
+}
+.mobile-nav { display: none; }
+
+/* Product Grid & Card Styling */
+.prod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+.prod-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+.prod-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+.prod-card.flagship {
+  border-top: 3px solid var(--gold);
+}
+.badge-gold {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.badge-emerald {
+  background: rgba(0, 135, 90, 0.2);
+  color: #8fd3a7;
+  border: 1px solid rgba(0, 135, 90, 0.4);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.filter-pill {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--muted);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.filter-pill.active, .filter-pill:hover {
+  background: var(--gold);
+  color: #071427;
+  border-color: var(--gold);
+  font-weight: 700;
+}
+
+/* Embedded Canvas Workspace */
+#productCanvasArea {
+  display: none;
+}
+.canvas-header {
+  background: #071427;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.canvas-tab-btn {
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.canvas-tab-btn.active {
+  background: var(--panel);
+  border-color: var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+}
+
+@media(max-width: 820px) {
+  .app { grid-template-columns: 1fr; }
+  .side { display: none; }
+  .mobile-nav {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #071427;
+    border-top: 1px solid var(--line);
+    z-index: 50;
+  }
+  .mobile-nav button {
+    border: 0; background: transparent;
+    color: var(--muted); padding: 10px 2px;
+    font-size: 10px;
+  }
+  .mobile-nav button.active { color: var(--gold); }
+  .main { padding-bottom: 54px; }
+  .prod-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sovereign Sidebar -->
+  <aside class="side">
+    <div class="brand">
+      ESCD
+      <small>Sovereign Control Dashboard</small>
+    </div>
+    <nav class="nav" id="nav">
+      <button class="active" onclick="switchMainTab('products')"><span>🏛️ Products</span><span class="badge-gold">8</span></button>
+      <button onclick="switchMainTab('chat')"><span>💬 Chat</span></button>
+      <button onclick="switchMainTab('tasks')"><span>✅ Tasks</span></button>
+      <button onclick="switchMainTab('ideas')"><span>💡 Ideas</span></button>
+      <button onclick="switchMainTab('knowledge')"><span>📚 Knowledge</span></button>
+      <button onclick="switchMainTab('assets')"><span>📦 Assets</span></button>
+      <button onclick="switchMainTab('ddna')"><span>🧬 DDNA</span></button>
+      <button onclick="switchMainTab('orchestrator')"><span>🤖 Orchestrator</span></button>
+    </nav>
+    <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:10px;color:var(--muted);line-height:1.6">
+      <div><strong>Authority:</strong> <span style="color:var(--gold)">DCS Sovereign</span></div>
+      <div><strong>Governance:</strong> <span>Master Profile v7.3</span></div>
+      <div><strong>Operative Mode:</strong> <span style="color:var(--ok)">Distributed Track</span></div>
+      <div><strong>Status:</strong> <span>Contract Verified</span></div>
+    </div>
+  </aside>
+
+  <!-- Main View Area -->
+  <section class="main">
+    <header class="top">
+      <div class="flex items-center gap-3">
+        <strong id="topPageTitle" style="font-size:15px;letter-spacing:0.02em">Products · Sovereign Ecosystem Catalog</strong>
+        <span id="canvasBreadcrumb" style="display:none;color:var(--gold);font-size:12px;font-weight:700"></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="status ok">● Node LAPTOP (Hub)</span>
+        <span class="status" style="color:var(--gold)">● Node DESKTOP (Compute Track)</span>
+        <button class="btn" onclick="alert('ESCD Sovereign Environment: Master Profile v7.3 Active. Zero database changes permitted.')" style="padding:4px 8px;font-size:11px">Gov v7.3 ▾</button>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ========================================================================= -->
+      <!-- TAB 1: PRODUCTS / SOVEREIGN SHOWROOM & INTERACTIVE CANVAS                  -->
+      <!-- ========================================================================= -->
+      <section id="productsView" class="view active">
+        
+        <!-- CATALOG VIEW -->
+        <div id="productCatalogArea">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+            <div>
+              <h1 style="font-size:24px;font-weight:800;margin:0 0 4px;color:var(--text)">Sovereign Products & Solutions Hub</h1>
+              <div style="color:var(--muted);font-size:13px">
+                Full operative portfolio across CTJ, TSL, MyMy, Scripture, and core ecosystem lines. Select any product to launch its live embedded canvas.
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge-gold">8 Inventoried Lines</span>
+              <span class="badge-emerald">v7.3 Operative</span>
+            </div>
+          </div>
+
+          <!-- Filter & Search Bar -->
+          <div class="card" style="padding:12px 16px;margin-bottom:16px">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex flex-wrap items-center gap-2" id="filterPills">
+                <button class="filter-pill active" onclick="filterCatalog('all', this)">All (8)</button>
+                <button class="filter-pill" onclick="filterCatalog('flagships', this)">Flagships (4)</button>
+                <button class="filter-pill" onclick="filterCatalog('wisdom_civic', this)">Wisdom & Civic (3)</button>
+                <button class="filter-pill" onclick="filterCatalog('sports_culture', this)">Sports & Culture (2)</button>
+                <button class="filter-pill" onclick="filterCatalog('media_studio', this)">Media & Studio (1)</button>
+                <button class="filter-pill" onclick="filterCatalog('enterprise', this)">Enterprise (2)</button>
+              </div>
+              <div style="min-width:240px;flex:1;max-width:320px">
+                <input id="prodSearchInput" oninput="searchCatalog(this.value)" placeholder="Search products, codes, tags..." style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:7px 12px;color:var(--text);font-size:12px">
+              </div>
+            </div>
+          </div>
+
+          <!-- Product Card Grid -->
+          <div class="prod-grid" id="productGridContainer">
+            <!-- Dynamic cards injected via JavaScript below -->
+          </div>
+        </div>
+
+        <!-- FULL EMBEDDED CANVAS WORKSPACE (ACTIVATED ON PRODUCT LAUNCH) -->
+        <div id="productCanvasArea">
+          <!-- Canvas Top Navigation Bar -->
+          <div class="canvas-header">
+            <div class="flex items-center gap-3">
+              <button class="btn primary" onclick="closeCanvasAndReturnToCatalog()">
+                ← Return to Catalog
+              </button>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 id="canvasProductTitle" style="font-size:18px;font-weight:800;margin:0;color:var(--gold)">Product Canvas</h2>
+                  <span id="canvasProductBadge" class="badge-gold">Interactive</span>
+                </div>
+                <div id="canvasProductMotto" style="font-size:11px;color:var(--muted)">Tagline</div>
+              </div>
+            </div>
+
+            <!-- Workspace Sub-tabs -->
+            <div class="flex items-center gap-2 flex-wrap">
+              <a id="canvasExternalLinkBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn" style="border-color:var(--gold);color:var(--gold);text-decoration:none;display:none">🌐 Live App ↗</a>
+              <button class="canvas-tab-btn active" id="canvasTabLiveApp" onclick="switchCanvasTab('live_app')">🖥️ Live App</button>
+              <button class="canvas-tab-btn" id="canvasTabWorkspace" onclick="switchCanvasTab('workspace')">⚡ Controls & Telemetry</button>
+              <button class="canvas-tab-btn" id="canvasTabFiles" onclick="switchCanvasTab('files')">📦 Workbooks & Files</button>
+              <button class="canvas-tab-btn" id="canvasTabDossier" onclick="switchCanvasTab('dossier')">📋 Specs & Dossier</button>
+              <button class="canvas-tab-btn" id="canvasTabGov" onclick="switchCanvasTab('gov')">🏛️ Governance</button>
+              <button class="btn" onclick="openProductPopout()" title="Open standalone window">⤢ Pop-out</button>
+            </div>
+          </div>
+
+          <!-- Sub-Tab 0: Embedded Live Interactive Application -->
+          <div id="canvasSubTabLiveApp">
+            <div class="card p-3 mb-3 flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="badge-emerald">● Live Embedded Runtime</span>
+                <span id="canvasLiveAppUrl" style="color:var(--ok);font-size:12px;font-family:monospace"></span>
+              </div>
+              <div class="flex items-center gap-2">
+                <select id="ctjEditionSelector" onchange="switchCtjEdition(this.value)" style="display:none;background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:4px;padding:4px 8px;font-size:11px">
+                  <option value="https://sc-ctj.vercel.app">CTJ Unified Home</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-1">Part 1: Clarity & Confidence</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-2">Part 2: Ideas & Moves</option>
+                  <option value="https://sc-ctj.vercel.app/#/part-3">Part 3: Meaning & Balance</option>
+                  <option value="https://sc-ctj.vercel.app/#/unified">Unified Path Engine</option>
+                  <option value="https://sc-ctj.vercel.app/#/sca">Strategic Clarity Assessment (SCA)</option>
+                </select>
+                <button class="btn" onclick="reloadLiveFrame()">↺ Reload</button>
+                <button class="btn" onclick="toggleLiveFrameFullscreen()">⤢ Fullscreen</button>
+                <a id="canvasLiveAppOpenTab" href="#" target="_blank" rel="noopener noreferrer" class="btn primary" style="text-decoration:none">🌐 Open in New Tab ↗</a>
+              </div>
+            </div>
+            <div id="liveFrameContainer" style="position:relative;background:#030712;border:1px solid var(--gold);border-radius:8px;overflow:hidden">
+              <iframe id="canvasLiveIframe" src="about:blank" style="width:100%;height:750px;border:none;display:block"></iframe>
+            </div>
+          </div>
+
+          <!-- Sub-Tab Content 1: Live Interactive Workspace Modules -->
+          <div id="canvasSubTabWorkspace" style="display:none">
+            
+            <!-- MODULE: CTJ (VOTER & CIVIC CLARITY MATRIX) -->
+            <div id="module-ctj" class="canvas-module" style="display:none">
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Left: 7-Step Clarity Protocol -->
+                <div class="card lg:col-span-1">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">7-Step Civic Clarity Matrix</strong>
+                    <span class="badge-gold">Step <span id="ctjStepNum">1</span> of 7</span>
+                  </div>
+                  <div class="space-y-2 mb-4">
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(1)">
+                      <strong>1. Issue Isolation</strong>
+                      <div class="text-[#9bb0ca]">Define exact claim stripped of emotional rhetoric.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(2)">
+                      <strong>2. Source Provenance</strong>
+                      <div class="text-[#9bb0ca]">Verify primary data origin and chain of custody.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(3)">
+                      <strong>3. Conflict Audit</strong>
+                      <div class="text-[#9bb0ca]">Disclose financial, donor, and institutional motives.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(4)">
+                      <strong>4. Fallacy Detection</strong>
+                      <div class="text-[#9bb0ca]">Audit ad-hominem, straw-man, and false dichotomies.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(5)">
+                      <strong>5. Empirical Cross-Check</strong>
+                      <div class="text-[#9bb0ca]">Benchmark historical precedent and reproducible metrics.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(6)">
+                      <strong>6. Second-Order Impact</strong>
+                      <div class="text-[#9bb0ca]">Model compounding consequences across 5-10 year horizons.</div>
+                    </button>
+                    <button class="w-full text-left p-2 rounded border border-[#28486f] bg-[#0d1d35] text-xs hover:border-[#d4af37]" onclick="setCtjStep(7)">
+                      <strong>7. Clarity Synthesis</strong>
+                      <div class="text-[#9bb0ca]">Synthesize decisive stance with uncertainty boundary.</div>
+                    </button>
+                  </div>
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:4px">CURRENT STEP FOCUS</div>
+                    <div id="ctjStepDetail" style="font-size:12px;color:var(--text)">
+                      Isolate the exact ballot initiative or candidate assertion. Remove all partisan framing and identify the underlying quantifiable outcome.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Center & Right: Candidate Evaluation & Civic Clarity Card -->
+                <div class="card lg:col-span-2">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">Interactive Candidate & Policy Evaluator</strong>
+                    <button class="btn emerald" onclick="generateCtjCard()">🖨️ Generate Civic Clarity Card</button>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Candidate / Ballot Initiative Name</label>
+                      <input id="ctjCandidateName" value="Proposition 104 - Municipal Infrastructure" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:var(--text);font-size:13px">
+                    </div>
+                    <div>
+                      <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Jurisdiction / Scope</label>
+                      <input id="ctjJurisdiction" value="Regional District 7" style="width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:var(--text);font-size:13px">
+                    </div>
+                  </div>
+
+                  <!-- 4 Score Sliders -->
+                  <div class="space-y-3 p-3 bg-[#071427] rounded border border-[#28486f] mb-4">
+                    <div class="flex justify-between text-xs">
+                      <span>Empirical Evidence Rigor:</span>
+                      <strong id="valRig" style="color:var(--gold)">85 / 100</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="85" class="w-full" oninput="$('valRig').textContent=this.value+' / 100'; recalculateCtjScore()">
+
+                    <div class="flex justify-between text-xs">
+                      <span>Freedom from Conflicted Donors:</span>
+                      <strong id="valConf" style="color:var(--gold)">70 / 100</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="70" class="w-full" oninput="$('valConf').textContent=this.value+' / 100'; recalculateCtjScore()">
+
+                    <div class="flex justify-between text-xs">
+                      <span>Logical Consistency & Historical Precedent:</span>
+                      <strong id="valLog" style="color:var(--gold)">90 / 100</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="90" class="w-full" oninput="$('valLog').textContent=this.value+' / 100'; recalculateCtjScore()">
+
+                    <div class="flex justify-between text-xs">
+                      <span>Transparency & Downside Risk Disclosure:</span>
+                      <strong id="valTran" style="color:var(--gold)">80 / 100</strong>
+                    </div>
+                    <input type="range" min="0" max="100" value="80" class="w-full" oninput="$('valTran').textContent=this.value+' / 100'; recalculateCtjScore()">
+                  </div>
+
+                  <!-- Summary Box & Printable Result -->
+                  <div id="ctjCardOutput" class="p-4 rounded-lg bg-[#0d1d35] border-2 border-[#d4af37]">
+                    <div class="flex justify-between items-start mb-2">
+                      <div>
+                        <div style="font-size:10px;color:var(--gold);font-weight:700">CTJ CIVIC CLARITY RATIFICATION</div>
+                        <h4 id="cardTitle" style="font-size:16px;font-weight:800;color:var(--text);margin:2px 0">Proposition 104 - Municipal Infrastructure</h4>
+                        <div style="font-size:11px;color:var(--muted)">Verified under CTJ Epistemic Standard · Non-Partisan Formulation</div>
+                      </div>
+                      <div class="text-right">
+                        <div style="font-size:24px;font-weight:900;color:var(--gold)" id="ctjFinalScore">81.3</div>
+                        <div class="text-[10px] text-[#8fd3a7] font-bold">TIER 1 · RATIFIED CLARITY</div>
+                      </div>
+                    </div>
+                    <div class="text-xs text-[#9bb0ca] border-t border-[#28486f] pt-2">
+                      Rationale: Core proposal exhibits high empirical grounding with verifiable public audits. Downside risk modeling accounts for interest rate shifts. Recommended action: Qualified Affirmative.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: TSL (TEDO'S SPORTS LOUNGE 5-TEAM TRACKER) -->
+            <div id="module-tsl" class="canvas-module" style="display:none">
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Left: 5-Team Multi-Sport Selection Slots -->
+                <div class="card lg:col-span-1">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">5 Favorite Teams Tracker</strong>
+                    <span class="badge-gold">Slots: 5 / 5</span>
+                  </div>
+                  <div class="space-y-2 mb-4" id="tslSlotsContainer">
+                    <!-- 5 Slots -->
+                    <div class="p-2.5 rounded bg-[#071427] border border-[#d4af37] flex items-center justify-between">
+                      <div>
+                        <div class="text-[10px] text-[#d4af37] font-bold">SLOT 1 · HIGH SCHOOL FOOTBALL</div>
+                        <div class="font-bold text-sm">Cass Tech Technicians</div>
+                      </div>
+                      <span class="badge-emerald">Live Q3</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between">
+                      <div>
+                        <div class="text-[10px] text-[#9bb0ca] font-bold">SLOT 2 · NFL</div>
+                        <div class="font-bold text-sm">Detroit Lions</div>
+                      </div>
+                      <span class="badge-gold">Sunday 1:00 PM</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between">
+                      <div>
+                        <div class="text-[10px] text-[#9bb0ca] font-bold">SLOT 3 · NBA</div>
+                        <div class="font-bold text-sm">Detroit Pistons</div>
+                      </div>
+                      <span class="badge-gold">Tonight 7:30 PM</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between">
+                      <div>
+                        <div class="text-[10px] text-[#9bb0ca] font-bold">SLOT 4 · NCAA BASKETBALL</div>
+                        <div class="font-bold text-sm">Michigan State Spartans</div>
+                      </div>
+                      <span class="badge-gold">Final: W 78-71</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between">
+                      <div>
+                        <div class="text-[10px] text-[#9bb0ca] font-bold">SLOT 5 · MLB</div>
+                        <div class="font-bold text-sm">Detroit Tigers</div>
+                      </div>
+                      <span class="badge-gold">Series Tied</span>
+                    </div>
+                  </div>
+                  <div class="p-3 rounded bg-[#0d1d35] border border-[#28486f]">
+                    <div class="text-xs text-[#9bb0ca]">
+                      Track high school athletics alongside national leagues in your sovereign radius. Coin reward triggers on verified local score receipts.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Center & Right: Live Score Simulator & Activity Stream -->
+                <div class="card lg:col-span-2">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">Live Radius Athletic Stream & Scoreboard</strong>
+                    <div class="flex items-center gap-2">
+                      <a href="https://tedos-sports-lounge.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" style="border-color:var(--gold);color:var(--gold);text-decoration:none">🌐 Live TSL Web App ↗</a>
+                      <span class="badge-emerald">● Live Sync</span>
+                      <button class="btn" onclick="simulateTslScoreRefresh()">↺ Refresh Scores</button>
+                    </div>
+                  </div>
+                  
+                  <!-- Main Featured Game Card -->
+                  <div class="p-4 rounded-lg bg-[#071427] border border-[#d4af37] mb-4">
+                    <div class="flex justify-between items-center text-xs text-[#9bb0ca] mb-2">
+                      <span>DETROIT PSL HIGH SCHOOL CHAMPIONSHIP · REGIONAL RADIUS</span>
+                      <span class="text-[#8fd3a7] font-bold">4th Quarter · 02:44</span>
+                    </div>
+                    <div class="flex justify-around items-center py-3 border-y border-[#28486f]">
+                      <div class="text-center">
+                        <div class="font-black text-xl">Cass Tech</div>
+                        <div class="text-3xl font-extrabold text-[#d4af37]" id="cassScore">28</div>
+                        <div class="text-[11px] text-[#9bb0ca]">Rushing: 184 yds</div>
+                      </div>
+                      <div class="text-sm font-bold text-[#9bb0ca]">VS</div>
+                      <div class="text-center">
+                        <div class="font-black text-xl">King Crusaders</div>
+                        <div class="text-3xl font-extrabold text-[#d4af37]" id="kingScore">24</div>
+                        <div class="text-[11px] text-[#9bb0ca]">Passing: 210 yds</div>
+                      </div>
+                    </div>
+                    <div class="mt-3 flex justify-between items-center text-xs">
+                      <span class="text-[#9bb0ca]">Ball on Martin Luther King 34 · 3rd & 4</span>
+                      <span class="text-[#d4af37] font-semibold">+150 TSL Lounge Coins Staked</span>
+                    </div>
+                  </div>
+
+                  <!-- Activity Feed -->
+                  <div class="space-y-2">
+                    <div class="text-xs font-bold text-[#d4af37] uppercase tracking-wider">Radius Community Activity Feed</div>
+                    <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-xs flex justify-between">
+                      <span>🏀 <strong>East English Village vs Mumford</strong> tipped off (Q1 Mumford leads 14-12)</span>
+                      <span class="text-[#9bb0ca]">4m ago</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-xs flex justify-between">
+                      <span>🏈 <strong>Lions Injury Report:</strong> Offensive line confirmed healthy for Sunday matchup.</span>
+                      <span class="text-[#9bb0ca]">18m ago</span>
+                    </div>
+                    <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-xs flex justify-between">
+                      <span>🪙 <strong>Tedo's Coin Economy:</strong> 42 verified members locked picks for Friday Night Lights.</span>
+                      <span class="text-[#9bb0ca]">35m ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: SCRIPTURE (INNER & OUTER WISDOM COMPARATIVE STUDIO) -->
+            <div id="module-scripture" class="canvas-module" style="display:none">
+              <div class="card">
+                <div class="flex flex-wrap items-center justify-between pb-3 mb-4 border-b border-[#28486f] gap-3">
+                  <div>
+                    <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0">Smoove Spots Inner & Outer Wisdom Studio</h3>
+                    <div style="font-size:12px;color:var(--muted)">6-Layer Comparative Exegesis, Original Languages & Esoteric Traditions</div>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <select id="scripturePassageSelect" onchange="loadScripturePassage(this.value)" style="background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px">
+                      <option value="proverbs3">Proverbs 3:5-6 (Trust & Counsel)</option>
+                      <option value="romans12">Romans 12:2 (Metamorphosis of the Mind)</option>
+                      <option value="genesis1">Genesis 1:1-3 (Cosmic Genesis & Order)</option>
+                      <option value="ephesians3">Ephesians 3:16-19 (Inner Strength & Fullness)</option>
+                      <option value="john1">John 1:1-5 (The Logos & Illumination)</option>
+                    </select>
+                    <button class="btn" id="audioToggleBtn" onclick="toggleScriptureAudio()">🔊 Play Contemplative Voice</button>
+                    <button class="btn" onclick="toggleTone432()">🎵 432 Hz Scriptorium Tone</button>
+                  </div>
+                </div>
+
+                <!-- 6-Layer Multi-Lens Columns -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <!-- Layer 1: The Canonical Word & Original Roots -->
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] font-bold text-[#d4af37] mb-2 uppercase tracking-wide">Layer 1 & 2 · Canonical Text & Language</div>
+                    <div class="text-sm font-serif italic text-[#f4efe5] mb-3" id="scriptureText">
+                      "Trust in the Lord with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will direct your paths."
+                    </div>
+                    <div class="border-t border-[#28486f] pt-2 text-xs text-[#9bb0ca] space-y-1" id="scriptureRoots">
+                      <div><strong>Hebrew:</strong> בְּטַח (<em>Bātach</em> - to feel secure, bold trust without defense).</div>
+                      <div><strong>Septuagint (LXX):</strong> ἴσθι πεποιθώς (<em>Pes-peithōs</em> - confident persuasion).</div>
+                      <div><strong>Vulgate:</strong> <em>Habe fiduciam in Domino toto corde tuo.</em></div>
+                    </div>
+                  </div>
+
+                  <!-- Layer 3 & 4: Symbolic & Esoteric Tradition -->
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] font-bold text-[#8fd3a7] mb-2 uppercase tracking-wide">Layer 4 · Hidden & Symbolic Traditions</div>
+                    <div class="text-xs text-[#f4efe5] leading-relaxed mb-3" id="scriptureEsoteric">
+                      Jakob Böhme (<em>De Signatura Rerum</em>): Trust is not intellectual concession but the re-alignment of the inner will to the uncreated center. "Understanding" when isolated becomes the fractured mirror of self-interest; when submitted to the center, it becomes reflective wisdom.
+                    </div>
+                    <div class="border-t border-[#28486f] pt-2 text-xs text-[#9bb0ca]">
+                      <strong>Epistemic Status:</strong> Categorized as Allegorical / Esoteric Hermeneutic. Cleanly separated from grammatical grammar.
+                    </div>
+                  </div>
+
+                  <!-- Layer 6: CTJ Living Reflection -->
+                  <div class="p-4 rounded bg-[#071427] border border-[#d4af37]">
+                    <div class="text-[11px] font-bold text-[#d4af37] mb-2 uppercase tracking-wide">Layer 6 · CTJ Reflective Inquiry</div>
+                    <div class="text-xs text-[#f4efe5] leading-relaxed mb-3" id="scriptureCtj">
+                      1. <strong>Assumption Audit:</strong> What assumptions do I treat as "self-evident understanding" without empirical verification?<br>
+                      2. <strong>Ego Decoupling:</strong> Am I clinging to a decision pathway out of pride or evidence-based stewardship?<br>
+                      3. <strong>Clarity Horizon:</strong> Does this action serve generational integrity?
+                    </div>
+                    <div class="border-t border-[#28486f] pt-2 text-xs text-[#8fd3a7] font-semibold">
+                      Operative Inquiry: Verified for daily meditation and executive decision review.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: MYMY (SC-MYMY MEDIA STUDIO & PERSONAL OS) -->
+            <div id="module-mymy" class="canvas-module" style="display:none">
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Left: Motion Profile Presets -->
+                <div class="card lg:col-span-1">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">Video Motion Profiles</strong>
+                    <span class="badge-gold">Quinn / Gemini Pilot</span>
+                  </div>
+                  <div class="space-y-2 mb-4">
+                    <button class="w-full text-left p-2.5 rounded border border-[#d4af37] bg-[#071427] text-xs" onclick="selectMyMyPreset('somya')">
+                      <div class="font-bold text-[#d4af37]">Somya Defensive Posture v2</div>
+                      <div class="text-[#9bb0ca] text-[11px]">Staged motion timeline · Frame stabilization 98.4%</div>
+                    </button>
+                    <button class="w-full text-left p-2.5 rounded border border-[#28486f] bg-[#071427] text-xs hover:border-[#d4af37]" onclick="selectMyMyPreset('flag')">
+                      <div class="font-bold text-[#text]">MyMy Flag Finale 2026</div>
+                      <div class="text-[#9bb0ca] text-[11px]">Layered composition · High-contrast typography</div>
+                    </button>
+                    <button class="w-full text-left p-2.5 rounded border border-[#28486f] bg-[#071427] text-xs hover:border-[#d4af37]" onclick="selectMyMyPreset('team')">
+                      <div class="font-bold text-[#text]">CHS Team Dynamic Sequence</div>
+                      <div class="text-[#9bb0ca] text-[11px]">Multi-subject tracking · High-school athletic velocity</div>
+                    </button>
+                  </div>
+                  <div class="p-3 rounded bg-[#0d1d35] border border-[#28486f]">
+                    <div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:3px">VISION PIPELINE STATUS</div>
+                    <div style="font-size:12px;color:var(--text)">Model routing: Gemini Vision 3.8 + Quinn Multi-Frame motion tensor encoder. Zero unreceipted media leakage.</div>
+                  </div>
+                </div>
+
+                <!-- Center & Right: Motion Analysis & Digital Collectibles -->
+                <div class="card lg:col-span-2">
+                  <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">Motion Telemetry & Creative Studio</strong>
+                    <button class="btn primary" onclick="alert('Quinn/Gemini video motion render queued. Output logged to ESCD media assets.')">⚡ Execute Motion Audit</button>
+                  </div>
+                  
+                  <!-- Telemetry Metrics -->
+                  <div class="grid grid-cols-3 gap-3 mb-4">
+                    <div class="p-3 rounded bg-[#071427] border border-[#28486f] text-center">
+                      <div class="text-[10px] text-[#9bb0ca]">Posture Stability</div>
+                      <div class="text-xl font-bold text-[#8fd3a7]">99.2%</div>
+                    </div>
+                    <div class="p-3 rounded bg-[#071427] border border-[#28486f] text-center">
+                      <div class="text-[10px] text-[#9bb0ca]">Angular Velocity</div>
+                      <div class="text-xl font-bold text-[#d4af37]">42.8 rad/s</div>
+                    </div>
+                    <div class="p-3 rounded bg-[#071427] border border-[#28486f] text-center">
+                      <div class="text-[10px] text-[#9bb0ca]">Digital Provenance</div>
+                      <div class="text-xl font-bold text-[#8fd3a7]">Verified</div>
+                    </div>
+                  </div>
+
+                  <!-- Digital Collectibles Showcase -->
+                  <div class="p-4 rounded-lg bg-[#071427] border border-[#28486f]">
+                    <div class="text-xs font-bold text-[#d4af37] mb-2 uppercase">MyMy Sovereign NFT & Media Showcase</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-center">
+                        <div class="h-24 bg-[#0a192f] rounded mb-2 flex items-center justify-center text-xs text-[#d4af37] border border-[#28486f]">
+                          [MyMy NFT #0]
+                        </div>
+                        <div class="font-bold text-xs">Genesis Token</div>
+                        <div class="text-[10px] text-[#9bb0ca]">SHA-256 Validated</div>
+                      </div>
+                      <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-center">
+                        <div class="h-24 bg-[#0a192f] rounded mb-2 flex items-center justify-center text-xs text-[#d4af37] border border-[#28486f]">
+                          [MyMy NFT #1]
+                        </div>
+                        <div class="font-bold text-xs">Flag Finale Edition</div>
+                        <div class="text-[10px] text-[#9bb0ca]">Staged 2026</div>
+                      </div>
+                      <div class="p-2.5 rounded bg-[#0d1d35] border border-[#28486f] text-center">
+                        <div class="h-24 bg-[#0a192f] rounded mb-2 flex items-center justify-center text-xs text-[#8fd3a7] border border-[#28486f]">
+                          [Audio Track]
+                        </div>
+                        <div class="font-bold text-xs">Capture 03:40</div>
+                        <div class="text-[10px] text-[#9bb0ca]">WAV Master</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: SC ENTERPRISE (SYSTEM PROOF TERMINAL #2) -->
+            <div id="module-sc_enterprise" class="canvas-module" style="display:none">
+              <div class="card">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#28486f]">
+                  <div>
+                    <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0">Sonly Consulting · System Proof Terminal #2</h3>
+                    <div style="font-size:12px;color:var(--muted)">Active PostgreSQL Migration & Governed Multi-Agent Execution Pipeline</div>
+                  </div>
+                  <span class="badge-emerald">Evidence Firewall Active</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] text-[#9bb0ca]">Audited Snapshot Tables</div>
+                    <div class="text-2xl font-black text-[#d4af37]">5 / 5 Verified</div>
+                    <div class="text-[10px] text-[#8fd3a7] mt-1">Zero schema drift detected</div>
+                  </div>
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] text-[#9bb0ca]">PostgreSQL Records Migrated</div>
+                    <div class="text-2xl font-black text-[#f4efe5]">28,450 Rows</div>
+                    <div class="text-[10px] text-[#8fd3a7] mt-1">100% Checksum validated</div>
+                  </div>
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] text-[#9bb0ca]">AI Pipeline Context</div>
+                    <div class="text-2xl font-black text-[#8fd3a7]">v7.3 Operative</div>
+                    <div class="text-[10px] text-[#9bb0ca] mt-1">Forward / Backward Chains Active</div>
+                  </div>
+                </div>
+                <div class="p-4 rounded bg-[#071427] border border-[#28486f] font-mono text-xs text-[#9bb0ca] space-y-1">
+                  <div>[2026-10-12 11:30:00] PROOF_TERMINAL_2: Initializing PostgreSQL snapshot pipeline...</div>
+                  <div>[2026-10-12 11:30:15] CHECKPOINT_01: Audited legacy schema tables [escd_tasks, escd_ideas, escd_assets]</div>
+                  <div>[2026-10-12 11:30:45] FIREWALL_OK: PS isolation policy enforced (0 PS litigation rows merged)</div>
+                  <div>[2026-10-12 11:31:00] CONVERGENCE_RATIFIED: CANON-164 and CANON-165 verified into master registry.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: SMOOVE SPOTS (DISCOVERY ENGINE) -->
+            <div id="module-smoove_spots" class="canvas-module" style="display:none">
+              <div class="card">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#28486f]">
+                  <div>
+                    <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0">Smoove Spots · Regional Discovery Engine</h3>
+                    <div style="font-size:12px;color:var(--muted)">Curated Urban Venues, Cultural Hubs & Neighborhood Vibe Index</div>
+                  </div>
+                  <span class="badge-gold">Verified Radius</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="font-bold text-sm text-[#d4af37]">Detroit Sound Lounge</div>
+                    <div class="text-xs text-[#9bb0ca] mt-1">Culinary & Acoustic Jazz · Midtown District</div>
+                    <div class="mt-3 flex justify-between items-center text-xs">
+                      <span class="text-[#8fd3a7] font-bold">Vibe Index: 96 / 100</span>
+                      <span class="badge-emerald">Verified Spot</span>
+                    </div>
+                  </div>
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="font-bold text-sm text-[#d4af37]">Avenue Cultural Bookstore</div>
+                    <div class="text-xs text-[#9bb0ca] mt-1">Independent Press & Community Archive · Avenue of Fashion</div>
+                    <div class="mt-3 flex justify-between items-center text-xs">
+                      <span class="text-[#8fd3a7] font-bold">Vibe Index: 94 / 100</span>
+                      <span class="badge-emerald">Verified Spot</span>
+                    </div>
+                  </div>
+                  <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="font-bold text-sm text-[#d4af37]">Riverfront Athletic Pavilion</div>
+                    <div class="text-xs text-[#9bb0ca] mt-1">Outdoor Courts & Community Gathering · Riverwalk</div>
+                    <div class="mt-3 flex justify-between items-center text-xs">
+                      <span class="text-[#8fd3a7] font-bold">Vibe Index: 91 / 100</span>
+                      <span class="badge-emerald">Verified Spot</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: MENTAL INGENUITY (COGNITIVE ARCHITECTURE) -->
+            <div id="module-mental_ingenuity" class="canvas-module" style="display:none">
+              <div class="card">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#28486f]">
+                  <div>
+                    <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0">Mental Ingenuity · Cognitive Architecture Matrix</h3>
+                    <div style="font-size:12px;color:var(--muted)">Human Cognitive Governance, Board Alignment & Decision Blueprints</div>
+                  </div>
+                  <span class="badge-gold">Structure Precedes Scale</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">First-Principles Problem Decomposition</strong>
+                    <div class="text-xs text-[#9bb0ca] mt-2 mb-3">
+                      Deconstruct complex dilemmas into irreducible physical and logical truths before building strategy.
+                    </div>
+                    <textarea class="w-full p-2 bg-[#0d1d35] border border-[#28486f] rounded text-xs text-[#f4efe5]" rows="3" placeholder="Enter executive strategic dilemma to deconstruct..."></textarea>
+                    <button class="btn primary mt-2" onclick="alert('Dilemma mapped into 3 irreducible first principles.')">Audit Assumptions</button>
+                  </div>
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <strong style="color:var(--gold);font-size:13px">Inversion & Antifragility Engine</strong>
+                    <div class="text-xs text-[#9bb0ca] mt-2 mb-3">
+                      Define the exact conditions that produce failure and systematically engineer barriers against them.
+                    </div>
+                    <div class="space-y-2 text-xs text-[#9bb0ca]">
+                      <div class="p-2 rounded bg-[#0d1d35]">✓ Inversion Barrier 1: Financial runway decoupled from single supplier</div>
+                      <div class="p-2 rounded bg-[#0d1d35]">✓ Inversion Barrier 2: Governance firewall prevents unauthorized schema drift</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODULE: SJL-B4LIFE (STEWARDSHIP BLUEPRINT) -->
+            <div id="module-sjl_b4life" class="canvas-module" style="display:none">
+              <div class="card">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#28486f]">
+                  <div>
+                    <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0">SJL Baller4Life™ Young Adult Transition Platform</h3>
+                    <div style="font-size:12px;color:var(--muted)">Driver Responsibility, Ephesians 3 Character Pillars & Generational Stewardship</div>
+                  </div>
+                  <span class="badge-gold">WIN WIN WIN™</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] font-bold text-[#d4af37] mb-2 uppercase">Driver Independence Protocol</div>
+                    <div class="text-xs text-[#9bb0ca] space-y-2">
+                      <label class="flex items-center gap-2"><input type="checkbox" checked> Daily vehicle inspection checklist</label>
+                      <label class="flex items-center gap-2"><input type="checkbox" checked> Insurance & registration verification</label>
+                      <label class="flex items-center gap-2"><input type="checkbox"> Speed & defensive posture discipline</label>
+                      <label class="flex items-center gap-2"><input type="checkbox"> Emergency preparedness kit certified</label>
+                    </div>
+                  </div>
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] font-bold text-[#8fd3a7] mb-2 uppercase">Ephesians 3 Character Pillars</div>
+                    <div class="text-xs text-[#9bb0ca] space-y-2">
+                      <div>1. <strong>Inner Strength:</strong> Emotional regulation under peer pressure.</div>
+                      <div>2. <strong>Rooted Integrity:</strong> Principles that do not bend for convenience.</div>
+                      <div>3. <strong>Full Potential:</strong> Stewardship of physical and athletic gifts.</div>
+                    </div>
+                  </div>
+                  <div class="p-4 rounded bg-[#071427] border border-[#28486f]">
+                    <div class="text-[11px] font-bold text-[#d4af37] mb-2 uppercase">Generational Foundation</div>
+                    <div class="text-xs text-[#9bb0ca] space-y-2">
+                      <div>• Financial literacy and credit foundation</div>
+                      <div>• Athletic leadership and community mentorship</div>
+                      <div>• Estate stewardship and family continuity</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Sub-Tab Content: Workbooks, Deliverables & Local Files -->
+          <div id="canvasSubTabFiles" style="display:none">
+            <div class="card">
+              <div class="flex items-center justify-between pb-2 mb-3 border-b border-[#28486f]">
+                <div>
+                  <strong style="color:var(--gold);font-size:15px" id="filesTabTitle">Product Deliverables, Workbooks & Archives</strong>
+                  <div class="text-[#9bb0ca] text-xs" id="filesTabMeta">Authoritative assets on Primary (LAPTOP-74UF76GB) & Remote (DESKTOP-PG1JATE) Nodes</div>
+                </div>
+                <span class="badge-emerald" id="filesCountBadge">0 Files Available</span>
+              </div>
+              <div id="filesListContainer" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab Content 2: Technical Specifications & Dossier -->
+          <div id="canvasSubTabDossier" style="display:none">
+            <div class="card">
+              <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0 0 10px" id="dossierTitle">Product Dossier & Capabilities</h3>
+              <div id="dossierBody" style="font-size:13px;color:var(--text);line-height:1.6">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-Tab Content 3: Governance & Provenance -->
+          <div id="canvasSubTabGov" style="display:none">
+            <div class="card">
+              <h3 style="font-size:16px;font-weight:800;color:var(--gold);margin:0 0 10px">Master Profile v7.3 Governance Alignment</h3>
+              <div style="font-size:13px;color:var(--muted);line-height:1.6" class="space-y-3">
+                <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                  <strong style="color:var(--gold)">Authority Mandate:</strong>
+                  <div>Direct DCS Executive Directive (2026-10-12). Governs the deployment of the complete sovereign product ecosystem into ESCD.</div>
+                </div>
+                <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                  <strong style="color:var(--gold)">D08 Public Voice Posture:</strong>
+                  <div>Third-person solo-brand posture. 0 first-person pronouns ("I", "we", "our", "us") in customer-facing copy. 0 em-dashes. Internal DCSE terms remain isolated from client interfaces.</div>
+                </div>
+                <div class="p-3 rounded bg-[#071427] border border-[#28486f]">
+                  <strong style="color:var(--gold)">Distributed Node Architecture (Rule 5):</strong>
+                  <div>Node LAPTOP-74UF76GB serves as Sovereign Controller & Interactive Preview Hub. Node DESKTOP-PG1JATE operates the AI Orchestration & Automated Test track.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Other tabs placeholder -->
+      <section id="chatView" class="view"><h1>Chat</h1><div class="card"><p>ESCD Chat Interface</p></div></section>
+      <section id="tasksView" class="view"><h1>Tasks</h1><div class="card"><p>ESCD Tasks Interface</p></div></section>
+      <section id="ideasView" class="view"><h1>Ideas</h1><div class="card"><p>ESCD Ideas Interface</p></div></section>
+      <section id="knowledgeView" class="view"><h1>Knowledge</h1><div class="card"><p>ESCD Knowledge Interface</p></div></section>
+      <section id="assetsView" class="view"><h1>Assets</h1><div class="card"><p>ESCD Assets Interface</p></div></section>
+      <section id="ddnaView" class="view"><h1>DDNA</h1><div class="card"><p>ESCD DDNA Interface</p></div></section>
+      <section id="orchestratorView" class="view"><h1>Orchestrator</h1><div class="card"><p>ESCD Multi-Agent Orchestrator Interface</p></div></section>
+
+    </main>
+  </section>
+</div>
+
+<!-- Mobile Navigation Bar -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="active" onclick="switchMainTab('products')">Prods</button>
+  <button onclick="switchMainTab('chat')">Chat</button>
+  <button onclick="switchMainTab('tasks')">Tasks</button>
+  <button onclick="switchMainTab('ideas')">Ideas</button>
+  <button onclick="switchMainTab('knowledge')">Know</button>
+  <button onclick="switchMainTab('assets')">Assets</button>
+  <button onclick="switchMainTab('ddna')">DDNA</button>
+  <button onclick="switchMainTab('orchestrator')">Orch</button>
+</nav>
+
+<script>
+'use strict';
+
+const $ = id => document.getElementById(id);
+
+// 8 Canonical Products Dataset
+const PRODUCTS = [
+  {
+    "id": "ctj",
+    "code": "CTJ",
+    "name": "The Critical Thinker's Journey",
+    "parent_brand": "Sonly Consulting",
+    "motto": "STRUCTURED REASONING ENGINE",
+    "tagline": "Clarity Before Decision",
+    "category": "wisdom_civic",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.4.0",
+    "hero": "Structured Decision Engine & Civic Clarity Matrix",
+    "description": "Critical Thinker's Journey is a structured reasoning framework for executives, analysts, and citizens who require verified cognitive workflows. The system replaces unexamined assumptions with an auditable 4-Tier Reasoning Matrix, 6-Chamber Ascent Engine, and the 7-Step Voter & Civic Clarity Evaluation Engine.",
+    "capabilities": [
+      "4-Tier Reasoning Matrix",
+      "6-Chamber Ascent Engine",
+      "7-Step Civic Clarity Evaluation",
+      "Candidate Epistemic Scoring",
+      "Printable Civic Clarity Card"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "ctj_voter_matrix",
+      "external_preview": "sc_homepage_preview.html#view-track3",
+      "dossier_available": true,
+      "live_url": "https://sc-ctj.vercel.app",
+      "local_source": "c:/DS All Things/SC-CTJ",
+      "deliverables": [
+        {
+          "name": "CTJ Collection Complete Bundle",
+          "file": "CTJ_Collection_v1.1.zip",
+          "size": "4.93 MB",
+          "type": "zip",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1.zip"
+        },
+        {
+          "name": "CTJ Part 1 Workbook",
+          "file": "CTJ_Part_1_Workbook.pdf",
+          "size": "3.12 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_1_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Part 2 Workbook",
+          "file": "CTJ_Part_2_Workbook.pdf",
+          "size": "3.12 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_2_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Part 3 Workbook",
+          "file": "CTJ_Part_3_Workbook.pdf",
+          "size": "3.11 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Part_3_Workbook.pdf"
+        },
+        {
+          "name": "CTJ Unified Path Workbook",
+          "file": "CTJ_Unified_Path_Workbook.pdf",
+          "size": "4.06 MB",
+          "type": "pdf",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/CTJ_Unified_Path_Workbook.pdf"
+        },
+        {
+          "name": "The Unified Path Offline Runner",
+          "file": "CTJ_Unified_Path.html",
+          "size": "5.41 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Unified_Path.html"
+        },
+        {
+          "name": "Part 1 Offline Runner",
+          "file": "CTJ_Part_1.html",
+          "size": "4.09 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Part_1.html"
+        },
+        {
+          "name": "4-in-1 Offline App (Start Here)",
+          "file": "START_HERE.html",
+          "size": "5.36 MB",
+          "type": "html",
+          "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/START_HERE.html"
+        }
+      ]
+    },
+    "tags": [
+      "Reasoning",
+      "Civic Clarity",
+      "Voter Module",
+      "Cognitive Audit"
+    ]
+  },
+  {
+    "id": "tsl",
+    "code": "TSL",
+    "name": "Tedo's Sports Lounge",
+    "parent_brand": "Smoove Spots",
+    "motto": "REGIONAL ATHLETICS RADIUS",
+    "tagline": "The Sovereign Sports Intelligence & Fan Hub",
+    "category": "sports_culture",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.2.0",
+    "hero": "Local Athletic Radius & 5-Team Activity Tracker",
+    "description": "Tedo's Sports Lounge tracks the regional athletic pulse that national platforms overlook. Covering high school athletics, collegiate programs, and professional leagues, TSL delivers multi-sport 5-team selection, real-time activity tracking, pick analytics, and community lounge engagement.",
+    "capabilities": [
+      "Multi-Sport 5-Team Tracker (NFL, NBA, MLB, NHL, NCAA, HS)",
+      "High School Athletic Roster Boards",
+      "Live Score & Schedule Feed",
+      "Pick Submission & Coin Economy",
+      "Regional Sports Community Lounge"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "tsl_team_tracker",
+      "external_preview": "sc_homepage_preview.html#view-track2",
+      "dossier_available": true,
+      "live_url": "https://tedos-sports-lounge.vercel.app/",
+      "local_source": "c:/DS All Things/SC-TedoSportsLounge",
+      "deliverables": [
+        {
+          "name": "TSL Production Readiness Plan",
+          "file": "TSL_PRODUCTION_READINESS_PLAN.md",
+          "type": "doc",
+          "path": "c:/DS All Things/SC-TedoSportsLounge/TSL_PRODUCTION_READINESS_PLAN.md"
+        },
+        {
+          "name": "TSL Closeout Receipt",
+          "file": "TSL_CLOSEOUT_RECEIPT.md",
+          "type": "doc",
+          "path": "c:/DS All Things/SC-TedoSportsLounge/TSL_CLOSEOUT_RECEIPT.md"
+        }
+      ]
+    },
+    "tags": [
+      "Sports",
+      "High School Athletics",
+      "5-Team Tracker",
+      "Fan Lounge"
+    ]
+  },
+  {
+    "id": "mymy",
+    "code": "MyMy",
+    "name": "SC-MyMy Flagship Media & Personal OS",
+    "parent_brand": "Sonly Consulting",
+    "motto": "HIGH-DEFINITION MOTION & SOVEREIGN IDENTITY",
+    "tagline": "Creative Motion Capture & Media Pipeline",
+    "category": "media_studio",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v2.0.0",
+    "hero": "Video Motion Context Profiler & Sovereign Studio",
+    "description": "SC-MyMy unifies sovereign media creation, high-definition motion profiling, and personal operating system capabilities. Features Quinn and Gemini vision analysis pipelines, digital collectible galleries, motion posture presets, and creative asset staging.",
+    "capabilities": [
+      "Video Motion Context Profiler",
+      "Somya Defensive Posture Analysis",
+      "Digital Collectibles & NFT Gallery",
+      "Motion Capture Timeline Studio",
+      "Prompt & Script Generator"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "mymy_media_studio",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime",
+      "deliverables": [
+        {
+          "name": "Quinn Motion Pipeline Spec",
+          "file": "quinn_motion_spec.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/quinn_motion_spec.json"
+        },
+        {
+          "name": "Somya Posture Registry",
+          "file": "somya_posture_v2.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/somya_posture_v2.json"
+        }
+      ]
+    },
+    "tags": [
+      "Media",
+      "Motion Analysis",
+      "NFT Gallery",
+      "Personal OS"
+    ]
+  },
+  {
+    "id": "scripture",
+    "code": "SS-WISDOM",
+    "name": "Inner & Outer Wisdom",
+    "parent_brand": "Smoove Spots",
+    "motto": "SACRED TRUTH & COMPARATIVE EXEGESIS",
+    "tagline": "Comparative Scripture & Contemplative Studio",
+    "category": "wisdom_civic",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Interactive Canvas Ready",
+    "version": "v1.1.0",
+    "hero": "6-Layer Exegesis & Original Language Studio",
+    "description": "Smoove Spots Inner & Outer Wisdom delivers comparative scripture analysis across Greek Koine, Hebrew Ivrit, and Latin Vulgate traditions. Incorporates contemplative audio with 432 Hz harmonic tone synthesis, multi-lens hermeneutics, and CTJ reflective inquiries.",
+    "capabilities": [
+      "6-Layer Multi-Lens Exegesis",
+      "Original Languages Studio (Greek, Hebrew, Latin)",
+      "Contemplative Audio with 432 Hz Synthesis",
+      "Epistemic Evidence & Dogma Register",
+      "Dual Theme Engine (Sanctum Dark & Ancient Parchment)"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "scripture_selector",
+      "external_preview": "DCSE SS Scripture Selector vs1.html",
+      "dossier_available": true,
+      "live_url": "https://sc-escd.vercel.app",
+      "preview_url": "apps/escd/web/scripture.html",
+      "local_source": "c:/DS All Things/ss-inner-outer-wisdom",
+      "deliverables": [
+        {
+          "name": "Inner & Outer Wisdom Standalone App",
+          "file": "index.html",
+          "size": "66.2 KB",
+          "type": "html",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/index.html"
+        },
+        {
+          "name": "DCSE SS Scripture Selector vs1",
+          "file": "DCSE SS Scripture Selector vs1.html",
+          "size": "66.2 KB",
+          "type": "html",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/DCSE SS Scripture Selector vs1.html"
+        },
+        {
+          "name": "Asset Record SS-WISDOM-001",
+          "file": "SS-WISDOM-001_ASSET_RECORD.json",
+          "type": "json",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/SS-WISDOM-001_ASSET_RECORD.json"
+        }
+      ]
+    },
+    "tags": [
+      "Wisdom",
+      "Comparative Scripture",
+      "Original Languages",
+      "Contemplation"
+    ]
+  },
+  {
+    "id": "sc_enterprise",
+    "code": "SC",
+    "name": "Sonly Consulting Enterprise",
+    "parent_brand": "Sonly Consulting",
+    "motto": "GET YOUR THINK ON!\u2122",
+    "tagline": "Enterprise AI & PostgreSQL Migration",
+    "category": "enterprise",
+    "is_flagship": true,
+    "status": "ACTIVE_CANVAS",
+    "badge": "System Proof Ready",
+    "version": "v1.2.0",
+    "hero": "Enterprise AI Orchestration & Database Modernization",
+    "description": "Sonly Consulting converts complex organizational technical debt into structured, auditable PostgreSQL architectures and governed AI agent pipelines. Delivers snapshot verification tables, evidence-backed decision frameworks, and live proof terminals.",
+    "capabilities": [
+      "System Proof Terminal #2",
+      "Legacy Database Audit & Migration Pipeline",
+      "Governed AI Agent Orchestration",
+      "Evidence Firewall & Checkpoint Verifier"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "sc_migration_terminal",
+      "external_preview": "sc_homepage_preview.html#view-track1",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center",
+      "deliverables": [
+        {
+          "name": "Canonical Convergence Registry",
+          "file": "escd_canonical_convergence_registry.json",
+          "type": "json",
+          "path": "c:/DS All Things/DCSE_Command_Center/apps/escd/runtime/escd_canonical_convergence_registry.json"
+        },
+        {
+          "name": "Master Profile v7.3",
+          "file": "Master-Profile-v7.3.md",
+          "type": "doc",
+          "path": "c:/DS All Things/DCSE_Command_Center/governance/Master-Profile-v7.3.md"
+        }
+      ]
+    },
+    "tags": [
+      "Enterprise",
+      "Database Migration",
+      "AI Pipeline",
+      "Proof Terminal"
+    ]
+  },
+  {
+    "id": "smoove_spots",
+    "code": "SS",
+    "name": "Smoove Spots Discovery Engine",
+    "parent_brand": "Smoove Spots",
+    "motto": "SPOTS MOOVED RIGHT!\u2122",
+    "tagline": "Verified Local Spot Curation",
+    "category": "sports_culture",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Discovery Ready",
+    "version": "v1.2.0",
+    "hero": "Curated Local Venues & Neighborhood Vibe Index",
+    "description": "Smoove Spots surfaces verified local venues, cultural hubs, culinary destinations, and community events across targeted metropolitan regions. Replaces noisy reviews with curated neighborhood vibe indexes and merchant portals.",
+    "capabilities": [
+      "Live Regional Spot Curation Map",
+      "Neighborhood Vibe Scoring",
+      "Merchant Verification Portal",
+      "Local Event & Culture Feed"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "ss_spots_curation",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/dcse-sc-sportsociety",
+      "deliverables": [
+        {
+          "name": "Sports Society Final Screen Map",
+          "file": "sc_sports_society_final_combined_screen_map.md",
+          "type": "doc",
+          "path": "c:/DS All Things/dcse-sc-sportsociety/sc_sports_society_final_combined_screen_map.md"
+        }
+      ]
+    },
+    "tags": [
+      "Culture",
+      "Local Discovery",
+      "Venues",
+      "Curation"
+    ]
+  },
+  {
+    "id": "mental_ingenuity",
+    "code": "MI",
+    "name": "Mental Ingenuity",
+    "parent_brand": "Sonly Consulting",
+    "motto": "STRUCTURE PRECEDES SCALE",
+    "tagline": "Human Cognitive Governance & Strategy",
+    "category": "enterprise",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Framework Ready",
+    "version": "v1.1.0",
+    "hero": "Cognitive Architecture & Board Alignment",
+    "description": "Mental Ingenuity addresses the cognitive architecture of leadership. Equips executives and boards with structured frameworks to audit assumptions, align governance, and resolve strategic disconnects using context compilers.",
+    "capabilities": [
+      "Executive Mindset Calibration Engine",
+      "Board Alignment Protocol",
+      "First-Principles Decision Tree Matrix",
+      "Strategic Stress-Testing Canvas"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "mi_cognitive_canvas",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/DCSE_Command_Center/docs",
+      "deliverables": [
+        {
+          "name": "Cognitive Architecture Doctrine",
+          "file": "DCSE_GITHUB_REORGANIZATION_DOSSIER_20261010.md",
+          "type": "doc",
+          "path": "c:/DS All Things/DCSE_Command_Center/docs/DCSE_GITHUB_REORGANIZATION_DOSSIER_20261010.md"
+        }
+      ]
+    },
+    "tags": [
+      "Leadership",
+      "Cognitive Architecture",
+      "Board Governance",
+      "Mental Models"
+    ]
+  },
+  {
+    "id": "sjl_b4life",
+    "code": "SJL-B4Life",
+    "name": "SJL Baller4Life\u2122 Platform",
+    "parent_brand": "Smoove Spots",
+    "motto": "RESPONSIBILITY FUELS INDEPENDENCE",
+    "tagline": "Generational Foundation & Young Adult Transition",
+    "category": "wisdom_civic",
+    "is_flagship": false,
+    "status": "ACTIVE_CANVAS",
+    "badge": "Blueprint Ready",
+    "version": "v1.0.0",
+    "hero": "Youth Character Development & Stewardship Blueprint",
+    "description": "SJL Persona and Baller4Life Framework equips young adults with discipline, financial stewardship, driver responsibility, and athletic leadership. Anchored in foundational character principles and WIN WIN WIN methodologies.",
+    "capabilities": [
+      "Young Adult Transition Milestones",
+      "Ephesians 3 Wisdom & Character Pillars",
+      "Driver Responsibility & Independence Checklist",
+      "Athletic Leadership & Mentorship Pipeline"
+    ],
+    "actions": {
+      "canvas_supported": true,
+      "canvas_module": "sjl_blueprint_canvas",
+      "external_preview": "sc_homepage_preview.html",
+      "dossier_available": true,
+      "local_source": "c:/DS All Things/ss-inner-outer-wisdom/docs",
+      "deliverables": [
+        {
+          "name": "Ephesians 3 Character Doctrine",
+          "file": "README.md",
+          "type": "doc",
+          "path": "c:/DS All Things/ss-inner-outer-wisdom/README.md"
+        }
+      ]
+    },
+    "tags": [
+      "Youth Development",
+      "Stewardship",
+      "Mentorship",
+      "Character"
+    ]
+  }
+];
+
+let activeFilter = 'all';
+let currentActiveProduct = null;
+
+// Render Product Cards
+function renderProductGrid(filter = 'all', searchQuery = '') {
+  const container = $('productGridContainer');
+  container.innerHTML = '';
+  const q = searchQuery.toLowerCase().trim();
+
+  const filtered = PRODUCTS.filter(p => {
+    const matchCategory = filter === 'all' || 
+      (filter === 'flagships' && p.is_flagship) ||
+      p.category === filter;
+    
+    const matchSearch = !q || 
+      p.name.toLowerCase().includes(q) ||
+      p.code.toLowerCase().includes(q) ||
+      p.motto.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.capabilities.some(c => c.toLowerCase().includes(q));
+
+    return matchCategory && matchSearch;
+  });
+
+  if (!filtered.length) {
+    container.innerHTML = '<div class="p-8 text-center text-[#9bb0ca] col-span-full border border-dashed border-[#28486f] rounded-lg">No products found matching query.</div>';
+    return;
+  }
+
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'prod-card' + (p.is_flagship ? ' flagship' : '');
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="flex items-center gap-2">
+          <span class="badge-gold">${p.code}</span>
+          ${p.is_flagship ? '<span class="badge-emerald">Flagship</span>' : ''}
+        </div>
+        <span class="text-[11px] text-[#8fd3a7] font-semibold">${p.badge}</span>
+      </div>
+      <h3 style="font-size:16px;font-weight:800;color:var(--text);margin:0 0 2px">${p.name}</h3>
+      <div style="font-size:11px;color:var(--gold);font-weight:700;margin-bottom:8px">${p.motto}</div>
+      <p style="font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.45;flex:1">${p.description}</p>
+      
+      <div class="space-y-1 mb-4 pt-2 border-t border-[#28486f]">
+        ${p.capabilities.slice(0, 3).map(c => `<div class="text-[11px] text-[#f4efe5] flex items-center gap-1.5"><span class="text-[#d4af37]">✓</span> ${c}</div>`).join('')}
+      </div>
+
+      <div class="flex items-center gap-2 pt-2 border-t border-[#28486f] flex-wrap">
+        <button class="btn primary flex-1 justify-center" onclick="launchEmbeddedCanvas('${p.id}')">
+          ⚡ Launch Canvas
+        </button>
+        ${p.actions?.live_url ? `<a href="${p.actions.live_url}" target="_blank" rel="noopener noreferrer" class="btn" style="border-color:var(--gold);color:var(--gold);text-decoration:none" title="Open Live Web Application">🌐 Live App ↗</a>` : ''}
+        <button class="btn" onclick="openProductDossierModal('${p.id}')" title="Inspect Specifications">
+          📋 Specs
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function filterCatalog(category, btn) {
+  activeFilter = category;
+  document.querySelectorAll('#filterPills button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProductGrid(activeFilter, $('prodSearchInput').value);
+}
+
+function searchCatalog(query) {
+  renderProductGrid(activeFilter, query);
+}
+
+// Render Deliverables, Workbooks & Local Files
+function renderProductFiles(prod) {
+  const container = $('filesListContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  const deliverables = prod.actions?.deliverables || [];
+  if ($('filesCountBadge')) $('filesCountBadge').textContent = deliverables.length + ' Deliverable' + (deliverables.length === 1 ? '' : 's');
+  if ($('filesTabTitle')) $('filesTabTitle').textContent = prod.name + ' · Deliverables & Local Files';
+  
+  if (!deliverables.length) {
+    container.innerHTML = '<div class="p-6 text-center text-[#9bb0ca] border border-dashed border-[#28486f] rounded">No offline deliverables registered for this product.</div>';
+    return;
+  }
+
+  deliverables.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'p-3 rounded bg-[#071427] border border-[#28486f] flex items-center justify-between gap-3';
+    card.innerHTML = `
+      <div>
+        <strong style="color:var(--gold);font-size:13px">${d.name}</strong>
+        <div class="text-[11px] text-[#9bb0ca] mt-0.5">${d.file} ${d.size ? '· ' + d.size : ''} ${d.type ? '· ' + d.type.toUpperCase() : ''}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        ${d.path ? `<a href="${d.path.startsWith('http') ? d.path : 'file:///' + d.path}" target="_blank" rel="noopener noreferrer" class="btn text-xs" style="text-decoration:none">Open / Path ↗</a>` : ''}
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Full Embedded Canvas Switching Logic
+function launchEmbeddedCanvas(productId) {
+  const prod = PRODUCTS.find(p => p.id === productId);
+  if (!prod) return;
+  currentActiveProduct = prod;
+
+  // Hide catalog, reveal canvas
+  $('productCatalogArea').style.display = 'none';
+  $('productCanvasArea').style.display = 'block';
+
+  // Update header and breadcrumb
+  $('topPageTitle').textContent = `Products / ${prod.name}`;
+  $('canvasProductTitle').textContent = prod.name;
+  $('canvasProductBadge').textContent = prod.code + ' · ' + prod.badge;
+  $('canvasProductMotto').textContent = prod.parent_brand + ' · ' + prod.motto;
+
+  // Setup Live App Iframe
+  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'https://sc-escd.vercel.app/scripture' : null);
+  const extBtn = $('canvasExternalLinkBtn');
+  const iframe = $('canvasLiveIframe');
+  const liveTabBtn = $('canvasTabLiveApp');
+  const liveUrlSpan = $('canvasLiveAppUrl');
+  const openTabBtn = $('canvasLiveAppOpenTab');
+  const ctjSelect = $('ctjEditionSelector');
+
+  if (liveUrl) {
+    liveTabBtn.style.display = 'inline-block';
+    iframe.src = liveUrl;
+    if (liveUrlSpan) liveUrlSpan.textContent = liveUrl;
+    if (openTabBtn) openTabBtn.href = liveUrl;
+    if (extBtn) { extBtn.href = liveUrl; extBtn.style.display = 'inline-block'; }
+    if (ctjSelect) ctjSelect.style.display = prod.id === 'ctj' ? 'inline-block' : 'none';
+    switchCanvasTab('live_app');
+  } else {
+    liveTabBtn.style.display = 'none';
+    iframe.src = 'about:blank';
+    if (extBtn) extBtn.style.display = 'none';
+    if (ctjSelect) ctjSelect.style.display = 'none';
+    switchCanvasTab('workspace');
+  }
+
+  // Populate Files Sub-Tab
+  renderProductFiles(prod);
+
+  // Hide all modules, show selected module
+  document.querySelectorAll('.canvas-module').forEach(m => m.style.display = 'none');
+  const targetModule = $('module-' + prod.id);
+  if (targetModule) {
+    targetModule.style.display = 'block';
+  } else {
+    $('module-sc_enterprise').style.display = 'block';
+  }
+
+  // Populate Dossier tab data
+  $('dossierTitle').textContent = `${prod.name} (${prod.code}) Technical Dossier`;
+  $('dossierBody').innerHTML = `
+    <div class="space-y-3">
+      <div><strong>Parent Brand:</strong> ${prod.parent_brand}</div>
+      <div><strong>Hero:</strong> ${prod.hero}</div>
+      <div><strong>Full Summary:</strong> ${prod.description}</div>
+      <div><strong>Full Capabilities:</strong>
+        <ul class="list-disc pl-5 mt-1 text-[#9bb0ca]">
+          ${prod.capabilities.map(c => `<li>${c}</li>`).join('')}
+        </ul>
+      </div>
+      <div><strong>Pricing Structure:</strong> <span class="text-[#d4af37]">${prod.pricing}</span></div>
+    </div>
+  `;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeCanvasAndReturnToCatalog() {
+  $('productCanvasArea').style.display = 'none';
+  $('productCatalogArea').style.display = 'block';
+  $('topPageTitle').textContent = 'Products · Sovereign Ecosystem Catalog';
+  currentActiveProduct = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchCanvasTab(tab) {
+  $('canvasTabLiveApp').classList.toggle('active', tab === 'live_app');
+  $('canvasTabWorkspace').classList.toggle('active', tab === 'workspace');
+  $('canvasTabFiles').classList.toggle('active', tab === 'files');
+  $('canvasTabDossier').classList.toggle('active', tab === 'dossier');
+  $('canvasTabGov').classList.toggle('active', tab === 'gov');
+
+  $('canvasSubTabLiveApp').style.display = tab === 'live_app' ? 'block' : 'none';
+  $('canvasSubTabWorkspace').style.display = tab === 'workspace' ? 'block' : 'none';
+  $('canvasSubTabFiles').style.display = tab === 'files' ? 'block' : 'none';
+  $('canvasSubTabDossier').style.display = tab === 'dossier' ? 'block' : 'none';
+  $('canvasSubTabGov').style.display = tab === 'gov' ? 'block' : 'none';
+}
+
+function reloadLiveFrame() {
+  const f = $('canvasLiveIframe');
+  if (f && f.src) f.src = f.src;
+}
+
+function toggleLiveFrameFullscreen() {
+  const c = $('liveFrameContainer');
+  if (!c) return;
+  if (!document.fullscreenElement) c.requestFullscreen?.().catch(()=>{});
+  else document.exitFullscreen?.().catch(()=>{});
+}
+
+function switchCtjEdition(url) {
+  const f = $('canvasLiveIframe');
+  if (f) f.src = url;
+  if ($('canvasLiveAppUrl')) $('canvasLiveAppUrl').textContent = url;
+  if ($('canvasLiveAppOpenTab')) $('canvasLiveAppOpenTab').href = url;
+}
+
+function openProductPopout() {
+  if (!currentActiveProduct) return;
+  alert(`Pop-out mode: Opening ${currentActiveProduct.name} standalone canvas.`);
+}
+
+function openProductDossierModal(productId) {
+  launchEmbeddedCanvas(productId);
+  switchCanvasTab('dossier');
+}
+
+// Module Specific Interactivities
+// CTJ Voter Logic
+const CTJ_STEPS = {
+  1: "Isolate the exact ballot initiative or candidate assertion. Remove all partisan framing and identify the underlying quantifiable outcome.",
+  2: "Audit the source provenance. Trace the primary funding and originating sponsor back to source records.",
+  3: "Inspect conflicts of interest. Disclose institutional incentives and campaign contributions.",
+  4: "Audit logical validity. Detect false dichotomies, ad-hominem appeals, and straw-man arguments.",
+  5: "Benchmark against empirical history. Verify past performance metrics under similar circumstances.",
+  6: "Model second-order impacts across 5 to 10-year horizons. Evaluate unintended debt or systemic consequences.",
+  7: "Synthesize decisive clarity. Issue an evidence-backed rating with clearly stated uncertainty boundaries."
+};
+
+function setCtjStep(num) {
+  $('ctjStepNum').textContent = num;
+  $('ctjStepDetail').textContent = CTJ_STEPS[num];
+}
+
+function recalculateCtjScore() {
+  const r = Number($('valRig').textContent.split(' ')[0]) || 85;
+  const c = Number($('valConf').textContent.split(' ')[0]) || 70;
+  const l = Number($('valLog').textContent.split(' ')[0]) || 90;
+  const t = Number($('valTran').textContent.split(' ')[0]) || 80;
+  const avg = ((r + c + l + t) / 4).toFixed(1);
+  $('ctjFinalScore').textContent = avg;
+}
+
+function generateCtjCard() {
+  $('cardTitle').textContent = $('ctjCandidateName').value;
+  recalculateCtjScore();
+  alert('Civic Clarity Card refreshed and primed for export.');
+}
+
+// TSL Score Simulator
+function simulateTslScoreRefresh() {
+  const currentCass = Number($('cassScore').textContent);
+  $('cassScore').textContent = currentCass + 7;
+  alert('TSL Live Game update received: Cass Tech touchdown scored! Score updated to ' + (currentCass + 7) + '.');
+}
+
+// Scripture Audio & 432 Hz Tone
+let audioContext = null;
+let toneOsc = null;
+let isTonePlaying = false;
+
+function toggleTone432() {
+  if (!isTonePlaying) {
+    try {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      toneOsc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      toneOsc.frequency.setValueAtTime(432, audioContext.currentTime);
+      gain.gain.setValueAtTime(0.05, audioContext.currentTime); // gentle ambient tone
+      toneOsc.connect(gain);
+      gain.connect(audioContext.destination);
+      toneOsc.start();
+      isTonePlaying = true;
+      alert('Harmonic 432 Hz Scriptorium meditation tone activated.');
+    } catch(e) {
+      alert('AudioContext not available: ' + e.message);
+    }
+  } else {
+    if (toneOsc) toneOsc.stop();
+    isTonePlaying = false;
+    alert('Harmonic 432 Hz Scriptorium tone stopped.');
+  }
+}
+
+function toggleScriptureAudio() {
+  if ('speechSynthesis' in window) {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+      $('audioToggleBtn').textContent = '🔊 Play Contemplative Voice';
+    } else {
+      const text = $('scriptureText').textContent;
+      const u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.85;
+      u.pitch = 0.95;
+      u.onend = () => { $('audioToggleBtn').textContent = '🔊 Play Contemplative Voice'; };
+      window.speechSynthesis.speak(u);
+      $('audioToggleBtn').textContent = '⏹ Stop Voice';
+    }
+  } else {
+    alert('Browser speech synthesis is not supported in this environment.');
+  }
+}
+
+const PASSAGES = {
+  proverbs3: {
+    text: '"Trust in the Lord with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He will direct your paths."',
+    roots: 'Hebrew: בְּטַח (Bātach - secure trust) · Greek: ἴσθι πεποιθώς (Pes-peithōs) · Latin: Habe fiduciam in Domino toto corde tuo.',
+    esoteric: 'Jakob Böhme (De Signatura Rerum): Trust is the re-alignment of the inner will to the uncreated center. Understanding isolated becomes self-interest.',
+    ctj: 'Assumption Audit: What premises do I treat as self-evident without empirical proof? Decouple ego from the decision trail.'
+  },
+  romans12: {
+    text: '"Do not be conformed to this world, but be transformed by the renewal of your mind, that by testing you may discern what is the will of God."',
+    roots: 'Greek: μεταμορφοῦσθε (Metamorphousthe - metamorphosis) · νοῦς (Nous - higher intellect) · Latin: Reformamini in novitate sensus vestri.',
+    esoteric: 'The transformation is structural, not moralistic. The Nous ascends through the chambers, shedding exterior mimetic conditioning.',
+    ctj: 'Epistemic Filter: Are current opinions derived from primary inspection or mimetic consensus pressure?'
+  },
+  genesis1: {
+    text: '"In the beginning God created the heavens and the earth. The earth was formless and void, and darkness was over the surface of the deep."',
+    roots: 'Hebrew: בְּרֵאשִׁית (Bereshit - in the head/beginning) · בָּרָא (Bara - structured ex-nihilo) · Latin: In principio creavit Deus caelum et terram.',
+    esoteric: 'Creation is the establishment of boundaries and distinctions within undifferentiated potentiality (Tohu va-Vohu).',
+    ctj: 'Order Precedes Acceleration: Structure is the prerequisite for all scaling systems.'
+  },
+  ephesians3: {
+    text: '"That He would grant you according to the riches of His glory, to be strengthened with power through His Spirit in the inner man."',
+    roots: 'Greek: κραταιωθῆναι (Krataiōthēnai - to be fortified) · ἔσω ἄνθρωπον (Esō anthrōpon - inner person).',
+    esoteric: 'Fortification of the inner man is the anchoring of character against outward turbulence. The cornerstone of the SJL Baller4Life framework.',
+    ctj: 'Character Architecture: Strength begins with internal governance before external authority is exercised.'
+  },
+  john1: {
+    text: '"In the beginning was the Word, and the Word was with God, and the Word was God. He was in the beginning with God. All things were made through Him."',
+    roots: 'Greek: ἐν ἀρχῇ ἦν ὁ λόγος (En archē ēn ho Logos) · Latin: In principio erat Verbum.',
+    esoteric: 'The Logos is the governing intelligible principle of the cosmos. Reason and existence are co-inherent.',
+    ctj: 'Logic & Reality: Coherent language must map to verifiable physical and ethical states.'
+  }
+};
+
+function loadScripturePassage(key) {
+  const p = PASSAGES[key];
+  if (!p) return;
+  $('scriptureText').textContent = p.text;
+  $('scriptureRoots').innerHTML = p.roots;
+  $('scriptureEsoteric').textContent = p.esoteric;
+  $('scriptureCtj').innerHTML = p.ctj;
+}
+
+// MyMy Preset Logic
+function selectMyMyPreset(preset) {
+  alert(`MyMy Motion Preset [${preset.toUpperCase()}] loaded. Telemetry calibrated.`);
+}
+
+// Main Sidebar Tab Switching
+function switchMainTab(tab) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('#nav button, #mobileNav button').forEach(b => b.classList.remove('active'));
+  
+  const viewMap = {
+    products: 'productsView',
+    chat: 'chatView',
+    tasks: 'tasksView',
+    ideas: 'ideasView',
+    knowledge: 'knowledgeView',
+    assets: 'assetsView',
+    ddna: 'ddnaView',
+    orchestrator: 'orchestratorView'
+  };
+
+  const targetView = $(viewMap[tab]);
+  if (targetView) targetView.classList.add('active');
+
+  const btns = document.querySelectorAll(`[onclick*="switchMainTab('${tab}')"]`);
+  btns.forEach(b => b.classList.add('active'));
+
+  if (tab === 'products') {
+    closeCanvasAndReturnToCatalog();
+  } else {
+    $('topPageTitle').textContent = tab.toUpperCase();
+  }
+}
+
+// Initialize on Load
+renderProductGrid();
+</script>
+</body>
+</html>

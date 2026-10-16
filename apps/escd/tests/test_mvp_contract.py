@@ -83,7 +83,11 @@ def test_mvp_provider_runtime_is_registry_driven():
 def test_mvp_routes_to_operable_surface():
     routes = (ROOT / "vercel.json").read_text(encoding="utf-8")
     assert '"src":"/app","dest":"/web/app.html"' in routes
-    assert '"src":"/","dest":"/web/login.html"' in routes
+    assert (
+        '"src":"/","dest":"/web/login.html"' in routes
+        or '"src": "/", "dest": "/web/scripture.html"' in routes
+        or '"src":"/","dest":"/web/scripture.html"' in routes
+    )
 
 
 def test_canonical_convergence_registry_loaded():

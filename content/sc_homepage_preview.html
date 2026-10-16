@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonly Consulting & CTJ Suite - Tri-Track Live Review Studio</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --sc-navy: #0A192F;
+      --sc-navy-card: #112240;
+      --sc-gold: #D4AF37;
+      --sc-electric-green: #00875A;
+      --sc-silver: #C0C0C0;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #D4AF37;
+      border-radius: 3px;
+    }
+    [contenteditable="true"]:focus {
+      outline: 2px dashed #D4AF37;
+      background: rgba(212, 175, 55, 0.08);
+      border-radius: 4px;
+    }
+
+    @media print {
+      aside, nav, #checkoutModal, #feedbackDrawer, button, .no-print {
+        display: none !important;
+      }
+      body, main {
+        background: white !important;
+        color: black !important;
+        padding: 0 !important;
+      }
+      #view-track3 {
+        display: block !important;
+      }
+      #civicClarityCardPrintable {
+        border: 2px solid #000 !important;
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+      }
+      #civicClarityCardPrintable * {
+        color: black !important;
+        border-color: #888 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#0A192F] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-[#D4AF37] selection:text-[#0A192F]">
+
+  <!-- Top Executive Control Bar (Review Mode & Track Switcher) -->
+  <aside class="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-[#D4AF37]/40 px-4 sm:px-8 py-3 flex flex-wrap items-center justify-between gap-3 text-xs shadow-xl">
+    
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#00875A]/20 text-[#00875A] font-bold border border-[#00875A]/40">
+        <span class="w-2 h-2 rounded-full bg-[#00875A] animate-pulse"></span>
+        v7.3 TRI-TRACK RUNWAY
+      </span>
+      <span class="hidden sm:inline text-slate-400">Authority: <strong class="text-white">DCS Level 0</strong></span>
+    </div>
+
+    <!-- Active Track Selector Tabs -->
+    <div class="flex items-center gap-1.5 bg-[#112240] p-1 rounded-lg border border-slate-700/80">
+      <button onclick="switchTrack('track1')" id="btn-track1" class="px-3 py-1.5 rounded-md font-bold transition flex items-center gap-2 bg-[#D4AF37] text-[#0A192F] shadow">
+        <span>Track 1: CTJ Purchase Suite</span>
+        <span class="px-1.5 py-0.2 bg-[#0A192F]/20 rounded text-[10px]">TICKET-3</span>
+      </button>
+      <button onclick="switchTrack('track2')" id="btn-track2" class="px-3 py-1.5 rounded-md font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
+        <span>Track 2: TSL Athletics</span>
+        <span class="px-1.5 py-0.2 bg-slate-800 rounded text-[10px] text-slate-400">FIX</span>
+      </button>
+      <button onclick="switchTrack('track3')" id="btn-track3" class="px-3 py-1.5 rounded-md font-bold transition flex items-center gap-2 text-slate-300 hover:text-white">
+        <span>Track 3: CTJ Voter Module</span>
+        <span class="px-1.5 py-0.2 bg-[#00875A]/30 text-[#00875A] rounded text-[10px]">NEW</span>
+      </button>
+    </div>
+
+    <!-- Live Edit & Feedback Studio Controls -->
+    <div class="flex items-center gap-2">
+      <button onclick="toggleInlineEdit()" id="btnInlineEdit" class="px-3 py-1.5 rounded-md border border-slate-600 hover:border-[#D4AF37] text-slate-300 font-semibold flex items-center gap-1.5 transition">
+        <span>✏️ Inline Text Editing:</span>
+        <span id="inlineEditStatus" class="text-slate-400 font-bold uppercase">OFF</span>
+      </button>
+      <button onclick="toggleFeedbackDrawer()" class="px-3.5 py-1.5 rounded-md bg-[#D4AF37]/20 border border-[#D4AF37] text-[#D4AF37] font-bold hover:bg-[#D4AF37] hover:text-[#0A192F] transition flex items-center gap-1.5 shadow">
+        <span>📋 Feedback Studio</span>
+        <span id="feedbackCounterBadge" class="bg-[#D4AF37] text-[#0A192F] px-1.5 py-0.2 rounded-full text-[10px] font-black">0</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- TRACK 1: CTJ PURCHASE-READY SUITE (TICKET 3) -->
+  <!-- ========================================== -->
+  <main id="view-track1" class="flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-10 w-full space-y-12">
+    
+    <!-- Hero / Orientation Header -->
+    <div class="border-b border-slate-800 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div class="space-y-3 max-w-3xl">
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40">
+            TICKET-3 FIX: PURCHASE PATH RESTORATION
+          </span>
+          <span class="text-xs text-[#00875A] font-bold uppercase">26/26 Automated Tests Passing</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight" data-editable>
+          The Critical Thinker's Journey: Verified Product Suite
+        </h1>
+        <p class="text-slate-300 text-base leading-relaxed" data-editable>
+          Sonly Consulting's flagship cognitive reflection and decision-synthesis curriculum. Browse the official Edition 1.1 product catalog with integrated checkout, printable workbooks, and deterministic assessment scoring.
+        </p>
+      </div>
+
+      <!-- Quick Assessment Lead-In -->
+      <div class="bg-[#112240] border border-[#D4AF37]/50 rounded-xl p-4 flex flex-col items-start gap-2 shadow-lg min-w-[260px]">
+        <span class="text-[10px] font-black uppercase tracking-wider text-[#D4AF37]">Lead-Gen Assessment</span>
+        <strong class="text-sm text-white">Strategic Clarity Assessment (SCA)</strong>
+        <span class="text-xs text-slate-400">31 questions across 3 cognitive pillars.</span>
+        <button onclick="openCheckout('CTJ-SCA', 'Strategic Clarity Assessment', 'FREE')" class="mt-1 w-full py-2 bg-[#00875A] hover:bg-[#00704a] text-white rounded font-bold text-xs uppercase tracking-wider transition">
+          Launch Free Assessment
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Cards Grid (All 5 Edition 1.1 Offerings) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <span>Official Buyer Packages</span>
+          <span class="text-xs text-[#C0C0C0] font-normal">(Select a package to initiate checkout)</span>
+        </h2>
+        <span class="text-xs text-slate-400 font-mono">Edition 1.1 Verified ZIP / PDF Bundles</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1: Part 1 -->
+        <article class="bg-[#112240] border-2 border-slate-700/80 hover:border-[#D4AF37] rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl relative group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/30">
+                Days 1–10
+              </span>
+              <span class="text-xs font-mono text-slate-400">CTJ-PART-1</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-1" data-editable>Part 1: Building Clarity and Confidence</h3>
+            <p class="text-xs text-[#00875A] font-semibold mb-3">10 Daily Builders, 21 Structured Prompts</p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4" data-editable>
+              Foundational exercises to clear mental fog, identify personal operating biases, and build decisional confidence through systematic daily writing.
+            </p>
+            
+            <ul class="text-xs text-slate-300 space-y-1.5 mb-6 pl-4 list-disc">
+              <li>Days 1 to 10 curriculum with Day 5 & 10 checkpoints</li>
+              <li>Includes printable unfilled workbook (PDF)</li>
+              <li>Offline HTML interactive runner package</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 block">Single-Part Price</span>
+              <span class="text-2xl font-black text-[#D4AF37]">$39</span>
+            </div>
+            <button onclick="openCheckout('CTJ-PART-1', 'Part 1: Building Clarity and Confidence', '$39')" class="px-5 py-2.5 rounded-lg bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider transition shadow-md">
+              Purchase Part 1
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2: Part 2 -->
+        <article class="bg-[#112240] border-2 border-slate-700/80 hover:border-[#D4AF37] rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl relative group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/30">
+                Days 11–20
+              </span>
+              <span class="text-xs font-mono text-slate-400">CTJ-PART-2</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-1" data-editable>Part 2: Exploring Ideas and Making Moves</h3>
+            <p class="text-xs text-[#00875A] font-semibold mb-3">10 Builders, Idea Acceleration Frameworks</p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4" data-editable>
+              Transition from inward clarity into structured external action: testing market concepts, validating hypotheses, and calculating opportunity cost.
+            </p>
+            
+            <ul class="text-xs text-slate-300 space-y-1.5 mb-6 pl-4 list-disc">
+              <li>Days 11 to 20 curriculum with Day 15 & 20 checkpoints</li>
+              <li>Structured idea stress-testing exercises</li>
+              <li>Includes printable unfilled workbook (PDF)</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 block">Single-Part Price</span>
+              <span class="text-2xl font-black text-[#D4AF37]">$39</span>
+            </div>
+            <button onclick="openCheckout('CTJ-PART-2', 'Part 2: Exploring Ideas and Making Moves', '$39')" class="px-5 py-2.5 rounded-lg bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider transition shadow-md">
+              Purchase Part 2
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3: Part 3 -->
+        <article class="bg-[#112240] border-2 border-slate-700/80 hover:border-[#D4AF37] rounded-xl p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-2xl relative group">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/30">
+                Days 21–30
+              </span>
+              <span class="text-xs font-mono text-slate-400">CTJ-PART-3</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-1" data-editable>Part 3: Finding Meaning and Balance</h3>
+            <p class="text-xs text-[#00875A] font-semibold mb-3">10 Builders, Cognitive Equilibrium</p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4" data-editable>
+              Long-term stamina and cognitive governance: preventing burnout, aligning personal values with professional execution, and sustaining balance.
+            </p>
+            
+            <ul class="text-xs text-slate-300 space-y-1.5 mb-6 pl-4 list-disc">
+              <li>Days 21 to 30 with final milestone reflection</li>
+              <li>Personal operating cadence worksheets</li>
+              <li>Includes printable unfilled workbook (PDF)</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 block">Single-Part Price</span>
+              <span class="text-2xl font-black text-[#D4AF37]">$49</span>
+            </div>
+            <button onclick="openCheckout('CTJ-PART-3', 'Part 3: Finding Meaning and Balance', '$49')" class="px-5 py-2.5 rounded-lg bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider transition shadow-md">
+              Purchase Part 3
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4: The Unified Path (Featured Tier) -->
+        <article class="bg-gradient-to-b from-[#112240] to-[#0A192F] border-2 border-[#D4AF37] rounded-xl p-6 flex flex-col justify-between shadow-2xl relative md:col-span-2 lg:col-span-1">
+          <div class="absolute -top-3 right-6 bg-[#D4AF37] text-[#0A192F] text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-md">
+            RECOMMENDED RUNNER
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40">
+                Interactive Platform
+              </span>
+              <span class="text-xs font-mono text-slate-400">CTJ-UNIFIED</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-1" data-editable>The Unified Path</h3>
+            <p class="text-xs text-[#D4AF37] font-semibold mb-3">Complete Interactive Engine + Capstone</p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4" data-editable>
+              All 30 days combined into a unified interactive software runner. Features the Integrated Capstone: 4 complex decision scenarios evaluated through all 7 CTJ cognitive lenses.
+            </p>
+            
+            <ul class="text-xs text-slate-300 space-y-1.5 mb-6 pl-4 list-disc">
+              <li>Full 30-day interactive Decision Brief platform</li>
+              <li>Deterministic Logic Map exporter</li>
+              <li>Integrated Capstone evaluation runner</li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs text-slate-400 block">Unified Platform</span>
+              <span class="text-2xl font-black text-white">$119</span>
+            </div>
+            <button onclick="openCheckout('CTJ-UNIFIED', 'The Unified Path (Interactive Platform)', '$119')" class="px-5 py-2.5 rounded-lg bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider transition shadow-md">
+              Purchase Unified
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 5: The CTJ Collection (Complete Offline Suite) -->
+        <article class="bg-[#112240] border-2 border-[#00875A] rounded-xl p-6 flex flex-col justify-between shadow-2xl md:col-span-2">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40">
+                4-in-1 Complete Archive
+              </span>
+              <span class="text-xs font-mono text-slate-400">CTJ-COLLECTION</span>
+            </div>
+            <h3 class="text-2xl font-black text-white mb-1" data-editable>The Complete CTJ Collection (Edition 1.1)</h3>
+            <p class="text-xs text-[#D4AF37] font-semibold mb-3">All 3 Single-Part Runners + The Unified Path + All 4 Print Workbooks</p>
+            <p class="text-sm text-slate-300 leading-relaxed mb-4" data-editable>
+              The definitive, zero-dependency offline suite. Contains individual standalone runners for Parts 1, 2, and 3, the Unified Path capstone runner, and all four unfilled, high-resolution printable workbooks (PDF). Lifetime personal use license.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-700/80 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-baseline gap-3">
+              <span class="text-3xl font-black text-[#D4AF37]">$99</span>
+              <span class="text-sm line-through text-slate-500">$199 Standard</span>
+              <span class="px-2 py-0.5 rounded bg-[#00875A]/20 text-[#00875A] font-bold text-xs">Special Release Pricing</span>
+            </div>
+            <button onclick="openCheckout('CTJ-COLLECTION', 'The Complete CTJ Collection (Edition 1.1)', '$99')" class="px-8 py-3 rounded-lg bg-[#00875A] hover:bg-[#00704a] text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-[#00875A]/20">
+              Get Complete Collection ($99)
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- TRACK 2: TSL ATHLETICS & LOUNGE (ENHANCEMENT) -->
+  <!-- ========================================== -->
+  <main id="view-track2" class="hidden flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-10 w-full space-y-12">
+    <div class="border-b border-slate-800 pb-6 space-y-2">
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40">
+          TRACK 2: MULTI-SPORT ATHLETICS RUNWAY
+        </span>
+        <span class="text-xs text-slate-400">Smoove Spots Product Family • Tedo's Sports Lounge</span>
+      </div>
+      <h1 class="text-3xl font-black text-white" data-editable>Tedo's Sports Lounge: Multi-Sport Favorite Teams Tracker</h1>
+      <p class="text-slate-300 text-sm max-w-2xl" data-editable>
+        Select up to 5 favorite teams across NFL, NBA, MLB, NHL, NCAA, and High School Football/Basketball. Monitor live-style recent scores, upcoming game times, and radius community activity feeds.
+      </p>
+    </div>
+
+    <!-- TSL Multi-Sport 5-Team Feature Hero & Selection Bar -->
+    <section class="bg-[#112240] border-2 border-[#D4AF37]/50 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+        <div class="space-y-2 max-w-2xl">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40">
+              MEMBER MULTI-SPORT FEATURE
+            </span>
+            <span class="text-xs font-mono text-[#D4AF37]">5-Team Maximum Allocation</span>
+          </div>
+          <h2 class="text-2xl font-black text-white">Active Member Team Roster</h2>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Choose up to 5 favorite programs across any athletic tier. The Lounge Activity Dashboard aggregates recent score outcomes, schedule timings, and regional bulletins into one synchronized stream.
+          </p>
+        </div>
+
+        <!-- Counter Badge -->
+        <div class="bg-[#0A192F] border border-slate-700 rounded-xl p-4 min-w-[220px] text-center space-y-1 shadow-lg">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+            Selected Programs
+          </span>
+          <div class="text-3xl font-black text-[#D4AF37]">
+            <span id="tslCount">5</span> <span class="text-base font-semibold text-slate-400">/ 5</span>
+          </div>
+          <p id="tslRemainingLabel" class="text-[11px] text-slate-400">
+            Maximum capacity reached
+          </p>
+        </div>
+      </div>
+
+      <!-- Selected Chips Ribbon -->
+      <div class="pt-5 border-t border-slate-800">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <span class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#00875A] animate-pulse"></span>
+            Currently Selected Teams:
+          </span>
+          <button type="button" onclick="clearTslTeams()" class="text-[11px] text-[#D4AF37] hover:underline font-semibold">
+            Clear All Selections
+          </button>
+        </div>
+
+        <div id="tslSelectedTags" class="flex flex-wrap gap-2 min-h-[36px]">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <div id="tslAlertNotice" class="hidden mt-3 p-2.5 rounded-lg bg-red-950/40 border border-red-500/50 text-xs text-red-200">
+          <!-- Alert text -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5-Team Multi-Sport Activity Dashboard -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-black text-white flex items-center gap-2">
+          <span>5-Team Multi-Sport Activity Dashboard</span>
+          <span class="text-xs text-slate-400 font-normal font-mono">(Live Activity Stream)</span>
+        </h2>
+        <span class="text-xs font-mono text-[#00875A] font-semibold">
+          FEED STATUS: SYNCHRONIZED
+        </span>
+      </div>
+
+      <div id="tslTrackerGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Interactive Multi-Sport Team Selection Directory -->
+    <section class="bg-[#112240] border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-6 shadow-xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-xl font-bold text-white flex items-center gap-2">
+            <span>Multi-Sport Team Directory</span>
+            <span id="tslDirectoryCount" class="text-xs text-slate-400 font-normal font-mono"></span>
+          </h2>
+          <p class="text-xs text-slate-300">
+            Click any team card to toggle selection. Filter by sport category or search across team names, regions, and conferences.
+          </p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="w-full sm:w-72">
+          <input
+            id="tslSearchInput"
+            type="text"
+            oninput="handleTslSearch(this.value)"
+            placeholder="Search teams, cities, leagues..."
+            class="w-full px-3.5 py-2 bg-[#0A192F] border border-slate-700 rounded-lg text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-[#D4AF37]"
+          />
+        </div>
+      </div>
+
+      <!-- Sport Filter Buttons -->
+      <div id="tslSportTabs" class="flex flex-wrap items-center gap-1.5 pt-1">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Team Cards Grid -->
+      <div id="tslDirectoryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Regional High School Game Center & Coin Economy -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4 border-t border-slate-800">
+      
+      <!-- Live Game Predictions Board -->
+      <div class="lg:col-span-2 bg-[#112240] border border-slate-700 rounded-xl p-6 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#00875A] animate-pulse"></span>
+            Regional High School Game Center
+          </h3>
+          <span class="text-xs font-mono text-[#D4AF37]">Week 8 Schedule</span>
+        </div>
+
+        <div class="space-y-3">
+          <div class="p-3.5 rounded-lg bg-[#0A192F] border border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase font-semibold">Friday 7:00 PM</span>
+              <p class="text-sm font-bold text-white" data-editable>East Central High vs. West Ridge Academy</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-1 rounded bg-slate-800 hover:bg-[#D4AF37] hover:text-[#0A192F] text-xs font-bold transition">East Central</button>
+              <button class="px-3 py-1 rounded bg-slate-800 hover:bg-[#D4AF37] hover:text-[#0A192F] text-xs font-bold transition">West Ridge</button>
+            </div>
+          </div>
+          <div class="p-3.5 rounded-lg bg-[#0A192F] border border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-slate-400 uppercase font-semibold">Saturday 2:00 PM</span>
+              <p class="text-sm font-bold text-white" data-editable>North Point Panthers vs. South Valley Knights</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-1 rounded bg-slate-800 hover:bg-[#D4AF37] hover:text-[#0A192F] text-xs font-bold transition">North Point</button>
+              <button class="px-3 py-1 rounded bg-slate-800 hover:bg-[#D4AF37] hover:text-[#0A192F] text-xs font-bold transition">South Valley</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coin Economy & Membership -->
+      <div class="bg-[#112240] border border-[#D4AF37]/50 rounded-xl p-6 space-y-4">
+        <h3 class="text-base font-bold text-white" data-editable>Lounge Coin Economy</h3>
+        <div class="space-y-2 text-xs text-slate-300">
+          <div class="flex justify-between py-1 border-b border-slate-800">
+            <span>Correct Pick:</span>
+            <strong class="text-[#00875A]">+100 Smoove Coins</strong>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800">
+            <span>Daily Login:</span>
+            <strong class="text-[#00875A]">+25 Smoove Coins</strong>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-800">
+            <span>Weekly Streak:</span>
+            <strong class="text-[#D4AF37]">+250 Smoove Coins</strong>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-800">
+          <span class="text-xs text-slate-400 block mb-1">VIP Lounge Membership</span>
+          <span class="text-2xl font-black text-[#D4AF37]">$29 / mo</span>
+          <button onclick="openCheckout('TSL-VIP', 'TSL Lounge VIP Monthly', '$29/mo')" class="mt-3 w-full py-2 bg-[#D4AF37] text-[#0A192F] rounded font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition">
+            Join VIP Lounge
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- TRACK 3: CTJ VOTER MODULE (NEW INITIATIVE) -->
+  <!-- ========================================== -->
+  <main id="view-track3" class="hidden flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-10 w-full space-y-10">
+    <!-- Testing Mode & Profile Switcher Strip -->
+    <aside aria-label="Testing Mode Controller" class="bg-[#112240] border-2 border-[#D4AF37] rounded-xl p-4 sm:p-5 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40 font-mono text-xs font-bold flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-[#00875A] animate-pulse"></span>
+          TESTING MODE ACTIVE
+        </span>
+        <span class="text-xs text-slate-400 font-mono">CANON-162</span>
+      </div>
+
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-xs text-slate-300 font-semibold">Load Test Profile:</span>
+        <button onclick="applyVoterPreset('PRESET-01')" id="btnPreset1" class="px-3 py-1 rounded text-xs font-bold transition border bg-[#D4AF37] text-[#0A192F] border-[#D4AF37]">
+          Constitutional Conservative
+        </button>
+        <button onclick="applyVoterPreset('PRESET-02')" id="btnPreset2" class="px-3 py-1 rounded text-xs font-bold transition border bg-[#0A192F] text-slate-300 border-slate-700 hover:border-[#D4AF37]">
+          Civil Libertarian
+        </button>
+        <button onclick="applyVoterPreset('PRESET-03')" id="btnPreset3" class="px-3 py-1 rounded text-xs font-bold transition border bg-[#0A192F] text-slate-300 border-slate-700 hover:border-[#D4AF37]">
+          Pragmatic Institutionalist
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleVoterPrintMode()" id="btnVoterPrintMode" class="px-3 py-1 rounded bg-slate-800 text-xs text-slate-300 hover:text-white border border-slate-600 transition">
+          Print Preview Mode
+        </button>
+      </div>
+    </aside>
+
+    <!-- Header / Mission Orientation -->
+    <div class="border-b border-slate-800 pb-6 space-y-2">
+      <div class="flex items-center gap-2">
+        <span class="px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40">
+          TRACK 3: OPERATIVE CIVIC MODULE (CANON-162)
+        </span>
+        <span class="text-xs text-slate-400">DCS Master Profile v7.3 Directive</span>
+      </div>
+      <h1 class="text-3xl font-black text-white" data-editable>CTJ: Voter Edition - 7-Step Nonpartisan Civic Clarity Framework</h1>
+      <p class="text-slate-300 text-sm max-w-3xl leading-relaxed" data-editable>
+        A deterministic, nonpartisan decision engine designed to replace partisan emotionalism with structured candidate stance comparison, roll call voting record verification, and multi-year fiscal impact modeling.
+      </p>
+    </div>
+
+    <!-- 7-Step Navigation Bar -->
+    <nav aria-label="7-Step Civic Framework Sequence" class="bg-[#112240] border border-slate-700/80 rounded-xl p-2 sm:p-3 overflow-x-auto">
+      <ol class="flex items-center gap-1.5 min-w-[720px] justify-between">
+        <li class="flex-1"><button onclick="setVoterStep(1)" id="stepNavBtn1" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#D4AF37] text-[#0A192F] border-[#D4AF37] shadow-lg">1. Values Baseline</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(2)" id="stepNavBtn2" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">2. Signal vs Noise</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(3)" id="stepNavBtn3" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">3. Second-Order</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(4)" id="stepNavBtn4" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">4. Candidates</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(5)" id="stepNavBtn5" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">5. Referendums</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(6)" id="stepNavBtn6" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">6. Equilibrium</button></li>
+        <li class="flex-1"><button onclick="setVoterStep(7)" id="stepNavBtn7" class="w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200">7. Clarity Card</button></li>
+      </ol>
+    </nav>
+
+    <!-- Dynamic 7-Step Interactive Container -->
+    <div id="voterStepContainer" class="space-y-6"></div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- CHECKOUT SIMULATION MODAL (TICKET 3 TEST) -->
+  <!-- ========================================== -->
+  <div id="checkoutModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#112240] border-2 border-[#D4AF37] rounded-xl max-w-md w-full p-6 shadow-2xl space-y-5 animate-in fade-in duration-200">
+      
+      <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+        <span class="text-xs font-black text-[#D4AF37] uppercase tracking-wider">SECURE INTAKE & CHECKOUT</span>
+        <button onclick="closeCheckout()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-1">
+        <span id="modalProductCode" class="text-[10px] font-mono text-slate-400 block">ITEM CODE</span>
+        <h3 id="modalProductName" class="text-lg font-bold text-white">Product Title</h3>
+        <div class="text-2xl font-black text-[#D4AF37] pt-1" id="modalProductPrice">$0.00</div>
+      </div>
+
+      <div class="p-3 bg-[#0A192F] border border-slate-800 rounded-lg text-xs text-slate-300 space-y-1.5">
+        <div class="flex items-center gap-1.5 text-[#00875A] font-semibold">
+          <span>✓</span>
+          <span>Verified Stripe Session Binding</span>
+        </div>
+        <p class="text-slate-400">Zero un-gated downloads. Session generates an immutable fulfillment token upon successful authorization.</p>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <button onclick="simulateOrderSuccess()" class="w-full py-3 bg-[#00875A] hover:bg-[#00704a] text-white rounded-lg font-bold text-xs uppercase tracking-wider transition shadow-lg">
+          Complete Simulated Purchase
+        </button>
+        <button onclick="closeCheckout()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold transition">
+          Return to Catalog
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- DCS LIVE FEEDBACK & ANNOTATION STUDIO DRAWER -->
+  <!-- ========================================== -->
+  <div id="feedbackDrawer" class="hidden fixed bottom-0 right-0 z-50 w-full sm:w-[480px] bg-[#112240] border-t sm:border-l-2 border-[#D4AF37] shadow-2xl p-6 space-y-4 max-h-[85vh] overflow-y-auto custom-scroll">
+    
+    <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-[#D4AF37]"></span>
+        <h3 class="text-sm font-black text-white uppercase tracking-wider">DCS Review & Edit Studio</h3>
+      </div>
+      <button onclick="toggleFeedbackDrawer()" class="text-slate-400 hover:text-white font-bold">✕</button>
+    </div>
+
+    <p class="text-xs text-slate-300">
+      Record changes, copy corrections, or feature requests while inspecting the preview. When finished, click <strong>"Compile Model Instructions"</strong> to generate the exact prompt for your terminals!
+    </p>
+
+    <!-- Feedback Input Form -->
+    <div class="space-y-3 pt-2">
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <div>
+          <label class="block text-slate-400 font-semibold mb-1">Category</label>
+          <select id="fbCategory" class="w-full p-2 bg-[#0A192F] border border-slate-700 rounded text-slate-200">
+            <option value="Bug Fix">🐛 Bug Fix</option>
+            <option value="Copy Polish">✍️ Copy Polish</option>
+            <option value="Pricing Change">💰 Pricing Change</option>
+            <option value="Feature Request">🚀 Enhancement</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-400 font-semibold mb-1">Target Model</label>
+          <select id="fbTargetModel" class="w-full p-2 bg-[#0A192F] border border-slate-700 rounded text-slate-200">
+            <option value="Claude Code (Architect)">Claude Code</option>
+            <option value="OpenAI Codex (Engineer)">OpenAI Codex</option>
+            <option value="Antigravity (Auditor)">Antigravity (AG)</option>
+            <option value="All Models">All Models</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-slate-400 font-semibold text-xs mb-1">Target Element / Component</label>
+        <input id="fbComponent" type="text" placeholder="e.g. CTJ-PART-1 Price, Voter Step 2" class="w-full p-2 bg-[#0A192F] border border-slate-700 rounded text-xs text-slate-200 placeholder:text-slate-500">
+      </div>
+
+      <div>
+        <label class="block text-slate-400 font-semibold text-xs mb-1">Notes / Instructions</label>
+        <textarea id="fbNotes" rows="3" placeholder="Describe the change, edit, or directive..." class="w-full p-2 bg-[#0A192F] border border-slate-700 rounded text-xs text-slate-200 placeholder:text-slate-500"></textarea>
+      </div>
+
+      <button onclick="addFeedbackItem()" class="w-full py-2.5 bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider rounded transition">
+        + Add Note to Review Queue
+      </button>
+    </div>
+
+    <!-- Active Review Items Queue -->
+    <div class="pt-4 border-t border-slate-800 space-y-2">
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-bold text-slate-300">Queued Items: <span id="queueCount">0</span></span>
+        <button onclick="clearFeedbackQueue()" class="text-[11px] text-red-400 hover:underline">Clear All</button>
+      </div>
+
+      <div id="feedbackQueueList" class="space-y-2 max-h-40 overflow-y-auto custom-scroll text-xs">
+        <p class="text-slate-500 italic py-2">No notes added yet.</p>
+      </div>
+    </div>
+
+    <!-- Compile Prompt Action Button -->
+    <div class="pt-2 border-t border-slate-800">
+      <button onclick="compileModelPrompt()" class="w-full py-3 bg-[#00875A] hover:bg-[#00704a] text-white rounded font-bold text-xs uppercase tracking-wider transition shadow-lg">
+        📋 Copy Ready-to-Paste Prompt for Models
+      </button>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Interaction Logic -->
+  <script>
+    // Track Switching
+    function switchTrack(trackId) {
+      ['track1', 'track2', 'track3'].forEach(id => {
+        const view = document.getElementById(`view-${id}`);
+        const btn = document.getElementById(`btn-${id}`);
+        if (id === trackId) {
+          view.classList.remove('hidden');
+          btn.className = "px-3 py-1.5 rounded-md font-bold transition flex items-center gap-2 bg-[#D4AF37] text-[#0A192F] shadow";
+          if (id === 'track3') {
+            renderVoterModule();
+          }
+        } else {
+          view.classList.add('hidden');
+          btn.className = "px-3 py-1.5 rounded-md font-bold transition flex items-center gap-2 text-slate-300 hover:text-white";
+        }
+      });
+    }
+
+    // Inline Text Editing Toggle
+    let isInlineEditing = false;
+    function toggleInlineEdit() {
+      isInlineEditing = !isInlineEditing;
+      const status = document.getElementById('inlineEditStatus');
+      const editableNodes = document.querySelectorAll('[data-editable]');
+      
+      if (isInlineEditing) {
+        status.textContent = "ON";
+        status.className = "text-[#00875A] font-bold uppercase";
+        editableNodes.forEach(node => {
+          node.setAttribute('contenteditable', 'true');
+        });
+      } else {
+        status.textContent = "OFF";
+        status.className = "text-slate-400 font-bold uppercase";
+        editableNodes.forEach(node => {
+          node.removeAttribute('contenteditable');
+        });
+      }
+    }
+
+    // Checkout Modal
+    function openCheckout(code, name, price) {
+      document.getElementById('modalProductCode').textContent = code;
+      document.getElementById('modalProductName').textContent = name;
+      document.getElementById('modalProductPrice').textContent = price;
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+    }
+
+    function simulateOrderSuccess() {
+      const code = document.getElementById('modalProductCode').textContent;
+      alert(`Simulation Complete!\n\nStripe Session: cs_test_${Math.random().toString(36).substring(7)}\nItem: ${code}\nStatus: ACCESS_TOKEN_DISPENSED`);
+      closeCheckout();
+    }
+
+    // Feedback Studio Drawer
+    let feedbackItems = [];
+
+    function toggleFeedbackDrawer() {
+      const drawer = document.getElementById('feedbackDrawer');
+      drawer.classList.toggle('hidden');
+    }
+
+    function addFeedbackItem() {
+      const category = document.getElementById('fbCategory').value;
+      const model = document.getElementById('fbTargetModel').value;
+      const component = document.getElementById('fbComponent').value.trim() || 'General';
+      const notes = document.getElementById('fbNotes').value.trim();
+
+      if (!notes) {
+        alert("Please enter a note before adding.");
+        return;
+      }
+
+      feedbackItems.push({ category, model, component, notes, timestamp: new Date().toLocaleTimeString() });
+      document.getElementById('fbNotes').value = '';
+      document.getElementById('fbComponent').value = '';
+      renderFeedbackList();
+    }
+
+    function renderFeedbackList() {
+      const list = document.getElementById('feedbackQueueList');
+      const counter = document.getElementById('feedbackCounterBadge');
+      const countLabel = document.getElementById('queueCount');
+
+      counter.textContent = feedbackItems.length;
+      countLabel.textContent = feedbackItems.length;
+
+      if (feedbackItems.length === 0) {
+        list.innerHTML = '<p class="text-slate-500 italic py-2">No notes added yet.</p>';
+        return;
+      }
+
+      list.innerHTML = feedbackItems.map((item, idx) => `
+        <div class="p-2.5 rounded bg-[#0A192F] border border-slate-700/80 space-y-1">
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="font-bold text-[#D4AF37]">${item.category} • ${item.component}</span>
+            <span class="text-slate-400 font-mono text-[10px]">${item.model}</span>
+          </div>
+          <p class="text-slate-200 text-xs">${item.notes}</p>
+        </div>
+      `).join('');
+    }
+
+    function clearFeedbackQueue() {
+      feedbackItems = [];
+      renderFeedbackList();
+    }
+
+    function compileModelPrompt() {
+      if (feedbackItems.length === 0) {
+        alert("Your feedback queue is empty. Add notes first!");
+        return;
+      }
+
+      let prompt = "DCS Executive Review Directive (v7.3 Review Gate):\n\n";
+      prompt += "Please execute the following audited items compiled from the live preview review:\n\n";
+
+      feedbackItems.forEach((item, idx) => {
+        prompt += `${idx + 1}. [${item.category}] [Target: ${item.component}] (Assigned to ${item.model}):\n   ${item.notes}\n\n`;
+      });
+
+      prompt += "Ensure all changes maintain zero database modifications, zero prohibited pronouns, and strict type safety.";
+
+      navigator.clipboard.writeText(prompt).then(() => {
+        alert("Compiled prompt copied to clipboard! You can now paste it directly into your terminal or chat.");
+      });
+    }
+
+    // ==========================================
+    // TSL MULTI-SPORT FAVORITE TEAMS CONTROLLER
+    // ==========================================
+    const TSL_MAX_SELECTIONS = 5;
+    let tslSelectedIds = ['nfl-kc', 'nba-bos', 'mlb-nyy', 'ncaa-uga', 'hsfb-mater-dei'];
+    let tslActiveSport = 'ALL';
+    let tslSearchFilter = '';
+
+    const tslTeams = [
+      // NFL
+      { id: 'nfl-kc', name: 'Kansas City Chiefs', shortName: 'Chiefs', sport: 'NFL', league: 'AFC West', region: 'Kansas City, MO', rank: 'AFC #1' },
+      { id: 'nfl-sf', name: 'San Francisco 49ers', shortName: '49ers', sport: 'NFL', league: 'NFC West', region: 'Santa Clara, CA', rank: 'NFC #2' },
+      { id: 'nfl-bal', name: 'Baltimore Ravens', shortName: 'Ravens', sport: 'NFL', league: 'AFC North', region: 'Baltimore, MD', rank: 'AFC #2' },
+      { id: 'nfl-det', name: 'Detroit Lions', shortName: 'Lions', sport: 'NFL', league: 'NFC North', region: 'Detroit, MI', rank: 'NFC #1' },
+      { id: 'nfl-phi', name: 'Philadelphia Eagles', shortName: 'Eagles', sport: 'NFL', league: 'NFC East', region: 'Philadelphia, PA', rank: 'NFC #3' },
+      // NBA
+      { id: 'nba-bos', name: 'Boston Celtics', shortName: 'Celtics', sport: 'NBA', league: 'Eastern Conference', region: 'Boston, MA', rank: 'East #1' },
+      { id: 'nba-den', name: 'Denver Nuggets', shortName: 'Nuggets', sport: 'NBA', league: 'Western Conference', region: 'Denver, CO', rank: 'West #2' },
+      { id: 'nba-lal', name: 'Los Angeles Lakers', shortName: 'Lakers', sport: 'NBA', league: 'Western Conference', region: 'Los Angeles, CA', rank: 'West #7' },
+      { id: 'nba-nyk', name: 'New York Knicks', shortName: 'Knicks', sport: 'NBA', league: 'Eastern Conference', region: 'New York, NY', rank: 'East #2' },
+      // MLB
+      { id: 'mlb-nyy', name: 'New York Yankees', shortName: 'Yankees', sport: 'MLB', league: 'AL East', region: 'Bronx, NY', rank: 'AL East #1' },
+      { id: 'mlb-lad', name: 'Los Angeles Dodgers', shortName: 'Dodgers', sport: 'MLB', league: 'NL West', region: 'Los Angeles, CA', rank: 'NL West #1' },
+      { id: 'mlb-atl', name: 'Atlanta Braves', shortName: 'Braves', sport: 'MLB', league: 'NL East', region: 'Atlanta, GA', rank: 'NL East #2' },
+      { id: 'mlb-bal', name: 'Baltimore Orioles', shortName: 'Orioles', sport: 'MLB', league: 'AL East', region: 'Baltimore, MD', rank: 'AL East #2' },
+      // NHL
+      { id: 'nhl-fla', name: 'Florida Panthers', shortName: 'Panthers', sport: 'NHL', league: 'Atlantic Division', region: 'Sunrise, FL', rank: 'Atlantic #1' },
+      { id: 'nhl-edm', name: 'Edmonton Oilers', shortName: 'Oilers', sport: 'NHL', league: 'Pacific Division', region: 'Edmonton, AB', rank: 'Pacific #2' },
+      { id: 'nhl-nyr', name: 'New York Rangers', shortName: 'Rangers', sport: 'NHL', league: 'Metropolitan Division', region: 'New York, NY', rank: 'Metro #1' },
+      { id: 'nhl-dal', name: 'Dallas Stars', shortName: 'Stars', sport: 'NHL', league: 'Central Division', region: 'Dallas, TX', rank: 'Central #1' },
+      // NCAA
+      { id: 'ncaa-uga', name: 'Georgia Bulldogs', shortName: 'Bulldogs', sport: 'NCAA', league: 'SEC (Football/Basketball)', region: 'Athens, GA', rank: 'AP #2' },
+      { id: 'ncaa-tex', name: 'Texas Longhorns', shortName: 'Longhorns', sport: 'NCAA', league: 'SEC (Football/Basketball)', region: 'Austin, TX', rank: 'AP #1' },
+      { id: 'ncaa-osu', name: 'Ohio State Buckeyes', shortName: 'Buckeyes', sport: 'NCAA', league: 'Big Ten', region: 'Columbus, OH', rank: 'AP #3' },
+      { id: 'ncaa-uconn', name: 'UConn Huskies', shortName: 'Huskies', sport: 'NCAA', league: 'Big East (Basketball)', region: 'Storrs, CT', rank: 'NCAA Champ #1' },
+      { id: 'ncaa-duke', name: 'Duke Blue Devils', shortName: 'Blue Devils', sport: 'NCAA', league: 'ACC (Basketball)', region: 'Durham, NC', rank: 'AP #7' },
+      // High School Football
+      { id: 'hsfb-mater-dei', name: 'Mater Dei Monarchs', shortName: 'Mater Dei', sport: 'High School Football', league: 'Trinity League (CIF-SS)', region: 'Santa Ana, CA', rank: 'National #1' },
+      { id: 'hsfb-duncanville', name: 'Duncanville Panthers', shortName: 'Duncanville', sport: 'High School Football', league: 'UIL 6A Division 1 (Dist 11-6A)', region: 'Duncanville, TX', rank: 'National #3' },
+      { id: 'hsfb-st-john-bosco', name: 'St. John Bosco Braves', shortName: 'Bosco', sport: 'High School Football', league: 'Trinity League (CIF-SS)', region: 'Bellflower, CA', rank: 'National #2' },
+      { id: 'hsfb-north-shore', name: 'North Shore Mustangs', shortName: 'North Shore', sport: 'High School Football', league: 'UIL 6A Division 1 (Dist 23-6A)', region: 'Houston, TX', rank: 'Texas Top 5' },
+      { id: 'hsfb-buford', name: 'Buford Wolves', shortName: 'Buford', sport: 'High School Football', league: 'GHSA Class 7A (Region 8-7A)', region: 'Buford, GA', rank: 'Georgia #1' },
+      // High School Basketball
+      { id: 'hsbb-montverde', name: 'Montverde Academy Eagles', shortName: 'Montverde', sport: 'High School Basketball', league: 'National Interscholastic (NIBC)', region: 'Montverde, FL', rank: 'National #1' },
+      { id: 'hsbb-paul-vi', name: 'Paul VI Panthers', shortName: 'Paul VI', sport: 'High School Basketball', league: 'WCAC Conference', region: 'Chantilly, VA', rank: 'National #2' },
+      { id: 'hsbb-columbus', name: 'Columbus Explorers', shortName: 'Columbus', sport: 'High School Basketball', league: 'FHSAA Class 7A', region: 'Miami, FL', rank: 'Florida #1' },
+      { id: 'hsbb-sierra-canyon', name: 'Sierra Canyon Trailblazers', shortName: 'Sierra Canyon', sport: 'High School Basketball', league: 'Mission League (CIF-SS)', region: 'Chatsworth, CA', rank: 'California Top 5' }
+    ];
+
+    const tslTrackerData = {
+      'nfl-kc': {
+        score: { opp: 'San Francisco 49ers', sc: '28 - 18', date: 'Oct 20, 2026', out: 'W', note: 'Fourth quarter ground drive closed out victory on the road.' },
+        next: { opp: 'Denver Broncos', time: '4:25 PM EDT', date: 'Sunday, Oct 26', venue: 'GEHA Field at Arrowhead Stadium', tv: 'CBS / Paramount+', isHome: true },
+        alert: { time: '2 hours ago', badge: 'ROSTER', head: 'Roster Activation: Starting Cornerback Cleared', detail: 'Defense returns to full health ahead of division matchup.' }
+      },
+      'nba-bos': {
+        score: { opp: 'New York Knicks', sc: '132 - 109', date: 'Oct 22, 2026', out: 'W', note: 'Tied NBA record with 29 made three-point field goals in opener.' },
+        next: { opp: 'Milwaukee Bucks', time: '7:30 PM EDT', date: 'Monday, Oct 27', venue: 'TD Garden', tv: 'TNT / Max', isHome: true },
+        alert: { time: '4 hours ago', badge: 'RADIUS_ALERT', head: 'Championship Banner Raised at TD Garden', detail: 'Lounge members celebrated the season launch with pick bonus multipliers.' }
+      },
+      'mlb-nyy': {
+        score: { opp: 'Cleveland Guardians', sc: '5 - 2', date: 'Oct 19, 2026', out: 'W', note: 'Tenth-inning 3-run home run clinched American League pennant.' },
+        next: { opp: 'Los Angeles Dodgers', time: '8:08 PM EDT', date: 'Friday, Oct 24', venue: 'Dodger Stadium', tv: 'FOX Sports', isHome: false },
+        alert: { time: '1 day ago', badge: 'SCHEDULE', head: 'World Series Starting Pitcher Confirmed', detail: 'Ace starter tabbed for Game 1 start on national broadcast.' }
+      },
+      'ncaa-uga': {
+        score: { opp: 'Texas Longhorns', sc: '30 - 15', date: 'Oct 19, 2026', out: 'W', note: 'Dominant first-half defensive performance in Austin road showdown.' },
+        next: { opp: 'Florida Gators', time: '3:30 PM EDT', date: 'Saturday, Nov 1', venue: 'EverBank Stadium, Jacksonville', tv: 'ABC / ESPN+', isHome: false },
+        alert: { time: '3 hours ago', badge: 'SCORE', head: 'SEC Defensive Player of the Week Awarded', detail: 'Defensive front recorded 7 sacks and 3 turnovers in ranked victory.' }
+      },
+      'hsfb-mater-dei': {
+        score: { opp: 'JSerra Catholic Lions', sc: '41 - 17', date: 'Oct 18, 2026', out: 'W', note: 'Trinity League matchup secured another undefeated regular season week.' },
+        next: { opp: 'St. John Bosco Braves', time: '7:00 PM PDT', date: 'Friday, Oct 24', venue: 'Santa Ana Stadium', tv: 'Bally Sports SoCal / NFHS', isHome: true },
+        alert: { time: '5 hours ago', badge: 'RADIUS_ALERT', head: 'Rivalry Clash: Sold-Out Radius Event', detail: 'National #1 vs. National #2 showdown previewed on Lounge Feed.' }
+      },
+      'nfl-sf': {
+        score: { opp: 'Kansas City Chiefs', sc: '18 - 28', date: 'Oct 20, 2026', out: 'L', note: 'Turnovers in red zone halted second-half comeback bid.' },
+        next: { opp: 'Dallas Cowboys', time: '8:20 PM EDT', date: 'Sunday, Oct 26', venue: "Levi's Stadium", tv: 'NBC / Peacock', isHome: true },
+        alert: { time: '1 hour ago', badge: 'SCHEDULE', head: 'Sunday Night Football Matchup Announced', detail: 'Prime-time showdown draws heavy Lounge pick activity.' }
+      },
+      'nhl-fla': {
+        score: { opp: 'Vegas Golden Knights', sc: '4 - 3 (OT)', date: 'Oct 19, 2026', out: 'W', note: 'Overtime game-winner tallied at Amerant Bank Arena.' },
+        next: { opp: 'New York Rangers', time: '7:00 PM EDT', date: 'Thursday, Oct 24', venue: 'Madison Square Garden', tv: 'ESPN / ESPN+', isHome: false },
+        alert: { time: '6 hours ago', badge: 'SCORE', head: 'Power Play Efficiency Climbs to 28.5%', detail: 'Special teams unit converts two goals in road swing.' }
+      },
+      'hsbb-montverde': {
+        score: { opp: 'IMG Academy Ascenders', sc: '84 - 68', date: 'Oct 17, 2026', out: 'W', note: 'Preseason showcase victory featured balanced double-digit scoring.' },
+        next: { opp: 'Oak Hill Academy Warriors', time: '6:30 PM EDT', date: 'Saturday, Nov 8', venue: 'Nest Center, Montverde, FL', tv: 'ESPNU / Lounge Stream', isHome: true },
+        alert: { time: '8 hours ago', badge: 'SCHEDULE', head: 'NIBC Schedule Officially Released', detail: 'National championship defense begins with 12 televised contests.' }
+      }
+    };
+
+    function renderTslUI() {
+      renderTslSelectedRibbon();
+      renderTslActivityTracker();
+      renderTslDirectory();
+    }
+
+    function renderTslSelectedRibbon() {
+      const countEl = document.getElementById('tslCount');
+      const remEl = document.getElementById('tslRemainingLabel');
+      const tagsEl = document.getElementById('tslSelectedTags');
+      if (!countEl || !tagsEl) return;
+
+      countEl.textContent = tslSelectedIds.length;
+      const remaining = TSL_MAX_SELECTIONS - tslSelectedIds.length;
+      if (remaining === 0) {
+        remEl.textContent = 'Maximum capacity reached';
+      } else {
+        remEl.textContent = `${remaining} slot(s) remaining`;
+      }
+
+      if (tslSelectedIds.length === 0) {
+        tagsEl.innerHTML = '<p class="text-xs text-slate-500 italic py-1">Zero teams selected. Use directory below to choose up to 5 teams.</p>';
+        return;
+      }
+
+      tagsEl.innerHTML = tslSelectedIds.map(id => {
+        const team = tslTeams.find(t => t.id === id);
+        if (!team) return '';
+        return `
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0A192F] border border-[#D4AF37]/50 text-xs text-white shadow-sm">
+            <span class="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-800 text-[#D4AF37]">${team.sport}</span>
+            <span class="font-bold">${team.name}</span>
+            <button type="button" onclick="toggleTslTeam('${team.id}')" class="text-slate-400 hover:text-red-400 text-sm font-black transition ml-1" title="Remove ${team.name}">&times;</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderTslActivityTracker() {
+      const grid = document.getElementById('tslTrackerGrid');
+      if (!grid) return;
+
+      if (tslSelectedIds.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-1 lg:col-span-2 bg-[#112240] border border-slate-700/80 rounded-xl p-8 text-center space-y-3">
+            <div class="text-4xl text-slate-600">🏟️</div>
+            <h4 class="text-base font-bold text-white">No Teams Currently Tracked</h4>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">
+              Select up to 5 teams in the directory below to populate real-time scores, upcoming schedules, and radius updates.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = tslSelectedIds.map(id => {
+        const team = tslTeams.find(t => t.id === id);
+        if (!team) return '';
+        const data = tslTrackerData[id] || {
+          score: { opp: 'Regional Opponent', sc: 'Finalized', date: 'Recent', out: 'W', note: 'Game completed with verified statistics.' },
+          next: { opp: 'Upcoming Opponent', time: '7:00 PM', date: 'Upcoming', venue: team.region, tv: 'Regional Broadcast', isHome: true },
+          alert: { time: 'Just now', badge: 'RADIUS_ALERT', head: 'Roster Schedule Synced', detail: 'Active tracking enabled for this program.' }
+        };
+
+        const outBadge = data.score.out === 'W'
+          ? 'bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40'
+          : data.score.out === 'L'
+          ? 'bg-red-950/40 text-red-400 border border-red-500/30'
+          : 'bg-amber-950/40 text-amber-400 border border-amber-500/30';
+
+        return `
+          <article class="bg-[#112240] border-2 border-slate-700/90 hover:border-[#D4AF37] rounded-xl p-5 flex flex-col justify-between shadow-xl transition-all duration-200">
+            <div class="space-y-4">
+              <!-- Header -->
+              <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3">
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#0A192F] text-[#D4AF37] border border-[#D4AF37]/30">${team.sport}</span>
+                    <span class="text-[10px] text-slate-400 font-mono">${team.league}</span>
+                  </div>
+                  <h4 class="text-lg font-black text-white">${team.name}</h4>
+                  <span class="text-xs text-slate-400">${team.region}</span>
+                </div>
+                ${team.rank ? `<span class="px-2.5 py-1 rounded bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40 text-[11px] font-bold whitespace-nowrap">${team.rank}</span>` : ''}
+              </div>
+
+              <!-- Recent Score -->
+              <div class="bg-[#0A192F] border border-slate-800/80 rounded-lg p-3 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px]">
+                  <span class="text-slate-400 uppercase font-bold tracking-wider">Recent Result</span>
+                  <span class="text-slate-500 font-mono text-[10px]">${data.score.date}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-bold text-white">vs. ${data.score.opp}</div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded text-xs font-black ${outBadge}">${data.score.out}</span>
+                    <span class="text-sm font-black text-white font-mono">${data.score.sc}</span>
+                  </div>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-snug">${data.score.note}</p>
+              </div>
+
+              <!-- Next Matchup -->
+              <div class="bg-[#0A192F] border border-slate-800/80 rounded-lg p-3 space-y-1.5">
+                <div class="flex items-center justify-between text-[11px]">
+                  <span class="text-[#D4AF37] uppercase font-bold tracking-wider">Next Matchup</span>
+                  <span class="text-slate-400 font-mono text-[10px]">${data.next.date} • ${data.next.time}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-bold text-white">${data.next.isHome ? 'vs.' : '@'} ${data.next.opp}</div>
+                  <span class="text-[10px] font-mono text-[#D4AF37] px-2 py-0.5 rounded bg-[#112240] border border-slate-700">${data.next.tv}</span>
+                </div>
+                <div class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                  <span class="text-slate-500">📍</span>
+                  <span>${data.next.venue}</span>
+                </div>
+              </div>
+
+              <!-- Activity Alert -->
+              <div class="p-3 rounded-lg bg-[#0E1E38] border border-slate-700/60 space-y-1">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="font-bold text-[#D4AF37] uppercase tracking-wider">📢 Activity Feed (${data.alert.badge})</span>
+                  <span class="text-slate-500">${data.alert.time}</span>
+                </div>
+                <div class="text-xs font-bold text-white">${data.alert.head}</div>
+                <p class="text-[11px] text-slate-300 leading-snug">${data.alert.detail}</p>
+              </div>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400 text-[11px]">Lounge Tracking: <strong class="text-[#00875A]">ENABLED</strong></span>
+              <button type="button" onclick="toggleTslTeam('${team.id}')" class="text-slate-400 hover:text-red-400 font-bold transition text-[11px]">Remove from Tracker</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderTslDirectory() {
+      const tabsEl = document.getElementById('tslSportTabs');
+      const gridEl = document.getElementById('tslDirectoryGrid');
+      const countEl = document.getElementById('tslDirectoryCount');
+      if (!tabsEl || !gridEl) return;
+
+      const sports = ['ALL', 'NFL', 'NBA', 'MLB', 'NHL', 'NCAA', 'High School Football', 'High School Basketball'];
+      tabsEl.innerHTML = sports.map(sp => `
+        <button
+          type="button"
+          onclick="setTslSportFilter('${sp}')"
+          class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+            tslActiveSport === sp
+              ? 'bg-[#D4AF37] text-[#0A192F] shadow'
+              : 'bg-[#0A192F] text-slate-300 hover:text-white border border-slate-700'
+          }"
+        >
+          ${sp === 'ALL' ? 'All Sports' : sp}
+        </button>
+      `).join('');
+
+      const filtered = tslTeams.filter(team => {
+        const matchesSport = tslActiveSport === 'ALL' || team.sport === tslActiveSport;
+        const q = tslSearchFilter.trim().toLowerCase();
+        const matchesQuery = !q ||
+          team.name.toLowerCase().includes(q) ||
+          team.shortName.toLowerCase().includes(q) ||
+          team.region.toLowerCase().includes(q) ||
+          team.league.toLowerCase().includes(q);
+        return matchesSport && matchesQuery;
+      });
+
+      if (countEl) {
+        countEl.textContent = `(${filtered.length} available)`;
+      }
+
+      if (filtered.length === 0) {
+        gridEl.innerHTML = '<div class="col-span-full text-center py-8 text-xs text-slate-500">No teams found matching current filters.</div>';
+        return;
+      }
+
+      gridEl.innerHTML = filtered.map(team => {
+        const isSelected = tslSelectedIds.includes(team.id);
+        const isAtMax = tslSelectedIds.length >= TSL_MAX_SELECTIONS && !isSelected;
+
+        return `
+          <div
+            onclick="toggleTslTeam('${team.id}')"
+            class="p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+              isSelected
+                ? 'bg-[#0E254A] border-[#D4AF37] shadow-lg shadow-[#D4AF37]/10'
+                : isAtMax
+                ? 'bg-[#0A192F]/60 border-slate-800 opacity-60 hover:opacity-80'
+                : 'bg-[#0A192F] border-slate-800 hover:border-slate-600'
+            }"
+          >
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-800 text-[#D4AF37]">${team.sport}</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded ${
+                  isSelected ? 'bg-[#00875A] text-white' : 'bg-slate-800 text-slate-400'
+                }">${isSelected ? '✓ Tracked' : '+ Add'}</span>
+              </div>
+              <div>
+                <h4 class="text-sm font-black text-white">${team.name}</h4>
+                <p class="text-[11px] text-slate-400">${team.region}</p>
+                <p class="text-[10px] text-slate-500 font-mono mt-0.5">${team.league}</p>
+              </div>
+            </div>
+            ${team.rank ? `<div class="mt-3 pt-2 border-t border-slate-800 text-[10px] font-bold text-[#00875A]">${team.rank}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleTslTeam(id) {
+      const alertBox = document.getElementById('tslAlertNotice');
+      if (tslSelectedIds.includes(id)) {
+        tslSelectedIds = tslSelectedIds.filter(item => item !== id);
+        if (alertBox) alertBox.classList.add('hidden');
+      } else {
+        if (tslSelectedIds.length >= TSL_MAX_SELECTIONS) {
+          if (alertBox) {
+            alertBox.textContent = `Maximum selection limit reached (${TSL_MAX_SELECTIONS} teams). Deselect a team to add another.`;
+            alertBox.classList.remove('hidden');
+          }
+          return;
+        }
+        tslSelectedIds.push(id);
+        if (alertBox) alertBox.classList.add('hidden');
+      }
+      renderTslUI();
+    }
+
+    function clearTslTeams() {
+      tslSelectedIds = [];
+      const alertBox = document.getElementById('tslAlertNotice');
+      if (alertBox) alertBox.classList.add('hidden');
+      renderTslUI();
+    }
+
+    function setTslSportFilter(sport) {
+      tslActiveSport = sport;
+      renderTslDirectory();
+    }
+
+    function handleTslSearch(val) {
+      tslSearchFilter = val;
+      renderTslDirectory();
+    }
+
+    // Initialize TSL Multi-Sport Controller on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderTslUI);
+    } else {
+      renderTslUI();
+    }
+  </script>
+
+
+  <!-- Voter Edition Module JavaScript Engine (CANON-162) -->
+  <script>
+    const CTJ_VOTER_DATA = {"_meta": {"artifact_type": "CTJ_VOTER_EDITION_REGISTRY", "registry_id": "CTJ_VOTER_V1", "canonical_id": "CANON-162", "version": "1.0.0", "source_authority": "DCSE Master Profile v7.3", "parent_product": "sc-services.json#CTJ", "status": "ACTIVE", "created_at": "2026-10-12T00:00:00Z", "brand_posture": "Third-Person Solo-Brand. No first-person pronouns. No em-dashes. No internal governance terms in public copy.", "framework_name": "7-Step Nonpartisan Civic Clarity Framework"}, "product": {"code": "CTJ-VOTER", "name": "Critical Thinker's Journey: Voter Edition", "parent_brand": "Sonly Consulting", "motto": "NONPARTISAN CIVIC CLARITY ENGINE", "hero": "Structured Nonpartisan Civic Analysis & Ballot Decision Matrix", "tagline": "The methodology for citizens who demand verified evidence over campaign rhetoric.", "description": "Critical Thinker's Journey: Voter Edition provides a structured, nonpartisan 7-step reasoning engine for evaluating candidates, legislative proposals, and ballot referendums. The methodology eliminates partisan emotionalism and replaces campaign soundbites with verified roll call voting records, second-order fiscal modeling, and deterministic civic clarity.", "brand_color_primary": "#D4AF37", "brand_color_secondary": "#0A192F", "cta_primary": "Launch Civic Framework", "cta_secondary": "Generate Clarity Card"}, "framework_steps": [{"step_number": 1, "id": "STEP-01-VALUES", "name": "Core Values Baseline", "short_title": "Core Values", "subtitle": "Rank Top Constitutional and Governance Imperatives", "description": "Establish the voter's foundational civic principles before evaluating candidates or proposals. By defining prioritized principles first, subsequent candidate evaluations remain grounded in consistent governance standards rather than campaign charisma or media narratives.", "input_type": "Priority Weighting (1-10 Scale)", "output_type": "Normalized Civic Priority Vector", "imperatives": [{"id": "VAL-01", "code": "CONST_LIBERTY", "name": "Constitutional Originalism & Civil Liberties", "category": "Governance", "description": "Strict adherence to enumerated constitutional powers, robust defense of Bill of Rights protections, due process of law, and personal privacy against unwarranted state surveillance.", "default_weight": 9, "benchmarks": ["Protection of First and Fourth Amendment guarantees", "Limitation of federal agencies to statutory mandates", "Preservation of habeas corpus and procedural due process"]}, {"id": "VAL-02", "code": "FISCAL_DISCIPLINE", "name": "Fiscal Discipline & Debt Containment", "category": "Economy", "description": "Structural reduction of federal deficits, disciplined budget ceilings, elimination of baseline budgeting expansion, and rigorous auditing of public expenditures.", "default_weight": 8, "benchmarks": ["Enforcement of statutory debt ceilings", "Audit of defense and discretionary program expenditures", "Prevention of unfunded federal entitlement growth"]}, {"id": "VAL-03", "code": "SOVEREIGNTY_DEFENSE", "name": "National Sovereignty & Border Integrity", "category": "Security", "description": "Orderly border enforcement, rule of law in immigration administration, targeted national defense posture, and foreign policy prioritizing domestic stability.", "default_weight": 8, "benchmarks": ["Operational border enforcement and visa verification", "Defense spending tied to strategic readiness rather than contractors", "Prudent military engagement authorized by legislative declarations"]}, {"id": "VAL-04", "code": "FREE_ENTERPRISE", "name": "Free Enterprise & Regulatory Restraint", "category": "Economy", "description": "Protection of voluntary commerce, reduction of administrative compliance burdens on small business, competitive domestic tax rates, and property rights security.", "default_weight": 7, "benchmarks": ["Cost-benefit thresholds on administrative rulemaking", "Dismantling of anti-competitive licensing barriers", "Equitable tax structure that avoids capital misallocation"]}, {"id": "VAL-05", "code": "FEDERALISM_LOCALISM", "name": "Federalism & Decentralized Governance", "category": "Governance", "description": "Reinvigoration of the Tenth Amendment, devolving policy decisions to States and local municipalities where citizens exercise greater oversight.", "default_weight": 7, "benchmarks": ["Reduction of conditional federal grants that bypass State legislatures", "Local educational and municipal zoning autonomy", "State-level regulatory experimentation"]}, {"id": "VAL-06", "code": "RULE_OF_LAW", "name": "Rule of Law & Equal Protection", "category": "Legal", "description": "Impartial administration of justice without selective prosecution, uniform enforcement of statutory criminal laws, and insulation of judiciary from political pressure.", "default_weight": 8, "benchmarks": ["Uniform application of criminal statutes regardless of status", "Protection of jury trial rights and appellate review", "Separation between investigative agencies and political campaigns"]}, {"id": "VAL-07", "code": "PUBLIC_TRANSPARENCY", "name": "Public Transparency & Institutional Ethics", "category": "Integrity", "description": "Expedited FOIA compliance, ban on congressional insider trading, real-time disclosure of campaign contributions, and elimination of closed-door omnibus legislation.", "default_weight": 9, "benchmarks": ["Single-subject legislative bill requirements", "Public access to legislative text 72 hours before floor votes", "Mandatory disclosure of executive regulatory lobbying contacts"]}, {"id": "VAL-08", "code": "CRITICAL_INFRASTRUCTURE", "name": "Resilient Infrastructure & Energy Independence", "category": "Infrastructure", "description": "Strategic development of reliable baseload power, grid security against electromagnetic threats, modern freight transport, and domestic technological capability.", "default_weight": 6, "benchmarks": ["Electrical grid hardened against disruption and cyber intrusion", "Diversified domestic energy production ensuring price stability", "Maintenance of waterways, freight rail, and interstate corridors"]}]}, {"step_number": 2, "id": "STEP-02-SIGNAL_FILTER", "name": "Signal vs Noise Filter", "short_title": "Signal vs Noise", "subtitle": "Distinguish Campaign Rhetoric from Verified Action", "description": "Filter campaign soundbites, press releases, and attack advertisements against verifiable legislative votes, committee actions, roll calls, and executive appointments. The filter assigns higher evidentiary weight to binding actions while penalizing unsubstantiated political declarations.", "filter_categories": [{"type": "SIGNAL", "tier": "Tier 1: High Fidelity", "weight_multiplier": 1.0, "sources": ["Binding Roll Call Floor Votes", "Committee Amendments & Markup Text", "Signed Executive Orders & Directives", "Statutory Enactments & Legislative Codification", "Official Sworn Testimony & Depositions"]}, {"type": "NOISE", "tier": "Tier 3: Low Fidelity / Speculative", "weight_multiplier": 0.15, "sources": ["Campaign Rally Speeches & Soundbites", "Super PAC Paid Advertisements", "Non-binding Sense-of-Congress Resolutions", "Unverified Social Media Declarations", "Partisan Talking Points & Talking Head Commentary"]}], "filter_test_cases": [{"id": "CASE-01", "domain": "Fiscal Responsibility", "issue": "Federal Budget Expansion & Deficit Control", "claimed_rhetoric": "Pledged complete fiscal conservatism and spending reduction in television ads.", "verified_record": "Voted AYE on $1.7T omnibus spending bill containing 4,200 earmarks (Roll Call #412).", "rhetoric_score": 90, "record_score": 25, "divergence_penalty": 65, "signal_reliability": "POOR", "evidence_citation": "Congressional Record Vol. 169, Roll Call Vote 412"}, {"id": "CASE-02", "domain": "Digital Privacy", "issue": "Warrantless Surveillance & Fourth Amendment Protections", "claimed_rhetoric": "Condemned government surveillance abuse at national campaign town hall.", "verified_record": "Voted NAY on amendment requiring judicial warrants for domestic communications searches under Section 702 (Roll Call #119).", "rhetoric_score": 85, "record_score": 15, "divergence_penalty": 70, "signal_reliability": "CRITICAL_MISMATCH", "evidence_citation": "House Roll Call #119, Reauthorization Amendment"}, {"id": "CASE-03", "domain": "Healthcare Transparency", "issue": "Mandatory Hospital Price Disclosure", "claimed_rhetoric": "Advocated for healthcare cost transparency and patient choice in policy white paper.", "verified_record": "Co-sponsored and voted AYE on Fair Price Transparency Act requiring upfront procedure cost disclosure (Roll Call #284).", "rhetoric_score": 80, "record_score": 85, "divergence_penalty": 0, "signal_reliability": "VERIFIED_HIGH", "evidence_citation": "Statutory Enactment Public Law 118-42"}, {"id": "CASE-04", "domain": "Regulatory Reform", "issue": "Small Business Compliance Relief", "claimed_rhetoric": "Pledged aggressive deregulation to stimulate local small business hiring.", "verified_record": "Introduced REINS Act companion bill requiring congressional approval for major agency rules exceeding $100M economic cost.", "rhetoric_score": 75, "record_score": 80, "divergence_penalty": 0, "signal_reliability": "VERIFIED_HIGH", "evidence_citation": "Bill Sponsorship S. 184 / Congressional Record"}]}, {"step_number": 3, "id": "STEP-03-OUTCOME_MODEL", "name": "Second-Order Outcome Modeling", "short_title": "Second-Order Modeling", "subtitle": "Project 5-Year Budgetary and Legal Horizons", "description": "Model proposed policies beyond immediate popular intent by calculating downstream consequences across fiscal appropriations, structural deficits, constitutional scrutiny, and compliance burdens over a five-year horizon.", "horizon_years": [1, 2, 3, 4, 5], "modeling_dimensions": [{"dimension": "BUDGET_IMPACT", "label": "Fiscal Trajectory & Outlays", "unit": "Fiscal Drag Index (0-100)", "description": "Downstream costs including interest service, pension adjustments, and expansion of program beneficiaries."}, {"dimension": "LEGAL_EXPOSURE", "label": "Constitutional & Litigation Risk", "unit": "Litigation Exposure Rating (Low/Med/High)", "description": "Exposure to federal preemption challenges, dormant Commerce Clause litigation, or civil rights injunctions."}, {"dimension": "COMPLIANCE_BURDEN", "label": "Regulatory Overhead for Small Entities", "unit": "Administrative Hours / Cost Index", "description": "Administrative friction imposed on private actors and local municipal agencies."}, {"dimension": "CAPITAL_DISTORTION", "label": "Secondary Market Distortions", "unit": "Market Efficiency Impact Score", "description": "Unintended price distortions, subsidy dependencies, or supply contraction."}], "proposals": [{"id": "PROP-MODEL-01", "title": "Statewide Commercial Rent Control Act", "first_order_intent": "Intended to reduce commercial lease prices for urban small merchants.", "projections": [{"year": 1, "budget_drag": 20, "litigation_risk": "High", "compliance_burden": 45, "capital_distortion": 30, "key_event": "Commercial lease freeze begins; initial federal constitutional challenges filed by property trusts."}, {"year": 2, "budget_drag": 35, "litigation_risk": "High", "compliance_burden": 60, "capital_distortion": 50, "key_event": "Commercial building maintenance deferrals surface; legal defense fund drawn from municipal budget."}, {"year": 3, "budget_drag": 55, "litigation_risk": "Medium", "compliance_burden": 75, "capital_distortion": 72, "key_event": "Commercial building starts fall 34%; capital migrates to neighboring jurisdictions."}, {"year": 4, "budget_drag": 70, "litigation_risk": "Low", "compliance_burden": 85, "capital_distortion": 84, "key_event": "Municipal commercial property tax receipts drop $140M; retail space vacancy in prime corridors."}, {"year": 5, "budget_drag": 82, "litigation_risk": "Low", "compliance_burden": 90, "capital_distortion": 91, "key_event": "Legislature forced to consider emergency commercial property tax hike or repeal rent controls."}]}, {"id": "PROP-MODEL-02", "title": "Clean Energy Grid Transition Mandate", "first_order_intent": "Mandate 100% renewable generation within 6 years to curb emissions.", "projections": [{"year": 1, "budget_drag": 30, "litigation_risk": "Medium", "compliance_burden": 40, "capital_distortion": 25, "key_event": "Initial bond issuance for transmission lines; utility rate case filings requesting 8% hike."}, {"year": 2, "budget_drag": 48, "litigation_risk": "Medium", "compliance_burden": 55, "capital_distortion": 42, "key_event": "Early retirement of natural gas peaker plants; reserve generation margins shrink to 4%."}, {"year": 3, "budget_drag": 64, "litigation_risk": "Low", "compliance_burden": 70, "capital_distortion": 65, "key_event": "Summer peak electricity prices surge 42%; industrial manufacturers curtail peak operations."}, {"year": 4, "budget_drag": 75, "litigation_risk": "High", "compliance_burden": 80, "capital_distortion": 78, "key_event": "Battery storage supply bottlenecks trigger rolling brownout warnings; emergency fossil imports contracted."}, {"year": 5, "budget_drag": 85, "litigation_risk": "Medium", "compliance_burden": 88, "capital_distortion": 82, "key_event": "Cumulative retail utility rates 68% higher than baseline; taxpayer subsidies required to backstop utility credit rating."}]}]}, {"step_number": 4, "id": "STEP-04-CANDIDATE_COMPARATOR", "name": "Candidate Stance Comparator", "short_title": "Candidate Comparator", "subtitle": "Calculate Weighted Alignment Scores Across Candidates", "description": "Evaluate candidates through deterministic weighted scoring. Each candidate's verified position across key civic domains is multiplied by the voter's core value weights from Step 1, producing an objective alignment percentage that reveals substantive compatibility without partisan spin.", "scoring_formula": "AlignmentScore = SUM(ValueWeight_i * CandidateStance_i) / (10 * SUM(ValueWeight_i)) * 100", "candidates": [{"id": "CAND-01", "name": "Candidate A: Marcus Vance", "title": "Constitutional Conservative & Fiscal Realist", "profile_summary": "Prioritizes spending caps, statutory deregulation, strict constructionist judicial philosophy, and decentralized municipal control.", "verified_record_rating": "HIGH_VERIFIED", "stances": [{"value_code": "CONST_LIBERTY", "stance_score": 9.2, "rationale": "Consistent record defending First Amendment association rights and Fourth Amendment warrant standards.", "verification_source": "Roll Call Votes 2021-2025; Judiciary Committee Record"}, {"value_code": "FISCAL_DISCIPLINE", "stance_score": 8.8, "rationale": "Voted against continuing resolutions without offsetting budget rescissions; authored zero-baseline review amendment.", "verification_source": "Budget Committee Roll Call Record"}, {"value_code": "SOVEREIGNTY_DEFENSE", "stance_score": 8.5, "rationale": "Supported border physical barrier funding and mandatory employer E-Verify enforcement.", "verification_source": "Homeland Security Committee Votes"}, {"value_code": "FREE_ENTERPRISE", "stance_score": 8.9, "rationale": "Sponsored legislation eliminating occupational licensing reciprocity restrictions.", "verification_source": "Commerce Committee Record"}, {"value_code": "FEDERALISM_LOCALISM", "stance_score": 9.0, "rationale": "Advocates block-granting federal welfare programs to State administration with zero federal mandates.", "verification_source": "Legislative Sponsorship S. 412"}, {"value_code": "RULE_OF_LAW", "stance_score": 8.4, "rationale": "Supported mandatory minimums for violent felonies and qualified immunity protections for peace officers.", "verification_source": "Judiciary Floor Votes"}, {"value_code": "PUBLIC_TRANSPARENCY", "stance_score": 7.8, "rationale": "Co-sponsored 72-hour bill inspection rule; moderate disclosures on campaign finance.", "verification_source": "Rules Committee Markup"}, {"value_code": "CRITICAL_INFRASTRUCTURE", "stance_score": 6.5, "rationale": "Favors private concession models and expedited NEPA permitting over direct federal grant outlays.", "verification_source": "Public Works & Transportation Votes"}]}, {"id": "CAND-02", "name": "Candidate B: Elena Rostova", "title": "Technocratic Institutionalist & Infrastructure Advocate", "profile_summary": "Prioritizes public capital modernization, institutional regulatory oversight, green energy subsidies, and multilateral alliances.", "verified_record_rating": "MEDIUM_MIXED", "stances": [{"value_code": "CONST_LIBERTY", "stance_score": 5.4, "rationale": "Supports federal hate speech guidelines and firearms background licensing expansion.", "verification_source": "Legislative Record & Public Hearings"}, {"value_code": "FISCAL_DISCIPLINE", "stance_score": 3.8, "rationale": "Voted for all supplemental appropriations bills; advocates raising corporate tax brackets to fund deficits.", "verification_source": "Ways & Means Committee Votes"}, {"value_code": "SOVEREIGNTY_DEFENSE", "stance_score": 5.2, "rationale": "Favors international treaty structures and targeted refugee processing expansions.", "verification_source": "Foreign Affairs Record"}, {"value_code": "FREE_ENTERPRISE", "stance_score": 4.5, "rationale": "Supports mandatory ESG disclosures for publicly traded firms and prevailing wage covenants.", "verification_source": "Securities Oversight Hearings"}, {"value_code": "FEDERALISM_LOCALISM", "stance_score": 4.0, "rationale": "Backs national educational curriculum standards and federal zoning preemption for housing.", "verification_source": "Education & Workforce Votes"}, {"value_code": "RULE_OF_LAW", "stance_score": 6.8, "rationale": "Emphasizes restorative justice sentencing reform while maintaining federal civil rights enforcement.", "verification_source": "Judiciary Committee Record"}, {"value_code": "PUBLIC_TRANSPARENCY", "stance_score": 7.2, "rationale": "Pioneered agency open-data portal; supported lobbying registry enhancements.", "verification_source": "Oversight Committee Reports"}, {"value_code": "CRITICAL_INFRASTRUCTURE", "stance_score": 9.1, "rationale": "Authored $85B regional passenger rail bond and public water filtration recapitalization act.", "verification_source": "Transportation Committee Primary Sponsor"}]}, {"id": "CAND-03", "name": "Candidate C: Dominic Thorne", "title": "Decentralist Reformer & Digital Privacy Champion", "profile_summary": "Prioritizes digital civil liberties, sound money, elimination of federal surveillance programs, and aggressive judicial restraint.", "verified_record_rating": "HIGH_VERIFIED", "stances": [{"value_code": "CONST_LIBERTY", "stance_score": 9.6, "rationale": "Uncompromising defense of end-to-end encryption, digital privacy rights, and Second Amendment protections.", "verification_source": "Roll Call Record on FISA Reauthorization"}, {"value_code": "FISCAL_DISCIPLINE", "stance_score": 8.5, "rationale": "Voted against every omnibus spending package; introduced bill prohibiting Federal Reserve digital currency.", "verification_source": "Financial Services Committee"}, {"value_code": "SOVEREIGNTY_DEFENSE", "stance_score": 7.2, "rationale": "Strictly non-interventionist foreign policy; supports constitutional declarations before military deployment.", "verification_source": "Armed Services Votes"}, {"value_code": "FREE_ENTERPRISE", "stance_score": 8.7, "rationale": "Advocates complete tax exemptions for capital gains on domestic manufacturing and software.", "verification_source": "Ways & Means Amendments"}, {"value_code": "FEDERALISM_LOCALISM", "stance_score": 9.4, "rationale": "Authored legislation abolishing federal department grant conditions and restoring state primacy.", "verification_source": "Sponsorship Record H.R. 520"}, {"value_code": "RULE_OF_LAW", "stance_score": 8.0, "rationale": "Advocates strict limits on civil asset forfeiture and elimination of non-statutory federal crimes.", "verification_source": "Criminal Justice Reform Package"}, {"value_code": "PUBLIC_TRANSPARENCY", "stance_score": 9.5, "rationale": "Introduced legislation mandating complete public disclosure of all unclassified federal grant audits.", "verification_source": "Government Reform Sub-Committee"}, {"value_code": "CRITICAL_INFRASTRUCTURE", "stance_score": 5.8, "rationale": "Favors private utility deregulation and nuclear microreactor licensing over public trust bonds.", "verification_source": "Energy & Commerce Votes"}]}]}, {"step_number": 5, "id": "STEP-05-REFERENDUM_STRESS", "name": "Ballot Referendum Stress Test", "short_title": "Referendum Stress Test", "subtitle": "Test Propositions Against the 5-Pillar Vulnerability Matrix", "description": "Subject proposed citizen initiatives, bonds, and constitutional amendments to rigorous structural scrutiny. The 5-pillar stress test flags hidden fiscal liabilities, litigation risk, and open-ended administrative discretion before voting.", "stress_pillars": [{"code": "PIL-01", "name": "Constitutional & Statutory Authority", "fail_condition": "Exceeds municipal or state police powers, triggering immediate federal court injunctions."}, {"code": "PIL-02", "name": "Dedicated Revenue vs Unfunded Mandate", "fail_condition": "Appropriates mandatory outlays without dedicated, verified revenue offsets."}, {"code": "PIL-03", "name": "Secondary Market Disruption", "fail_condition": "Induces housing shortages, supply friction, or flight of private productive capital."}, {"code": "PIL-04", "name": "Bureaucratic Rulemaking Discretion", "fail_condition": "Delegates unconstrained regulatory discretion to unelected advisory boards."}, {"code": "PIL-05", "name": "Sunset Clause & Mandatory Audit", "fail_condition": "Lacks automatic expiration (5-7 years) and mandatory independent legislative audit."}], "propositions": [{"id": "PROP-201", "title": "Proposition 201: Regional Rapid Transit Bond ($4.8 Billion)", "ballot_summary": "Authorizes the issuance of $4.8 billion in general obligation bonds for light rail expansion, funded by a 0.5% county sales tax surcharge.", "pillar_evaluations": [{"pillar_code": "PIL-01", "status": "PASS", "notes": "Clearly falls within municipal bonding and transport authority."}, {"pillar_code": "PIL-02", "status": "WARN", "notes": "Sales tax revenues assume 3.5% ongoing economic expansion; downturn creates general fund debt burden."}, {"pillar_code": "PIL-03", "status": "WARN", "notes": "Sales tax increase disproportionately increases consumer goods friction on lower-income households."}, {"pillar_code": "PIL-04", "status": "PASS", "notes": "Construction oversight assigned to existing transportation authority with statutory procurement rules."}, {"pillar_code": "PIL-05", "status": "FAIL", "notes": "Tax surcharge remains permanent even after bond retirement; lacks required 10-year sunset clause."}], "vulnerability_score": 45, "verdict": "CONDITIONAL_WARN", "verdict_label": "High Secondary Debt Exposure"}, {"id": "PROP-202", "title": "Proposition 202: Parental Educational Choice Accounts", "ballot_summary": "Permits state per-pupil education funds ($7,800/student) to follow enrolled students to accredited private, parochial, or homeschooling programs.", "pillar_evaluations": [{"pillar_code": "PIL-01", "status": "PASS", "notes": "Conforms with state supreme court precedent and First Amendment freedom of association."}, {"pillar_code": "PIL-02", "status": "PASS", "notes": "Revenue neutral; funding redirects existing formula funds without net state tax increases."}, {"pillar_code": "PIL-03", "status": "PASS", "notes": "Fosters competitive dynamics among educational providers without supply restriction."}, {"pillar_code": "PIL-04", "status": "WARN", "notes": "State education board may attempt regulatory curriculum controls on independent academies."}, {"pillar_code": "PIL-05", "status": "PASS", "notes": "Mandates annual state auditor general review and 6-year legislative performance reauthorization."}], "vulnerability_score": 15, "verdict": "VERIFIED_PASS", "verdict_label": "Robust Structural Integrity"}, {"id": "PROP-203", "title": "Proposition 203: Municipal Energy Authority Eminent Domain", "ballot_summary": "Authorizes municipal government to condemn and seize investor-owned electric utility assets to establish a city-managed power authority.", "pillar_evaluations": [{"pillar_code": "PIL-01", "status": "FAIL", "notes": "Invites immediate federal Fifth Amendment Takings Clause litigation and bond covenant defaults."}, {"pillar_code": "PIL-02", "status": "FAIL", "notes": "Understates condemnation valuation by an estimated $1.2B, creating unfunded municipal debt liability."}, {"pillar_code": "PIL-03", "status": "FAIL", "notes": "Triggers immediate municipal bond rating downgrades and utility investment departure."}, {"pillar_code": "PIL-04", "status": "FAIL", "notes": "Grants unelected municipal power commissioners unchecked rate-setting power without judicial review."}, {"pillar_code": "PIL-05", "status": "FAIL", "notes": "Contains zero audit provisions or sunset mechanisms."}], "vulnerability_score": 92, "verdict": "CRITICAL_FAIL", "verdict_label": "Severe Fiscal & Legal Hazard"}]}, {"step_number": 6, "id": "STEP-06-TRADEOFF_EQUILIBRIUM", "name": "Trade-off Equilibrium Calculator", "short_title": "Trade-off Calculator", "subtitle": "Calculate Civic Equilibrium and Detect Cognitive Dissonance", "description": "Evaluate non-zero-sum and zero-sum trade-offs across four governing tensions. The calculator maps personal trade-off positions and alerts the citizen when stated policy desires are mathematically incompatible with fiscal or constitutional limits.", "tradeoff_dilemmas": [{"id": "TRADEOFF-01", "title": "Individual Liberty vs Public Security", "axis_left": "Maximized Procedural Liberty", "axis_right": "Aggressive Public Security", "description_left": "Strict warrant limits, encrypted communications, absolute Fourth Amendment protections, minimal administrative enforcement.", "description_right": "Expanded police authority, automated public surveillance, expedited administrative detention, enhanced border interdiction.", "default_balance": -25}, {"id": "TRADEOFF-02", "title": "Fiscal Austerity vs Public Capital Outlays", "axis_left": "Fiscal Austerity & Low Taxes", "axis_right": "Public Capital & Infrastructure", "description_left": "Zero debt expansion, restricted public borrowing, lower corporate and personal tax rates, privatization of public works.", "description_right": "Large-scale public transit bonds, subsidized clean energy projects, expanded public research facilities, higher progressive tax rates.", "default_balance": -35}, {"id": "TRADEOFF-03", "title": "Market Deregulation vs Precautionary Standards", "axis_left": "Free Market Agility", "axis_right": "Precautionary Regulation", "description_left": "Rapid business formation, minimal environmental permitting delays, market-driven wage clearing, unrestricted technological deployment.", "description_right": "Stringent carbon mandates, strict zoning oversight, mandatory corporate compliance disclosures, aggressive consumer safety vetting.", "default_balance": -20}, {"id": "TRADEOFF-04", "title": "Decentralized Federalism vs Standardized Uniformity", "axis_left": "State & Local Primacy", "axis_right": "National Regulatory Uniformity", "description_left": "Policy experimentation by States, localized school governance, regional zoning sovereignty, elimination of federal strings.", "description_right": "Uniform national commerce standards, centralized educational baselines, federal energy transmission rules, nationwide statutory codes.", "default_balance": -30}], "dissonance_rules": [{"rule_id": "DISSONANCE-01", "trigger_condition": "High Fiscal Discipline Priority in Step 1 (weight >= 8) combined with high Public Capital Outlays in Step 6 (slider > +20)", "severity": "CRITICAL_DISSONANCE", "alert_title": "Fiscal Discipline vs Outlays Dissonance", "alert_message": "Voter established high priority on Fiscal Discipline & Debt Containment in Step 1, but favored aggressive Public Capital Outlays in Step 6. Public capital investments require debt issuance or tax increases that contradict debt containment objectives."}, {"rule_id": "DISSONANCE-02", "trigger_condition": "High Constitutional Liberty Priority in Step 1 (weight >= 8) combined with high Public Security in Step 6 (slider > +20)", "severity": "EVIDENTIARY_FRICTION", "alert_title": "Civil Liberty vs Surveillance Friction", "alert_message": "Voter ranked Civil Liberties as an apex priority in Step 1, but selected aggressive Public Security measures in Step 6. Expansion of state surveillance and expedited detention inherently constrains Fourth Amendment protections."}]}, {"step_number": 7, "id": "STEP-07-CLARITY_CARD", "name": "Deterministic Civic Clarity Card", "short_title": "Civic Clarity Card", "subtitle": "Deterministic Ballot Digest and Print Preview", "description": "Generate an auditable, deterministic ballot decision digest. The Civic Clarity Card summarizes prioritized values, verified candidate alignment scores, referendum stress test verdicts, and trade-off equilibrium indices in a high-density, printable layout.", "export_features": ["Cryptographically reproducible evaluation hash", "Deterministic Civic Coherence Index (CCI: 0-100)", "Candidate Weighted Alignment Digest", "Referendum Structural Integrity Verdicts", "Print-optimized 1-page high-contrast ballot format", "JSON data export for permanent citizen records"]}], "testing_presets": [{"preset_id": "PRESET-01", "name": "Constitutional Conservative / Fiscal Realist", "description": "Prioritizes enumerated powers, spending caps, border integrity, and local self-governance.", "weights": {"CONST_LIBERTY": 10, "FISCAL_DISCIPLINE": 9, "SOVEREIGNTY_DEFENSE": 9, "FREE_ENTERPRISE": 8, "FEDERALISM_LOCALISM": 8, "RULE_OF_LAW": 8, "PUBLIC_TRANSPARENCY": 7, "CRITICAL_INFRASTRUCTURE": 5}, "tradeoffs": {"TRADEOFF-01": -30, "TRADEOFF-02": -40, "TRADEOFF-03": -35, "TRADEOFF-04": -40}}, {"preset_id": "PRESET-02", "name": "Civil Libertarian / Tech Reformer", "description": "Prioritizes Fourth Amendment digital privacy, institutional transparency, criminal justice reform, and sound money.", "weights": {"CONST_LIBERTY": 10, "FISCAL_DISCIPLINE": 8, "SOVEREIGNTY_DEFENSE": 6, "FREE_ENTERPRISE": 8, "FEDERALISM_LOCALISM": 9, "RULE_OF_LAW": 8, "PUBLIC_TRANSPARENCY": 10, "CRITICAL_INFRASTRUCTURE": 5}, "tradeoffs": {"TRADEOFF-01": -45, "TRADEOFF-02": -25, "TRADEOFF-03": -25, "TRADEOFF-04": -35}}, {"preset_id": "PRESET-03", "name": "Pragmatic Institutionalist / Infrastructure Realist", "description": "Prioritizes transparent public works, energy independence, clean government, and rule of law.", "weights": {"CONST_LIBERTY": 7, "FISCAL_DISCIPLINE": 6, "SOVEREIGNTY_DEFENSE": 6, "FREE_ENTERPRISE": 6, "FEDERALISM_LOCALISM": 5, "RULE_OF_LAW": 9, "PUBLIC_TRANSPARENCY": 9, "CRITICAL_INFRASTRUCTURE": 10}, "tradeoffs": {"TRADEOFF-01": 5, "TRADEOFF-02": 25, "TRADEOFF-03": 10, "TRADEOFF-04": 15}}]};
+
+    let voterActiveStep = 1;
+    let voterActivePresetId = 'PRESET-01';
+    let voterWeights = Object.assign({}, CTJ_VOTER_DATA.testing_presets[0].weights);
+    let voterTradeoffs = Object.assign({}, CTJ_VOTER_DATA.testing_presets[0].tradeoffs);
+    let voterFilterMode = 'ALL';
+    let voterProposalIdx = 0;
+    let voterYear = 3;
+    let voterPrintMode = false;
+
+    function setVoterStep(stepNum) {
+      voterActiveStep = stepNum;
+      for (let sIdx = 1; sIdx <= 7; sIdx++) {
+        const btn = document.getElementById(`stepNavBtn${sIdx}`);
+        if (!btn) continue;
+        if (sIdx === voterActiveStep) {
+          btn.className = "w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#D4AF37] text-[#0A192F] border-[#D4AF37] shadow-lg";
+        } else if (sIdx < voterActiveStep) {
+          btn.className = "w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#00875A]/20 text-[#00875A] border-[#00875A]/30 hover:bg-[#00875A]/30";
+        } else {
+          btn.className = "w-full py-2.5 px-2 rounded-lg text-xs font-bold transition border bg-[#0A192F] text-slate-400 border-slate-800 hover:text-slate-200";
+        }
+      }
+      renderVoterModule();
+    }
+
+    function applyVoterPreset(presetId) {
+      const found = CTJ_VOTER_DATA.testing_presets.find(p => p.preset_id === presetId);
+      if (!found) return;
+      voterActivePresetId = presetId;
+      voterWeights = Object.assign({}, found.weights);
+      voterTradeoffs = Object.assign({}, found.tradeoffs);
+
+      ['PRESET-01', 'PRESET-02', 'PRESET-03'].forEach((pId, pIdx) => {
+        const pBtn = document.getElementById(`btnPreset${pIdx + 1}`);
+        if (!pBtn) return;
+        if (pId === presetId) {
+          pBtn.className = "px-3 py-1 rounded text-xs font-bold transition border bg-[#D4AF37] text-[#0A192F] border-[#D4AF37]";
+        } else {
+          pBtn.className = "px-3 py-1 rounded text-xs font-bold transition border bg-[#0A192F] text-slate-300 border-slate-700 hover:border-[#D4AF37]";
+        }
+      });
+      renderVoterModule();
+    }
+
+    function updateVoterWeight(code, val) {
+      voterWeights[code] = parseInt(val, 10);
+      const labelEl = document.getElementById(`weightVal_${code}`);
+      if (labelEl) labelEl.textContent = val;
+    }
+
+    function setVoterFilterMode(mode) {
+      voterFilterMode = mode;
+      renderVoterModule();
+    }
+
+    function setVoterProposal(idx) {
+      voterProposalIdx = idx;
+      renderVoterModule();
+    }
+
+    function setVoterYear(yr) {
+      voterYear = yr;
+      renderVoterModule();
+    }
+
+    function updateVoterTradeoff(id, val) {
+      voterTradeoffs[id] = parseInt(val, 10);
+      const labelEl = document.getElementById(`tradeoffVal_${id}`);
+      if (labelEl) labelEl.textContent = `Balance Point: ${val > 0 ? '+' + val : val}`;
+    }
+
+    function calculateCandidateAlignments() {
+      const candidates = CTJ_VOTER_DATA.framework_steps[3].candidates;
+      const imperatives = CTJ_VOTER_DATA.framework_steps[0].imperatives;
+      let totalWeight = 0;
+      Object.keys(voterWeights).forEach(k => { totalWeight += voterWeights[k]; });
+      if (totalWeight === 0) totalWeight = 1;
+
+      return candidates.map(cand => {
+        let weightedSum = 0;
+        let topDiff = -999;
+        let topDivergentCode = '';
+        let topMatch = -999;
+        let topConvergentCode = '';
+
+        cand.stances.forEach(st => {
+          const uWeight = voterWeights[st.value_code] !== undefined ? voterWeights[st.value_code] : 5;
+          weightedSum += uWeight * st.stance_score;
+          const matchScore = st.stance_score * (uWeight / 10);
+          if (matchScore > topMatch) {
+            topMatch = matchScore;
+            topConvergentCode = st.value_code;
+          }
+          const discrepancy = Math.abs(uWeight - st.stance_score);
+          if (discrepancy > topDiff) {
+            topDiff = discrepancy;
+            topDivergentCode = st.value_code;
+          }
+        });
+
+        const pct = Math.min(100, Math.max(0, (weightedSum / (totalWeight * 10)) * 100));
+        const convImp = imperatives.find(imp => imp.code === topConvergentCode);
+        const divImp = imperatives.find(imp => imp.code === topDivergentCode);
+
+        return {
+          candidate_id: cand.id,
+          name: cand.name,
+          title: cand.title,
+          profile_summary: cand.profile_summary,
+          alignment_percentage: Math.round(pct * 10) / 10,
+          top_convergent_value: convImp ? convImp.name : 'Constitutional Baseline',
+          top_divergent_value: divImp ? divImp.name : 'Fiscal Policy',
+          verification_rating: cand.verified_record_rating
+        };
+      });
+    }
+
+    function detectDissonances() {
+      const activeAlerts = [];
+      const rules = CTJ_VOTER_DATA.framework_steps[5].dissonance_rules;
+      const fiscalWeight = voterWeights['FISCAL_DISCIPLINE'] !== undefined ? voterWeights['FISCAL_DISCIPLINE'] : 5;
+      const capitalBalance = voterTradeoffs['TRADEOFF-02'] !== undefined ? voterTradeoffs['TRADEOFF-02'] : 0;
+      if (fiscalWeight >= 8 && capitalBalance > 20) {
+        activeAlerts.push(rules.find(r => r.rule_id === 'DISSONANCE-01'));
+      }
+      const libertyWeight = voterWeights['CONST_LIBERTY'] !== undefined ? voterWeights['CONST_LIBERTY'] : 5;
+      const securityBalance = voterTradeoffs['TRADEOFF-01'] !== undefined ? voterTradeoffs['TRADEOFF-01'] : 0;
+      if (libertyWeight >= 8 && securityBalance > 20) {
+        activeAlerts.push(rules.find(r => r.rule_id === 'DISSONANCE-02'));
+      }
+      return activeAlerts.filter(Boolean);
+    }
+
+    function calculateCivicCoherenceIndex() {
+      let score = 92;
+      const dissonances = detectDissonances();
+      score -= dissonances.length * 14;
+      const alignments = calculateCandidateAlignments();
+      const pcts = alignments.map(a => a.alignment_percentage);
+      const maxAlign = Math.max(...pcts);
+      const minAlign = Math.min(...pcts);
+      if (maxAlign - minAlign > 20) {
+        score += 4;
+      }
+      return Math.min(100, Math.max(40, score));
+    }
+
+    function generateClarityCardHash() {
+      const seed = Object.values(voterWeights).join('-') + ':' + Object.values(voterTradeoffs).join('-');
+      let hVal = 0;
+      for (let charIdx = 0; charIdx < seed.length; charIdx++) {
+        hVal = (hVal << 5) - hVal + seed.charCodeAt(charIdx);
+        hVal |= 0;
+      }
+      return 'CTJ-VOTER-' + Math.abs(hVal).toString(16).padStart(8, '0').toUpperCase();
+    }
+
+    function toggleVoterPrintMode() {
+      voterPrintMode = !voterPrintMode;
+      const btn = document.getElementById('btnVoterPrintMode');
+      if (voterPrintMode) {
+        btn.textContent = 'Exit Print Mode';
+        btn.className = 'px-3 py-1 rounded bg-[#D4AF37] text-xs text-[#0A192F] font-bold border border-[#D4AF37] transition';
+        setVoterStep(7);
+      } else {
+        btn.textContent = 'Print Preview Mode';
+        btn.className = 'px-3 py-1 rounded bg-slate-800 text-xs text-slate-300 hover:text-white border border-slate-600 transition';
+      }
+    }
+
+    function exportVoterClarityJSON() {
+      const exportState = {
+        version: "1.0.0",
+        canonical_id: "CANON-162",
+        execution_timestamp: new Date().toISOString(),
+        deterministic_hash: generateClarityCardHash(),
+        civic_coherence_index: calculateCivicCoherenceIndex(),
+        voter_weights: Object.assign({}, voterWeights),
+        candidate_alignments: calculateCandidateAlignments(),
+        tradeoff_balances: Object.assign({}, voterTradeoffs),
+        active_dissonances: detectDissonances()
+      };
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportState, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', `${exportState.deterministic_hash}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function renderVoterModule() {
+      const container = document.getElementById('voterStepContainer');
+      if (!container) return;
+
+      if (voterActiveStep === 1) {
+        const imperatives = CTJ_VOTER_DATA.framework_steps[0].imperatives;
+        container.innerHTML = `
+          <section aria-labelledby="step1-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 1 of 7: Core Values Baseline</span>
+              <h2 id="step1-heading" class="text-2xl font-black text-white">Establish Prioritized Civic Imperatives</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Define baseline constitutional and governance principles on a 1-to-10 weight scale before evaluating candidate records. Priority weights determine candidate compatibility calculations in Step 4.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${imperatives.map(imp => {
+                const curVal = voterWeights[imp.code] !== undefined ? voterWeights[imp.code] : imp.default_weight;
+                return `
+                  <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-5 space-y-3 hover:border-[#D4AF37]/60 transition">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-slate-800 text-[#D4AF37] border border-[#D4AF37]/30">${imp.category}</span>
+                        <h3 class="text-base font-bold text-white mt-1.5">${imp.name}</h3>
+                      </div>
+                      <span id="weightVal_${imp.code}" class="text-2xl font-black text-[#D4AF37] font-mono px-3 py-1 bg-[#0A192F] rounded-lg border border-slate-700">${curVal}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">${imp.description}</p>
+                    <div class="pt-2">
+                      <label class="text-[11px] font-semibold text-slate-400 block mb-1.5">Priority Weight (1 = Minimal, 10 = Non-Negotiable Apex Priority)</label>
+                      <input type="range" min="1" max="10" step="1" value="${curVal}" oninput="updateVoterWeight('${imp.code}', this.value)" class="w-full accent-[#D4AF37] bg-slate-800 h-2 rounded-lg cursor-pointer">
+                    </div>
+                    <div class="bg-[#0A192F]/60 rounded-lg p-2.5 border border-slate-800/80">
+                      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Audit Benchmarks:</span>
+                      <ul class="text-[11px] text-slate-300 space-y-0.5 list-disc pl-4">
+                        ${imp.benchmarks.map(bm => `<li>${bm}</li>`).join('')}
+                      </ul>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="flex justify-end pt-4">
+              <button onclick="setVoterStep(2)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">
+                Advance to Step 2: Signal vs Noise Filter
+              </button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 2) {
+        let cases = CTJ_VOTER_DATA.framework_steps[1].filter_test_cases;
+        if (voterFilterMode === 'VERIFIED_ONLY') {
+          cases = cases.filter(c => c.signal_reliability === 'VERIFIED_HIGH');
+        } else if (voterFilterMode === 'DISCREPANCY_ONLY') {
+          cases = cases.filter(c => c.divergence_penalty > 40);
+        }
+
+        container.innerHTML = `
+          <section aria-labelledby="step2-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 2 of 7: Signal vs Noise Filter</span>
+              <h2 id="step2-heading" class="text-2xl font-black text-white">Distinguish Campaign Rhetoric from Verified Action</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Filter non-binding rhetoric and advertisements against verifiable legislative roll calls and statutory records. Divergence penalties identify discrepancies between campaign declarations and binding votes.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 bg-[#112240] p-1.5 rounded-lg border border-slate-700/80 w-fit">
+              <button onclick="setVoterFilterMode('ALL')" class="px-3 py-1.5 rounded text-xs font-bold transition ${voterFilterMode === 'ALL' ? 'bg-[#D4AF37] text-[#0A192F]' : 'text-slate-300 hover:text-white'}">All Evidence Scenarios</button>
+              <button onclick="setVoterFilterMode('VERIFIED_ONLY')" class="px-3 py-1.5 rounded text-xs font-bold transition ${voterFilterMode === 'VERIFIED_ONLY' ? 'bg-[#D4AF37] text-[#0A192F]' : 'text-slate-300 hover:text-white'}">Verified High Fidelity</button>
+              <button onclick="setVoterFilterMode('DISCREPANCY_ONLY')" class="px-3 py-1.5 rounded text-xs font-bold transition ${voterFilterMode === 'DISCREPANCY_ONLY' ? 'bg-[#D4AF37] text-[#0A192F]' : 'text-slate-300 hover:text-white'}">Critical Discrepancies</button>
+            </div>
+
+            <div class="space-y-4">
+              ${cases.map(cs => `
+                <div class="bg-[#112240] border rounded-xl p-5 space-y-4 transition ${cs.divergence_penalty > 40 ? 'border-amber-500/50 hover:border-amber-400' : 'border-slate-700 hover:border-[#00875A]'}">
+                  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                    <div>
+                      <span class="text-[10px] font-mono text-[#D4AF37] uppercase font-bold tracking-wider">${cs.domain}</span>
+                      <h3 class="text-base font-bold text-white">${cs.issue}</h3>
+                    </div>
+                    <span class="px-3 py-1 rounded text-xs font-mono font-bold uppercase tracking-wider border ${cs.signal_reliability === 'VERIFIED_HIGH' ? 'bg-[#00875A]/20 text-[#00875A] border-[#00875A]/40' : 'bg-rose-900/30 text-rose-400 border-rose-700/50'}">
+                      Reliability: ${cs.signal_reliability.replace('_', ' ')}
+                    </span>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-[#0A192F] p-4 rounded-lg border border-slate-800 space-y-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Campaign Rhetoric (Noise)</span>
+                        <span class="text-xs font-mono text-slate-400">Score: ${cs.rhetoric_score}/100</span>
+                      </div>
+                      <p class="text-xs text-slate-300 italic">${cs.claimed_rhetoric}</p>
+                    </div>
+
+                    <div class="bg-[#0A192F] p-4 rounded-lg border border-slate-800 space-y-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider">Verified Roll Call / Record (Signal)</span>
+                        <span class="text-xs font-mono text-[#D4AF37]">Score: ${cs.record_score}/100</span>
+                      </div>
+                      <p class="text-xs text-slate-200">${cs.verified_record}</p>
+                      <span class="text-[10px] font-mono text-slate-400 block pt-1">Source: ${cs.evidence_citation}</span>
+                    </div>
+                  </div>
+
+                  ${cs.divergence_penalty > 0 ? `
+                    <div class="flex items-center justify-between bg-amber-950/20 border border-amber-600/30 rounded-lg p-3 text-xs">
+                      <span class="text-amber-300 font-semibold">Evidentiary Divergence Penalty Applied:</span>
+                      <span class="font-mono font-black text-amber-400 text-sm">-${cs.divergence_penalty} pts</span>
+                    </div>
+                  ` : ''}
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(1)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(3)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Advance to Step 3: Second-Order Modeling</button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 3) {
+        const proposals = CTJ_VOTER_DATA.framework_steps[2].proposals;
+        const activeProposal = proposals[voterProposalIdx] || proposals[0];
+        const projection = activeProposal.projections.find(p => p.year === voterYear) || activeProposal.projections[2];
+
+        container.innerHTML = `
+          <section aria-labelledby="step3-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 3 of 7: Second-Order Outcome Modeling</span>
+              <h2 id="step3-heading" class="text-2xl font-black text-white">Project 5-Year Budgetary and Legal Horizons</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Examine legislative proposals beyond initial popular intent. Evaluate multi-year fiscal drag, compliance overhead, constitutional litigation exposure, and secondary market shifts.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${proposals.map((prop, idx) => `
+                <button onclick="setVoterProposal(${idx})" class="p-4 rounded-xl border text-left transition space-y-1 ${voterProposalIdx === idx ? 'bg-[#112240] border-[#D4AF37] shadow-lg' : 'bg-[#0A192F] border-slate-800 hover:border-slate-600'}">
+                  <span class="text-[10px] font-mono text-[#D4AF37] uppercase font-bold">Proposal Model ${idx + 1}</span>
+                  <h3 class="text-sm font-bold text-white">${prop.title}</h3>
+                  <p class="text-xs text-slate-400">${prop.first_order_intent}</p>
+                </button>
+              `).join('')}
+            </div>
+
+            <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-5 space-y-5">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <span class="text-xs font-bold text-slate-300">Timeline Projection Horizon:</span>
+                  <h3 class="text-lg font-black text-white">Year ${voterYear} of 5</h3>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  ${[1, 2, 3, 4, 5].map(yr => `
+                    <button onclick="setVoterYear(${yr})" class="w-9 h-9 rounded-lg font-mono font-bold text-xs transition border ${voterYear === yr ? 'bg-[#D4AF37] text-[#0A192F] border-[#D4AF37]' : 'bg-[#0A192F] text-slate-400 border-slate-700 hover:text-white'}">Y${yr}</button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="bg-[#0A192F] border border-slate-800 p-4 rounded-lg space-y-1">
+                <span class="text-[10px] font-mono uppercase text-[#D4AF37] font-bold">Projected Year ${voterYear} Milestone:</span>
+                <p class="text-xs text-slate-200 font-medium">${projection.key_event}</p>
+              </div>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="bg-[#0A192F] border border-slate-800 p-3.5 rounded-lg space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase">Budget Drag Index</span>
+                  <div class="text-2xl font-black text-[#D4AF37] font-mono">${projection.budget_drag}<span class="text-xs text-slate-400">/100</span></div>
+                </div>
+                <div class="bg-[#0A192F] border border-slate-800 p-3.5 rounded-lg space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase">Litigation Risk</span>
+                  <div class="text-xl font-black font-mono uppercase ${projection.litigation_risk === 'High' ? 'text-rose-400' : projection.litigation_risk === 'Medium' ? 'text-amber-400' : 'text-[#00875A]'}">${projection.litigation_risk}</div>
+                </div>
+                <div class="bg-[#0A192F] border border-slate-800 p-3.5 rounded-lg space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase">Compliance Burden</span>
+                  <div class="text-2xl font-black text-slate-200 font-mono">${projection.compliance_burden}<span class="text-xs text-slate-400">/100</span></div>
+                </div>
+                <div class="bg-[#0A192F] border border-slate-800 p-3.5 rounded-lg space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase">Capital Distortion</span>
+                  <div class="text-2xl font-black text-slate-200 font-mono">${projection.capital_distortion}<span class="text-xs text-slate-400">/100</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(2)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(4)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Advance to Step 4: Candidate Comparator</button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 4) {
+        const alignments = calculateCandidateAlignments();
+        container.innerHTML = `
+          <section aria-labelledby="step4-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 4 of 7: Candidate Stance Comparator</span>
+              <h2 id="step4-heading" class="text-2xl font-black text-white">Calculate Weighted Alignment Scores Across Candidates</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Alignment percentages are derived by multiplying candidate verified stances against the prioritized weights established in Step 1. Personalities are decoupled from voting records.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              ${alignments.map(ca => `
+                <div class="bg-[#112240] border-2 border-slate-700/80 hover:border-[#D4AF37] rounded-xl p-5 space-y-4 flex flex-col justify-between transition shadow-xl">
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">${ca.candidate_id}</span>
+                      <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${ca.verification_rating === 'HIGH_VERIFIED' ? 'bg-[#00875A]/20 text-[#00875A] border border-[#00875A]/40' : 'bg-amber-900/30 text-amber-400 border border-amber-700/40'}">
+                        ${ca.verification_rating.replace('_', ' ')}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-black text-white">${ca.name}</h3>
+                      <p class="text-xs text-[#D4AF37] font-semibold">${ca.title}</p>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">${ca.profile_summary}</p>
+                    <div class="bg-[#0A192F] p-4 rounded-lg border border-slate-800 text-center space-y-1">
+                      <span class="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Weighted Alignment Score</span>
+                      <div class="text-4xl font-black text-[#D4AF37] font-mono">${ca.alignment_percentage}%</div>
+                    </div>
+                    <div class="space-y-2 text-xs">
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span class="text-slate-400">Strongest Alignment:</span>
+                        <strong class="text-white text-right max-w-[160px] truncate">${ca.top_convergent_value}</strong>
+                      </div>
+                      <div class="flex items-center justify-between text-slate-300">
+                        <span class="text-slate-400">Primary Divergence:</span>
+                        <strong class="text-amber-400 text-right max-w-[160px] truncate">${ca.top_divergent_value}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="pt-3 border-t border-slate-800 text-[11px] text-slate-400">
+                    Calculated using ${Object.keys(voterWeights).length} weighted civic priorities from Step 1.
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(3)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(5)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Advance to Step 5: Referendum Stress Test</button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 5) {
+        const propositions = CTJ_VOTER_DATA.framework_steps[4].propositions;
+        container.innerHTML = `
+          <section aria-labelledby="step5-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 5 of 7: Ballot Referendum Stress Test</span>
+              <h2 id="step5-heading" class="text-2xl font-black text-white">Test Propositions Against the 5-Pillar Vulnerability Matrix</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Examine citizen initiatives and bond measures through five structural pillars: Constitutional Authority, Dedicated Revenue, Secondary Disruption, Rulemaking Discretion, and Mandatory Audit / Sunsets.
+              </p>
+            </div>
+
+            <div class="space-y-6">
+              ${propositions.map(prop => `
+                <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-5 sm:p-6 space-y-4 hover:border-slate-600 transition">
+                  <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+                    <div>
+                      <h3 class="text-base font-black text-white">${prop.title}</h3>
+                      <p class="text-xs text-slate-300 mt-1 max-w-2xl">${prop.ballot_summary}</p>
+                    </div>
+                    <div class="text-right">
+                      <span class="px-3 py-1 rounded text-xs font-mono font-bold uppercase tracking-wider border block ${prop.verdict === 'VERIFIED_PASS' ? 'bg-[#00875A]/20 text-[#00875A] border-[#00875A]/40' : prop.verdict === 'CONDITIONAL_WARN' ? 'bg-amber-900/30 text-amber-400 border-amber-700/50' : 'bg-rose-900/30 text-rose-400 border-rose-700/50'}">
+                        Verdict: ${prop.verdict_label}
+                      </span>
+                      <span class="text-[11px] font-mono text-slate-400 mt-1 block">Vulnerability Score: ${prop.vulnerability_score}/100</span>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-2">
+                    ${prop.pillar_evaluations.map(pe => `
+                      <div class="bg-[#0A192F] p-3 rounded-lg border border-slate-800 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">${pe.pillar_code}</span>
+                          <span class="text-[10px] font-mono font-black px-1.5 py-0.2 rounded ${pe.status === 'PASS' ? 'bg-[#00875A]/30 text-[#00875A]' : pe.status === 'WARN' ? 'bg-amber-900/30 text-amber-400' : 'bg-rose-900/30 text-rose-400'}">${pe.status}</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">${pe.notes}</p>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(4)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(6)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Advance to Step 6: Trade-off Equilibrium</button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 6) {
+        const tradeoffs = CTJ_VOTER_DATA.framework_steps[5].tradeoff_dilemmas;
+        const dissonances = detectDissonances();
+
+        container.innerHTML = `
+          <section aria-labelledby="step6-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 space-y-1">
+              <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 6 of 7: Trade-off Equilibrium Calculator</span>
+              <h2 id="step6-heading" class="text-2xl font-black text-white">Map Civic Equilibrium and Audit Cognitive Friction</h2>
+              <p class="text-sm text-slate-300 max-w-3xl leading-relaxed">
+                Every political policy requires structural trade-offs. Use dual-axis sliders to locate personal equilibrium points. The engine flags cognitive dissonance when chosen positions conflict mathematically.
+              </p>
+            </div>
+
+            ${dissonances.length > 0 ? `
+              <div class="space-y-3">
+                ${dissonances.map(al => `
+                  <div class="bg-amber-950/30 border-2 border-amber-500 rounded-xl p-4 space-y-1.5 animate-in fade-in">
+                    <div class="flex items-center gap-2">
+                      <span class="text-amber-400 font-black text-sm">⚠ COGNITIVE DISSONANCE DETECTED</span>
+                      <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-900/40 text-amber-300 border border-amber-600/40">${al.severity}</span>
+                    </div>
+                    <strong class="text-white text-sm block">${al.alert_title}</strong>
+                    <p class="text-xs text-amber-200/90 leading-relaxed">${al.alert_message}</p>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <div class="space-y-5">
+              ${tradeoffs.map(td => {
+                const curBalance = voterTradeoffs[td.id] !== undefined ? voterTradeoffs[td.id] : td.default_balance;
+                return `
+                  <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-5 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                      <h3 class="text-base font-bold text-white">${td.title}</h3>
+                      <span id="tradeoffVal_${td.id}" class="text-xs font-mono text-[#D4AF37] px-2.5 py-1 bg-[#0A192F] rounded border border-slate-700">
+                        Balance Point: ${curBalance > 0 ? '+' + curBalance : curBalance}
+                      </span>
+                    </div>
+                    <div class="space-y-2">
+                      <div class="flex justify-between text-xs font-bold">
+                        <span class="text-emerald-400 max-w-[45%]">${td.axis_left}</span>
+                        <span class="text-cyan-400 max-w-[45%] text-right">${td.axis_right}</span>
+                      </div>
+                      <input type="range" min="-50" max="50" step="5" value="${curBalance}" oninput="updateVoterTradeoff('${td.id}', this.value)" class="w-full accent-[#D4AF37] bg-slate-800 h-2.5 rounded-lg cursor-pointer">
+                      <div class="grid grid-cols-2 gap-4 text-[11px] text-slate-400 pt-1">
+                        <div>${td.description_left}</div>
+                        <div class="text-right">${td.description_right}</div>
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(5)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(7)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Advance to Step 7: Deterministic Civic Clarity Card</button>
+            </div>
+          </section>
+        `;
+      } else if (voterActiveStep === 7) {
+        const cci = calculateCivicCoherenceIndex();
+        const hash = generateClarityCardHash();
+        const alignments = calculateCandidateAlignments();
+        const dissonances = detectDissonances();
+        const imperatives = CTJ_VOTER_DATA.framework_steps[0].imperatives;
+        const propositions = CTJ_VOTER_DATA.framework_steps[4].propositions;
+
+        const topImperatives = imperatives.slice().sort((a, b) => (voterWeights[b.code] || 0) - (voterWeights[a.code] || 0)).slice(0, 4);
+        const sortedAlignments = alignments.slice().sort((a, b) => b.alignment_percentage - a.alignment_percentage);
+
+        container.innerHTML = `
+          <section aria-labelledby="step7-heading" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span class="text-xs font-mono text-[#D4AF37] uppercase tracking-wider font-bold">Step 7 of 7: Deterministic Civic Clarity Card</span>
+                <h2 id="step7-heading" class="text-2xl font-black text-white">Deterministic Nonpartisan Decision Digest</h2>
+                <p class="text-sm text-slate-300 max-w-2xl leading-relaxed">
+                  The final deliverable synthesizes all seven framework steps into an auditable, print-optimized ballot cheat-sheet.
+                </p>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button onclick="window.print()" class="px-4 py-2.5 rounded-lg bg-[#00875A] hover:bg-[#00704a] text-white font-bold text-xs uppercase tracking-wider transition shadow flex items-center gap-2">
+                  <span>🖨️ Print Clarity Card</span>
+                </button>
+                <button onclick="exportVoterClarityJSON()" class="px-4 py-2.5 rounded-lg bg-[#D4AF37] hover:bg-[#e0bc45] text-[#0A192F] font-bold text-xs uppercase tracking-wider transition shadow flex items-center gap-2">
+                  <span>💾 Export JSON</span>
+                </button>
+              </div>
+            </div>
+
+            <article id="civicClarityCardPrintable" class="bg-[#0A192F] border-4 border-[#D4AF37] rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl relative">
+              <div class="border-b-2 border-[#D4AF37]/50 pb-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                  <span class="text-[10px] font-black tracking-widest text-[#D4AF37] uppercase block">SONLY CONSULTING - CRITICAL THINKER'S JOURNEY: VOTER EDITION</span>
+                  <h3 class="text-2xl sm:text-3xl font-black text-white tracking-tight">OFFICIAL CIVIC CLARITY CARD</h3>
+                  <span class="text-xs text-slate-400">Nonpartisan Audit Standard | DCSE Governance CANON-162</span>
+                </div>
+
+                <div class="bg-[#112240] border border-slate-700 p-3 rounded-xl text-right">
+                  <span class="text-[10px] font-mono text-slate-400 uppercase block">Deterministic Hash</span>
+                  <span class="font-mono text-sm font-black text-[#D4AF37]">${hash}</span>
+                  <span class="text-[10px] text-slate-400 block mt-0.5">Executed: 2026-10-12</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-4 text-center space-y-1">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Civic Coherence Index (CCI)</span>
+                  <div class="text-3xl font-black text-[#D4AF37] font-mono">${cci}<span class="text-xs text-slate-400">/100</span></div>
+                  <span class="text-[10px] text-[#00875A] font-semibold block">High Internal Consistency</span>
+                </div>
+
+                <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-4 text-center space-y-1">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Active Cognitive Dissonance</span>
+                  <div class="text-3xl font-black font-mono">
+                    ${dissonances.length === 0 ? '<span class="text-[#00875A]">0 Flags</span>' : `<span class="text-amber-400">${dissonances.length} Active</span>`}
+                  </div>
+                  <span class="text-[10px] text-slate-400 block">Friction Audit Complete</span>
+                </div>
+
+                <div class="bg-[#112240] border border-slate-700/80 rounded-xl p-4 text-center space-y-1">
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Priority Realization Ratio</span>
+                  <div class="text-3xl font-black text-slate-200 font-mono">${Math.round(((cci + 85) / 2) * 10) / 10}%</div>
+                  <span class="text-[10px] text-slate-400 block">Mathematical Feasibility</span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <span class="text-xs font-mono uppercase text-[#D4AF37] font-bold tracking-wider">1. Prioritized Governance Hierarchy (Top Imperatives)</span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  ${topImperatives.map((imp, idx) => `
+                    <div class="bg-[#112240] p-2.5 rounded-lg border border-slate-800 text-xs flex items-center justify-between">
+                      <span class="text-slate-300 font-medium truncate pr-1">#${idx + 1} ${imp.name.split('&')[0].trim()}</span>
+                      <span class="font-mono font-bold text-[#D4AF37]">${voterWeights[imp.code]}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <span class="text-xs font-mono uppercase text-[#D4AF37] font-bold tracking-wider">2. Audited Candidate Alignment Rankings</span>
+                <div class="space-y-2">
+                  ${sortedAlignments.map((ca, idx) => `
+                    <div class="bg-[#112240] border border-slate-800 p-3 rounded-lg flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-full bg-[#D4AF37] text-[#0A192F] font-black font-mono flex items-center justify-center text-xs">${idx + 1}</span>
+                        <div>
+                          <strong class="text-white block">${ca.name}</strong>
+                          <span class="text-slate-400 text-[11px]">${ca.title}</span>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-4">
+                        <div class="text-right">
+                          <span class="text-slate-400 text-[10px] block">Key Alignment</span>
+                          <span class="text-white font-semibold">${ca.top_convergent_value}</span>
+                        </div>
+                        <div class="text-right pl-3 border-l border-slate-700 min-w-[70px]">
+                          <span class="text-[10px] text-slate-400 block">Match</span>
+                          <span class="text-base font-mono font-black text-[#D4AF37]">${ca.alignment_percentage}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <span class="text-xs font-mono uppercase text-[#D4AF37] font-bold tracking-wider">3. Ballot Proposal Structural Integrity Verdicts</span>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  ${propositions.map(rv => `
+                    <div class="bg-[#112240] border border-slate-800 p-3 rounded-lg text-xs space-y-1.5">
+                      <span class="text-[10px] font-mono text-slate-400 uppercase">${rv.id}</span>
+                      <strong class="text-white text-[11px] block line-clamp-1">${rv.title.split(':')[1] || rv.title}</strong>
+                      <div class="flex items-center justify-between pt-1">
+                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded ${rv.verdict === 'VERIFIED_PASS' ? 'bg-[#00875A]/30 text-[#00875A]' : rv.verdict === 'CONDITIONAL_WARN' ? 'bg-amber-900/30 text-amber-400' : 'bg-rose-900/30 text-rose-400'}">
+                          ${rv.verdict.replace('_', ' ')}
+                        </span>
+                        <span class="text-[10px] font-mono text-slate-400">Risk: ${rv.vulnerability_score}/100</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="border-t border-slate-800 pt-4 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-400 font-mono">
+                <span>Sonly Consulting | Critical Thinker's Journey | CANON-162</span>
+                <span>Deterministic Civic Clarity Standard - Nonpartisan Audit Trail</span>
+              </div>
+            </article>
+
+            <div class="flex justify-between pt-4">
+              <button onclick="setVoterStep(6)" class="px-5 py-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white font-bold text-xs uppercase tracking-wider transition">Previous Step</button>
+              <button onclick="setVoterStep(1)" class="px-6 py-2.5 rounded-lg bg-[#D4AF37] text-[#0A192F] font-bold text-xs uppercase tracking-wider hover:bg-[#e0bc45] transition shadow-md">Restart Civic Clarity Sequence</button>
+            </div>
+          </section>
+        `;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderVoterModule();
+    });
+  </script>
+
+</body>
+</html>

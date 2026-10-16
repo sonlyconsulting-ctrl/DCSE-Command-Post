@@ -153,12 +153,14 @@ PROVIDER_CATALOG = {
     "openai": [
         {"id": "gpt-5.6-sol", "name": "GPT-5.6 Sol (Flagship)", "tier": "flagship"},
         {"id": "gpt-4o", "name": "GPT-4o (Production Fast)", "tier": "balanced"},
+        {"id": "gpt-4o-mini", "name": "GPT-4o Mini (Fast)", "tier": "fast"},
         {"id": "o3-mini", "name": "o3-mini (High Reasoning / STEM)", "tier": "reasoning"},
         {"id": "gpt-4.1-mini", "name": "GPT-4.1 Mini (High Throughput)", "tier": "fast"},
     ],
     "anthropic": [
         {"id": "claude-sonnet-5", "name": "Claude Sonnet 5 (Operative)", "tier": "flagship"},
         {"id": "claude-3-7-sonnet-20250219", "name": "Claude 3.7 Sonnet (Hybrid Reasoning)", "tier": "reasoning"},
+        {"id": "claude-3-5-sonnet-latest", "name": "Claude 3.5 Sonnet (Latest)", "tier": "flagship"},
         {"id": "claude-3-5-haiku-20241022", "name": "Claude 3.5 Haiku (Fast Triage)", "tier": "fast"},
     ],
     "qwen": [
@@ -168,9 +170,9 @@ PROVIDER_CATALOG = {
         {"id": "qwen-2.5-72b-instruct", "name": "Qwen 2.5 72B Instruct", "tier": "flagship"},
     ],
     "gemini": [
+        {"id": "gemini-flash-latest", "name": "Gemini Flash Latest (Fast)", "tier": "fast"},
+        {"id": "gemini-3.1-pro-preview", "name": "Gemini 3.1 Pro Preview (Deep Context)", "tier": "flagship"},
         {"id": "gemini-3.8-flash", "name": "Gemini 3.8 Flash (Operative)", "tier": "fast"},
-        {"id": "gemini-2.5-pro", "name": "Gemini 2.5 Pro (Deep Context)", "tier": "flagship"},
-        {"id": "gemini-2.5-flash", "name": "Gemini 2.5 Flash (Mobile Fast)", "tier": "fast"},
     ],
     "openrouter": [
         {"id": "openrouter/auto", "name": "OpenRouter Auto-Route", "tier": "auto"},
@@ -185,6 +187,104 @@ PROVIDER_CATALOG = {
     ],
 }
 
+DISALLOWED_MODEL_PREFIXES = {
+    "openai": (
+        "gemini",
+        "models/gemini",
+        "claude",
+        "qwen",
+        "dashscope",
+        "deepseek",
+        "openrouter",
+        "nousresearch",
+        "gpt-oss",
+    ),
+    "gemini": (
+        "gpt-",
+        "o1-",
+        "o1",
+        "o3-",
+        "o3",
+        "chatgpt",
+        "claude",
+        "qwen",
+        "dashscope",
+        "deepseek",
+        "openrouter",
+        "nousresearch",
+        "gpt-oss",
+    ),
+    "anthropic": (
+        "gemini",
+        "models/gemini",
+        "gpt-",
+        "o1-",
+        "o1",
+        "o3-",
+        "o3",
+        "chatgpt",
+        "qwen",
+        "dashscope",
+        "deepseek",
+        "openrouter",
+        "nousresearch",
+        "gpt-oss",
+    ),
+    "qwen": (
+        "gemini",
+        "models/gemini",
+        "gpt-",
+        "o1-",
+        "o1",
+        "o3-",
+        "o3",
+        "chatgpt",
+        "claude",
+        "deepseek",
+        "openrouter",
+        "nousresearch",
+        "gpt-oss",
+    ),
+    "ollama": (
+        "claude",
+        "gemini",
+        "models/gemini",
+        "openrouter/",
+        "nousresearch/",
+    ),
+    "openrouter": (),
+}
+
+
+def is_cross_provider_mismatch(provider: str, model: str | None) -> bool:
+    if not model or not isinstance(model, str):
+        return False
+    provider = str(provider or "").strip().lower()
+    model_str = model.strip().lower()
+    catalog_ids = {m["id"].lower() for m in PROVIDER_CATALOG.get(provider, [])}
+    if model_str in catalog_ids:
+        return False
+    disallowed = DISALLOWED_MODEL_PREFIXES.get(provider, ())
+    for prefix in disallowed:
+        if model_str.startswith(prefix.lower()):
+            return True
+    if provider in ("openai", "anthropic", "qwen"):
+        if "/" in model_str or (":" in model_str and not model_str.startswith("ft:")):
+            return True
+    if provider == "gemini":
+        if ":" in model_str or ("/" in model_str and not model_str.startswith("models/")):
+            return True
+    return False
+
+
+def get_default_model_for_provider(provider: str) -> str:
+    provider = str(provider or "").strip().lower()
+    catalog = PROVIDER_CATALOG.get(provider, [])
+    if catalog and isinstance(catalog, list) and catalog[0].get("id"):
+        return catalog[0]["id"]
+    fb = _fallback_config(provider)
+    return fb.get("model") or "gpt-4o"
+
 
 def _fallback_config(provider: str) -> dict:
     defaults = {
@@ -192,7 +292,7 @@ def _fallback_config(provider: str) -> dict:
         "anthropic": {"provider": "anthropic", "enabled": True, "model": "claude-sonnet-5", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
         "qwen": {"provider": "qwen", "enabled": True, "model": "qwen-max", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
         "gemini": {"provider": "gemini", "enabled": True, "model": "gemini-3.8-flash", "timeout_seconds": 25, "max_output_tokens": 768, "thinking_level": "low"},
-        "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 45, "max_output_tokens": 1024, "thinking_level": None},
+        "openrouter": {"provider": "openrouter", "enabled": False, "model": "openrouter/auto", "timeout_seconds": 60, "max_output_tokens": 4096, "thinking_level": None},
         "ollama": {"provider": "ollama", "enabled": True, "model": "gpt-oss:120b", "timeout_seconds": 60, "max_output_tokens": 1024, "thinking_level": None},
     }
     cfg = dict(defaults.get(provider) or {})
@@ -217,6 +317,8 @@ def provider_runtime(provider: str) -> dict:
     cfg = dict(row)
     cfg["registry_available"] = True
     cfg["project_ref"] = "nevgdyfpxdaloacuutal"
+    if is_cross_provider_mismatch(provider, cfg.get("model")):
+        cfg["model"] = get_default_model_for_provider(provider)
     vault_key = str(cfg.get("api_key") or "")
     env_key = _env_secret(provider)
     if vault_key:
@@ -276,6 +378,9 @@ def update_provider_config(provider: str, changes: dict) -> dict:
     provider = str(provider or "").lower().strip()
     if provider not in PROVIDERS:
         raise MVPServiceError("unsupported_provider")
+    req_model = changes.get("model")
+    if req_model and is_cross_provider_mismatch(provider, str(req_model)):
+        raise MVPServiceError(f"Model '{req_model}' is not valid for provider '{_provider_name(provider)}'. Cross-provider models are disallowed.")
     payload = {
         "p_provider": provider,
         "p_enabled": changes.get("enabled") if "enabled" in changes else None,
@@ -541,6 +646,17 @@ def search_knowledge(query: str, limit: int = 200, repo=None) -> list[dict]:
         or q in it.get("id", "").lower()
         or q in it.get("authority_classification", "").lower()
     ]
+def list_products() -> dict:
+    for candidate in (
+        Path(__file__).resolve().parent / "escd-products-catalog.json",
+        Path(__file__).resolve().parents[2] / "content" / "escd-products-catalog.json",
+    ):
+        if candidate.exists():
+            try:
+                return json.loads(candidate.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+    return {"_meta": {"total_products": 0}, "categories": [], "products": []}
 
 
 def _asset_is_ps(row: dict) -> bool:
@@ -1084,6 +1200,8 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
         except Exception:
             raise MVPServiceError(f"{provider.title()} is disabled in ESCD Provider Settings")
     model = str(model_override or "").strip() or str(cfg.get("model") or "").strip()
+    if is_cross_provider_mismatch(provider, model):
+        model = get_default_model_for_provider(provider)
     timeout = int(cfg.get("timeout_seconds") or 30)
     max_tokens = int(cfg.get("max_output_tokens") or 1024)
 
@@ -1155,17 +1273,20 @@ def chat(provider: str, messages: list[dict], conversation_id: str = "conv_defau
                 raise MVPServiceError("Gemini returned an empty response")
 
         elif provider == "openrouter":
+            or_max_tokens = max(max_tokens, 4096) if max_tokens <= 1024 else max_tokens
             _, data = _http_json(
                 "https://openrouter.ai/api/v1/chat/completions",
                 method="POST",
                 headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json", "HTTP-Referer": "https://os.sonlyconsulting.com", "X-Title": "ESCD"},
-                payload={"model": model, "messages": clean, "max_tokens": max_tokens},
+                payload={"model": model, "messages": clean, "max_tokens": or_max_tokens},
                 timeout=timeout,
             )
             choices = (data or {}).get("choices") or []
-            text = str((((choices[0] if choices else {}).get("message") or {}).get("content") or "")).strip()
+            msg = (choices[0] if choices else {}).get("message") or {}
+            text = str(msg.get("content") or msg.get("reasoning") or msg.get("reasoning_content") or "").strip()
             if not text:
-                raise MVPServiceError("OpenRouter returned an empty response")
+                finish = (choices[0] if choices else {}).get("finish_reason") or "empty"
+                raise MVPServiceError(f"OpenRouter returned an empty response (finish_reason: {finish})")
 
         elif provider in ("qwen", "dashscope"):
             url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"

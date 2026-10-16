@@ -53,6 +53,7 @@ from apps.escd.runtime.mvp_data import (
     list_ddna_jobs,
     list_ddna_sources,
     list_knowledge,
+    list_products,
     list_saved_chats,
     provider_status,
     reset_conversation,
@@ -207,6 +208,8 @@ class handler(BaseHTTPRequestHandler):
             elif path == "/api/mvp/orchestrator/threads":
                 days = int((query.get("days") or [7])[0])
                 self._json(200, dict({"ok": True}, **orchestrator_threads(days)))
+            elif path == "/api/mvp/products":
+                self._json(200, {"ok": True, "catalog": list_products()})
             elif path == "/api/mvp/providers":
                 self._json(200, {"ok": True, "providers": provider_status()})
             elif path == "/api/mvp/governance/status":

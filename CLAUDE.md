@@ -80,107 +80,6 @@ Key handler functions and their API routes:
 - `Access-Control-Allow-Origin: *` is currently accepted for preview deployments.
 - External font CDN links in the HTML are accepted.
 
-## Testing Instructions
-
-### Local API Testing (No Network Required)
-
-Start the server locally:
-```bash
-cd apps/sc-agent-os
-node -e "
-const http = require('http');
-const handler = require('./api/index.js');
-http.createServer(handler).listen(3000, () => console.log('http://localhost:3000'));
-"
-```
-
-Note: Without `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` env vars, DB-dependent endpoints return 503. Input validation tests still work.
-
-### Test Matrix (10-Point Validation)
-
-Run these against `http://localhost:3000`:
-
-| # | Test | Method | Endpoint | Expected |
-|---|------|--------|----------|----------|
-| 1 | Inbox returns stats | GET | `/api/tribunal/inbox` | 200 with `stats` object |
-| 2 | Dispatch without DB | POST | `/api/tribunal/dispatch` | 503 (no DB) with valid payload |
-| 3 | Missing title | POST | `/api/tribunal/dispatch` | 400 `title required` |
-| 4 | Invalid status value | POST | `/api/tribunal/status` | 400 `Invalid status` |
-| 5 | Missing task_id on status | POST | `/api/tribunal/status` | 400 `task_id and status required` |
-| 6 | Missing status field | POST | `/api/tribunal/status` | 400 `task_id and status required` |
-| 7 | Malformed JSON body | POST | `/api/tribunal/dispatch` | 500 |
-| 8 | Runtime health | GET | `/api/runtime` | 200 |
-| 9 | Dependency failure msg | GET | `/api/runtime` | Response contains dependency info |
-| 10 | UI HTML serves | GET | `/` | 200 with HTML containing `SC Agent OS` |
-
-### Example curl Commands
-
-```bash
-# Test 1: GET inbox
-curl -s http://localhost:3000/api/tribunal/inbox | jq .
-
-# Test 3: Missing title (expect 400)
-curl -s -X POST http://localhost:3000/api/tribunal/dispatch \
-  -H 'Content-Type: application/json' \
-  -d '{"lane":"SYSTEM"}' | jq .
-
-# Test 4: Invalid status (expect 400)
-curl -s -X POST http://localhost:3000/api/tribunal/status \
-  -H 'Content-Type: application/json' \
-  -d '{"task_id":"00000000-0000-0000-0000-000000000000","status":"bogus"}' | jq .
-
-# Test 7: Malformed JSON (expect 500)
-curl -s -X POST http://localhost:3000/api/tribunal/dispatch \
-  -H 'Content-Type: application/json' \
-  -d 'not json' | jq .
-
-# Test 10: UI serves
-curl -s http://localhost:3000/ | grep -o 'SC Agent OS'
-```
-
-### E2E Testing Against Supabase
-
-For full lifecycle testing with a live Supabase connection, set env vars and run:
-
-```bash
-export SUPABASE_URL=https://nevgdyfpxdaloacuutal.supabase.co
-export SUPABASE_SERVICE_ROLE_KEY=<key from Vercel env vars>
-```
-
-Then test the full dispatch lifecycle:
-1. POST `/api/tribunal/dispatch` with title, lane, task_type, priority
-2. Verify task appears in GET `/api/tribunal/inbox`
-3. POST `/api/tribunal/status` with `status: assigned`, then `running`
-4. POST `/api/tribunal/receipt` with `event_type: completed`
-5. Verify final state in GET `/api/tribunal/inbox`
-6. Clean up test records via Supabase MCP `execute_sql`
-
-### Playwright UI Testing
-
-Playwright is available for browser-based testing. Use the pre-installed Chromium:
-
-```javascript
-const { chromium } = require('playwright');
-const browser = await chromium.launch({
-  executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-  args: ['--no-sandbox']
-});
-```
-
-UI tests should verify:
-- Dashboard loads with "SC Agent OS" title
-- Each panel button activates its corresponding panel
-- No browser console errors on panel activation
-- Dispatch panel renders form fields
-- Agent Ops panel renders agent table
-
-### Vercel Preview Testing
-
-Preview deployments have Vercel Deployment Protection (SSO). To test previews:
-- Use `mcp__Vercel__get_access_to_vercel_url` to obtain a share token
-- Authenticate via `?_vercel_share=<token>` query parameter
-- Note: The environment proxy may block direct HTTPS to `.vercel.app` domains
-
 ## Security Constraints (Enforced)
 
 - No secrets in client code, logs, GitHub, or CP task payloads
@@ -205,3 +104,30 @@ Preview deployments have Vercel Deployment Protection (SSO). To test previews:
 - PRs target `main`
 - Squash merge only
 - No force push to main
+
+---
+
+## Operative v7.3 Governance, D15 Confinement & Authority
+
+### 1. Canonical Governance Source
+The canonical cross-product governance plane is **`sonlyconsulting-ctrl/DCSE-Control-Plane`** (`main`). Operative authority is **DCSE v7.3** (ratified by DCS Level 0 on 2026-09-20).
+
+### 2. Authority`n- Only v7.3 is operative. All earlier material is archived, carries no authority, and must not be queried, read, written to, or referenced.`n- Approval record: `authority/decisions/v7.3/DCS_APPROVAL_V73_BASELINE_AND_D15_20261010.md` in DCSE-Control-Plane.`n`n### 3. Database Confinement Rules (Doctrine D15)
+- **Target Project:** `nevgdyfpxdaloacuutal` (`SC-Command-Post`).
+- **Mandatory Schema:** `dcse_cp` exclusively.
+- **Mandatory Headers:** All queries and client calls must pass `'Accept-Profile': 'dcse_cp'` and `'Content-Profile': 'dcse_cp'`.
+- **Prohibited Objects:** The PostgreSQL `public` schema and legacy table `public.dcse_asset_registry` are STRICTLY BANNED.
+- **Fail-Closed Rule:** If a table or object is missing in `dcse_cp`, HALT IMMEDIATELY. Do NOT search `public`. Report the missing schema definition.
+- **Asset Registration:** Master product and asset registers live in Git (`DCSE-Control-Plane/products/PRODUCT_AND_ENTITY_REGISTER.md`) and ESCD (`apps/escd/runtime/escd_canonical_convergence_registry.json`), NOT in legacy SQL tables.
+
+### 4. Poller & Universal Dispatch Governance
+- The legacy script `job_tribunal_poller_v7.py` is RETIRED. Do NOT attempt to run it or report Step 5 as blocked.
+- The active runtime controller is `DCSE_DispatchController` running automatically on a 1-minute cadence.
+- Inserting a record into `dcse_cp.poller_wake_requests` with `status = 'REQUESTED'` satisfies the wake requirement.
+
+### 5. Operative Decision Workflow (The Authorized 4-Step Sequence)
+Whenever a product, asset, or DCS decision is approved, execute this exact 4-step sequence:
+1. **Step 1 — Evidence Artifacts:** Create Manifest, Receipt, and Summary in `tribunal/`.
+2. **Step 2 — Git Commit & Push:** Commit and push artifacts to the designated branch.
+3. **Step 3 — Supabase `dcse_cp` Task & Wake:** Insert active task into `dcse_cp.agent_tasks` and wake record into `dcse_cp.poller_wake_requests` (schema `dcse_cp` only).
+4. **Step 4 — ESCD Co-Registration:** Register the item in `apps/escd/runtime/escd_canonical_convergence_registry.json` (`CANON-XXX`).

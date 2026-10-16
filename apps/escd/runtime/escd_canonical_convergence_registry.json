@@ -1,17 +1,17 @@
 {
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
-    "total_source_occurrences": 189,
-    "total_candidates": 159,
+    "total_source_occurrences": 194,
+    "total_candidates": 164,
     "duplicates_merged": 31,
     "disposition_counts": {
-      "TASK": 55,
+      "TASK": 56,
       "HOLD": 25,
       "IDEA": 9,
       "SOURCE_ONLY": 3,
       "ASSET": 3,
       "DDNA": 40,
-      "KNOWLEDGE": 24
+      "KNOWLEDGE": 28
     },
     "governed_rules": [
       "Tasks: no historical task becomes active automatically (status=inactive)",
@@ -4357,7 +4357,7 @@
         "cross_source_duplicates": []
       },
       "authority_classification": "DCS_DIRECTION",
-      "confidence": 1.0,
+      "confidence": 1,
       "status": "active",
       "historical_current": "current_reference",
       "topic_relationships": [
@@ -4368,6 +4368,213 @@
       "duplicate_merge_relationship": "Merged 0 occurrences",
       "disposition_rationale": "DCS direct mandate: formal investigation of Antigravity reliability & Vercel deployment completion probe upon rate-limit reset",
       "content": "Investigate Antigravity reliability & verify ESCD live deployment upon Vercel reset\n\n- Issue: https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/issues/152\n- Incident Record: docs/governance/INCIDENT_REPORT_20260919_ESCD_DEPLOYMENT_FAILURE_AND_ANTIGRAVITY_INVESTIGATION.md\n- PR Merged: #153 (commit eece38a)\n- Status: Incomplete pending Vercel 24hr reset (api-deployments-free-per-day)\n- Verification: Direct probe of sc-escd.vercel.app/escd/app DOM for chatModelSelect & multi-model catalog"
+    },
+    {
+      "canonical_id": "CANON-160",
+      "content_hash": "eadd1830dd07",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCS_LEVEL_0_PROMOTION_AUTHORIZATION_V73_20260920.md",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-160"
+        ],
+        "occurrence_count": 1,
+        "source_document": "DCS_LEVEL_0_PROMOTION_AUTHORIZATION_V73_20260920.md",
+        "cross_source_duplicates": [
+          "ESCD_BROADCAST_V73_OPERATIVE_DESIGNATION_20260920.json"
+        ]
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "GOVERNANCE_PROMOTION",
+        "OPERATIVE_DESIGNATION",
+        "V73_AUTHORITY"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "DCS Level 0 sovereign governance decision promoting DCSE v7.3 to operative status and superseding v7.2 R5",
+      "content": "DCSE v7.3 Governance Package Promoted to OPERATIVE status by DCS Level 0 Authority (2026-09-20). Doctrines D01-D22 active ratified. Upstream activation commit d24b4f64e7f464c22bbe8f2d5060c8521434a660."
+    },
+    {
+      "canonical_id": "CANON-161",
+      "content_hash": "be4fd5262026",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "sonlyconsulting-ctrl/DCSE-Control-Plane#1",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TAS-161"
+        ],
+        "occurrence_count": 1,
+        "source_document": "plans/CONTROL_PLANE_TARGET_REPOSITORY_STRUCTURE_20261010.md",
+        "cross_source_duplicates": [
+          "handoffs/CODEX_REORG_COMPLETION_HANDOFF_20261010.md"
+        ]
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "GITHUB_CONTROL_PLANE_REORG",
+        "FULL_ESTATE_ARCHITECTURE",
+        "CODEX_HANDOFF_H07"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Complete GitHub Control Plane architectural reorganization and resolution of all unlocated sources staged in private candidate PR #1",
+      "content": "Complete GitHub Control Plane reorganization and multi-product architecture implemented in sonlyconsulting-ctrl/DCSE-Control-Plane PR #1 (commit be4fd52). Zero unlocated sources remain. Codex completion handoff H07 staged. Ready for human review, branch protection verification, and merge."
+    },
+    {
+      "canonical_id": "CANON-162",
+      "content_hash": "44be6894490e",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "source": "SC-CTJ-VOTER-EDITION-APPROVAL-20261010",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-162"
+        ],
+        "occurrence_count": 1,
+        "source_document": "tribunal/SC-CTJ-VOTER-EDITION-APPROVAL-MANIFEST-20261010.json",
+        "cross_source_duplicates": [
+          "tribunal/v7/decision_log.md"
+        ]
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "PRODUCT_APPROVAL",
+        "CTJ_VOTER_EDITION",
+        "CAAS_FAMILY"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "DCS product approval: Critical Thinker Journey Voter Edition nonpartisan 7-step module (Build Not Started)",
+      "content": "DCS approved CTJ: Voter Edition as a future product in the CaaS/CTJ family on 2026-10-10. Nonpartisan 7-step module + Clarity Card. GitHub commit 44be689 on gemini/dcseg-runtime. Supabase task 2b81ae0e, wake 8ea19fb8."
+    },
+    {
+      "canonical_id": "CANON-163",
+      "content_hash": "be09110765c1",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "DCS-APPROVAL-V73-D15-20261010-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-163"
+        ],
+        "occurrence_count": 1,
+        "source_document": "authority/decisions/v7.3/DCS_APPROVAL_V73_BASELINE_AND_D15_20261010.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "V73_BASELINE",
+        "D15"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "DCS approval of v7.3 baseline and D15; sole operative authority",
+      "content": "DCS approved v7.3 as sole operative baseline and D15 (SHA-256 BE09110765C1EF63277377860F2A27CC7659E91C05C4E1ABEEB35AEC91457B1A) on 2026-10-10. Earlier material archived under governance/archive/pre-v7.3."
+    },
+    {
+      "canonical_id": "CANON-164",
+      "content_hash": "9f81d4a02c31",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "ESCD-KNOW-CTJ-SUITE-20261011",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNO-164"
+        ],
+        "occurrence_count": 1,
+        "source_document": "apps/escd/docs/ESCD_CTJ_PRODUCT_SUITE_FACT_SHEET_20261011.md",
+        "cross_source_duplicates": [
+          "tribunal/v7/BOW-004_CTJ_TRUE_AUDIT_AND_INVENTORY_20260803.md"
+        ]
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CTJ_PRODUCT_SUITE",
+        "CTJ_FREE_EXPOSURE_REMEDIATION",
+        "EDITION_1_1_PACKAGING",
+        "RESPONSIBILITY_MATRIX",
+        "ROLLING_VERSION_CONTROL"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Comprehensive operational fact and cheat sheet for CTJ product family, pricing, free exposure remediation, 26/26 automated tests, responsibility matrix, and rolling version control.",
+      "content": "CTJ Product Suite Fact Sheet: Parts 1-3 (//), Unified (), Collection (/offer ). Historical free exposure via public GitHub repos and ungated hash routing identified and isolated. Edition 1.1 buyer packages verified with 26/26 automated tests passing. Lead: DCS Level 0; Integrator: Antigravity; Design: Claude Design; Frontend: Claude Code; Audit: Codex. Rolling version control governed by task IDs and SHA-256 evidence manifests."
+    },
+    {
+      "canonical_id": "CANON-165",
+      "content_hash": "c73a81f9b012",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "ESCD-TASK-TRI-MODEL-V73-20261012",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TSK-165"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "completed",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "TRI_MODEL_GOVERNANCE",
+        "V7_3_OPERATIVE",
+        "SC_SERVICES_REGISTRY",
+        "CTJ_PRIORITY_DELIVERY",
+        "V7_4_TRANSITION"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Tri-Model Governance setup (Claude, Codex, Antigravity) under operative Master Profile v7.3, extracting SC core services to content/sc-services.json and generating types/services.ts ahead of v7.4 transition.",
+      "content": "Ticket 1: Tri-Model pipeline execution. Claude Code extracted SC core services to content/sc-services.json. Codex generated TypeScript types in types/services.ts. Antigravity audited and verified zero database mutations. Operative Master Profile updated to v7.3 as runway for CTJ delivery before transition to v7.4."
+    },
+    {
+      "canonical_id": "CANON-166",
+      "content_hash": "e84b29f10a74",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "ESCD-TASK-DISTRIBUTED-NODE-DESKTOP-20261012",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TSK-166"
+        ],
+        "occurrence_count": 1,
+        "source_document": "AGENTS.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "active_verified",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "DISTRIBUTED_ORCHESTRATION",
+        "DESKTOP_PG1JATE_NODE",
+        "PLAYWRIGHT_OFFLOAD",
+        "MANDATORY_LIVE_PREVIEW_GATE"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Distributed node link to DESKTOP-PG1JATE polled and verified active (Ping=True, UNC=True, Playwright Spec=Ready). Ready for headless test offloading.",
+      "content": "ESCD Distributed Node Gateway: Establish DESKTOP-PG1JATE as an autonomous compute and AI orchestration worker node. Enables offloading of Playwright E2E suites and background builds while enforcing DCS mandatory live preview generation for all UI deliverables. [POLL VERIFIED: 2026-10-12 11:37 EDT - Node online, UNC share accessible, E2E runner primed]"
     }
   ]
 }
