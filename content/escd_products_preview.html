@@ -1588,7 +1588,7 @@ function launchEmbeddedCanvas(productId) {
   $('canvasProductMotto').textContent = prod.parent_brand + ' · ' + prod.motto;
 
   // Setup Live App Iframe
-  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'https://sc-escd.vercel.app' : null);
+  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'https://sc-escd.vercel.app/scripture' : null);
   const extBtn = $('canvasExternalLinkBtn');
   const iframe = $('canvasLiveIframe');
   const liveTabBtn = $('canvasTabLiveApp');

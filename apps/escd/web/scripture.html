@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Sacred Study</title>
+<title>Sacred Study | Inner & Outer Wisdom</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
 
 <style>
-/* Sacred Study */
+/* Sacred Study — Inner & Outer Wisdom Platform */
 :root {
   --bg: #0C1117; --surface: #141C28; --surface-2: #1C2638; --border: #2A3A50;
   --fg: #E6DCCA; --fg-muted: #8E9BAA; --fg-dim: #4E5E6E;
@@ -45,7 +46,7 @@ body {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
 }
 .app-logo { font-family: 'EB Garamond', Georgia, serif; font-size: 1.2rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
-.header-actions { display: flex; align-items: center; gap: 4px; }
+.header-actions { display: flex; align-items: center; gap: 6px; }
 .icon-btn { background: none; border: none; color: var(--fg-muted); cursor: pointer; padding: 7px; border-radius: 6px; display: flex; align-items: center; font-size: 0.9rem; transition: color .15s, background .15s; }
 .icon-btn:hover { color: var(--fg); background: var(--surface-2); }
 .bookmark-count { font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 600; background: var(--gold); color: #0C1117; border-radius: 4px; padding: 1px 5px; margin-left: -4px; min-width: 16px; text-align: center; }
@@ -65,11 +66,13 @@ body {
 .btn-primary:hover { opacity: .88; }
 .btn-ghost { background: var(--surface-2); border: 1px solid var(--border); color: var(--fg-muted); }
 .btn-ghost:hover { color: var(--fg); border-color: var(--fg-dim); }
+.btn-ghost.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
 .btn-sage { background: var(--sage-glow); border: 1px solid var(--sage); color: var(--sage); }
 .btn-sage:hover { background: var(--sage); color: #0C1117; }
 .btn-rec { background: rgba(217,108,108,.1); border: 1px solid var(--red); color: var(--red); }
 .btn-rec:hover { background: var(--red); color: white; }
 .btn-rec.recording { background: var(--red); color: white; animation: rec-pulse 1.4s ease-in-out infinite; }
+#ambientBtn.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); box-shadow: 0 0 10px rgba(201,165,90,0.25); animation: rec-pulse 2s ease-in-out infinite; }
 @keyframes rec-pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
 .btn-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 .verse-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; margin-bottom: 16px; position: relative; overflow: hidden; }
@@ -105,11 +108,12 @@ body {
 .tts-status.active { display: flex; }
 .tts-dot { width: 7px; height: 7px; background: var(--sage); border-radius: 50%; animation: rec-pulse 1.2s infinite; }
 .chapter-heading { font-family: 'EB Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 22px; color: var(--fg); }
-.verse-row { display: flex; gap: 10px; padding: 5px 6px 5px 4px; border-radius: 6px; cursor: pointer; transition: background .12s; border-left: 2px solid transparent; }
+.verse-row { display: flex; gap: 10px; padding: 6px 8px; border-radius: 6px; cursor: pointer; transition: background .12s; border-left: 3px solid transparent; }
 .verse-row:hover { background: var(--gold-glow); }
 .verse-row.highlighted { background: var(--gold-glow); border-left-color: var(--gold); }
-.v-num { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 600; color: var(--gold); min-width: 20px; padding-top: 5px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-.v-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; line-height: 1.95; }
+.verse-row.reading-active { background: var(--gold-glow); border-left-color: var(--gold); box-shadow: inset 4px 0 0 var(--gold); }
+.v-num { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 600; color: var(--gold); min-width: 24px; padding-top: 5px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.v-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; line-height: 1.95; flex: 1; }
 .ctx-menu { position: fixed; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.45); z-index: 200; padding: 6px; display: none; min-width: 160px; }
 .ctx-menu.visible { display: block; }
 .ctx-item { display: flex; align-items: center; gap: 8px; background: none; border: none; border-radius: 6px; color: var(--fg-muted); cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.78rem; padding: 7px 10px; width: 100%; text-align: left; transition: all .1s; }
@@ -140,11 +144,10 @@ body {
 .toast.show { transform: translateX(-50%) translateY(0); }
 .sub-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .feature-note { background: var(--sage-glow); border: 1px solid var(--sage); border-radius: 8px; padding: 10px 14px; font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--sage); margin-top: 10px; line-height: 1.5; }
-@media (max-width: 480px) { .lens-grid { grid-template-columns: 1fr 1fr; } .pane-title { font-size: 1.45rem; } .verse-text-large { font-size: 1.15rem; } .tab-btn { padding: 10px 12px; font-size: 0.68rem; } }
+@media (max-width: 480px) { .lens-grid { grid-template-columns: 1fr 1fr; } .pane-title { font-size: 1.45rem; } .verse-text-large { font-size: 1.15rem; } .tab-btn { padding: 10px 12px; font-size: 0.68rem; } .chapter-controls { gap: 6px; } }
 </style>
 </head>
 <body>
-
 
 <header class="app-header">
   <div class="app-logo"><span>✦</span> Sacred Study</div>
@@ -208,7 +211,13 @@ body {
     </select>
   </div>
   <div class="chapter-controls">
-    <button class="btn btn-primary" id="ttsBtn" onclick="toggleTTS()">🔊 Read Aloud</button>
+    <button class="btn btn-primary" id="ttsBtn" onclick="toggleTTS()" title="Read the whole chapter aloud">🔊 Read Aloud</button>
+    <select class="nav-select" id="voiceGenderSelect" onchange="onVoiceGenderChange()" style="width:auto;min-width:130px;" aria-label="Reader Voice">
+      <option value="female">♀ Female Voice</option>
+      <option value="male">♂ Male Voice</option>
+      <option value="default">Default Voice</option>
+    </select>
+    <button class="btn btn-ghost" id="ambientBtn" onclick="toggleAmbiance()" title="432Hz Scriptorium Ambient Tone">🎵 Ambiance</button>
     <button class="btn btn-rec" id="recBtn" onclick="toggleRecording()">⏺ Record Reading</button>
     <div class="tts-status" id="ttsStatus"><div class="tts-dot"></div><span id="ttsLabel">Reading…</span></div>
   </div>
@@ -298,66 +307,770 @@ const DAILY_VERSES = [
   { ref:'Romans 12:2', book:'Romans', ch:12, v:2, topic:'Transformed Mind', text:'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.' },
   { ref:'Psalm 119:105', book:'Psalms', ch:119, v:105, topic:'Lamp to My Feet', text:'Thy word is a lamp unto my feet, and a light unto my path.' },
   { ref:'2 Timothy 1:7', book:'2 Timothy', ch:1, v:7, topic:'Spirit of Power', text:'For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.' },
-  { ref:'Micah 6:8', book:'Micah', ch:6, v:8, topic:'What God Requires', text:'He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?' },
+  { ref:'Micah 6:8', book:'Micah', ch:6, v:8, topic:'What God Requires', text:'He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?' }
 ];
+
 const BOOKS = {'Genesis':50,'Exodus':40,'Leviticus':27,'Numbers':36,'Deuteronomy':34,'Joshua':24,'Judges':21,'Ruth':4,'1 Samuel':31,'2 Samuel':24,'1 Kings':22,'2 Kings':25,'1 Chronicles':29,'2 Chronicles':36,'Ezra':10,'Nehemiah':13,'Esther':10,'Job':42,'Psalms':150,'Proverbs':31,'Ecclesiastes':12,'Song of Solomon':8,'Isaiah':66,'Jeremiah':52,'Lamentations':5,'Ezekiel':48,'Daniel':12,'Hosea':14,'Joel':3,'Amos':9,'Obadiah':1,'Jonah':4,'Micah':7,'Nahum':3,'Habakkuk':3,'Zephaniah':3,'Haggai':2,'Zechariah':14,'Malachi':4,'Matthew':28,'Mark':16,'Luke':24,'John':21,'Acts':28,'Romans':16,'1 Corinthians':16,'2 Corinthians':13,'Galatians':6,'Ephesians':6,'Philippians':4,'Colossians':4,'1 Thessalonians':5,'2 Thessalonians':3,'1 Timothy':6,'2 Timothy':4,'Titus':3,'Philemon':1,'Hebrews':13,'James':5,'1 Peter':5,'2 Peter':3,'1 John':5,'2 John':1,'3 John':1,'Jude':1,'Revelation':22};
-const BIBLE = {'2 Samuel':{7:[{v:1,t:'And it came to pass, when the king sat in his house, and the LORD had given him rest round about from all his enemies;'},{v:16,t:'And thine house and thy kingdom shall be established for ever before thee: thy throne shall be established for ever.'},{v:22,t:'Wherefore thou art great, O LORD God: for there is none like thee, neither is there any God beside thee, according to all that we have heard with our ears.'}]},Psalms:{23:[{v:1,t:'The LORD is my shepherd; I shall not want.'},{v:2,t:'He maketh me to lie down in green pastures: he leadeth me beside the still waters.'},{v:3,t:'He restoreth my soul: he leadeth me in the paths of righteousness for his name\'s sake.'},{v:4,t:'Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.'},{v:5,t:'Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.'},{v:6,t:'Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the LORD for ever.'}],139:[{v:14,t:'I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.'},{v:23,t:'Search me, O God, and know my heart: try me, and know my thoughts:'}]},John:{3:[{v:16,t:'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.'}]},Romans:{8:[{v:1,t:'There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.'},{v:28,t:'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.'}]},Genesis:{1:[{v:1,t:'In the beginning God created the heaven and the earth.'},{v:3,t:'And God said, Let there be light: and there was light.'},{v:27,t:'So God created man in his own image, in the image of God created he him; male and female created he them.'}]}};
-const AI = {orthodox:{name:'Orthodox Christian Exegesis',body:'<p>In 2 Samuel 7, David\'s prayer reaches its theological apex at verse 22. <strong>"there is none like thee."</strong> The Hebrew phrase echoes the Shema\'s monotheistic heartbeat. God did not need David\'s temple — He desired a living lineage fulfilled in Christ Jesus. <strong>When your most sincere offering is redirected, ask whether God is building something through you rather than with you.</strong></p>'},esoteric:{name:'Esoteric / Hermetic Wisdom',body:'<p>In the Kabbalistic reading, the house God refuses from David is an exoteric stone structure — an earthly Malkhut. God redirects toward the Davidic line as a living Tiferet channel. <strong>"there is none like thee"</strong> parallels the Hermetic axiom: "There is one Sun, though all flowers follow it." The inner temple is not built by hands but by surrender.</p>'},interfaith:{name:'Comparative Interfaith',body:'<p>This verse resonates with the Quranic declaration: <em>"Say: He is Allah, One"</em> (Quran 112:1). In Sufi mysticism, David\'s recognition is the station of Fana — the annihilation of self in God. What crosses every tradition is the ego\'s surrender before infinite reality. <strong>The years of waiting are the purifying interval that breaks attachment to the ego\'s preferred timeline.</strong></p>'},practical:{name:'Practical Mindset',body:'<p>David\'s interrupted temple project is one of scripture\'s most instructive redirections. His response is not resentment — it is a question: <strong>"Who am I, O LORD God?"</strong> Research on post-traumatic growth shows deepest development occurs in recalibration after unexpected redirection. <strong>Your unrealized vision may be preparing ground for something greater than you imagined.</strong></p>'}};
-let S = {theme:null,activeTab:'daily',book:'2 Samuel',chapter:7,activeLens:null,reflectLens:null,speaking:false,recording:false,mediaRecorder:null,audioChunks:[],dictating:false,recognition:null,ctxVerse:null,highlighted:new Set(),recordings:[],reflections:[],bookmarks:[]};
-function loadLocal(){try{const d=JSON.parse(localStorage.getItem('sacredStudy')||'{}');if(d.reflections)S.reflections=d.reflections;if(d.bookmarks)S.bookmarks=d.bookmarks;if(d.highlighted)S.highlighted=new Set(d.highlighted);if(d.theme)S.theme=d.theme;if(d.recordings)S.recordings=d.recordings;}catch(e){}}
-function saveLocal(){try{localStorage.setItem('sacredStudy',JSON.stringify({reflections:S.reflections,bookmarks:S.bookmarks,highlighted:[...S.highlighted],theme:S.theme,recordings:S.recordings}));}catch(e){}}
-loadLocal();applyTheme();renderDailyVerse();renderChapter();renderHistory();renderBookmarks();renderRecordings();updateBmCount();
-function applyTheme(){if(S.theme==='light'){document.documentElement.setAttribute('data-theme','light');document.getElementById('themeToggle').textContent='☽';}else if(S.theme==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeToggle').textContent='☀';}else document.getElementById('themeToggle').textContent='☀';}
-document.getElementById('themeToggle').onclick=()=>{const cur=document.documentElement.getAttribute('data-theme');S.theme=cur==='dark'?'light':'dark';saveLocal();applyTheme();};
-function switchTab(tab){document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('pane-'+tab).classList.add('active');const tabs=['daily','reader','reflection','history'];document.querySelectorAll('.tab-btn')[tabs.indexOf(tab)].classList.add('active');S.activeTab=tab;if(tab==='history'){renderHistory();renderBookmarks();}if(tab==='reflection')renderRecordings();}
-function renderDailyVerse(){const now=new Date();const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);const v=DAILY_VERSES[doy%DAILY_VERSES.length];document.getElementById('dailyDate').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});document.getElementById('dailyTopic').textContent=v.topic;document.getElementById('dailyVerseLabel').textContent=v.ref;document.getElementById('dailyVerseText').textContent=v.text;document.getElementById('dailyVerseRef').textContent=v.ref;S._dailyVerse=v;}
-function goToChapter(){if(!S._dailyVerse)return;const v=S._dailyVerse;S.book=v.book in BOOKS?v.book:'2 Samuel';S.chapter=v.ch||1;populateBookSelect();loadChapter();switchTab('reader');}
-function bookmarkDailyVerse(){const v=S._dailyVerse;if(!v)return;if(S.bookmarks.find(b=>b.ref===v.ref)){toast('Already bookmarked');return;}S.bookmarks.push({ref:v.ref,text:v.text,date:new Date().toISOString()});saveLocal();updateBmCount();toast('Bookmarked: '+v.ref);}
-function speakVerse(){const t=document.getElementById('dailyVerseText').textContent;const ref=document.getElementById('dailyVerseRef').textContent;speak(ref+'. '+t);}
-function selectLens(lens,btn){document.querySelectorAll('#pane-daily .lens-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.activeLens=lens;showAI('aiPanel','aiBody','aiLensName',lens);}
-function selectReflectLens(lens,btn){document.querySelectorAll('#pane-reflection .lens-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.reflectLens=lens;showAI('reflectAiPanel','reflectAiBody','reflectLensName',lens);}
-function showAI(panelId,bodyId,nameId,lens){const resp=AI[lens];document.getElementById(nameId).textContent=resp.name;document.getElementById(bodyId).innerHTML=resp.body;document.getElementById(panelId).classList.add('visible');}
-function speakAI(){speak(document.getElementById('aiBody').innerText);}
-function speakReflectAI(){speak(document.getElementById('reflectAiBody').innerText);}
-function saveAIInsight(){if(!S.activeLens){toast('Select a lens first');return;}const text=document.getElementById('aiBody').innerText;const ref=S._dailyVerse?S._dailyVerse.ref:'Daily Study';const ta=document.getElementById('reflectionText');ta.value+=(ta.value?'\n\n':'')+('[AI '+AI[S.activeLens].name+' on '+ref+']\n')+text.substring(0,400)+'…';toast('AI insight added to reflection');}
-function populateBookSelect(){const bs=document.getElementById('bookSelect');bs.innerHTML='';Object.keys(BOOKS).forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=name;if(name===S.book)o.selected=true;bs.appendChild(o);});populateChapterSelect();}
-function populateChapterSelect(){const cs=document.getElementById('chapterSelect');const count=BOOKS[S.book]||1;cs.innerHTML='';for(let i=1;i<=count;i++){const o=document.createElement('option');o.value=i;o.textContent='Chapter '+i;if(i===S.chapter)o.selected=true;cs.appendChild(o);}}
-function onBookChange(){S.book=document.getElementById('bookSelect').value;S.chapter=1;populateChapterSelect();loadChapter();}
-function loadChapter(){S.chapter=parseInt(document.getElementById('chapterSelect').value);S.book=document.getElementById('bookSelect').value;renderChapter();}
-async function renderChapter(){const el=document.getElementById('chapterContent');const loading=document.getElementById('chapterLoading');const cached=BIBLE[S.book]&&BIBLE[S.book][S.chapter];if(cached){renderVerses(cached);return;}loading.style.display='block';el.innerHTML='';try{const ref=encodeURIComponent(S.book+' '+S.chapter);const trans=document.getElementById('translationSelect').value;const res=await fetch('https://bible-api.com/'+ref+'?translation='+trans);if(!res.ok)throw new Error('API error '+res.status);const data=await res.json();if(!data.verses||!data.verses.length)throw new Error('No verses returned');if(!BIBLE[S.book])BIBLE[S.book]={};BIBLE[S.book][S.chapter]=data.verses.map(v=>({v:v.verse,t:v.text.trim()}));renderVerses(BIBLE[S.book][S.chapter]);}catch(e){el.innerHTML='<div class="chapter-heading">'+S.book+' '+S.chapter+'</div><div class="feature-note">⚠ Could not load scripture. Check your connection and try again.</div>';}finally{loading.style.display='none';}}
-function renderVerses(data){const el=document.getElementById('chapterContent');const heading=S.book==='Psalms'?'Psalm '+S.chapter:S.book+' '+S.chapter;let html='<div class="chapter-heading">'+heading+'</div>';data.forEach(row=>{const hi=S.highlighted.has(S.book+'_'+S.chapter+'_'+row.v)?' highlighted':'';html+='<div class="verse-row'+hi+'" data-book="'+S.book+'" data-ch="'+S.chapter+'" data-v="'+row.v+'" data-t="'+row.t.replace(/"/g,'&quot;')+'" onclick="handleVerseClick(event,this)"><span class="v-num">'+row.v+'</span><span class="v-text">'+row.t+'</span></div>';});el.innerHTML=html;}
+
+// Complete pre-seeded offline/instant scripture chapters (all verses)
+const BIBLE = {"2 Samuel": {"7": [{"v": 1, "t": "And it came to pass, when the king sat in his house, and the LORD had given him rest round about from all his enemies;"}, {"v": 2, "t": "That the king said unto Nathan the prophet, See now, I dwell in an house of cedar, but the ark of God dwelleth within curtains."}, {"v": 3, "t": "And Nathan said to the king, Go, do all that is in thine heart; for the LORD is with thee."}, {"v": 4, "t": "And it came to pass that night, that the word of the LORD came unto Nathan, saying,"}, {"v": 5, "t": "Go and tell my servant David, Thus saith the LORD, Shalt thou build me an house for me to dwell in?"}, {"v": 6, "t": "Whereas I have not dwelt in any house since the time that I brought up the children of Israel out of Egypt, even to this day, but have walked in a tent and in a tabernacle."}, {"v": 7, "t": "In all the places wherein I have walked with all the children of Israel spake I a word with any of the tribes of Israel, whom I commanded to feed my people Israel, saying, Why build ye not me an house of cedar?"}, {"v": 8, "t": "Now therefore so shalt thou say unto my servant David, Thus saith the LORD of hosts, I took thee from the sheepcote, from following the sheep, to be ruler over my people, over Israel:"}, {"v": 9, "t": "And I was with thee whithersoever thou wentest, and have cut off all thine enemies out of thy sight, and have made thee a great name, like unto the name of the great men that are in the earth."}, {"v": 10, "t": "Moreover I will appoint a place for my people Israel, and will plant them, that they may dwell in a place of their own, and move no more; neither shall the children of wickedness afflict them any more, as beforetime,"}, {"v": 11, "t": "And as since the time that I commanded judges to be over my people Israel, and have caused thee to rest from all thine enemies. Also the LORD telleth thee that he will make thee an house."}, {"v": 12, "t": "And when thy days be fulfilled, and thou shalt sleep with thy fathers, I will set up thy seed after thee, which shall proceed out of thy bowels, and I will establish his kingdom."}, {"v": 13, "t": "He shall build an house for my name, and I will stablish the throne of his kingdom for ever."}, {"v": 14, "t": "I will be his father, and he shall be my son. If he commit iniquity, I will chasten him with the rod of men, and with the stripes of the children of men:"}, {"v": 15, "t": "But my mercy shall not depart away from him, as I took it  from Saul, whom I put away before thee."}, {"v": 16, "t": "And thine house and thy kingdom shall be established for ever before thee: thy throne shall be established for ever."}, {"v": 17, "t": "According to all these words, and according to all this vision, so did Nathan speak unto David."}, {"v": 18, "t": "Then went king David in, and sat before the LORD, and he said, Who am I, O Lord GOD? and what is my house, that thou hast brought me hitherto?"}, {"v": 19, "t": "And this was yet a small thing in thy sight, O Lord GOD; but thou hast spoken also of thy servant’s house for a great while to come. And is  this the manner of man, O Lord GOD?"}, {"v": 20, "t": "And what can David say more unto thee? for thou, Lord GOD, knowest thy servant."}, {"v": 21, "t": "For thy word’s sake, and according to thine own heart, hast thou done all these great things, to make thy servant know them."}, {"v": 22, "t": "Wherefore thou art great, O LORD God: for there is none like thee, neither is there any God beside thee, according to all that we have heard with our ears."}, {"v": 23, "t": "And what one nation in the earth is like thy people, even like Israel, whom God went to redeem for a people to himself, and to make him a name, and to do for you great things and terrible, for thy land, before thy people, which thou redeemedst to thee from Egypt, from  the nations and their gods?"}, {"v": 24, "t": "For thou hast confirmed to thyself thy people Israel to be  a people unto thee for ever: and thou, LORD, art become their God."}, {"v": 25, "t": "And now, O LORD God, the word that thou hast spoken concerning thy servant, and concerning his house, establish it for ever, and do as thou hast said."}, {"v": 26, "t": "And let thy name be magnified for ever, saying, The LORD of hosts is the God over Israel: and let the house of thy servant David be established before thee."}, {"v": 27, "t": "For thou, O LORD of hosts, God of Israel, hast revealed to thy servant, saying, I will build thee an house: therefore hath thy servant found in his heart to pray this prayer unto thee."}, {"v": 28, "t": "And now, O Lord GOD, thou art that God, and thy words be true, and thou hast promised this goodness unto thy servant:"}, {"v": 29, "t": "Therefore now let it please thee to bless the house of thy servant, that it may continue for ever before thee: for thou, O Lord GOD, hast spoken it: and with thy blessing let the house of thy servant be blessed for ever."}]}, "Psalms": {"23": [{"v": 1, "t": "The LORD is my shepherd; I shall not want."}, {"v": 2, "t": "He maketh me to lie down in green pastures: he leadeth me beside the still waters."}, {"v": 3, "t": "He restoreth my soul: he leadeth me in the paths of righteousness for his name’s sake."}, {"v": 4, "t": "Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me."}, {"v": 5, "t": "Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over."}, {"v": 6, "t": "Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the LORD for ever."}], "139": [{"v": 1, "t": "O LORD, thou hast searched me, and known me."}, {"v": 2, "t": "Thou knowest my downsitting and mine uprising, thou understandest my thought afar off."}, {"v": 3, "t": "Thou compassest my path and my lying down, and art acquainted with  all my ways."}, {"v": 4, "t": "For there is not a word in my tongue, but, lo, O LORD, thou knowest it altogether."}, {"v": 5, "t": "Thou hast beset me behind and before, and laid thine hand upon me."}, {"v": 6, "t": "Such knowledge is too wonderful for me; it is high, I cannot attain unto it."}, {"v": 7, "t": "Whither shall I go from thy spirit? or whither shall I flee from thy presence?"}, {"v": 8, "t": "If I ascend up into heaven, thou art there: if I make my bed in hell, behold, thou art there."}, {"v": 9, "t": "If I take the wings of the morning, and dwell in the uttermost parts of the sea;"}, {"v": 10, "t": "Even there shall thy hand lead me, and thy right hand shall hold me."}, {"v": 11, "t": "If I say, Surely the darkness shall cover me; even the night shall be light about me."}, {"v": 12, "t": "Yea, the darkness hideth not from thee; but the night shineth as the day: the darkness and the light are both alike to thee."}, {"v": 13, "t": "For thou hast possessed my reins: thou hast covered me in my mother’s womb."}, {"v": 14, "t": "I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well."}, {"v": 15, "t": "My substance was not hid from thee, when I was made in secret, and curiously wrought in the lowest parts of the earth."}, {"v": 16, "t": "Thine eyes did see my substance, yet being unperfect; and in thy book all my members were written, which in continuance were fashioned, when as yet there was none of them."}, {"v": 17, "t": "How precious also are thy thoughts unto me, O God! how great is the sum of them!"}, {"v": 18, "t": "If I should count them, they are more in number than the sand: when I awake, I am still with thee."}, {"v": 19, "t": "Surely thou wilt slay the wicked, O God: depart from me therefore, ye bloody men."}, {"v": 20, "t": "For they speak against thee wickedly, and thine enemies take thy name in vain."}, {"v": 21, "t": "Do not I hate them, O LORD, that hate thee? and am not I grieved with those that rise up against thee?"}, {"v": 22, "t": "I hate them with perfect hatred: I count them mine enemies."}, {"v": 23, "t": "Search me, O God, and know my heart: try me, and know my thoughts:"}, {"v": 24, "t": "And see if there be any wicked way in me, and lead me in the way everlasting."}], "46": [{"v": 1, "t": "God is our refuge and strength, a very present help in trouble."}, {"v": 2, "t": "Therefore will not we fear, though the earth be removed, and though the mountains be carried into the midst of the sea;"}, {"v": 3, "t": "Though the waters thereof roar and be troubled, though the mountains shake with the swelling thereof. Selah."}, {"v": 4, "t": "There is a river, the streams whereof shall make glad the city of God, the holy place of the tabernacles of the most High."}, {"v": 5, "t": "God is in the midst of her; she shall not be moved: God shall help her, and that right early."}, {"v": 6, "t": "The heathen raged, the kingdoms were moved: he uttered his voice, the earth melted."}, {"v": 7, "t": "The LORD of hosts is with us; the God of Jacob is  our refuge. Selah."}, {"v": 8, "t": "Come, behold the works of the LORD, what desolations he hath made in the earth."}, {"v": 9, "t": "He maketh wars to cease unto the end of the earth; he breaketh the bow, and cutteth the spear in sunder; he burneth the chariot in the fire."}, {"v": 10, "t": "Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth."}, {"v": 11, "t": "The LORD of hosts is with us; the God of Jacob is  our refuge. Selah."}]}, "John": {"3": [{"v": 1, "t": "There was a man of the Pharisees, named Nicodemus, a ruler of the Jews:"}, {"v": 2, "t": "The same came to Jesus by night, and said unto him, Rabbi, we know that thou art a teacher come from God: for no man can do these miracles that thou doest, except God be with him."}, {"v": 3, "t": "Jesus answered and said unto him, Verily, verily, I say unto thee, Except a man be born again, he cannot see the kingdom of God."}, {"v": 4, "t": "Nicodemus saith unto him, How can a man be born when he is old? can he enter the second time into his mother’s womb, and be born?"}, {"v": 5, "t": "Jesus answered, Verily, verily, I say unto thee, Except a man be born of water and of the Spirit, he cannot enter into the kingdom of God."}, {"v": 6, "t": "That which is born of the flesh is flesh; and that which is born of the Spirit is spirit."}, {"v": 7, "t": "Marvel not that I said unto thee, Ye must be born again."}, {"v": 8, "t": "The wind bloweth where it listeth, and thou hearest the sound thereof, but canst not tell whence it cometh, and whither it goeth: so is every one that is born of the Spirit."}, {"v": 9, "t": "Nicodemus answered and said unto him, How can these things be?"}, {"v": 10, "t": "Jesus answered and said unto him, Art thou a master of Israel, and knowest not these things?"}, {"v": 11, "t": "Verily, verily, I say unto thee, We speak that we do know, and testify that we have seen; and ye receive not our witness."}, {"v": 12, "t": "If I have told you earthly things, and ye believe not, how shall ye believe, if I tell you of heavenly things?"}, {"v": 13, "t": "And no man hath ascended up to heaven, but he that came down from heaven, even the Son of man which is in heaven."}, {"v": 14, "t": "And as Moses lifted up the serpent in the wilderness, even so must the Son of man be lifted up:"}, {"v": 15, "t": "That whosoever believeth in him should not perish, but have eternal life."}, {"v": 16, "t": "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."}, {"v": 17, "t": "For God sent not his Son into the world to condemn the world; but that the world through him might be saved."}, {"v": 18, "t": "He that believeth on him is not condemned: but he that believeth not is condemned already, because he hath not believed in the name of the only begotten Son of God."}, {"v": 19, "t": "And this is the condemnation, that light is come into the world, and men loved darkness rather than light, because their deeds were evil."}, {"v": 20, "t": "For every one that doeth evil hateth the light, neither cometh to the light, lest his deeds should be reproved."}, {"v": 21, "t": "But he that doeth truth cometh to the light, that his deeds may be made manifest, that they are wrought in God."}, {"v": 22, "t": "After these things came Jesus and his disciples into the land of Judaea; and there he tarried with them, and baptized."}, {"v": 23, "t": "And John also was baptizing in Aenon near to Salim, because there was much water there: and they came, and were baptized."}, {"v": 24, "t": "For John was not yet cast into prison."}, {"v": 25, "t": "Then there arose a question between some of John’s disciples and the Jews about purifying."}, {"v": 26, "t": "And they came unto John, and said unto him, Rabbi, he that was with thee beyond Jordan, to whom thou barest witness, behold, the same baptizeth, and all men come to him."}, {"v": 27, "t": "John answered and said, A man can receive nothing, except it be given him from heaven."}, {"v": 28, "t": "Ye yourselves bear me witness, that I said, I am not the Christ, but that I am sent before him."}, {"v": 29, "t": "He that hath the bride is the bridegroom: but the friend of the bridegroom, which standeth and heareth him, rejoiceth greatly because of the bridegroom’s voice: this my joy therefore is fulfilled."}, {"v": 30, "t": "He must increase, but I must decrease."}, {"v": 31, "t": "He that cometh from above is above all: he that is of the earth is earthly, and speaketh of the earth: he that cometh from heaven is above all."}, {"v": 32, "t": "And what he hath seen and heard, that he testifieth; and no man receiveth his testimony."}, {"v": 33, "t": "He that hath received his testimony hath set to his seal that God is true."}, {"v": 34, "t": "For he whom God hath sent speaketh the words of God: for God giveth not the Spirit by measure unto him."}, {"v": 35, "t": "The Father loveth the Son, and hath given all things into his hand."}, {"v": 36, "t": "He that believeth on the Son hath everlasting life: and he that believeth not the Son shall not see life; but the wrath of God abideth on him."}], "14": [{"v": 1, "t": "Let not your heart be troubled: ye believe in God, believe also in me."}, {"v": 2, "t": "In my Father’s house are many mansions: if it were not so, I would have told you. I go to prepare a place for you."}, {"v": 3, "t": "And if I go and prepare a place for you, I will come again, and receive you unto myself; that where I am, there ye may be also."}, {"v": 4, "t": "And whither I go ye know, and the way ye know."}, {"v": 5, "t": "Thomas saith unto him, Lord, we know not whither thou goest; and how can we know the way?"}, {"v": 6, "t": "Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me."}, {"v": 7, "t": "If ye had known me, ye should have known my Father also: and from henceforth ye know him, and have seen him."}, {"v": 8, "t": "Philip saith unto him, Lord, shew us the Father, and it sufficeth us."}, {"v": 9, "t": "Jesus saith unto him, Have I been so long time with you, and yet hast thou not known me, Philip? he that hath seen me hath seen the Father; and how sayest thou then, Shew us the Father?"}, {"v": 10, "t": "Believest thou not that I am in the Father, and the Father in me? the words that I speak unto you I speak not of myself: but the Father that dwelleth in me, he doeth the works."}, {"v": 11, "t": "Believe me that I am in the Father, and the Father in me: or else believe me for the very works’ sake."}, {"v": 12, "t": "Verily, verily, I say unto you, He that believeth on me, the works that I do shall he do also; and greater works than these shall he do; because I go unto my Father."}, {"v": 13, "t": "And whatsoever ye shall ask in my name, that will I do, that the Father may be glorified in the Son."}, {"v": 14, "t": "If ye shall ask any thing in my name, I will do it."}, {"v": 15, "t": "If ye love me, keep my commandments."}, {"v": 16, "t": "And I will pray the Father, and he shall give you another Comforter, that he may abide with you for ever;"}, {"v": 17, "t": "Even the Spirit of truth; whom the world cannot receive, because it seeth him not, neither knoweth him: but ye know him; for he dwelleth with you, and shall be in you."}, {"v": 18, "t": "I will not leave you comfortless: I will come to you."}, {"v": 19, "t": "Yet a little while, and the world seeth me no more; but ye see me: because I live, ye shall live also."}, {"v": 20, "t": "At that day ye shall know that I am in my Father, and ye in me, and I in you."}, {"v": 21, "t": "He that hath my commandments, and keepeth them, he it is that loveth me: and he that loveth me shall be loved of my Father, and I will love him, and will manifest myself to him."}, {"v": 22, "t": "Judas saith unto him, not Iscariot, Lord, how is it that thou wilt manifest thyself unto us, and not unto the world?"}, {"v": 23, "t": "Jesus answered and said unto him, If a man love me, he will keep my words: and my Father will love him, and we will come unto him, and make our abode with him."}, {"v": 24, "t": "He that loveth me not keepeth not my sayings: and the word which ye hear is not mine, but the Father’s which sent me."}, {"v": 25, "t": "These things have I spoken unto you, being yet present with you."}, {"v": 26, "t": "But the Comforter, which is the Holy Ghost, whom the Father will send in my name, he shall teach you all things, and bring all things to your remembrance, whatsoever I have said unto you."}, {"v": 27, "t": "Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid."}, {"v": 28, "t": "Ye have heard how I said unto you, I go away, and come again  unto you. If ye loved me, ye would rejoice, because I said, I go unto the Father: for my Father is greater than I."}, {"v": 29, "t": "And now I have told you before it come to pass, that, when it is come to pass, ye might believe."}, {"v": 30, "t": "Hereafter I will not talk much with you: for the prince of this world cometh, and hath nothing in me."}, {"v": 31, "t": "But that the world may know that I love the Father; and as the Father gave me commandment, even so I do. Arise, let us go hence."}]}, "Romans": {"8": [{"v": 1, "t": "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit."}, {"v": 2, "t": "For the law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death."}, {"v": 3, "t": "For what the law could not do, in that it was weak through the flesh, God sending his own Son in the likeness of sinful flesh, and for sin, condemned sin in the flesh:"}, {"v": 4, "t": "That the righteousness of the law might be fulfilled in us, who walk not after the flesh, but after the Spirit."}, {"v": 5, "t": "For they that are after the flesh do mind the things of the flesh; but they that are after the Spirit the things of the Spirit."}, {"v": 6, "t": "For to be carnally minded is death; but to be spiritually minded is life and peace."}, {"v": 7, "t": "Because the carnal mind is enmity against God: for it is not subject to the law of God, neither indeed can be."}, {"v": 8, "t": "So then they that are in the flesh cannot please God."}, {"v": 9, "t": "But ye are not in the flesh, but in the Spirit, if so be that the Spirit of God dwell in you. Now if any man have not the Spirit of Christ, he is none of his."}, {"v": 10, "t": "And if Christ be in you, the body is dead because of sin; but the Spirit is life because of righteousness."}, {"v": 11, "t": "But if the Spirit of him that raised up Jesus from the dead dwell in you, he that raised up Christ from the dead shall also quicken your mortal bodies by his Spirit that dwelleth in you."}, {"v": 12, "t": "Therefore, brethren, we are debtors, not to the flesh, to live after the flesh."}, {"v": 13, "t": "For if ye live after the flesh, ye shall die: but if ye through the Spirit do mortify the deeds of the body, ye shall live."}, {"v": 14, "t": "For as many as are led by the Spirit of God, they are the sons of God."}, {"v": 15, "t": "For ye have not received the spirit of bondage again to fear; but ye have received the Spirit of adoption, whereby we cry, Abba, Father."}, {"v": 16, "t": "The Spirit itself beareth witness with our spirit, that we are the children of God:"}, {"v": 17, "t": "And if children, then heirs; heirs of God, and joint-heirs with Christ; if so be that we suffer with him, that we may be also glorified together."}, {"v": 18, "t": "For I reckon that the sufferings of this present time are  not worthy to be compared with the glory which shall be revealed in us."}, {"v": 19, "t": "For the earnest expectation of the creature waiteth for the manifestation of the sons of God."}, {"v": 20, "t": "For the creature was made subject to vanity, not willingly, but by reason of him who hath subjected the same in hope,"}, {"v": 21, "t": "Because the creature itself also shall be delivered from the bondage of corruption into the glorious liberty of the children of God."}, {"v": 22, "t": "For we know that the whole creation groaneth and travaileth in pain together until now."}, {"v": 23, "t": "And not only they, but ourselves also, which have the firstfruits of the Spirit, even we ourselves groan within ourselves, waiting for the adoption, to wit, the redemption of our body."}, {"v": 24, "t": "For we are saved by hope: but hope that is seen is not hope: for what a man seeth, why doth he yet hope for?"}, {"v": 25, "t": "But if we hope for that we see not, then do we with patience wait for it."}, {"v": 26, "t": "Likewise the Spirit also helpeth our infirmities: for we know not what we should pray for as we ought: but the Spirit itself maketh intercession for us with groanings which cannot be uttered."}, {"v": 27, "t": "And he that searcheth the hearts knoweth what is the mind of the Spirit, because he maketh intercession for the saints according to the will of God."}, {"v": 28, "t": "And we know that all things work together for good to them that love God, to them who are the called according to his purpose."}, {"v": 29, "t": "For whom he did foreknow, he also did predestinate to be  conformed to the image of his Son, that he might be the firstborn among many brethren."}, {"v": 30, "t": "Moreover whom he did predestinate, them he also called: and whom he called, them he also justified: and whom he justified, them he also glorified."}, {"v": 31, "t": "What shall we then say to these things? If God be for us, who can be against us?"}, {"v": 32, "t": "He that spared not his own Son, but delivered him up for us all, how shall he not with him also freely give us all things?"}, {"v": 33, "t": "Who shall lay any thing to the charge of God’s elect? It is  God that justifieth."}, {"v": 34, "t": "Who is he that condemneth? It is Christ that died, yea rather, that is risen again, who is even at the right hand of God, who also maketh intercession for us."}, {"v": 35, "t": "Who shall separate us from the love of Christ? shall tribulation, or distress, or persecution, or famine, or nakedness, or peril, or sword?"}, {"v": 36, "t": "As it is written, For thy sake we are killed all the day long; we are accounted as sheep for the slaughter."}, {"v": 37, "t": "Nay, in all these things we are more than conquerors through him that loved us."}, {"v": 38, "t": "For I am persuaded, that neither death, nor life, nor angels, nor principalities, nor powers, nor things present, nor things to come,"}, {"v": 39, "t": "Nor height, nor depth, nor any other creature, shall be able to separate us from the love of God, which is in Christ Jesus our Lord."}], "12": [{"v": 1, "t": "I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is  your reasonable service."}, {"v": 2, "t": "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God."}, {"v": 3, "t": "For I say, through the grace given unto me, to every man that is among you, not to think of himself more highly than he ought to think; but to think soberly, according as God hath dealt to every man the measure of faith."}, {"v": 4, "t": "For as we have many members in one body, and all members have not the same office:"}, {"v": 5, "t": "So we, being many, are one body in Christ, and every one members one of another."}, {"v": 6, "t": "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith;"}, {"v": 7, "t": "Or ministry, let us wait on our ministering: or he that teacheth, on teaching;"}, {"v": 8, "t": "Or he that exhorteth, on exhortation: he that giveth, let him do it  with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness."}, {"v": 9, "t": "Let love be without dissimulation. Abhor that which is evil; cleave to that which is good."}, {"v": 10, "t": "Be kindly affectioned one to another with brotherly love; in honour preferring one another;"}, {"v": 11, "t": "Not slothful in business; fervent in spirit; serving the Lord;"}, {"v": 12, "t": "Rejoicing in hope; patient in tribulation; continuing instant in prayer;"}, {"v": 13, "t": "Distributing to the necessity of saints; given to hospitality."}, {"v": 14, "t": "Bless them which persecute you: bless, and curse not."}, {"v": 15, "t": "Rejoice with them that do rejoice, and weep with them that weep."}, {"v": 16, "t": "Be of the same mind one toward another. Mind not high things, but condescend to men of low estate. Be not wise in your own conceits."}, {"v": 17, "t": "Recompense to no man evil for evil. Provide things honest in the sight of all men."}, {"v": 18, "t": "If it be possible, as much as lieth in you, live peaceably with all men."}, {"v": 19, "t": "Dearly beloved, avenge not yourselves, but rather give place unto wrath: for it is written, Vengeance is mine; I will repay, saith the Lord."}, {"v": 20, "t": "Therefore if thine enemy hunger, feed him; if he thirst, give him drink: for in so doing thou shalt heap coals of fire on his head."}, {"v": 21, "t": "Be not overcome of evil, but overcome evil with good."}]}, "Genesis": {"1": [{"v": 1, "t": "In the beginning God created the heaven and the earth."}, {"v": 2, "t": "And the earth was without form, and void; and darkness was  upon the face of the deep. And the Spirit of God moved upon the face of the waters."}, {"v": 3, "t": "And God said, Let there be light: and there was light."}, {"v": 4, "t": "And God saw the light, that it was good: and God divided the light from the darkness."}, {"v": 5, "t": "And God called the light Day, and the darkness he called Night. And the evening and the morning were the first day."}, {"v": 6, "t": "And God said, Let there be a firmament in the midst of the waters, and let it divide the waters from the waters."}, {"v": 7, "t": "And God made the firmament, and divided the waters which were  under the firmament from the waters which were above the firmament: and it was so."}, {"v": 8, "t": "And God called the firmament Heaven. And the evening and the morning were the second day."}, {"v": 9, "t": "And God said, Let the waters under the heaven be gathered together unto one place, and let the dry land appear: and it was so."}, {"v": 10, "t": "And God called the dry land Earth; and the gathering together of the waters called he Seas: and God saw that it was good."}, {"v": 11, "t": "And God said, Let the earth bring forth grass, the herb yielding seed, and the fruit tree yielding fruit after his kind, whose seed is in itself, upon the earth: and it was so."}, {"v": 12, "t": "And the earth brought forth grass, and herb yielding seed after his kind, and the tree yielding fruit, whose seed was in itself, after his kind: and God saw that it was good."}, {"v": 13, "t": "And the evening and the morning were the third day."}, {"v": 14, "t": "And God said, Let there be lights in the firmament of the heaven to divide the day from the night; and let them be for signs, and for seasons, and for days, and years:"}, {"v": 15, "t": "And let them be for lights in the firmament of the heaven to give light upon the earth: and it was so."}, {"v": 16, "t": "And God made two great lights; the greater light to rule the day, and the lesser light to rule the night: he made the stars also."}, {"v": 17, "t": "And God set them in the firmament of the heaven to give light upon the earth,"}, {"v": 18, "t": "And to rule over the day and over the night, and to divide the light from the darkness: and God saw that it was good."}, {"v": 19, "t": "And the evening and the morning were the fourth day."}, {"v": 20, "t": "And God said, Let the waters bring forth abundantly the moving creature that hath life, and fowl that may fly above the earth in the open firmament of heaven."}, {"v": 21, "t": "And God created great whales, and every living creature that moveth, which the waters brought forth abundantly, after their kind, and every winged fowl after his kind: and God saw that it was good."}, {"v": 22, "t": "And God blessed them, saying, Be fruitful, and multiply, and fill the waters in the seas, and let fowl multiply in the earth."}, {"v": 23, "t": "And the evening and the morning were the fifth day."}, {"v": 24, "t": "And God said, Let the earth bring forth the living creature after his kind, cattle, and creeping thing, and beast of the earth after his kind: and it was so."}, {"v": 25, "t": "And God made the beast of the earth after his kind, and cattle after their kind, and every thing that creepeth upon the earth after his kind: and God saw that it was good."}, {"v": 26, "t": "And God said, Let us make man in our image, after our likeness: and let them have dominion over the fish of the sea, and over the fowl of the air, and over the cattle, and over all the earth, and over every creeping thing that creepeth upon the earth."}, {"v": 27, "t": "So God created man in his own image, in the image of God created he him; male and female created he them."}, {"v": 28, "t": "And God blessed them, and God said unto them, Be fruitful, and multiply, and replenish the earth, and subdue it: and have dominion over the fish of the sea, and over the fowl of the air, and over every living thing that moveth upon the earth."}, {"v": 29, "t": "And God said, Behold, I have given you every herb bearing seed, which is upon the face of all the earth, and every tree, in the which is the fruit of a tree yielding seed; to you it shall be for meat."}, {"v": 30, "t": "And to every beast of the earth, and to every fowl of the air, and to every thing that creepeth upon the earth, wherein there is life, I have given every green herb for meat: and it was so."}, {"v": 31, "t": "And God saw every thing that he had made, and, behold, it was  very good. And the evening and the morning were the sixth day."}]}, "Proverbs": {"3": [{"v": 1, "t": "My son, forget not my law; but let thine heart keep my commandments:"}, {"v": 2, "t": "For length of days, and long life, and peace, shall they add to thee."}, {"v": 3, "t": "Let not mercy and truth forsake thee: bind them about thy neck; write them upon the table of thine heart:"}, {"v": 4, "t": "So shalt thou find favour and good understanding in the sight of God and man."}, {"v": 5, "t": "Trust in the LORD with all thine heart; and lean not unto thine own understanding."}, {"v": 6, "t": "In all thy ways acknowledge him, and he shall direct thy paths."}, {"v": 7, "t": "Be not wise in thine own eyes: fear the LORD, and depart from evil."}, {"v": 8, "t": "It shall be health to thy navel, and marrow to thy bones."}, {"v": 9, "t": "Honour the LORD with thy substance, and with the firstfruits of all thine increase:"}, {"v": 10, "t": "So shall thy barns be filled with plenty, and thy presses shall burst out with new wine."}, {"v": 11, "t": "My son, despise not the chastening of the LORD; neither be weary of his correction:"}, {"v": 12, "t": "For whom the LORD loveth he correcteth; even as a father the son in whom he delighteth."}, {"v": 13, "t": "Happy is the man that findeth wisdom, and the man that getteth understanding."}, {"v": 14, "t": "For the merchandise of it is better than the merchandise of silver, and the gain thereof than fine gold."}, {"v": 15, "t": "She is more precious than rubies: and all the things thou canst desire are not to be compared unto her."}, {"v": 16, "t": "Length of days is in her right hand; and in her left hand riches and honour."}, {"v": 17, "t": "Her ways are ways of pleasantness, and all her paths are peace."}, {"v": 18, "t": "She is a tree of life to them that lay hold upon her: and happy is every one that retaineth her."}, {"v": 19, "t": "The LORD by wisdom hath founded the earth; by understanding hath he established the heavens."}, {"v": 20, "t": "By his knowledge the depths are broken up, and the clouds drop down the dew."}, {"v": 21, "t": "My son, let not them depart from thine eyes: keep sound wisdom and discretion:"}, {"v": 22, "t": "So shall they be life unto thy soul, and grace to thy neck."}, {"v": 23, "t": "Then shalt thou walk in thy way safely, and thy foot shall not stumble."}, {"v": 24, "t": "When thou liest down, thou shalt not be afraid: yea, thou shalt lie down, and thy sleep shall be sweet."}, {"v": 25, "t": "Be not afraid of sudden fear, neither of the desolation of the wicked, when it cometh."}, {"v": 26, "t": "For the LORD shall be thy confidence, and shall keep thy foot from being taken."}, {"v": 27, "t": "Withhold not good from them to whom it is due, when it is in the power of thine hand to do it."}, {"v": 28, "t": "Say not unto thy neighbour, Go, and come again, and to morrow I will give; when thou hast it by thee."}, {"v": 29, "t": "Devise not evil against thy neighbour, seeing he dwelleth securely by thee."}, {"v": 30, "t": "Strive not with a man without cause, if he have done thee no harm."}, {"v": 31, "t": "Envy thou not the oppressor, and choose none of his ways."}, {"v": 32, "t": "For the froward is abomination to the LORD: but his secret is with the righteous."}, {"v": 33, "t": "The curse of the LORD is in the house of the wicked: but he blesseth the habitation of the just."}, {"v": 34, "t": "Surely he scorneth the scorners: but he giveth grace unto the lowly."}, {"v": 35, "t": "The wise shall inherit glory: but shame shall be the promotion of fools."}], "4": [{"v": 1, "t": "Hear, ye children, the instruction of a father, and attend to know understanding."}, {"v": 2, "t": "For I give you good doctrine, forsake ye not my law."}, {"v": 3, "t": "For I was my father’s son, tender and only beloved in the sight of my mother."}, {"v": 4, "t": "He taught me also, and said unto me, Let thine heart retain my words: keep my commandments, and live."}, {"v": 5, "t": "Get wisdom, get understanding: forget it not; neither decline from the words of my mouth."}, {"v": 6, "t": "Forsake her not, and she shall preserve thee: love her, and she shall keep thee."}, {"v": 7, "t": "Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding."}, {"v": 8, "t": "Exalt her, and she shall promote thee: she shall bring thee to honour, when thou dost embrace her."}, {"v": 9, "t": "She shall give to thine head an ornament of grace: a crown of glory shall she deliver to thee."}, {"v": 10, "t": "Hear, O my son, and receive my sayings; and the years of thy life shall be many."}, {"v": 11, "t": "I have taught thee in the way of wisdom; I have led thee in right paths."}, {"v": 12, "t": "When thou goest, thy steps shall not be straitened; and when thou runnest, thou shalt not stumble."}, {"v": 13, "t": "Take fast hold of instruction; let her not go: keep her; for she is thy life."}, {"v": 14, "t": "Enter not into the path of the wicked, and go not in the way of evil men."}, {"v": 15, "t": "Avoid it, pass not by it, turn from it, and pass away."}, {"v": 16, "t": "For they sleep not, except they have done mischief; and their sleep is taken away, unless they cause some to fall."}, {"v": 17, "t": "For they eat the bread of wickedness, and drink the wine of violence."}, {"v": 18, "t": "But the path of the just is as the shining light, that shineth more and more unto the perfect day."}, {"v": 19, "t": "The way of the wicked is as darkness: they know not at what they stumble."}, {"v": 20, "t": "My son, attend to my words; incline thine ear unto my sayings."}, {"v": 21, "t": "Let them not depart from thine eyes; keep them in the midst of thine heart."}, {"v": 22, "t": "For they are life unto those that find them, and health to all their flesh."}, {"v": 23, "t": "Keep thy heart with all diligence; for out of it are the issues of life."}, {"v": 24, "t": "Put away from thee a froward mouth, and perverse lips put far from thee."}, {"v": 25, "t": "Let thine eyes look right on, and let thine eyelids look straight before thee."}, {"v": 26, "t": "Ponder the path of thy feet, and let all thy ways be established."}, {"v": 27, "t": "Turn not to the right hand nor to the left: remove thy foot from evil."}]}, "Philippians": {"4": [{"v": 1, "t": "Therefore, my brethren dearly beloved and longed for, my joy and crown, so stand fast in the Lord, my dearly beloved."}, {"v": 2, "t": "I beseech Euodias, and beseech Syntyche, that they be of the same mind in the Lord."}, {"v": 3, "t": "And I intreat thee also, true yokefellow, help those women which laboured with me in the gospel, with Clement also, and with other my fellowlabourers, whose names are in the book of life."}, {"v": 4, "t": "Rejoice in the Lord alway: and again I say, Rejoice."}, {"v": 5, "t": "Let your moderation be known unto all men. The Lord is at hand."}, {"v": 6, "t": "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God."}, {"v": 7, "t": "And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."}, {"v": 8, "t": "Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things."}, {"v": 9, "t": "Those things, which ye have both learned, and received, and heard, and seen in me, do: and the God of peace shall be with you."}, {"v": 10, "t": "But I rejoiced in the Lord greatly, that now at the last your care of me hath flourished again; wherein ye were also careful, but ye lacked opportunity."}, {"v": 11, "t": "Not that I speak in respect of want: for I have learned, in whatsoever state I am, therewith to be content."}, {"v": 12, "t": "I know both how to be abased, and I know how to abound: every where and in all things I am instructed both to be full and to be hungry, both to abound and to suffer need."}, {"v": 13, "t": "I can do all things through Christ which strengtheneth me."}, {"v": 14, "t": "Notwithstanding ye have well done, that ye did communicate with my affliction."}, {"v": 15, "t": "Now ye Philippians know also, that in the beginning of the gospel, when I departed from Macedonia, no church communicated with me as concerning giving and receiving, but ye only."}, {"v": 16, "t": "For even in Thessalonica ye sent once and again unto my necessity."}, {"v": 17, "t": "Not because I desire a gift: but I desire fruit that may abound to your account."}, {"v": 18, "t": "But I have all, and abound: I am full, having received of Epaphroditus the things which were sent from you, an odour of a sweet smell, a sacrifice acceptable, wellpleasing to God."}, {"v": 19, "t": "But my God shall supply all your need according to his riches in glory by Christ Jesus."}, {"v": 20, "t": "Now unto God and our Father be glory for ever and ever. Amen."}, {"v": 21, "t": "Salute every saint in Christ Jesus. The brethren which are with me greet you."}, {"v": 22, "t": "All the saints salute you, chiefly they that are of Caesar’s household."}, {"v": 23, "t": "The grace of our Lord Jesus Christ be with you all. Amen."}]}, "Isaiah": {"40": [{"v": 1, "t": "Comfort ye, comfort ye my people, saith your God."}, {"v": 2, "t": "Speak ye comfortably to Jerusalem, and cry unto her, that her warfare is accomplished, that her iniquity is pardoned: for she hath received of the LORD’S hand double for all her sins."}, {"v": 3, "t": "The voice of him that crieth in the wilderness, Prepare ye the way of the LORD, make straight in the desert a highway for our God."}, {"v": 4, "t": "Every valley shall be exalted, and every mountain and hill shall be made low: and the crooked shall be made straight, and the rough places plain:"}, {"v": 5, "t": "And the glory of the LORD shall be revealed, and all flesh shall see it together: for the mouth of the LORD hath spoken it."}, {"v": 6, "t": "The voice said, Cry. And he said, What shall I cry? All flesh is  grass, and all the goodliness thereof is as the flower of the field:"}, {"v": 7, "t": "The grass withereth, the flower fadeth: because the spirit of the LORD bloweth upon it: surely the people is grass."}, {"v": 8, "t": "The grass withereth, the flower fadeth: but the word of our God shall stand for ever."}, {"v": 9, "t": "O Zion, that bringest good tidings, get thee up into the high mountain; O Jerusalem, that bringest good tidings, lift up thy voice with strength; lift it up, be not afraid; say unto the cities of Judah, Behold your God!"}, {"v": 10, "t": "Behold, the Lord GOD will come with strong hand, and his arm shall rule for him: behold, his reward is with him, and his work before him."}, {"v": 11, "t": "He shall feed his flock like a shepherd: he shall gather the lambs with his arm, and carry them in his bosom, and shall gently lead those that are with young."}, {"v": 12, "t": "Who hath measured the waters in the hollow of his hand, and meted out heaven with the span, and comprehended the dust of the earth in a measure, and weighed the mountains in scales, and the hills in a balance?"}, {"v": 13, "t": "Who hath directed the Spirit of the LORD, or being his counsellor hath taught him?"}, {"v": 14, "t": "With whom took he counsel, and who instructed him, and taught him in the path of judgment, and taught him knowledge, and shewed to him the way of understanding?"}, {"v": 15, "t": "Behold, the nations are as a drop of a bucket, and are counted as the small dust of the balance: behold, he taketh up the isles as a very little thing."}, {"v": 16, "t": "And Lebanon is not sufficient to burn, nor the beasts thereof sufficient for a burnt offering."}, {"v": 17, "t": "All nations before him are as nothing; and they are counted to him less than nothing, and vanity."}, {"v": 18, "t": "To whom then will ye liken God? or what likeness will ye compare unto him?"}, {"v": 19, "t": "The workman melteth a graven image, and the goldsmith spreadeth it over with gold, and casteth silver chains."}, {"v": 20, "t": "He that is so impoverished that he hath no oblation chooseth a tree that will not rot; he seeketh unto him a cunning workman to prepare a graven image, that shall not be moved."}, {"v": 21, "t": "Have ye not known? have ye not heard? hath it not been told you from the beginning? have ye not understood from the foundations of the earth?"}, {"v": 22, "t": "It is he that sitteth upon the circle of the earth, and the inhabitants thereof are as grasshoppers; that stretcheth out the heavens as a curtain, and spreadeth them out as a tent to dwell in:"}, {"v": 23, "t": "That bringeth the princes to nothing; he maketh the judges of the earth as vanity."}, {"v": 24, "t": "Yea, they shall not be planted; yea, they shall not be sown: yea, their stock shall not take root in the earth: and he shall also blow upon them, and they shall wither, and the whirlwind shall take them away as stubble."}, {"v": 25, "t": "To whom then will ye liken me, or shall I be equal? saith the Holy One."}, {"v": 26, "t": "Lift up your eyes on high, and behold who hath created these things,  that bringeth out their host by number: he calleth them all by names by the greatness of his might, for that he is strong in power; not one faileth."}, {"v": 27, "t": "Why sayest thou, O Jacob, and speakest, O Israel, My way is hid from the LORD, and my judgment is passed over from my God?"}, {"v": 28, "t": "Hast thou not known? hast thou not heard, that the everlasting God, the LORD, the Creator of the ends of the earth, fainteth not, neither is weary? there is no searching of his understanding."}, {"v": 29, "t": "He giveth power to the faint; and to them that have no might he increaseth strength."}, {"v": 30, "t": "Even the youths shall faint and be weary, and the young men shall utterly fall:"}, {"v": 31, "t": "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint."}], "43": [{"v": 1, "t": "But now thus saith the LORD that created thee, O Jacob, and he that formed thee, O Israel, Fear not: for I have redeemed thee, I have called thee by thy name; thou art mine."}, {"v": 2, "t": "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee."}, {"v": 3, "t": "For I am the LORD thy God, the Holy One of Israel, thy Saviour: I gave Egypt for thy ransom, Ethiopia and Seba for thee."}, {"v": 4, "t": "Since thou wast precious in my sight, thou hast been honourable, and I have loved thee: therefore will I give men for thee, and people for thy life."}, {"v": 5, "t": "Fear not: for I am with thee: I will bring thy seed from the east, and gather thee from the west;"}, {"v": 6, "t": "I will say to the north, Give up; and to the south, Keep not back: bring my sons from far, and my daughters from the ends of the earth;"}, {"v": 7, "t": "Even every one that is called by my name: for I have created him for my glory, I have formed him; yea, I have made him."}, {"v": 8, "t": "Bring forth the blind people that have eyes, and the deaf that have ears."}, {"v": 9, "t": "Let all the nations be gathered together, and let the people be assembled: who among them can declare this, and shew us former things? let them bring forth their witnesses, that they may be justified: or let them hear, and say, It is truth."}, {"v": 10, "t": "Ye are my witnesses, saith the LORD, and my servant whom I have chosen: that ye may know and believe me, and understand that I am he: before me there was no God formed, neither shall there be after me."}, {"v": 11, "t": "I, even I, am the LORD; and beside me there is  no saviour."}, {"v": 12, "t": "I have declared, and have saved, and I have shewed, when there was  no strange god among you: therefore ye are my witnesses, saith the LORD, that I am God."}, {"v": 13, "t": "Yea, before the day was I am he; and there is  none that can deliver out of my hand: I will work, and who shall let it?"}, {"v": 14, "t": "Thus saith the LORD, your redeemer, the Holy One of Israel; For your sake I have sent to Babylon, and have brought down all their nobles, and the Chaldeans, whose cry is in the ships."}, {"v": 15, "t": "I am the LORD, your Holy One, the creator of Israel, your King."}, {"v": 16, "t": "Thus saith the LORD, which maketh a way in the sea, and a path in the mighty waters;"}, {"v": 17, "t": "Which bringeth forth the chariot and horse, the army and the power; they shall lie down together, they shall not rise: they are extinct, they are quenched as tow."}, {"v": 18, "t": "Remember ye not the former things, neither consider the things of old."}, {"v": 19, "t": "Behold, I will do a new thing; now it shall spring forth; shall ye not know it? I will even make a way in the wilderness, and rivers in the desert."}, {"v": 20, "t": "The beast of the field shall honour me, the dragons and the owls: because I give waters in the wilderness, and rivers in the desert, to give drink to my people, my chosen."}, {"v": 21, "t": "This people have I formed for myself; they shall shew forth my praise."}, {"v": 22, "t": "But thou hast not called upon me, O Jacob; but thou hast been weary of me, O Israel."}, {"v": 23, "t": "Thou hast not brought me the small cattle of thy burnt offerings; neither hast thou honoured me with thy sacrifices. I have not caused thee to serve with an offering, nor wearied thee with incense."}, {"v": 24, "t": "Thou hast bought me no sweet cane with money, neither hast thou filled me with the fat of thy sacrifices: but thou hast made me to serve with thy sins, thou hast wearied me with thine iniquities."}, {"v": 25, "t": "I, even I, am he that blotteth out thy transgressions for mine own sake, and will not remember thy sins."}, {"v": 26, "t": "Put me in remembrance: let us plead together: declare thou, that thou mayest be justified."}, {"v": 27, "t": "Thy first father hath sinned, and thy teachers have transgressed against me."}, {"v": 28, "t": "Therefore I have profaned the princes of the sanctuary, and have given Jacob to the curse, and Israel to reproaches."}]}, "Jeremiah": {"29": [{"v": 1, "t": "Now these are the words of the letter that Jeremiah the prophet sent from Jerusalem unto the residue of the elders which were carried away captives, and to the priests, and to the prophets, and to all the people whom Nebuchadnezzar had carried away captive from Jerusalem to Babylon;"}, {"v": 2, "t": "(After that Jeconiah the king, and the queen, and the eunuchs, the princes of Judah and Jerusalem, and the carpenters, and the smiths, were departed from Jerusalem;)"}, {"v": 3, "t": "By the hand of Elasah the son of Shaphan, and Gemariah the son of Hilkiah, (whom Zedekiah king of Judah sent unto Babylon to Nebuchadnezzar king of Babylon) saying,"}, {"v": 4, "t": "Thus saith the LORD of hosts, the God of Israel, unto all that are carried away captives, whom I have caused to be carried away from Jerusalem unto Babylon;"}, {"v": 5, "t": "Build ye houses, and dwell in them; and plant gardens, and eat the fruit of them;"}, {"v": 6, "t": "Take ye wives, and beget sons and daughters; and take wives for your sons, and give your daughters to husbands, that they may bear sons and daughters; that ye may be increased there, and not diminished."}, {"v": 7, "t": "And seek the peace of the city whither I have caused you to be carried away captives, and pray unto the LORD for it: for in the peace thereof shall ye have peace."}, {"v": 8, "t": "For thus saith the LORD of hosts, the God of Israel; Let not your prophets and your diviners, that be in the midst of you, deceive you, neither hearken to your dreams which ye cause to be dreamed."}, {"v": 9, "t": "For they prophesy falsely unto you in my name: I have not sent them, saith the LORD."}, {"v": 10, "t": "For thus saith the LORD, That after seventy years be accomplished at Babylon I will visit you, and perform my good word toward you, in causing you to return to this place."}, {"v": 11, "t": "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."}, {"v": 12, "t": "Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you."}, {"v": 13, "t": "And ye shall seek me, and find me, when ye shall search for me with all your heart."}, {"v": 14, "t": "And I will be found of you, saith the LORD: and I will turn away your captivity, and I will gather you from all the nations, and from all the places whither I have driven you, saith the LORD; and I will bring you again into the place whence I caused you to be carried away captive."}, {"v": 15, "t": "Because ye have said, The LORD hath raised us up prophets in Babylon;"}, {"v": 16, "t": "Know that thus saith the LORD of the king that sitteth upon the throne of David, and of all the people that dwelleth in this city, and of your brethren that are not gone forth with you into captivity;"}, {"v": 17, "t": "Thus saith the LORD of hosts; Behold, I will send upon them the sword, the famine, and the pestilence, and will make them like vile figs, that cannot be eaten, they are so evil."}, {"v": 18, "t": "And I will persecute them with the sword, with the famine, and with the pestilence, and will deliver them to be removed to all the kingdoms of the earth, to be a curse, and an astonishment, and an hissing, and a reproach, among all the nations whither I have driven them:"}, {"v": 19, "t": "Because they have not hearkened to my words, saith the LORD, which I sent unto them by my servants the prophets, rising up early and sending them; but ye would not hear, saith the LORD."}, {"v": 20, "t": "Hear ye therefore the word of the LORD, all ye of the captivity, whom I have sent from Jerusalem to Babylon:"}, {"v": 21, "t": "Thus saith the LORD of hosts, the God of Israel, of Ahab the son of Kolaiah, and of Zedekiah the son of Maaseiah, which prophesy a lie unto you in my name; Behold, I will deliver them into the hand of Nebuchadrezzar king of Babylon; and he shall slay them before your eyes;"}, {"v": 22, "t": "And of them shall be taken up a curse by all the captivity of Judah which are in Babylon, saying, The LORD make thee like Zedekiah and like Ahab, whom the king of Babylon roasted in the fire;"}, {"v": 23, "t": "Because they have committed villany in Israel, and have committed adultery with their neighbours’ wives, and have spoken lying words in my name, which I have not commanded them; even I know, and am a witness, saith the LORD."}, {"v": 24, "t": "Thus shalt thou also speak to Shemaiah the Nehelamite, saying,"}, {"v": 25, "t": "Thus speaketh the LORD of hosts, the God of Israel, saying, Because thou hast sent letters in thy name unto all the people that are at Jerusalem, and to Zephaniah the son of Maaseiah the priest, and to all the priests, saying,"}, {"v": 26, "t": "The LORD hath made thee priest in the stead of Jehoiada the priest, that ye should be officers in the house of the LORD, for every man that is  mad, and maketh himself a prophet, that thou shouldest put him in prison, and in the stocks."}, {"v": 27, "t": "Now therefore why hast thou not reproved Jeremiah of Anathoth, which maketh himself a prophet to you?"}, {"v": 28, "t": "For therefore he sent unto us in Babylon, saying, This captivity is long: build ye houses, and dwell in them;  and plant gardens, and eat the fruit of them."}, {"v": 29, "t": "And Zephaniah the priest read this letter in the ears of Jeremiah the prophet."}, {"v": 30, "t": "Then came the word of the LORD unto Jeremiah, saying,"}, {"v": 31, "t": "Send to all them of the captivity, saying, Thus saith the LORD concerning Shemaiah the Nehelamite; Because that Shemaiah hath prophesied unto you, and I sent him not, and he caused you to trust in a lie:"}, {"v": 32, "t": "Therefore thus saith the LORD; Behold, I will punish Shemaiah the Nehelamite, and his seed: he shall not have a man to dwell among this people; neither shall he behold the good that I will do for my people, saith the LORD; because he hath taught rebellion against the LORD."}]}, "Joel": {"2": [{"v": 1, "t": "Blow ye the trumpet in Zion, and sound an alarm in my holy mountain: let all the inhabitants of the land tremble: for the day of the LORD cometh, for it is nigh at hand;"}, {"v": 2, "t": "A day of darkness and of gloominess, a day of clouds and of thick darkness, as the morning spread upon the mountains: a great people and a strong; there hath not been ever the like, neither shall be any more after it, even to the years of many generations."}, {"v": 3, "t": "A fire devoureth before them; and behind them a flame burneth: the land is as the garden of Eden before them, and behind them a desolate wilderness; yea, and nothing shall escape them."}, {"v": 4, "t": "The appearance of them is as the appearance of horses; and as horsemen, so shall they run."}, {"v": 5, "t": "Like the noise of chariots on the tops of mountains shall they leap, like the noise of a flame of fire that devoureth the stubble, as a strong people set in battle array."}, {"v": 6, "t": "Before their face the people shall be much pained: all faces shall gather blackness."}, {"v": 7, "t": "They shall run like mighty men; they shall climb the wall like men of war; and they shall march every one on his ways, and they shall not break their ranks:"}, {"v": 8, "t": "Neither shall one thrust another; they shall walk every one in his path: and when they fall upon the sword, they shall not be wounded."}, {"v": 9, "t": "They shall run to and fro in the city; they shall run upon the wall, they shall climb up upon the houses; they shall enter in at the windows like a thief."}, {"v": 10, "t": "The earth shall quake before them; the heavens shall tremble: the sun and the moon shall be dark, and the stars shall withdraw their shining:"}, {"v": 11, "t": "And the LORD shall utter his voice before his army: for his camp is very great: for he is strong that executeth his word: for the day of the LORD is great and very terrible; and who can abide it?"}, {"v": 12, "t": "Therefore also now, saith the LORD, turn ye even to me with all your heart, and with fasting, and with weeping, and with mourning:"}, {"v": 13, "t": "And rend your heart, and not your garments, and turn unto the LORD your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil."}, {"v": 14, "t": "Who knoweth if he will return and repent, and leave a blessing behind him; even a meat offering and a drink offering unto the LORD your God?"}, {"v": 15, "t": "Blow the trumpet in Zion, sanctify a fast, call a solemn assembly:"}, {"v": 16, "t": "Gather the people, sanctify the congregation, assemble the elders, gather the children, and those that suck the breasts: let the bridegroom go forth of his chamber, and the bride out of her closet."}, {"v": 17, "t": "Let the priests, the ministers of the LORD, weep between the porch and the altar, and let them say, Spare thy people, O LORD, and give not thine heritage to reproach, that the heathen should rule over them: wherefore should they say among the people, Where is their God?"}, {"v": 18, "t": "Then will the LORD be jealous for his land, and pity his people."}, {"v": 19, "t": "Yea, the LORD will answer and say unto his people, Behold, I will send you corn, and wine, and oil, and ye shall be satisfied therewith: and I will no more make you a reproach among the heathen:"}, {"v": 20, "t": "But I will remove far off from you the northern army, and will drive him into a land barren and desolate, with his face toward the east sea, and his hinder part toward the utmost sea, and his stink shall come up, and his ill savour shall come up, because he hath done great things."}, {"v": 21, "t": "Fear not, O land; be glad and rejoice: for the LORD will do great things."}, {"v": 22, "t": "Be not afraid, ye beasts of the field: for the pastures of the wilderness do spring, for the tree beareth her fruit, the fig tree and the vine do yield their strength."}, {"v": 23, "t": "Be glad then, ye children of Zion, and rejoice in the LORD your God: for he hath given you the former rain moderately, and he will cause to come down for you the rain, the former rain, and the latter rain in the first month."}, {"v": 24, "t": "And the floors shall be full of wheat, and the vats shall overflow with wine and oil."}, {"v": 25, "t": "And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you."}, {"v": 26, "t": "And ye shall eat in plenty, and be satisfied, and praise the name of the LORD your God, that hath dealt wondrously with you: and my people shall never be ashamed."}, {"v": 27, "t": "And ye shall know that I am in the midst of Israel, and that I am the LORD your God, and none else: and my people shall never be ashamed."}, {"v": 28, "t": "And it shall come to pass afterward, that I will pour out my spirit upon all flesh; and your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions:"}, {"v": 29, "t": "And also upon the servants and upon the handmaids in those days will I pour out my spirit."}, {"v": 30, "t": "And I will shew wonders in the heavens and in the earth, blood, and fire, and pillars of smoke."}, {"v": 31, "t": "The sun shall be turned into darkness, and the moon into blood, before the great and the terrible day of the LORD come."}, {"v": 32, "t": "And it shall come to pass, that whosoever shall call on the name of the LORD shall be delivered: for in mount Zion and in Jerusalem shall be deliverance, as the LORD hath said, and in the remnant whom the LORD shall call."}]}, "Hebrews": {"5": [{"v": 1, "t": "For every high priest taken from among men is ordained for men in things pertaining to God, that he may offer both gifts and sacrifices for sins:"}, {"v": 2, "t": "Who can have compassion on the ignorant, and on them that are out of the way; for that he himself also is compassed with infirmity."}, {"v": 3, "t": "And by reason hereof he ought, as for the people, so also for himself, to offer for sins."}, {"v": 4, "t": "And no man taketh this honour unto himself, but he that is called of God, as was Aaron."}, {"v": 5, "t": "So also Christ glorified not himself to be made an high priest; but he that said unto him, Thou art my Son, to day have I begotten thee."}, {"v": 6, "t": "As he saith also in another place, Thou art a priest for ever after the order of Melchisedec."}, {"v": 7, "t": "Who in the days of his flesh, when he had offered up prayers and supplications with strong crying and tears unto him that was able to save him from death, and was heard in that he feared;"}, {"v": 8, "t": "Though he were a Son, yet learned he obedience by the things which he suffered;"}, {"v": 9, "t": "And being made perfect, he became the author of eternal salvation unto all them that obey him;"}, {"v": 10, "t": "Called of God an high priest after the order of Melchisedec."}, {"v": 11, "t": "Of whom we have many things to say, and hard to be uttered, seeing ye are dull of hearing."}, {"v": 12, "t": "For when for the time ye ought to be teachers, ye have need that one teach you again which be the first principles of the oracles of God; and are become such as have need of milk, and not of strong meat."}, {"v": 13, "t": "For every one that useth milk is unskilful in the word of righteousness: for he is a babe."}, {"v": 14, "t": "But strong meat belongeth to them that are of full age, even  those who by reason of use have their senses exercised to discern both good and evil."}]}, "Galatians": {"6": [{"v": 1, "t": "Brethren, if a man be overtaken in a fault, ye which are spiritual, restore such an one in the spirit of meekness; considering thyself, lest thou also be tempted."}, {"v": 2, "t": "Bear ye one another’s burdens, and so fulfil the law of Christ."}, {"v": 3, "t": "For if a man think himself to be something, when he is nothing, he deceiveth himself."}, {"v": 4, "t": "But let every man prove his own work, and then shall he have rejoicing in himself alone, and not in another."}, {"v": 5, "t": "For every man shall bear his own burden."}, {"v": 6, "t": "Let him that is taught in the word communicate unto him that teacheth in all good things."}, {"v": 7, "t": "Be not deceived; God is not mocked: for whatsoever a man soweth, that shall he also reap."}, {"v": 8, "t": "For he that soweth to his flesh shall of the flesh reap corruption; but he that soweth to the Spirit shall of the Spirit reap life everlasting."}, {"v": 9, "t": "And let us not be weary in well doing: for in due season we shall reap, if we faint not."}, {"v": 10, "t": "As we have therefore opportunity, let us do good unto all men,  especially unto them who are of the household of faith."}, {"v": 11, "t": "Ye see how large a letter I have written unto you with mine own hand."}, {"v": 12, "t": "As many as desire to make a fair shew in the flesh, they constrain you to be circumcised; only lest they should suffer persecution for the cross of Christ."}, {"v": 13, "t": "For neither they themselves who are circumcised keep the law; but desire to have you circumcised, that they may glory in your flesh."}, {"v": 14, "t": "But God forbid that I should glory, save in the cross of our Lord Jesus Christ, by whom the world is crucified unto me, and I unto the world."}, {"v": 15, "t": "For in Christ Jesus neither circumcision availeth any thing, nor uncircumcision, but a new creature."}, {"v": 16, "t": "And as many as walk according to this rule, peace be on them, and mercy, and upon the Israel of God."}, {"v": 17, "t": "From henceforth let no man trouble me: for I bear in my body the marks of the Lord Jesus."}, {"v": 18, "t": "Brethren, the grace of our Lord Jesus Christ be with your spirit. Amen."}]}, "Matthew": {"7": [{"v": 1, "t": "Judge not, that ye be not judged."}, {"v": 2, "t": "For with what judgment ye judge, ye shall be judged: and with what measure ye mete, it shall be measured to you again."}, {"v": 3, "t": "And why beholdest thou the mote that is in thy brother’s eye, but considerest not the beam that is in thine own eye?"}, {"v": 4, "t": "Or how wilt thou say to thy brother, Let me pull out the mote out of thine eye; and, behold, a beam is in thine own eye?"}, {"v": 5, "t": "Thou hypocrite, first cast out the beam out of thine own eye; and then shalt thou see clearly to cast out the mote out of thy brother’s eye."}, {"v": 6, "t": "Give not that which is holy unto the dogs, neither cast ye your pearls before swine, lest they trample them under their feet, and turn again and rend you."}, {"v": 7, "t": "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you:"}, {"v": 8, "t": "For every one that asketh receiveth; and he that seeketh findeth; and to him that knocketh it shall be opened."}, {"v": 9, "t": "Or what man is there of you, whom if his son ask bread, will he give him a stone?"}, {"v": 10, "t": "Or if he ask a fish, will he give him a serpent?"}, {"v": 11, "t": "If ye then, being evil, know how to give good gifts unto your children, how much more shall your Father which is in heaven give good things to them that ask him?"}, {"v": 12, "t": "Therefore all things whatsoever ye would that men should do to you, do ye even so to them: for this is the law and the prophets."}, {"v": 13, "t": "Enter ye in at the strait gate: for wide is the gate, and broad is the way, that leadeth to destruction, and many there be which go in thereat:"}, {"v": 14, "t": "Because strait is the gate, and narrow is  the way, which leadeth unto life, and few there be that find it."}, {"v": 15, "t": "Beware of false prophets, which come to you in sheep’s clothing, but inwardly they are ravening wolves."}, {"v": 16, "t": "Ye shall know them by their fruits. Do men gather grapes of thorns, or figs of thistles?"}, {"v": 17, "t": "Even so every good tree bringeth forth good fruit; but a corrupt tree bringeth forth evil fruit."}, {"v": 18, "t": "A good tree cannot bring forth evil fruit, neither can  a corrupt tree bring forth good fruit."}, {"v": 19, "t": "Every tree that bringeth not forth good fruit is hewn down, and cast into the fire."}, {"v": 20, "t": "Wherefore by their fruits ye shall know them."}, {"v": 21, "t": "Not every one that saith unto me, Lord, Lord, shall enter into the kingdom of heaven; but he that doeth the will of my Father which is in heaven."}, {"v": 22, "t": "Many will say to me in that day, Lord, Lord, have we not prophesied in thy name? and in thy name have cast out devils? and in thy name done many wonderful works?"}, {"v": 23, "t": "And then will I profess unto them, I never knew you: depart from me, ye that work iniquity."}, {"v": 24, "t": "Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock:"}, {"v": 25, "t": "And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock."}, {"v": 26, "t": "And every one that heareth these sayings of mine, and doeth them not, shall be likened unto a foolish man, which built his house upon the sand:"}, {"v": 27, "t": "And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell: and great was the fall of it."}, {"v": 28, "t": "And it came to pass, when Jesus had ended these sayings, the people were astonished at his doctrine:"}, {"v": 29, "t": "For he taught them as one having authority, and not as the scribes."}]}, "2 Corinthians": {"5": [{"v": 1, "t": "For we know that if our earthly house of this tabernacle were dissolved, we have a building of God, an house not made with hands, eternal in the heavens."}, {"v": 2, "t": "For in this we groan, earnestly desiring to be clothed upon with our house which is from heaven:"}, {"v": 3, "t": "If so be that being clothed we shall not be found naked."}, {"v": 4, "t": "For we that are in this tabernacle do groan, being burdened: not for that we would be unclothed, but clothed upon, that mortality might be swallowed up of life."}, {"v": 5, "t": "Now he that hath wrought us for the selfsame thing is God, who also hath given unto us the earnest of the Spirit."}, {"v": 6, "t": "Therefore we are always confident, knowing that, whilst we are at home in the body, we are absent from the Lord:"}, {"v": 7, "t": "(For we walk by faith, not by sight:)"}, {"v": 8, "t": "We are confident, I say, and willing rather to be absent from the body, and to be present with the Lord."}, {"v": 9, "t": "Wherefore we labour, that, whether present or absent, we may be accepted of him."}, {"v": 10, "t": "For we must all appear before the judgment seat of Christ; that every one may receive the things done in his body, according to that he hath done, whether it be good or bad."}, {"v": 11, "t": "Knowing therefore the terror of the Lord, we persuade men; but we are made manifest unto God; and I trust also are made manifest in your consciences."}, {"v": 12, "t": "For we commend not ourselves again unto you, but give you occasion to glory on our behalf, that ye may have somewhat to answer them which glory in appearance, and not in heart."}, {"v": 13, "t": "For whether we be beside ourselves, it is to God: or whether we be sober, it is for your cause."}, {"v": 14, "t": "For the love of Christ constraineth us; because we thus judge, that if one died for all, then were all dead:"}, {"v": 15, "t": "And that he died for all, that they which live should not henceforth live unto themselves, but unto him which died for them, and rose again."}, {"v": 16, "t": "Wherefore henceforth know we no man after the flesh: yea, though we have known Christ after the flesh, yet now henceforth know we him no more."}, {"v": 17, "t": "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new."}, {"v": 18, "t": "And all things are of God, who hath reconciled us to himself by Jesus Christ, and hath given to us the ministry of reconciliation;"}, {"v": 19, "t": "To wit, that God was in Christ, reconciling the world unto himself, not imputing their trespasses unto them; and hath committed unto us the word of reconciliation."}, {"v": 20, "t": "Now then we are ambassadors for Christ, as though God did beseech you by us: we pray you in Christ’s stead, be ye reconciled to God."}, {"v": 21, "t": "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him."}]}, "James": {"1": [{"v": 1, "t": "James, a servant of God and of the Lord Jesus Christ, to the twelve tribes which are scattered abroad, greeting."}, {"v": 2, "t": "My brethren, count it all joy when ye fall into divers temptations;"}, {"v": 3, "t": "Knowing this, that the trying of your faith worketh patience."}, {"v": 4, "t": "But let patience have her perfect work, that ye may be perfect and entire, wanting nothing."}, {"v": 5, "t": "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."}, {"v": 6, "t": "But let him ask in faith, nothing wavering. For he that wavereth is like a wave of the sea driven with the wind and tossed."}, {"v": 7, "t": "For let not that man think that he shall receive any thing of the Lord."}, {"v": 8, "t": "A double minded man is unstable in all his ways."}, {"v": 9, "t": "Let the brother of low degree rejoice in that he is exalted:"}, {"v": 10, "t": "But the rich, in that he is made low: because as the flower of the grass he shall pass away."}, {"v": 11, "t": "For the sun is no sooner risen with a burning heat, but it withereth the grass, and the flower thereof falleth, and the grace of the fashion of it perisheth: so also shall the rich man fade away in his ways."}, {"v": 12, "t": "Blessed is the man that endureth temptation: for when he is tried, he shall receive the crown of life, which the Lord hath promised to them that love him."}, {"v": 13, "t": "Let no man say when he is tempted, I am tempted of God: for God cannot be tempted with evil, neither tempteth he any man:"}, {"v": 14, "t": "But every man is tempted, when he is drawn away of his own lust, and enticed."}, {"v": 15, "t": "Then when lust hath conceived, it bringeth forth sin: and sin, when it is finished, bringeth forth death."}, {"v": 16, "t": "Do not err, my beloved brethren."}, {"v": 17, "t": "Every good gift and every perfect gift is from above, and cometh down from the Father of lights, with whom is no variableness, neither shadow of turning."}, {"v": 18, "t": "Of his own will begat he us with the word of truth, that we should be a kind of firstfruits of his creatures."}, {"v": 19, "t": "Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath:"}, {"v": 20, "t": "For the wrath of man worketh not the righteousness of God."}, {"v": 21, "t": "Wherefore lay apart all filthiness and superfluity of naughtiness, and receive with meekness the engrafted word, which is able to save your souls."}, {"v": 22, "t": "But be ye doers of the word, and not hearers only, deceiving your own selves."}, {"v": 23, "t": "For if any be a hearer of the word, and not a doer, he is like unto a man beholding his natural face in a glass:"}, {"v": 24, "t": "For he beholdeth himself, and goeth his way, and straightway forgetteth what manner of man he was."}, {"v": 25, "t": "But whoso looketh into the perfect law of liberty, and continueth therein, he being not a forgetful hearer, but a doer of the work, this man shall be blessed in his deed."}, {"v": 26, "t": "If any man among you seem to be religious, and bridleth not his tongue, but deceiveth his own heart, this man’s religion is vain."}, {"v": 27, "t": "Pure religion and undefiled before God and the Father is this, To visit the fatherless and widows in their affliction, and to keep himself unspotted from the world."}]}, "2 Timothy": {"1": [{"v": 1, "t": "Paul, an apostle of Jesus Christ by the will of God, according to the promise of life which is in Christ Jesus,"}, {"v": 2, "t": "To Timothy, my dearly beloved son: Grace, mercy, and  peace, from God the Father and Christ Jesus our Lord."}, {"v": 3, "t": "I thank God, whom I serve from my forefathers with pure conscience, that without ceasing I have remembrance of thee in my prayers night and day;"}, {"v": 4, "t": "Greatly desiring to see thee, being mindful of thy tears, that I may be filled with joy;"}, {"v": 5, "t": "When I call to remembrance the unfeigned faith that is in thee, which dwelt first in thy grandmother Lois, and thy mother Eunice; and I am persuaded that in thee also."}, {"v": 6, "t": "Wherefore I put thee in remembrance that thou stir up the gift of God, which is in thee by the putting on of my hands."}, {"v": 7, "t": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind."}, {"v": 8, "t": "Be not thou therefore ashamed of the testimony of our Lord, nor of me his prisoner: but be thou partaker of the afflictions of the gospel according to the power of God;"}, {"v": 9, "t": "Who hath saved us, and called us with an holy calling, not according to our works, but according to his own purpose and grace, which was given us in Christ Jesus before the world began,"}, {"v": 10, "t": "But is now made manifest by the appearing of our Saviour Jesus Christ, who hath abolished death, and hath brought life and immortality to light through the gospel:"}, {"v": 11, "t": "Whereunto I am appointed a preacher, and an apostle, and a teacher of the Gentiles."}, {"v": 12, "t": "For the which cause I also suffer these things: nevertheless I am not ashamed: for I know whom I have believed, and am persuaded that he is able to keep that which I have committed unto him against that day."}, {"v": 13, "t": "Hold fast the form of sound words, which thou hast heard of me, in faith and love which is in Christ Jesus."}, {"v": 14, "t": "That good thing which was committed unto thee keep by the Holy Ghost which dwelleth in us."}, {"v": 15, "t": "This thou knowest, that all they which are in Asia be turned away from me; of whom are Phygellus and Hermogenes."}, {"v": 16, "t": "The Lord give mercy unto the house of Onesiphorus; for he oft refreshed me, and was not ashamed of my chain:"}, {"v": 17, "t": "But, when he was in Rome, he sought me out very diligently, and found me."}, {"v": 18, "t": "The Lord grant unto him that he may find mercy of the Lord in that day: and in how many things he ministered unto me at Ephesus, thou knowest very well."}]}, "Micah": {"6": [{"v": 1, "t": "Hear ye now what the LORD saith; Arise, contend thou before the mountains, and let the hills hear thy voice."}, {"v": 2, "t": "Hear ye, O mountains, the LORD’S controversy, and ye strong foundations of the earth: for the LORD hath a controversy with his people, and he will plead with Israel."}, {"v": 3, "t": "O my people, what have I done unto thee? and wherein have I wearied thee? testify against me."}, {"v": 4, "t": "For I brought thee up out of the land of Egypt, and redeemed thee out of the house of servants; and I sent before thee Moses, Aaron, and Miriam."}, {"v": 5, "t": "O my people, remember now what Balak king of Moab consulted, and what Balaam the son of Beor answered him from Shittim unto Gilgal; that ye may know the righteousness of the LORD."}, {"v": 6, "t": "Wherewith shall I come before the LORD, and bow myself before the high God? shall I come before him with burnt offerings, with calves of a year old?"}, {"v": 7, "t": "Will the LORD be pleased with thousands of rams, or with ten thousands of rivers of oil? shall I give my firstborn for my transgression, the fruit of my body for the sin of my soul?"}, {"v": 8, "t": "He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?"}, {"v": 9, "t": "The LORD’S voice crieth unto the city, and the man of wisdom shall see thy name: hear ye the rod, and who hath appointed it."}, {"v": 10, "t": "Are there yet the treasures of wickedness in the house of the wicked, and the scant measure that is abominable?"}, {"v": 11, "t": "Shall I count them pure with the wicked balances, and with the bag of deceitful weights?"}, {"v": 12, "t": "For the rich men thereof are full of violence, and the inhabitants thereof have spoken lies, and their tongue is deceitful in their mouth."}, {"v": 13, "t": "Therefore also will I make thee sick in smiting thee, in making thee desolate because of thy sins."}, {"v": 14, "t": "Thou shalt eat, but not be satisfied; and thy casting down shall be in the midst of thee; and thou shalt take hold, but shalt not deliver; and that which thou deliverest will I give up to the sword."}, {"v": 15, "t": "Thou shalt sow, but thou shalt not reap; thou shalt tread the olives, but thou shalt not anoint thee with oil; and sweet wine, but shalt not drink wine."}, {"v": 16, "t": "For the statutes of Omri are kept, and all the works of the house of Ahab, and ye walk in their counsels; that I should make thee a desolation, and the inhabitants thereof an hissing: therefore ye shall bear the reproach of my people."}]}};
+
+const AI = {
+  orthodox: {
+    name: 'Orthodox Christian Exegesis',
+    body: "<p>In 2 Samuel 7, David's prayer reaches its theological apex at verse 22: <strong>\"there is none like thee.\"</strong> The Hebrew phrase echoes the Shema's monotheistic heartbeat. God did not need David's temple — He desired a living lineage fulfilled in Christ Jesus. <strong>When your most sincere offering is redirected, ask whether God is building something through you rather than with you.</strong></p>"
+  },
+  esoteric: {
+    name: 'Esoteric / Hermetic Wisdom',
+    body: "<p>In the Kabbalistic reading, the house God refuses from David is an exoteric stone structure — an earthly Malkhut. God redirects toward the Davidic line as a living Tiferet channel. <strong>\"there is none like thee\"</strong> parallels the Hermetic axiom: \"There is one Sun, though all flowers follow it.\" The inner temple is not built by hands but by surrender.</p>"
+  },
+  interfaith: {
+    name: 'Comparative Interfaith',
+    body: "<p>This verse resonates with the Quranic declaration: <em>\"Say: He is Allah, One\"</em> (Quran 112:1). In Sufi mysticism, David's recognition is the station of Fana — the annihilation of self in God. What crosses every tradition is the ego's surrender before infinite reality. <strong>The years of waiting are the purifying interval that breaks attachment to the ego's preferred timeline.</strong></p>"
+  },
+  practical: {
+    name: 'Practical Mindset',
+    body: "<p>David's interrupted temple project is one of scripture's most instructive redirections. His response is not resentment — it is a question: <strong>\"Who am I, O LORD God?\"</strong> Research on post-traumatic growth shows deepest development occurs in recalibration after unexpected redirection. <strong>Your unrealized vision may be preparing ground for something greater than you imagined.</strong></p>"
+  }
+};
+
+let S = {
+  theme: null,
+  activeTab: 'daily',
+  book: '2 Samuel',
+  chapter: 7,
+  activeLens: null,
+  reflectLens: null,
+  speaking: false,
+  isReadingChapter: false,
+  currentReadingIndex: -1,
+  currentReadingVerses: [],
+  recording: false,
+  mediaRecorder: null,
+  audioChunks: [],
+  dictating: false,
+  recognition: null,
+  ctxVerse: null,
+  highlighted: new Set(),
+  recordings: [],
+  reflections: [],
+  bookmarks: []
+};
+
+// --- AUDIO & VOICE SYSTEM ---
+let audioCtx = null;
+let ambientOsc1 = null;
+let ambientOsc2 = null;
+let ambientGain = null;
+let isAmbientPlaying = false;
+let availableVoices = [];
+let voiceGender = localStorage.getItem('sacredStudyVoiceGender') || 'female';
+
+function initVoices() {
+  if (!('speechSynthesis' in window)) return;
+  const populate = () => {
+    availableVoices = window.speechSynthesis.getVoices();
+  };
+  populate();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = populate;
+  }
+}
+
+function getSelectedVoice() {
+  if (!availableVoices.length && ('speechSynthesis' in window)) {
+    availableVoices = window.speechSynthesis.getVoices();
+  }
+  const gender = document.getElementById('voiceGenderSelect')?.value || voiceGender;
+  if (gender === 'default' || !availableVoices.length) return null;
+
+  const englishVoices = availableVoices.filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+  const pool = englishVoices.length ? englishVoices : availableVoices;
+
+  const femaleKeywords = ['female', 'zira', 'susan', 'samantha', 'victoria', 'karen', 'moira', 'fiona', 'tessa', 'veena', 'catherine', 'heather', 'jenny', 'aria', 'eva', 'hazel', 'stephanie', 'allison', 'olivia'];
+  const maleKeywords = ['male', 'david', 'mark', 'george', 'daniel', 'alex', 'fred', 'oliver', 'tom', 'james', 'guy', 'ryan', 'richard', 'edward', 'brian'];
+
+  if (gender === 'female') {
+    const match = pool.find(v => femaleKeywords.some(kw => (v.name || '').toLowerCase().includes(kw)));
+    if (match) return match;
+    const nonMale = pool.find(v => !maleKeywords.some(kw => (v.name || '').toLowerCase().includes(kw)));
+    return nonMale || pool[0];
+  } else if (gender === 'male') {
+    const match = pool.find(v => maleKeywords.some(kw => (v.name || '').toLowerCase().includes(kw)));
+    if (match) return match;
+    return pool[0];
+  }
+  return null;
+}
+
+function onVoiceGenderChange() {
+  const sel = document.getElementById('voiceGenderSelect');
+  if (sel) {
+    voiceGender = sel.value;
+    localStorage.setItem('sacredStudyVoiceGender', voiceGender);
+    toast((voiceGender === 'female' ? 'Female' : voiceGender === 'male' ? 'Male' : 'Default') + ' voice selected');
+  }
+}
+
+// 432Hz Scriptorium Ambiance Harmonic
+function toggleAmbiance() {
+  if (isAmbientPlaying) {
+    stopAmbiance();
+  } else {
+    startAmbiance();
+  }
+}
+
+function startAmbiance() {
+  try {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) {
+      toast('Web Audio API not supported in this browser');
+      return;
+    }
+    if (!audioCtx) audioCtx = new AudioContextClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    // 432 Hz fundamental tone
+    ambientOsc1 = audioCtx.createOscillator();
+    ambientOsc1.type = 'sine';
+    ambientOsc1.frequency.setValueAtTime(432, audioCtx.currentTime);
+
+    // 216 Hz warm sub-harmonic octave
+    ambientOsc2 = audioCtx.createOscillator();
+    ambientOsc2.type = 'sine';
+    ambientOsc2.frequency.setValueAtTime(216, audioCtx.currentTime);
+
+    ambientGain = audioCtx.createGain();
+    ambientGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    ambientGain.gain.exponentialRampToValueAtTime(0.038, audioCtx.currentTime + 1.2);
+
+    ambientOsc1.connect(ambientGain);
+    ambientOsc2.connect(ambientGain);
+    ambientGain.connect(audioCtx.destination);
+
+    ambientOsc1.start();
+    ambientOsc2.start();
+    isAmbientPlaying = true;
+
+    const btn = document.getElementById('ambientBtn');
+    if (btn) {
+      btn.classList.add('active');
+      btn.innerHTML = '🎵 Ambiance: 432Hz';
+    }
+    toast('432Hz Scriptorium contemplative ambiance started');
+  } catch (e) {
+    console.error('Ambiance error:', e);
+    toast('Audio error: ' + e.message);
+  }
+}
+
+function stopAmbiance() {
+  if (ambientGain && audioCtx) {
+    try {
+      ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioCtx.currentTime);
+      ambientGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+      setTimeout(() => {
+        if (ambientOsc1) { ambientOsc1.stop(); ambientOsc1.disconnect(); }
+        if (ambientOsc2) { ambientOsc2.stop(); ambientOsc2.disconnect(); }
+        isAmbientPlaying = false;
+      }, 550);
+    } catch(e) {
+      isAmbientPlaying = false;
+    }
+  } else {
+    isAmbientPlaying = false;
+  }
+  const btn = document.getElementById('ambientBtn');
+  if (btn) {
+    btn.classList.remove('active');
+    btn.innerHTML = '🎵 Ambiance';
+  }
+  toast('Ambiance stopped');
+}
+
+// --- WHOLE CHAPTER READ ALOUD (TTS) ---
+function toggleTTS() {
+  if (S.isReadingChapter || S.speaking) {
+    stopTTS();
+    return;
+  }
+  const data = BIBLE[S.book] && BIBLE[S.book][S.chapter];
+  if (!data || !data.length) {
+    toast('Chapter still loading — try again in a moment');
+    return;
+  }
+  startChapterReading(data);
+}
+
+function startChapterReading(verses) {
+  if (!('speechSynthesis' in window)) {
+    toast('Text-to-speech not supported');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  S.isReadingChapter = true;
+  S.speaking = true;
+  S.currentReadingVerses = verses;
+  S.currentReadingIndex = 0;
+  updateTTSUI(true);
+
+  // Intro utterance: Book and Chapter
+  const heading = S.book === 'Psalms' ? `Psalm ${S.chapter}.` : `${S.book} Chapter ${S.chapter}.`;
+  const introUtterance = new SpeechSynthesisUtterance(heading);
+  const voice = getSelectedVoice();
+  if (voice) introUtterance.voice = voice;
+  introUtterance.rate = 0.92;
+  introUtterance.onend = () => {
+    if (!S.isReadingChapter) return;
+    readNextVerse();
+  };
+  introUtterance.onerror = () => {
+    if (!S.isReadingChapter) return;
+    readNextVerse();
+  };
+  window.speechSynthesis.speak(introUtterance);
+}
+
+function readNextVerse() {
+  if (!S.isReadingChapter || S.currentReadingIndex >= S.currentReadingVerses.length) {
+    stopTTS();
+    toast(`Finished reading ${S.book} ${S.chapter}`);
+    return;
+  }
+
+  const verseObj = S.currentReadingVerses[S.currentReadingIndex];
+  highlightReadingVerse(verseObj.v);
+
+  const textToRead = `Verse ${verseObj.v}. ${verseObj.t}`;
+  const utterance = new SpeechSynthesisUtterance(textToRead);
+  const voice = getSelectedVoice();
+  if (voice) utterance.voice = voice;
+  utterance.rate = 0.92;
+
+  const lbl = document.getElementById('ttsLabel');
+  if (lbl) {
+    lbl.textContent = `Reading ${S.book} ${S.chapter} · Verse ${verseObj.v} of ${S.currentReadingVerses.length}…`;
+  }
+
+  utterance.onend = () => {
+    if (!S.isReadingChapter) return;
+    S.currentReadingIndex++;
+    readNextVerse();
+  };
+  utterance.onerror = (e) => {
+    console.warn('Speech error:', e);
+    if (!S.isReadingChapter) return;
+    S.currentReadingIndex++;
+    readNextVerse();
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function highlightReadingVerse(verseNum) {
+  document.querySelectorAll('.verse-row').forEach(row => {
+    if (parseInt(row.dataset.v, 10) === verseNum) {
+      row.classList.add('reading-active');
+      row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      row.classList.remove('reading-active');
+    }
+  });
+}
+
+function stopTTS() {
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  S.isReadingChapter = false;
+  S.speaking = false;
+  S.currentReadingIndex = -1;
+  document.querySelectorAll('.verse-row.reading-active').forEach(r => r.classList.remove('reading-active'));
+  updateTTSUI(false);
+}
+
+function updateTTSUI(active) {
+  const btn = document.getElementById('ttsBtn');
+  if (btn) btn.textContent = active ? '⏹ Stop' : '🔊 Read Aloud';
+  const status = document.getElementById('ttsStatus');
+  if (status) status.classList.toggle('active', active);
+  if (!active) {
+    const lbl = document.getElementById('ttsLabel');
+    if (lbl) lbl.textContent = '';
+  }
+}
+
+function speak(text) {
+  if (!window.speechSynthesis) {
+    toast('Text-to-speech not available');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const voice = getSelectedVoice();
+  if (voice) u.voice = voice;
+  u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+}
+
+// --- LOCAL STORAGE & INIT ---
+function loadLocal() {
+  try {
+    const d = JSON.parse(localStorage.getItem('sacredStudy') || '{}');
+    if (d.reflections) S.reflections = d.reflections;
+    if (d.bookmarks) S.bookmarks = d.bookmarks;
+    if (d.highlighted) S.highlighted = new Set(d.highlighted);
+    if (d.theme) S.theme = d.theme;
+    if (d.recordings) S.recordings = d.recordings;
+  } catch(e) {}
+}
+
+function saveLocal() {
+  try {
+    localStorage.setItem('sacredStudy', JSON.stringify({
+      reflections: S.reflections,
+      bookmarks: S.bookmarks,
+      highlighted: [...S.highlighted],
+      theme: S.theme,
+      recordings: S.recordings
+    }));
+  } catch(e) {}
+}
+
+loadLocal();
+initVoices();
+applyTheme();
+if (document.getElementById('voiceGenderSelect')) {
+  document.getElementById('voiceGenderSelect').value = voiceGender;
+}
+renderDailyVerse();
+renderChapter();
+renderHistory();
+renderBookmarks();
+renderRecordings();
+updateBmCount();
+
+function applyTheme() {
+  if (S.theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.getElementById('themeToggle').textContent = '☽';
+  } else if (S.theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('themeToggle').textContent = '☀';
+  } else {
+    document.getElementById('themeToggle').textContent = '☀';
+  }
+}
+
+document.getElementById('themeToggle').onclick = () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  S.theme = cur === 'dark' ? 'light' : 'dark';
+  saveLocal();
+  applyTheme();
+};
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+  const tabs = ['daily', 'reader', 'reflection', 'history'];
+  document.querySelectorAll('.tab-btn')[tabs.indexOf(tab)].classList.add('active');
+  S.activeTab = tab;
+  if (tab === 'history') { renderHistory(); renderBookmarks(); }
+  if (tab === 'reflection') renderRecordings();
+}
+
+function renderDailyVerse() {
+  const now = new Date();
+  const doy = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+  const v = DAILY_VERSES[doy % DAILY_VERSES.length];
+  document.getElementById('dailyDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById('dailyTopic').textContent = v.topic;
+  document.getElementById('dailyVerseLabel').textContent = v.ref;
+  document.getElementById('dailyVerseText').textContent = v.text;
+  document.getElementById('dailyVerseRef').textContent = v.ref;
+  S._dailyVerse = v;
+}
+
+function goToChapter() {
+  if (!S._dailyVerse) return;
+  const v = S._dailyVerse;
+  S.book = v.book in BOOKS ? v.book : '2 Samuel';
+  S.chapter = v.ch || 7;
+  populateBookSelect();
+  loadChapter();
+  switchTab('reader');
+
+  // Highlight and scroll to target verse in the whole chapter
+  setTimeout(() => {
+    const targetRow = document.querySelector(`.verse-row[data-v="${v.v}"]`);
+    if (targetRow) {
+      targetRow.classList.add('highlighted');
+      targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      toast(`Full chapter loaded: ${S.book} ${S.chapter} (Verse ${v.v} highlighted)`);
+    }
+  }, 350);
+}
+
+function bookmarkDailyVerse() {
+  const v = S._dailyVerse;
+  if (!v) return;
+  if (S.bookmarks.find(b => b.ref === v.ref)) {
+    toast('Already bookmarked');
+    return;
+  }
+  S.bookmarks.push({ ref: v.ref, text: v.text, date: new Date().toISOString() });
+  saveLocal();
+  updateBmCount();
+  toast('Bookmarked: ' + v.ref);
+}
+
+function speakVerse() {
+  const t = document.getElementById('dailyVerseText').textContent;
+  const ref = document.getElementById('dailyVerseRef').textContent;
+  speak(ref + '. ' + t);
+}
+
+function selectLens(lens, btn) {
+  document.querySelectorAll('#pane-daily .lens-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  S.activeLens = lens;
+  showAI('aiPanel', 'aiBody', 'aiLensName', lens);
+}
+
+function selectReflectLens(lens, btn) {
+  document.querySelectorAll('#pane-reflection .lens-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  S.reflectLens = lens;
+  showAI('reflectAiPanel', 'reflectAiBody', 'reflectLensName', lens);
+}
+
+function showAI(panelId, bodyId, nameId, lens) {
+  const resp = AI[lens];
+  document.getElementById(nameId).textContent = resp.name;
+  document.getElementById(bodyId).innerHTML = resp.body;
+  document.getElementById(panelId).classList.add('visible');
+}
+
+function speakAI() {
+  speak(document.getElementById('aiBody').innerText);
+}
+
+function speakReflectAI() {
+  speak(document.getElementById('reflectAiBody').innerText);
+}
+
+function saveAIInsight() {
+  if (!S.activeLens) { toast('Select a lens first'); return; }
+  const text = document.getElementById('aiBody').innerText;
+  const ref = S._dailyVerse ? S._dailyVerse.ref : 'Daily Study';
+  const ta = document.getElementById('reflectionText');
+  ta.value += (ta.value ? '\n\n' : '') + `[AI ${AI[S.activeLens].name} on ${ref}]\n` + text.substring(0, 400) + '…';
+  toast('AI insight added to reflection');
+}
+
+function populateBookSelect() {
+  const bs = document.getElementById('bookSelect');
+  bs.innerHTML = '';
+  Object.keys(BOOKS).forEach(name => {
+    const o = document.createElement('option');
+    o.value = name;
+    o.textContent = name;
+    if (name === S.book) o.selected = true;
+    bs.appendChild(o);
+  });
+  populateChapterSelect();
+}
+
+function populateChapterSelect() {
+  const cs = document.getElementById('chapterSelect');
+  const count = BOOKS[S.book] || 1;
+  cs.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = 'Chapter ' + i;
+    if (i === S.chapter) o.selected = true;
+    cs.appendChild(o);
+  }
+}
+
+function onBookChange() {
+  S.book = document.getElementById('bookSelect').value;
+  S.chapter = 1;
+  populateChapterSelect();
+  loadChapter();
+}
+
+function loadChapter() {
+  S.chapter = parseInt(document.getElementById('chapterSelect').value, 10);
+  S.book = document.getElementById('bookSelect').value;
+  stopTTS();
+  renderChapter();
+}
+
+async function renderChapter() {
+  const el = document.getElementById('chapterContent');
+  const loading = document.getElementById('chapterLoading');
+  const cached = BIBLE[S.book] && BIBLE[S.book][S.chapter];
+
+  // If we have cached verses with complete data
+  if (cached && cached.length > 0) {
+    renderVerses(cached);
+    return;
+  }
+
+  loading.style.display = 'block';
+  el.innerHTML = '';
+  try {
+    const ref = encodeURIComponent(S.book + ' ' + S.chapter);
+    const trans = document.getElementById('translationSelect').value;
+    const res = await fetch('https://bible-api.com/' + ref + '?translation=' + trans);
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const data = await res.json();
+    if (!data.verses || !data.verses.length) throw new Error('No verses returned');
+    if (!BIBLE[S.book]) BIBLE[S.book] = {};
+    BIBLE[S.book][S.chapter] = data.verses.map(v => ({ v: v.verse, t: v.text.trim().replace(/\n/g, ' ') }));
+    renderVerses(BIBLE[S.book][S.chapter]);
+  } catch(e) {
+    el.innerHTML = `<div class="chapter-heading">${S.book} ${S.chapter}</div><div class="feature-note">⚠ Could not fetch remote chapter. <button class="btn btn-ghost" style="margin-top:8px;padding:4px 10px;font-size:0.75rem" onclick="renderChapter()">🔄 Retry</button></div>`;
+  } finally {
+    loading.style.display = 'none';
+  }
+}
+
+function renderVerses(data) {
+  const el = document.getElementById('chapterContent');
+  const heading = S.book === 'Psalms' ? 'Psalm ' + S.chapter : S.book + ' ' + S.chapter;
+  let html = `<div class="chapter-heading">${heading} <span style="font-size:0.85rem;color:var(--fg-dim);font-family:'Inter',sans-serif;font-weight:400">(${data.length} verses)</span></div>`;
+  data.forEach(row => {
+    const hi = S.highlighted.has(S.book + '_' + S.chapter + '_' + row.v) ? ' highlighted' : '';
+    html += `<div class="verse-row${hi}" data-book="${S.book}" data-ch="${S.chapter}" data-v="${row.v}" data-t="${row.t.replace(/"/g, '&quot;')}" onclick="handleVerseClick(event,this)"><span class="v-num">${row.v}</span><span class="v-text">${row.t}</span></div>`;
+  });
+  el.innerHTML = html;
+}
+
 populateBookSelect();
-function handleVerseClick(e,el){e.preventDefault();S.ctxVerse={book:el.dataset.book,ch:el.dataset.ch,v:el.dataset.v,t:el.dataset.t};const menu=document.getElementById('ctxMenu');menu.classList.add('visible');let x=e.clientX,y=e.clientY;if(x+180>window.innerWidth)x=window.innerWidth-190;if(y+200>window.innerHeight)y=y-180;menu.style.left=x+'px';menu.style.top=y+'px';}
-document.addEventListener('click',e=>{if(!e.target.closest('.ctx-menu')&&!e.target.closest('.verse-row'))document.getElementById('ctxMenu').classList.remove('visible');});
-function ctxBookmark(){if(!S.ctxVerse)return;const cv=S.ctxVerse;const ref=cv.book+' '+cv.ch+':'+cv.v;if(S.bookmarks.find(b=>b.ref===ref)){toast('Already bookmarked');}else{S.bookmarks.push({ref,text:cv.t,date:new Date().toISOString()});saveLocal();updateBmCount();toast('Bookmarked '+ref);}document.getElementById('ctxMenu').classList.remove('visible');}
-function ctxHighlight(){if(!S.ctxVerse)return;const key=S.ctxVerse.book+'_'+S.ctxVerse.ch+'_'+S.ctxVerse.v;if(S.highlighted.has(key))S.highlighted.delete(key);else S.highlighted.add(key);saveLocal();renderChapter();document.getElementById('ctxMenu').classList.remove('visible');}
-function ctxCopy(){if(!S.ctxVerse)return;const text=S.ctxVerse.book+' '+S.ctxVerse.ch+':'+S.ctxVerse.v+' — '+S.ctxVerse.t;try{navigator.clipboard.writeText(text).then(()=>toast('Copied to clipboard'));}catch(e){toast('Select and copy the text manually');}document.getElementById('ctxMenu').classList.remove('visible');}
-function ctxAddNote(){if(!S.ctxVerse)return;const ta=document.getElementById('reflectionText');ta.value+=(ta.value?'\n':'')+'"'+S.ctxVerse.t+'" — '+S.ctxVerse.book+' '+S.ctxVerse.ch+':'+S.ctxVerse.v+'\n';switchTab('reflection');document.getElementById('ctxMenu').classList.remove('visible');toast('Verse added to reflection');}
-function ctxSpeak(){if(!S.ctxVerse)return;speak(S.ctxVerse.book+' '+S.ctxVerse.ch+' verse '+S.ctxVerse.v+'. '+S.ctxVerse.t);document.getElementById('ctxMenu').classList.remove('visible');}
-function onTranslationChange(){BIBLE[S.book]={};renderChapter();}
-function toggleTTS(){if(S.speaking){stopTTS();return;}const data=BIBLE[S.book]&&BIBLE[S.book][S.chapter];if(!data){toast('Chapter still loading — try again in a moment');return;}startTTS(S.book+' chapter '+S.chapter+'. '+data.map(r=>r.t).join(' '));}
-function startTTS(text){if(!window.speechSynthesis){toast('Text-to-speech not supported');return;}speechSynthesis.cancel();S.speaking=true;const u=new SpeechSynthesisUtterance(text);u.rate=0.92;u.onend=()=>{S.speaking=false;updateTTSUI(false);};u.onerror=()=>{S.speaking=false;updateTTSUI(false);};speechSynthesis.speak(u);updateTTSUI(true);}
-function stopTTS(){speechSynthesis.cancel();S.speaking=false;updateTTSUI(false);}
-function updateTTSUI(active){document.getElementById('ttsBtn').textContent=active?'⏹ Stop':'🔊 Read Aloud';document.getElementById('ttsStatus').classList.toggle('active',active);document.getElementById('ttsLabel').textContent=active?'Reading '+S.book+' '+S.chapter+'…':'';}
-function speak(text){if(!window.speechSynthesis){toast('Text-to-speech not available');return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.9;speechSynthesis.speak(u);}
-async function toggleRecording(){if(S.recording){stopRecording();return;}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});S.audioChunks=[];S.mediaRecorder=new MediaRecorder(stream);S.mediaRecorder.ondataavailable=e=>S.audioChunks.push(e.data);S.mediaRecorder.onstop=()=>{const blob=new Blob(S.audioChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);S.recordings.push({id:Date.now(),title:S.book+' '+S.chapter,date:new Date().toLocaleString(),url});saveLocal();renderRecordings();toast('Recording saved: '+S.book+' '+S.chapter);stream.getTracks().forEach(t=>t.stop());};S.mediaRecorder.start();S.recording=true;updateRecBtn(true);}catch(e){toast('Microphone access required');}}
-function stopRecording(){if(S.mediaRecorder)S.mediaRecorder.stop();S.recording=false;updateRecBtn(false);}
-function updateRecBtn(active){const btn=document.getElementById('recBtn');btn.textContent=active?'⏹ Stop Recording':'⏺ Record Reading';btn.classList.toggle('recording',active);}
-function toggleDictation(){if(S.dictating){stopDictation();return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Voice dictation requires Chrome or Edge');return;}try{S.recognition=new SR();S.recognition.continuous=true;S.recognition.interimResults=false;S.recognition.lang='en-US';S.recognition.onresult=e=>{const transcript=Array.from(e.results).map(r=>r[0].transcript).join(' ');const ta=document.getElementById('reflectionText');ta.value+=(ta.value&&!ta.value.endsWith(' ')?' ':'')+transcript;};S.recognition.onerror=()=>{stopDictation();};S.recognition.onend=()=>{if(S.dictating)stopDictation();};S.recognition.start();S.dictating=true;document.getElementById('dictateBtn').textContent='⏹ Stop Dictating';document.getElementById('dictateBtn').className='btn btn-rec recording';document.getElementById('voiceHint').classList.add('active');}catch(e){toast('Microphone access required');}}
-function stopDictation(){if(S.recognition){try{S.recognition.stop();}catch(e){}}S.dictating=false;document.getElementById('dictateBtn').textContent='🎤 Voice Dictate';document.getElementById('dictateBtn').className='btn btn-sage';document.getElementById('voiceHint').classList.remove('active');}
-function clearReflection(){document.getElementById('reflectionText').value='';}
-function saveReflection(){const text=document.getElementById('reflectionText').value.trim();if(!text){toast('Write or dictate a reflection first');return;}const ref=S._dailyVerse?S._dailyVerse.ref:'Study';S.reflections.unshift({id:Date.now(),date:new Date().toLocaleString(),ref,text});if(S.reflections.length>100)S.reflections=S.reflections.slice(0,100);saveLocal();toast('Reflection saved');}
-function speakReflection(){const text=document.getElementById('reflectionText').value.trim();if(!text){toast('Nothing to read back');return;}speak(text);}
-function renderRecordings(){const el=document.getElementById('recordingsList');if(!S.recordings.length){el.innerHTML='<div class="empty"><div class="empty-icon">🎙</div><div class="empty-title">No recordings yet</div></div>';return;}el.innerHTML=S.recordings.map(r=>'<div class="rec-item"><span style="font-size:1.4rem">🎙</span><div class="rec-info"><div class="rec-title">'+r.title+'</div><div class="rec-meta">'+r.date+'</div></div><audio controls src="'+r.url+'" style="height:30px;min-width:120px"></audio></div>').join('');}
-function renderHistory(){const el=document.getElementById('historyList');if(!S.reflections.length){el.innerHTML='<div class="empty"><div class="empty-icon">📜</div><div class="empty-title">No saved reflections</div></div>';return;}el.innerHTML=S.reflections.map((r,i)=>'<div class="history-item"><div class="h-date">'+r.date+'</div><div class="h-ref">'+r.ref+'</div><div class="h-preview">'+r.text+'</div><div class="h-actions"><button class="btn btn-sage" style="padding:5px 10px;font-size:0.72rem" onclick="readHistoryItem('+i+')">🔊 Listen</button><button class="btn btn-ghost" style="padding:5px 10px;font-size:0.72rem" onclick="loadHistoryItem('+i+')">✏ Edit</button><button class="btn btn-rec" style="padding:5px 10px;font-size:0.72rem" onclick="deleteHistoryItem('+i+')">✕</button></div></div>').join('');}
-function readHistoryItem(i){speak(S.reflections[i].text);}
-function loadHistoryItem(i){document.getElementById('reflectionText').value=S.reflections[i].text;switchTab('reflection');}
-function deleteHistoryItem(i){S.reflections.splice(i,1);saveLocal();renderHistory();}
-function clearHistory(){if(!S.reflections.length){toast('No reflections to clear');return;}S.reflections=[];saveLocal();renderHistory();toast('History cleared');}
-function renderBookmarks(){const el=document.getElementById('bookmarkList');if(!S.bookmarks.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔖</div><div class="empty-title">No bookmarks yet</div></div>';return;}el.innerHTML=S.bookmarks.map((b,i)=>'<div class="bookmark-chip"><div style="flex-shrink:0"><div class="bm-ref">'+b.ref+'</div><button class="btn btn-ghost" style="padding:4px 8px;font-size:0.7rem;margin-top:6px" onclick="removeBookmark('+i+')">Remove</button></div><div class="bm-text">'+b.text+'</div></div>').join('');}
-function removeBookmark(i){S.bookmarks.splice(i,1);saveLocal();renderBookmarks();updateBmCount();}
-function updateBmCount(){document.getElementById('bmCount').textContent=S.bookmarks.length;}
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2800);}
+
+function handleVerseClick(e, el) {
+  e.preventDefault();
+  S.ctxVerse = { book: el.dataset.book, ch: el.dataset.ch, v: el.dataset.v, t: el.dataset.t };
+  const menu = document.getElementById('ctxMenu');
+  menu.classList.add('visible');
+  let x = e.clientX, y = e.clientY;
+  if (x + 180 > window.innerWidth) x = window.innerWidth - 190;
+  if (y + 200 > window.innerHeight) y = y - 180;
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.ctx-menu') && !e.target.closest('.verse-row')) {
+    document.getElementById('ctxMenu').classList.remove('visible');
+  }
+});
+
+function ctxBookmark() {
+  if (!S.ctxVerse) return;
+  const cv = S.ctxVerse;
+  const ref = cv.book + ' ' + cv.ch + ':' + cv.v;
+  if (S.bookmarks.find(b => b.ref === ref)) {
+    toast('Already bookmarked');
+  } else {
+    S.bookmarks.push({ ref, text: cv.t, date: new Date().toISOString() });
+    saveLocal();
+    updateBmCount();
+    toast('Bookmarked ' + ref);
+  }
+  document.getElementById('ctxMenu').classList.remove('visible');
+}
+
+function ctxHighlight() {
+  if (!S.ctxVerse) return;
+  const key = S.ctxVerse.book + '_' + S.ctxVerse.ch + '_' + S.ctxVerse.v;
+  if (S.highlighted.has(key)) S.highlighted.delete(key);
+  else S.highlighted.add(key);
+  saveLocal();
+  renderChapter();
+  document.getElementById('ctxMenu').classList.remove('visible');
+}
+
+function ctxCopy() {
+  if (!S.ctxVerse) return;
+  const text = S.ctxVerse.book + ' ' + S.ctxVerse.ch + ':' + S.ctxVerse.v + ' — ' + S.ctxVerse.t;
+  try {
+    navigator.clipboard.writeText(text).then(() => toast('Copied to clipboard'));
+  } catch(e) {
+    toast('Select and copy the text manually');
+  }
+  document.getElementById('ctxMenu').classList.remove('visible');
+}
+
+function ctxAddNote() {
+  if (!S.ctxVerse) return;
+  const ta = document.getElementById('reflectionText');
+  ta.value += (ta.value ? '\n' : '') + '"' + S.ctxVerse.t + '" — ' + S.ctxVerse.book + ' ' + S.ctxVerse.ch + ':' + S.ctxVerse.v + '\n';
+  switchTab('reflection');
+  document.getElementById('ctxMenu').classList.remove('visible');
+  toast('Verse added to reflection');
+}
+
+function ctxSpeak() {
+  if (!S.ctxVerse) return;
+  speak(S.ctxVerse.book + ' ' + S.ctxVerse.ch + ' verse ' + S.ctxVerse.v + '. ' + S.ctxVerse.t);
+  document.getElementById('ctxMenu').classList.remove('visible');
+}
+
+function onTranslationChange() {
+  BIBLE[S.book] = {};
+  renderChapter();
+}
+
+async function toggleRecording() {
+  if (S.recording) { stopRecording(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    S.audioChunks = [];
+    S.mediaRecorder = new MediaRecorder(stream);
+    S.mediaRecorder.ondataavailable = e => S.audioChunks.push(e.data);
+    S.mediaRecorder.onstop = () => {
+      const blob = new Blob(S.audioChunks, { type: 'audio/webm' });
+      const url = URL.createObjectURL(blob);
+      S.recordings.push({ id: Date.now(), title: S.book + ' ' + S.chapter, date: new Date().toLocaleString(), url });
+      saveLocal();
+      renderRecordings();
+      toast('Recording saved: ' + S.book + ' ' + S.chapter);
+      stream.getTracks().forEach(t => t.stop());
+    };
+    S.mediaRecorder.start();
+    S.recording = true;
+    updateRecBtn(true);
+  } catch(e) {
+    toast('Microphone access required');
+  }
+}
+
+function stopRecording() {
+  if (S.mediaRecorder) S.mediaRecorder.stop();
+  S.recording = false;
+  updateRecBtn(false);
+}
+
+function updateRecBtn(active) {
+  const btn = document.getElementById('recBtn');
+  btn.textContent = active ? '⏹ Stop Recording' : '⏺ Record Reading';
+  btn.classList.toggle('recording', active);
+}
+
+function toggleDictation() {
+  if (S.dictating) { stopDictation(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { toast('Voice dictation requires Chrome or Edge'); return; }
+  try {
+    S.recognition = new SR();
+    S.recognition.continuous = true;
+    S.recognition.interimResults = false;
+    S.recognition.lang = 'en-US';
+    S.recognition.onresult = e => {
+      const transcript = Array.from(e.results).map(r => r[0].transcript).join(' ');
+      const ta = document.getElementById('reflectionText');
+      ta.value += (ta.value && !ta.value.endsWith(' ') ? ' ' : '') + transcript;
+    };
+    S.recognition.onerror = () => { stopDictation(); };
+    S.recognition.onend = () => { if (S.dictating) stopDictation(); };
+    S.recognition.start();
+    S.dictating = true;
+    document.getElementById('dictateBtn').textContent = '⏹ Stop Dictating';
+    document.getElementById('dictateBtn').className = 'btn btn-rec recording';
+    document.getElementById('voiceHint').classList.add('active');
+  } catch(e) {
+    toast('Microphone access required');
+  }
+}
+
+function stopDictation() {
+  if (S.recognition) { try { S.recognition.stop(); } catch(e) {} }
+  S.dictating = false;
+  document.getElementById('dictateBtn').textContent = '🎤 Voice Dictate';
+  document.getElementById('dictateBtn').className = 'btn btn-sage';
+  document.getElementById('voiceHint').classList.remove('active');
+}
+
+function clearReflection() {
+  document.getElementById('reflectionText').value = '';
+}
+
+function saveReflection() {
+  const text = document.getElementById('reflectionText').value.trim();
+  if (!text) { toast('Write or dictate a reflection first'); return; }
+  const ref = S._dailyVerse ? S._dailyVerse.ref : 'Study';
+  S.reflections.unshift({ id: Date.now(), date: new Date().toLocaleString(), ref, text });
+  if (S.reflections.length > 100) S.reflections = S.reflections.slice(0, 100);
+  saveLocal();
+  toast('Reflection saved');
+}
+
+function speakReflection() {
+  const text = document.getElementById('reflectionText').value.trim();
+  if (!text) { toast('Nothing to read back'); return; }
+  speak(text);
+}
+
+function renderRecordings() {
+  const el = document.getElementById('recordingsList');
+  if (!S.recordings.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🎙</div><div class="empty-title">No recordings yet</div></div>';
+    return;
+  }
+  el.innerHTML = S.recordings.map(r => `<div class="rec-item"><span style="font-size:1.4rem">🎙</span><div class="rec-info"><div class="rec-title">${r.title}</div><div class="rec-meta">${r.date}</div></div><audio controls src="${r.url}" style="height:30px;min-width:120px"></audio></div>`).join('');
+}
+
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  if (!S.reflections.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📜</div><div class="empty-title">No saved reflections</div></div>';
+    return;
+  }
+  el.innerHTML = S.reflections.map((r, i) => `<div class="history-item"><div class="h-date">${r.date}</div><div class="h-ref">${r.ref}</div><div class="h-preview">${r.text}</div><div class="h-actions"><button class="btn btn-sage" style="padding:5px 10px;font-size:0.72rem" onclick="readHistoryItem(${i})">🔊 Listen</button><button class="btn btn-ghost" style="padding:5px 10px;font-size:0.72rem" onclick="loadHistoryItem(${i})">✏ Edit</button><button class="btn btn-rec" style="padding:5px 10px;font-size:0.72rem" onclick="deleteHistoryItem(${i})">✕</button></div></div>`).join('');
+}
+
+function readHistoryItem(i) { speak(S.reflections[i].text); }
+function loadHistoryItem(i) { document.getElementById('reflectionText').value = S.reflections[i].text; switchTab('reflection'); }
+function deleteHistoryItem(i) { S.reflections.splice(i, 1); saveLocal(); renderHistory(); }
+function clearHistory() {
+  if (!S.reflections.length) { toast('No reflections to clear'); return; }
+  S.reflections = [];
+  saveLocal();
+  renderHistory();
+  toast('History cleared');
+}
+
+function renderBookmarks() {
+  const el = document.getElementById('bookmarkList');
+  if (!S.bookmarks.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔖</div><div class="empty-title">No bookmarks yet</div></div>';
+    return;
+  }
+  el.innerHTML = S.bookmarks.map((b, i) => `<div class="bookmark-chip"><div style="flex-shrink:0"><div class="bm-ref">${b.ref}</div><button class="btn btn-ghost" style="padding:4px 8px;font-size:0.7rem;margin-top:6px" onclick="removeBookmark(${i})">Remove</button></div><div class="bm-text">${b.text}</div></div>`).join('');
+}
+
+function removeBookmark(i) {
+  S.bookmarks.splice(i, 1);
+  saveLocal();
+  renderBookmarks();
+  updateBmCount();
+}
+
+function updateBmCount() {
+  document.getElementById('bmCount').textContent = S.bookmarks.length;
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
 </script>
 </body>
 </html>
