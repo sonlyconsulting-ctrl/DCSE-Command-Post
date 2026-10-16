@@ -108,6 +108,7 @@ export interface FavoriteTeam {
   region: string;
   color?: string;
   seedOrRank?: string;
+  websiteUrl?: string;
 }
 
 export interface TeamScoreOutcome {
@@ -128,6 +129,9 @@ export interface TeamScheduledGame {
   venue: string;
   broadcast?: string;
   isHome: boolean;
+  odds?: string;
+  liveLookUrl?: string;
+  teamWebsiteUrl?: string;
 }
 
 export interface TeamActivityAlert {

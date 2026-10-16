@@ -799,6 +799,9 @@ export default function TeamTracker({
                   venue: team.region,
                   broadcast: 'Lounge Regional Feed',
                   isHome: true,
+                  odds: 'Lounge Consensus: Even • O/U 47.5',
+                  liveLookUrl: team.websiteUrl || 'https://tedos-sports-lounge.vercel.app/',
+                  teamWebsiteUrl: team.websiteUrl || 'https://tedos-sports-lounge.vercel.app/',
                 },
                 activityUpdate: {
                   id: `act-${team.id}`,
@@ -900,9 +903,31 @@ export default function TeamTracker({
                         )}
                       </div>
 
-                      <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                        <span className="text-slate-500">📍</span>
-                        <span>{upcomingGame.venue}</span>
+                      <div className="text-[11px] text-slate-400 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-slate-500">📍</span>
+                          <span>{upcomingGame.venue}</span>
+                        </div>
+                      </div>
+
+                      {/* Odds & Official Live Look Ribbon */}
+                      <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+                        <span className="text-[#D4AF37] font-mono font-bold flex items-center gap-1">
+                          <span>🎲</span>
+                          <span>Odds: {upcomingGame.odds || 'Lounge Consensus: Even • O/U 47.5'}</span>
+                        </span>
+                        {(upcomingGame.teamWebsiteUrl || team.websiteUrl || upcomingGame.liveLookUrl) && (
+                          <a
+                            href={upcomingGame.teamWebsiteUrl || team.websiteUrl || upcomingGame.liveLookUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-[#D4AF37] hover:underline font-bold inline-flex items-center gap-1 bg-[#112240] px-2 py-0.5 rounded border border-[#D4AF37]/30"
+                            title="Official Team Website Live Look"
+                          >
+                            <span>👁️ Live Look</span>
+                            <span>↗</span>
+                          </a>
+                        )}
                       </div>
                     </div>
 
