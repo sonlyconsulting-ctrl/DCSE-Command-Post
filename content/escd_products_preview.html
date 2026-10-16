@@ -1259,8 +1259,8 @@ const PRODUCTS = [
       "canvas_module": "scripture_selector",
       "external_preview": "DCSE SS Scripture Selector vs1.html",
       "dossier_available": true,
-      "live_url": "/scripture",
-      "preview_url": "scripture.html",
+      "live_url": "https://sc-escd.vercel.app",
+      "preview_url": "apps/escd/web/scripture.html",
       "local_source": "c:/DS All Things/ss-inner-outer-wisdom",
       "deliverables": [
         {
@@ -1588,7 +1588,7 @@ function launchEmbeddedCanvas(productId) {
   $('canvasProductMotto').textContent = prod.parent_brand + ' · ' + prod.motto;
 
   // Setup Live App Iframe
-  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'scripture.html' : null);
+  const liveUrl = prod.actions?.live_url || (prod.id === 'ctj' ? 'https://sc-ctj.vercel.app' : prod.id === 'tsl' ? 'https://tedos-sports-lounge.vercel.app/' : prod.id === 'scripture' ? 'https://sc-escd.vercel.app' : null);
   const extBtn = $('canvasExternalLinkBtn');
   const iframe = $('canvasLiveIframe');
   const liveTabBtn = $('canvasTabLiveApp');

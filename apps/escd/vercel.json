@@ -8,7 +8,7 @@
     { "src":"/app","dest":"/web/app.html" },
     { "src": "/escd", "dest": "/web/login.html" },
     { "src": "/login", "dest": "/web/login.html" },
-    { "src":"/","dest":"/web/login.html" },
+    { "src": "/", "dest": "/web/scripture.html" },
     { "src": "/(.*)", "dest": "/web/login.html" }
   ]
 }

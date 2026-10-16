@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sacred Study</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap">
+
+<style>
+/* Sacred Study */
+:root {
+  --bg: #0C1117; --surface: #141C28; --surface-2: #1C2638; --border: #2A3A50;
+  --fg: #E6DCCA; --fg-muted: #8E9BAA; --fg-dim: #4E5E6E;
+  --gold: #C9A55A; --gold-glow: rgba(201,165,90,0.11);
+  --sage: #7EA898; --sage-glow: rgba(126,168,152,0.11); --red: #D96C6C;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #F5F0E8; --surface: #FDFAF4; --surface-2: #EDE7D9; --border: #D4C9B4;
+    --fg: #1A1612; --fg-muted: #5A5248; --fg-dim: #9A9288;
+    --gold: #8B5E1A; --gold-glow: rgba(139,94,26,0.08);
+    --sage: #3D7A6A; --sage-glow: rgba(61,122,106,0.08); --red: #B84040; color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #F5F0E8; --surface: #FDFAF4; --surface-2: #EDE7D9; --border: #D4C9B4;
+  --fg: #1A1612; --fg-muted: #5A5248; --fg-dim: #9A9288;
+  --gold: #8B5E1A; --gold-glow: rgba(139,94,26,0.08);
+  --sage: #3D7A6A; --sage-glow: rgba(61,122,106,0.08); --red: #B84040; color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: 'Lora', Georgia, serif; font-size: 16px; line-height: 1.7;
+  display: flex; flex-direction: column;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+.app-header {
+  flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 12px 0; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+}
+.app-logo { font-family: 'EB Garamond', Georgia, serif; font-size: 1.2rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+.header-actions { display: flex; align-items: center; gap: 4px; }
+.icon-btn { background: none; border: none; color: var(--fg-muted); cursor: pointer; padding: 7px; border-radius: 6px; display: flex; align-items: center; font-size: 0.9rem; transition: color .15s, background .15s; }
+.icon-btn:hover { color: var(--fg); background: var(--surface-2); }
+.bookmark-count { font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 600; background: var(--gold); color: #0C1117; border-radius: 4px; padding: 1px 5px; margin-left: -4px; min-width: 16px; text-align: center; }
+.tab-nav { flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; overflow-x: auto; scrollbar-width: none; }
+.tab-nav::-webkit-scrollbar { display: none; }
+.tab-btn { flex-shrink: 0; background: none; border: none; border-bottom: 2px solid transparent; color: var(--fg-muted); cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 18px; transition: color .15s, border-color .15s; white-space: nowrap; }
+.tab-btn:hover { color: var(--fg); }
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.app-content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.tab-pane { display: none; padding: 24px 0 96px; }
+.tab-pane.active { display: block; }
+.eyebrow { font-family: 'Inter', sans-serif; font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 4px; }
+.pane-title { font-family: 'EB Garamond', Georgia, serif; font-size: 1.7rem; font-weight: 500; line-height: 1.25; text-wrap: balance; margin-bottom: 20px; }
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+.btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: 8px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; padding: 9px 16px; transition: all .15s; white-space: nowrap; }
+.btn-primary { background: var(--gold); color: #0C1117; }
+.btn-primary:hover { opacity: .88; }
+.btn-ghost { background: var(--surface-2); border: 1px solid var(--border); color: var(--fg-muted); }
+.btn-ghost:hover { color: var(--fg); border-color: var(--fg-dim); }
+.btn-sage { background: var(--sage-glow); border: 1px solid var(--sage); color: var(--sage); }
+.btn-sage:hover { background: var(--sage); color: #0C1117; }
+.btn-rec { background: rgba(217,108,108,.1); border: 1px solid var(--red); color: var(--red); }
+.btn-rec:hover { background: var(--red); color: white; }
+.btn-rec.recording { background: var(--red); color: white; animation: rec-pulse 1.4s ease-in-out infinite; }
+@keyframes rec-pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+.btn-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.verse-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px; margin-bottom: 16px; position: relative; overflow: hidden; }
+.verse-card::before { content: '\201C'; font-family: 'EB Garamond', Georgia, serif; font-size: 130px; line-height: 1; color: var(--gold); opacity: .07; position: absolute; top: -14px; left: 10px; pointer-events: none; }
+.verse-topic { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.verse-text-large { font-family: 'EB Garamond', Georgia, serif; font-size: 1.3rem; font-style: italic; line-height: 1.85; color: var(--fg); margin-bottom: 16px; position: relative; }
+.verse-ref-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.verse-ref { font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600; color: var(--gold); letter-spacing: 0.04em; }
+.translation-badge { font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 500; background: var(--gold-glow); border: 1px solid var(--gold); color: var(--gold); border-radius: 4px; padding: 1px 7px; letter-spacing: 0.06em; }
+.daily-date { font-family: 'Inter', sans-serif; font-size: 0.73rem; color: var(--fg-dim); letter-spacing: 0.04em; margin-bottom: 18px; }
+.section-label { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 10px; }
+.lens-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+.lens-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--fg-muted); cursor: pointer; padding: 12px 14px; text-align: left; transition: all .15s; }
+.lens-btn:hover { border-color: var(--gold); color: var(--fg); }
+.lens-btn.active { background: var(--gold-glow); border-color: var(--gold); color: var(--gold); }
+.lens-icon { font-size: 1.1rem; display: block; margin-bottom: 4px; }
+.lens-label { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+.ai-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-top: 16px; display: none; }
+.ai-panel.visible { display: block; }
+.ai-panel-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.ai-badge { font-family: 'Inter', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold-glow); border: 1px solid var(--gold); color: var(--gold); padding: 2px 8px; border-radius: 4px; }
+.ai-lens-name { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: var(--fg-muted); }
+.ai-body { font-size: 0.92rem; line-height: 1.85; color: var(--fg-muted); }
+.ai-body p { margin-bottom: 12px; }
+.ai-body p:last-child { margin-bottom: 0; }
+.ai-body strong { color: var(--fg); font-weight: 500; }
+.chapter-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+.chapter-nav .nav-select:first-child { grid-column: 1 / -1; }
+.nav-select { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--fg); font-family: 'Inter', sans-serif; font-size: 0.8rem; padding: 8px 12px; cursor: pointer; outline: none; width: 100%; }
+.nav-select:focus { border-color: var(--gold); }
+.chapter-controls { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+.tts-status { font-family: 'Inter', sans-serif; font-size: 0.75rem; color: var(--sage); display: none; align-items: center; gap: 6px; }
+.tts-status.active { display: flex; }
+.tts-dot { width: 7px; height: 7px; background: var(--sage); border-radius: 50%; animation: rec-pulse 1.2s infinite; }
+.chapter-heading { font-family: 'EB Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 22px; color: var(--fg); }
+.verse-row { display: flex; gap: 10px; padding: 5px 6px 5px 4px; border-radius: 6px; cursor: pointer; transition: background .12s; border-left: 2px solid transparent; }
+.verse-row:hover { background: var(--gold-glow); }
+.verse-row.highlighted { background: var(--gold-glow); border-left-color: var(--gold); }
+.v-num { font-family: 'Inter', sans-serif; font-size: 0.68rem; font-weight: 600; color: var(--gold); min-width: 20px; padding-top: 5px; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.v-text { font-family: 'EB Garamond', Georgia, serif; font-size: 1.08rem; line-height: 1.95; }
+.ctx-menu { position: fixed; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.45); z-index: 200; padding: 6px; display: none; min-width: 160px; }
+.ctx-menu.visible { display: block; }
+.ctx-item { display: flex; align-items: center; gap: 8px; background: none; border: none; border-radius: 6px; color: var(--fg-muted); cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.78rem; padding: 7px 10px; width: 100%; text-align: left; transition: all .1s; }
+.ctx-item:hover { background: var(--surface-2); color: var(--fg); }
+.reflect-toolbar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.reflection-area { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--fg); font-family: 'Lora', Georgia, serif; font-size: 1rem; line-height: 1.8; padding: 16px; resize: vertical; width: 100%; min-height: 160px; outline: none; transition: border-color .15s; }
+.reflection-area:focus { border-color: var(--gold); }
+.reflection-area::placeholder { color: var(--fg-dim); font-style: italic; }
+.voice-hint { font-family: 'Inter', sans-serif; font-size: 0.73rem; color: var(--sage); display: none; align-items: center; gap: 6px; margin-top: 8px; }
+.voice-hint.active { display: flex; }
+.history-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+.h-date { font-family: 'Inter', sans-serif; font-size: 0.68rem; color: var(--fg-dim); margin-bottom: 3px; letter-spacing: 0.04em; }
+.h-ref { font-family: 'Inter', sans-serif; font-size: 0.76rem; font-weight: 600; color: var(--gold); margin-bottom: 8px; }
+.h-preview { font-size: 0.88rem; color: var(--fg-muted); overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.h-actions { display: flex; gap: 6px; margin-top: 10px; }
+.bookmark-chip { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; }
+.bm-ref { font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--gold); margin-bottom: 4px; white-space: nowrap; }
+.bm-text { font-family: 'EB Garamond', Georgia, serif; font-size: 0.95rem; font-style: italic; color: var(--fg-muted); min-width: 0; }
+.rec-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+.rec-info { flex: 1; min-width: 0; }
+.rec-title { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500; color: var(--fg); }
+.rec-meta { font-family: 'Inter', sans-serif; font-size: 0.7rem; color: var(--fg-dim); margin-top: 2px; }
+.empty { text-align: center; padding: 48px 16px; color: var(--fg-dim); }
+.empty-icon { font-size: 2.4rem; margin-bottom: 12px; }
+.empty-title { font-family: 'EB Garamond', Georgia, serif; font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 6px; }
+.empty-text { font-family: 'Inter', sans-serif; font-size: 0.8rem; }
+.toast { position: fixed; bottom: max(24px, env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.8rem; color: var(--fg); z-index: 300; transition: transform .25s ease; white-space: nowrap; box-shadow: 0 4px 20px rgba(0,0,0,.35); }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.sub-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.feature-note { background: var(--sage-glow); border: 1px solid var(--sage); border-radius: 8px; padding: 10px 14px; font-family: 'Inter', sans-serif; font-size: 0.78rem; color: var(--sage); margin-top: 10px; line-height: 1.5; }
+@media (max-width: 480px) { .lens-grid { grid-template-columns: 1fr 1fr; } .pane-title { font-size: 1.45rem; } .verse-text-large { font-size: 1.15rem; } .tab-btn { padding: 10px 12px; font-size: 0.68rem; } }
+</style>
+</head>
+<body>
+
+
+<header class="app-header">
+  <div class="app-logo"><span>✦</span> Sacred Study</div>
+  <div class="header-actions">
+    <button class="icon-btn" id="themeToggle" title="Toggle theme">☀</button>
+    <button class="icon-btn" onclick="switchTab('history')" title="Bookmarks">🔖<span class="bookmark-count" id="bmCount">0</span></button>
+  </div>
+</header>
+
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active" role="tab" onclick="switchTab('daily')">Daily Verse</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('reader')">Chapter Reader</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('reflection')">My Reflection</button>
+  <button class="tab-btn" role="tab" onclick="switchTab('history')">History &amp; Notes</button>
+</nav>
+
+<main class="app-content">
+<section class="tab-pane active" id="pane-daily" role="tabpanel">
+  <div class="eyebrow">Today's Study</div>
+  <div class="pane-title" id="dailyTopic">Finding Purpose in Delay</div>
+  <div class="daily-date" id="dailyDate"></div>
+  <div class="verse-card">
+    <div class="verse-topic" id="dailyVerseLabel"></div>
+    <div class="verse-text-large" id="dailyVerseText"></div>
+    <div class="verse-ref-row"><span class="verse-ref" id="dailyVerseRef"></span><span class="translation-badge">KJV</span></div>
+  </div>
+  <div class="btn-actions">
+    <button class="btn btn-primary" onclick="goToChapter()">📖 Read Full Chapter</button>
+    <button class="btn btn-ghost" onclick="bookmarkDailyVerse()">🔖 Bookmark</button>
+    <button class="btn btn-sage" onclick="speakVerse()">🔊 Listen</button>
+  </div>
+  <div class="divider"></div>
+  <div class="section-label">AI Study Companion — Choose a Lens</div>
+  <div class="lens-grid">
+    <button class="lens-btn" onclick="selectLens('orthodox',this)"><span class="lens-icon">✝</span><span class="lens-label">Orthodox Christian</span></button>
+    <button class="lens-btn" onclick="selectLens('esoteric',this)"><span class="lens-icon">◈</span><span class="lens-label">Esoteric / Hermetic</span></button>
+    <button class="lens-btn" onclick="selectLens('interfaith',this)"><span class="lens-icon">☯</span><span class="lens-label">Comparative Interfaith</span></button>
+    <button class="lens-btn" onclick="selectLens('practical',this)"><span class="lens-icon">◎</span><span class="lens-label">Practical Mindset</span></button>
+  </div>
+  <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel-header"><span class="ai-badge">AI Insight</span><span class="ai-lens-name" id="aiLensName"></span></div>
+    <div class="ai-body" id="aiBody"></div>
+    <div class="btn-actions">
+      <button class="btn btn-sage" onclick="speakAI()">🔊 Read Aloud</button>
+      <button class="btn btn-ghost" onclick="saveAIInsight()">💾 Save to Notes</button>
+    </div>
+  </div>
+</section>
+
+<section class="tab-pane" id="pane-reader" role="tabpanel">
+  <div class="eyebrow">Scripture</div>
+  <div class="chapter-nav">
+    <select class="nav-select" id="bookSelect" onchange="onBookChange()" aria-label="Book"></select>
+    <select class="nav-select" id="chapterSelect" onchange="loadChapter()" aria-label="Chapter"></select>
+    <select class="nav-select" id="translationSelect" onchange="onTranslationChange()" aria-label="Translation">
+      <option value="kjv">KJV — King James Version</option>
+      <option value="web">WEB — World English Bible</option>
+      <option value="bbe">BBE — Bible in Basic English</option>
+      <option value="NIV" disabled>NIV — New International (deployed)</option>
+      <option value="ESV" disabled>ESV — English Standard (deployed)</option>
+    </select>
+  </div>
+  <div class="chapter-controls">
+    <button class="btn btn-primary" id="ttsBtn" onclick="toggleTTS()">🔊 Read Aloud</button>
+    <button class="btn btn-rec" id="recBtn" onclick="toggleRecording()">⏺ Record Reading</button>
+    <div class="tts-status" id="ttsStatus"><div class="tts-dot"></div><span id="ttsLabel">Reading…</span></div>
+  </div>
+  <div id="chapterLoading" style="display:none;text-align:center;padding:40px 0;color:var(--fg-dim);font-family:'Inter',sans-serif;font-size:0.85rem">Loading scripture…</div>
+  <div id="chapterContent"></div>
+</section>
+
+<section class="tab-pane" id="pane-reflection" role="tabpanel">
+  <div class="eyebrow">Personal Reflection</div>
+  <div class="pane-title">Today's Thoughts</div>
+  <div class="section-label">Voice &amp; Text Journal</div>
+  <div class="reflect-toolbar">
+    <button class="btn btn-sage" id="dictateBtn" onclick="toggleDictation()">🎤 Voice Dictate</button>
+    <button class="btn btn-ghost" onclick="clearReflection()">✕ Clear</button>
+  </div>
+  <div class="voice-hint" id="voiceHint"><div class="tts-dot" style="background:var(--sage)"></div><span>Listening…</span></div>
+  <textarea class="reflection-area" id="reflectionText" placeholder="Write or dictate your reflection…"></textarea>
+  <div class="divider"></div>
+  <div class="section-label" style="margin-bottom:10px">AI Response — Choose a Lens</div>
+  <div class="lens-grid">
+    <button class="lens-btn" onclick="selectReflectLens('orthodox',this)"><span class="lens-icon">✝</span><span class="lens-label">Orthodox</span></button>
+    <button class="lens-btn" onclick="selectReflectLens('esoteric',this)"><span class="lens-icon">◈</span><span class="lens-label">Esoteric</span></button>
+    <button class="lens-btn" onclick="selectReflectLens('interfaith',this)"><span class="lens-icon">☯</span><span class="lens-label">Interfaith</span></button>
+    <button class="lens-btn" onclick="selectReflectLens('practical',this)"><span class="lens-icon">◎</span><span class="lens-label">Practical</span></button>
+  </div>
+  <div class="ai-panel" id="reflectAiPanel" style="margin-top:16px">
+    <div class="ai-panel-header"><span class="ai-badge">Study Companion</span><span class="ai-lens-name" id="reflectLensName"></span></div>
+    <div class="ai-body" id="reflectAiBody"></div>
+    <div class="btn-actions"><button class="btn btn-sage" onclick="speakReflectAI()">🔊 Read Response</button></div>
+  </div>
+  <div class="divider"></div>
+  <div class="btn-actions">
+    <button class="btn btn-primary" onclick="saveReflection()">💾 Save Reflection</button>
+    <button class="btn btn-sage" onclick="speakReflection()">🔊 Read Back</button>
+  </div>
+  <div class="divider"></div>
+  <div class="sub-row"><div class="section-label" style="margin:0">Chapter Recordings</div></div>
+  <div id="recordingsList"></div>
+</section>
+
+<section class="tab-pane" id="pane-history" role="tabpanel">
+  <div class="eyebrow">Archive</div>
+  <div class="pane-title">History &amp; Notes</div>
+  <div class="sub-row">
+    <div class="section-label" style="margin:0">Saved Reflections</div>
+    <button class="btn btn-ghost" style="padding:6px 10px;font-size:0.72rem" onclick="clearHistory()">Clear All</button>
+  </div>
+  <div id="historyList"></div>
+  <div class="divider"></div>
+  <div class="section-label">Bookmarked Verses</div>
+  <div id="bookmarkList"></div>
+</section>
+</main>
+
+<div class="ctx-menu" id="ctxMenu">
+  <button class="ctx-item" onclick="ctxBookmark()">🔖 Bookmark verse</button>
+  <button class="ctx-item" onclick="ctxHighlight()">✦ Highlight</button>
+  <button class="ctx-item" onclick="ctxCopy()">⎘ Copy text</button>
+  <button class="ctx-item" onclick="ctxAddNote()">✏ Add to reflection</button>
+  <button class="ctx-item" onclick="ctxSpeak()">🔊 Read verse</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DAILY_VERSES = [
+  { ref:'2 Samuel 7:22', book:'2 Samuel', ch:7, v:22, topic:'The Incomparable God', text:'Wherefore thou art great, O LORD God: for there is none like thee, neither is there any God beside thee, according to all that we have heard with our ears.' },
+  { ref:'John 3:16', book:'John', ch:3, v:16, topic:"God's Love", text:'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.' },
+  { ref:'Romans 8:28', book:'Romans', ch:8, v:28, topic:'All Things Work Together', text:'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.' },
+  { ref:'Psalm 23:1', book:'Psalms', ch:23, v:1, topic:'The Good Shepherd', text:'The LORD is my shepherd; I shall not want.' },
+  { ref:'Isaiah 43:19', book:'Isaiah', ch:43, v:19, topic:'A New Thing', text:'Behold, I will do a new thing; now it shall spring forth; shall ye not know it? I will even make a way in the wilderness, and rivers in the desert.' },
+  { ref:'Philippians 4:13', book:'Philippians', ch:4, v:13, topic:'Strength in Christ', text:'I can do all things through Christ which strengtheneth me.' },
+  { ref:'Jeremiah 29:11', book:'Jeremiah', ch:29, v:11, topic:'Plans for a Future', text:'For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.' },
+  { ref:'Psalm 139:23', book:'Psalms', ch:139, v:23, topic:'Search My Heart', text:'Search me, O God, and know my heart: try me, and know my thoughts:' },
+  { ref:'Joel 2:25', book:'Joel', ch:2, v:25, topic:'Restoring Lost Years', text:'And I will restore to you the years that the locust hath eaten, the cankerworm, and the caterpiller, and the palmerworm, my great army which I sent among you.' },
+  { ref:'Romans 8:1', book:'Romans', ch:8, v:1, topic:'No Condemnation', text:'There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.' },
+  { ref:'Hebrews 5:14', book:'Hebrews', ch:5, v:14, topic:'Mature Discernment', text:'But strong meat belongeth to them that are of full age, even those who by reason of use have their senses exercised to discern both good and evil.' },
+  { ref:'Galatians 6:9', book:'Galatians', ch:6, v:9, topic:'Do Not Grow Weary', text:'And let us not be weary in well doing: for in due season we shall reap, if we faint not.' },
+  { ref:'Proverbs 4:7', book:'Proverbs', ch:4, v:7, topic:'Wisdom Above All', text:'Wisdom is the principal thing; therefore get wisdom: and with all thy getting get understanding.' },
+  { ref:'Psalm 139:14', book:'Psalms', ch:139, v:14, topic:'Fearfully Made', text:'I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.' },
+  { ref:'Matthew 7:7', book:'Matthew', ch:7, v:7, topic:'Ask and Receive', text:'Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you:' },
+  { ref:'Psalm 46:10', book:'Psalms', ch:46, v:10, topic:'Be Still', text:'Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth.' },
+  { ref:'Isaiah 40:31', book:'Isaiah', ch:40, v:31, topic:'Renewed Strength', text:'But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.' },
+  { ref:'Proverbs 3:5-6', book:'Proverbs', ch:3, v:5, topic:'Trust and Acknowledge', text:'Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.' },
+  { ref:'John 14:27', book:'John', ch:14, v:27, topic:"Christ's Peace", text:'Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid.' },
+  { ref:'2 Corinthians 5:17', book:'2 Corinthians', ch:5, v:17, topic:'New Creation', text:'Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.' },
+  { ref:'James 1:5', book:'James', ch:1, v:5, topic:'Ask for Wisdom', text:'If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.' },
+  { ref:'Romans 12:2', book:'Romans', ch:12, v:2, topic:'Transformed Mind', text:'And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.' },
+  { ref:'Psalm 119:105', book:'Psalms', ch:119, v:105, topic:'Lamp to My Feet', text:'Thy word is a lamp unto my feet, and a light unto my path.' },
+  { ref:'2 Timothy 1:7', book:'2 Timothy', ch:1, v:7, topic:'Spirit of Power', text:'For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.' },
+  { ref:'Micah 6:8', book:'Micah', ch:6, v:8, topic:'What God Requires', text:'He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?' },
+];
+const BOOKS = {'Genesis':50,'Exodus':40,'Leviticus':27,'Numbers':36,'Deuteronomy':34,'Joshua':24,'Judges':21,'Ruth':4,'1 Samuel':31,'2 Samuel':24,'1 Kings':22,'2 Kings':25,'1 Chronicles':29,'2 Chronicles':36,'Ezra':10,'Nehemiah':13,'Esther':10,'Job':42,'Psalms':150,'Proverbs':31,'Ecclesiastes':12,'Song of Solomon':8,'Isaiah':66,'Jeremiah':52,'Lamentations':5,'Ezekiel':48,'Daniel':12,'Hosea':14,'Joel':3,'Amos':9,'Obadiah':1,'Jonah':4,'Micah':7,'Nahum':3,'Habakkuk':3,'Zephaniah':3,'Haggai':2,'Zechariah':14,'Malachi':4,'Matthew':28,'Mark':16,'Luke':24,'John':21,'Acts':28,'Romans':16,'1 Corinthians':16,'2 Corinthians':13,'Galatians':6,'Ephesians':6,'Philippians':4,'Colossians':4,'1 Thessalonians':5,'2 Thessalonians':3,'1 Timothy':6,'2 Timothy':4,'Titus':3,'Philemon':1,'Hebrews':13,'James':5,'1 Peter':5,'2 Peter':3,'1 John':5,'2 John':1,'3 John':1,'Jude':1,'Revelation':22};
+const BIBLE = {'2 Samuel':{7:[{v:1,t:'And it came to pass, when the king sat in his house, and the LORD had given him rest round about from all his enemies;'},{v:16,t:'And thine house and thy kingdom shall be established for ever before thee: thy throne shall be established for ever.'},{v:22,t:'Wherefore thou art great, O LORD God: for there is none like thee, neither is there any God beside thee, according to all that we have heard with our ears.'}]},Psalms:{23:[{v:1,t:'The LORD is my shepherd; I shall not want.'},{v:2,t:'He maketh me to lie down in green pastures: he leadeth me beside the still waters.'},{v:3,t:'He restoreth my soul: he leadeth me in the paths of righteousness for his name\'s sake.'},{v:4,t:'Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me.'},{v:5,t:'Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over.'},{v:6,t:'Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the LORD for ever.'}],139:[{v:14,t:'I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.'},{v:23,t:'Search me, O God, and know my heart: try me, and know my thoughts:'}]},John:{3:[{v:16,t:'For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.'}]},Romans:{8:[{v:1,t:'There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.'},{v:28,t:'And we know that all things work together for good to them that love God, to them who are the called according to his purpose.'}]},Genesis:{1:[{v:1,t:'In the beginning God created the heaven and the earth.'},{v:3,t:'And God said, Let there be light: and there was light.'},{v:27,t:'So God created man in his own image, in the image of God created he him; male and female created he them.'}]}};
+const AI = {orthodox:{name:'Orthodox Christian Exegesis',body:'<p>In 2 Samuel 7, David\'s prayer reaches its theological apex at verse 22. <strong>"there is none like thee."</strong> The Hebrew phrase echoes the Shema\'s monotheistic heartbeat. God did not need David\'s temple — He desired a living lineage fulfilled in Christ Jesus. <strong>When your most sincere offering is redirected, ask whether God is building something through you rather than with you.</strong></p>'},esoteric:{name:'Esoteric / Hermetic Wisdom',body:'<p>In the Kabbalistic reading, the house God refuses from David is an exoteric stone structure — an earthly Malkhut. God redirects toward the Davidic line as a living Tiferet channel. <strong>"there is none like thee"</strong> parallels the Hermetic axiom: "There is one Sun, though all flowers follow it." The inner temple is not built by hands but by surrender.</p>'},interfaith:{name:'Comparative Interfaith',body:'<p>This verse resonates with the Quranic declaration: <em>"Say: He is Allah, One"</em> (Quran 112:1). In Sufi mysticism, David\'s recognition is the station of Fana — the annihilation of self in God. What crosses every tradition is the ego\'s surrender before infinite reality. <strong>The years of waiting are the purifying interval that breaks attachment to the ego\'s preferred timeline.</strong></p>'},practical:{name:'Practical Mindset',body:'<p>David\'s interrupted temple project is one of scripture\'s most instructive redirections. His response is not resentment — it is a question: <strong>"Who am I, O LORD God?"</strong> Research on post-traumatic growth shows deepest development occurs in recalibration after unexpected redirection. <strong>Your unrealized vision may be preparing ground for something greater than you imagined.</strong></p>'}};
+let S = {theme:null,activeTab:'daily',book:'2 Samuel',chapter:7,activeLens:null,reflectLens:null,speaking:false,recording:false,mediaRecorder:null,audioChunks:[],dictating:false,recognition:null,ctxVerse:null,highlighted:new Set(),recordings:[],reflections:[],bookmarks:[]};
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem('sacredStudy')||'{}');if(d.reflections)S.reflections=d.reflections;if(d.bookmarks)S.bookmarks=d.bookmarks;if(d.highlighted)S.highlighted=new Set(d.highlighted);if(d.theme)S.theme=d.theme;if(d.recordings)S.recordings=d.recordings;}catch(e){}}
+function saveLocal(){try{localStorage.setItem('sacredStudy',JSON.stringify({reflections:S.reflections,bookmarks:S.bookmarks,highlighted:[...S.highlighted],theme:S.theme,recordings:S.recordings}));}catch(e){}}
+loadLocal();applyTheme();renderDailyVerse();renderChapter();renderHistory();renderBookmarks();renderRecordings();updateBmCount();
+function applyTheme(){if(S.theme==='light'){document.documentElement.setAttribute('data-theme','light');document.getElementById('themeToggle').textContent='☽';}else if(S.theme==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeToggle').textContent='☀';}else document.getElementById('themeToggle').textContent='☀';}
+document.getElementById('themeToggle').onclick=()=>{const cur=document.documentElement.getAttribute('data-theme');S.theme=cur==='dark'?'light':'dark';saveLocal();applyTheme();};
+function switchTab(tab){document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('pane-'+tab).classList.add('active');const tabs=['daily','reader','reflection','history'];document.querySelectorAll('.tab-btn')[tabs.indexOf(tab)].classList.add('active');S.activeTab=tab;if(tab==='history'){renderHistory();renderBookmarks();}if(tab==='reflection')renderRecordings();}
+function renderDailyVerse(){const now=new Date();const doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);const v=DAILY_VERSES[doy%DAILY_VERSES.length];document.getElementById('dailyDate').textContent=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});document.getElementById('dailyTopic').textContent=v.topic;document.getElementById('dailyVerseLabel').textContent=v.ref;document.getElementById('dailyVerseText').textContent=v.text;document.getElementById('dailyVerseRef').textContent=v.ref;S._dailyVerse=v;}
+function goToChapter(){if(!S._dailyVerse)return;const v=S._dailyVerse;S.book=v.book in BOOKS?v.book:'2 Samuel';S.chapter=v.ch||1;populateBookSelect();loadChapter();switchTab('reader');}
+function bookmarkDailyVerse(){const v=S._dailyVerse;if(!v)return;if(S.bookmarks.find(b=>b.ref===v.ref)){toast('Already bookmarked');return;}S.bookmarks.push({ref:v.ref,text:v.text,date:new Date().toISOString()});saveLocal();updateBmCount();toast('Bookmarked: '+v.ref);}
+function speakVerse(){const t=document.getElementById('dailyVerseText').textContent;const ref=document.getElementById('dailyVerseRef').textContent;speak(ref+'. '+t);}
+function selectLens(lens,btn){document.querySelectorAll('#pane-daily .lens-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.activeLens=lens;showAI('aiPanel','aiBody','aiLensName',lens);}
+function selectReflectLens(lens,btn){document.querySelectorAll('#pane-reflection .lens-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');S.reflectLens=lens;showAI('reflectAiPanel','reflectAiBody','reflectLensName',lens);}
+function showAI(panelId,bodyId,nameId,lens){const resp=AI[lens];document.getElementById(nameId).textContent=resp.name;document.getElementById(bodyId).innerHTML=resp.body;document.getElementById(panelId).classList.add('visible');}
+function speakAI(){speak(document.getElementById('aiBody').innerText);}
+function speakReflectAI(){speak(document.getElementById('reflectAiBody').innerText);}
+function saveAIInsight(){if(!S.activeLens){toast('Select a lens first');return;}const text=document.getElementById('aiBody').innerText;const ref=S._dailyVerse?S._dailyVerse.ref:'Daily Study';const ta=document.getElementById('reflectionText');ta.value+=(ta.value?'\n\n':'')+('[AI '+AI[S.activeLens].name+' on '+ref+']\n')+text.substring(0,400)+'…';toast('AI insight added to reflection');}
+function populateBookSelect(){const bs=document.getElementById('bookSelect');bs.innerHTML='';Object.keys(BOOKS).forEach(name=>{const o=document.createElement('option');o.value=name;o.textContent=name;if(name===S.book)o.selected=true;bs.appendChild(o);});populateChapterSelect();}
+function populateChapterSelect(){const cs=document.getElementById('chapterSelect');const count=BOOKS[S.book]||1;cs.innerHTML='';for(let i=1;i<=count;i++){const o=document.createElement('option');o.value=i;o.textContent='Chapter '+i;if(i===S.chapter)o.selected=true;cs.appendChild(o);}}
+function onBookChange(){S.book=document.getElementById('bookSelect').value;S.chapter=1;populateChapterSelect();loadChapter();}
+function loadChapter(){S.chapter=parseInt(document.getElementById('chapterSelect').value);S.book=document.getElementById('bookSelect').value;renderChapter();}
+async function renderChapter(){const el=document.getElementById('chapterContent');const loading=document.getElementById('chapterLoading');const cached=BIBLE[S.book]&&BIBLE[S.book][S.chapter];if(cached){renderVerses(cached);return;}loading.style.display='block';el.innerHTML='';try{const ref=encodeURIComponent(S.book+' '+S.chapter);const trans=document.getElementById('translationSelect').value;const res=await fetch('https://bible-api.com/'+ref+'?translation='+trans);if(!res.ok)throw new Error('API error '+res.status);const data=await res.json();if(!data.verses||!data.verses.length)throw new Error('No verses returned');if(!BIBLE[S.book])BIBLE[S.book]={};BIBLE[S.book][S.chapter]=data.verses.map(v=>({v:v.verse,t:v.text.trim()}));renderVerses(BIBLE[S.book][S.chapter]);}catch(e){el.innerHTML='<div class="chapter-heading">'+S.book+' '+S.chapter+'</div><div class="feature-note">⚠ Could not load scripture. Check your connection and try again.</div>';}finally{loading.style.display='none';}}
+function renderVerses(data){const el=document.getElementById('chapterContent');const heading=S.book==='Psalms'?'Psalm '+S.chapter:S.book+' '+S.chapter;let html='<div class="chapter-heading">'+heading+'</div>';data.forEach(row=>{const hi=S.highlighted.has(S.book+'_'+S.chapter+'_'+row.v)?' highlighted':'';html+='<div class="verse-row'+hi+'" data-book="'+S.book+'" data-ch="'+S.chapter+'" data-v="'+row.v+'" data-t="'+row.t.replace(/"/g,'&quot;')+'" onclick="handleVerseClick(event,this)"><span class="v-num">'+row.v+'</span><span class="v-text">'+row.t+'</span></div>';});el.innerHTML=html;}
+populateBookSelect();
+function handleVerseClick(e,el){e.preventDefault();S.ctxVerse={book:el.dataset.book,ch:el.dataset.ch,v:el.dataset.v,t:el.dataset.t};const menu=document.getElementById('ctxMenu');menu.classList.add('visible');let x=e.clientX,y=e.clientY;if(x+180>window.innerWidth)x=window.innerWidth-190;if(y+200>window.innerHeight)y=y-180;menu.style.left=x+'px';menu.style.top=y+'px';}
+document.addEventListener('click',e=>{if(!e.target.closest('.ctx-menu')&&!e.target.closest('.verse-row'))document.getElementById('ctxMenu').classList.remove('visible');});
+function ctxBookmark(){if(!S.ctxVerse)return;const cv=S.ctxVerse;const ref=cv.book+' '+cv.ch+':'+cv.v;if(S.bookmarks.find(b=>b.ref===ref)){toast('Already bookmarked');}else{S.bookmarks.push({ref,text:cv.t,date:new Date().toISOString()});saveLocal();updateBmCount();toast('Bookmarked '+ref);}document.getElementById('ctxMenu').classList.remove('visible');}
+function ctxHighlight(){if(!S.ctxVerse)return;const key=S.ctxVerse.book+'_'+S.ctxVerse.ch+'_'+S.ctxVerse.v;if(S.highlighted.has(key))S.highlighted.delete(key);else S.highlighted.add(key);saveLocal();renderChapter();document.getElementById('ctxMenu').classList.remove('visible');}
+function ctxCopy(){if(!S.ctxVerse)return;const text=S.ctxVerse.book+' '+S.ctxVerse.ch+':'+S.ctxVerse.v+' — '+S.ctxVerse.t;try{navigator.clipboard.writeText(text).then(()=>toast('Copied to clipboard'));}catch(e){toast('Select and copy the text manually');}document.getElementById('ctxMenu').classList.remove('visible');}
+function ctxAddNote(){if(!S.ctxVerse)return;const ta=document.getElementById('reflectionText');ta.value+=(ta.value?'\n':'')+'"'+S.ctxVerse.t+'" — '+S.ctxVerse.book+' '+S.ctxVerse.ch+':'+S.ctxVerse.v+'\n';switchTab('reflection');document.getElementById('ctxMenu').classList.remove('visible');toast('Verse added to reflection');}
+function ctxSpeak(){if(!S.ctxVerse)return;speak(S.ctxVerse.book+' '+S.ctxVerse.ch+' verse '+S.ctxVerse.v+'. '+S.ctxVerse.t);document.getElementById('ctxMenu').classList.remove('visible');}
+function onTranslationChange(){BIBLE[S.book]={};renderChapter();}
+function toggleTTS(){if(S.speaking){stopTTS();return;}const data=BIBLE[S.book]&&BIBLE[S.book][S.chapter];if(!data){toast('Chapter still loading — try again in a moment');return;}startTTS(S.book+' chapter '+S.chapter+'. '+data.map(r=>r.t).join(' '));}
+function startTTS(text){if(!window.speechSynthesis){toast('Text-to-speech not supported');return;}speechSynthesis.cancel();S.speaking=true;const u=new SpeechSynthesisUtterance(text);u.rate=0.92;u.onend=()=>{S.speaking=false;updateTTSUI(false);};u.onerror=()=>{S.speaking=false;updateTTSUI(false);};speechSynthesis.speak(u);updateTTSUI(true);}
+function stopTTS(){speechSynthesis.cancel();S.speaking=false;updateTTSUI(false);}
+function updateTTSUI(active){document.getElementById('ttsBtn').textContent=active?'⏹ Stop':'🔊 Read Aloud';document.getElementById('ttsStatus').classList.toggle('active',active);document.getElementById('ttsLabel').textContent=active?'Reading '+S.book+' '+S.chapter+'…':'';}
+function speak(text){if(!window.speechSynthesis){toast('Text-to-speech not available');return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.9;speechSynthesis.speak(u);}
+async function toggleRecording(){if(S.recording){stopRecording();return;}try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});S.audioChunks=[];S.mediaRecorder=new MediaRecorder(stream);S.mediaRecorder.ondataavailable=e=>S.audioChunks.push(e.data);S.mediaRecorder.onstop=()=>{const blob=new Blob(S.audioChunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);S.recordings.push({id:Date.now(),title:S.book+' '+S.chapter,date:new Date().toLocaleString(),url});saveLocal();renderRecordings();toast('Recording saved: '+S.book+' '+S.chapter);stream.getTracks().forEach(t=>t.stop());};S.mediaRecorder.start();S.recording=true;updateRecBtn(true);}catch(e){toast('Microphone access required');}}
+function stopRecording(){if(S.mediaRecorder)S.mediaRecorder.stop();S.recording=false;updateRecBtn(false);}
+function updateRecBtn(active){const btn=document.getElementById('recBtn');btn.textContent=active?'⏹ Stop Recording':'⏺ Record Reading';btn.classList.toggle('recording',active);}
+function toggleDictation(){if(S.dictating){stopDictation();return;}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Voice dictation requires Chrome or Edge');return;}try{S.recognition=new SR();S.recognition.continuous=true;S.recognition.interimResults=false;S.recognition.lang='en-US';S.recognition.onresult=e=>{const transcript=Array.from(e.results).map(r=>r[0].transcript).join(' ');const ta=document.getElementById('reflectionText');ta.value+=(ta.value&&!ta.value.endsWith(' ')?' ':'')+transcript;};S.recognition.onerror=()=>{stopDictation();};S.recognition.onend=()=>{if(S.dictating)stopDictation();};S.recognition.start();S.dictating=true;document.getElementById('dictateBtn').textContent='⏹ Stop Dictating';document.getElementById('dictateBtn').className='btn btn-rec recording';document.getElementById('voiceHint').classList.add('active');}catch(e){toast('Microphone access required');}}
+function stopDictation(){if(S.recognition){try{S.recognition.stop();}catch(e){}}S.dictating=false;document.getElementById('dictateBtn').textContent='🎤 Voice Dictate';document.getElementById('dictateBtn').className='btn btn-sage';document.getElementById('voiceHint').classList.remove('active');}
+function clearReflection(){document.getElementById('reflectionText').value='';}
+function saveReflection(){const text=document.getElementById('reflectionText').value.trim();if(!text){toast('Write or dictate a reflection first');return;}const ref=S._dailyVerse?S._dailyVerse.ref:'Study';S.reflections.unshift({id:Date.now(),date:new Date().toLocaleString(),ref,text});if(S.reflections.length>100)S.reflections=S.reflections.slice(0,100);saveLocal();toast('Reflection saved');}
+function speakReflection(){const text=document.getElementById('reflectionText').value.trim();if(!text){toast('Nothing to read back');return;}speak(text);}
+function renderRecordings(){const el=document.getElementById('recordingsList');if(!S.recordings.length){el.innerHTML='<div class="empty"><div class="empty-icon">🎙</div><div class="empty-title">No recordings yet</div></div>';return;}el.innerHTML=S.recordings.map(r=>'<div class="rec-item"><span style="font-size:1.4rem">🎙</span><div class="rec-info"><div class="rec-title">'+r.title+'</div><div class="rec-meta">'+r.date+'</div></div><audio controls src="'+r.url+'" style="height:30px;min-width:120px"></audio></div>').join('');}
+function renderHistory(){const el=document.getElementById('historyList');if(!S.reflections.length){el.innerHTML='<div class="empty"><div class="empty-icon">📜</div><div class="empty-title">No saved reflections</div></div>';return;}el.innerHTML=S.reflections.map((r,i)=>'<div class="history-item"><div class="h-date">'+r.date+'</div><div class="h-ref">'+r.ref+'</div><div class="h-preview">'+r.text+'</div><div class="h-actions"><button class="btn btn-sage" style="padding:5px 10px;font-size:0.72rem" onclick="readHistoryItem('+i+')">🔊 Listen</button><button class="btn btn-ghost" style="padding:5px 10px;font-size:0.72rem" onclick="loadHistoryItem('+i+')">✏ Edit</button><button class="btn btn-rec" style="padding:5px 10px;font-size:0.72rem" onclick="deleteHistoryItem('+i+')">✕</button></div></div>').join('');}
+function readHistoryItem(i){speak(S.reflections[i].text);}
+function loadHistoryItem(i){document.getElementById('reflectionText').value=S.reflections[i].text;switchTab('reflection');}
+function deleteHistoryItem(i){S.reflections.splice(i,1);saveLocal();renderHistory();}
+function clearHistory(){if(!S.reflections.length){toast('No reflections to clear');return;}S.reflections=[];saveLocal();renderHistory();toast('History cleared');}
+function renderBookmarks(){const el=document.getElementById('bookmarkList');if(!S.bookmarks.length){el.innerHTML='<div class="empty"><div class="empty-icon">🔖</div><div class="empty-title">No bookmarks yet</div></div>';return;}el.innerHTML=S.bookmarks.map((b,i)=>'<div class="bookmark-chip"><div style="flex-shrink:0"><div class="bm-ref">'+b.ref+'</div><button class="btn btn-ghost" style="padding:4px 8px;font-size:0.7rem;margin-top:6px" onclick="removeBookmark('+i+')">Remove</button></div><div class="bm-text">'+b.text+'</div></div>').join('');}
+function removeBookmark(i){S.bookmarks.splice(i,1);saveLocal();renderBookmarks();updateBmCount();}
+function updateBmCount(){document.getElementById('bmCount').textContent=S.bookmarks.length;}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2800);}
+</script>
+</body>
+</html>
