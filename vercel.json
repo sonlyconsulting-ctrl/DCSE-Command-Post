@@ -7,6 +7,8 @@
     { "source": "/api/mvp/(.*)", "destination": "/api/mvp?mvp_path=$1" },
     { "source": "/escd/app", "destination": "/apps/escd/web/mvp.html" },
     { "source": "/scripture", "destination": "/apps/escd/web/scripture.html" },
+    { "source": "/ambiance.mp3", "destination": "/apps/escd/web/ambiance.mp3" },
+    { "source": "/audio/(.*)", "destination": "/apps/escd/web/audio/$1" },
     { "source": "/app", "destination": "/apps/escd/web/app.html" },
     { "source": "/escd", "destination": "/apps/escd/web/login.html" },
     { "source": "/login", "destination": "/apps/escd/web/login.html" },
