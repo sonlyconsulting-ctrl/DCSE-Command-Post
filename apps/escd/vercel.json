@@ -5,6 +5,8 @@
     { "src": "/api/mvp", "dest": "/api/mvp.py" },
     { "src": "/escd/app", "dest": "/web/mvp.html" },
     { "src": "/scripture", "dest": "/web/scripture.html" },
+    { "src": "/ambiance.mp3", "dest": "/web/ambiance.mp3" },
+    { "src": "/audio/(.*)", "dest": "/web/audio/$1" },
     { "src":"/app","dest":"/web/app.html" },
     { "src": "/escd", "dest": "/web/login.html" },
     { "src": "/login", "dest": "/web/login.html" },

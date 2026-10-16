@@ -427,6 +427,7 @@ let audioCtx = null;
 let ambientOsc1 = null;
 let ambientOsc2 = null;
 let ambientGain = null;
+let ambientAudioEl = null;
 let isAmbientPlaying = false;
 let availableVoices = [];
 let voiceGender = localStorage.getItem('sacredStudyVoiceGender') || 'female';
@@ -477,7 +478,7 @@ function onVoiceGenderChange() {
   }
 }
 
-// 432Hz Scriptorium Ambiance Harmonic
+// Scriptorium Ambiance Audio & 432Hz Harmonic Synthesizer
 function toggleAmbiance() {
   if (isAmbientPlaying) {
     stopAmbiance();
@@ -487,14 +488,59 @@ function toggleAmbiance() {
 }
 
 function startAmbiance() {
+  const btn = document.getElementById('ambientBtn');
+
+  if (!ambientAudioEl) {
+    ambientAudioEl = new Audio();
+    ambientAudioEl.loop = true;
+    ambientAudioEl.volume = 0.55;
+
+    const candidates = [
+      'audio/scripture_ambiance.mp3',
+      'ambiance.mp3',
+      '/audio/scripture_ambiance.mp3',
+      '/ambiance.mp3',
+      'https://sc-escd.vercel.app/ambiance.mp3'
+    ];
+    let candidateIndex = 0;
+    ambientAudioEl.src = candidates[0];
+
+    ambientAudioEl.addEventListener('error', function() {
+      candidateIndex++;
+      if (candidateIndex < candidates.length) {
+        ambientAudioEl.src = candidates[candidateIndex];
+        ambientAudioEl.play().catch(startSynthesizerFallback);
+      } else {
+        startSynthesizerFallback();
+      }
+    });
+  }
+
+  ambientAudioEl.play().then(() => {
+    isAmbientPlaying = true;
+    if (btn) {
+      btn.classList.add('active');
+      btn.innerHTML = '🎵 Ambiance: Playing';
+    }
+    toast('Scriptorium contemplative ambiance track playing');
+  }).catch(e => {
+    console.warn('Audio element play failed, falling back to 432Hz harmonic synth:', e);
+    startSynthesizerFallback();
+  });
+}
+
+function startSynthesizerFallback() {
   try {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) {
-      toast('Web Audio API not supported in this browser');
+      toast('Web Audio not supported in this browser');
       return;
     }
     if (!audioCtx) audioCtx = new AudioContextClass();
     if (audioCtx.state === 'suspended') audioCtx.resume();
+
+    if (ambientOsc1) { try { ambientOsc1.stop(); } catch(_) {} }
+    if (ambientOsc2) { try { ambientOsc2.stop(); } catch(_) {} }
 
     // 432 Hz fundamental tone
     ambientOsc1 = audioCtx.createOscillator();
@@ -521,9 +567,9 @@ function startAmbiance() {
     const btn = document.getElementById('ambientBtn');
     if (btn) {
       btn.classList.add('active');
-      btn.innerHTML = '🎵 Ambiance: 432Hz';
+      btn.innerHTML = '🎵 Ambiance: 432Hz Synth';
     }
-    toast('432Hz Scriptorium contemplative ambiance started');
+    toast('432Hz Scriptorium contemplative tone started');
   } catch (e) {
     console.error('Ambiance error:', e);
     toast('Audio error: ' + e.message);
@@ -531,21 +577,21 @@ function startAmbiance() {
 }
 
 function stopAmbiance() {
+  if (ambientAudioEl) {
+    ambientAudioEl.pause();
+    ambientAudioEl.currentTime = 0;
+  }
   if (ambientGain && audioCtx) {
     try {
       ambientGain.gain.setValueAtTime(ambientGain.gain.value, audioCtx.currentTime);
       ambientGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
       setTimeout(() => {
-        if (ambientOsc1) { ambientOsc1.stop(); ambientOsc1.disconnect(); }
-        if (ambientOsc2) { ambientOsc2.stop(); ambientOsc2.disconnect(); }
-        isAmbientPlaying = false;
+        if (ambientOsc1) { try { ambientOsc1.stop(); ambientOsc1.disconnect(); } catch(_) {} }
+        if (ambientOsc2) { try { ambientOsc2.stop(); ambientOsc2.disconnect(); } catch(_) {} }
       }, 550);
-    } catch(e) {
-      isAmbientPlaying = false;
-    }
-  } else {
-    isAmbientPlaying = false;
+    } catch(e) {}
   }
+  isAmbientPlaying = false;
   const btn = document.getElementById('ambientBtn');
   if (btn) {
     btn.classList.remove('active');
