@@ -61,6 +61,7 @@ class TurnRecord:
     project_task: str = ""
     evidence_classification: str = "ASSUMPTION"
     retrieved_refs: list[dict] = field(default_factory=list)
+    governance_attestation: dict[str, Any] = field(default_factory=dict)
     created_at: str = ""
 
     def to_dict(self) -> dict[str, Any]:
@@ -176,6 +177,12 @@ def assemble_context_packet(
 
     # System instruction: DCSE Kernel + relevant retrieved context (if any)
     system_sections = [DCSE_KERNEL.strip()]
+
+    # V7.3 governance bootstrap + conversation continuation packet + cross-system status contract.
+    # This is assembled on every turn so ESCD continues the work instead of reintroducing itself.
+    from apps.escd.runtime.governance_runtime import runtime_context
+    governance_prompt, _ = runtime_context(state, current_turn, turns)
+    system_sections.append(governance_prompt)
 
     # CTJ CF DDNA extraction & resolution state
     try:

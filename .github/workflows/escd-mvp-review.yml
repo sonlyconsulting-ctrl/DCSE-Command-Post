@@ -39,7 +39,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Compile ESCD Python and validate deployment config syntax
         run: |
-          python -m py_compile api/mvp.py apps/escd/api/mvp.py apps/escd/runtime/auth.py apps/escd/runtime/repository.py apps/escd/runtime/mvp_data.py scripts/validate_escd_production_config.py
+          python -m py_compile api/mvp.py apps/escd/api/mvp.py apps/escd/runtime/auth.py apps/escd/runtime/repository.py apps/escd/runtime/continuity.py apps/escd/runtime/governance_runtime.py apps/escd/runtime/mvp_data.py scripts/validate_escd_production_config.py
           python -m json.tool vercel.json >/dev/null
           node --check apps/escd/web/attachments-v2.js
       - name: Run ESCD MVP contract tests
