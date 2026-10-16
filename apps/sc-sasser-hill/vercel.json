@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    { "src": "/ambiance.mp3", "dest": "/ambiance.mp3" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
