@@ -31,9 +31,10 @@ def test_knowledge_tab_exists():
         assert "knowledgeSearch" in html
 
 
-def test_knowledge_record_count_24():
+def test_knowledge_record_count():
+    expected_count = len(get_canonical_convergence_items()["knowledge"])
     records = list_knowledge(limit=500)
-    assert len(records) == 24, f"Expected 24 canonical knowledge records, found {len(records)}"
+    assert len(records) == expected_count, f"Expected {expected_count} canonical knowledge records, found {len(records)}"
 
 
 def test_knowledge_records_endpoint():
@@ -49,15 +50,16 @@ def test_knowledge_records_endpoint():
 
 def test_knowledge_search():
     # Search for an existing term
+    expected_count = len(get_canonical_convergence_items()["knowledge"])
     all_records = list_knowledge(limit=500)
-    assert len(all_records) == 24
+    assert len(all_records) == expected_count
     term = all_records[0]["title"][:15].strip()
     results = search_knowledge(term)
     assert len(results) >= 1
     assert any(term.lower() in r["title"].lower() or term.lower() in r["content"].lower() for r in results)
 
     # Empty search returns full list
-    assert len(search_knowledge("")) == 24
+    assert len(search_knowledge("")) == expected_count
 
 
 def test_knowledge_detail_inspector():
