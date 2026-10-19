@@ -31,6 +31,7 @@ if "apps.escd" not in sys.modules:
 
 from apps.escd.runtime.auth import AuthError, extract_bearer, verify_supabase_user, authorize_operator
 from apps.escd.runtime.repository import SupabaseRLSClient, RepositoryError
+from apps.escd.runtime.saved_chats import get_chat, list_chats, save_chat_snapshot, seed_chat_history
 from apps.escd.runtime.mvp_data import (
     MVPServiceError,
     canonical_item_payload,
@@ -47,17 +48,14 @@ from apps.escd.runtime.mvp_data import (
     update_asset,
     update_knowledge,
     get_canonical_convergence_items,
-    get_conversation_state,
     governance_status,
     list_assets,
     list_ddna_jobs,
     list_ddna_sources,
     list_knowledge,
     list_products,
-    list_saved_chats,
     provider_status,
     reset_conversation,
-    save_chat,
     set_provider_secret,
     update_provider_config,
 )
@@ -109,6 +107,7 @@ class handler(BaseHTTPRequestHandler):
     def _auth(self):
         auth, repo = self._repo_for_token(extract_bearer(self.headers))
         self._operator_email = auth.email or ""
+        self._chat_user_id = auth.user_id
         return repo
 
     def _login(self, payload: dict):
@@ -216,16 +215,28 @@ class handler(BaseHTTPRequestHandler):
                 self._json(200, {"ok": True, "governance": governance_status()})
             elif path == "/api/mvp/conversation":
                 cid = str((query.get("conversation_id") or ["conv_default"])[0]).strip()
-                self._json(200, {"ok": True, "conversation": get_conversation_state(cid)})
+                try:
+                    conversation = get_chat(repo, self._chat_user_id, conversation_id=cid)
+                except MVPServiceError as exc:
+                    if str(exc) != "saved_chat_not_found":
+                        raise
+                    conversation = {"conversation_id": cid, "messages": [], "state": {}}
+                self._json(200, {"ok": True, "conversation": conversation})
             elif path == "/api/mvp/saved-chats":
                 limit_val = int((query.get("limit") or [50])[0])
-                self._json(200, {"ok": True, "saved_chats": list_saved_chats(limit_val)})
+                self._json(200, {"ok": True, "saved_chats": list_chats(repo, self._chat_user_id, limit_val)})
+            elif path == "/api/mvp/saved-chat":
+                record_id = str((query.get("id") or [""])[0])
+                self._json(200, {"ok": True, "conversation": get_chat(repo, self._chat_user_id, record_id=record_id)})
             else:
                 self._json(404, {"error": "not_found"})
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError) as exc:
-            self._json(502, {"error": str(exc)})
+            status = (404 if str(exc) == "saved_chat_not_found" else
+                      400 if isinstance(exc, MVPServiceError) else 502) if path in {
+                          "/api/mvp/chat/save", "/api/mvp/saved-chat", "/api/mvp/saved-chats", "/api/mvp/conversation"} else 502
+            self._json(status, {"error": str(exc)})
         except Exception:
             self._json(500, {"error": "internal_error"})
 
@@ -295,11 +306,14 @@ class handler(BaseHTTPRequestHandler):
                 prov = str(payload.get("provider") or "openai").strip()
                 model_sel = str(payload.get("model") or "").strip() or None
                 msgs = payload.get("messages") or []
+                cid = seed_chat_history(self._chat_user_id, cid, msgs, payload.get("state"))
                 self._json(200, {"ok": True, "response": chat(prov, msgs, conversation_id=cid, model_override=model_sel)})
             elif path == "/api/mvp/chat/save":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 title = str(payload.get("title") or "").strip()
-                self._json(200, {"ok": True, "saved": save_chat(cid, title)})
+                self._json(200, {"ok": True, "saved": save_chat_snapshot(
+                    repo, self._chat_user_id, cid, payload.get("messages"), title,
+                    record_id=payload.get("saved_chat_id"), state=payload.get("state"))})
             elif path == "/api/mvp/conversation/reset":
                 cid = str(payload.get("conversation_id") or "conv_default").strip()
                 self._json(200, {"ok": True, "conversation": reset_conversation(cid)})
@@ -313,7 +327,10 @@ class handler(BaseHTTPRequestHandler):
         except AuthError as exc:
             self._json(401 if str(exc) != "dcs_operator_not_authorized" else 403, {"error": str(exc)})
         except (RepositoryError, MVPServiceError, ValueError) as exc:
-            self._json(502, {"error": str(exc)})
+            status = (404 if str(exc) == "saved_chat_not_found" else
+                      400 if isinstance(exc, MVPServiceError) else 502) if path in {
+                          "/api/mvp/chat/save", "/api/mvp/saved-chat", "/api/mvp/saved-chats", "/api/mvp/conversation"} else 502
+            self._json(status, {"error": str(exc)})
         except Exception:
             self._json(500, {"error": "internal_error"})
 

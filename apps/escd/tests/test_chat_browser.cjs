@@ -1,0 +1,55 @@
+// Browser checks against the real application UI with a deterministic persistence adapter.
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const fs = require('node:fs');
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE}:{})});
+ const context=await browser.newContext({viewport:{width:1280,height:900}});
+ const page=await context.newPage();
+ const dialogs=[];let promptTitle='Review thread';
+ page.on('dialog',async d=>{dialogs.push(d.message());await d.accept(d.type()==='prompt'?promptTitle:undefined)});
+ await page.goto('file://'+path.resolve(__dirname,'../docs/previews/chat_persistence_preview.html'));
+ await page.locator('#saveChatBtn').click();assert.match(dialogs.at(-1),/No conversation/);
+ await page.locator('#prompt').fill('First question');await page.locator('#send').click();
+ await page.waitForFunction(()=>!chatBusy&&messages.length===2);
+ await page.locator('#prompt').fill('Second question');await page.locator('#send').click();
+ await page.waitForFunction(()=>!chatBusy&&messages.length===4);
+ await page.locator('#saveChatBtn').click();await page.waitForFunction(()=>!chatBusy);
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem(previewStorage)).length),1);
+ await page.reload();await page.waitForFunction(()=>messages.length===4);
+ await page.locator('#resetConv').click();assert.equal(await page.locator('#messages .msg').count(),0);
+ await page.locator('#viewSavedChatsBtn').click();await page.getByRole('button',{name:'Open',exact:true}).click();
+ await page.waitForFunction(()=>messages.length===4&&!chatBusy);
+ await page.evaluate(()=>{messages.push({role:'user',content:'Provider failed request'},{role:'assistant',content:'Error: provider unavailable',error:true});chatDirty=true;renderMessages()});
+ await page.locator('#saveChatBtn').click();await page.waitForFunction(()=>!chatBusy);
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem(previewStorage)).length),1);
+ await page.reload();await page.waitForFunction(()=>messages.length===6);
+ assert.match(await page.locator('#messages').innerText(),/provider unavailable/);
+ await page.evaluate(()=>{previewFailure=true;messages.push({role:'user',content:'Unsaved but preserved'});chatDirty=true;renderMessages()});
+ await page.locator('#saveChatBtn').click();await page.waitForFunction(()=>!chatBusy);
+ assert.match(dialogs.at(-1),/Preview persistence outage/);
+ assert.equal(await page.evaluate(()=>messages.at(-1).content),'Unsaved but preserved');
+ // Missing record and unauthorized requests must also preserve the current transcript.
+ await page.evaluate(()=>{chatDirty=false;return openSavedChat('missing')});
+ assert.match(dialogs.at(-1),/saved_chat_not_found/);
+ assert.equal(await page.evaluate(()=>messages.at(-1).content),'Unsaved but preserved');
+ await page.evaluate(()=>{fetch=async()=>({status:401,ok:false,json:async()=>({error:'expired'})});return saveChat()});
+ assert.match(dialogs.at(-1),/Session expired/);
+ assert.equal(await page.evaluate(()=>messages.at(-1).content),'Unsaved but preserved');
+ await page.screenshot({path:'/tmp/escd-chat-desktop.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ assert.equal(await page.locator('#saveChatBtn').isVisible(),true);
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+ await page.screenshot({path:'/tmp/escd-chat-mobile.png',fullPage:true});
+ // A new browser context has no sessionStorage; saved-list restoration still works.
+ const persisted=await page.evaluate(()=>localStorage.getItem(previewStorage));
+ const second=await browser.newContext();
+ await second.addInitScript(value=>localStorage.setItem('escd-chat-persistence-demo-v1',value),persisted);
+ const p2=await second.newPage();p2.on('dialog',d=>d.accept());
+ await p2.goto('file://'+path.resolve(__dirname,'../docs/previews/chat_persistence_preview.html'));
+ await p2.locator('#viewSavedChatsBtn').click();await p2.getByRole('button',{name:'Open',exact:true}).click();
+ await p2.waitForFunction(()=>messages.length===6);
+ await browser.close();
+ console.log('PASS: empty, multi-turn save, refresh restore, list/open, repeat save, provider error, outage, missing record, expired session, mobile layout, new session restoration');
+})().catch(e=>{console.error(e);process.exit(1)});
