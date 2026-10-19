@@ -1,0 +1,53 @@
+{
+  "tribunal_catalog_id": "TRIB-RUNBOOK-INDEX-v7.3",
+  "authority": "Master Profile v7.3-OPERATIVE // DCS Level 0 Directives",
+  "updated_at": "2026-10-19T14:10:00-04:00",
+  "conformity_standard": "98%+ User & Operator Reproducibility Standard",
+  "runbooks": [
+    {
+      "id": "RUNBOOK-POL-001",
+      "title": "Poller Mutex Lock Contention & Orphan Worker Recovery",
+      "category": "infrastructure/poller",
+      "file_path": "docs/runbooks/products/poller/RUNBOOK-POL-001_POLLER_LOCK_WEDGING_AND_RECOVERY.md",
+      "associated_incidents": ["DCSE-CP-POLLER-RUNTIME-RECOVERY-20260917-H01", "TRIBUNAL_POLLER-QUARANTINE-REMEDIATION_20260914"],
+      "cli_primary": true,
+      "severity": "HIGH"
+    },
+    {
+      "id": "RUNBOOK-ESCD-001",
+      "title": "Supabase 504 Gateway Timeout & Free-Tier Dormancy Recovery",
+      "category": "products/escd",
+      "file_path": "docs/runbooks/products/escd/RUNBOOK-ESCD-001_SUPABASE_504_GATEWAY_TIMEOUT_DORMANCY.md",
+      "associated_incidents": ["TRIB-20261019-ESCD-GATEWAY-TIMEOUT-RESOLVED"],
+      "cli_primary": true,
+      "severity": "CRITICAL"
+    },
+    {
+      "id": "RUNBOOK-VERCEL-001",
+      "title": "Vercel Deployment Storm & Quota Exhaustion (api-deployments-free-per-day)",
+      "category": "infrastructure/vercel",
+      "file_path": "docs/runbooks/products/vercel/RUNBOOK-VERCEL-001_DEPLOYMENT_STORM_AND_QUOTA_EXHAUSTION.md",
+      "associated_incidents": ["DCSE-VERCEL-CONTAIN-20260908-001", "DCSE-INCIDENT-20260919-01"],
+      "cli_primary": true,
+      "severity": "HIGH"
+    },
+    {
+      "id": "RUNBOOK-ESCD-002",
+      "title": "Vercel Production Scope Missing Supabase Auth Environment Variables",
+      "category": "products/escd",
+      "file_path": "docs/runbooks/products/escd/RUNBOOK-ESCD-002_VERCEL_PRODUCTION_AUTH_ENV_MISSING.md",
+      "associated_incidents": ["TRIB-20260913-ESCD-AUTH-CONFIG-RESTORED"],
+      "cli_primary": true,
+      "severity": "HIGH"
+    },
+    {
+      "id": "RUNBOOK-CTJ-001",
+      "title": "Claim Token Consumption & Identity Hijack Prevention (ACCESS-01)",
+      "category": "products/ctj",
+      "file_path": "docs/runbooks/products/ctj/RUNBOOK-CTJ-001_CLAIM_TOKEN_IDENTITY_HIJACK_ACCESS01.md",
+      "associated_incidents": ["DCSE-RELEASE-20261017-01", "AG-RECEIPT-09-PR19-BE70C54-VERIFICATION-20261018"],
+      "cli_primary": true,
+      "severity": "CRITICAL"
+    }
+  ]
+}

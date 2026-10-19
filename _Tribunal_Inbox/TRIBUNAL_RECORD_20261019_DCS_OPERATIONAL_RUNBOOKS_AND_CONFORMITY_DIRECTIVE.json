@@ -1,0 +1,28 @@
+{
+  "tribunal_id": "TRIB-20261019-DCS-OPERATIONAL-RUNBOOKS-AND-CONFORMITY-DIRECTIVE",
+  "directive_id": "DCSE-DIR-20261019-001",
+  "timestamp": "2026-10-19T14:22:00-04:00",
+  "lane": "DCSE // GOVERNANCE // TRIBUNAL // RUNBOOKS",
+  "originator": "DCS Level 0 Authority",
+  "authority": "Master Profile v7.3-OPERATIVE",
+  "status": "RATIFIED_ACTIVE",
+  "summary": "Promulgation of the DCSE Operational Runbook Index, 98% conformity standard, and multi-model ESCD Orchestrator dispatch protocol.",
+  "target_models": [
+    "antigravity",
+    "chatgpt",
+    "claude_cowork",
+    "codex",
+    "dolphin_mistral",
+    "gemini",
+    "github_agent"
+  ],
+  "runbooks_promulgated": [
+    "RUNBOOK-POL-001",
+    "RUNBOOK-ESCD-001",
+    "RUNBOOK-VERCEL-001",
+    "RUNBOOK-ESCD-002",
+    "RUNBOOK-CTJ-001"
+  ],
+  "skill_file": "skills/dcse-platform-runbooks/SKILL.md",
+  "index_file": "_Tribunal_Inbox/TRIBUNAL_RUNBOOK_INDEX.md"
+}

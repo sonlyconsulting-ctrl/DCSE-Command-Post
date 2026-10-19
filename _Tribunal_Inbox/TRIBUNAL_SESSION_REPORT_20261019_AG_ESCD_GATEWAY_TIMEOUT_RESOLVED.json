@@ -1,0 +1,20 @@
+{
+  "TRIBUNAL_MESSAGE_ID": "TRIB-20261019-ESCD-GATEWAY-TIMEOUT-RESOLVED",
+  "TIMESTAMP": "2026-10-19T16:33:00.000Z",
+  "LANE": "DCSE // ESCD // TRIBUNAL",
+  "ORIGINATOR": "Antigravity",
+  "STATUS": "COMPLETE",
+  "CLASSIFICATION": "DCSE Command Post - ESCD Auth Gateway Timeout Resolution",
+  "TASK_ID": "DCSE-ESCD-GATEWAY-TIMEOUT-20261019-001",
+  "ACTION": "Restored paused/hung Supabase backend project nevgdyfpxdaloacuutal and verified GoTrue auth and Google OAuth redirection",
+  "FINDINGS": {
+    "root_cause": "The backend Supabase project nevgdyfpxdaloacuutal (organization hwnilrdznitvqrwvdffz, Free Tier) had paused/hung database and compute instances, causing all service health checks (auth, db, rest, storage) to fail. Requests to https://nevgdyfpxdaloacuutal.supabase.co/auth/v1/authorize and /auth/v1/token were timed out by Cloudflare/Kong with 504 Gateway Timeout.",
+    "resolution": "Invoked Supabase Management API to restart and restore project nevgdyfpxdaloacuutal. Monitored service provisioning until all services achieved ACTIVE_HEALTHY status.",
+    "verification_results": {
+      "supabase_health": "All services (auth [GoTrue v2.197.0], db, rest, storage) verified ACTIVE_HEALTHY via Management API.",
+      "google_oauth": "https://nevgdyfpxdaloacuutal.supabase.co/auth/v1/authorize?provider=google&redirect_to=https%3A%2F%2Fsc-escd.vercel.app%2Fescd returns HTTP 302 Found redirecting to accounts.google.com.",
+      "email_auth": "https://sc-escd.vercel.app/api/mvp/login connects to Supabase GoTrue within <1s without timeout.",
+      "login_page": "https://sc-escd.vercel.app/escd loads HTTP 200 with active Google OAuth and credential login triggers."
+    }
+  }
+}
