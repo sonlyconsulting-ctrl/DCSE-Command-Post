@@ -1,16 +1,22 @@
-# CTJ approved storefront: ESCD synchronization
+# CTJ storefront production promotion
 
-Task SC-CTJ-PROMOTION-20261019-01. DCS authorized the approved storefront deployment and subsequent ESCD update.
+DCS authorized deployment of the approved storefront and subsequent ESCD update.
 
-Source artifact: SC-CTJ PR #22, commit ec50ba0569546b1acc22ebc4eaf97698f8c7c9d7, deployment/approved-ctj/ctj/index.html. SHA-256 4f2eedc1bd206712ac8e589d34a8e71bff02dc3518893e13f897c81550c41a1a. Target https://sonlyconsulting.com/ctj/.
+{
+  "task_id": "SC-CTJ-PROMOTION-20261019-01",
+  "status": "DEPLOYED",
+  "production_url": "https://sonlyconsulting.com/ctj/",
+  "netlify_deploy_id": "6ad6b7cfb4adc6e92d314ca8",
+  "site_id": "23a265c1-6ba1-4e82-aeaa-e39084842c40",
+  "source_commit": "ec50ba0569546b1acc22ebc4eaf97698f8c7c9d7",
+  "artifact_sha256": "4f2eedc1bd206712ac8e589d34a8e71bff02dc3518893e13f897c81550c41a1a",
+  "verified": "Netlify published success and live browser hero/navigation/product-price readback",
+  "preserved_files": 124,
+  "package_changes": [
+    "ctj/index.html",
+    "netlify.toml publish path corrected to ."
+  ],
+  "commerce_status": "INCOMPLETE: SCA and bundle links, purchase return/delivery/email acceptance remain open in SC-CTJ issue 21"
+}
 
-Current status: source synchronized as pending; deployment is not verified. No live URL/version has been relabeled as the approved release.
-
-After the actual Netlify deployment is verified:
-1. Update only the CTJ entry in both catalog copies. Set actions.live_url and actions.external_preview to the verified branded route, store the actual deployment ID/artifact hash, and close pending_release with deployed/readback status.
-2. Reconcile the CTJ card description and capabilities to the approved family; do not present the separate Voter Edition as the total CTJ family. Do not alter unrelated products or teaching.
-3. Append or update the bounded canonical promotion record with the actual receipt. Retain prior evidence and distinguish storefront promotion from open commerce work in issue #21.
-4. Publish the catalog/registry changes through the existing ESCD production deployment process, preserving its current verified chat repair and other production files. Do not rebuild production from an older or unverified snapshot.
-5. Verify the production ESCD Products response and UI return the actual new URL/version, and the canonical Knowledge entry includes the artifact identity. A Git commit alone is not live ingestion.
-
-The current ESCD source reads its products catalog and canonical registry from packaged files, so there is no verified automatic GitHub-to-live-catalog refresh. The asset path in the inspected source uses public schema; do not use it for this operation. Follow operative D15 dcse_cp isolation and do not create a substitute registration table.
+ESCD deployment source is based on current production commit 601f35099530e51beea2409c062687976dbed419, preserving the verified chat-persistence and ambiance repair. This branch updates only the two catalog copies, the bounded canonical knowledge record and this receipt. Runtime consumption is pending the ESCD deployment readback, and must not be inferred from the commit. The original Voter Matrix canvas and historical deliverables remain available; they are not represented as the whole CTJ family.
