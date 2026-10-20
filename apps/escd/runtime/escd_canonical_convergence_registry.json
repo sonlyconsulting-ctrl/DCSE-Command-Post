@@ -2,16 +2,16 @@
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
     "total_source_occurrences": 194,
-    "total_candidates": 164,
+    "total_candidates": 166,
     "duplicates_merged": 31,
     "disposition_counts": {
-      "TASK": 56,
+      "TASK": 57,
       "HOLD": 25,
       "IDEA": 9,
       "SOURCE_ONLY": 3,
       "ASSET": 3,
       "DDNA": 40,
-      "KNOWLEDGE": 28
+      "KNOWLEDGE": 29
     },
     "governed_rules": [
       "Tasks: no historical task becomes active automatically (status=inactive)",
@@ -4575,6 +4575,65 @@
       "duplicate_merge_relationship": "Merged 0 occurrences",
       "disposition_rationale": "Distributed node link to DESKTOP-PG1JATE polled and verified active (Ping=True, UNC=True, Playwright Spec=Ready). Ready for headless test offloading.",
       "content": "ESCD Distributed Node Gateway: Establish DESKTOP-PG1JATE as an autonomous compute and AI orchestration worker node. Enables offloading of Playwright E2E suites and background builds while enforcing DCS mandatory live preview generation for all UI deliverables. [POLL VERIFIED: 2026-10-12 11:37 EDT - Node online, UNC share accessible, E2E runner primed]"
+    },
+    {
+      "canonical_id": "CANON-167",
+      "content_hash": "9c48db8957ba",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "ESCD-TASK-BET-SALON-UPGRADE-20261019-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-TSK-167"
+        ],
+        "occurrence_count": 1,
+        "source_document": "BET_DIGITAL_UPGRADE_BLUEPRINT.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1.0,
+      "status": "active_verified",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "CLIENT_ENGAGEMENT",
+        "BET_BEAUTY_BRAIDS",
+        "SALON_ECOMMERCE",
+        "ONE_YEAR_AGREEMENT",
+        "WIX_MIGRATION"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Approved client engagement track for B.E.T. (Rhode Island) encompassing upfront restructuring and 1-year managed growth retainer.",
+      "content": "B.E.T. (Beauty & Braids) Digital Platform Upgrade: Execute 1-year managed transformation for Rhode Island flagship salon client. Scope includes Wix complete restructuring vs. Shopify e-commerce migration, guided braid intake forms, product retail monetization, and quarterly performance milestone tracking."
+    },
+    {
+      "canonical_id": "CANON-168",
+      "content_hash": "f07df6a09782",
+      "disposition": "KNOWLEDGE",
+      "original_type": "KNOWLEDGE",
+      "normalized_type": "KNOWLEDGE",
+      "source": "ESCD-KNOW-BET-SALON-DOSSIER-20261019-01",
+      "provenance": {
+        "source_occurrences": [
+          "OCC-KNW-168"
+        ],
+        "occurrence_count": 1,
+        "source_document": "PLATFORM_COMPETITIVE_EVALUATION_MATRIX.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1.0,
+      "status": "active_verified",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "STRATEGIC_DOSSIER",
+        "PLATFORM_COMPARISON",
+        "PAST_BUILDS_LEVERAGE",
+        "REUSE_ADAPT_REBUILD_EXCLUDE"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Canonical platform selection doctrine and asset reuse framework linking B.E.T. to DCSE Persona #20 (beauty_pro).",
+      "content": "B.E.T. Strategic Dossier & Platform Evaluation Architecture: Defines 3-layer transformation (Market/Business Intelligence, Website Restructuring, Digital Growth Stewardship), comparative evaluation across Wix, Shopify, Hostinger, and Modern Jamstack, and past build asset transfer from SC.com, S-S.com, TSL, CTJ, and Sis Dee under D08-D11 doctrine."
     }
   ]
 }
