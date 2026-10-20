@@ -126,7 +126,19 @@
             "type": "html",
             "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/START_HERE.html"
           }
-        ]
+        ],
+        "pending_release": {
+          "task_id": "SC-CTJ-PROMOTION-20261019-01",
+          "approval_status": "DCS_APPROVED",
+          "deployment_status": "AWAITING_DEPLOYMENT",
+          "target_url": "https://sonlyconsulting.com/ctj/",
+          "source_repository": "sonlyconsulting-ctrl/SC-CTJ",
+          "source_commit": "ec50ba0569546b1acc22ebc4eaf97698f8c7c9d7",
+          "source_path": "deployment/approved-ctj/ctj/index.html",
+          "sha256": "4f2eedc1bd206712ac8e589d34a8e71bff02dc3518893e13f897c81550c41a1a",
+          "production_readback_required": true,
+          "commerce_status": "Six-offer delivery/email acceptance open in SC-CTJ issue 21"
+        }
       },
       "tags": [
         "Reasoning",
@@ -298,7 +310,7 @@
       "code": "SC",
       "name": "Sonly Consulting Enterprise",
       "parent_brand": "Sonly Consulting",
-      "motto": "GET YOUR THINK ON!\u2122",
+      "motto": "GET YOUR THINK ON!™",
       "tagline": "Enterprise AI & PostgreSQL Migration",
       "category": "enterprise",
       "is_flagship": true,
@@ -346,7 +358,7 @@
       "code": "SS",
       "name": "Smoove Spots Discovery Engine",
       "parent_brand": "Smoove Spots",
-      "motto": "SPOTS MOOVED RIGHT!\u2122",
+      "motto": "SPOTS MOOVED RIGHT!™",
       "tagline": "Verified Local Spot Curation",
       "category": "sports_culture",
       "is_flagship": false,
@@ -428,7 +440,7 @@
     {
       "id": "sjl_b4life",
       "code": "SJL-B4Life",
-      "name": "SJL Baller4Life\u2122 Platform",
+      "name": "SJL Baller4Life™ Platform",
       "parent_brand": "Smoove Spots",
       "motto": "RESPONSIBILITY FUELS INDEPENDENCE",
       "tagline": "Generational Foundation & Young Adult Transition",
