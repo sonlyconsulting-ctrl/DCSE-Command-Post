@@ -2,22 +2,29 @@
   "_meta": {
     "artifact_type": "ESCD_PRODUCTS_CATALOG",
     "registry_id": "ESCD_PRODUCTS_V1",
-    "version": "1.3.0",
+    "version": "1.4.1",
     "source_authority": "DCSE Master Profile v7.3 OPERATIVE",
     "directive": "DCS Executive Directive 2026-10-12: Full Sovereign Ecosystem Product Access & Interactive Canvas",
     "status": "OPERATIVE_CATALOG",
-    "total_products": 8
+    "total_products": 9,
+    "change_control": {
+      "task_id": "DCS-MEDICARE-APP-20261019-01",
+      "disposition": "PROTECTED_LINK_PROMOTION_CANDIDATE",
+      "source": "DCS promotion directive 2026-10-21",
+      "deployment": "Independent Vercel project with protection all; no public access",
+      "source_sha256": "a79ae5bdcc9b493b3950922524b43fc1578e26a6e6cda9dcf54fe8bf14f4c26e"
+    }
   },
   "categories": [
     {
       "id": "all",
       "label": "All Products",
-      "count": 8
+      "count": 9
     },
     {
       "id": "flagships",
       "label": "Flagships",
-      "count": 4
+      "count": 5
     },
     {
       "id": "wisdom_civic",
@@ -38,6 +45,11 @@
       "id": "enterprise",
       "label": "Enterprise Systems",
       "count": 2
+    },
+    {
+      "id": "personal_private",
+      "label": "Private Personal Tools",
+      "count": 1
     }
   ],
   "products": [
@@ -298,7 +310,7 @@
       "code": "SC",
       "name": "Sonly Consulting Enterprise",
       "parent_brand": "Sonly Consulting",
-      "motto": "GET YOUR THINK ON!\u2122",
+      "motto": "GET YOUR THINK ON!™",
       "tagline": "Enterprise AI & PostgreSQL Migration",
       "category": "enterprise",
       "is_flagship": true,
@@ -346,7 +358,7 @@
       "code": "SS",
       "name": "Smoove Spots Discovery Engine",
       "parent_brand": "Smoove Spots",
-      "motto": "SPOTS MOOVED RIGHT!\u2122",
+      "motto": "SPOTS MOOVED RIGHT!™",
       "tagline": "Verified Local Spot Curation",
       "category": "sports_culture",
       "is_flagship": false,
@@ -428,7 +440,7 @@
     {
       "id": "sjl_b4life",
       "code": "SJL-B4Life",
-      "name": "SJL Baller4Life\u2122 Platform",
+      "name": "SJL Baller4Life™ Platform",
       "parent_brand": "Smoove Spots",
       "motto": "RESPONSIBILITY FUELS INDEPENDENCE",
       "tagline": "Generational Foundation & Young Adult Transition",
@@ -465,6 +477,50 @@
         "Stewardship",
         "Mentorship",
         "Character"
+      ]
+    },
+    {
+      "id": "dcs_medicare",
+      "code": "DCS-MEDICARE",
+      "name": "DCS Medicare Decision Center",
+      "parent_brand": "DCS / Private Personal Research",
+      "motto": "BENEFITS CLARITY & DECISION SUPPORT",
+      "tagline": "Private Medicare Plan and Preventive Benefits Workspace",
+      "category": "personal_private",
+      "is_flagship": false,
+      "status": "ACTIVE_PROTECTED_LINK",
+      "badge": "Private app · Vercel Auth",
+      "version": "v1.1",
+      "hero": "Medicare plan costs, preventive benefits, appointments, and source-verified decisions",
+      "description": "Private-first Medicare decision support for adults 65 and older. Compare plan costs and Part B giveback assumptions, review preventive benefits and appointment timing, and preserve distinctions between official sources and historical advice. Local working HTML preview exists; no authenticated hosted app, live Medicare data connection, or production release is verified.",
+      "capabilities": [
+        "Medicare plan comparisons with evidence labels",
+        "Part B, plan premium, giveback and cost scenario calculations",
+        "Preventive care and wellness benefits checklist",
+        "Appointment timeline and document-readiness tracker",
+        "Private session-only research export"
+      ],
+      "pricing": "Private personal research. Not an insurance sales offering.",
+      "access_classification": "PRIVATE_PERSONAL_RESEARCH",
+      "privacy": "No Medicare identifiers, uploaded personal records, or credentials included in product metadata.",
+      "release_gate": "Verified Vercel SSO all deployments; owner browser acceptance, full E2E, independent source repository and per-user persistence remain open",
+      "actions": {
+        "canvas_supported": false,
+        "canvas_module": null,
+        "external_preview": null,
+        "dossier_available": true,
+        "live_url": "https://dcs-medicare-decision-center.vercel.app",
+        "preview_status": "PROTECTED_DEPLOYMENT_READY",
+        "deliverables": [],
+        "deployment_project": "dcs-medicare-decision-center",
+        "deployment_id": "dpl_2TKzTfsCR4DYeeMXY3iHJcBH7SP2"
+      },
+      "tags": [
+        "Medicare",
+        "Retirement Benefits",
+        "Preventive Care",
+        "Personal Research",
+        "Private Review"
       ]
     }
   ]
