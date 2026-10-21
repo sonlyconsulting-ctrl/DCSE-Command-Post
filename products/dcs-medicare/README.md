@@ -37,3 +37,13 @@ Official Medicare plan details and 2027 data remain source-verification gates be
 - Create distinct private repository with source, tests and rollback tag; wire into the Vercel project.
 - Implement app-local authentication/persistence only if storing personal data for broader 65+ audiences.
 - Validate accessibility targets, user isolation, benefits sourcing, currency and real service eligibility.
+
+## DCS review status and private repository requirement (2026-10-21)
+
+DCS confirmed the protected standalone application's production availability and ESCD product placement. Product disposition is `PENDING_REVIEW`; do not interpret production deployment as final product approval.
+
+GitHub repository inventory checked 2026-10-21: no standalone Medicare source repository was present among the 22 repositories returned for `sonlyconsulting-ctrl`. This existing `DCSE-Command-Post` repository is **PUBLIC** and contains only catalog metadata and this deployment/source manifest, not the Medicare app source or beneficiary records. Do **not** change the visibility of the entire Command Post repository merely to protect the Medicare product.
+
+Required separate repository: `sonlyconsulting-ctrl/DCS-Medicare-Decision-Center`, visibility **PRIVATE**, then attach its contents to the existing Vercel project without changing Vercel Authentication for all deployment types. Repo creation / visibility management is not available through this session's GitHub actions; [issue #199](https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/issues/199) tracks completion. Do not mark this control satisfied without a live GitHub visibility readback.
+
+Private-source handoff generated for DCS in the conversation: `DCS_Medicare_Private_GitHub_Repo_Ready.zip`. It contains only the reviewed static app source, documentation, tests and a GitHub workflow; original compiled HTML SHA-256 remains `a79ae5bdcc9b493b3950922524b43fc1578e26a6e6cda9dcf54fe8bf14f4c26e`. The attached source package is **not** committed to the public Command Post repository.
