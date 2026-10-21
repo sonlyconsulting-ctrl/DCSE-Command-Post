@@ -2,17 +2,17 @@
   "_meta": {
     "artifact_type": "ESCD_PRODUCTS_CATALOG",
     "registry_id": "ESCD_PRODUCTS_V1",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "source_authority": "DCSE Master Profile v7.3 OPERATIVE",
     "directive": "DCS Executive Directive 2026-10-12: Full Sovereign Ecosystem Product Access & Interactive Canvas",
     "status": "OPERATIVE_CATALOG",
     "total_products": 9,
     "change_control": {
       "task_id": "DCS-MEDICARE-APP-20261019-01",
-      "disposition": "PROTECTED_LINK_PROMOTION_CANDIDATE",
-      "source": "DCS promotion directive 2026-10-21",
-      "deployment": "Independent Vercel project with protection all; no public access",
-      "source_sha256": "a79ae5bdcc9b493b3950922524b43fc1578e26a6e6cda9dcf54fe8bf14f4c26e"
+      "disposition": "PENDING_REVIEW_CONFIRMED",
+      "source": "DCS confirmation 2026-10-21 that production and ESCD placement are confirmed; further review pending",
+      "deployment": "Existing independent Vercel protected app; no re-deployment requested",
+      "repository_policy": "Separate private repository required; do not change visibility of public DCSE-Command-Post"
     }
   },
   "categories": [
@@ -488,11 +488,11 @@
       "tagline": "Private Medicare Plan and Preventive Benefits Workspace",
       "category": "personal_private",
       "is_flagship": false,
-      "status": "ACTIVE_PROTECTED_LINK",
-      "badge": "Private app · Vercel Auth",
+      "status": "PENDING_REVIEW",
+      "badge": "Protected · Under Review",
       "version": "v1.1",
       "hero": "Medicare plan costs, preventive benefits, appointments, and source-verified decisions",
-      "description": "Private-first Medicare decision support for adults 65 and older. Compare plan costs and Part B giveback assumptions, review preventive benefits and appointment timing, and preserve distinctions between official sources and historical advice. Local working HTML preview exists; no authenticated hosted app, live Medicare data connection, or production release is verified.",
+      "description": "Independent private-first Medicare Decision Center for adults 65 and older, hosted separately from ESCD behind Vercel Authentication. Plan comparisons, Part B cost scenarios, preventive benefits and appointment checklists are available for review. This is a decision-support prototype; plan data, multiuser persistence and final acceptance remain pending.",
       "capabilities": [
         "Medicare plan comparisons with evidence labels",
         "Part B, plan premium, giveback and cost scenario calculations",
@@ -503,14 +503,14 @@
       "pricing": "Private personal research. Not an insurance sales offering.",
       "access_classification": "PRIVATE_PERSONAL_RESEARCH",
       "privacy": "No Medicare identifiers, uploaded personal records, or credentials included in product metadata.",
-      "release_gate": "Verified Vercel SSO all deployments; owner browser acceptance, full E2E, independent source repository and per-user persistence remain open",
+      "release_gate": "DCS confirms production ESCD placement and protected standalone route. Product disposition remains PENDING_REVIEW until private GitHub source repository, current Medicare source verification, user acceptance, and privacy/access testing are complete.",
       "actions": {
         "canvas_supported": false,
         "canvas_module": null,
         "external_preview": null,
         "dossier_available": true,
         "live_url": "https://dcs-medicare-decision-center.vercel.app",
-        "preview_status": "PROTECTED_DEPLOYMENT_READY",
+        "preview_status": "PROTECTED_HOSTED_PENDING_REVIEW",
         "deliverables": [],
         "deployment_project": "dcs-medicare-decision-center",
         "deployment_id": "dpl_2TKzTfsCR4DYeeMXY3iHJcBH7SP2"
