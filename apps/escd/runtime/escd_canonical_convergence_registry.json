@@ -4575,6 +4575,29 @@
       "duplicate_merge_relationship": "Merged 0 occurrences",
       "disposition_rationale": "Distributed node link to DESKTOP-PG1JATE polled and verified active (Ping=True, UNC=True, Playwright Spec=Ready). Ready for headless test offloading.",
       "content": "ESCD Distributed Node Gateway: Establish DESKTOP-PG1JATE as an autonomous compute and AI orchestration worker node. Enables offloading of Playwright E2E suites and background builds while enforcing DCS mandatory live preview generation for all UI deliverables. [POLL VERIFIED: 2026-10-12 11:37 EDT - Node online, UNC share accessible, E2E runner primed]"
+    },
+    {
+      "canonical_id": "CANON-167",
+      "disposition": "ASSET",
+      "original_type": "ASSET",
+      "normalized_type": "ASSET",
+      "source": "SS-PRODUCTION-RELEASE-20261022",
+      "provenance": {
+        "source_document": "responses/chatgpt/SS_PRODUCTION_RELEASE_20261022.md",
+        "source_occurrences": [],
+        "occurrence_count": 1,
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "production_deployed_integration_pending",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "SS_WEBSITE",
+        "VERCEL_RELEASE",
+        "ESCD_PRODUCTS"
+      ],
+      "content": "SS deployed to existing smoove-spots-v2 Vercel project. Commit ee34942d3e9f802baf828c4a92f61c53d2f44ada. Production URL https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/. ESCD catalog source prepared; live ESCD synchronization pending authenticated access and reconciliation of newer employment release. Preserve CANON-160 governance record."
     }
   ]
 }

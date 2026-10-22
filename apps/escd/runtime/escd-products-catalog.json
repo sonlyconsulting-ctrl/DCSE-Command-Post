@@ -2,17 +2,15 @@
   "_meta": {
     "artifact_type": "ESCD_PRODUCTS_CATALOG",
     "registry_id": "ESCD_PRODUCTS_V1",
-    "version": "1.4.2",
+    "version": "1.4.4",
     "source_authority": "DCSE Master Profile v7.3 OPERATIVE",
     "directive": "DCS Executive Directive 2026-10-12: Full Sovereign Ecosystem Product Access & Interactive Canvas",
     "status": "OPERATIVE_CATALOG",
     "total_products": 9,
     "change_control": {
-      "task_id": "DCS-MEDICARE-APP-20261019-01",
-      "disposition": "PENDING_REVIEW_CONFIRMED",
-      "source": "DCS confirmation 2026-10-21 that production and ESCD placement are confirmed; further review pending",
-      "deployment": "Existing independent Vercel protected app; no re-deployment requested",
-      "repository_policy": "Separate private repository required; do not change visibility of public DCSE-Command-Post"
+      "task_id": "DCSE-MEDIA-RECONCILIATION-20261021-01",
+      "disposition": "SS_DEPLOYED_ESCD_RUNTIME_PENDING",
+      "scope": "Only Smoove Spots catalog record updated. Reconcile newer live employment catalog before deploying ESCD."
     }
   },
   "categories": [
@@ -356,43 +354,39 @@
     {
       "id": "smoove_spots",
       "code": "SS",
-      "name": "Smoove Spots Discovery Engine",
+      "name": "Smoove Spots",
       "parent_brand": "Smoove Spots",
-      "motto": "SPOTS MOOVED RIGHT!™",
-      "tagline": "Verified Local Spot Curation",
+      "motto": "WHERE LIFE GETS DIGITAL & PERSONAL",
+      "tagline": "Stories, everyday culture, and digital experiences",
       "category": "sports_culture",
       "is_flagship": false,
-      "status": "ACTIVE_CANVAS",
-      "badge": "Discovery Ready",
-      "version": "v1.2.0",
-      "hero": "Curated Local Venues & Neighborhood Vibe Index",
-      "description": "Smoove Spots surfaces verified local venues, cultural hubs, culinary destinations, and community events across targeted metropolitan regions. Replaces noisy reviews with curated neighborhood vibe indexes and merchant portals.",
+      "status": "LIVE_WEBSITE",
+      "badge": "Live website",
+      "version": "2026.10.22",
+      "hero": "Reflection, culture, and thoughtful digital craft",
+      "description": "An editorial destination for The Mirror in the Hallway, visual mood reels, and links to Mental Ingenuity, Focus & Flow, The Critical Thinker's Journey, and Tedo's Sports Lounge.",
       "capabilities": [
-        "Live Regional Spot Curation Map",
-        "Neighborhood Vibe Scoring",
-        "Merchant Verification Portal",
-        "Local Event & Culture Feed"
+        "Read The Mirror in the Hallway",
+        "Play silent visual mood reels",
+        "Explore linked digital experiences"
       ],
       "actions": {
         "canvas_supported": true,
-        "canvas_module": "ss_spots_curation",
-        "external_preview": "sc_homepage_preview.html",
+        "canvas_module": null,
+        "external_preview": "https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/",
         "dossier_available": true,
-        "local_source": "c:/DS All Things/dcse-sc-sportsociety",
-        "deliverables": [
-          {
-            "name": "Sports Society Final Screen Map",
-            "file": "sc_sports_society_final_combined_screen_map.md",
-            "type": "doc",
-            "path": "c:/DS All Things/dcse-sc-sportsociety/sc_sports_society_final_combined_screen_map.md"
-          }
-        ]
+        "live_url": "https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/",
+        "icon_url": "https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/assets/web/ss-mark-400.jpg",
+        "deployment_project": "smoove-spots-v2",
+        "deployment_id": "dpl_3schbcQSqrRtYgkwULrcBKy4JZPV",
+        "source_commit": "ee34942d3e9f802baf828c4a92f61c53d2f44ada",
+        "deliverables": []
       },
       "tags": [
+        "Stories",
         "Culture",
-        "Local Discovery",
-        "Venues",
-        "Curation"
+        "Reflection",
+        "Digital Experiences"
       ]
     },
     {
