@@ -1,0 +1,46 @@
+{
+  "task_id": "DCSE-MEDIA-RECONCILIATION-20261021-01",
+  "source_commit": "ee34942d3e9f802baf828c4a92f61c53d2f44ada",
+  "deployment_id": "dpl_3schbcQSqrRtYgkwULrcBKy4JZPV",
+  "environment": "production",
+  "state": "READY",
+  "build": "PASS",
+  "tests": {
+    "pass": 11,
+    "fail": 0
+  },
+  "live_url": "https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/",
+  "browser_checks": {
+    "desktop_render": "PASS",
+    "navigation": "PASS",
+    "images": "9 loaded",
+    "video_loop": "Observed playback beyond 10-second clip",
+    "video_mutex": "PASS switching rain to heartland",
+    "focus_flow_link": "Verified final source and rendered link to existing MVP preview",
+    "destination_applications": [
+      "Mental Ingenuity",
+      "CTJ",
+      "TSL",
+      "Focus & Flow"
+    ],
+    "mobile": "PARTIAL viewport test blocked",
+    "wcag": "Not certified"
+  },
+  "escd": {
+    "source_pr": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/pull/203",
+    "runtime": "PENDING",
+    "blockers": [
+      "Protected API share link rejected with 401",
+      "Connected Chrome extension UI blocks automation",
+      "Live catalog differs from known GitHub release; preserve newer employment changes"
+    ],
+    "canonical_record": "CANON-167",
+    "preserved_record": "CANON-160"
+  },
+  "custom_domain_path": {
+    "url": "https://sonlyconsulting.com/smoove-spots/",
+    "status": "NOT_ROUTED_THIS_TURN",
+    "parent_host": "Netlify sonlyconsulting-app"
+  },
+  "claude_url": "Original design workspace; not synchronized with GitHub edits"
+}
