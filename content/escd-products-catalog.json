@@ -344,7 +344,8 @@
             "type": "doc",
             "path": "c:/DS All Things/DCSE_Command_Center/governance/Master-Profile-v7.3.md"
           }
-        ]
+        ],
+        "website_url": "https://sonlyconsulting.com"
       },
       "tags": [
         "Enterprise",
@@ -386,7 +387,8 @@
             "type": "doc",
             "path": "c:/DS All Things/dcse-sc-sportsociety/sc_sports_society_final_combined_screen_map.md"
           }
-        ]
+        ],
+        "website_url": "https://smoove-spots-c2a9eaaf-d58c-450d-a34.vercel.app"
       },
       "tags": [
         "Culture",
