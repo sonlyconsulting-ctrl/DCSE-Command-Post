@@ -4386,7 +4386,7 @@
       },
       "authority_classification": "DCS_DIRECTION",
       "confidence": 1,
-      "status": "completed",
+      "status": "staged",
       "historical_current": "current_reference",
       "topic_relationships": [
         "SS_WEBSITE",
@@ -4394,7 +4394,7 @@
         "EDITORIAL_PRODUCTION"
       ],
       "duplicate_merge_relationship": "Merged 0 occurrences",
-      "disposition_rationale": "Mandatory co-registration of Smoove Spots (ss.com) website remediation for H07 evaluation release hold",
+      "disposition_rationale": "HOLD pending deployment verification: remediated destinations, verified Vite static build packaging, and corrected solo-founder editorial voice",
       "content": "Remediate Smoove Spots candidate based on H07 audit findings: hero image 4:5 sizing, full Mirror in the Hallway narrative, video looping and accessible labels, narrow viewport header overflow at <=391px, copy overhaul, QA subdomain removal, and audience representation."
     }
   ]

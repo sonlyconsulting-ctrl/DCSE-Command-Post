@@ -1,66 +1,52 @@
 {
   "TRIBUNAL_MESSAGE_ID": "TRIB-20261022-SMOOVE-SPOTS-DC-EVALUATION",
-  "TIMESTAMP": "2026-10-22T04:38:00.000Z",
+  "TIMESTAMP": "2026-10-22T05:43:00.000Z",
   "LANE": "SS // DCSE // TRIBUNAL",
   "ORIGINATOR": "Antigravity",
-  "STATUS": "VERIFIED_EVALUATION_RECORD",
-  "CLASSIFICATION": "Smoove Spots Claude Design Production Evaluation & Governance Audit",
+  "STATUS": "HOLD_REMEDIATION_IN_PROGRESS",
+  "CLASSIFICATION": "Smoove Spots Production Evaluation & Remediated Candidate Evidence",
   "TASK_ID": "DCSE-SS-CLAUDE-DESIGN-EVAL-20261022-001",
   "SHARE_URL": "https://claude.ai/design/p/8ce23b80-3cd3-447e-98b4-5cd511376599?file=Smoove+Spots.dc.html&via=share",
   "EVALUATION_SUMMARY": {
-    "composite_score": 94,
-    "grade": "A",
-    "readiness": "PRODUCTION_CANDIDATE_APPROVED",
-    "compliance_score": 98,
-    "aesthetic_and_ux_score": 95,
-    "asset_binding_score": 92,
-    "representativeness_score": 95
+    "composite_score": 68,
+    "grade": "C+",
+    "readiness": "HOLD_PENDING_DEPLOYMENT_PREVIEW_VERIFICATION",
+    "art_direction_score": 85,
+    "layout_execution_score": 80,
+    "written_content_score": 75,
+    "asset_binding_score": 85,
+    "audience_representation_score": 70,
+    "production_readiness_score": 65
   },
   "DETAILED_EVALUATION": {
     "compliance": {
-      "status": "PASS",
-      "rule_brand_dash_001": "PASSED (0 em dashes, 0 en dashes detected across entire document)",
+      "status": "PARTIAL_PASS",
+      "rule_brand_dash_001": "PASSED (0 em dashes, 0 en dashes verified across public HTML and component script)",
+      "language_declaration": "PASSED (html lang='en' present)",
       "ps_isolation_firewall": "PASSED (0 mentions of PS, litigation, legal dockets, or case facts)",
       "dcs_employ_isolation": "PASSED (Zero resume, compensation, recruiter, or internal employment pipeline leakage)",
-      "entity_attribution": "PASSED (Strict footer attribution: 'Powered by Sonly Consulting' active with valid route)",
-      "entity_boundary": "PASSED (Dedicated Sonly Consulting callout card in About section clearly separating business systems from creative lifestyle)",
-      "wcag_accessibility": "PASSED (Skip-to-content anchor, semantic landmarks, prefers-reduced-motion media query, descriptive video/image alt text)"
+      "entity_attribution": "PASSED (Strict footer attribution: 'Powered by Sonly Consulting' with active link)",
+      "solo_founder_alignment": "PASSED (Corrected 'our partnership/practice' phrasing to reflect authentic solo founder business identity)",
+      "wcag_accessibility": "PROVISIONAL_PARTIAL (Skip link, semantic landmarks, prefers-reduced-motion, and descriptive alt text present; full certified audit pending deployment)"
     },
-    "look_and_feel": {
-      "status": "EXCELLENT",
-      "typography": "High-end editorial pairing: Cormorant Garamond (refined luxury serif) with Jost (clean modern geometric sans-serif)",
-      "color_palette": "Deep Forest Canvas (#04120D), Emerald/Mint Accents (#7FCFA8, #2FA173), Rich Gold (#C9A24A), Champagne Hover (#E8CE8F)",
-      "composition": "Asymmetric editorial broadsheet layout, generous whitespace, fluid clamp typography, delicate borders and luxury micro-interactions",
-      "motion_design": "Subtle soul/cinematic marquee, smooth intersection-observer video scroll tracking, no unconstrained noisy animations"
+    "destinations": {
+      "status": "REMEDIATED_TO_VERIFIED_ENDPOINTS",
+      "mental_ingenuity": "https://mental-ingenuity-qa.vercel.app/ (Verified live 200; speculative production host removed)",
+      "the_critical_thinkers_journey": "https://sc-ctj.vercel.app/ (Verified live 200; Netlify 404 removed)",
+      "tedos_sports_lounge": "https://tedos-sports-lounge.vercel.app/ (Verified live 200; Netlify 404 removed)",
+      "focus_and_flow": "Held in preview; no outgoing launch CTA rendered until standalone endpoint is provisioned",
+      "contact_inquiries": "mailto:sonlyconsulting@gmail.com (Verified founder address; speculative support@ address removed)"
     },
-    "asset_integration": {
-      "status": "VERIFIED_BOUND",
-      "video_assets": [
-        "assets/video/golden-cafe-tranquility.mp4 (The Mirror in the Hallway)",
-        "assets/video/rainy-night-serenity.mp4 (Rain on glass mood reel)",
-        "assets/video/heartland-street-charm.mp4 (Street charm mood reel)",
-        "assets/video/urban-nighttime-charm.mp4 (Urban nighttime reel)"
-      ],
-      "image_assets": [
-        "assets/brand/sc_logo_primary.png",
-        "assets/brand/smoove_spots_logo.svg",
-        "assets/brand/ss-mark-400.jpg",
-        "assets/products/ctj_chamber_signal.webp",
-        "assets/products/ctj_mental_ingenuity_hero.webp",
-        "assets/products/tsl_kentucky_derby_hero.png"
-      ],
-      "performance_controls": "IntersectionObserver controls auto-playback with 0.4 threshold; video mutex ensures only 1 video plays at a time; video elements have preload='none'/'metadata' and static JPG poster fallbacks"
+    "editorial_and_narrative": {
+      "status": "REFINED",
+      "the_mirror_in_the_hallway": "Published 260-word reflective vignette on thresholds and stillness; removed 'Every home...' overgeneralization and removed invented origin story claim ('Smoove Spots was born from that exact pause')",
+      "about_section": "Refocused directly on Smoove Spots as an unhurried digital destination for culture and reflection, while cleanly delineating Sonly Consulting as the founder's enterprise advisory",
+      "experience_capabilities": "Removed unverified feature claims regarding Focus & Flow and TSL commentary"
     },
-    "representativeness": {
-      "status": "HIGH_FIDELITY_ALIGNMENT",
-      "headline": "Where Life Gets Digital & Personal",
-      "narrative_spine": "Faithfully captures 'The Mirror in the Hallway' as an intimate space for reflection, everyday culture, and mood",
-      "showroom_integration": "Seamlessly introduces CTJ (The Critical Thinker's Journey), Tedo's Sports Lounge, and Focus & Flow as organic product extensions under the SS umbrella without corporate disruption"
-    },
-    "recommendations": [
-      "1. Ensure static assets/web/ directory paths match the local extraction directory structure when deployed to Vercel/Netlify.",
-      "2. Bind live routing URLs for CTJ and TSL once their individual sub-domain DNS records are confirmed.",
-      "3. Expand mobile drawer touch targets by 4px for enhanced thumb ergonomics on smaller devices."
-    ]
+    "packaging_and_build": {
+      "status": "VERIFIED_VITE_BUILD",
+      "vite_config": "Custom plugin bundles dist/index.html, dist/Smoove Spots.dc.html, dist/support.js, and static dist/assets/",
+      "dist_verification": "Automated node test suite confirms all 5 bundle targets and media files load with status 200"
+    }
   }
 }
