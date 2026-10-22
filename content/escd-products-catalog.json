@@ -58,28 +58,29 @@
       "code": "CTJ",
       "name": "The Critical Thinker's Journey",
       "parent_brand": "Sonly Consulting",
-      "motto": "STRUCTURED REASONING ENGINE",
+      "motto": "THINKING IS A PRACTICE",
       "tagline": "Clarity Before Decision",
       "category": "wisdom_civic",
       "is_flagship": true,
       "status": "ACTIVE_CANVAS",
-      "badge": "Interactive Canvas Ready",
-      "version": "v1.4.0",
-      "hero": "Structured Decision Engine & Civic Clarity Matrix",
-      "description": "Critical Thinker's Journey is a structured reasoning framework for executives, analysts, and citizens who require verified cognitive workflows. The system replaces unexamined assumptions with an auditable 4-Tier Reasoning Matrix, 6-Chamber Ascent Engine, and the 7-Step Voter & Civic Clarity Evaluation Engine.",
+      "badge": "Approved storefront live",
+      "version": "storefront-20261019-4f2eedc1",
+      "hero": "A clearer path through complex decisions.",
+      "description": "The Critical Thinker's Journey connects the Strategic Clarity Assessment, Parts 1-3 and The Unified Path through a progressive practice for examining assumptions, exploring alternatives and applying judgment. The approved silver, deep navy and gold public storefront is live. Purchase delivery and email acceptance remain incomplete.",
       "capabilities": [
-        "4-Tier Reasoning Matrix",
-        "6-Chamber Ascent Engine",
-        "7-Step Civic Clarity Evaluation",
-        "Candidate Epistemic Scoring",
-        "Printable Civic Clarity Card"
+        "Strategic Clarity Assessment: $20",
+        "Parts 1, 2 and 3: $39 each",
+        "Parts 1-3 bundle: $99",
+        "The Unified Path: $119",
+        "Distinct Focus & Flow and Mental Ingenuity practice experiences",
+        "Collection: $199 conditional, unavailable for purchase"
       ],
       "actions": {
         "canvas_supported": true,
         "canvas_module": "ctj_voter_matrix",
-        "external_preview": "sc_homepage_preview.html#view-track3",
+        "external_preview": "https://sonlyconsulting.com/ctj/",
         "dossier_available": true,
-        "live_url": "https://sc-ctj.vercel.app",
+        "live_url": "https://sonlyconsulting.com/ctj/",
         "local_source": "c:/DS All Things/SC-CTJ",
         "deliverables": [
           {
@@ -138,13 +139,29 @@
             "type": "html",
             "path": "c:/DS All Things/SC-CTJ/deliverables/v1.1/CTJ_Collection_v1.1/START_HERE.html"
           }
-        ]
+        ],
+        "release": {
+          "task_id": "SC-CTJ-PROMOTION-20261019-01",
+          "status": "DEPLOYED",
+          "production_url": "https://sonlyconsulting.com/ctj/",
+          "netlify_deploy_id": "6ad6b7cfb4adc6e92d314ca8",
+          "site_id": "23a265c1-6ba1-4e82-aeaa-e39084842c40",
+          "source_commit": "ec50ba0569546b1acc22ebc4eaf97698f8c7c9d7",
+          "artifact_sha256": "4f2eedc1bd206712ac8e589d34a8e71bff02dc3518893e13f897c81550c41a1a",
+          "verified": "Netlify published success and live browser hero/navigation/product-price readback",
+          "preserved_files": 124,
+          "package_changes": [
+            "ctj/index.html",
+            "netlify.toml publish path corrected to ."
+          ],
+          "commerce_status": "INCOMPLETE: SCA and bundle links, purchase return/delivery/email acceptance remain open in SC-CTJ issue 21"
+        }
       },
       "tags": [
-        "Reasoning",
-        "Civic Clarity",
-        "Voter Module",
-        "Cognitive Audit"
+        "Critical Thinking",
+        "Assessment",
+        "Guided Curriculum",
+        "Unified Practice"
       ]
     },
     {
