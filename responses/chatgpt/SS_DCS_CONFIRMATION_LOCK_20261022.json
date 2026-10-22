@@ -1,0 +1,35 @@
+{
+  "release_id": "SS-20261022-01",
+  "task_id": "DCSE-MEDIA-RECONCILIATION-20261021-01",
+  "status": "DCS_CONFIRMED_CURRENT_RELEASE",
+  "confirmation_date": "2026-10-22",
+  "confirmation_timezone": "America/Indianapolis",
+  "authority": "DCS direct instruction in this conversation",
+  "directive_verbatim": "confirmed lock and post with this as most recent version testing from DCS will be provided later.",
+  "application_commit": "ee34942d3e9f802baf828c4a92f61c53d2f44ada",
+  "deployment_id": "dpl_3schbcQSqrRtYgkwULrcBKy4JZPV",
+  "project": "smoove-spots-v2",
+  "environment": "production",
+  "deployment_state": "READY",
+  "confirmed_url": "https://smoove-spots-c2a9eaaf-d58c-450d-a34.vercel.app/",
+  "stable_project_url": "https://smoove-spots-v2-sonlyconsulting-ctrls-projects.vercel.app/",
+  "automated_tests": {
+    "passed": 11,
+    "failed": 0
+  },
+  "dcs_testing": {
+    "status": "PENDING_DCS_RESULTS",
+    "results": null
+  },
+  "lock_scope": "Current deployed SS application version and its source identity. Further changes require a new version record; this receipt does not change application files or deployment settings.",
+  "escd": {
+    "website_launch": "VERIFIED_EXISTING_LINK_REACHES_CURRENT_RELEASE",
+    "catalog_copy_cleanup": "SOURCE_PREPARED_RUNTIME_PENDING",
+    "integration_pr": "https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/pull/203"
+  },
+  "remaining": {
+    "mobile_accessibility": "Partial verification; no full WCAG certification",
+    "sc_parent_path": "sonlyconsulting.com/smoove-spots/ routing remains pending",
+    "claude_design": "Original share workspace remains separate from deployed release"
+  }
+}
