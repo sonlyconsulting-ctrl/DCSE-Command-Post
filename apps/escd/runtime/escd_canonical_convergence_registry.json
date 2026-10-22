@@ -2,10 +2,10 @@
   "metadata": {
     "title": "ESCD Canonical Content Convergence Registry",
     "total_source_occurrences": 189,
-    "total_candidates": 159,
+    "total_candidates": 160,
     "duplicates_merged": 31,
     "disposition_counts": {
-      "TASK": 55,
+      "TASK": 56,
       "HOLD": 25,
       "IDEA": 9,
       "SOURCE_ONLY": 3,
@@ -4357,7 +4357,7 @@
         "cross_source_duplicates": []
       },
       "authority_classification": "DCS_DIRECTION",
-      "confidence": 1.0,
+      "confidence": 1,
       "status": "active",
       "historical_current": "current_reference",
       "topic_relationships": [
@@ -4368,6 +4368,34 @@
       "duplicate_merge_relationship": "Merged 0 occurrences",
       "disposition_rationale": "DCS direct mandate: formal investigation of Antigravity reliability & Vercel deployment completion probe upon rate-limit reset",
       "content": "Investigate Antigravity reliability & verify ESCD live deployment upon Vercel reset\n\n- Issue: https://github.com/sonlyconsulting-ctrl/DCSE-Command-Post/issues/152\n- Incident Record: docs/governance/INCIDENT_REPORT_20260919_ESCD_DEPLOYMENT_FAILURE_AND_ANTIGRAVITY_INVESTIGATION.md\n- PR Merged: #153 (commit eece38a)\n- Status: Incomplete pending Vercel 24hr reset (api-deployments-free-per-day)\n- Verification: Direct probe of sc-escd.vercel.app/escd/app DOM for chatModelSelect & multi-model catalog"
+    },
+    {
+      "canonical_id": "CANON-160",
+      "content_hash": "ss20261022h07",
+      "disposition": "TASK",
+      "original_type": "TASK",
+      "normalized_type": "TASK",
+      "source": "SS_Design_Evaluation_H07_20261022",
+      "provenance": {
+        "source_occurrences": [
+          "SS_Design_Evaluation_H07_20261022.md"
+        ],
+        "occurrence_count": 1,
+        "source_document": "SS_Design_Evaluation_H07_20261022.md",
+        "cross_source_duplicates": []
+      },
+      "authority_classification": "DCS_DIRECTION",
+      "confidence": 1,
+      "status": "completed",
+      "historical_current": "current_reference",
+      "topic_relationships": [
+        "SS_WEBSITE",
+        "H07_REMEDIATION",
+        "EDITORIAL_PRODUCTION"
+      ],
+      "duplicate_merge_relationship": "Merged 0 occurrences",
+      "disposition_rationale": "Mandatory co-registration of Smoove Spots (ss.com) website remediation for H07 evaluation release hold",
+      "content": "Remediate Smoove Spots candidate based on H07 audit findings: hero image 4:5 sizing, full Mirror in the Hallway narrative, video looping and accessible labels, narrow viewport header overflow at <=391px, copy overhaul, QA subdomain removal, and audience representation."
     }
   ]
 }
