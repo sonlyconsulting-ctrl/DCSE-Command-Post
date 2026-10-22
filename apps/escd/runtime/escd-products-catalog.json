@@ -310,7 +310,7 @@
       "code": "SC",
       "name": "Sonly Consulting Enterprise",
       "parent_brand": "Sonly Consulting",
-      "motto": "GET YOUR THINK ON!™",
+      "motto": "GET YOUR THINK ON!\u2122",
       "tagline": "Enterprise AI & PostgreSQL Migration",
       "category": "enterprise",
       "is_flagship": true,
@@ -345,7 +345,8 @@
             "path": "c:/DS All Things/DCSE_Command_Center/governance/Master-Profile-v7.3.md"
           }
         ],
-        "website_url": "https://sonlyconsulting.com"
+        "website_url": "https://sonlyconsulting.com",
+        "website_icon": "/escd-brand/sc-website.png"
       },
       "tags": [
         "Enterprise",
@@ -359,7 +360,7 @@
       "code": "SS",
       "name": "Smoove Spots Discovery Engine",
       "parent_brand": "Smoove Spots",
-      "motto": "SPOTS MOOVED RIGHT!™",
+      "motto": "SPOTS MOOVED RIGHT!\u2122",
       "tagline": "Verified Local Spot Curation",
       "category": "sports_culture",
       "is_flagship": false,
@@ -388,7 +389,8 @@
             "path": "c:/DS All Things/dcse-sc-sportsociety/sc_sports_society_final_combined_screen_map.md"
           }
         ],
-        "website_url": "https://smoove-spots-c2a9eaaf-d58c-450d-a34.vercel.app"
+        "website_url": "https://smoove-spots-c2a9eaaf-d58c-450d-a34.vercel.app",
+        "website_icon": "/escd-brand/ss-website.jpg"
       },
       "tags": [
         "Culture",
@@ -442,7 +444,7 @@
     {
       "id": "sjl_b4life",
       "code": "SJL-B4Life",
-      "name": "SJL Baller4Life™ Platform",
+      "name": "SJL Baller4Life\u2122 Platform",
       "parent_brand": "Smoove Spots",
       "motto": "RESPONSIBILITY FUELS INDEPENDENCE",
       "tagline": "Generational Foundation & Young Adult Transition",
@@ -491,7 +493,7 @@
       "category": "personal_private",
       "is_flagship": false,
       "status": "PENDING_REVIEW",
-      "badge": "Protected · Under Review",
+      "badge": "Protected \u00b7 Under Review",
       "version": "v1.1",
       "hero": "Medicare plan costs, preventive benefits, appointments, and source-verified decisions",
       "description": "Independent private-first Medicare Decision Center for adults 65 and older, hosted separately from ESCD behind Vercel Authentication. Plan comparisons, Part B cost scenarios, preventive benefits and appointment checklists are available for review. This is a decision-support prototype; plan data, multiuser persistence and final acceptance remain pending.",

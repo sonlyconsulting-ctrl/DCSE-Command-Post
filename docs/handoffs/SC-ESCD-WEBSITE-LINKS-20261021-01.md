@@ -28,3 +28,6 @@ No DCS Employment module or its task register modified; only ESCD's brand websit
 Exit criteria for source work: scoped branch/PR, passing link and preservation checks, standalone review artifact. Complete.
 Exit criteria for runtime release: separately authorized production deployment and authenticated ESCD card-link readback. Pending.
 Status: SOURCE_READY / PRODUCTION_NOT_UPDATED.
+
+## User-approved logos and deployment
+DCS approved the preview packet, instructed promotion, and requested both website icons. Original site artwork retrieved from publicly deployed brand websites and retained unchanged. SC: uploads/assets-1786937403355-edhq.png, SHA256 9c5c260d5f3dd0277f19230dded21390d88dd88432d23c0f2040450b778d1dbb. SS: bundled manifest asset 640ad1b0-e886-4f14-9c60-174c9cdeabe1, SHA256 df225f2225214383b28c7d97525e0249e7bd3e9be92648be54e27b0c3fbedf66. A narrow /escd-brand/(.*) rewrite serves those files before the existing catchall. Original logos display intact with object-fit contain and accessible names. API and fallback renderer checks pass with both images. Preview dpl_E7NZRiJeWacdxKf8Nsw7QLmywS7i is READY; final production verification follows in the release receipt. The earlier source-only status is superseded by this execution record.
