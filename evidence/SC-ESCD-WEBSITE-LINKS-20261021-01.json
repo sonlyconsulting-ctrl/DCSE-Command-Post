@@ -1,0 +1,52 @@
+{
+  "task_id": "SC-ESCD-WEBSITE-LINKS-20261021-01",
+  "handoff_id": "SC-ESCD-WEBSITE-LINKS-HO-20261021-01",
+  "source_commit": "2c02daa7c8aa459cd03d1d5ff417821f8053a361",
+  "production_base_private_commit": "e16f6c4bfe19180f9f4d65346504d81aeb3a8bd2",
+  "preview": "dpl_E7NZRiJeWacdxKf8Nsw7QLmywS7i",
+  "production": "dpl_FSLSCJ1FgPbXmA8dmADxJbSXaUPw",
+  "production_url": "https://sc-escd.vercel.app/escd/app",
+  "state": "READY",
+  "method": "Redeploy validated preview source to production after promote endpoint returned 422; production HTML byte-for-byte verified against preview and staged artifact.",
+  "rollback": "dpl_4azYXmXv9mztsCWaZ9TrXQSccGk8",
+  "artifact_changes": {
+    "content/escd-products-catalog.json": {
+      "sha256": "6d11a83a6b445f2bb66391974d1842021225dfa9f945004af3612822e5540a61",
+      "bytes": 23188
+    },
+    "apps/escd/runtime/escd-products-catalog.json": {
+      "sha256": "6d11a83a6b445f2bb66391974d1842021225dfa9f945004af3612822e5540a61",
+      "bytes": 23188
+    },
+    "apps/escd/web/mvp.html": {
+      "sha256": "87f42990ce977a8e74497542d449eaeda6f0c5928e9c0513ed77bb1ca6e91ea3",
+      "bytes": 120877
+    },
+    "vercel.json": {
+      "sha256": "2d5edc135a3dc3c404f0ec7bd53b513a7a3432e848c0c6748de80ee60a7ece97",
+      "bytes": 1658
+    },
+    "apps/escd/web/assets/brand/sc-website.png": {
+      "sha256": "9c5c260d5f3dd0277f19230dded21390d88dd88432d23c0f2040450b778d1dbb",
+      "bytes": 1632691
+    },
+    "apps/escd/web/assets/brand/ss-website.jpg": {
+      "sha256": "df225f2225214383b28c7d97525e0249e7bd3e9be92648be54e27b0c3fbedf66",
+      "bytes": 462364
+    }
+  },
+  "validation": [
+    "Both catalog copies identical",
+    "Inline scripts parse",
+    "API and fallback renderers each produce two accessible website links and correct logos",
+    "All ten existing product records preserved except added SC/SS website fields",
+    "Existing root configuration preserved except narrow icon route",
+    "Production /escd/app HTTP 200 and exact HTML match",
+    "Both production logo endpoints HTTP 200, expected MIME and original byte sizes",
+    "All three original audio files verified by build hashes/size",
+    "No error/fatal runtime log groups returned in deployment-scoped 10-minute query"
+  ],
+  "browser_limit": "Preview normal Google sign-in completed; Chrome then blocked further UI automation because another extension UI was open. Final rendered card screenshots and live click-through not claimed.",
+  "employment_module_modified": false,
+  "db_schema_changes": false
+}
