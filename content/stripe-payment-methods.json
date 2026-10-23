@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "source": "Stripe Dashboard > Settings > Checkout > Payment Methods",
+  "status_filter": "Enabled",
+  "extracted_at_utc": "2026-10-23T04:54:17Z",
+  "merchant": "Sonly Consulting",
+  "payment_methods": [
+    {
+      "id": "cashapp",
+      "name": "Cash App Pay",
+      "status": "Enabled",
+      "popular_in": "United States",
+      "type": "wallet",
+      "prominence": "primary",
+      "payments_count": 1,
+      "usage_rate": "50%",
+      "payment_volume_usd": 1.00,
+      "notes": "Verified active volume in US checkout"
+    },
+    {
+      "id": "link",
+      "name": "Link",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "wallet_accelerator",
+      "prominence": "standard",
+      "payments_count": 1,
+      "usage_rate": "50%",
+      "payment_volume_usd": 1.00,
+      "notes": "Verified active volume via Stripe 1-click checkout"
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "status": "Enabled",
+      "popular_in": "United States / Global",
+      "type": "wallet",
+      "prominence": "primary",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00,
+      "notes": "Prominent primary checkout choice for US and global buyers"
+    },
+    {
+      "id": "amazon_pay",
+      "name": "Amazon Pay",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "wallet",
+      "prominence": "standard",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "apple_pay",
+      "name": "Apple Pay",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "wallet",
+      "prominence": "standard",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "card",
+      "name": "Cards",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "card",
+      "brands": [
+        "Visa",
+        "Mastercard",
+        "American Express",
+        "Discover",
+        "Diners Club",
+        "JCB"
+      ],
+      "prominence": "standard",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "google_pay",
+      "name": "Google Pay",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "wallet",
+      "prominence": "standard",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "klarna",
+      "name": "Klarna",
+      "status": "Enabled",
+      "popular_in": "All regions",
+      "type": "buy_now_pay_later",
+      "prominence": "standard",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "bancontact",
+      "name": "Bancontact",
+      "status": "Enabled",
+      "popular_in": "Belgium",
+      "type": "bank_redirect",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "blik",
+      "name": "BLIK",
+      "status": "Enabled",
+      "popular_in": "Poland",
+      "type": "bank_redirect",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "eps",
+      "name": "EPS",
+      "status": "Enabled",
+      "popular_in": "Austria",
+      "type": "bank_redirect",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "mb_way",
+      "name": "MB WAY",
+      "status": "Enabled",
+      "popular_in": "Portugal",
+      "type": "mobile_wallet",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "pix",
+      "name": "Pix",
+      "status": "Enabled",
+      "popular_in": "Brazil",
+      "type": "bank_redirect_instant",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    },
+    {
+      "id": "satispay",
+      "name": "Satispay",
+      "status": "Enabled",
+      "popular_in": "Italy",
+      "type": "mobile_wallet",
+      "prominence": "regional",
+      "payments_count": 0,
+      "usage_rate": "--",
+      "payment_volume_usd": 0.00
+    }
+  ]
+}
