@@ -126,6 +126,42 @@
       align-items: center;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
+    .brand-logo-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--gold-soft);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.35);
+      flex-shrink: 0;
+    }
+    .catalog-product-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.25s ease;
+    }
+    .catalog-product-img:hover {
+      transform: scale(1.02);
+    }
+    .ctj-item-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--gold-soft);
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .ctj-item-row-flex {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
     .brand-lockup {
       display: flex;
       align-items: center;
@@ -1263,7 +1299,7 @@
       <!-- Storefront Navigation Shell -->
       <header class="store-header">
         <div class="brand-lockup">
-          <div class="brand-mark">CTJ</div>
+          <img src="assets/ctj-main-logo-vf.png" alt="CTJ Main Logo" class="brand-logo-img">
           <div class="brand-text">
             <strong>The Critical Thinker's Journey</strong>
             <small>Sonly Consulting · Purchase-Gated Storefront</small>
@@ -1306,10 +1342,13 @@
               <!-- Cart Items List -->
               <ul class="ctj-order-items" id="cartItemsList">
                 <li class="ctj-item-card" id="itemRowPart1">
-                  <div class="ctj-item-main">
-                    <span class="ctj-item-tag">Foundational Layer · Part 1</span>
-                    <strong class="ctj-item-title">Part 1: Foundations of Critical Thinking</strong>
-                    <span class="ctj-item-kind">✓ Web Application + Offline Bundle · Lifetime Access</span>
+                  <div class="ctj-item-row-flex">
+                    <img src="assets/products/ctj-product-part-1.png" alt="Part 1" class="ctj-item-thumb">
+                    <div class="ctj-item-main">
+                      <span class="ctj-item-tag">Foundational Layer · Part 1</span>
+                      <strong class="ctj-item-title">Part 1: Foundations of Critical Thinking</strong>
+                      <span class="ctj-item-kind">✓ Web Application + Offline Bundle · Lifetime Access</span>
+                    </div>
                   </div>
                   <div class="ctj-item-actions">
                     <strong class="ctj-price">$39.00</strong>
@@ -1347,7 +1386,7 @@
                   <span id="cartPromoChevron">▼</span>
                 </div>
                 <div id="cartPromoInputRow" class="ctj-promo-input-row" style="display:none;">
-                  <input type="text" id="cartPromoCodeInput" placeholder="e.g. DCSE10, SAVE20">
+                  <input type="text" id="cartPromoCodeInput" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119">
                   <button class="btn" type="button" onclick="applyCartPromoCode()">Apply</button>
                 </div>
                 <div id="cartPromoAppliedBadge" style="display:none;" class="promo-badge-success">
@@ -1449,6 +1488,7 @@
           </article>
 
           <article class="catalog-card">
+            <img src="assets/products/ctj-product-part-1.png" alt="Part 1: Building Clarity and Confidence" class="catalog-product-img">
             <div>
               <span class="ctj-item-tag">Core Foundation</span>
               <h3 style="font-size:18px; margin:6px 0;">Part 1: Foundations of Thinking</h3>
@@ -1465,6 +1505,7 @@
 
           <article class="catalog-card featured">
             <span class="featured-ribbon">Best Value</span>
+            <img src="assets/products/ctj-product-bundle.png" alt="Parts 1-3 Comprehensive Bundle" class="catalog-product-img">
             <div>
               <span class="ctj-item-tag">Complete Curriculum</span>
               <h3 style="font-size:18px; margin:6px 0;">3-Part Curriculum Bundle</h3>
@@ -1480,6 +1521,7 @@
           </article>
 
           <article class="catalog-card">
+            <img src="assets/products/ctj-product-unified.png" alt="The Unified Path" class="catalog-product-img">
             <div>
               <span class="ctj-item-tag">Flagship Synthesis</span>
               <h3 style="font-size:18px; margin:6px 0;">CTJ Unified Edition</h3>
@@ -1816,7 +1858,7 @@
                 🏷️ Add promotion code
               </button>
               <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. DCSE10, SAVE20" style="text-transform:uppercase;">
+                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
                 <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
               </div>
               <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
@@ -2069,7 +2111,7 @@
                 🏷️ Add promotion code
               </button>
               <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. DCSE10, SAVE20" style="text-transform:uppercase;">
+                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
                 <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
               </div>
               <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
@@ -2378,7 +2420,7 @@
                 🏷️ Add promotion code
               </button>
               <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. DCSE10, SAVE20" style="text-transform:uppercase;">
+                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
                 <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
               </div>
               <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
@@ -2640,7 +2682,7 @@
                 🏷️ Add promotion code
               </button>
               <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. DCSE10, SAVE20" style="text-transform:uppercase;">
+                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
                 <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
               </div>
               <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">

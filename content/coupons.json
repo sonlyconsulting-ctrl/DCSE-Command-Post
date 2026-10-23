@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "source_authority": "DCS Executive Directive 2026-10-23",
+    "updated_at": "2026-10-23T02:52:45-04:00",
+    "livemode": true,
+    "description": "Authorized Stripe coupon and promotion codes for CTJ commerce purchase flows"
+  },
+  "promotions": [
+    {
+      "code": "SCONE39",
+      "discount_cents": 3800,
+      "discount_display": "$38.00 off",
+      "applies_to": ["CTJ-PART-1", "CTJ-PART-2", "CTJ-PART-3"],
+      "products_display": "Part 1, Part 2, Part 3",
+      "result": "$39.00 → $1.00",
+      "stripe_coupon_id": "dSc5C1PJ",
+      "stripe_promo_code_id": "promo_1UTcDDDAcM1P3ED8PKiKWtvE",
+      "active": true
+    },
+    {
+      "code": "SCONE99",
+      "discount_cents": 9800,
+      "discount_display": "$98.00 off",
+      "applies_to": ["PARTS-BUNDLE"],
+      "products_display": "Parts 1-3 Comprehensive Bundle",
+      "result": "$99.00 → $1.00",
+      "stripe_coupon_id": "bwkTpF8m",
+      "stripe_promo_code_id": "promo_1UTcDCDAcM1P3ED8YPRxeatD",
+      "active": true
+    },
+    {
+      "code": "SCONE20",
+      "discount_cents": 1900,
+      "discount_display": "$19.00 off",
+      "applies_to": ["SCA"],
+      "products_display": "Strategic Clarity Assessment",
+      "result": "$20.00 → $1.00",
+      "stripe_coupon_id": "SK4aPDy4",
+      "stripe_promo_code_id": "promo_1UTcDCDAcM1P3ED8NZQLgd7b",
+      "active": true
+    },
+    {
+      "code": "SCONE119",
+      "discount_cents": 11800,
+      "discount_display": "$118.00 off",
+      "applies_to": ["CTJ-UNIFIED"],
+      "products_display": "The Unified Path",
+      "result": "$119.00 → $1.00",
+      "stripe_coupon_id": "gIoYkSKx",
+      "stripe_promo_code_id": "promo_1UTcDDDAcM1P3ED85olFOYbr",
+      "active": true
+    }
+  ]
+}
