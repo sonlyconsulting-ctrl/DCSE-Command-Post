@@ -1647,7 +1647,177 @@
     </div>
   </main>
 
+  <!-- Full Interactive Stripe Checkout Modal (Single Authoritative Container) -->
+  <div id="stripePaymentModal" class="stripe-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="stripeModalTitle">
+    <div class="stripe-modal-container">
+      
+      <!-- Top Test Mode Banner -->
+      <div class="stripe-top-bar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="stripe-test-badge">STRIPE VERIFIED CHECKOUT</span>
+          <span>Sonly Consulting · The Critical Thinker's Journey</span>
+        </div>
+        <button class="stripe-close-btn" onclick="closeStripeModal()" aria-label="Close checkout">✕</button>
+      </div>
+
+      <!-- Payment Interface (Pre-Success) -->
+      <div id="stripeCheckoutView" class="stripe-checkout-inner">
+        <div class="stripe-modal-header">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <img src="assets/ctj-main-logo-vf.png" alt="CTJ Logo" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:1px solid #d4af37;">
+            <div>
+              <h2 id="stripeModalTitle" style="font-size:18px; color:#1e293b; margin:0 0 2px;">The Critical Thinker's Journey</h2>
+              <p style="font-size:12px; color:#64748b; margin:0;">Secure encrypted checkout · Instant delivery</p>
+            </div>
+          </div>
+          <div class="stripe-amount-due" id="stripeModalAmount">$39.00</div>
+        </div>
+
+        <div class="stripe-modal-body">
+          <div class="stripe-order-item-row">
+            <span id="stripeModalItemTitle">Part 1: Foundations of Critical Thinking</span>
+            <strong id="stripeModalItemPrice">$39.00</strong>
+          </div>
+
+          <!-- Stripe Modal Promo Code -->
+          <div class="stripe-promo-section">
+            <button type="button" class="stripe-promo-toggle-btn" id="stripePromoToggleBtn" onclick="toggleStripePromoInput()">
+              🏷️ Add promotion code
+            </button>
+            <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
+              <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="font-size:13px; padding:6px 10px;">
+              <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
+            </div>
+            <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="promo-tag-pill">COUPON APPLIED</span>
+                <strong id="stripeActivePromoCode">SCONE39</strong>: <span id="stripeDiscountAmount">-$38.00</span>
+              </div>
+              <button type="button" class="stripe-promo-remove-btn" onclick="removeStripePromoCode()">✕</button>
+            </div>
+          </div>
+
+          <!-- PROMINENT EXPRESS PAYMENT CHOICES (Cash App Pay & PayPal) -->
+          <div style="margin-bottom:16px;">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#64748b; letter-spacing:0.05em; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+              <span>⚡ Express Checkout</span>
+              <span class="stripe-logo-pill">stripe</span>
+            </div>
+            
+            <div class="stripe-prominent-grid">
+              <button type="button" class="express-btn cashapp-express-btn" onclick="selectPaymentMethod('cashapp')">
+                <span class="cash-glyph">$</span> Pay with Cash App
+              </button>
+              <button type="button" class="express-btn paypal-express-btn" onclick="selectPaymentMethod('paypal')">
+                <span class="paypal-glyph">P</span> PayPal Checkout
+              </button>
+            </div>
+          </div>
+
+          <!-- Secondary Payment Methods -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#64748b; letter-spacing:0.05em; margin-bottom:8px;">
+              Or Pay with Card, Wallet, or Installments
+            </div>
+            <div class="stripe-payment-methods-grid">
+              <button type="button" class="method-tile active" id="tileCard" onclick="selectPaymentMethod('card')">
+                💳 Credit / Debit
+              </button>
+              <button type="button" class="method-tile" id="tileApple" onclick="selectPaymentMethod('applepay')">
+                 Apple Pay
+              </button>
+              <button type="button" class="method-tile" id="tileGoogle" onclick="selectPaymentMethod('googlepay')">
+                G Google Pay
+              </button>
+              <button type="button" class="method-tile" id="tileAmazon" onclick="selectPaymentMethod('amazonpay')">
+                Amazon Pay
+              </button>
+              <button type="button" class="method-tile" id="tileLink" onclick="selectPaymentMethod('link')">
+                ⚡ Link
+              </button>
+              <button type="button" class="method-tile" id="tileKlarna" onclick="selectPaymentMethod('klarna')">
+                Klarna (4x)
+              </button>
+            </div>
+          </div>
+
+          <!-- Simulated Method Form -->
+          <form id="stripePaymentForm" onsubmit="event.preventDefault(); executeStripePayment();">
+            <div id="cardFieldsArea">
+              <label for="stripeEmail">Delivery Email</label>
+              <input class="stripe-input" id="stripeEmail" type="email" value="buyer@example.test" required>
+
+              <label for="stripeCardNum">Card Number</label>
+              <div class="stripe-card-input-mock">
+                <input class="stripe-input" id="stripeCardNum" type="text" value="•••• •••• •••• 4242" required style="border:none; padding:0; flex:1;">
+                <span class="stripe-badge-cvc">CVC 123</span>
+              </div>
+
+              <label for="stripeName">Cardholder Name</label>
+              <input class="stripe-input" id="stripeName" type="text" value="Jordan Smith" required>
+
+              <label for="stripeZip">Country or Region</label>
+              <div class="stripe-input-row">
+                <select class="stripe-input" style="background:#fff;">
+                  <option selected>United States</option>
+                  <option>Canada</option>
+                  <option>United Kingdom</option>
+                </select>
+                <input class="stripe-input" id="stripeZip" type="text" value="90210" placeholder="ZIP">
+              </div>
+            </div>
+
+            <button type="submit" id="btnStripePayAction" class="stripe-pay-action-btn">
+              <span id="btnStripePayText">Pay $39.00</span>
+            </button>
+          </form>
+
+          <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:14px;">
+            🔒 By clicking Pay, your payment is processed by Stripe with 256-bit encryption.
+          </p>
+        </div>
+      </div>
+
+      <!-- Payment Succeeded View -->
+      <div id="stripeSuccessView" class="stripe-success-pane" style="display:none;">
+        <div class="stripe-success-icon">✓</div>
+        <h3 class="stripe-success-title">Payment Successful!</h3>
+        <p class="stripe-success-sub">
+          Your order has been confirmed by Stripe. Your digital learning entitlements are immediately prepared and ready for use.
+        </p>
+
+        <div class="stripe-unlocked-card">
+          <span class="ctj-item-tag" style="background:#dcfce7; color:#15803d; margin-bottom:8px;">Instant Entitlement Active</span>
+          <strong id="unlockedProductTitle">The Critical Thinker's Journey</strong>
+          <p id="unlockedProductDesc">Web application unlocked and offline package generated. Zero localhost dependency.</p>
+          
+          <div class="stripe-access-btn-row">
+            <button class="btn primary" onclick="launchExperienceSimulator()">Open Web Experience</button>
+            <button class="btn" onclick="alert('📦 Downloading private offline package (HTML + JSON state bundle)...');">Download Offline Files</button>
+            <button class="btn" onclick="switchView('email'); closeStripeModal();">View Email Receipt</button>
+          </div>
+        </div>
+
+        <div style="font-size:12px; color:#64748b;">
+          Order Reference: <strong id="orderReceiptRef">CTJ-ORD-20261023-74UF</strong> · Transactional receipt sent to <span id="confirmedBuyerEmail">buyer@example.test</span>
+        </div>
+
+        <div style="margin-top:20px;">
+          <button class="btn" onclick="closeStripeModal(); resetPreviewCart();">Return to Storefront</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script>
+    let isAuthed = true;
+    let currentCartTotal = '$39.00';
+    let currentProductTitle = 'Part 1: Foundations of Critical Thinking';
+    let activeDiscountCents = 0;
+    let basePriceCents = 3900;
+    let activeCouponName = '';
+
     function switchView(tabName) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.pill-group[role="tablist"] .pill-btn').forEach(btn => btn.classList.remove('active'));
@@ -1660,33 +1830,41 @@
       };
 
       const target = tabMap[tabName] || tabMap.cart;
-      document.getElementById(target.view).classList.add('active');
-      document.querySelectorAll('.pill-group[role="tablist"] .pill-btn')[target.index].classList.add('active');
+      const el = document.getElementById(target.view);
+      if (el) el.classList.add('active');
+      const tabs = document.querySelectorAll('.pill-group[role="tablist"] .pill-btn');
+      if (tabs[target.index]) tabs[target.index].classList.add('active');
     }
 
     function setDevice(device) {
       const frame = document.getElementById('deviceFrame');
-      frame.className = 'device-wrapper mode-' + device;
-      
+      if (frame) frame.className = 'device-wrapper mode-' + device;
       document.querySelectorAll('.pill-group[aria-label="Viewport Switcher"] .pill-btn').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (window.event && window.event.target) window.event.target.classList.add('active');
     }
 
-    let isAuthed = true;
     function toggleAuthState(auth) {
       isAuthed = auth;
-      document.getElementById('confirmedEmailState').style.display = isAuthed ? 'flex' : 'none';
-      document.getElementById('unauthEmailState').style.display = isAuthed ? 'none' : 'block';
-      document.getElementById('stepEmailIndicator').className = isAuthed ? 'step-active' : 'step-pending';
+      const conf = document.getElementById('confirmedEmailState');
+      const unauth = document.getElementById('unauthEmailState');
+      const step = document.getElementById('stepEmailIndicator');
+      if (conf) conf.style.display = isAuthed ? 'flex' : 'none';
+      if (unauth) unauth.style.display = isAuthed ? 'none' : 'block';
+      if (step) step.className = isAuthed ? 'step-active' : 'step-pending';
     }
 
     function applyBundleUpgrade() {
+      basePriceCents = 9900;
+      currentProductTitle = 'Parts 1, 2 & 3 Curriculum Bundle';
       document.getElementById('cartItemsList').innerHTML = `
         <li class="ctj-item-card">
-          <div class="ctj-item-main">
-            <span class="ctj-item-tag">Complete Series Bundle · Save $18</span>
-            <strong class="ctj-item-title">Parts 1, 2 & 3 Curriculum Bundle</strong>
-            <span class="ctj-item-kind">✓ Full 30-Day Program · Lifetime Entitlement</span>
+          <div class="ctj-item-row-flex">
+            <img src="assets/products/ctj-product-bundle.png" alt="Bundle" class="ctj-item-thumb">
+            <div class="ctj-item-main">
+              <span class="ctj-item-tag">Complete Series Bundle · Save $18</span>
+              <strong class="ctj-item-title">Parts 1, 2 & 3 Curriculum Bundle</strong>
+              <span class="ctj-item-kind">✓ Full 30-Day Program · Lifetime Entitlement</span>
+            </div>
           </div>
           <div class="ctj-item-actions">
             <strong class="ctj-price">$99.00</strong>
@@ -1696,9 +1874,9 @@
       `;
       document.getElementById('upgradeBanner').style.display = 'none';
       document.getElementById('savingsRow').style.display = 'flex';
-      document.getElementById('orderTotalDisplay').textContent = '$99.00';
       document.getElementById('cartBadgeCount').textContent = '(1)';
       document.getElementById('cartCount').textContent = '1';
+      updatePriceDisplays();
     }
 
     function addMockItem(code, title, cents) {
@@ -1707,12 +1885,25 @@
         applyBundleUpgrade();
         return;
       }
+      basePriceCents = cents;
+      currentProductTitle = title;
+      
+      let imgPath = 'assets/products/ctj-product-part-1.png';
+      if (code === 'SCA') imgPath = 'assets/products/ctj-product-sca.png';
+      else if (code === 'part1') imgPath = 'assets/products/ctj-product-part-1.png';
+      else if (code === 'part2') imgPath = 'assets/products/ctj-product-part-2.png';
+      else if (code === 'part3') imgPath = 'assets/products/ctj-product-part-3.png';
+      else if (code === 'unified') imgPath = 'assets/products/ctj-product-unified.png';
+
       document.getElementById('cartItemsList').innerHTML = `
         <li class="ctj-item-card">
-          <div class="ctj-item-main">
-            <span class="ctj-item-tag">CTJ Product</span>
-            <strong class="ctj-item-title">${title}</strong>
-            <span class="ctj-item-kind">✓ Digital Delivery · Lifetime Access</span>
+          <div class="ctj-item-row-flex">
+            <img src="${imgPath}" alt="${title}" class="ctj-item-thumb">
+            <div class="ctj-item-main">
+              <span class="ctj-item-tag">CTJ Product</span>
+              <strong class="ctj-item-title">${title}</strong>
+              <span class="ctj-item-kind">✓ Digital Delivery · Lifetime Access</span>
+            </div>
           </div>
           <div class="ctj-item-actions">
             <strong class="ctj-price">$${(cents/100).toFixed(2)}</strong>
@@ -1720,12 +1911,15 @@
           </div>
         </li>
       `;
-      document.getElementById('orderTotalDisplay').textContent = `$${(cents/100).toFixed(2)}`;
       document.getElementById('cartBadgeCount').textContent = '(1)';
       document.getElementById('cartCount').textContent = '1';
+      updatePriceDisplays();
     }
 
     function removeMockItem(id) {
+      basePriceCents = 0;
+      activeDiscountCents = 0;
+      activeCouponName = '';
       document.getElementById('cartItemsList').innerHTML = `
         <li style="text-align:center; padding:24px; color:#64748b;">
           Your cart is currently empty.
@@ -1736,869 +1930,163 @@
       document.getElementById('cartCount').textContent = '0';
       document.getElementById('upgradeBanner').style.display = 'none';
       document.getElementById('savingsRow').style.display = 'none';
+      const row = document.getElementById('cartPromoDiscountRow');
+      if (row) row.style.display = 'none';
+      const badge = document.getElementById('cartPromoAppliedBadge');
+      if (badge) badge.style.display = 'none';
+      const stripeBadge = document.getElementById('stripePromoActiveBadge');
+      if (stripeBadge) stripeBadge.style.display = 'none';
     }
 
-    
-    
-    let activeDiscountCents = 0;
-    let basePriceCents = 3900;
-    let activeCouponName = '';
-
-    function getBaseCents() {
-      const txt = document.getElementById('orderTotalDisplay').textContent || '$39.00';
-      const clean = txt.replace(/[^0-9.]/g, '');
-      const parsed = Math.round(parseFloat(clean || '39') * 100);
-      return parsed > 0 ? (parsed + activeDiscountCents) : 3900;
+    // Official SCONE Coupon Engine
+    function calculatePromoDiscount(code, subtotal) {
+      if (code === 'SCONE39') {
+        return Math.min(3800, Math.max(0, subtotal - 100));
+      } else if (code === 'SCONE99') {
+        return Math.min(9800, Math.max(0, subtotal - 100));
+      } else if (code === 'SCONE20') {
+        return Math.min(1900, Math.max(0, subtotal - 100));
+      } else if (code === 'SCONE119') {
+        return Math.min(11800, Math.max(0, subtotal - 100));
+      } else if (code === 'UNIFIED50' || code === 'CTJ50') {
+        return Math.round(subtotal * 0.50);
+      } else if (code === 'DCSE10') {
+        return Math.round(subtotal * 0.10);
+      } else if (code === 'SAVE20') {
+        return Math.round(subtotal * 0.20);
+      } else if (code === 'FOUNDER') {
+        return 2500;
+      }
+      return 0;
     }
 
     function updatePriceDisplays() {
       const finalCents = Math.max(0, basePriceCents - activeDiscountCents);
-      const formatted = '
-    let currentProductTitle = 'Part 1: Foundations of Critical Thinking';
-
-    function simulateStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      const checkoutView = document.getElementById('stripeCheckoutView');
-      const successView = document.getElementById('stripeSuccessView');
-      
-      checkoutView.style.display = 'contents';
-      successView.style.display = 'none';
-
-      const total = document.getElementById('orderTotalDisplay').textContent || '$39.00';
-      currentCartTotal = total;
-      
-      document.getElementById('stripeModalAmount').textContent = total;
-      document.getElementById('btnStripePayText').textContent = 'Pay ' + total;
-      document.getElementById('stripeModalItemPrice').textContent = total;
-
-      const firstItemTitle = document.querySelector('.ctj-item-title')?.textContent || 'The Critical Thinker\'s Journey';
-      currentProductTitle = firstItemTitle;
-      document.getElementById('stripeModalItemTitle').textContent = firstItemTitle;
-      document.getElementById('unlockedProductTitle').textContent = firstItemTitle;
-
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    function executeStripePayment(method) {
-      const btn = document.getElementById('btnStripePayAction');
-      const btnText = document.getElementById('btnStripePayText');
-      
-      btn.disabled = true;
-      btnText.innerHTML = '<span class="stripe-spinner"></span> Confirming with Stripe...';
-
-      setTimeout(() => {
-        document.getElementById('stripeCheckoutView').style.display = 'none';
-        document.getElementById('stripeSuccessView').style.display = 'block';
-        btn.disabled = false;
-        btnText.textContent = 'Pay ' + currentCartTotal;
-
-        const randomOrd = 'CTJ-ORD-20261023-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-        document.getElementById('orderReceiptRef').textContent = randomOrd;
-        document.getElementById('confirmedBuyerEmail').textContent = document.getElementById('stripeEmail').value;
-      }, 1200);
-    }
-
-    function launchExperienceSimulator() {
-      alert("🚀 Unlocking CTJ Interactive Thinking Canvas!\n\nProduct: " + currentProductTitle + "\nAccess Mode: Single-use verified token\nPrivacy: Responses remain 100% on your device.");
-    }
-
-    function resetPreviewCart() {
-      document.getElementById('cartBadgeCount').textContent = '(0)';
-      document.getElementById('cartCount').textContent = '0';
-      document.getElementById('cartItemsList').innerHTML = '<li style="text-align:center; padding:24px; color:#64748b;">Your order is completed! Explore additional curriculum below.</li>';
-      document.getElementById('orderTotalDisplay').textContent = '$0.00';
-    }
-
-    function _oldSimulate() {
-      alert("🔒 Simulation: Navigating to Stripe Hosted Checkout session (multi-item payload, live catalog verification).");
-    }
-  </script>
-
-  <!-- Full Interactive Stripe Checkout Modal -->
-  <div id="stripePaymentModal" class="stripe-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="stripeModalTitle">
-    <div class="stripe-modal-container">
-      
-      <!-- Top Test Mode Banner -->
-      <div class="stripe-top-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="stripe-test-badge">STRIPE VERIFIED CHECKOUT</span>
-          <span>Sonly Consulting · The Critical Thinker's Journey</span>
-        </div>
-        <button class="stripe-close-btn" onclick="closeStripeModal()" aria-label="Close checkout">✕</button>
-      </div>
-
-      <!-- Payment Interface (Pre-Success) -->
-      <div id="stripeCheckoutView" style="display:contents;">
-        <!-- Left Pane: Order Summary -->
-        <div class="stripe-left-pane">
-          <div>
-            <p class="stripe-merchant-title">Sonly Consulting</p>
-            <div class="stripe-total-due" id="stripeModalAmount">$39.00</div>
-            <ul class="stripe-items-breakdown" id="stripeModalItems">
-              <li class="stripe-item-row">
-                <span id="stripeModalItemTitle">Part 1: Foundations of Critical Thinking</span>
-                <strong id="stripeModalItemPrice">$39.00</strong>
-              </li>
-              <li class="stripe-item-row" style="color:#16a34a;">
-                <span>Digital Delivery & Web Entitlement</span>
-                <strong>Free</strong>
-              </li>
-            </ul>
-            
-            <!-- Stripe Modal Promo Code -->
-            <div class="stripe-promo-section">
-              <button type="button" class="stripe-promo-toggle-btn" id="stripePromoToggleBtn" onclick="toggleStripePromoInput()">
-                🏷️ Add promotion code
-              </button>
-              <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
-                <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
-              </div>
-              <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
-                <div>
-                  <span class="promo-tag-pill">COUPON APPLIED</span>
-                  <strong id="stripeActivePromoCode">DCSE10</strong>: <span id="stripeDiscountAmount">-$3.90</span>
-                </div>
-                <button type="button" class="stripe-promo-remove-btn" onclick="removeStripePromoCode()">✕</button>
-              </div>
-            </div>
-
-          </div>
-          <div>
-            <div class="stripe-powered">
-              <span>Powered by</span>
-              <span class="stripe-logo-pill">stripe</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Pane: Payment Methods -->
-        <div class="stripe-right-pane">
-          <div class="express-pay-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>⚡ Express Checkout</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">STRIPE ENABLED</span>
-          </div>
-          
-          <!-- Prominent Primary Choices: Cash App Pay & PayPal -->
-          <div class="express-btn-group">
-            <button class="express-cashapp-btn" type="button" onclick="executeStripePayment('Cash App Pay')">
-              <span class="cash-symbol">$</span>
-              <span>Cash App Pay</span>
-            </button>
-            <button class="express-paypal-btn" type="button" onclick="executeStripePayment('PayPal')">
-              <span><strong class="paypal-text"><span style="color:#003087">Pay</span><span style="color:#0079c1">Pal</span></strong></span>
-            </button>
-          </div>
-
-          <!-- Secondary Express Methods -->
-          <div class="express-secondary-grid">
-            <button class="express-apple-btn" type="button" onclick="executeStripePayment('Apple Pay')">
-              <span>Pay</span>
-            </button>
-            <button class="express-gpay-btn" type="button" onclick="executeStripePayment('Google Pay')">
-              <span><strong style="color:#4285F4">G</strong> <strong style="color:#EA4335">P</strong><strong style="color:#FBBC05">a</strong><strong style="color:#34A853">y</strong></span>
-            </button>
-            <button class="express-amazon-btn" type="button" onclick="executeStripePayment('Amazon Pay')">
-              <span>Amazon Pay</span>
-            </button>
-            <button class="express-link-btn" type="button" onclick="executeStripePayment('Link by Stripe')">
-              <span>Link ⚡</span>
-            </button>
-          </div>
-
-          <!-- Klarna Installments Callout -->
-          <div class="klarna-pill-row" onclick="executeStripePayment('Klarna Pay in 4')">
-            <span><strong>Klarna.</strong> 4 interest-free payments of <span id="klarnaInstallmentAmount">$9.75</span></span>
-            <span style="font-weight:700; text-decoration:underline;">Select →</span>
-          </div>
-
-          <div class="stripe-divider">
-            <span>Or pay with card</span>
-          </div>
-
-          <form id="stripeCardForm" onsubmit="event.preventDefault(); executeStripePayment('Card');">
-            <div class="stripe-form-group">
-              <label for="stripeEmail">Email</label>
-              <input class="stripe-input" id="stripeEmail" type="email" value="buyer@example.test" required>
-
-              <label for="stripeCardNumber">Card Information</label>
-              <div class="stripe-card-input-wrap">
-                <input class="stripe-input" id="stripeCardNumber" type="text" value="4242 •••• •••• 4242" style="width:100%; letter-spacing:0.05em;" required>
-                <span class="stripe-card-badge">VISA</span>
-              </div>
-              
-              <div class="stripe-input-row">
-                <input class="stripe-input" id="stripeExp" type="text" value="12 / 28" placeholder="MM / YY" required>
-                <input class="stripe-input" id="stripeCvc" type="text" value="123" placeholder="CVC" required>
-              </div>
-
-              <label for="stripeName">Cardholder Name</label>
-              <input class="stripe-input" id="stripeName" type="text" value="Jordan Smith" required>
-
-              <label for="stripeZip">Country or Region</label>
-              <div class="stripe-input-row">
-                <select class="stripe-input" style="background:#fff;">
-                  <option selected>United States</option>
-                  <option>Canada</option>
-                  <option>United Kingdom</option>
-                </select>
-                <input class="stripe-input" id="stripeZip" type="text" value="90210" placeholder="ZIP">
-              </div>
-            </div>
-
-            <button type="submit" id="btnStripePayAction" class="stripe-pay-action-btn">
-              <span id="btnStripePayText">Pay $39.00</span>
-            </button>
-          </form>
-
-          <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:14px;">
-            🔒 By clicking Pay, your payment is processed by Stripe with 256-bit encryption.
-          </p>
-        </div>
-      </div>
-
-      <!-- Payment Succeeded View -->
-      <div id="stripeSuccessView" class="stripe-success-pane" style="display:none;">
-        <div class="stripe-success-icon">✓</div>
-        <h3 class="stripe-success-title">Payment Successful!</h3>
-        <p class="stripe-success-sub">
-          Your order has been confirmed by Stripe. Your digital learning entitlements are immediately prepared and ready for use.
-        </p>
-
-        <div class="stripe-unlocked-card">
-          <span class="ctj-item-tag" style="background:#dcfce7; color:#15803d; margin-bottom:8px;">Instant Entitlement Active</span>
-          <strong id="unlockedProductTitle">The Critical Thinker's Journey</strong>
-          <p id="unlockedProductDesc">Web application unlocked and offline package generated. Zero localhost dependency.</p>
-          
-          <div class="stripe-access-btn-row">
-            <button class="btn primary" onclick="launchExperienceSimulator()">Open Web Experience</button>
-            <button class="btn" onclick="alert('⚡ Downloading private offline package (HTML + JSON state bundle)...');">Download Offline Files</button>
-            <button class="btn" onclick="switchView('email'); closeStripeModal();">View Email Receipt</button>
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#64748b;">
-          Order Reference: <strong id="orderReceiptRef">CTJ-ORD-20261023-74UF</strong> · Transactional receipt sent to <span id="confirmedBuyerEmail">buyer@example.test</span>
-        </div>
-
-        <div style="margin-top:20px;">
-          <button class="btn" onclick="closeStripeModal(); resetPreviewCart();">Return to Storefront</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</body>
-</html>
- + (finalCents / 100).toFixed(2);
-      
-      document.getElementById('orderTotalDisplay').textContent = formatted;
-      document.getElementById('stripeModalAmount').textContent = formatted;
-      document.getElementById('btnStripePayText').textContent = 'Pay ' + formatted;
+      const formatted = '$' + (finalCents / 100).toFixed(2);
       currentCartTotal = formatted;
 
-      // Update Klarna 4-payment breakdown
-      const klarnaQuarter = '
-    let currentProductTitle = 'Part 1: Foundations of Critical Thinking';
+      const orderTotal = document.getElementById('orderTotalDisplay');
+      if (orderTotal) orderTotal.textContent = formatted;
 
-    function simulateStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      const checkoutView = document.getElementById('stripeCheckoutView');
-      const successView = document.getElementById('stripeSuccessView');
-      
-      checkoutView.style.display = 'contents';
-      successView.style.display = 'none';
+      const stripeTotal = document.getElementById('stripeModalAmount');
+      if (stripeTotal) stripeTotal.textContent = formatted;
 
-      const total = document.getElementById('orderTotalDisplay').textContent || '$39.00';
-      currentCartTotal = total;
-      
-      document.getElementById('stripeModalAmount').textContent = total;
-      document.getElementById('btnStripePayText').textContent = 'Pay ' + total;
-      document.getElementById('stripeModalItemPrice').textContent = total;
+      const payBtnText = document.getElementById('btnStripePayText');
+      if (payBtnText) payBtnText.textContent = 'Pay ' + formatted;
 
-      const firstItemTitle = document.querySelector('.ctj-item-title')?.textContent || 'The Critical Thinker\'s Journey';
-      currentProductTitle = firstItemTitle;
-      document.getElementById('stripeModalItemTitle').textContent = firstItemTitle;
-      document.getElementById('unlockedProductTitle').textContent = firstItemTitle;
+      const stripeItemPrice = document.getElementById('stripeModalItemPrice');
+      if (stripeItemPrice) stripeItemPrice.textContent = formatted;
 
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    function executeStripePayment(method) {
-      const btn = document.getElementById('btnStripePayAction');
-      const btnText = document.getElementById('btnStripePayText');
-      
-      btn.disabled = true;
-      btnText.innerHTML = '<span class="stripe-spinner"></span> Confirming with Stripe...';
-
-      setTimeout(() => {
-        document.getElementById('stripeCheckoutView').style.display = 'none';
-        document.getElementById('stripeSuccessView').style.display = 'block';
-        btn.disabled = false;
-        btnText.textContent = 'Pay ' + currentCartTotal;
-
-        const randomOrd = 'CTJ-ORD-20261023-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-        document.getElementById('orderReceiptRef').textContent = randomOrd;
-        document.getElementById('confirmedBuyerEmail').textContent = document.getElementById('stripeEmail').value;
-      }, 1200);
-    }
-
-    function launchExperienceSimulator() {
-      alert("🚀 Unlocking CTJ Interactive Thinking Canvas!\n\nProduct: " + currentProductTitle + "\nAccess Mode: Single-use verified token\nPrivacy: Responses remain 100% on your device.");
-    }
-
-    function resetPreviewCart() {
-      document.getElementById('cartBadgeCount').textContent = '(0)';
-      document.getElementById('cartCount').textContent = '0';
-      document.getElementById('cartItemsList').innerHTML = '<li style="text-align:center; padding:24px; color:#64748b;">Your order is completed! Explore additional curriculum below.</li>';
-      document.getElementById('orderTotalDisplay').textContent = '$0.00';
-    }
-
-    function _oldSimulate() {
-      alert("🔒 Simulation: Navigating to Stripe Hosted Checkout session (multi-item payload, live catalog verification).");
-    }
-  </script>
-
-  <!-- Full Interactive Stripe Checkout Modal -->
-  <div id="stripePaymentModal" class="stripe-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="stripeModalTitle">
-    <div class="stripe-modal-container">
-      
-      <!-- Top Test Mode Banner -->
-      <div class="stripe-top-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="stripe-test-badge">STRIPE VERIFIED CHECKOUT</span>
-          <span>Sonly Consulting · The Critical Thinker's Journey</span>
-        </div>
-        <button class="stripe-close-btn" onclick="closeStripeModal()" aria-label="Close checkout">✕</button>
-      </div>
-
-      <!-- Payment Interface (Pre-Success) -->
-      <div id="stripeCheckoutView" style="display:contents;">
-        <!-- Left Pane: Order Summary -->
-        <div class="stripe-left-pane">
-          <div>
-            <p class="stripe-merchant-title">Sonly Consulting</p>
-            <div class="stripe-total-due" id="stripeModalAmount">$39.00</div>
-            <ul class="stripe-items-breakdown" id="stripeModalItems">
-              <li class="stripe-item-row">
-                <span id="stripeModalItemTitle">Part 1: Foundations of Critical Thinking</span>
-                <strong id="stripeModalItemPrice">$39.00</strong>
-              </li>
-              <li class="stripe-item-row" style="color:#16a34a;">
-                <span>Digital Delivery & Web Entitlement</span>
-                <strong>Free</strong>
-              </li>
-            </ul>
-            
-            <!-- Stripe Modal Promo Code -->
-            <div class="stripe-promo-section">
-              <button type="button" class="stripe-promo-toggle-btn" id="stripePromoToggleBtn" onclick="toggleStripePromoInput()">
-                🏷️ Add promotion code
-              </button>
-              <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
-                <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
-              </div>
-              <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
-                <div>
-                  <span class="promo-tag-pill">COUPON APPLIED</span>
-                  <strong id="stripeActivePromoCode">DCSE10</strong>: <span id="stripeDiscountAmount">-$3.90</span>
-                </div>
-                <button type="button" class="stripe-promo-remove-btn" onclick="removeStripePromoCode()">✕</button>
-              </div>
-            </div>
-
-          </div>
-          <div>
-            <div class="stripe-powered">
-              <span>Powered by</span>
-              <span class="stripe-logo-pill">stripe</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Pane: Payment Methods -->
-        <div class="stripe-right-pane">
-          <div class="express-pay-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>⚡ Express Checkout</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">STRIPE ENABLED</span>
-          </div>
-          
-          <!-- Prominent Primary Choices: Cash App Pay & PayPal -->
-          <div class="express-btn-group">
-            <button class="express-cashapp-btn" type="button" onclick="executeStripePayment('Cash App Pay')">
-              <span class="cash-symbol">$</span>
-              <span>Cash App Pay</span>
-            </button>
-            <button class="express-paypal-btn" type="button" onclick="executeStripePayment('PayPal')">
-              <span><strong class="paypal-text"><span style="color:#003087">Pay</span><span style="color:#0079c1">Pal</span></strong></span>
-            </button>
-          </div>
-
-          <!-- Secondary Express Methods -->
-          <div class="express-secondary-grid">
-            <button class="express-apple-btn" type="button" onclick="executeStripePayment('Apple Pay')">
-              <span>Pay</span>
-            </button>
-            <button class="express-gpay-btn" type="button" onclick="executeStripePayment('Google Pay')">
-              <span><strong style="color:#4285F4">G</strong> <strong style="color:#EA4335">P</strong><strong style="color:#FBBC05">a</strong><strong style="color:#34A853">y</strong></span>
-            </button>
-            <button class="express-amazon-btn" type="button" onclick="executeStripePayment('Amazon Pay')">
-              <span>Amazon Pay</span>
-            </button>
-            <button class="express-link-btn" type="button" onclick="executeStripePayment('Link by Stripe')">
-              <span>Link ⚡</span>
-            </button>
-          </div>
-
-          <!-- Klarna Installments Callout -->
-          <div class="klarna-pill-row" onclick="executeStripePayment('Klarna Pay in 4')">
-            <span><strong>Klarna.</strong> 4 interest-free payments of <span id="klarnaInstallmentAmount">$9.75</span></span>
-            <span style="font-weight:700; text-decoration:underline;">Select →</span>
-          </div>
-
-          <div class="stripe-divider">
-            <span>Or pay with card</span>
-          </div>
-
-          <form id="stripeCardForm" onsubmit="event.preventDefault(); executeStripePayment('Card');">
-            <div class="stripe-form-group">
-              <label for="stripeEmail">Email</label>
-              <input class="stripe-input" id="stripeEmail" type="email" value="buyer@example.test" required>
-
-              <label for="stripeCardNumber">Card Information</label>
-              <div class="stripe-card-input-wrap">
-                <input class="stripe-input" id="stripeCardNumber" type="text" value="4242 •••• •••• 4242" style="width:100%; letter-spacing:0.05em;" required>
-                <span class="stripe-card-badge">VISA</span>
-              </div>
-              
-              <div class="stripe-input-row">
-                <input class="stripe-input" id="stripeExp" type="text" value="12 / 28" placeholder="MM / YY" required>
-                <input class="stripe-input" id="stripeCvc" type="text" value="123" placeholder="CVC" required>
-              </div>
-
-              <label for="stripeName">Cardholder Name</label>
-              <input class="stripe-input" id="stripeName" type="text" value="Jordan Smith" required>
-
-              <label for="stripeZip">Country or Region</label>
-              <div class="stripe-input-row">
-                <select class="stripe-input" style="background:#fff;">
-                  <option selected>United States</option>
-                  <option>Canada</option>
-                  <option>United Kingdom</option>
-                </select>
-                <input class="stripe-input" id="stripeZip" type="text" value="90210" placeholder="ZIP">
-              </div>
-            </div>
-
-            <button type="submit" id="btnStripePayAction" class="stripe-pay-action-btn">
-              <span id="btnStripePayText">Pay $39.00</span>
-            </button>
-          </form>
-
-          <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:14px;">
-            🔒 By clicking Pay, your payment is processed by Stripe with 256-bit encryption.
-          </p>
-        </div>
-      </div>
-
-      <!-- Payment Succeeded View -->
-      <div id="stripeSuccessView" class="stripe-success-pane" style="display:none;">
-        <div class="stripe-success-icon">✓</div>
-        <h3 class="stripe-success-title">Payment Successful!</h3>
-        <p class="stripe-success-sub">
-          Your order has been confirmed by Stripe. Your digital learning entitlements are immediately prepared and ready for use.
-        </p>
-
-        <div class="stripe-unlocked-card">
-          <span class="ctj-item-tag" style="background:#dcfce7; color:#15803d; margin-bottom:8px;">Instant Entitlement Active</span>
-          <strong id="unlockedProductTitle">The Critical Thinker's Journey</strong>
-          <p id="unlockedProductDesc">Web application unlocked and offline package generated. Zero localhost dependency.</p>
-          
-          <div class="stripe-access-btn-row">
-            <button class="btn primary" onclick="launchExperienceSimulator()">Open Web Experience</button>
-            <button class="btn" onclick="alert('⚡ Downloading private offline package (HTML + JSON state bundle)...');">Download Offline Files</button>
-            <button class="btn" onclick="switchView('email'); closeStripeModal();">View Email Receipt</button>
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#64748b;">
-          Order Reference: <strong id="orderReceiptRef">CTJ-ORD-20261023-74UF</strong> · Transactional receipt sent to <span id="confirmedBuyerEmail">buyer@example.test</span>
-        </div>
-
-        <div style="margin-top:20px;">
-          <button class="btn" onclick="closeStripeModal(); resetPreviewCart();">Return to Storefront</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</body>
-</html>
- + (finalCents / 400).toFixed(2);
-      const klEl = document.getElementById('klarnaInstallmentAmount');
-      if (klEl) klEl.textContent = klarnaQuarter;
+      const discountRow = document.getElementById('cartPromoDiscountRow');
+      const discountDisplay = document.getElementById('cartPromoDiscountValue');
+      if (discountRow && discountDisplay) {
+        if (activeDiscountCents > 0) {
+          discountRow.style.display = 'flex';
+          discountDisplay.textContent = '-$' + (activeDiscountCents / 100).toFixed(2);
+        } else {
+          discountRow.style.display = 'none';
+        }
+      }
     }
 
     function toggleCartPromoInput() {
       const row = document.getElementById('cartPromoInputRow');
-      const chev = document.getElementById('cartPromoChevron');
-      const isHidden = row.style.display === 'none';
-      row.style.display = isHidden ? 'flex' : 'none';
-      chev.textContent = isHidden ? '▲' : '▼';
+      if (!row) return;
+      const isOpen = row.style.display === 'flex';
+      row.style.display = isOpen ? 'none' : 'flex';
+      const chevron = document.getElementById('cartPromoChevron');
+      if (chevron) chevron.textContent = isOpen ? '▼' : '▲';
     }
 
     function applyCartPromoCode() {
-      const val = (document.getElementById('cartPromoCodeInput').value || '').trim().toUpperCase();
-      if (!val) return;
-      applyDiscountEngine(val);
+      const input = document.getElementById('cartPromoCodeInput');
+      if (!input) return;
+      const code = input.value.trim().toUpperCase();
+      if (!code) return;
+
+      const discount = calculatePromoDiscount(code, basePriceCents);
+      if (discount <= 0) {
+        alert('Invalid or non-applicable promotion code: ' + code + '\n\nTry: SCONE39, SCONE99, SCONE20, SCONE119');
+        return;
+      }
+
+      activeDiscountCents = discount;
+      activeCouponName = code;
+
+      const appliedBadge = document.getElementById('cartPromoAppliedBadge');
+      const appliedName = document.getElementById('cartAppliedPromoName');
+      const appliedText = document.getElementById('cartPromoDiscountText');
+      if (appliedBadge && appliedName && appliedText) {
+        appliedName.textContent = code;
+        appliedText.textContent = '-$' + (discount / 100).toFixed(2);
+        appliedBadge.style.display = 'flex';
+      }
+      const inputRow = document.getElementById('cartPromoInputRow');
+      if (inputRow) inputRow.style.display = 'none';
+
+      const stripeBadge = document.getElementById('stripePromoActiveBadge');
+      const stripeCode = document.getElementById('stripeActivePromoCode');
+      const stripeAmt = document.getElementById('stripeDiscountAmount');
+      if (stripeBadge && stripeCode && stripeAmt) {
+        stripeCode.textContent = code;
+        stripeAmt.textContent = '-$' + (discount / 100).toFixed(2);
+        stripeBadge.style.display = 'flex';
+      }
+      const stripeWrap = document.getElementById('stripePromoInputWrap');
+      if (stripeWrap) stripeWrap.style.display = 'none';
+
+      updatePriceDisplays();
     }
 
     function removeCartPromoCode() {
       activeDiscountCents = 0;
       activeCouponName = '';
-      document.getElementById('cartPromoAppliedBadge').style.display = 'none';
-      document.getElementById('stripePromoActiveBadge').style.display = 'none';
-      document.getElementById('cartPromoCodeInput').value = '';
-      document.getElementById('stripePromoCodeInput').value = '';
+      const badge = document.getElementById('cartPromoAppliedBadge');
+      if (badge) badge.style.display = 'none';
+      const stripeBadge = document.getElementById('stripePromoActiveBadge');
+      if (stripeBadge) stripeBadge.style.display = 'none';
+      const cartInput = document.getElementById('cartPromoCodeInput');
+      if (cartInput) cartInput.value = '';
+      const stripeInput = document.getElementById('stripePromoCodeInput');
+      if (stripeInput) stripeInput.value = '';
       updatePriceDisplays();
     }
 
     function toggleStripePromoInput() {
       const wrap = document.getElementById('stripePromoInputWrap');
-      wrap.style.display = wrap.style.display === 'none' ? 'flex' : 'none';
+      if (wrap) wrap.style.display = wrap.style.display === 'flex' ? 'none' : 'flex';
     }
 
     function applyStripePromoCode() {
-      const val = (document.getElementById('stripePromoCodeInput').value || '').trim().toUpperCase();
-      if (!val) return;
-      applyDiscountEngine(val);
+      const input = document.getElementById('stripePromoCodeInput');
+      if (!input) return;
+      const code = input.value.trim().toUpperCase();
+      const cartInput = document.getElementById('cartPromoCodeInput');
+      if (cartInput) cartInput.value = code;
+      applyCartPromoCode();
     }
 
     function removeStripePromoCode() {
       removeCartPromoCode();
     }
 
-    function applyDiscountEngine(code) {
-      basePriceCents = getBaseCents();
-      let discount = 0;
-
-      if (code === 'DCSE10' || code === 'SAVE10') {
-        discount = Math.round(basePriceCents * 0.10);
-      } else if (code === 'SAVE20' || code === 'WELCOME20') {
-        discount = 2000;
-      } else if (code === 'LAUNCH50' || code === 'HALF') {
-        discount = Math.round(basePriceCents * 0.50);
-      } else {
-        // Default 15% promotional courtesy discount for any valid custom coupon entered
-        discount = Math.round(basePriceCents * 0.15);
-      }
-
-      if (discount >= basePriceCents) discount = basePriceCents - 100; // minimum $1
-
-      activeDiscountCents = discount;
-      activeCouponName = code;
-
-      const discountFormatted = '-
-    let currentProductTitle = 'Part 1: Foundations of Critical Thinking';
-
     function simulateStripeModal() {
       const modal = document.getElementById('stripePaymentModal');
       const checkoutView = document.getElementById('stripeCheckoutView');
       const successView = document.getElementById('stripeSuccessView');
+      if (!modal) return;
       
-      checkoutView.style.display = 'contents';
-      successView.style.display = 'none';
-
-      const total = document.getElementById('orderTotalDisplay').textContent || '$39.00';
-      currentCartTotal = total;
-      
-      document.getElementById('stripeModalAmount').textContent = total;
-      document.getElementById('btnStripePayText').textContent = 'Pay ' + total;
-      document.getElementById('stripeModalItemPrice').textContent = total;
-
-      const firstItemTitle = document.querySelector('.ctj-item-title')?.textContent || 'The Critical Thinker\'s Journey';
-      currentProductTitle = firstItemTitle;
-      document.getElementById('stripeModalItemTitle').textContent = firstItemTitle;
-      document.getElementById('unlockedProductTitle').textContent = firstItemTitle;
-
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      modal.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    function executeStripePayment(method) {
-      const btn = document.getElementById('btnStripePayAction');
-      const btnText = document.getElementById('btnStripePayText');
-      
-      btn.disabled = true;
-      btnText.innerHTML = '<span class="stripe-spinner"></span> Confirming with Stripe...';
-
-      setTimeout(() => {
-        document.getElementById('stripeCheckoutView').style.display = 'none';
-        document.getElementById('stripeSuccessView').style.display = 'block';
-        btn.disabled = false;
-        btnText.textContent = 'Pay ' + currentCartTotal;
-
-        const randomOrd = 'CTJ-ORD-20261023-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-        document.getElementById('orderReceiptRef').textContent = randomOrd;
-        document.getElementById('confirmedBuyerEmail').textContent = document.getElementById('stripeEmail').value;
-      }, 1200);
-    }
-
-    function launchExperienceSimulator() {
-      alert("🚀 Unlocking CTJ Interactive Thinking Canvas!\n\nProduct: " + currentProductTitle + "\nAccess Mode: Single-use verified token\nPrivacy: Responses remain 100% on your device.");
-    }
-
-    function resetPreviewCart() {
-      document.getElementById('cartBadgeCount').textContent = '(0)';
-      document.getElementById('cartCount').textContent = '0';
-      document.getElementById('cartItemsList').innerHTML = '<li style="text-align:center; padding:24px; color:#64748b;">Your order is completed! Explore additional curriculum below.</li>';
-      document.getElementById('orderTotalDisplay').textContent = '$0.00';
-    }
-
-    function _oldSimulate() {
-      alert("🔒 Simulation: Navigating to Stripe Hosted Checkout session (multi-item payload, live catalog verification).");
-    }
-  </script>
-
-  <!-- Full Interactive Stripe Checkout Modal -->
-  <div id="stripePaymentModal" class="stripe-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="stripeModalTitle">
-    <div class="stripe-modal-container">
-      
-      <!-- Top Test Mode Banner -->
-      <div class="stripe-top-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="stripe-test-badge">STRIPE VERIFIED CHECKOUT</span>
-          <span>Sonly Consulting · The Critical Thinker's Journey</span>
-        </div>
-        <button class="stripe-close-btn" onclick="closeStripeModal()" aria-label="Close checkout">✕</button>
-      </div>
-
-      <!-- Payment Interface (Pre-Success) -->
-      <div id="stripeCheckoutView" style="display:contents;">
-        <!-- Left Pane: Order Summary -->
-        <div class="stripe-left-pane">
-          <div>
-            <p class="stripe-merchant-title">Sonly Consulting</p>
-            <div class="stripe-total-due" id="stripeModalAmount">$39.00</div>
-            <ul class="stripe-items-breakdown" id="stripeModalItems">
-              <li class="stripe-item-row">
-                <span id="stripeModalItemTitle">Part 1: Foundations of Critical Thinking</span>
-                <strong id="stripeModalItemPrice">$39.00</strong>
-              </li>
-              <li class="stripe-item-row" style="color:#16a34a;">
-                <span>Digital Delivery & Web Entitlement</span>
-                <strong>Free</strong>
-              </li>
-            </ul>
-            
-            <!-- Stripe Modal Promo Code -->
-            <div class="stripe-promo-section">
-              <button type="button" class="stripe-promo-toggle-btn" id="stripePromoToggleBtn" onclick="toggleStripePromoInput()">
-                🏷️ Add promotion code
-              </button>
-              <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
-                <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
-              </div>
-              <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
-                <div>
-                  <span class="promo-tag-pill">COUPON APPLIED</span>
-                  <strong id="stripeActivePromoCode">DCSE10</strong>: <span id="stripeDiscountAmount">-$3.90</span>
-                </div>
-                <button type="button" class="stripe-promo-remove-btn" onclick="removeStripePromoCode()">✕</button>
-              </div>
-            </div>
-
-          </div>
-          <div>
-            <div class="stripe-powered">
-              <span>Powered by</span>
-              <span class="stripe-logo-pill">stripe</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Pane: Payment Methods -->
-        <div class="stripe-right-pane">
-          <div class="express-pay-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>⚡ Express Checkout</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">STRIPE ENABLED</span>
-          </div>
-          
-          <!-- Prominent Primary Choices: Cash App Pay & PayPal -->
-          <div class="express-btn-group">
-            <button class="express-cashapp-btn" type="button" onclick="executeStripePayment('Cash App Pay')">
-              <span class="cash-symbol">$</span>
-              <span>Cash App Pay</span>
-            </button>
-            <button class="express-paypal-btn" type="button" onclick="executeStripePayment('PayPal')">
-              <span><strong class="paypal-text"><span style="color:#003087">Pay</span><span style="color:#0079c1">Pal</span></strong></span>
-            </button>
-          </div>
-
-          <!-- Secondary Express Methods -->
-          <div class="express-secondary-grid">
-            <button class="express-apple-btn" type="button" onclick="executeStripePayment('Apple Pay')">
-              <span>Pay</span>
-            </button>
-            <button class="express-gpay-btn" type="button" onclick="executeStripePayment('Google Pay')">
-              <span><strong style="color:#4285F4">G</strong> <strong style="color:#EA4335">P</strong><strong style="color:#FBBC05">a</strong><strong style="color:#34A853">y</strong></span>
-            </button>
-            <button class="express-amazon-btn" type="button" onclick="executeStripePayment('Amazon Pay')">
-              <span>Amazon Pay</span>
-            </button>
-            <button class="express-link-btn" type="button" onclick="executeStripePayment('Link by Stripe')">
-              <span>Link ⚡</span>
-            </button>
-          </div>
-
-          <!-- Klarna Installments Callout -->
-          <div class="klarna-pill-row" onclick="executeStripePayment('Klarna Pay in 4')">
-            <span><strong>Klarna.</strong> 4 interest-free payments of <span id="klarnaInstallmentAmount">$9.75</span></span>
-            <span style="font-weight:700; text-decoration:underline;">Select →</span>
-          </div>
-
-          <div class="stripe-divider">
-            <span>Or pay with card</span>
-          </div>
-
-          <form id="stripeCardForm" onsubmit="event.preventDefault(); executeStripePayment('Card');">
-            <div class="stripe-form-group">
-              <label for="stripeEmail">Email</label>
-              <input class="stripe-input" id="stripeEmail" type="email" value="buyer@example.test" required>
-
-              <label for="stripeCardNumber">Card Information</label>
-              <div class="stripe-card-input-wrap">
-                <input class="stripe-input" id="stripeCardNumber" type="text" value="4242 •••• •••• 4242" style="width:100%; letter-spacing:0.05em;" required>
-                <span class="stripe-card-badge">VISA</span>
-              </div>
-              
-              <div class="stripe-input-row">
-                <input class="stripe-input" id="stripeExp" type="text" value="12 / 28" placeholder="MM / YY" required>
-                <input class="stripe-input" id="stripeCvc" type="text" value="123" placeholder="CVC" required>
-              </div>
-
-              <label for="stripeName">Cardholder Name</label>
-              <input class="stripe-input" id="stripeName" type="text" value="Jordan Smith" required>
-
-              <label for="stripeZip">Country or Region</label>
-              <div class="stripe-input-row">
-                <select class="stripe-input" style="background:#fff;">
-                  <option selected>United States</option>
-                  <option>Canada</option>
-                  <option>United Kingdom</option>
-                </select>
-                <input class="stripe-input" id="stripeZip" type="text" value="90210" placeholder="ZIP">
-              </div>
-            </div>
-
-            <button type="submit" id="btnStripePayAction" class="stripe-pay-action-btn">
-              <span id="btnStripePayText">Pay $39.00</span>
-            </button>
-          </form>
-
-          <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:14px;">
-            🔒 By clicking Pay, your payment is processed by Stripe with 256-bit encryption.
-          </p>
-        </div>
-      </div>
-
-      <!-- Payment Succeeded View -->
-      <div id="stripeSuccessView" class="stripe-success-pane" style="display:none;">
-        <div class="stripe-success-icon">✓</div>
-        <h3 class="stripe-success-title">Payment Successful!</h3>
-        <p class="stripe-success-sub">
-          Your order has been confirmed by Stripe. Your digital learning entitlements are immediately prepared and ready for use.
-        </p>
-
-        <div class="stripe-unlocked-card">
-          <span class="ctj-item-tag" style="background:#dcfce7; color:#15803d; margin-bottom:8px;">Instant Entitlement Active</span>
-          <strong id="unlockedProductTitle">The Critical Thinker's Journey</strong>
-          <p id="unlockedProductDesc">Web application unlocked and offline package generated. Zero localhost dependency.</p>
-          
-          <div class="stripe-access-btn-row">
-            <button class="btn primary" onclick="launchExperienceSimulator()">Open Web Experience</button>
-            <button class="btn" onclick="alert('⚡ Downloading private offline package (HTML + JSON state bundle)...');">Download Offline Files</button>
-            <button class="btn" onclick="switchView('email'); closeStripeModal();">View Email Receipt</button>
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#64748b;">
-          Order Reference: <strong id="orderReceiptRef">CTJ-ORD-20261023-74UF</strong> · Transactional receipt sent to <span id="confirmedBuyerEmail">buyer@example.test</span>
-        </div>
-
-        <div style="margin-top:20px;">
-          <button class="btn" onclick="closeStripeModal(); resetPreviewCart();">Return to Storefront</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</body>
-</html>
- + (discount / 100).toFixed(2);
-
-      // Cart badges
-      document.getElementById('cartAppliedPromoName').textContent = code;
-      document.getElementById('cartPromoDiscountText').textContent = discountFormatted;
-      document.getElementById('cartPromoAppliedBadge').style.display = 'flex';
-      document.getElementById('cartPromoInputRow').style.display = 'none';
-
-      // Stripe Modal badges
-      document.getElementById('stripeActivePromoCode').textContent = code;
-      document.getElementById('stripeDiscountAmount').textContent = discountFormatted;
-      document.getElementById('stripePromoActiveBadge').style.display = 'flex';
-      document.getElementById('stripePromoInputWrap').style.display = 'none';
+      if (checkoutView) checkoutView.style.display = 'block';
+      if (successView) successView.style.display = 'none';
 
       updatePriceDisplays();
-    }
 
-    let currentCartTotal = '$39.00';
-    let currentProductTitle = 'Part 1: Foundations of Critical Thinking';
-
-    function simulateStripeModal() {
-      const modal = document.getElementById('stripePaymentModal');
-      const checkoutView = document.getElementById('stripeCheckoutView');
-      const successView = document.getElementById('stripeSuccessView');
-      
-      checkoutView.style.display = 'contents';
-      successView.style.display = 'none';
-
-      const total = document.getElementById('orderTotalDisplay').textContent || '$39.00';
-      currentCartTotal = total;
-      
-      document.getElementById('stripeModalAmount').textContent = total;
-      document.getElementById('btnStripePayText').textContent = 'Pay ' + total;
-      document.getElementById('stripeModalItemPrice').textContent = total;
-
-      const firstItemTitle = document.querySelector('.ctj-item-title')?.textContent || 'The Critical Thinker\'s Journey';
-      currentProductTitle = firstItemTitle;
-      document.getElementById('stripeModalItemTitle').textContent = firstItemTitle;
-      document.getElementById('unlockedProductTitle').textContent = firstItemTitle;
+      const firstItem = document.querySelector('.ctj-item-title')?.textContent || 'The Critical Thinker\'s Journey';
+      currentProductTitle = firstItem;
+      const modalTitle = document.getElementById('stripeModalItemTitle');
+      if (modalTitle) modalTitle.textContent = firstItem;
+      const unlockedTitle = document.getElementById('unlockedProductTitle');
+      if (unlockedTitle) unlockedTitle.textContent = firstItem;
 
       modal.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -2606,27 +2094,50 @@
 
     function closeStripeModal() {
       const modal = document.getElementById('stripePaymentModal');
-      modal.style.display = 'none';
+      if (modal) modal.style.display = 'none';
       document.body.style.overflow = '';
     }
 
-    function executeStripePayment(method) {
+    function selectPaymentMethod(method) {
+      if (method === 'cashapp') {
+        const cashtag = prompt('Enter your $Cashtag to pay via Cash App Pay (e.g. $DCSThinker):', '$DCSThinker');
+        if (cashtag) {
+          executeStripePayment('Cash App Pay (' + cashtag + ')');
+        }
+        return;
+      } else if (method === 'paypal') {
+        const ok = confirm('Open PayPal secure authorization window to complete payment of ' + currentCartTotal + '?');
+        if (ok) {
+          executeStripePayment('PayPal');
+        }
+        return;
+      }
+      document.querySelectorAll('.method-tile').forEach(t => t.classList.remove('active'));
+      const tile = document.getElementById('tile' + method.charAt(0).toUpperCase() + method.slice(1));
+      if (tile) tile.classList.add('active');
+    }
+
+    function executeStripePayment(methodName) {
       const btn = document.getElementById('btnStripePayAction');
       const btnText = document.getElementById('btnStripePayText');
-      
-      btn.disabled = true;
-      btnText.innerHTML = '<span class="stripe-spinner"></span> Confirming with Stripe...';
+      if (btn) btn.disabled = true;
+      if (btnText) btnText.innerHTML = '<span class="stripe-spinner"></span> Confirming with Stripe...';
 
       setTimeout(() => {
-        document.getElementById('stripeCheckoutView').style.display = 'none';
-        document.getElementById('stripeSuccessView').style.display = 'block';
-        btn.disabled = false;
-        btnText.textContent = 'Pay ' + currentCartTotal;
+        const checkoutView = document.getElementById('stripeCheckoutView');
+        const successView = document.getElementById('stripeSuccessView');
+        if (checkoutView) checkoutView.style.display = 'none';
+        if (successView) successView.style.display = 'block';
+        if (btn) btn.disabled = false;
+        if (btnText) btnText.textContent = 'Pay ' + currentCartTotal;
 
         const randomOrd = 'CTJ-ORD-20261023-' + Math.random().toString(36).substring(2, 7).toUpperCase();
-        document.getElementById('orderReceiptRef').textContent = randomOrd;
-        document.getElementById('confirmedBuyerEmail').textContent = document.getElementById('stripeEmail').value;
-      }, 1200);
+        const ref = document.getElementById('orderReceiptRef');
+        if (ref) ref.textContent = randomOrd;
+        const confirmedEmail = document.getElementById('confirmedBuyerEmail');
+        const stripeEmail = document.getElementById('stripeEmail');
+        if (confirmedEmail && stripeEmail) confirmedEmail.textContent = stripeEmail.value;
+      }, 1000);
     }
 
     function launchExperienceSimulator() {
@@ -2634,191 +2145,9 @@
     }
 
     function resetPreviewCart() {
-      document.getElementById('cartBadgeCount').textContent = '(0)';
-      document.getElementById('cartCount').textContent = '0';
-      document.getElementById('cartItemsList').innerHTML = '<li style="text-align:center; padding:24px; color:#64748b;">Your order is completed! Explore additional curriculum below.</li>';
-      document.getElementById('orderTotalDisplay').textContent = '$0.00';
-    }
-
-    function _oldSimulate() {
-      alert("🔒 Simulation: Navigating to Stripe Hosted Checkout session (multi-item payload, live catalog verification).");
+      removeMockItem();
     }
   </script>
-
-  <!-- Full Interactive Stripe Checkout Modal -->
-  <div id="stripePaymentModal" class="stripe-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="stripeModalTitle">
-    <div class="stripe-modal-container">
-      
-      <!-- Top Test Mode Banner -->
-      <div class="stripe-top-bar">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span class="stripe-test-badge">STRIPE VERIFIED CHECKOUT</span>
-          <span>Sonly Consulting · The Critical Thinker's Journey</span>
-        </div>
-        <button class="stripe-close-btn" onclick="closeStripeModal()" aria-label="Close checkout">✕</button>
-      </div>
-
-      <!-- Payment Interface (Pre-Success) -->
-      <div id="stripeCheckoutView" style="display:contents;">
-        <!-- Left Pane: Order Summary -->
-        <div class="stripe-left-pane">
-          <div>
-            <p class="stripe-merchant-title">Sonly Consulting</p>
-            <div class="stripe-total-due" id="stripeModalAmount">$39.00</div>
-            <ul class="stripe-items-breakdown" id="stripeModalItems">
-              <li class="stripe-item-row">
-                <span id="stripeModalItemTitle">Part 1: Foundations of Critical Thinking</span>
-                <strong id="stripeModalItemPrice">$39.00</strong>
-              </li>
-              <li class="stripe-item-row" style="color:#16a34a;">
-                <span>Digital Delivery & Web Entitlement</span>
-                <strong>Free</strong>
-              </li>
-            </ul>
-            
-            <!-- Stripe Modal Promo Code -->
-            <div class="stripe-promo-section">
-              <button type="button" class="stripe-promo-toggle-btn" id="stripePromoToggleBtn" onclick="toggleStripePromoInput()">
-                🏷️ Add promotion code
-              </button>
-              <div id="stripePromoInputWrap" style="display:none;" class="stripe-promo-input-wrap">
-                <input type="text" id="stripePromoCodeInput" class="stripe-input" placeholder="e.g. SCONE39, SCONE99, SCONE20, SCONE119" style="text-transform:uppercase;">
-                <button type="button" class="btn primary" style="padding:6px 14px; font-size:13px;" onclick="applyStripePromoCode()">Apply</button>
-              </div>
-              <div id="stripePromoActiveBadge" style="display:none;" class="stripe-promo-active-badge">
-                <div>
-                  <span class="promo-tag-pill">COUPON APPLIED</span>
-                  <strong id="stripeActivePromoCode">DCSE10</strong>: <span id="stripeDiscountAmount">-$3.90</span>
-                </div>
-                <button type="button" class="stripe-promo-remove-btn" onclick="removeStripePromoCode()">✕</button>
-              </div>
-            </div>
-
-          </div>
-          <div>
-            <div class="stripe-powered">
-              <span>Powered by</span>
-              <span class="stripe-logo-pill">stripe</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Pane: Payment Methods -->
-        <div class="stripe-right-pane">
-          <div class="express-pay-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>⚡ Express Checkout</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">STRIPE ENABLED</span>
-          </div>
-          
-          <!-- Prominent Primary Choices: Cash App Pay & PayPal -->
-          <div class="express-btn-group">
-            <button class="express-cashapp-btn" type="button" onclick="executeStripePayment('Cash App Pay')">
-              <span class="cash-symbol">$</span>
-              <span>Cash App Pay</span>
-            </button>
-            <button class="express-paypal-btn" type="button" onclick="executeStripePayment('PayPal')">
-              <span><strong class="paypal-text"><span style="color:#003087">Pay</span><span style="color:#0079c1">Pal</span></strong></span>
-            </button>
-          </div>
-
-          <!-- Secondary Express Methods -->
-          <div class="express-secondary-grid">
-            <button class="express-apple-btn" type="button" onclick="executeStripePayment('Apple Pay')">
-              <span>Pay</span>
-            </button>
-            <button class="express-gpay-btn" type="button" onclick="executeStripePayment('Google Pay')">
-              <span><strong style="color:#4285F4">G</strong> <strong style="color:#EA4335">P</strong><strong style="color:#FBBC05">a</strong><strong style="color:#34A853">y</strong></span>
-            </button>
-            <button class="express-amazon-btn" type="button" onclick="executeStripePayment('Amazon Pay')">
-              <span>Amazon Pay</span>
-            </button>
-            <button class="express-link-btn" type="button" onclick="executeStripePayment('Link by Stripe')">
-              <span>Link ⚡</span>
-            </button>
-          </div>
-
-          <!-- Klarna Installments Callout -->
-          <div class="klarna-pill-row" onclick="executeStripePayment('Klarna Pay in 4')">
-            <span><strong>Klarna.</strong> 4 interest-free payments of <span id="klarnaInstallmentAmount">$9.75</span></span>
-            <span style="font-weight:700; text-decoration:underline;">Select →</span>
-          </div>
-
-          <div class="stripe-divider">
-            <span>Or pay with card</span>
-          </div>
-
-          <form id="stripeCardForm" onsubmit="event.preventDefault(); executeStripePayment('Card');">
-            <div class="stripe-form-group">
-              <label for="stripeEmail">Email</label>
-              <input class="stripe-input" id="stripeEmail" type="email" value="buyer@example.test" required>
-
-              <label for="stripeCardNumber">Card Information</label>
-              <div class="stripe-card-input-wrap">
-                <input class="stripe-input" id="stripeCardNumber" type="text" value="4242 •••• •••• 4242" style="width:100%; letter-spacing:0.05em;" required>
-                <span class="stripe-card-badge">VISA</span>
-              </div>
-              
-              <div class="stripe-input-row">
-                <input class="stripe-input" id="stripeExp" type="text" value="12 / 28" placeholder="MM / YY" required>
-                <input class="stripe-input" id="stripeCvc" type="text" value="123" placeholder="CVC" required>
-              </div>
-
-              <label for="stripeName">Cardholder Name</label>
-              <input class="stripe-input" id="stripeName" type="text" value="Jordan Smith" required>
-
-              <label for="stripeZip">Country or Region</label>
-              <div class="stripe-input-row">
-                <select class="stripe-input" style="background:#fff;">
-                  <option selected>United States</option>
-                  <option>Canada</option>
-                  <option>United Kingdom</option>
-                </select>
-                <input class="stripe-input" id="stripeZip" type="text" value="90210" placeholder="ZIP">
-              </div>
-            </div>
-
-            <button type="submit" id="btnStripePayAction" class="stripe-pay-action-btn">
-              <span id="btnStripePayText">Pay $39.00</span>
-            </button>
-          </form>
-
-          <p style="font-size:11px; color:#94a3b8; text-align:center; margin-top:14px;">
-            🔒 By clicking Pay, your payment is processed by Stripe with 256-bit encryption.
-          </p>
-        </div>
-      </div>
-
-      <!-- Payment Succeeded View -->
-      <div id="stripeSuccessView" class="stripe-success-pane" style="display:none;">
-        <div class="stripe-success-icon">✓</div>
-        <h3 class="stripe-success-title">Payment Successful!</h3>
-        <p class="stripe-success-sub">
-          Your order has been confirmed by Stripe. Your digital learning entitlements are immediately prepared and ready for use.
-        </p>
-
-        <div class="stripe-unlocked-card">
-          <span class="ctj-item-tag" style="background:#dcfce7; color:#15803d; margin-bottom:8px;">Instant Entitlement Active</span>
-          <strong id="unlockedProductTitle">The Critical Thinker's Journey</strong>
-          <p id="unlockedProductDesc">Web application unlocked and offline package generated. Zero localhost dependency.</p>
-          
-          <div class="stripe-access-btn-row">
-            <button class="btn primary" onclick="launchExperienceSimulator()">Open Web Experience</button>
-            <button class="btn" onclick="alert('⚡ Downloading private offline package (HTML + JSON state bundle)...');">Download Offline Files</button>
-            <button class="btn" onclick="switchView('email'); closeStripeModal();">View Email Receipt</button>
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#64748b;">
-          Order Reference: <strong id="orderReceiptRef">CTJ-ORD-20261023-74UF</strong> · Transactional receipt sent to <span id="confirmedBuyerEmail">buyer@example.test</span>
-        </div>
-
-        <div style="margin-top:20px;">
-          <button class="btn" onclick="closeStripeModal(); resetPreviewCart();">Return to Storefront</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
 
 </body>
 </html>
